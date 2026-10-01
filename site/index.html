@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Flowbase — More clients. Less manual work.</title>
+  <meta name="description" content="Flowbase builds websites, lead systems and automations for startups and small businesses — turning visitors into clients with less manual work.">
+  <meta name="theme-color" content="#07080b">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Flowbase">
+  <meta property="og:title" content="Flowbase — More clients. Less manual work.">
+  <meta property="og:description" content="Websites, lead systems and automation that turn visitors into clients — so you don't have to do it all by hand.">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <script>
+    /* Вмикаємо анімації до першого рендеру (щоб не було "блимання"), мову — з ?lang= або збереженого вибору. */
+    (function (d) {
+      var r = d.documentElement;
+      r.classList.remove('no-js');
+      if (!window.matchMedia || !matchMedia('(prefers-reduced-motion: reduce)').matches) r.classList.add('motion');
+      setTimeout(function () { if (!window.__flowbaseReady) r.classList.remove('motion'); }, 3000);
+    })(document);
+  </script>
+  <script src="assets/vendor/gsap.min.js" defer></script>
+  <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="assets/js/config.js" defer></script>
+  <script src="assets/js/i18n.js" defer></script>
+  <script src="assets/js/main.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="a11y.skip">Skip to content</a>
+  <div class="scroll-progress" aria-hidden="true"></div>
+
+  <!-- ============ NAV ============ -->
+  <header class="nav" data-nav>
+    <div class="nav-inner container">
+      <a class="logo" href="#top" aria-label="Flowbase">
+        <svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <defs>
+            <linearGradient id="lg-logo" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#f3dca4"/><stop offset="1" stop-color="#b98a4b"/>
+            </linearGradient>
+          </defs>
+          <path d="M5 23c6 0 7-14 13-14s5 7 9 7" fill="none" stroke="url(#lg-logo)" stroke-width="2.6" stroke-linecap="round"/>
+          <circle cx="5" cy="23" r="2.6" fill="#f3dca4"/>
+          <circle cx="27" cy="16" r="2.6" fill="#b98a4b"/>
+        </svg>
+        <span class="logo-word">Flowbase</span>
+      </a>
+
+      <div class="nav-actions">
+        <div class="lang" data-lang>
+          <button class="lang-btn" type="button" aria-haspopup="true" aria-expanded="false" data-lang-btn data-i18n-attr="aria-label:lang.label" aria-label="Change language">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+            <span class="lang-code" data-lang-code>EN</span>
+          </button>
+          <ul class="lang-menu" role="menu" data-lang-menu hidden>
+            <li role="none"><button role="menuitemradio" type="button" data-set-lang="en" lang="en">English</button></li>
+            <li role="none"><button role="menuitemradio" type="button" data-set-lang="uk" lang="uk">Українська</button></li>
+            <li role="none"><button role="menuitemradio" type="button" data-set-lang="pl" lang="pl">Polski</button></li>
+          </ul>
+        </div>
+        <a class="btn btn-small btn-gold" href="#contact" data-i18n="nav.cta">Message us</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ============ 1. HERO ============ -->
+    <section class="hero" id="top" data-hero>
+      <canvas class="hero-canvas" data-flow-canvas aria-hidden="true"></canvas>
+      <div class="hero-orbs" aria-hidden="true">
+        <span class="orb orb-1" data-depth="0.35"></span>
+        <span class="orb orb-2" data-depth="0.6"></span>
+        <span class="orb orb-3" data-depth="0.2"></span>
+      </div>
+      <div class="hero-vignette" aria-hidden="true"></div>
+
+      <div class="hero-content container" data-hero-content>
+        <p class="pill" data-hero-reveal><span class="pill-dot"></span><span data-i18n="hero.eyebrow">For startups, small businesses &amp; experts</span></p>
+        <h1 class="hero-title" data-i18n="hero.title" data-split>More clients.<br><em>Less manual work.</em></h1>
+        <p class="hero-sub" data-hero-reveal data-i18n="hero.subtitle">We build websites and automated systems that turn visitors into clients — so you don't have to do it all by hand.</p>
+        <div class="hero-actions" data-hero-reveal>
+          <a class="btn btn-gold btn-lg" href="#contact" data-magnetic>
+            <span data-i18n="hero.cta">Message us</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+          <a class="btn btn-ghost btn-lg" href="#solution" data-i18n="hero.secondary">See how it works</a>
+        </div>
+        <p class="hero-note" data-hero-reveal data-i18n="hero.note">No calls. Just send a message — we'll take it from there.</p>
+      </div>
+
+      <div class="scroll-cue-wrap" data-cue-wrap>
+        <a class="scroll-cue" href="#problem" data-hero-reveal>
+          <span data-i18n="hero.scroll">Scroll</span>
+          <span class="scroll-cue-line" aria-hidden="true"></span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============ 2. PROBLEM ============ -->
+    <section class="section problem" id="problem">
+      <div class="container problem-grid">
+        <header class="section-head problem-head" data-reveal-group>
+          <p class="eyebrow"><span class="eyebrow-num">01</span><span data-i18n="problem.eyebrow">The problem</span></p>
+          <h2 class="problem-title" data-i18n="problem.title">Sound familiar?</h2>
+          <p class="problem-outro" data-i18n="problem.outro">Each of these costs you clients. <em>Each of them can be fixed.</em></p>
+        </header>
+
+        <ul class="pains" data-pains>
+          <li class="pain">
+            <span class="pain-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>
+            <div class="pain-body">
+              <span class="pain-tag"><i class="pain-dot"></i><span data-i18n="problem.t1">Unanswered</span></span>
+              <p data-i18n="problem.p1">Requests come in — and you forget to reply in time.</p>
+            </div>
+          </li>
+          <li class="pain">
+            <span class="pain-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2z"/><path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1"/></svg></span>
+            <div class="pain-body">
+              <span class="pain-tag"><i class="pain-dot"></i><span data-i18n="problem.t2">Lost in chats</span></span>
+              <p data-i18n="problem.p2">Clients write to you in different messengers, and some requests get lost.</p>
+            </div>
+          </li>
+          <li class="pain">
+            <span class="pain-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 22h14"/><path d="M5 2h14"/><path d="M17 22v-4.17a2 2 0 0 0-.59-1.42L12 12l-4.41 4.41A2 2 0 0 0 7 17.83V22"/><path d="M7 2v4.17a2 2 0 0 0 .59 1.42L12 12l4.41-4.41A2 2 0 0 0 17 6.17V2"/></svg></span>
+            <div class="pain-body">
+              <span class="pain-tag"><i class="pain-dot"></i><span data-i18n="problem.t3">Manual routine</span></span>
+              <p data-i18n="problem.p3">You spend hours on routine work that could run on autopilot.</p>
+            </div>
+          </li>
+          <li class="pain">
+            <span class="pain-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/><path d="m14.5 7.5-5 5"/><path d="m9.5 7.5 5 5"/></svg></span>
+            <div class="pain-body">
+              <span class="pain-tag"><i class="pain-dot"></i><span data-i18n="problem.t4">Invisible online</span></span>
+              <p data-i18n="problem.p4">You don't have a website — or it looks outdated and brings no requests.</p>
+            </div>
+          </li>
+          <li class="pain">
+            <span class="pain-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg></span>
+            <div class="pain-body">
+              <span class="pain-tag"><i class="pain-dot"></i><span data-i18n="problem.t5">Gone to competitors</span></span>
+              <p data-i18n="problem.p5">Clients wait hours for a reply and leave for your competitors.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ 3. SOLUTION ============ -->
+    <section class="section solution" id="solution">
+      <div class="flow" data-flow>
+        <div class="container flow-inner">
+          <header class="section-head flow-head" data-reveal-group>
+            <p class="eyebrow"><span class="eyebrow-num">02</span><span data-i18n="solution.eyebrow">The solution</span></p>
+            <h2 data-i18n="solution.title">One system — from first visit to <em>loyal client</em>.</h2>
+            <p class="section-sub" data-i18n="solution.subtitle">A website is only the start. We build the whole path your client takes and automate everything that slows it down.</p>
+          </header>
+
+          <div class="flow-track" data-flow-track>
+            <div class="flow-line" aria-hidden="true">
+              <span class="flow-line-fill" data-flow-fill></span>
+              <span class="flow-spark" data-flow-spark></span>
+            </div>
+            <ol class="flow-nodes">
+              <li class="flow-node" data-flow-node><span class="flow-node-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg></span><span class="flow-node-label" data-i18n="solution.n1">Website</span></li>
+              <li class="flow-node" data-flow-node><span class="flow-node-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg></span><span class="flow-node-label" data-i18n="solution.n2">Lead</span></li>
+              <li class="flow-node" data-flow-node><span class="flow-node-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 7v7"/><path d="M12 7v4"/><path d="M16 7v9"/></svg></span><span class="flow-node-label" data-i18n="solution.n3">CRM</span></li>
+              <li class="flow-node" data-flow-node><span class="flow-node-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></span><span class="flow-node-label" data-i18n="solution.n4">Automation</span></li>
+              <li class="flow-node" data-flow-node><span class="flow-node-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5a2 2 0 0 0 1.44 1.44l6.14 1.58a.5.5 0 0 1 0 .96l-6.14 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/></svg></span><span class="flow-node-label" data-i18n="solution.n5">AI</span></li>
+              <li class="flow-node" data-flow-node><span class="flow-node-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></span><span class="flow-node-label" data-i18n="solution.n6">Follow-up</span></li>
+              <li class="flow-node" data-flow-node><span class="flow-node-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m16 11 2 2 4-4"/></svg></span><span class="flow-node-label" data-i18n="solution.n7">Client</span></li>
+            </ol>
+          </div>
+
+          <div class="flow-details" data-flow-details>
+            <article class="flow-detail" data-flow-detail><span class="flow-detail-num">01</span><h3 data-i18n="solution.n1">Website</h3><p data-i18n="solution.d1">Explains what you do in seconds and makes it easy to get in touch.</p></article>
+            <article class="flow-detail" data-flow-detail><span class="flow-detail-num">02</span><h3 data-i18n="solution.n2">Lead</h3><p data-i18n="solution.d2">Every request — from the site and messengers — lands in one place. Nothing gets lost.</p></article>
+            <article class="flow-detail" data-flow-detail><span class="flow-detail-num">03</span><h3 data-i18n="solution.n3">CRM</h3><p data-i18n="solution.d3">All clients and conversations on one simple board. You always know who's next.</p></article>
+            <article class="flow-detail" data-flow-detail><span class="flow-detail-num">04</span><h3 data-i18n="solution.n4">Automation</h3><p data-i18n="solution.d4">Confirmations, reminders and data entry happen on their own.</p></article>
+            <article class="flow-detail" data-flow-detail><span class="flow-detail-num">05</span><h3 data-i18n="solution.n5">AI</h3><p data-i18n="solution.d5">Instant answers to common questions — day and night.</p></article>
+            <article class="flow-detail" data-flow-detail><span class="flow-detail-num">06</span><h3 data-i18n="solution.n6">Follow-up</h3><p data-i18n="solution.d6">Timely messages bring back people who didn't decide right away.</p></article>
+            <article class="flow-detail" data-flow-detail><span class="flow-detail-num">07</span><h3 data-i18n="solution.n7">Client</h3><p data-i18n="solution.d7">More requests turn into paying clients — with less of your time.</p></article>
+          </div>
+
+          <p class="flow-hint" aria-hidden="true"><span data-i18n="solution.hint">Scroll to follow the flow</span> <span class="flow-counter"><b data-flow-count>01</b> / 07</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 4. SERVICES ============ -->
+    <section class="section services" id="services">
+      <div class="container">
+        <header class="section-head" data-reveal-group>
+          <p class="eyebrow"><span class="eyebrow-num">03</span><span data-i18n="services.eyebrow">Services</span></p>
+          <h2 data-i18n="services.title">What we build</h2>
+          <p class="section-sub" data-i18n="services.subtitle">Four building blocks. Use one — or connect them into a complete system.</p>
+        </header>
+
+        <div class="services-grid" data-services>
+          <article class="service">
+            <div class="service-inner" data-tilt>
+              <span class="service-glare" aria-hidden="true"></span>
+              <div class="service-top">
+                <span class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg></span>
+                <span class="service-num">01</span>
+              </div>
+              <h3 data-i18n="services.s1.title">Websites</h3>
+              <p data-i18n="services.s1.text">Landing pages and business websites that explain your offer in seconds and lead visitors to one clear action. Fast, mobile-first, built to convert.</p>
+              <ul class="tags"><li data-i18n="services.s1.tag1">Landing pages</li><li data-i18n="services.s1.tag2">Business websites</li><li data-i18n="services.s1.tag3">Startup &amp; MVP sites</li></ul>
+            </div>
+          </article>
+          <article class="service">
+            <div class="service-inner" data-tilt>
+              <span class="service-glare" aria-hidden="true"></span>
+              <div class="service-top">
+                <span class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
+                <span class="service-num">02</span>
+              </div>
+              <h3 data-i18n="services.s2.title">Lead systems</h3>
+              <p data-i18n="services.s2.text">Forms, booking and instant notifications that bring every request into a CRM — with qualification, so your time goes to the right clients.</p>
+              <ul class="tags"><li data-i18n="services.s2.tag1">Forms &amp; booking</li><li data-i18n="services.s2.tag2">CRM setup</li><li data-i18n="services.s2.tag3">Lead qualification</li></ul>
+            </div>
+          </article>
+          <article class="service">
+            <div class="service-inner" data-tilt>
+              <span class="service-glare" aria-hidden="true"></span>
+              <div class="service-top">
+                <span class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><path d="M7 11v4a2 2 0 0 0 2 2h4"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg></span>
+                <span class="service-num">03</span>
+              </div>
+              <h3 data-i18n="services.s3.title">Business automation</h3>
+              <p data-i18n="services.s3.text">We find repetitive tasks in your business and hand them to automations: follow-ups, reminders, data entry, documents and reports.</p>
+              <ul class="tags"><li data-i18n="services.s3.tag1">Follow-up</li><li data-i18n="services.s3.tag2">Data sync</li><li data-i18n="services.s3.tag3">Docs &amp; reports</li></ul>
+            </div>
+          </article>
+          <article class="service">
+            <div class="service-inner" data-tilt>
+              <span class="service-glare" aria-hidden="true"></span>
+              <div class="service-top">
+                <span class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 8V4H8"/><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></span>
+                <span class="service-num">04</span>
+              </div>
+              <h3 data-i18n="services.s4.title">AI automation</h3>
+              <p data-i18n="services.s4.text">AI assistants that answer FAQs, qualify requests and draft replies — used only where they save real time.</p>
+              <ul class="tags"><li data-i18n="services.s4.tag1">AI FAQ assistant</li><li data-i18n="services.s4.tag2">AI support</li><li data-i18n="services.s4.tag3">AI workflows</li></ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 5. PROCESS ============ -->
+    <section class="section process" id="process" data-process>
+      <div class="process-pin" data-process-pin>
+        <div class="container">
+          <header class="section-head" data-reveal-group>
+            <p class="eyebrow"><span class="eyebrow-num">04</span><span data-i18n="process.eyebrow">Process</span></p>
+            <h2 data-i18n="process.title">How we work</h2>
+            <p class="section-sub" data-i18n="process.subtitle">Simple, transparent steps — all by message, no calls needed.</p>
+          </header>
+        </div>
+
+        <div class="process-viewport">
+          <ol class="process-track" data-process-track>
+            <li class="step"><span class="step-num" aria-hidden="true">01</span><div class="step-card"><h3 data-i18n="process.p1.title">You message us</h3><p data-i18n="process.p1.text">Tell us about your business and what isn't working. A few lines are enough.</p></div></li>
+            <li class="step"><span class="step-num" aria-hidden="true">02</span><div class="step-card"><h3 data-i18n="process.p2.title">We analyse</h3><p data-i18n="process.p2.text">We map your client's path and find where you lose time and requests.</p></div></li>
+            <li class="step"><span class="step-num" aria-hidden="true">03</span><div class="step-card"><h3 data-i18n="process.p3.title">You get a plan</h3><p data-i18n="process.p3.text">A clear proposal: what we'll build, in what order, and why it matters for your business.</p></div></li>
+            <li class="step"><span class="step-num" aria-hidden="true">04</span><div class="step-card"><h3 data-i18n="process.p4.title">We build</h3><p data-i18n="process.p4.text">Website, forms, CRM, automations and AI — connected into one working system.</p></div></li>
+            <li class="step"><span class="step-num" aria-hidden="true">05</span><div class="step-card"><h3 data-i18n="process.p5.title">Launch &amp; grow</h3><p data-i18n="process.p5.text">We test everything, launch, show you how it works — and help improve it as your business grows.</p></div></li>
+          </ol>
+        </div>
+
+        <div class="container">
+          <div class="process-progress" aria-hidden="true"><span data-process-bar></span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 6. FINAL CTA ============ -->
+    <section class="section contact" id="contact" data-contact>
+      <div class="contact-bg" data-contact-bg aria-hidden="true">
+        <span class="contact-aurora"></span>
+      </div>
+
+      <div class="container contact-grid">
+        <div class="contact-copy">
+          <p class="eyebrow"><span class="eyebrow-num">05</span><span data-i18n="cta.eyebrow">Let's talk</span></p>
+          <h2 class="contact-title" data-i18n="cta.title" data-words>Tell us about your business. <em>We'll show you what to automate.</em></h2>
+          <p class="section-sub" data-i18n="cta.subtitle" data-contact-item>Write a few lines about what you do and what slows you down. We'll reply with concrete ideas for your business.</p>
+
+          <div class="messengers" data-contact-item>
+            <p class="messengers-label" data-i18n="cta.or">Or message us directly</p>
+            <div class="messengers-row">
+              <a class="btn btn-ghost btn-messenger" data-messenger="telegram" href="#" target="_blank" rel="noopener" data-magnetic>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+                <span>Telegram</span>
+              </a>
+              <a class="btn btn-ghost btn-messenger" data-messenger="whatsapp" href="#" target="_blank" rel="noopener" data-magnetic>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+                <span>WhatsApp</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-shell" data-contact-item>
+          <form class="form" data-form novalidate>
+            <div class="field" data-field>
+              <label for="f-name" data-i18n="form.name">Name</label>
+              <input id="f-name" name="name" type="text" autocomplete="name" required maxlength="120" data-i18n-attr="placeholder:form.namePh" placeholder="How should we address you?">
+            </div>
+            <div class="field" data-field>
+              <label for="f-contact" data-i18n="form.contact">Email or messenger</label>
+              <input id="f-contact" name="contact" type="text" autocomplete="email" required maxlength="160" data-i18n-attr="placeholder:form.contactPh" placeholder="you@company.com or @telegram">
+            </div>
+            <div class="field" data-field>
+              <label for="f-message" data-i18n="form.message">About your business</label>
+              <textarea id="f-message" name="message" rows="4" required maxlength="3000" data-i18n-attr="placeholder:form.messagePh" placeholder="What do you do, and what would you like to improve?"></textarea>
+            </div>
+            <!-- антиспам: справжні люди це поле не бачать -->
+            <div class="hp" aria-hidden="true">
+              <label for="f-company">Company</label>
+              <input id="f-company" name="company" type="text" tabindex="-1" autocomplete="off">
+            </div>
+            <button class="btn btn-gold btn-lg btn-submit" type="submit" data-field data-magnetic>
+              <span data-submit-label data-i18n="form.submit">Send message</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </button>
+            <p class="form-status" data-form-status role="status" aria-live="polite"></p>
+            <p class="form-note" data-i18n="cta.note">No calls, no pressure — just a conversation.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <a class="logo logo-small" href="#top" aria-label="Flowbase">
+        <svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 23c6 0 7-14 13-14s5 7 9 7" fill="none" stroke="url(#lg-logo)" stroke-width="2.6" stroke-linecap="round"/><circle cx="5" cy="23" r="2.6" fill="#f3dca4"/><circle cx="27" cy="16" r="2.6" fill="#b98a4b"/></svg>
+        <span class="logo-word">Flowbase</span>
+      </a>
+      <p class="footer-tag" data-i18n="footer.tagline">Websites, lead systems and automation for growing businesses.</p>
+      <p class="footer-copy">© <span data-year>2026</span> Flowbase. <span data-i18n="footer.rights">All rights reserved.</span></p>
+    </div>
+  </footer>
+</body>
+</html>
