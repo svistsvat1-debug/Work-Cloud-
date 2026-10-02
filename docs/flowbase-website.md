@@ -34,8 +34,8 @@
 |---|---|---|
 | `formEndpoint` | [MISSING] | URL нашого Google Apps Script з `automation/lead-intake/` (CRM + Telegram + лист клієнту, інструкція в README там). Альтернатива — Formspree / Web3Forms |
 | `formAccessKey` | [MISSING, тільки для Web3Forms] | Access key з Web3Forms |
-| `telegramUrl` | [MISSING] | `https://t.me/<username>` |
-| `whatsappUrl` | [MISSING] | `https://wa.me/<номер>` |
+| `telegramUrl` | ✅ | `https://t.me/svat_ceo` |
+| `whatsappUrl` | ✅ | `https://wa.me/48535979089` + готовий перший рядок повідомлення мовою сайту |
 | Домен | [MISSING] | Для хостингу і `og:url` |
 | OG-зображення (прев'ю при пересиланні посилання) | [MISSING] | 1200×630, можна зробити пізніше |
 

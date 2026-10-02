@@ -13,8 +13,8 @@ window.FLOWBASE_CONFIG = {
   formAccessKey: '', // [MISSING якщо Web3Forms]
 
   // Прямі посилання на месенджери.
-  telegramUrl: '', // [MISSING] напр. https://t.me/<username>
-  whatsappUrl: '', // [MISSING] напр. https://wa.me/<номер у міжнародному форматі без +>
+  telegramUrl: 'https://t.me/svat_ceo',
+  whatsappUrl: 'https://wa.me/48535979089', // текст першого повідомлення підставляється мовою сайту (cta.waText в i18n.js)
 
   // Мова за замовчуванням.
   defaultLang: 'en'

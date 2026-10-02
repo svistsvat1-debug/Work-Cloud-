@@ -151,9 +151,16 @@
   function initMessengers() {
     var urls = { telegram: cfg.telegramUrl, whatsapp: cfg.whatsappUrl };
     qsa('[data-messenger]').forEach(function (a) {
-      var url = urls[a.getAttribute('data-messenger')];
+      var type = a.getAttribute('data-messenger');
+      var url = urls[type];
       if (isUrl(url)) {
         a.href = url.trim();
+        // WhatsApp: готовий перший рядок повідомлення мовою сайту
+        if (type === 'whatsapp' && /wa\.me\//.test(url)) {
+          var setText = function () { a.href = url.trim().split('?')[0] + '?text=' + encodeURIComponent(decode(t('cta.waText'))); };
+          setText();
+          afterLangHooks.push(setText);
+        }
       } else {
         // [MISSING] посилання ще не задане в config.js
         a.classList.add('is-missing');
