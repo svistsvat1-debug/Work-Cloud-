@@ -364,16 +364,16 @@ h3 { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.015em; line-height:
 /* =========================================================
    3. SOLUTION — flow
    ========================================================= */
-.solution { padding-block: 0; }
-.flow { position: relative; padding-block: clamp(96px, 12vw, 150px); overflow: hidden; }
-.flow::before {
+.solution { isolation: isolate; }
+.solution::before {
   content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-  background: radial-gradient(ellipse 60% 50% at 50% 60%, rgba(123, 108, 255, 0.12), transparent 70%);
+  background: radial-gradient(ellipse 60% 45% at 50% 60%, rgba(123, 108, 255, 0.12), transparent 70%);
 }
+.flow { position: relative; margin-top: clamp(48px, 6vw, 72px); }
 .flow-head { margin-inline: auto; text-align: center; }
 .flow-head .section-sub { margin-inline: auto; }
 
-.flow-track { --icon: 58px; position: relative; margin-top: clamp(48px, 6vw, 72px); }
+.flow-track { --icon: 58px; position: relative; }
 .flow-nodes { position: relative; display: grid; grid-template-columns: repeat(7, 1fr); }
 .flow-node { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
 .flow-node-icon {
@@ -436,16 +436,24 @@ h3 { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.015em; line-height:
 .flow-detail p { margin-top: 8px; color: var(--muted); }
 .flow-hint { display: none; }
 
-/* жива (закріплена) версія */
-.flow--live { min-height: 100vh; min-height: 100svh; display: flex; align-items: center; padding-block: calc(var(--nav-h) + 24px) 40px; }
+/* жива версія: висока "доріжка" для скролу, а схема з карткою прилипає (sticky)
+   і центрується у видимій частині екрана — працює на будь-якій висоті й ширині */
+.flow--live { margin-top: 0; height: calc(100vh + var(--flow-steps, 7) * 45vh); }
+.flow--live .flow-stage {
+  position: sticky; top: 0;
+  height: 100vh; height: 100svh;
+  display: flex; align-items: center;
+  padding-top: var(--nav-h);
+  overflow: clip;
+}
 .flow--live .flow-inner { width: 100%; }
 .flow--live .flow-spark { opacity: 1; }
-.flow--live .flow-details { display: grid; grid-template-columns: 1fr; margin-top: clamp(36px, 5vh, 56px); }
+.flow--live .flow-details { display: grid; grid-template-columns: 1fr; margin-top: clamp(24px, 5vh, 52px); }
 .flow--live .flow-detail {
   grid-area: 1 / 1;
   max-width: 620px; width: 100%; margin-inline: auto;
   text-align: center;
-  padding: 26px 30px;
+  padding: clamp(18px, 3.2vh, 28px) clamp(20px, 3vw, 30px);
   background: linear-gradient(160deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.015));
   opacity: 0;
   transform: translateY(26px) scale(0.97);
@@ -457,11 +465,16 @@ h3 { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.015em; line-height:
 .flow--live .flow-detail h3 { font-size: clamp(1.4rem, 2.4vw, 1.9rem); }
 .flow--live .flow-detail p { font-size: clamp(1.02rem, 1.4vw, 1.15rem); }
 .flow--live .flow-hint {
-  display: flex; justify-content: center; gap: 14px;
-  margin-top: 26px; font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--dim);
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 14px; text-align: center;
+  margin-top: clamp(14px, 3vh, 26px); font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--dim);
 }
+.flow-counter { white-space: nowrap; }
 .flow-counter b { color: var(--gold); font-weight: 700; }
 
+@media (max-height: 640px) {
+  .flow-track { --icon: 48px; }
+  .flow-node { gap: 8px; }
+}
 @media (max-width: 700px) {
   .flow-track { --icon: 40px; }
   .flow-node-label { display: none; }
@@ -529,7 +542,7 @@ h3 { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.015em; line-height:
 /* =========================================================
    5. PROCESS
    ========================================================= */
-.process { padding-block: clamp(96px, 12vw, 150px); }
+.process { padding-block: clamp(88px, 11vw, 140px); }
 .process-viewport { margin-top: 56px; }
 .process-track {
   max-width: 1200px; margin-inline: auto; padding-inline: var(--gutter);
@@ -554,28 +567,31 @@ h3 { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.015em; line-height:
   backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
 }
 .step-card p { margin-top: 10px; color: var(--muted); }
-.process-progress { display: none; }
+.process-progress, .process-caption { display: none; }
 
-/* горизонтальний режим (десктоп) */
-.process--h { padding-block: 0; }
-.process--h .process-pin {
-  min-height: 100vh; min-height: 100svh;
+/* горизонтальний режим (десктоп): висота доріжки = 100vh + ширина стрічки (--dist з JS),
+   етапи прилипають (sticky) і їдуть уліво */
+.process--h .process-pin { height: calc(100vh + var(--dist, 0px)); }
+.process--h .process-stage {
+  position: sticky; top: 0;
+  height: 100vh; height: 100svh;
   display: flex; flex-direction: column; justify-content: center;
-  padding-block: calc(var(--nav-h) + 20px) 48px;
-  overflow: hidden;
+  padding-top: var(--nav-h);
+  overflow: clip;
 }
-.process--h .process-viewport { margin-top: clamp(36px, 6vh, 64px); }
+.process--h .process-viewport { margin-top: 0; }
+.process--h .process-caption { display: block; margin-bottom: clamp(8px, 3vh, 32px); }
 .process--h .process-track {
   display: flex; gap: 28px;
   width: max-content; max-width: none;
   padding-inline: max(var(--gutter), calc((100vw - 1200px) / 2 + var(--gutter)));
 }
 .process--h .step { width: clamp(300px, 30vw, 400px); }
-.process--h .step-num { font-size: clamp(6rem, 10vw, 9rem); margin-bottom: -26px; }
-.process--h .step-card { min-height: 210px; padding: 32px 30px; }
+.process--h .step-num { font-size: clamp(4.5rem, min(10vw, 16vh), 10rem); margin-bottom: -0.18em; }
+.process--h .step-card { min-height: min(260px, 30vh); padding: clamp(22px, 3.6vh, 36px) 30px; }
 .process--h .step-card h3 { font-size: 1.5rem; }
 .process--h .process-progress {
-  display: block; position: relative; margin-top: clamp(32px, 5vh, 52px);
+  display: block; position: relative; margin-top: clamp(20px, 5vh, 52px);
   height: 2px; background: var(--line); border-radius: 2px; overflow: hidden;
 }
 .process--h .process-progress span {

@@ -505,7 +505,8 @@
     var counter = qs('[data-flow-count]');
     var last = nodes.length - 1;
 
-    mm.add('(min-height: 520px)', function () {
+    // на дуже низьких екранах (телефон горизонтально) — статична сітка без прилипання
+    mm.add('(min-height: 460px)', function () {
       var current = -1;
       function setActive(i) {
         if (i === current) return;
@@ -519,6 +520,7 @@
       }
 
       flow.classList.add('flow--live');
+      flow.style.setProperty('--flow-steps', nodes.length);
       flow.style.setProperty('--flow', 0);
       setActive(0);
 
@@ -526,19 +528,14 @@
         '--flow': 1,
         ease: 'none',
         onUpdate: function () { setActive(Math.round(this.progress() * last)); },
-        scrollTrigger: {
-          trigger: flow,
-          start: 'top top',
-          end: function () { return '+=' + Math.round(window.innerHeight * 0.55 * nodes.length); },
-          pin: true,
-          scrub: 0.6,
-          invalidateOnRefresh: true
-        }
+        // схема прилипає через CSS sticky, тут лише рахуємо прогрес скролу
+        scrollTrigger: { trigger: flow, start: 'top top', end: 'bottom bottom', scrub: 0.6 }
       });
 
       return function () {
         flow.classList.remove('flow--live');
         flow.style.removeProperty('--flow');
+        flow.style.removeProperty('--flow-steps');
         nodes.concat(details).forEach(function (el) { el.classList.remove('is-active', 'is-done'); });
       };
     });
@@ -591,9 +588,13 @@
     var track = qs('[data-process-track]');
     var bar = qs('[data-process-bar]');
 
-    mm.add('(min-width: 900px) and (min-height: 560px)', function () {
+    mm.add('(min-width: 900px) and (min-height: 500px)', function () {
       section.classList.add('process--h');
       function distance() { return Math.max(0, track.scrollWidth - document.documentElement.clientWidth); }
+      // висота доріжки залежить від ширини стрічки — оновлюємо перед кожним перерахунком
+      function setDistance() { pin.style.setProperty('--dist', distance() + 'px'); }
+      setDistance();
+      ScrollTrigger.addEventListener('refreshInit', setDistance);
 
       var scroller = gsap.to(track, {
         x: function () { return -distance(); },
@@ -601,8 +602,7 @@
         scrollTrigger: {
           trigger: pin,
           start: 'top top',
-          end: function () { return '+=' + distance(); },
-          pin: true,
+          end: 'bottom bottom',
           scrub: 0.8,
           invalidateOnRefresh: true,
           onUpdate: function (self) { bar.style.setProperty('--p', self.progress.toFixed(4)); }
@@ -622,10 +622,14 @@
           });
       });
 
-      return function () { section.classList.remove('process--h'); };
+      return function () {
+        ScrollTrigger.removeEventListener('refreshInit', setDistance);
+        section.classList.remove('process--h');
+        pin.style.removeProperty('--dist');
+      };
     });
 
-    mm.add('(max-width: 899px), (max-height: 559px)', function () {
+    mm.add('(max-width: 899px), (max-height: 499px)', function () {
       section.classList.add('process--v');
       gsap.fromTo(track, { '--fill': 0 }, {
         '--fill': 1, ease: 'none',
