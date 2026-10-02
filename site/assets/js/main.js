@@ -457,11 +457,47 @@
   /* ---------- загальна поява заголовків секцій ---------- */
   function initSectionHeads() {
     qsa('[data-reveal-group]').forEach(function (group) {
-      gsap.from(group.children, {
-        y: 44, opacity: 0, duration: 1.1, ease: 'power3.out', stagger: 0.12,
-        scrollTrigger: { trigger: group, start: 'top 82%', once: true }
+      var title = qs('h2', group);
+      var rest = Array.prototype.filter.call(group.children, function (el) { return el !== title; });
+      var played = false;
+
+      // заголовок: слова "встають" з 3D-повороту одне за одним
+      function hideWords() {
+        gsap.set(qsa('.w', title), { yPercent: 90, rotateX: -75, opacity: 0, transformOrigin: '50% 100%', transformPerspective: 700 });
+      }
+      splitText(title, false);
+      hideWords();
+      afterLangHooks.push(function () { splitText(title, false); if (!played) hideWords(); });
+
+      gsap.from(rest, {
+        y: 36, opacity: 0, duration: 1.1, ease: 'power3.out', stagger: 0.12, delay: 0.15,
+        scrollTrigger: { trigger: group, start: 'top 84%', once: true }
+      });
+      ScrollTrigger.create({
+        trigger: group, start: 'top 84%', once: true,
+        onEnter: function () {
+          played = true;
+          gsap.to(qsa('.w', title), { yPercent: 0, rotateX: 0, opacity: 1, duration: 1.15, ease: 'expo.out', stagger: 0.055 });
+        }
       });
     });
+  }
+
+  // Прилипаюча "сцена": міряє її висоту (--stage-h) і повертає, де вона прилипає
+  function stickyStage(holder, stage) {
+    stage.classList.add('sticky-stage');
+    function measure() { holder.style.setProperty('--stage-h', stage.offsetHeight + 'px'); }
+    measure();
+    ScrollTrigger.addEventListener('refreshInit', measure);
+    return {
+      top: function () { return parseFloat(window.getComputedStyle(stage).top) || 0; },
+      height: function () { return stage.offsetHeight; },
+      destroy: function () {
+        ScrollTrigger.removeEventListener('refreshInit', measure);
+        stage.classList.remove('sticky-stage');
+        holder.style.removeProperty('--stage-h');
+      }
+    };
   }
 
   /* =========================================================
@@ -505,6 +541,16 @@
     var counter = qs('[data-flow-count]');
     var last = nodes.length - 1;
 
+    // поява схеми: лінія "простягається", вузли вискакують по черзі
+    gsap.from('.flow-line', {
+      scaleX: 0, transformOrigin: '0% 50%', duration: 1.4, ease: 'power3.inOut',
+      scrollTrigger: { trigger: flow, start: 'top 88%', once: true }
+    });
+    gsap.from(nodes, {
+      scale: 0.3, y: 30, opacity: 0, duration: 0.9, ease: 'back.out(2.2)', stagger: 0.08, delay: 0.15,
+      scrollTrigger: { trigger: flow, start: 'top 88%', once: true }
+    });
+
     // на дуже низьких екранах (телефон горизонтально) — статична сітка без прилипання
     mm.add('(min-height: 460px)', function () {
       var current = -1;
@@ -523,16 +569,24 @@
       flow.style.setProperty('--flow-steps', nodes.length);
       flow.style.setProperty('--flow', 0);
       setActive(0);
+      var stage = stickyStage(flow, qs('.flow-stage', flow));
 
       gsap.to(flow, {
         '--flow': 1,
         ease: 'none',
         onUpdate: function () { setActive(Math.round(this.progress() * last)); },
         // схема прилипає через CSS sticky, тут лише рахуємо прогрес скролу
-        scrollTrigger: { trigger: flow, start: 'top top', end: 'bottom bottom', scrub: 0.6 }
+        scrollTrigger: {
+          trigger: flow,
+          start: function () { return 'top ' + stage.top(); },
+          end: function () { return 'bottom ' + (stage.top() + stage.height()); },
+          scrub: 0.6,
+          invalidateOnRefresh: true
+        }
       });
 
       return function () {
+        stage.destroy();
         flow.classList.remove('flow--live');
         flow.style.removeProperty('--flow');
         flow.style.removeProperty('--flow-steps');
@@ -595,14 +649,15 @@
       function setDistance() { pin.style.setProperty('--dist', distance() + 'px'); }
       setDistance();
       ScrollTrigger.addEventListener('refreshInit', setDistance);
+      var stage = stickyStage(pin, qs('.process-stage', pin));
 
       var scroller = gsap.to(track, {
         x: function () { return -distance(); },
         ease: 'none',
         scrollTrigger: {
           trigger: pin,
-          start: 'top top',
-          end: 'bottom bottom',
+          start: function () { return 'top ' + stage.top(); },
+          end: function () { return 'bottom ' + (stage.top() + stage.height()); },
           scrub: 0.8,
           invalidateOnRefresh: true,
           onUpdate: function (self) { bar.style.setProperty('--p', self.progress.toFixed(4)); }
@@ -624,6 +679,7 @@
 
       return function () {
         ScrollTrigger.removeEventListener('refreshInit', setDistance);
+        stage.destroy();
         section.classList.remove('process--h');
         pin.style.removeProperty('--dist');
       };
