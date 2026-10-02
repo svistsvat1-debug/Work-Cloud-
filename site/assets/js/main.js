@@ -229,12 +229,19 @@
       label.textContent = decode(t('form.sending'));
       setFormStatus(null);
 
+      // Google Apps Script не приймає CORS-preflight, тому туди шлемо JSON як text/plain
+      var isAppsScript = /script\.google\.com/.test(cfg.formEndpoint);
       fetch(cfg.formEndpoint, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        headers: isAppsScript
+          ? { 'Content-Type': 'text/plain;charset=utf-8' }
+          : { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify(payload)
       }).then(function (res) {
         if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json().catch(function () { return {}; });
+      }).then(function (result) {
+        if (result && result.ok === false) throw new Error(result.error || 'rejected');
         form.reset();
         setFormStatus('form.success', 'success');
       }).catch(function () {

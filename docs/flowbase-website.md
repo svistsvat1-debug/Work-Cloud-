@@ -32,7 +32,7 @@
 
 | Поле | Статус | Що потрібно |
 |---|---|---|
-| `formEndpoint` | [MISSING] | Сервіс, який пересилає заявки з форми на Gmail. Варіанти: Formspree або Web3Forms (обидва мають безкоштовний старт; ліміти перевірити на їхніх сайтах). Підключається одним рядком |
+| `formEndpoint` | [MISSING] | URL нашого Google Apps Script з `automation/lead-intake/` (CRM + Telegram + лист клієнту, інструкція в README там). Альтернатива — Formspree / Web3Forms |
 | `formAccessKey` | [MISSING, тільки для Web3Forms] | Access key з Web3Forms |
 | `telegramUrl` | [MISSING] | `https://t.me/<username>` |
 | `whatsappUrl` | [MISSING] | `https://wa.me/<номер>` |
