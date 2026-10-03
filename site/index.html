@@ -17,15 +17,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap">
   <link rel="stylesheet" href="assets/css/style.css">
 
-  <script>
-    /* Вмикаємо анімації до першого рендеру (щоб не було "блимання"), мову — з ?lang= або збереженого вибору. */
-    (function (d) {
-      var r = d.documentElement;
-      r.classList.remove('no-js');
-      if (!window.matchMedia || !matchMedia('(prefers-reduced-motion: reduce)').matches) r.classList.add('motion');
-      setTimeout(function () { if (!window.__flowbaseReady) r.classList.remove('motion'); }, 3000);
-    })(document);
-  </script>
+  <script src="assets/js/boot.js"></script>
   <script src="assets/vendor/gsap.min.js" defer></script>
   <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
   <script src="assets/js/config.js" defer></script>
