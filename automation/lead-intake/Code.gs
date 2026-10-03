@@ -19,7 +19,8 @@ var SETTINGS = {
   REPORT_WEEKDAY: ScriptApp.WeekDay.MONDAY,
   REPORT_HOUR: 9,
   REMINDER_HOUR: 10,
-  MAX_CONFIRMATIONS_PER_HOUR: 20 // захист від спаму листами через форму
+  MAX_CONFIRMATIONS_PER_HOUR: 20, // захист від спаму листами через форму
+  MAX_LEADS_PER_10_MIN: 30        // захист від флуду таблиці й Telegram фейковими заявками
 };
 
 var COLUMNS = ['Дата', 'Ім\'я', 'Контакт', 'Email', 'Повідомлення', 'Мова', 'Тип запиту', 'Статус', 'Статус змінено', 'Нотатки', 'Сторінка'];
@@ -44,6 +45,7 @@ function doPost(e) {
       page: clean_(data.page, 300)
     };
     if (!lead.name || !lead.contact || !lead.message) return json_({ ok: false, error: 'missing_fields' });
+    if (!underLeadLimit_()) return json_({ ok: false, error: 'rate_limited' });
 
     lead.email = isEmail_(lead.contact) ? lead.contact : (isEmail_(data.email) ? clean_(data.email, 160) : '');
     lead.type = detectType_(lead.message);
@@ -340,6 +342,17 @@ function testTelegram() {
 /* =========================================================
    Допоміжне
    ========================================================= */
+
+// Не більше MAX_LEADS_PER_10_MIN заявок за 10 хв загалом: реальні клієнти не впираються,
+// а флуд не засмічує CRM і Telegram.
+function underLeadLimit_() {
+  var cache = CacheService.getScriptCache();
+  var key = 'l:' + Math.floor(Date.now() / 600000);
+  var count = Number(cache.get(key) || 0);
+  if (count >= SETTINGS.MAX_LEADS_PER_10_MIN) return false;
+  cache.put(key, String(count + 1), 900);
+  return true;
+}
 
 function clean_(v, max) {
   return String(v == null ? '' : v).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '').trim().slice(0, max);
