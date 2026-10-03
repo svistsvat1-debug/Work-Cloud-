@@ -9,7 +9,7 @@ window.FLOWBASE_CONFIG = {
   // у налаштуваннях Cloudflare Pages (див. docs/deploy-cloudflare.md). Поки їх немає —
   // форма ввічливо пропонує написати в Telegram/WhatsApp.
   // Альтернативи: Google Apps Script (CRM, automation/lead-intake) або Formspree/Web3Forms.
-  formEndpoint: '/api/lead',
+  formEndpoint: 'https://script.google.com/macros/s/AKfycbxrfdefbq69kkSHBeNH_44o63DEqc7CC8e1Xz_mMVPsd5pD1g6znfGMkux3uQFickng/exec',
 
   // Тільки для Web3Forms: access key. Для Formspree залиш порожнім.
   formAccessKey: '', // [MISSING якщо Web3Forms]
