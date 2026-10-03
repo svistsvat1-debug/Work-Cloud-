@@ -8,6 +8,7 @@ function doPost(e) {
   try {
     var d = JSON.parse(e.postData.contents);
     if (d.company) return out_({ ok: true });                 // антиспам (приховане поле)
+    if (!underLimit_()) return out_({ ok: false, error: 'rate_limited' }); // захист від флуду
 
     var name = clean_(d.name, 120), contact = clean_(d.contact, 160), message = clean_(d.message, 3000);
     var lang = ['en', 'uk', 'pl'].indexOf(d.language) > -1 ? d.language : 'en';
@@ -50,6 +51,15 @@ function detectType_(text) {
   if (/(автомат|automat|crm|follow|нагадуван|integrac|workflow)/i.test(t)) found.push('Автоматизація');
   if (/(сайт|лендинг|website|site|landing|strona|web)/i.test(t)) found.push('Сайт');
   return found.length ? found.join(', ') : 'Інше';
+}
+
+// Не більше 30 заявок за 10 хв загалом — реальні клієнти не впираються, а флуд відсікається.
+function underLimit_() {
+  var c = CacheService.getScriptCache(), k = 'l:' + Math.floor(Date.now() / 600000);
+  var n = Number(c.get(k) || 0);
+  if (n >= 30) return false;
+  c.put(k, String(n + 1), 900);
+  return true;
 }
 
 function clean_(v, max) {
