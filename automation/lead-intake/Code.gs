@@ -59,8 +59,9 @@ function doPost(e) {
       lock.releaseLock();
     }
 
-    // Сповіщення і лист не повинні "ламати" заявку — вона вже збережена в таблиці.
+    // Сповіщення і листи не повинні "ламати" заявку — вона вже збережена в таблиці.
     try { notifyTelegram_(newLeadText_(lead)); } catch (err) { console.error('Telegram: ' + err); }
+    try { notifyOwner_(lead); } catch (err) { console.error('Owner email: ' + err); }
     try { sendConfirmation_(lead); } catch (err) { console.error('Email: ' + err); }
 
     return json_({ ok: true });
@@ -193,6 +194,19 @@ function newLeadText_(lead) {
     '',
     'CRM: ' + SpreadsheetApp.getActiveSpreadsheet().getUrl()
   ].join('\n');
+}
+
+/* =========================================================
+   Лист тобі на пошту про кожну нову заявку
+   ========================================================= */
+
+function notifyOwner_(lead) {
+  // OWNER_EMAIL у Script Properties, або — за замовчуванням — пошта власника скрипта
+  var to = PropertiesService.getScriptProperties().getProperty('OWNER_EMAIL') || Session.getEffectiveUser().getEmail();
+  if (!to) return;
+  var opts = { to: to, subject: 'Flowbase — нова заявка: ' + lead.name, body: newLeadText_(lead), name: 'Flowbase' };
+  if (lead.email) opts.replyTo = lead.email; // відповідаєш клієнту прямо з пошти
+  MailApp.sendEmail(opts);
 }
 
 /* =========================================================
