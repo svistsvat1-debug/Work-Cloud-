@@ -4,10 +4,12 @@
  */
 window.FLOWBASE_CONFIG = {
   // Куди надсилати заявки з форми.
-  // Рекомендовано: наш Google Apps Script (automation/lead-intake) — заявка йде в CRM-таблицю,
-  // сповіщення в Telegram і лист-підтвердження клієнту. URL виду https://script.google.com/macros/s/.../exec
-  // Також підходить Formspree (https://formspree.io/f/xxxxxxx) або Web3Forms (https://api.web3forms.com/submit).
-  formEndpoint: '', // [MISSING]
+  // За замовчуванням — наша Cloudflare-функція "/api/lead" (site/functions/api/lead.js):
+  // заявка приходить одразу тобі на пошту. Треба лише додати ключ RESEND_API_KEY і LEAD_EMAIL
+  // у налаштуваннях Cloudflare Pages (див. docs/deploy-cloudflare.md). Поки їх немає —
+  // форма ввічливо пропонує написати в Telegram/WhatsApp.
+  // Альтернативи: Google Apps Script (CRM, automation/lead-intake) або Formspree/Web3Forms.
+  formEndpoint: '/api/lead',
 
   // Тільки для Web3Forms: access key. Для Formspree залиш порожнім.
   formAccessKey: '', // [MISSING якщо Web3Forms]

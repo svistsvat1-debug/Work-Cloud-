@@ -13,11 +13,12 @@
 | Пакети послуг і ціни | [MISSING] |
 | Домен сайту | [MISSING] (хостинг: Cloudflare Pages, тимчасова адреса `*.pages.dev`) |
 | CRM / booking інструменти | CRM v1: Google Таблиця + Apps Script (`automation/lead-intake/`). Booking — [MISSING] |
-| Сервіс для форми сайту | Власний Google Apps Script (код готовий, URL після публікації — [MISSING]) |
+| Сервіс для форми сайту | Cloudflare Pages Function `/api/lead` → лист на пошту через Resend (ключ `RESEND_API_KEY` + `LEAD_EMAIL` у Cloudflare — [MISSING], ~3 хв). Альтернатива — Apps Script CRM |
 | Посилання Telegram / WhatsApp | Telegram @svat_ceo · WhatsApp +48 535 979 089 |
 
 ## Записи
 
+- 2026-10-03 · Заявки з форми → одразу лист власнику на пошту через Cloudflare Pages Function `/api/lead` + Resend (безкоштовно), reply_to = клієнт · відвідувач просто тисне «Надіслати», власник відповідає з Gmail; без власного бекенд-сервера.
 - 2026-10-03 · Хостинг сайту — Cloudflare Pages з автодеплоєм з GitHub (output dir `site`, без збірки), заголовки безпеки в `site/_headers` · безкоштовно, швидко, оновлення сайту = push.
 - 2026-10-02 · Контакти на сайті: Telegram @svat_ceo, WhatsApp +48 535 979 089 (з готовим першим повідомленням мовою сайту) · зменшує бар'єр першого контакту.
 - 2026-10-02 · Заявки з сайту → Google Таблиця-CRM (статуси Новий / В роботі / Закрито) + Telegram-сповіщення + лист-підтвердження + щоденні нагадування і тижневий звіт, усе в одному Apps Script · безкоштовно, без API-ключів, листи з власного Gmail; Notion — пізніше, коли буде потреба.

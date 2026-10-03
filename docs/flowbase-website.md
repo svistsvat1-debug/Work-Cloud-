@@ -32,7 +32,7 @@
 
 | Поле | Статус | Що потрібно |
 |---|---|---|
-| `formEndpoint` | [MISSING] | URL нашого Google Apps Script з `automation/lead-intake/` (CRM + Telegram + лист клієнту, інструкція в README там). Альтернатива — Formspree / Web3Forms |
+| `formEndpoint` | ✅ `/api/lead` | Cloudflare-функція `site/functions/api/lead.js` → лист власнику через Resend. Треба додати `RESEND_API_KEY` і `LEAD_EMAIL` у Cloudflare (`docs/deploy-cloudflare.md`). Альтернативи — Apps Script CRM, Formspree |
 | `formAccessKey` | [MISSING, тільки для Web3Forms] | Access key з Web3Forms |
 | `telegramUrl` | ✅ | `https://t.me/svat_ceo` |
 | `whatsappUrl` | ✅ | `https://wa.me/48535979089` + готовий перший рядок повідомлення мовою сайту |

@@ -214,8 +214,10 @@
         return;
       }
 
-      if (!isUrl(cfg.formEndpoint)) {
-        // [MISSING] сервіс прийому заявок ще не підключений у config.js
+      // endpoint може бути повним URL (Formspree/Apps Script) або відносним шляхом
+      // нашої Cloudflare-функції (напр. "/api/lead")
+      var endpoint = cfg.formEndpoint;
+      if (!isUrl(endpoint) && !/^\//.test(endpoint)) {
         setFormStatus('form.notConfigured', 'error');
         return;
       }
@@ -237,18 +239,21 @@
       setFormStatus(null);
 
       // Google Apps Script не приймає CORS-preflight, тому туди шлемо JSON як text/plain
-      var isAppsScript = /script\.google\.com/.test(cfg.formEndpoint);
-      fetch(cfg.formEndpoint, {
+      var isAppsScript = /script\.google\.com/.test(endpoint);
+      fetch(endpoint, {
         method: 'POST',
         headers: isAppsScript
           ? { 'Content-Type': 'text/plain;charset=utf-8' }
           : { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify(payload)
       }).then(function (res) {
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        return res.json().catch(function () { return {}; });
-      }).then(function (result) {
-        if (result && result.ok === false) throw new Error(result.error || 'rejected');
+        return res.json().catch(function () { return {}; }).then(function (result) {
+          return { ok: res.ok, result: result || {} };
+        });
+      }).then(function (r) {
+        // бекенд ще без ключа/пошти → м'яко пропонуємо месенджер, а не "помилка"
+        if (r.result.error === 'not_configured') { setFormStatus('form.notConfigured', 'error'); return; }
+        if (!r.ok || r.result.ok === false) throw new Error(r.result.error || 'rejected');
         form.reset();
         setFormStatus('form.success', 'success');
       }).catch(function () {
