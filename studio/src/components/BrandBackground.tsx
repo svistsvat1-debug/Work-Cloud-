@@ -7,7 +7,7 @@ export const BrandBackground: React.FC<{glow?: number; flipGlow?: boolean}> = ({
   const f = useCurrentFrame();
   const gx = 30 + Math.sin(f / 70) * 12;
   const gy = (flipGlow ? 70 : 28) + Math.cos(f / 90) * 8;
-  const grain = Math.floor(f / 2);
+  const grain = Math.floor(f / 4); // slower grain keeps the bitrate sane
   return (
     <AbsoluteFill style={{backgroundColor: C.bg}}>
       <AbsoluteFill
@@ -27,7 +27,7 @@ export const BrandBackground: React.FC<{glow?: number; flipGlow?: boolean}> = ({
           WebkitMaskImage: 'radial-gradient(ellipse at 50% 45%, black 20%, transparent 75%)',
         }}
       />
-      <AbsoluteFill style={{opacity: 0.07, mixBlendMode: 'screen'}}>
+      <AbsoluteFill style={{opacity: 0.05, mixBlendMode: 'screen'}}>
         <svg width="100%" height="100%">
           <filter id="grain">
             <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed={Math.floor(random(grain) * 1000)} />

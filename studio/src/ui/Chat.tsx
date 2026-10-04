@@ -135,14 +135,16 @@ export const TypingDots: React.FC<{frame: number}> = ({frame}) => (
 );
 
 /** A result card in the AI answer list. */
-export const BizCard: React.FC<{rank: number | string; name: string; meta: string; you?: boolean; ghost?: boolean; style?: React.CSSProperties}> = ({
-  rank,
-  name,
-  meta,
-  you,
-  ghost,
-  style,
-}) => (
+export const BizCard: React.FC<{
+  rank: number | string;
+  name: string;
+  meta: string;
+  you?: boolean;
+  ghost?: boolean;
+  /** ghost card called out in yellow */
+  accent?: boolean;
+  style?: React.CSSProperties;
+}> = ({rank, name, meta, you, ghost, accent, style}) => (
   <div
     style={{
       display: 'flex',
@@ -151,7 +153,7 @@ export const BizCard: React.FC<{rank: number | string; name: string; meta: strin
       padding: '24px 28px',
       borderRadius: 28,
       background: you ? 'rgba(255,230,0,0.1)' : ghost ? 'transparent' : '#1C1C1C',
-      border: you ? `3px solid ${C.yellow}` : ghost ? `3px dashed ${C.dim}` : `2px solid ${C.line}`,
+      border: you ? `3px solid ${C.yellow}` : ghost ? `3px dashed ${accent ? C.yellow : C.dim}` : `2px solid ${C.line}`,
       boxShadow: you ? '0 0 60px rgba(255,230,0,0.35)' : undefined,
       fontFamily: UI,
       ...style,
@@ -163,8 +165,8 @@ export const BizCard: React.FC<{rank: number | string; name: string; meta: strin
         height: 64,
         borderRadius: 18,
         background: you ? C.yellow : ghost ? 'transparent' : '#2A2A2A',
-        border: ghost ? `3px dashed ${C.dim}` : undefined,
-        color: you ? '#000' : C.white,
+        border: ghost ? `3px dashed ${accent ? C.yellow : C.dim}` : undefined,
+        color: you ? '#000' : accent ? C.yellow : C.white,
         fontSize: 34,
         fontWeight: 800,
         display: 'flex',
@@ -175,8 +177,8 @@ export const BizCard: React.FC<{rank: number | string; name: string; meta: strin
       {rank}
     </div>
     <div style={{flex: 1}}>
-      <div style={{fontSize: 38, fontWeight: 700, color: ghost ? C.gray : C.white}}>{name}</div>
-      <div style={{fontSize: 28, fontWeight: 500, color: ghost ? C.dim : C.gray, marginTop: 4, display: 'flex', alignItems: 'center', gap: 6}}>
+      <div style={{fontSize: 38, fontWeight: 700, color: ghost && !accent ? C.gray : C.white}}>{name}</div>
+      <div style={{fontSize: 28, fontWeight: 500, color: accent ? C.yellow : ghost ? C.dim : C.gray, marginTop: 4, display: 'flex', alignItems: 'center', gap: 6}}>
         {!ghost && [0, 1, 2, 3, 4].map((i) => <Star key={i} size={24} color={you ? C.yellow : '#BDBDBD'} />)}
         <span style={{marginLeft: ghost ? 0 : 10}}>{meta}</span>
       </div>

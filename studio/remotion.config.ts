@@ -7,5 +7,5 @@ Config.setBrowserExecutable(
 Config.setVideoImageFormat('jpeg');
 Config.setJpegQuality(95);
 Config.setCodec('h264');
-Config.setCrf(16);
+Config.setCrf(12); // high-quality intermediate; final encode happens in tools/finalize.py
 Config.setPixelFormat('yuv420p');

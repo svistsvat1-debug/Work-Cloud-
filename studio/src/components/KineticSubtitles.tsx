@@ -43,14 +43,14 @@ export const KineticSubtitles: React.FC<{words: Word[]; centerY?: number}> = ({w
           flexWrap: 'wrap',
           justifyContent: 'center',
           alignItems: 'center',
-          columnGap: size * 0.26,
+          columnGap: size * 0.34,
           rowGap: 0,
         }}
       >
         {chunk.words.map((w, i) => {
           const wf = frame - Math.round((w.start - 0.03) * fps);
           const visible = wf >= 0;
-          const pop = spring({frame: wf, fps, config: {damping: 9, stiffness: 300, mass: 0.55}});
+          const pop = spring({frame: wf, fps, config: {damping: 12, stiffness: 300, mass: 0.55}});
           const accent = w.hl || w.emph;
           const base = w.emph ? 1.22 : w.hl ? 1.1 : 1;
           const scale = visible ? interpolate(pop, [0, 1], [0.45, 1]) : 0;

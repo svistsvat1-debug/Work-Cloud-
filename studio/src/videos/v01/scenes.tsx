@@ -84,7 +84,8 @@ export const GhostSlot: React.FC = () => {
           name="Your business?"
           meta="searching…"
           ghost
-          style={{opacity: blink, transform: 'scale(1.04)', borderColor: C.yellow, boxShadow: '0 0 50px rgba(255,230,0,0.25)'}}
+          accent
+          style={{opacity: blink, transform: 'scale(1.06)', boxShadow: '0 0 60px rgba(255,230,0,0.3)'}}
         />
       </div>
     </Stage>
