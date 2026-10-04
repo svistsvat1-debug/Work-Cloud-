@@ -4,8 +4,8 @@ export type Chunk = {words: Word[]; start: number; end: number};
 
 const chars = (ws: Word[]) => ws.reduce((n, w) => n + display(w.text).length, 0);
 
-/** Subtitle display form: uppercase, sentence punctuation removed (keeps ? ! '). */
-export const display = (text: string) => text.toUpperCase().replace(/[.,;:…]/g, '');
+/** Subtitle display form: uppercase, sentence punctuation and double quotes removed (keeps ? ! '). */
+export const display = (text: string) => text.toUpperCase().replace(/[.,;:"\u2026\u201c\u201d]/g, '');
 
 /**
  * Group words into 1-4 word subtitle chunks.

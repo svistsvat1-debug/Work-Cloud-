@@ -5,6 +5,7 @@ Usage: python3 tools/tts_kokoro.py videos/01-ask-chatgpt
 
 Reads  <video>/script.json
 Writes <video>/voice.wav, <video>/voice.mp3, <video>/timestamps.json
+(words for subtitles, phones [ipa, start, end] for avatar lip-sync)
 
 Script markup inside segment text:
   [word ...]  highlighted keyword(s)  -> yellow in subtitles
@@ -53,26 +54,23 @@ def ensure_models():
 
 
 def parse_segment(text):
-    """Split markup text into word dicts: raw, hl, emph, brk."""
+    """Split markup text into word dicts: raw, hl, emph, brk.
+
+    Brackets may sit next to punctuation or quotes, e.g. [Instagram.]" or "[Hi]".
+    """
     words, hl, emph, brk = [], False, False, False
     for tok in text.split():
         if tok == "|":
             brk = True
             continue
-        w_hl, w_emph = hl, emph
-        if tok.startswith("["):
-            hl = w_hl = True
-            tok = tok[1:]
-        if tok.startswith("{"):
-            emph = w_emph = True
-            tok = tok[1:]
-        if tok.endswith("]"):
-            hl = False
-            tok = tok[:-1]
-        if tok.endswith("}"):
-            emph = False
-            tok = tok[:-1]
-        words.append({"raw": tok, "hl": w_hl, "emph": w_emph, "brk": brk})
+        opens_hl, closes_hl = "[" in tok, "]" in tok
+        opens_em, closes_em = "{" in tok, "}" in tok
+        hl = hl or opens_hl
+        emph = emph or opens_em
+        raw = re.sub(r"[\[\]{}]", "", tok)
+        words.append({"raw": raw, "hl": hl, "emph": emph, "brk": brk})
+        hl = hl and not closes_hl
+        emph = emph and not closes_em
         brk = False
     return words
 
@@ -131,7 +129,9 @@ def synth_segment(kokoro, session, words, voice, speed, say):
         s, e = int(cum[ti + 1]), int(cum[ti + 2])
         spans[wi][0] = s if spans[wi][0] is None else min(spans[wi][0], s)
         spans[wi][1] = e if spans[wi][1] is None else max(spans[wi][1], e)
-    return audio.astype(np.float32), spans
+    # per-phoneme timing (for avatar lip-sync); spaces are gaps
+    phones = [(c, int(cum[ti + 1]), int(cum[ti + 2])) for ti, c in enumerate(chars) if c != " "]
+    return audio.astype(np.float32), spans, phones
 
 
 def fade(x, n_in, n_out):
@@ -151,10 +151,10 @@ def main(video_dir):
     voice, speed, say = cfg["voice"], cfg.get("speed", 1.0), cfg.get("say", {})
 
     t = cfg.get("leadIn", 0.0)
-    pieces, out_words, out_segs = [], [], []
+    pieces, out_words, out_segs, out_phones = [], [], [], []
     for si, seg in enumerate(cfg["segments"]):
         words = parse_segment(seg["text"])
-        audio, spans = synth_segment(kokoro, session, words, voice, speed, say)
+        audio, spans, phones = synth_segment(kokoro, session, words, voice, speed, say)
         start = max(0, spans[0][0] - int(0.02 * SR))
         end = min(len(audio), spans[-1][1] + int(0.09 * SR))
         clip = fade(audio[start:end].copy(), int(0.004 * SR), int(0.015 * SR))
@@ -170,6 +170,9 @@ def main(video_dir):
                 "emph": w["emph"],
                 "brk": w["brk"],
             })
+        for c, ps, pe in phones:
+            if start <= ps < end:
+                out_phones.append([c, round(offset + ps / SR, 3), round(offset + min(pe, end) / SR, 3)])
         seg_end = t + len(clip) / SR
         out_segs.append({
             "index": si,
@@ -199,6 +202,7 @@ def main(video_dir):
         "duration": round(total, 3),
         "segments": out_segs,
         "words": out_words,
+        "phones": out_phones,
     }, indent=1))
     print(f"done: {total:.2f}s, {len(out_words)} words")
 
