@@ -1,10 +1,18 @@
 import React from 'react';
-import {AbsoluteFill, Sequence, useCurrentFrame} from 'remotion';
+import {AbsoluteFill, Easing, interpolate, Sequence, useCurrentFrame} from 'remotion';
 import {GlitchTransition} from './GlitchTransition';
 import {WhipTransition} from './WhipTransition';
 import {ZoomTransition} from './ZoomTransition';
 
-export type TransitionType = 'zoomIn' | 'zoomOut' | 'glitch' | 'whipLeft' | 'whipRight' | 'cut';
+export type TransitionType = 'zoomIn' | 'zoomOut' | 'glitch' | 'whipLeft' | 'whipRight' | 'cut' | 'soft' | 'slide';
+
+/** Calm entries for slower-paced videos. */
+const Soft: React.FC<{kind: 'soft' | 'slide'; children: React.ReactNode}> = ({kind, children}) => {
+  const f = useCurrentFrame();
+  const p = interpolate(f, [0, 9], [0, 1], {extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic)});
+  const transform = kind === 'soft' ? `scale(${1.05 - 0.05 * p})` : `translateX(${(1 - p) * 90}px)`;
+  return <AbsoluteFill style={{opacity: 0.25 + 0.75 * p, transform}}>{children}</AbsoluteFill>;
+};
 
 const PushIn: React.FC<{amount: number; duration: number; children: React.ReactNode}> = ({amount, duration, children}) => {
   const f = useCurrentFrame();
@@ -32,6 +40,7 @@ export const Shot: React.FC<{
   if (transition === 'zoomOut') body = <ZoomTransition dir="out">{inner}</ZoomTransition>;
   if (transition === 'whipLeft') body = <WhipTransition from="left">{inner}</WhipTransition>;
   if (transition === 'whipRight') body = <WhipTransition from="right">{inner}</WhipTransition>;
+  if (transition === 'soft' || transition === 'slide') body = <Soft kind={transition}>{inner}</Soft>;
   if (transition === 'glitch' || hits.length) {
     body = (
       <GlitchTransition hits={hits} duration={transition === 'glitch' ? 8 : 6}>

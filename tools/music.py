@@ -7,6 +7,7 @@ Royalty-free by construction (pure code). Arrangement follows script.json "music
   bpm            tempo
   breakFromSeg   segment index where the groove drops into a filtered breakdown
   dropSeg        segment index where the full groove returns (lands on a downbeat)
+  energy         optional 0..1, softer drums for calmer videos (default 1)
 The beat grid is phase-locked so a bar starts exactly on the drop.
 """
 import json
@@ -162,7 +163,9 @@ def main(video_dir):
 
     pads = block_filter(pads, cutoff)
     plucks = block_filter(plucks, cutoff)
-    mix = drums + (bass + pads * 0.9 + plucks) * pump
+    energy = cfg.get("energy", 1.0)  # <1 = calmer: softer drums, gentler pump
+    pump = 1 - (1 - pump) * energy
+    mix = drums * energy + (bass + pads * 0.9 + plucks) * pump
     mix = np.tanh(1.2 * mix) / np.tanh(1.2)
     fade = int(0.6 * SR)
     mix[-fade:] *= np.linspace(1, 0, fade)

@@ -12,11 +12,12 @@ const sizeFor = (n: number) => Math.max(76, Math.min(132, 1000 / n));
  * - 1-4 words per chunk, each word pops in on its exact start time
  * - highlighted words: yellow + scaled; emphasis words: yellow + bigger + shake
  */
-export type SubtitleTheme = 'dark' | 'yellow';
+export type SubtitleTheme = 'dark' | 'yellow' | 'light';
 
 /**
  * dark:   white words, yellow accents, black stroke (default, for dark backgrounds)
  * yellow: black words, white accents with black stroke (for the Yellow Punch style)
+ * light:  near-black words, accents on a yellow highlighter (for the Clean Light style)
  */
 export const KineticSubtitles: React.FC<{words: Word[]; centerY?: number; theme?: SubtitleTheme}> = ({words, centerY = 1270, theme = 'dark'}) => {
   const frame = useCurrentFrame();
@@ -78,11 +79,17 @@ export const KineticSubtitles: React.FC<{words: Word[]; centerY?: number; theme?
                 fontSize: size * base,
                 lineHeight: 1.08,
                 letterSpacing: '-0.01em',
-                color: theme === 'yellow' ? (accent ? C.white : '#000') : accent ? C.yellow : C.white,
-                WebkitTextStroke: theme === 'yellow' && !accent ? '0px #000' : `${Math.round(size * base * 0.1)}px #000`,
+                color: theme === 'yellow' ? (accent ? C.white : '#000') : theme === 'light' ? '#111' : accent ? C.yellow : C.white,
+                WebkitTextStroke:
+                  theme === 'light' || (theme === 'yellow' && !accent) ? '0px #000' : `${Math.round(size * base * 0.1)}px #000`,
+                background: theme === 'light' && accent ? `linear-gradient(transparent 14%, ${C.yellow} 14%, ${C.yellow} 90%, transparent 90%)` : undefined,
+                padding: theme === 'light' && accent ? '0 0.12em' : undefined,
+                borderRadius: theme === 'light' && accent ? 10 : undefined,
                 paintOrder: 'stroke fill',
                 textShadow:
-                  theme === 'yellow'
+                  theme === 'light'
+                    ? '0 4px 0 rgba(255,255,255,0.9)'
+                    : theme === 'yellow'
                     ? accent
                       ? '0 8px 0 #000'
                       : '0 5px 0 rgba(255,255,255,0.55)'

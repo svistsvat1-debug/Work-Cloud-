@@ -3,7 +3,7 @@ import {C} from '../brand';
 import type {AvatarState} from './useAvatar';
 
 /** "Bolt": dark robot head with a screen face; yellow LED eyes and mouth. */
-export const RobotAvatar: React.FC<{s: AvatarState; width?: number}> = ({s, width = 600}) => {
+export const RobotAvatar: React.FC<{s: AvatarState; width?: number; shadow?: number}> = ({s, width = 600, shadow = 0.5}) => {
   const id = useId().replace(/:/g, '');
   const {mouth, blink, brow, nod, t, speaking} = s;
   const bob = Math.sin(t * 2 * Math.PI * 0.5) * 6 + (speaking ? Math.sin(t * 2 * Math.PI * 2.1) * 2.5 : 0) + nod * 8;
@@ -29,7 +29,7 @@ export const RobotAvatar: React.FC<{s: AvatarState; width?: number}> = ({s, widt
           </feMerge>
         </filter>
       </defs>
-      <ellipse cx="300" cy="712" rx="230" ry="16" fill="#000" opacity="0.5" />
+      <ellipse cx="300" cy="712" rx="230" ry="16" fill="#000" opacity={shadow} />
       <path d="M50 720 C 70 585, 180 540, 300 540 C 420 540, 530 585, 550 720 Z" fill="#161616" stroke="#2B2B2B" strokeWidth="4" />
       <rect x="282" y="612" width="36" height="36" transform="rotate(45 300 630)" fill={C.yellow} />
       <rect x="250" y="470" width="100" height="90" rx="24" fill="#1E1E1E" stroke="#2B2B2B" strokeWidth="4" />
