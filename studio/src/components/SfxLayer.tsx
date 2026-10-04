@@ -12,7 +12,9 @@ export type SfxName =
   | 'impact'
   | 'glitch'
   | 'check'
-  | 'error';
+  | 'error'
+  | 'buzz'
+  | 'notify';
 
 /** Default levels keep every effect clearly under the voice (voice = 1.0). */
 const LEVEL: Record<SfxName, number> = {
@@ -27,6 +29,8 @@ const LEVEL: Record<SfxName, number> = {
   glitch: 0.24,
   check: 0.26,
   error: 0.18,
+  buzz: 0.3,
+  notify: 0.24,
 };
 
 export type SfxCue = {at: number; sfx: SfxName; gain?: number};

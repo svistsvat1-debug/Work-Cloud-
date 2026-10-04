@@ -92,3 +92,33 @@ export const ImageIcon: React.FC<P> = (p) => (
     <path d="M21 16l-5-5-9 9" />
   </Svg>
 );
+export const Bolt: React.FC<P> = (p) => (
+  <Svg {...p} fill>
+    <path d="M13.5 2L4 13.5h6.5L9.5 22 20 9.5h-6.6z" />
+  </Svg>
+);
+export const CalendarIcon: React.FC<P> = (p) => (
+  <Svg {...p}>
+    <rect x="3.5" y="5" width="17" height="15.5" rx="3" />
+    <path d="M3.5 10h17M8 3v4M16 3v4" />
+  </Svg>
+);
+export const Mail: React.FC<P> = (p) => (
+  <Svg {...p}>
+    <rect x="3" y="5" width="18" height="14" rx="2.5" />
+    <path d="M3.5 6.5l8.5 6.5 8.5-6.5" />
+  </Svg>
+);
+export const Kanban: React.FC<P> = (p) => (
+  <Svg {...p}>
+    <rect x="3.5" y="4" width="4.5" height="16" rx="1.5" />
+    <rect x="9.75" y="4" width="4.5" height="10" rx="1.5" />
+    <rect x="16" y="4" width="4.5" height="13" rx="1.5" />
+  </Svg>
+);
+export const Mic: React.FC<P> = (p) => (
+  <Svg {...p}>
+    <rect x="9" y="3" width="6" height="11" rx="3" />
+    <path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21" />
+  </Svg>
+);

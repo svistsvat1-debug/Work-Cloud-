@@ -1,0 +1,27 @@
+{
+  "id": "02-hold-it-down",
+  "voice": "am_michael",
+  "speed": 1.22,
+  "leadIn": 0.08,
+  "tail": 0.9,
+  "say": {
+    "9PM?": "nine P M?",
+    "CRM": "C R M"
+  },
+  "music": {"bpm": 124, "breakFromSeg": 9, "dropSeg": 11},
+  "segments": [
+    { "text": "Owner's {away.}", "pause": 0.08 },
+    { "text": "Someone's gotta [hold it down.]", "pause": 0.26 },
+    { "text": "New lead at [9PM?]", "pause": 0.04 },
+    { "text": "[Replied] in seconds.", "pause": 0.16 },
+    { "text": "Booking request?", "pause": 0.04 },
+    { "text": "{Confirmed.}", "pause": 0.16 },
+    { "text": "No reply in [two days?]", "pause": 0.04 },
+    { "text": "[Follow-up] sent.", "pause": 0.16 },
+    { "text": "Every lead, | in the [CRM.]", "pause": 0.24 },
+    { "text": "So who's holding it down?", "pause": 0.2 },
+    { "text": "Not an employee.", "pause": 0.1 },
+    { "text": "A {system.}", "pause": 0.3 },
+    { "text": "[Follow] for more.", "pause": 0 }
+  ]
+}

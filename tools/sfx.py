@@ -148,6 +148,30 @@ def error():
     return norm(x * gate, 0.7)
 
 
+def buzz():
+    """Phone vibration: two short low rumbles."""
+    out = np.zeros(int(0.5 * SR))
+    for start in (0.0, 0.22):
+        tt = t(0.16)
+        x = signal.square(2 * np.pi * 165 * tt) * 0.6 + np.sin(2 * np.pi * 82 * tt)
+        x = lp(x, 900) * np.sin(np.pi * tt / 0.16) ** 0.6
+        s = int(start * SR)
+        out[s:s + len(x)] += x
+    return norm(out, 0.8)
+
+
+def notify():
+    """Soft glassy two-note chime (original, not a system sound)."""
+    out = np.zeros(int(0.6 * SR))
+    for f, d in ((1567.98, 0.0), (2093.0, 0.09)):
+        tt = t(0.45)
+        tone = (np.sin(2 * np.pi * f * tt) + 0.25 * np.sin(2 * np.pi * 2.01 * f * tt)) * env_exp(len(tt), 0.11)
+        tone[:96] *= np.linspace(0, 1, 96)
+        s = int(d * SR)
+        out[s:s + len(tt)] += tone[: len(out) - s]
+    return norm(space(out, 0.2), 0.7)
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     lib = {
@@ -162,6 +186,8 @@ def main():
         "glitch": glitch(),
         "check": check(),
         "error": error(),
+        "buzz": buzz(),
+        "notify": notify(),
     }
     for name, x in lib.items():
         sf.write(OUT / f"{name}.wav", x.astype(np.float32), SR, subtype="PCM_16")

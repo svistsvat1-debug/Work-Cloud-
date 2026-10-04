@@ -1,0 +1,465 @@
+{
+ "engine": "kokoro-v1.0:am_michael@1.22",
+ "sampleRate": 24000,
+ "duration": 20.69,
+ "segments": [
+  {
+   "index": 0,
+   "text": "Owner's away.",
+   "start": 0.08,
+   "end": 1.19
+  },
+  {
+   "index": 1,
+   "text": "Someone's gotta hold it down.",
+   "start": 1.27,
+   "end": 3.08
+  },
+  {
+   "index": 2,
+   "text": "New lead at 9PM?",
+   "start": 3.34,
+   "end": 5.0
+  },
+  {
+   "index": 3,
+   "text": "Replied in seconds.",
+   "start": 5.04,
+   "end": 6.5
+  },
+  {
+   "index": 4,
+   "text": "Booking request?",
+   "start": 6.66,
+   "end": 7.845
+  },
+  {
+   "index": 5,
+   "text": "Confirmed.",
+   "start": 7.885,
+   "end": 8.82
+  },
+  {
+   "index": 6,
+   "text": "No reply in two days?",
+   "start": 8.98,
+   "end": 10.715
+  },
+  {
+   "index": 7,
+   "text": "Follow-up sent.",
+   "start": 10.755,
+   "end": 11.915
+  },
+  {
+   "index": 8,
+   "text": "Every lead, in the CRM.",
+   "start": 12.075,
+   "end": 14.01
+  },
+  {
+   "index": 9,
+   "text": "So who's holding it down?",
+   "start": 14.25,
+   "end": 15.81
+  },
+  {
+   "index": 10,
+   "text": "Not an employee.",
+   "start": 16.01,
+   "end": 17.295
+  },
+  {
+   "index": 11,
+   "text": "A system.",
+   "start": 17.395,
+   "end": 18.305
+  },
+  {
+   "index": 12,
+   "text": "Follow for more.",
+   "start": 18.605,
+   "end": 19.79
+  }
+ ],
+ "words": [
+  {
+   "text": "Owner's",
+   "start": 0.1,
+   "end": 0.425,
+   "seg": 0,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "away.",
+   "start": 0.475,
+   "end": 1.1,
+   "seg": 0,
+   "hl": false,
+   "emph": true,
+   "brk": false
+  },
+  {
+   "text": "Someone's",
+   "start": 1.29,
+   "end": 1.64,
+   "seg": 1,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "gotta",
+   "start": 1.69,
+   "end": 1.99,
+   "seg": 1,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "hold",
+   "start": 2.04,
+   "end": 2.265,
+   "seg": 1,
+   "hl": true,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "it",
+   "start": 2.29,
+   "end": 2.34,
+   "seg": 1,
+   "hl": true,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "down.",
+   "start": 2.39,
+   "end": 2.99,
+   "seg": 1,
+   "hl": true,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "New",
+   "start": 3.36,
+   "end": 3.51,
+   "seg": 2,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "lead",
+   "start": 3.56,
+   "end": 3.735,
+   "seg": 2,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "at",
+   "start": 3.785,
+   "end": 3.885,
+   "seg": 2,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "9PM?",
+   "start": 3.935,
+   "end": 4.91,
+   "seg": 2,
+   "hl": true,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "Replied",
+   "start": 5.06,
+   "end": 5.51,
+   "seg": 3,
+   "hl": true,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "in",
+   "start": 5.56,
+   "end": 5.66,
+   "seg": 3,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "seconds.",
+   "start": 5.735,
+   "end": 6.41,
+   "seg": 3,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "Booking",
+   "start": 6.68,
+   "end": 6.98,
+   "seg": 4,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "request?",
+   "start": 7.03,
+   "end": 7.755,
+   "seg": 4,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "Confirmed.",
+   "start": 7.905,
+   "end": 8.73,
+   "seg": 5,
+   "hl": false,
+   "emph": true,
+   "brk": false
+  },
+  {
+   "text": "No",
+   "start": 9.0,
+   "end": 9.2,
+   "seg": 6,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "reply",
+   "start": 9.25,
+   "end": 9.65,
+   "seg": 6,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "in",
+   "start": 9.675,
+   "end": 9.775,
+   "seg": 6,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "two",
+   "start": 9.825,
+   "end": 9.95,
+   "seg": 6,
+   "hl": true,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "days?",
+   "start": 10.0,
+   "end": 10.625,
+   "seg": 6,
+   "hl": true,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "Follow-up",
+   "start": 10.775,
+   "end": 11.225,
+   "seg": 7,
+   "hl": true,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "sent.",
+   "start": 11.3,
+   "end": 11.825,
+   "seg": 7,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "Every",
+   "start": 12.095,
+   "end": 12.345,
+   "seg": 8,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "lead,",
+   "start": 12.395,
+   "end": 12.695,
+   "seg": 8,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "in",
+   "start": 12.745,
+   "end": 12.82,
+   "seg": 8,
+   "hl": false,
+   "emph": false,
+   "brk": true
+  },
+  {
+   "text": "the",
+   "start": 12.845,
+   "end": 12.895,
+   "seg": 8,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "CRM.",
+   "start": 12.97,
+   "end": 13.92,
+   "seg": 8,
+   "hl": true,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "So",
+   "start": 14.27,
+   "end": 14.37,
+   "seg": 9,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "who's",
+   "start": 14.42,
+   "end": 14.595,
+   "seg": 9,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "holding",
+   "start": 14.645,
+   "end": 14.97,
+   "seg": 9,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "it",
+   "start": 14.995,
+   "end": 15.07,
+   "seg": 9,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "down?",
+   "start": 15.12,
+   "end": 15.72,
+   "seg": 9,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "Not",
+   "start": 16.03,
+   "end": 16.205,
+   "seg": 10,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "an",
+   "start": 16.23,
+   "end": 16.28,
+   "seg": 10,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "employee.",
+   "start": 16.305,
+   "end": 17.205,
+   "seg": 10,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "A",
+   "start": 17.415,
+   "end": 17.465,
+   "seg": 11,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "system.",
+   "start": 17.54,
+   "end": 18.215,
+   "seg": 11,
+   "hl": false,
+   "emph": true,
+   "brk": false
+  },
+  {
+   "text": "Follow",
+   "start": 18.625,
+   "end": 18.95,
+   "seg": 12,
+   "hl": true,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "for",
+   "start": 19.0,
+   "end": 19.1,
+   "seg": 12,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "more.",
+   "start": 19.15,
+   "end": 19.7,
+   "seg": 12,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  }
+ ]
+}
