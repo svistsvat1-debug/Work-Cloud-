@@ -1,6 +1,6 @@
 # TikTok — контент-план, місяць 1 (30 днів, 25 відео) · v2
 
-> Статус: **v2 НА ЗАТВЕРДЖЕННЯ** (v1 на 18 відео затверджено 2026-10-04, #01 вже зроблено).
+> Статус: **v2 ЗАТВЕРДЖЕНО** 2026-10-04. Готові: #01, #02.
 > Зміни v2 від власника: 25 відео/місяць · кожне 3-тє відео веде на наш сайт · більше різних стилів і форматів (#01 — еталон якості).
 > Трекер у Notion (оновлюється після кожного готового відео): [TikTok контент-план · місяць 1](https://app.notion.com/p/3ef266afb185816ea4abfdd3d8e9548c)
 > Бриф: `docs/TIKTOK_BRIEF.md`. Мова відео — English. Day 1 = 2026-10-04.
@@ -35,7 +35,7 @@
 | # | Day | Pillar | Style · Format | Hook (first 2 sec) | Topic & angle | 1-line script summary | CTA | Length |
 |---|---|---|---|---|---|---|---|---|
 | 1 | 1 | AI & automation | DN · explainer | "Ask ChatGPT who to hire. Are you there?" | AI recommends only businesses whose site is clear | ✅ ГОТОВО — `videos/01-ask-chatgpt/` | Follow | 30s |
-| 2 | 2 | Trend-jacking | PN · notification story | "Owner's away. Someone's gotta hold it down." | "Someone's gotta hold it down" (Oct 2026), the "someone" is an automation | Lock screen fills with alerts: new lead → auto-replied → booked → follow-up sent → reveal: it's a system | Follow | 15–20s |
+| 2 | 2 | Trend-jacking | PN · notification story | "Owner's away. Someone's gotta hold it down." | "Someone's gotta hold it down" (Oct 2026), the "someone" is an automation | ✅ ГОТОВО — `videos/02-hold-it-down/` | Follow | 21s |
 | 3 | 3 | Pain points | YP · problem → fix | "Your contact form is where leads die." | Form → unchecked inbox → lead goes cold | Lead buried under newsletters → no reply → books a competitor → fix: instant alert + auto-reply + CRM → "We build this. Link in bio." | **SITE** | 20–25s |
 | 4 | 4 | Myths & mistakes | CL · myth vs fact split | "'I don't need a website. I have Instagram.'" | You rent followers, you own your site | MYTH / FACT cards: algorithm decides reach, DMs get lost, no booking → site = place you own that turns attention into leads | Follow | 25s |
 | 5 | 5 | Before → After | RW→DN · split slider | "This site was losing clients. Watch." | Concept redesign of a fictional cleaning company ("Concept" label) | Retro site → slider drags → fixes pop one by one: headline, one CTA, booking, mobile-first | Follow | 20–25s |
