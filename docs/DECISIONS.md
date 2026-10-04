@@ -17,7 +17,7 @@
 | CRM / booking інструменти | [MISSING] — варіанти в STRATEGY §7 |
 | TikTok: мова, формат, стиль, стек | ПРИЙНЯТО власником (бриф `TIKTOK_BRIEF.md`): EN, 9:16 faceless, dark + #FFE600, Remotion + FFmpeg |
 | TikTok контент-план, місяць 1 | v2 НА ЗАТВЕРДЖЕННЯ: 25 відео, кожне 3-тє з CTA на сайт, мікс 7 стилів (`TIKTOK_CONTENT_PLAN_M1.md`); #01 готове |
-| TikTok трекер (Google Sheets) | [TikTok контент-план · місяць 1](https://docs.google.com/spreadsheets/d/1NzLkndDY6ezbbPx3YnVtODp1HoemxEDnzH5sjihHpyk/edit) — після кожного готового відео: статус, факт. тривалість, файли, caption; після публікації — метрики. Для оновлень потрібен конектор Google Sheets: [MISSING] |
+| TikTok трекер | **Notion:** [TikTok контент-план · місяць 1](https://app.notion.com/p/3ef266afb185816ea4abfdd3d8e9548c) (база «Відео»: таблиця, дошка за статусом, календар). Після кожного готового відео Claude оновлює запис: статус, факт. тривалість, файли, caption; після публікації — метрики. Стара копія в Google Sheets більше не оновлюється. |
 | TikTok: озвучка / музика / SFX | Тимчасово: голос Kokoro (open-source, локально, `am_michael`); музика й SFX синтезуються кодом (royalty-free). Ціль — ElevenLabs: [MISSING] доступ + voice ID |
 
 ## Відкриті рішення — потрібні від власника
@@ -37,6 +37,7 @@
 
 ## Записи
 
+- 2026-10-04 · Трекер контент-плану перенесено в Notion ([сторінка](https://app.notion.com/p/3ef266afb185816ea4abfdd3d8e9548c)) за рішенням власника · Notion-конектор дає оновлювати записи; Google Sheets-версія лишається як знімок і не оновлюється.
 - 2026-10-04 · Створено трекер контент-плану в Google Sheets ([посилання](https://docs.google.com/spreadsheets/d/1NzLkndDY6ezbbPx3YnVtODp1HoemxEDnzH5sjihHpyk/edit)) · власник хоче бачити прогрес у таблиці; генерується з плану скриптом `tools/build_plan_sheet.py`.
 - 2026-10-04 · Власник: 25 TikTok-відео/місяць, кожне 3-тє веде на сайт, більше різних стилів (основа — якість #01) · план переписано у v2, зміни внесено в `TIKTOK_BRIEF.md`.
 - 2026-10-04 · План TikTok M1 затверджено; відео #01 «Ask ChatGPT who to hire» зроблено (`videos/01-ask-chatgpt/`) · студія на Remotion + FFmpeg (`studio/`, `tools/`), озвучка Kokoro до появи доступу до ElevenLabs, музика/SFX — власний синтез без ліцензійних ризиків.
