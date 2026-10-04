@@ -172,6 +172,14 @@ def notify():
     return norm(space(out, 0.2), 0.7)
 
 
+def beep():
+    """Monitor flatline beep."""
+    tt = t(0.9)
+    x = np.sin(2 * np.pi * 988 * tt) + 0.2 * np.sin(2 * np.pi * 1976 * tt)
+    x *= np.minimum(1, tt / 0.01) * np.minimum(1, (0.9 - tt) / 0.08)
+    return norm(x, 0.6)
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     lib = {
@@ -188,6 +196,7 @@ def main():
         "error": error(),
         "buzz": buzz(),
         "notify": notify(),
+        "beep": beep(),
     }
     for name, x in lib.items():
         sf.write(OUT / f"{name}.wav", x.astype(np.float32), SR, subtype="PCM_16")

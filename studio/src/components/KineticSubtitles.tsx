@@ -12,7 +12,13 @@ const sizeFor = (n: number) => Math.max(76, Math.min(132, 1000 / n));
  * - 1-4 words per chunk, each word pops in on its exact start time
  * - highlighted words: yellow + scaled; emphasis words: yellow + bigger + shake
  */
-export const KineticSubtitles: React.FC<{words: Word[]; centerY?: number}> = ({words, centerY = 1270}) => {
+export type SubtitleTheme = 'dark' | 'yellow';
+
+/**
+ * dark:   white words, yellow accents, black stroke (default, for dark backgrounds)
+ * yellow: black words, white accents with black stroke (for the Yellow Punch style)
+ */
+export const KineticSubtitles: React.FC<{words: Word[]; centerY?: number; theme?: SubtitleTheme}> = ({words, centerY = 1270, theme = 'dark'}) => {
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
   const t = frame / fps;
@@ -72,12 +78,17 @@ export const KineticSubtitles: React.FC<{words: Word[]; centerY?: number}> = ({w
                 fontSize: size * base,
                 lineHeight: 1.08,
                 letterSpacing: '-0.01em',
-                color: accent ? C.yellow : C.white,
-                WebkitTextStroke: `${Math.round(size * base * 0.1)}px #000`,
+                color: theme === 'yellow' ? (accent ? C.white : '#000') : accent ? C.yellow : C.white,
+                WebkitTextStroke: theme === 'yellow' && !accent ? '0px #000' : `${Math.round(size * base * 0.1)}px #000`,
                 paintOrder: 'stroke fill',
-                textShadow: accent
-                  ? `0 8px 0 rgba(0,0,0,0.9), 0 0 38px rgba(255,230,0,0.45)`
-                  : `0 8px 0 rgba(0,0,0,0.9), 0 10px 30px rgba(0,0,0,0.6)`,
+                textShadow:
+                  theme === 'yellow'
+                    ? accent
+                      ? '0 8px 0 #000'
+                      : '0 5px 0 rgba(255,255,255,0.55)'
+                    : accent
+                      ? `0 8px 0 rgba(0,0,0,0.9), 0 0 38px rgba(255,230,0,0.45)`
+                      : `0 8px 0 rgba(0,0,0,0.9), 0 10px 30px rgba(0,0,0,0.6)`,
                 display: 'inline-block',
                 opacity: visible ? 1 : 0,
                 transform: `translate(${sx}px, ${sy}px) rotate(${rot}deg) scale(${scale})`,

@@ -14,7 +14,8 @@ export type SfxName =
   | 'check'
   | 'error'
   | 'buzz'
-  | 'notify';
+  | 'notify'
+  | 'beep';
 
 /** Default levels keep every effect clearly under the voice (voice = 1.0). */
 const LEVEL: Record<SfxName, number> = {
@@ -31,6 +32,7 @@ const LEVEL: Record<SfxName, number> = {
   error: 0.18,
   buzz: 0.3,
   notify: 0.24,
+  beep: 0.16,
 };
 
 export type SfxCue = {at: number; sfx: SfxName; gain?: number};
