@@ -16,8 +16,8 @@
 | Домен сайту | [MISSING] (поки work-cloud.pages.dev) |
 | CRM / booking інструменти | [MISSING] — варіанти в STRATEGY §7 |
 | TikTok: мова, формат, стиль, стек | ПРИЙНЯТО власником (бриф `TIKTOK_BRIEF.md`): EN, 9:16 faceless, dark + #FFE600, Remotion + FFmpeg |
-| TikTok контент-план, місяць 1 | ПРОПОЗИЦІЯ готова (`TIKTOK_CONTENT_PLAN_M1.md`, 18 відео), на затвердження |
-| TikTok: озвучка / музика / SFX | [MISSING] — доступ до ElevenLabs, voice ID, ліцензоване джерело музики та SFX |
+| TikTok контент-план, місяць 1 | ЗАТВЕРДЖЕНО власником 2026-10-04 (`TIKTOK_CONTENT_PLAN_M1.md`, 18 відео); #01 готове |
+| TikTok: озвучка / музика / SFX | Тимчасово: голос Kokoro (open-source, локально, `am_michael`); музика й SFX синтезуються кодом (royalty-free). Ціль — ElevenLabs: [MISSING] доступ + voice ID |
 
 ## Відкриті рішення — потрібні від власника
 
@@ -35,6 +35,7 @@
 
 ## Записи
 
+- 2026-10-04 · План TikTok M1 затверджено; відео #01 «Ask ChatGPT who to hire» зроблено (`videos/01-ask-chatgpt/`) · студія на Remotion + FFmpeg (`studio/`, `tools/`), озвучка Kokoro до появи доступу до ElevenLabs, музика/SFX — власний синтез без ліцензійних ризиків.
 - 2026-10-04 · Отримано TikTok production brief → `docs/TIKTOK_BRIEF.md`; складено план на 30 днів (18 відео) → `docs/TIKTOK_CONTENT_PLAN_M1.md`, на затвердження · Authority-відео без вигаданих результатів (доказ процесом), Before→After лише концепт-редизайни вигаданих бізнесів.
 - 2026-10-04 · Створено фундамент: `STRATEGY.md`, `WEBSITE.md`, `CONTENT_PLAN.md` · перший шар побудови компанії за MASTER CONTEXT; реальні факти позначені [MISSING].
 - 2026-10-03 · Додано `SECURITY.md` + `scan.sh` (кібербезпека + Strix) · довідка і раннер для сканування власного сайту.
