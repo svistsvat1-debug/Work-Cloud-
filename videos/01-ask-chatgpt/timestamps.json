@@ -1,0 +1,813 @@
+{
+ "engine": "kokoro-v1.0:am_michael@1.22",
+ "sampleRate": 24000,
+ "duration": 30.385,
+ "segments": [
+  {
+   "index": 0,
+   "text": "Ask ChatGPT who to hire.",
+   "start": 0.08,
+   "end": 2.14
+  },
+  {
+   "index": 1,
+   "text": "Are you there?",
+   "start": 2.18,
+   "end": 3.115
+  },
+  {
+   "index": 2,
+   "text": "People search like this now.",
+   "start": 3.335,
+   "end": 5.095
+  },
+  {
+   "index": 3,
+   "text": "Best roofer near me.",
+   "start": 5.155,
+   "end": 6.665
+  },
+  {
+   "index": 4,
+   "text": "AI gives them three names.",
+   "start": 6.765,
+   "end": 8.475
+  },
+  {
+   "index": 5,
+   "text": "Not yours.",
+   "start": 8.515,
+   "end": 9.525
+  },
+  {
+   "index": 6,
+   "text": "Why?",
+   "start": 9.785,
+   "end": 10.37
+  },
+  {
+   "index": 7,
+   "text": "AI doesn't guess.",
+   "start": 10.53,
+   "end": 11.715
+  },
+  {
+   "index": 8,
+   "text": "It reads the web.",
+   "start": 11.755,
+   "end": 12.99
+  },
+  {
+   "index": 9,
+   "text": "Including your site.",
+   "start": 13.03,
+   "end": 14.29
+  },
+  {
+   "index": 10,
+   "text": "If your site doesn't clearly say what you do,",
+   "start": 14.49,
+   "end": 16.875
+  },
+  {
+   "index": 11,
+   "text": "where you work,",
+   "start": 16.895,
+   "end": 17.88
+  },
+  {
+   "index": 12,
+   "text": "and who it's for,",
+   "start": 17.9,
+   "end": 18.96
+  },
+  {
+   "index": 13,
+   "text": "AI can't recommend you.",
+   "start": 19.06,
+   "end": 20.595
+  },
+  {
+   "index": 14,
+   "text": "Fix it.",
+   "start": 20.875,
+   "end": 21.635
+  },
+  {
+   "index": 15,
+   "text": "Clear services.",
+   "start": 21.755,
+   "end": 22.99
+  },
+  {
+   "index": 16,
+   "text": "Your city.",
+   "start": 23.05,
+   "end": 23.91
+  },
+  {
+   "index": 17,
+   "text": "Real answers to real questions.",
+   "start": 23.97,
+   "end": 26.08
+  },
+  {
+   "index": 18,
+   "text": "Give AI a reason to pick you.",
+   "start": 26.24,
+   "end": 28.1
+  },
+  {
+   "index": 19,
+   "text": "Follow for more.",
+   "start": 28.3,
+   "end": 29.485
+  }
+ ],
+ "words": [
+  {
+   "text": "Ask",
+   "start": 0.1,
+   "end": 0.3,
+   "seg": 0,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "ChatGPT",
+   "start": 0.35,
+   "end": 1.2,
+   "seg": 0,
+   "hl": true,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "who",
+   "start": 1.225,
+   "end": 1.325,
+   "seg": 0,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "to",
+   "start": 1.35,
+   "end": 1.4,
+   "seg": 0,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "hire.",
+   "start": 1.45,
+   "end": 2.05,
+   "seg": 0,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "Are",
+   "start": 2.2,
+   "end": 2.325,
+   "seg": 1,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "you",
+   "start": 2.375,
+   "end": 2.475,
+   "seg": 1,
+   "hl": false,
+   "emph": true,
+   "brk": false
+  },
+  {
+   "text": "there?",
+   "start": 2.525,
+   "end": 3.025,
+   "seg": 1,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "People",
+   "start": 3.355,
+   "end": 3.68,
+   "seg": 2,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "search",
+   "start": 3.755,
+   "end": 4.055,
+   "seg": 2,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "like",
+   "start": 4.08,
+   "end": 4.23,
+   "seg": 2,
+   "hl": false,
+   "emph": false,
+   "brk": true
+  },
+  {
+   "text": "this",
+   "start": 4.28,
+   "end": 4.43,
+   "seg": 2,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "now.",
+   "start": 4.48,
+   "end": 5.005,
+   "seg": 2,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "Best",
+   "start": 5.175,
+   "end": 5.425,
+   "seg": 3,
+   "hl": true,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "roofer",
+   "start": 5.5,
+   "end": 5.825,
+   "seg": 3,
+   "hl": true,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "near",
+   "start": 5.875,
+   "end": 6.075,
+   "seg": 3,
+   "hl": true,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "me.",
+   "start": 6.125,
+   "end": 6.575,
+   "seg": 3,
+   "hl": true,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "AI",
+   "start": 6.785,
+   "end": 7.01,
+   "seg": 4,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "gives",
+   "start": 7.06,
+   "end": 7.235,
+   "seg": 4,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "them",
+   "start": 7.26,
+   "end": 7.41,
+   "seg": 4,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "three",
+   "start": 7.485,
+   "end": 7.66,
+   "seg": 4,
+   "hl": true,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "names.",
+   "start": 7.71,
+   "end": 8.385,
+   "seg": 4,
+   "hl": true,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "Not",
+   "start": 8.535,
+   "end": 8.735,
+   "seg": 5,
+   "hl": false,
+   "emph": true,
+   "brk": false
+  },
+  {
+   "text": "yours.",
+   "start": 8.785,
+   "end": 9.435,
+   "seg": 5,
+   "hl": false,
+   "emph": true,
+   "brk": false
+  },
+  {
+   "text": "Why?",
+   "start": 9.805,
+   "end": 10.28,
+   "seg": 6,
+   "hl": false,
+   "emph": true,
+   "brk": false
+  },
+  {
+   "text": "AI",
+   "start": 10.55,
+   "end": 10.75,
+   "seg": 7,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "doesn't",
+   "start": 10.8,
+   "end": 11.025,
+   "seg": 7,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "guess.",
+   "start": 11.075,
+   "end": 11.625,
+   "seg": 7,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "It",
+   "start": 11.775,
+   "end": 11.875,
+   "seg": 8,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "reads",
+   "start": 11.925,
+   "end": 12.225,
+   "seg": 8,
+   "hl": true,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "the",
+   "start": 12.25,
+   "end": 12.325,
+   "seg": 8,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "web.",
+   "start": 12.375,
+   "end": 12.9,
+   "seg": 8,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "Including",
+   "start": 13.05,
+   "end": 13.45,
+   "seg": 9,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "your",
+   "start": 13.5,
+   "end": 13.6,
+   "seg": 9,
+   "hl": true,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "site.",
+   "start": 13.675,
+   "end": 14.2,
+   "seg": 9,
+   "hl": true,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "If",
+   "start": 14.51,
+   "end": 14.585,
+   "seg": 10,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "your",
+   "start": 14.61,
+   "end": 14.71,
+   "seg": 10,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "site",
+   "start": 14.785,
+   "end": 15.035,
+   "seg": 10,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "doesn't",
+   "start": 15.085,
+   "end": 15.31,
+   "seg": 10,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "clearly",
+   "start": 15.36,
+   "end": 15.685,
+   "seg": 10,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "say",
+   "start": 15.76,
+   "end": 15.96,
+   "seg": 10,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "what",
+   "start": 16.01,
+   "end": 16.11,
+   "seg": 10,
+   "hl": true,
+   "emph": false,
+   "brk": true
+  },
+  {
+   "text": "you",
+   "start": 16.16,
+   "end": 16.235,
+   "seg": 10,
+   "hl": true,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "do,",
+   "start": 16.285,
+   "end": 16.785,
+   "seg": 10,
+   "hl": true,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "where",
+   "start": 16.915,
+   "end": 17.04,
+   "seg": 11,
+   "hl": true,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "you",
+   "start": 17.09,
+   "end": 17.215,
+   "seg": 11,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "work,",
+   "start": 17.265,
+   "end": 17.79,
+   "seg": 11,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "and",
+   "start": 17.92,
+   "end": 17.995,
+   "seg": 12,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "who",
+   "start": 18.045,
+   "end": 18.17,
+   "seg": 12,
+   "hl": true,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "it's",
+   "start": 18.195,
+   "end": 18.345,
+   "seg": 12,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "for,",
+   "start": 18.395,
+   "end": 18.87,
+   "seg": 12,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "AI",
+   "start": 19.08,
+   "end": 19.28,
+   "seg": 13,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "can't",
+   "start": 19.33,
+   "end": 19.555,
+   "seg": 13,
+   "hl": false,
+   "emph": true,
+   "brk": false
+  },
+  {
+   "text": "recommend",
+   "start": 19.605,
+   "end": 20.03,
+   "seg": 13,
+   "hl": false,
+   "emph": false,
+   "brk": true
+  },
+  {
+   "text": "you.",
+   "start": 20.08,
+   "end": 20.505,
+   "seg": 13,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "Fix",
+   "start": 20.895,
+   "end": 21.145,
+   "seg": 14,
+   "hl": false,
+   "emph": true,
+   "brk": false
+  },
+  {
+   "text": "it.",
+   "start": 21.195,
+   "end": 21.545,
+   "seg": 14,
+   "hl": false,
+   "emph": true,
+   "brk": false
+  },
+  {
+   "text": "Clear",
+   "start": 21.775,
+   "end": 22.0,
+   "seg": 15,
+   "hl": true,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "services.",
+   "start": 22.075,
+   "end": 22.9,
+   "seg": 15,
+   "hl": true,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "Your",
+   "start": 23.07,
+   "end": 23.22,
+   "seg": 16,
+   "hl": true,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "city.",
+   "start": 23.295,
+   "end": 23.82,
+   "seg": 16,
+   "hl": true,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "Real",
+   "start": 23.99,
+   "end": 24.265,
+   "seg": 17,
+   "hl": true,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "answers",
+   "start": 24.34,
+   "end": 24.74,
+   "seg": 17,
+   "hl": true,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "to",
+   "start": 24.79,
+   "end": 24.865,
+   "seg": 17,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "real",
+   "start": 24.915,
+   "end": 25.14,
+   "seg": 17,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "questions.",
+   "start": 25.19,
+   "end": 25.99,
+   "seg": 17,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "Give",
+   "start": 26.26,
+   "end": 26.36,
+   "seg": 18,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "AI",
+   "start": 26.41,
+   "end": 26.71,
+   "seg": 18,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "a",
+   "start": 26.76,
+   "end": 26.81,
+   "seg": 18,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "reason",
+   "start": 26.885,
+   "end": 27.185,
+   "seg": 18,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "to",
+   "start": 27.235,
+   "end": 27.285,
+   "seg": 18,
+   "hl": false,
+   "emph": false,
+   "brk": true
+  },
+  {
+   "text": "pick",
+   "start": 27.335,
+   "end": 27.535,
+   "seg": 18,
+   "hl": true,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "you.",
+   "start": 27.585,
+   "end": 28.01,
+   "seg": 18,
+   "hl": true,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "Follow",
+   "start": 28.32,
+   "end": 28.645,
+   "seg": 19,
+   "hl": true,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "for",
+   "start": 28.695,
+   "end": 28.795,
+   "seg": 19,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  },
+  {
+   "text": "more.",
+   "start": 28.845,
+   "end": 29.395,
+   "seg": 19,
+   "hl": false,
+   "emph": false,
+   "brk": false
+  }
+ ]
+}
