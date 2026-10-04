@@ -1,0 +1,22 @@
+{
+  "id": "05-site-redesign",
+  "voice": "am_michael",
+  "speed": 1.14,
+  "leadIn": 0.15,
+  "tail": 1.0,
+  "music": {"bpm": 106, "breakFromSeg": 1, "dropSeg": 10, "energy": 0.6},
+  "segments": [
+    { "text": "This website | was [losing clients.]", "pause": 0.3 },
+    { "text": "Let's fix it, | step by step.", "pause": 0.3 },
+    { "text": "First, the [headline.]", "pause": 0.12 },
+    { "text": "Say [what you do,] | and [where.]", "pause": 0.3 },
+    { "text": "Next, [one button.]", "pause": 0.1 },
+    { "text": "One clear next step: | [Book a cleaning.]", "pause": 0.3 },
+    { "text": "Then, [trust.]", "pause": 0.1 },
+    { "text": "Show [reviews] | right next to the button.", "pause": 0.3 },
+    { "text": "Finally, [mobile.]", "pause": 0.1 },
+    { "text": "Your clients probably see it | on their [phone.]", "pause": 0.3 },
+    { "text": "Before. | And {after.}", "pause": 0.4 },
+    { "text": "[Follow] for more.", "pause": 0 }
+  ]
+}

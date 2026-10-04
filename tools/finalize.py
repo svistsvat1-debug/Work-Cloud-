@@ -15,7 +15,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-TARGET = "I=-14:TP=-1.5:LRA=11"
+TARGET = "I=-14:TP=-2:LRA=11"
 MUSIC_BELOW_VOICE_DB = 10  # music bed level vs voice (before ducking)
 
 
