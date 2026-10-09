@@ -1,0 +1,2224 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Edge Journal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Unbounded:wght@600;700&display=swap">
+<style>
+/* Layout: sticky terminal-style header + one filter row that scopes a tabbed workspace of panels on a graphite plane.
+   Color: graphite neutrals with a slight blue bias, amber accent (terminal amber), profit/loss as status colors. */
+:root {
+  color-scheme: dark;
+  --bg: #0d1015;
+  --surface: #141920;
+  --surface-2: #1a2029;
+  --raise: #222a35;
+  --line: #252c37;
+  --line-2: #323b48;
+  --fg: #e9edf2;
+  --fg-2: #a6afbc;
+  --muted: #7d8796;
+  --accent: #f2a93b;
+  --accent-ink: #1c1405;
+  --accent-text: #f5b65a;
+  --accent-wash: rgba(242, 169, 59, .13);
+  --profit: #3cc774;
+  --loss: #f26b6b;
+  --profit-wash: rgba(60, 199, 116, .14);
+  --loss-wash: rgba(242, 107, 107, .14);
+  --focus: #8ab4ff;
+  --overlay: rgba(4, 6, 10, .66);
+  --shadow: 0 14px 40px rgba(0, 0, 0, .5);
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500;
+  --s5: #d55181; --s6: #2f9a2f; --s7: #9085e9; --s8: #e66767;
+  --font-ui: "Onest", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --font-display: "Unbounded", "Onest", system-ui, sans-serif;
+  --r: 12px;
+  --r-sm: 8px;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    color-scheme: light;
+    --bg: #eef1f5; --surface: #ffffff; --surface-2: #f5f7fa; --raise: #e9edf2;
+    --line: #e0e5eb; --line-2: #ccd3dc;
+    --fg: #10151c; --fg-2: #4a5462; --muted: #6a7483;
+    --accent: #f2a93b; --accent-ink: #1c1405; --accent-text: #985a00; --accent-wash: rgba(242, 169, 59, .16);
+    --profit: #0b7d39; --loss: #c42b2b; --profit-wash: rgba(11, 125, 57, .10); --loss-wash: rgba(196, 43, 43, .09);
+    --focus: #2f6fd8; --overlay: rgba(16, 21, 28, .45); --shadow: 0 14px 40px rgba(16, 21, 28, .16);
+    --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100;
+    --s5: #e87ba4; --s6: #008300; --s7: #4a3aa7; --s8: #e34948;
+  }
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #eef1f5; --surface: #ffffff; --surface-2: #f5f7fa; --raise: #e9edf2;
+  --line: #e0e5eb; --line-2: #ccd3dc;
+  --fg: #10151c; --fg-2: #4a5462; --muted: #6a7483;
+  --accent: #f2a93b; --accent-ink: #1c1405; --accent-text: #985a00; --accent-wash: rgba(242, 169, 59, .16);
+  --profit: #0b7d39; --loss: #c42b2b; --profit-wash: rgba(11, 125, 57, .10); --loss-wash: rgba(196, 43, 43, .09);
+  --focus: #2f6fd8; --overlay: rgba(16, 21, 28, .45); --shadow: 0 14px 40px rgba(16, 21, 28, .16);
+  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100;
+  --s5: #e87ba4; --s6: #008300; --s7: #4a3aa7; --s8: #e34948;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 14px/1.45 var(--font-ui); -webkit-font-smoothing: antialiased; }
+body.modal-open { overflow: hidden; }
+button, input, select, textarea { font: inherit; color: inherit; }
+img { max-width: 100%; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.num { font-variant-numeric: tabular-nums; }
+.mono { font-family: var(--font-mono); }
+.pos { color: var(--profit); }
+.neg { color: var(--loss); }
+.muted { color: var(--muted); }
+.grow { flex: 1 1 auto; }
+.wrap { max-width: 1240px; margin-inline: auto; padding-inline: 16px; }
+@media (min-width: 900px) { .wrap { padding-inline: 24px; } }
+
+/* header */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.top-in { display: flex; align-items: center; gap: 12px; padding-block: 12px 6px; }
+.brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.brand .mark { width: 30px; height: 30px; border-radius: 8px; background: var(--accent); display: grid; place-items: center; flex: none; }
+.brand .mark svg { width: 18px; height: 18px; }
+.word { font-family: var(--font-display); font-weight: 700; font-size: 16px; letter-spacing: -.01em; white-space: nowrap; }
+.word b { color: var(--accent-text); font-weight: 700; }
+.store-chip { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; color: var(--fg-2); border: 1px solid var(--line-2); border-radius: 999px; padding: 3px 10px 3px 9px; white-space: nowrap; cursor: default; }
+.store-chip i { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); flex: none; }
+.store-chip.cloud i { background: var(--profit); }
+.store-chip.warn i, .store-chip.demo i { background: var(--accent); }
+.top-actions { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+.tabs { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab { appearance: none; background: none; border: 0; padding: 10px 12px 11px; color: var(--fg-2); font-weight: 500; cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; }
+.tab:hover { color: var(--fg); }
+.tab[aria-selected="true"] { color: var(--fg); border-bottom-color: var(--accent); }
+@media (max-width: 600px) { .store-chip span { display: none; } .btn-new-label { display: none; } .word { font-size: 14px; } }
+
+.demo-bar { background: var(--accent-wash); border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line)); }
+.demo-bar .wrap { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; padding-block: 8px; font-size: 13px; }
+.demo-short { display: none; }
+@media (max-width: 600px) { .demo-long { display: none; } .demo-short { display: inline; } .demo-bar .wrap { flex-wrap: nowrap; gap: 8px; } }
+
+/* buttons */
+.btn { appearance: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 36px; padding: 0 14px; border-radius: var(--r-sm); border: 1px solid var(--line-2); background: var(--surface-2); color: var(--fg); font-weight: 500; cursor: pointer; white-space: nowrap; text-decoration: none; }
+.btn:hover { background: var(--raise); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
+.btn.primary:hover { filter: brightness(1.07); }
+.btn.ghost { background: transparent; border-color: transparent; color: var(--fg-2); }
+.btn.ghost:hover { background: var(--surface-2); color: var(--fg); }
+.btn.danger { color: var(--loss); border-color: color-mix(in srgb, var(--loss) 45%, var(--line-2)); background: transparent; }
+.btn.danger.solid { background: var(--loss); color: #fff; border-color: var(--loss); }
+.btn.sm { height: 30px; padding: 0 10px; font-size: 13px; }
+.btn[disabled] { opacity: .55; cursor: default; }
+.btn svg, .icon-btn svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.icon-btn { appearance: none; width: 36px; height: 36px; display: grid; place-items: center; border-radius: var(--r-sm); border: 1px solid var(--line-2); background: var(--surface-2); color: var(--fg-2); cursor: pointer; flex: none; }
+.icon-btn:hover { color: var(--fg); background: var(--raise); }
+.kbd { font-family: var(--font-mono); font-size: 12px; border: 1px solid var(--line-2); border-bottom-width: 2px; border-radius: 5px; padding: 0 6px; background: var(--surface-2); color: var(--fg); white-space: nowrap; }
+
+/* filters */
+.filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding-block: 14px; }
+.filters select, .filters input, .inp { height: 34px; border: 1px solid var(--line-2); background: var(--surface); color: var(--fg); border-radius: var(--r-sm); padding: 0 10px; min-width: 0; max-width: 100%; }
+.filters input[type="search"] { width: 220px; flex: 1 1 220px; max-width: 360px; }
+.filters input[type="date"] { width: 150px; }
+.f-custom { display: inline-flex; gap: 6px; align-items: center; }
+.f-more { display: contents; }
+.f-toggle { display: none; }
+@media (max-width: 720px) {
+  .filters:not(.open) .f-more { display: none; }
+  .f-toggle { display: inline-flex; }
+  .filters select { flex: 1 1 140px; }
+  .filters input[type="search"] { flex: 1 1 100%; width: auto; max-width: none; }
+  .f-custom { flex: 1 1 100%; }
+  .f-custom input { flex: 1 1 0; width: auto; }
+}
+
+/* layout */
+.view { display: grid; gap: 16px; padding-bottom: 56px; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; min-width: 0; }
+.panel h3 { margin: 0 0 14px; font-size: 12px; font-weight: 600; color: var(--fg-2); letter-spacing: .06em; text-transform: uppercase; display: flex; align-items: center; gap: 8px; min-height: 24px; }
+.panel h3 .aside { margin-left: auto; text-transform: none; letter-spacing: 0; font-weight: 500; font-size: 12px; color: var(--muted); }
+.panel h3 .btn.aside { color: var(--fg-2); }
+.g2 { display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 980px) { .g2 { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); } .g2.even { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+
+/* hero + tiles */
+.hero { display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 980px) { .hero { grid-template-columns: minmax(250px, .85fr) minmax(0, 2fr); align-items: stretch; } }
+.hero-main { display: flex; flex-direction: column; gap: 4px; justify-content: center; padding: 4px 4px 4px 2px; }
+.lbl { font-size: 12px; color: var(--fg-2); }
+.hero-num { font-size: 48px; line-height: 1.05; font-weight: 700; letter-spacing: -.02em; margin: 4px 0 6px; overflow-wrap: anywhere; }
+.hero-main .sub { color: var(--fg-2); font-size: 13px; }
+.tiles { display: grid; gap: 1px; grid-template-columns: repeat(2, minmax(0, 1fr)); background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+@media (min-width: 700px) { .tiles { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.tile { background: var(--surface); padding: 12px 14px; min-width: 0; }
+.tile .val { font-size: 20px; font-weight: 600; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tile .sub { font-size: 12px; color: var(--muted); margin-top: 2px; overflow-wrap: anywhere; }
+
+/* compare cards */
+.cmp { display: grid; gap: 1px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.cmp > div { background: var(--surface); padding: 12px 14px; display: grid; gap: 2px; }
+.cmp .big { font-size: 20px; font-weight: 600; }
+.cmp .sub { font-size: 12px; color: var(--muted); }
+
+/* tables */
+.tbl-wrap { overflow-x: auto; }
+table.tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
+.tbl th { font-weight: 500; color: var(--muted); text-align: right; padding: 8px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; font-size: 12px; }
+.tbl th:first-child, .tbl td:first-child { text-align: left; padding-left: 0; }
+.tbl th:last-child, .tbl td:last-child { padding-right: 0; }
+.tbl td { padding: 10px; border-bottom: 1px solid var(--line); text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tbl tbody tr:last-child td { border-bottom: 0; }
+.tbl tr.click { cursor: pointer; }
+.tbl tr.click:hover td { background: var(--surface-2); }
+.tbl th.sort { cursor: pointer; user-select: none; }
+.tbl th.sort:hover, .tbl th[aria-sort] { color: var(--fg); }
+.tbl .wr { display: inline-grid; gap: 3px; justify-items: end; }
+.meter { width: 64px; height: 4px; border-radius: 2px; background: var(--line-2); position: relative; overflow: hidden; }
+.meter i { position: absolute; inset: 0 auto 0 0; background: var(--fg-2); border-radius: 2px; }
+
+/* strategy chip, tags */
+.schip { display: inline-flex; align-items: center; gap: 7px; min-width: 0; max-width: 100%; }
+.schip i { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+.schip span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dir { font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; padding: 1px 6px; border-radius: 4px; border: 1px solid; }
+.dir.long { color: var(--profit); border-color: color-mix(in srgb, var(--profit) 40%, transparent); }
+.dir.short { color: var(--loss); border-color: color-mix(in srgb, var(--loss) 40%, transparent); }
+.tag { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; padding: 2px 8px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--line-2); color: var(--fg-2); white-space: nowrap; }
+.tag.m { border-color: color-mix(in srgb, var(--loss) 40%, var(--line-2)); background: var(--loss-wash); color: var(--fg); }
+.tag.ok { border-color: color-mix(in srgb, var(--profit) 40%, var(--line-2)); background: var(--profit-wash); color: var(--fg); }
+.tag.demo { border-color: color-mix(in srgb, var(--accent) 50%, var(--line-2)); background: var(--accent-wash); color: var(--fg); font-size: 11px; padding: 0 6px; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* trade list */
+.tlist { display: grid; }
+.trow { display: grid; grid-template-columns: 60px 86px minmax(130px, 1.3fr) minmax(120px, 1fr) 72px 118px 96px; gap: 12px; align-items: center; padding: 9px 6px; border-bottom: 1px solid var(--line); cursor: pointer; border-radius: 6px; }
+.trow:last-child { border-bottom: 0; }
+.trow.head { cursor: default; color: var(--muted); font-size: 12px; padding-block: 4px 8px; border-radius: 0; }
+.trow:not(.head):hover { background: var(--surface-2); }
+.trow .c-r, .trow .c-res { text-align: right; font-variant-numeric: tabular-nums; }
+.trow .c-res { font-weight: 600; }
+.trow .c-date small { display: block; color: var(--muted); font-size: 12px; }
+.trow .c-sym { display: flex; align-items: center; gap: 8px; min-width: 0; flex-wrap: wrap; }
+.trow .sym { font-family: var(--font-mono); font-weight: 600; }
+.trow .c-flags { display: flex; gap: 4px; justify-content: flex-end; flex-wrap: wrap; }
+.trow .c-meta { display: none; }
+.trow.compact { grid-template-columns: 60px minmax(0, 1fr) auto; }
+.trow.compact .c-date, .trow.compact .c-strat, .trow.compact .c-flags, .trow.compact .c-r { display: none; }
+.trow.compact .c-meta { display: block; grid-column: 2; grid-row: 2; }
+.trow.compact .c-th { grid-row: span 2; }
+.trow.compact .c-res { grid-row: span 2; }
+.thumb { width: 60px; height: 38px; border-radius: 6px; background: var(--surface-2); overflow: hidden; display: grid; place-items: center; border: 1px solid var(--line); color: var(--muted); }
+.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.thumb svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+.c-meta { font-size: 12px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@media (max-width: 760px) {
+  .trow.head { display: none; }
+  .trow { grid-template-columns: 60px minmax(0, 1fr) auto; row-gap: 2px; column-gap: 12px; }
+  .trow .c-date, .trow .c-strat, .trow .c-flags { display: none; }
+  .trow .c-th { grid-row: span 2; }
+  .trow .c-sym { grid-column: 2; grid-row: 1; }
+  .trow .c-res { grid-column: 3; grid-row: 1; }
+  .trow .c-meta { display: block; grid-column: 2; grid-row: 2; }
+  .trow .c-r { grid-column: 3; grid-row: 2; font-size: 12px; color: var(--muted); }
+}
+.list-head { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; margin-bottom: 8px; }
+.list-head .count { font-weight: 600; }
+.hint { font-size: 13px; color: var(--fg-2); }
+
+/* charts */
+.chart { position: relative; width: 100%; }
+.chart svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.chart text { fill: var(--muted); font-size: 11px; font-family: var(--font-ui); font-variant-numeric: tabular-nums; }
+.chart .endlab { fill: var(--fg); font-weight: 600; font-size: 12px; }
+.gridl { stroke: var(--line); stroke-width: 1; }
+.zerol { stroke: var(--line-2); stroke-width: 1; }
+.eq-line { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.eq-area { fill: var(--accent); opacity: .1; }
+.dot { fill: var(--accent); stroke: var(--surface); stroke-width: 2; }
+.xh { stroke: var(--fg-2); stroke-width: 1; }
+.col-p { fill: var(--profit); }
+.col-n { fill: var(--loss); }
+.hit { fill: transparent; cursor: default; }
+.hit:hover + .hl, .hl.on { fill: var(--fg); opacity: .06; }
+.spark { display: block; }
+.spark polyline { fill: none; stroke-width: 1.5; stroke-linejoin: round; stroke-linecap: round; }
+
+/* horizontal diverging bars */
+.bars { display: grid; gap: 10px; }
+.bar-row { display: grid; grid-template-columns: minmax(90px, 170px) minmax(0, 1fr) minmax(92px, auto); gap: 12px; align-items: center; font-size: 13px; }
+.bar-row .lab { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bar-row .lab small { color: var(--muted); margin-left: 4px; }
+.bar-track { position: relative; height: 14px; }
+.bar-track .zero { position: absolute; top: -3px; bottom: -3px; width: 1px; background: var(--line-2); }
+.bar-track .b { position: absolute; top: 2px; height: 10px; min-width: 2px; }
+.bar-track .b.p { background: var(--profit); border-radius: 0 4px 4px 0; }
+.bar-track .b.n { background: var(--loss); border-radius: 4px 0 0 4px; }
+.bar-row .val { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; white-space: nowrap; }
+@media (max-width: 520px) { .bar-row { grid-template-columns: minmax(0, 1fr) minmax(84px, auto); } .bar-row .bar-track { grid-column: 1 / -1; grid-row: 2; } }
+
+/* insights */
+.ins { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.ins li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 8px; line-height: 1.5; }
+.ins .ic { width: 22px; height: 22px; border-radius: 6px; display: grid; place-items: center; font-size: 12px; font-weight: 700; }
+.ins .good .ic { background: var(--profit-wash); color: var(--profit); }
+.ins .bad .ic { background: var(--loss-wash); color: var(--loss); }
+.ins .info .ic { background: var(--accent-wash); color: var(--accent-text); }
+
+/* calendar */
+.cal-head { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; margin-bottom: 12px; }
+.cal-head h2 { margin: 0; font-size: 18px; font-weight: 600; min-width: 150px; }
+.cal-sum { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--fg-2); }
+.cal-sum b { color: var(--fg); }
+.cal { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)) minmax(0, 1.05fr); gap: 4px; }
+.cal .wd { font-size: 12px; color: var(--muted); padding: 2px 6px; }
+.cal .day, .cal .wk { min-height: 80px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface-2); padding: 6px 8px; display: flex; flex-direction: column; gap: 1px; min-width: 0; text-align: left; font: inherit; color: inherit; appearance: none; }
+.cal .day.has { cursor: pointer; }
+.cal .day.has:hover { border-color: var(--line-2); }
+.cal .day .d { font-size: 12px; color: var(--muted); }
+.cal .day .v, .cal .wk .v { font-weight: 600; font-size: 13px; margin-top: auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.cal .day .n, .cal .wk .n { font-size: 11px; color: var(--fg-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cal .day.out { visibility: hidden; }
+.cal .vs { display: none; }
+.cal .day.today { border-color: var(--accent); }
+.cal .wk { background: transparent; border-style: dashed; }
+@media (max-width: 680px) {
+  .cal { grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 3px; }
+  .cal .wk, .cal .wkh { display: none; }
+  .cal .day { min-height: 54px; padding: 4px 5px; }
+  .cal .day .n { display: none; }
+  .cal .day .v { font-size: 11px; letter-spacing: -.02em; }
+  .cal .vl { display: none; }
+  .cal .vs { display: inline; }
+}
+
+/* empty states */
+.empty { display: grid; gap: 14px; padding: 32px 24px; justify-items: start; }
+.empty h2 { font-family: var(--font-display); font-size: 22px; line-height: 1.25; margin: 0; text-wrap: balance; max-width: 26ch; }
+.empty p { margin: 0; color: var(--fg-2); max-width: 62ch; line-height: 1.6; }
+.empty .acts { display: flex; flex-wrap: wrap; gap: 8px; }
+.steps { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); width: 100%; margin-top: 4px; }
+.steps div { border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; background: var(--surface-2); color: var(--fg-2); font-size: 13px; line-height: 1.5; }
+.steps b { display: block; color: var(--fg); font-size: 14px; margin-bottom: 2px; }
+.nores { padding: 28px 20px; text-align: center; color: var(--fg-2); display: grid; gap: 10px; justify-items: center; }
+
+/* modal */
+.mback { position: fixed; inset: 0; z-index: 50; background: var(--overlay); display: flex; align-items: flex-start; justify-content: center; padding: max(24px, env(safe-area-inset-top, 0px)) 16px 24px; overflow-y: auto; overscroll-behavior: contain; }
+.modal { width: 100%; max-width: 900px; background: var(--surface); border: 1px solid var(--line-2); border-radius: 14px; box-shadow: var(--shadow); display: flex; flex-direction: column; min-width: 0; margin-block: auto; }
+.modal.narrow { max-width: 720px; }
+.mhead { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+.mhead h2 { margin: 0; font-size: 17px; font-weight: 600; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.mhead .icon-btn { margin-left: auto; }
+.mbody { padding: 16px; display: grid; gap: 22px; min-width: 0; }
+.mfoot { display: flex; gap: 8px; align-items: center; justify-content: flex-end; padding: 12px 16px; border-top: 1px solid var(--line); position: sticky; bottom: -24px; background: var(--surface); border-radius: 0 0 14px 14px; flex-wrap: wrap; z-index: 2; }
+.mfoot .msg { margin-right: auto; font-size: 13px; color: var(--fg-2); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.mfoot .msg.err { color: var(--loss); }
+@media (max-width: 640px) {
+  .mback { padding: 0; }
+  .modal { border-radius: 0; min-height: 100%; border: 0; margin: 0; }
+  .mfoot { border-radius: 0; bottom: 0; padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px)); }
+  .mhead { padding-top: calc(14px + env(safe-area-inset-top, 0px)); }
+}
+
+/* form */
+.fsec h4 { margin: 0 0 10px; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.fgrid { display: grid; gap: 12px; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 720px) { .fgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.fld { display: grid; gap: 5px; font-size: 12px; color: var(--fg-2); min-width: 0; align-content: start; }
+.fld input, .fld select, .fld textarea { height: 38px; border: 1px solid var(--line-2); background: var(--bg); border-radius: var(--r-sm); padding: 0 10px; color: var(--fg); font-size: 14px; width: 100%; min-width: 0; }
+.fld textarea { height: auto; padding: 9px 10px; resize: vertical; line-height: 1.5; }
+.fld input.mono { font-family: var(--font-mono); font-size: 13px; }
+.fld.span2 { grid-column: span 2; }
+.fld.full { grid-column: 1 / -1; }
+.fld .with-btn { display: flex; gap: 6px; }
+.fld .with-btn .btn { height: 38px; flex: none; }
+.seg { display: flex; border: 1px solid var(--line-2); border-radius: var(--r-sm); overflow: hidden; height: 38px; background: var(--bg); }
+.seg button { flex: 1; appearance: none; border: 0; background: transparent; color: var(--fg-2); cursor: pointer; font-weight: 500; padding: 0 8px; min-width: 0; }
+.seg button + button { border-left: 1px solid var(--line-2); }
+.seg button[aria-pressed="true"] { background: var(--accent-wash); color: var(--fg); box-shadow: inset 0 -2px 0 var(--accent); }
+.seg button[data-v="long"][aria-pressed="true"], .seg button[data-v="yes"][aria-pressed="true"] { background: var(--profit-wash); box-shadow: inset 0 -2px 0 var(--profit); }
+.seg button[data-v="short"][aria-pressed="true"], .seg button[data-v="no"][aria-pressed="true"] { background: var(--loss-wash); box-shadow: inset 0 -2px 0 var(--loss); }
+.srules { margin: 10px 0 0; padding: 10px 12px; border-radius: var(--r-sm); background: var(--surface-2); border: 1px solid var(--line); font-size: 13px; color: var(--fg-2); white-space: pre-wrap; line-height: 1.5; }
+.srules b { color: var(--fg); }
+.calc { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 12px; font-size: 13px; color: var(--fg-2); }
+.calc b { color: var(--fg); font-variant-numeric: tabular-nums; }
+.pz-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: stretch; }
+.pz { flex: 1 1 280px; min-height: 76px; border: 1.5px dashed var(--line-2); border-radius: var(--r); display: flex; align-items: center; justify-content: center; text-align: center; padding: 12px 16px; color: var(--fg-2); cursor: text; outline: none; caret-color: transparent; line-height: 1.5; user-select: none; }
+.pz:empty::before { content: attr(data-ph); }
+.pz:focus, .pz.drag, .modal.drag .pz { border-color: var(--accent); background: var(--accent-wash); color: var(--fg); }
+.pz-btns { display: flex; flex-direction: column; gap: 8px; }
+@media (max-width: 520px) { .pz-btns { flex-direction: row; flex: 1 1 100%; } .pz-btns .btn { flex: 1; } }
+.thumbs { display: flex; flex-wrap: wrap; gap: 10px; }
+.thumbs:not(:empty) { margin-top: 12px; }
+.thumbs figure { margin: 0; position: relative; width: 168px; max-width: calc(50% - 5px); aspect-ratio: 16 / 10; border-radius: 8px; overflow: hidden; border: 1px solid var(--line-2); background: var(--bg); }
+.thumbs img { width: 100%; height: 100%; object-fit: cover; display: block; cursor: zoom-in; }
+.thumbs .rm { position: absolute; top: 6px; right: 6px; width: 28px; height: 28px; border-radius: 6px; border: 0; background: rgba(8, 10, 14, .78); color: #fff; display: grid; place-items: center; cursor: pointer; }
+.thumbs .rm svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
+.thumbs .cover { position: absolute; left: 6px; bottom: 6px; font-size: 11px; padding: 1px 6px; border-radius: 4px; background: rgba(8, 10, 14, .78); color: #fff; }
+.thumbs .busy { display: grid; place-items: center; color: var(--fg-2); font-size: 12px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { appearance: none; border: 1px solid var(--line-2); background: var(--bg); color: var(--fg-2); border-radius: 999px; padding: 5px 11px; font-size: 13px; cursor: pointer; }
+.chip:hover { color: var(--fg); }
+.chip[aria-pressed="true"] { border-color: var(--accent); color: var(--fg); background: var(--accent-wash); }
+.chip.m[aria-pressed="true"] { border-color: var(--loss); background: var(--loss-wash); }
+.chip-add { height: 30px; width: 150px; border: 1px dashed var(--line-2); background: transparent; border-radius: 999px; padding: 0 12px; font-size: 13px; color: var(--fg); }
+.stars { display: inline-flex; gap: 2px; }
+.stars button { appearance: none; border: 0; background: none; font-size: 22px; line-height: 1; color: var(--line-2); cursor: pointer; padding: 2px; }
+.stars button.on { color: var(--accent); }
+.disc-grid { display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+@media (max-width: 720px) { .disc-grid { grid-template-columns: minmax(0, 1fr); } }
+.sub-lbl { font-size: 12px; color: var(--fg-2); margin-bottom: 6px; display: block; }
+
+/* detail */
+.det-top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; }
+.det-res { font-size: 34px; font-weight: 700; letter-spacing: -.01em; }
+.det-meta { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; color: var(--fg-2); }
+.gal { display: grid; gap: 8px; }
+.gal .main { border-radius: 10px; overflow: hidden; border: 1px solid var(--line); background: var(--bg); padding: 0; appearance: none; cursor: zoom-in; display: block; width: 100%; }
+.gal .main img { display: block; width: 100%; max-height: 62vh; object-fit: contain; }
+.gal .rest { display: flex; gap: 8px; flex-wrap: wrap; }
+.gal .rest button { width: 120px; aspect-ratio: 16 / 10; border-radius: 8px; overflow: hidden; border: 1px solid var(--line); padding: 0; background: var(--bg); cursor: zoom-in; }
+.gal .rest img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.facts { display: flex; flex-wrap: wrap; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.fact { background: var(--surface); padding: 9px 12px; flex: 1 1 120px; min-width: 0; }
+.fact .k { font-size: 11px; color: var(--muted); }
+.fact .v { font-family: var(--font-mono); font-size: 13px; overflow-wrap: anywhere; }
+.note h4 { margin: 0 0 6px; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.note p { margin: 0; white-space: pre-wrap; line-height: 1.6; max-width: 80ch; overflow-wrap: anywhere; }
+.note.warn { border-left: 2px solid var(--loss); padding-left: 12px; }
+img.broken { opacity: .3; }
+
+/* settings */
+.slist { display: grid; gap: 10px; }
+.srow { display: grid; grid-template-columns: 14px minmax(0, 1fr) auto; gap: 10px; align-items: start; padding: 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface-2); }
+.srow .dotc { width: 10px; height: 10px; border-radius: 50%; margin-top: 14px; }
+.srow .sfields { display: grid; gap: 6px; min-width: 0; }
+.srow .sfields input, .srow .sfields textarea { width: 100%; border: 1px solid var(--line-2); background: var(--bg); border-radius: var(--r-sm); padding: 8px 10px; color: var(--fg); min-width: 0; }
+.srow .sfields textarea { resize: vertical; font-size: 13px; line-height: 1.5; }
+.srow .scount { font-size: 12px; color: var(--muted); }
+.srow.del { opacity: .5; }
+.srow.del input { text-decoration: line-through; }
+.row-add { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.row-add .inp { flex: 1 1 220px; height: 36px; }
+.data-acts { display: flex; flex-wrap: wrap; gap: 8px; }
+.store-info { font-size: 13px; color: var(--fg-2); margin: 0 0 12px; line-height: 1.55; max-width: 72ch; }
+.danger-zone { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 13px; color: var(--fg-2); }
+
+/* lightbox */
+.lb { position: fixed; inset: 0; z-index: 70; background: rgba(5, 7, 10, .94); display: flex; flex-direction: column; color: #e9edf2; }
+.lb-bar { display: flex; align-items: center; gap: 8px; padding: calc(10px + env(safe-area-inset-top, 0px)) 12px 10px; font-size: 13px; }
+.lb-bar button { appearance: none; width: 38px; height: 38px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, .16); background: rgba(255, 255, 255, .06); color: #e9edf2; cursor: pointer; display: grid; place-items: center; }
+.lb-bar button svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.lb-stage { flex: 1; overflow: auto; display: grid; place-items: center; padding: 8px 8px calc(8px + env(safe-area-inset-bottom, 0px)); min-height: 0; }
+.lb-stage img { max-width: 100%; max-height: calc(100vh - 80px); object-fit: contain; cursor: zoom-in; display: block; }
+.lb-stage.zoom { place-items: start; }
+.lb-stage.zoom img { max-width: none; max-height: none; cursor: zoom-out; }
+
+/* tooltip & toast */
+#tip { position: fixed; z-index: 80; pointer-events: none; background: var(--raise); color: var(--fg); border: 1px solid var(--line-2); border-radius: 8px; padding: 8px 10px; font-size: 12px; box-shadow: var(--shadow); max-width: 260px; left: 0; top: 0; }
+#tip b { display: block; font-size: 14px; font-variant-numeric: tabular-nums; }
+#tip span { display: block; color: var(--fg-2); }
+#toasts { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 90; display: grid; gap: 8px; justify-items: center; pointer-events: none; width: max-content; max-width: calc(100vw - 32px); }
+.toast { background: var(--fg); color: var(--bg); padding: 10px 14px; border-radius: 10px; font-weight: 500; box-shadow: var(--shadow); animation: tin .18s ease-out; max-width: 100%; }
+.toast.err { background: var(--loss); color: #fff; }
+@keyframes tin { from { transform: translateY(6px); opacity: 0; } to { transform: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .toast { animation: none; } }
+.loading { padding: 48px 0; color: var(--fg-2); text-align: center; }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap top-in">
+    <div class="brand">
+      <span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24"><g fill="#1c1405"><rect x="3" y="9" width="4" height="9" rx="1"/><rect x="10" y="4" width="4" height="12" rx="1"/><rect x="17" y="7" width="4" height="7" rx="1"/></g><g stroke="#1c1405" stroke-width="1.6" stroke-linecap="round"><path d="M5 6v3M5 18v2M12 2v2M12 16v3M19 4v3M19 14v4"/></g></svg></span>
+      <span class="word">Edge<b>Journal</b></span>
+    </div>
+    <span id="storeChip" class="store-chip" title=""><i></i><span>Підключення…</span></span>
+    <div class="top-actions">
+      <button id="btnTheme" class="icon-btn" type="button" title="Тема" aria-label="Перемкнути тему"></button>
+      <button id="btnSettings" class="icon-btn" type="button" title="Налаштування, стратегії, експорт" aria-label="Налаштування"></button>
+      <button id="btnNew" class="btn primary" type="button" title="Нова угода (N)"></button>
+    </div>
+  </div>
+  <nav class="wrap tabs" role="tablist" aria-label="Розділи">
+    <button class="tab" role="tab" data-tab="overview" type="button">Огляд</button>
+    <button class="tab" role="tab" data-tab="trades" type="button">Угоди</button>
+    <button class="tab" role="tab" data-tab="strategies" type="button">Стратегії</button>
+    <button class="tab" role="tab" data-tab="calendar" type="button">Календар</button>
+    <button class="tab" role="tab" data-tab="analytics" type="button">Аналітика</button>
+  </nav>
+</header>
+<div id="demoBar" class="demo-bar" hidden>
+  <div class="wrap"><b>Демо-режим.</b><span class="demo-long">Це згенеровані приклади, не реальні угоди. Зміни тут не зберігаються.</span><span class="demo-short">Приклади, не реальні угоди.</span><span class="grow"></span><button class="btn sm" type="button" id="btnExitDemo">Вийти з демо</button></div>
+</div>
+<main class="wrap">
+  <section id="filters" class="filters" aria-label="Фільтри">
+    <select id="fPeriod" aria-label="Період">
+      <option value="all">Весь час</option>
+      <option value="today">Сьогодні</option>
+      <option value="7d">Останні 7 днів</option>
+      <option value="30d">Останні 30 днів</option>
+      <option value="90d">Останні 90 днів</option>
+      <option value="month">Цей місяць</option>
+      <option value="prev">Минулий місяць</option>
+      <option value="year">Цей рік</option>
+      <option value="custom">Свій діапазон…</option>
+    </select>
+    <span class="f-custom" id="fCustom" hidden><input type="date" id="fFrom" aria-label="Від"><span class="muted">–</span><input type="date" id="fTo" aria-label="До"></span>
+    <select id="fStrategy" aria-label="Стратегія"></select>
+    <button type="button" class="btn sm f-toggle" id="fToggle">Ще фільтри</button>
+    <div class="f-more">
+      <select id="fSymbol" aria-label="Інструмент"></select>
+      <select id="fDir" aria-label="Напрям">
+        <option value="">Long і Short</option>
+        <option value="long">Лише Long</option>
+        <option value="short">Лише Short</option>
+      </select>
+      <select id="fResult" aria-label="Результат">
+        <option value="">Будь-який результат</option>
+        <option value="win">Прибуткові</option>
+        <option value="loss">Збиткові</option>
+        <option value="be">Беззбиткові</option>
+        <option value="open">Відкриті</option>
+      </select>
+      <select id="fMistake" aria-label="Помилки"></select>
+      <select id="fPlan" aria-label="План">
+        <option value="">План: усі</option>
+        <option value="yes">За планом</option>
+        <option value="no">Не за планом</option>
+      </select>
+      <input id="fQ" type="search" placeholder="Пошук: тикер, нотатки, теги" aria-label="Пошук">
+    </div>
+    <button type="button" class="btn ghost sm" id="fReset" hidden>Скинути</button>
+  </section>
+  <div id="view" class="view"><div class="loading">Завантаження журналу…</div></div>
+</main>
+<div id="tip" role="tooltip" hidden></div>
+<div id="toasts" aria-live="polite"></div>
+
+<script>
+(() => {
+'use strict';
+
+/* ---------- utils ---------- */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const ESC = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ESC[c]);
+const clone = o => o == null ? o : JSON.parse(JSON.stringify(o));
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const uid = p => `${p}_${Date.now().toString(36)}${Math.random().toString(36).slice(2, 8)}`;
+const pad = n => String(n).padStart(2, '0');
+const ymd = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+const todayStr = () => ymd(new Date());
+const nowTime = () => { const d = new Date(); return `${pad(d.getHours())}:${pad(d.getMinutes())}`; };
+const uniq = a => [...new Set(a)];
+const strList = v => Array.isArray(v) ? uniq(v.filter(x => typeof x === 'string').map(x => x.trim()).filter(Boolean)) : [];
+const round2 = v => Math.round(v * 100) / 100;
+function num(v) {
+  if (v === '' || v == null) return null;
+  if (typeof v === 'number') return isFinite(v) ? v : null;
+  const s = String(v).replace(/[\s ]/g, '').replace(/−/g, '-').replace(',', '.');
+  if (!/^[-+]?(\d+\.?\d*|\.\d+)(e[-+]?\d+)?$/i.test(s)) return null;
+  const n = parseFloat(s);
+  return isFinite(n) ? n : null;
+}
+const ls = {
+  get(k, d) { try { const v = localStorage.getItem('edge-journal:' + k); return v == null ? d : JSON.parse(v); } catch { return d; } },
+  set(k, v) { try { localStorage.setItem('edge-journal:' + k, JSON.stringify(v)); } catch { /* storage blocked */ } },
+};
+function plural(n, one, few, many) {
+  const a = Math.abs(n) % 100, b = a % 10;
+  if (a > 10 && a < 20) return many;
+  if (b === 1) return one;
+  if (b >= 2 && b <= 4) return few;
+  return many;
+}
+
+/* ---------- formatting ---------- */
+const NF2 = new Intl.NumberFormat('uk-UA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const NF1 = new Intl.NumberFormat('uk-UA', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const NF0 = new Intl.NumberFormat('uk-UA', { maximumFractionDigits: 0 });
+const NFk = new Intl.NumberFormat('uk-UA', { maximumFractionDigits: 1 });
+const NFP = new Intl.NumberFormat('uk-UA', { maximumFractionDigits: 8 });
+const MINUS = '−';
+const MONTHS = ['січ', 'лют', 'бер', 'кві', 'тра', 'чер', 'лип', 'сер', 'вер', 'жов', 'лис', 'гру'];
+const MONTHS_FULL = ['Січень', 'Лютий', 'Березень', 'Квітень', 'Травень', 'Червень', 'Липень', 'Серпень', 'Вересень', 'Жовтень', 'Листопад', 'Грудень'];
+const WD = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'];
+function withCur(body, sign) {
+  const cur = String(cfg().currency || '$').trim() || '$';
+  return /^[$€£]$/.test(cur) ? `${sign}${cur}${body}` : `${sign}${body} ${cur}`;
+}
+function money(v, sign = true) {
+  if (v == null || !isFinite(v)) return '—';
+  return withCur(NF2.format(Math.abs(v)), v < 0 ? MINUS : (sign && v > 0 ? '+' : ''));
+}
+function moneyShort(v, sign = true) {
+  if (v == null || !isFinite(v)) return '—';
+  const a = Math.abs(v);
+  return withCur(compactNum(Math.abs(v)), v < 0 ? MINUS : (sign && v > 0 ? '+' : ''));
+}
+function compactNum(a) { return a >= 1e6 ? NFk.format(a / 1e6) + 'M' : a >= 1e4 ? NF0.format(a / 1e3) + 'k' : a >= 1e3 ? NFk.format(a / 1e3) + 'k' : NF0.format(a); }
+const signedShort = v => (v < 0 ? MINUS : v > 0 ? '+' : '') + compactNum(Math.abs(v));
+const pct = v => v == null || !isFinite(v) ? '—' : NF1.format(v * 100) + '%';
+const rfmt = v => v == null || !isFinite(v) ? '—' : (v > 0 ? '+' : v < 0 ? MINUS : '') + NF2.format(Math.abs(v)) + 'R';
+const ratio = v => v == null ? '—' : v === Infinity ? '∞' : NF2.format(v);
+const price = v => v == null ? '—' : NFP.format(v);
+const cls = v => v > 0 ? 'pos' : v < 0 ? 'neg' : '';
+function fmtDate(s, year = false) {
+  if (!s) return '—';
+  const [y, m, d] = s.split('-');
+  return `${+d} ${MONTHS[+m - 1] || ''}${year ? ' ' + y : ''}`;
+}
+function weekdayIdx(s) { const [y, m, d] = s.split('-').map(Number); return (new Date(y, m - 1, d).getDay() + 6) % 7; }
+
+/* ---------- icons ---------- */
+const I = {
+  plus: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>',
+  gear: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>',
+  sun: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
+  moon: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>',
+  auto: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3v18" /><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg>',
+  x: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  left: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>',
+  right: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>',
+  img: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 16l5-5 4 4 3-3 6 6"/></svg>',
+  zoom: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-5-5M11 8v6M8 11h6"/></svg>',
+};
+
+/* ---------- defaults ---------- */
+const DEFAULT_MISTAKES = ['Вхід без сетапу', 'Ранній вхід', 'Запізнений вхід', 'Пересунув стоп', 'Без стоп-лосу', 'Рано закрив', 'Пересидів збиток', 'Завеликий ризик', 'Овертрейдинг', 'Проти тренду', 'Ігнорував новини', 'Помста ринку'];
+const DEFAULT_EMOTIONS = ['Спокій', 'Впевненість', 'FOMO', 'Страх', 'Жадібність', 'Нетерпіння', 'Втома', 'Злість'];
+const DEFAULT_TF = ['M1', 'M5', 'M15', 'M30', 'H1', 'H4', 'D1', 'W1'];
+const NUM_FIELDS = ['entry', 'stop', 'take', 'exit', 'size', 'risk', 'pnl', 'fees', 'rating'];
+function defaultSettings() {
+  return { currency: '$', startBalance: 0, beThreshold: 0, defaultRisk: null, strategies: [], mistakes: [...DEFAULT_MISTAKES], emotions: [...DEFAULT_EMOTIONS], timeframes: [...DEFAULT_TF] };
+}
+function normSettings(s) {
+  const d = defaultSettings();
+  s = s && typeof s === 'object' ? clone(s) : {};
+  const strategies = Array.isArray(s.strategies) ? s.strategies.filter(x => x && typeof x.name === 'string' && x.name.trim()).map(x => ({ id: String(x.id || uid('s')), name: x.name.trim(), description: String(x.description || '') })) : [];
+  return {
+    currency: typeof s.currency === 'string' && s.currency.trim() ? s.currency.trim() : d.currency,
+    startBalance: num(s.startBalance) ?? 0,
+    beThreshold: Math.abs(num(s.beThreshold) ?? 0),
+    defaultRisk: num(s.defaultRisk),
+    strategies,
+    mistakes: Array.isArray(s.mistakes) ? strList(s.mistakes) : d.mistakes,
+    emotions: Array.isArray(s.emotions) ? strList(s.emotions) : d.emotions,
+    timeframes: Array.isArray(s.timeframes) ? strList(s.timeframes) : d.timeframes,
+  };
+}
+function normTrade(t) {
+  t = { ...(t || {}) };
+  t.id = String(t.id || '').replace(/[^A-Za-z0-9_\-.~:@+]/g, '_').slice(0, 120);
+  if (!t.id || /^\.+$/.test(t.id)) t.id = uid('t');
+  t.date = /^\d{4}-\d{2}-\d{2}$/.test(t.date) ? t.date : todayStr();
+  t.time = /^\d{2}:\d{2}/.test(t.time || '') ? String(t.time).slice(0, 5) : '';
+  t.symbol = String(t.symbol || '').toUpperCase();
+  t.direction = t.direction === 'short' ? 'short' : 'long';
+  t.status = t.status === 'open' ? 'open' : 'closed';
+  t.strategy = String(t.strategy || '').trim();
+  t.timeframe = String(t.timeframe || '');
+  for (const k of NUM_FIELDS) t[k] = num(t[k]);
+  t.images = Array.isArray(t.images) ? t.images.filter(x => typeof x === 'string' && x) : [];
+  t.mistakes = strList(t.mistakes);
+  t.emotions = strList(t.emotions);
+  t.tags = strList(t.tags);
+  t.followedPlan = t.followedPlan === true ? true : t.followedPlan === false ? false : null;
+  for (const k of ['analysis', 'offPlan', 'lesson']) t[k] = String(t[k] || '');
+  t.createdAt = num(t.createdAt) || Date.now();
+  t.updatedAt = num(t.updatedAt) || t.createdAt;
+  return t;
+}
+
+/* ---------- storage backends ---------- */
+const MEM = new Map();
+class MemoryStore {
+  constructor() { this.kind = 'memory'; this.trades = new Map(); this.settings = null; }
+  async load() { return { trades: [...this.trades.values()].map(clone), settings: clone(this.settings) }; }
+  async putTrade(t) { this.trades.set(t.id, clone(t)); }
+  async deleteTrade(id) { this.trades.delete(id); }
+  async putSettings(s) { this.settings = clone(s); }
+  async putImage(blob) { const ref = 'mem:' + uid('img'); MEM.set(ref, blob); return ref; }
+  async deleteImage(ref) { MEM.delete(ref); }
+}
+class LocalStore {
+  constructor(db) { this.kind = 'local'; this.db = db; }
+  static open() {
+    return new Promise((res, rej) => {
+      if (!('indexedDB' in window) || !window.indexedDB) { rej(new Error('IndexedDB недоступний')); return; }
+      let r;
+      try { r = indexedDB.open('edge-journal', 1); } catch (e) { rej(e); return; }
+      r.onupgradeneeded = () => {
+        const d = r.result;
+        if (!d.objectStoreNames.contains('trades')) d.createObjectStore('trades', { keyPath: 'id' });
+        if (!d.objectStoreNames.contains('images')) d.createObjectStore('images');
+        if (!d.objectStoreNames.contains('meta')) d.createObjectStore('meta');
+      };
+      r.onsuccess = () => res(new LocalStore(r.result));
+      r.onerror = () => rej(r.error);
+      r.onblocked = () => rej(new Error('IndexedDB заблоковано іншою вкладкою'));
+    });
+  }
+  req(name, mode, fn) {
+    return new Promise((res, rej) => {
+      let tx;
+      try { tx = this.db.transaction(name, mode); } catch (e) { rej(e); return; }
+      const q = fn(tx.objectStore(name));
+      tx.oncomplete = () => res(q ? q.result : undefined);
+      tx.onerror = () => rej(tx.error);
+      tx.onabort = () => rej(tx.error || new Error('Транзакцію скасовано'));
+    });
+  }
+  async load() {
+    const trades = await this.req('trades', 'readonly', s => s.getAll());
+    const settings = await this.req('meta', 'readonly', s => s.get('settings'));
+    return { trades: trades || [], settings: settings || null };
+  }
+  putTrade(t) { return this.req('trades', 'readwrite', s => s.put(clone(t))); }
+  deleteTrade(id) { return this.req('trades', 'readwrite', s => s.delete(id)); }
+  putSettings(v) { return this.req('meta', 'readwrite', s => s.put(clone(v), 'settings')); }
+  async putImage(blob) { const id = uid('img'); await this.req('images', 'readwrite', s => s.put(blob, id)); return 'idb:' + id; }
+  getBlob(ref) { return this.req('images', 'readonly', s => s.get(ref.slice(4))); }
+  deleteImage(ref) { return this.req('images', 'readwrite', s => s.delete(ref.slice(4))); }
+}
+async function withRetry(fn) {
+  try { return await fn(); } catch (e) {
+    if (e && (e.code === 'unavailable' || e.code === 'store_unavailable')) { await sleep(400 + Math.random() * 600); return fn(); }
+    throw e;
+  }
+}
+/* Claude artifact runtime: trades in the viewer's private db subtree, screenshots in the artifact's asset store. */
+class CloudStore {
+  constructor(db, assets, userId) {
+    this.kind = 'cloud';
+    this.assets = assets;
+    this.settingsRef = db.doc(`data/users/${userId}/settings`);
+    this.col = db.doc(`data/users/${userId}/journal`).collection('trades');
+  }
+  async load() {
+    const [ts, ss] = await Promise.all([this.col.get(), this.settingsRef.get()]);
+    return { trades: ts.docs.map(d => clone(d.data())), settings: ss.exists ? clone(ss.data()) : null };
+  }
+  subscribe(onTrades, onSettings, onError) {
+    this.col.onSnapshot(snap => {
+      if (snap.metadata && snap.metadata.fromCache && snap.empty) return;
+      onTrades(snap.docs.map(d => clone(d.data())));
+    }, onError);
+    this.settingsRef.onSnapshot(snap => { if (snap.exists) onSettings(clone(snap.data())); }, onError);
+  }
+  putTrade(t) { return withRetry(() => this.col.doc(t.id).set(clone(t))); }
+  deleteTrade(id) { return withRetry(() => this.col.doc(id).delete()); }
+  putSettings(s) { return withRetry(() => this.settingsRef.set(clone(s))); }
+  async putImage(blob) {
+    if (!this.assets) throw new Error('У цьому перегляді не можна додавати скріни');
+    const r = await withRetry(() => this.assets.upload(blob, { type: blob.type || 'image/png' }));
+    return 'asset:' + r.id;
+  }
+  async deleteImage(ref) { if (this.assets) await this.assets.delete(ref.slice(6)); }
+}
+function errText(e) {
+  const map = {
+    quota_exceeded: 'Сховище заповнене. Видали старі угоди або скріни.',
+    quota_or_state: 'Ліміт сховища скрінів вичерпано.',
+    too_large: 'Файл завеликий (максимум 20 МБ).',
+    unsupported_type: 'Цей формат зображення не підтримується.',
+    rate_limited: 'Забагато запитів. Спробуй за хвилину.',
+    resource_exhausted: 'Забагато запитів. Спробуй за хвилину.',
+    invalid_argument: 'Немає прав на запис у цей журнал.',
+    revoked: 'Доступ до сховища відкликано.',
+    not_granted: 'Сховище не надало дозвіл.',
+  };
+  return (e && map[e.code]) || (e && e.message) || 'Невідома помилка';
+}
+
+/* ---------- state ---------- */
+function blankFilters() { return { period: 'all', from: '', to: '', strategy: '', symbol: '', dir: '', result: '', mistake: '', plan: '', q: '' }; }
+const S = {
+  store: null,
+  data: { trades: [], settings: defaultSettings() },
+  ready: false,
+  demo: false, demoStore: null, demoData: null,
+  downloads: null,
+  tab: ls.get('tab', 'overview'),
+  f: Object.assign(blankFilters(), ls.get('filters', {})),
+  tradeSort: 'new', stratSort: { k: 'net', d: -1 }, cal: null, listLimit: 100,
+  modal: null, lb: null,
+};
+let readyResolve;
+const readyP = new Promise(r => { readyResolve = r; });
+const D = () => S.demo ? S.demoData : S.data;
+const cfg = () => D().settings;
+const store = () => S.demo ? S.demoStore : S.store;
+function upsertTrade(t) { const a = D().trades; const i = a.findIndex(x => x.id === t.id); if (i >= 0) a[i] = t; else a.push(t); }
+
+/* ---------- trade math ---------- */
+function tradeNet(t) { if (t.pnl == null) return null; return t.pnl - (t.fees || 0); }
+function isClosed(t) { return t.status !== 'open' && tradeNet(t) != null; }
+function outcome(t) {
+  const n = tradeNet(t);
+  if (n == null) return null;
+  if (Math.abs(n) <= (cfg().beThreshold || 0)) return 'be';
+  return n > 0 ? 'win' : 'loss';
+}
+function tradeR(t) {
+  const n = tradeNet(t);
+  if (n != null && t.risk > 0) return n / t.risk;
+  const { entry: e, stop: s, exit: x } = t;
+  if (e != null && s != null && x != null && e !== s) return (t.direction === 'short' ? -1 : 1) * (x - e) / Math.abs(e - s);
+  return null;
+}
+function plannedRR(t) {
+  const { entry: e, stop: s, take: tp } = t;
+  if (e == null || s == null || tp == null || e === s) return null;
+  return Math.abs(tp - e) / Math.abs(e - s);
+}
+const chronoKey = t => `${t.date} ${t.time || '99:99'}`;
+function sortChrono(list) { return [...list].sort((a, b) => chronoKey(a).localeCompare(chronoKey(b)) || a.createdAt - b.createdAt); }
+
+function stats(list) {
+  const closed = sortChrono(list.filter(isClosed));
+  const st = { n: closed.length, wins: 0, losses: 0, be: 0, net: 0, grossWin: 0, grossLoss: 0, sumWin: 0, sumLoss: 0, best: null, worst: null, rSum: 0, rN: 0, maxW: 0, maxL: 0, maxDD: 0, maxDDPct: null, equity: [], cur: null };
+  const start = cfg().startBalance || 0;
+  let cw = 0, cl = 0, cum = 0, peak = start;
+  for (const t of closed) {
+    const n = tradeNet(t), o = outcome(t);
+    st.net += n;
+    if (n > 0) st.grossWin += n; else st.grossLoss += n;
+    if (o === 'win') { st.wins++; st.sumWin += n; cw++; cl = 0; }
+    else if (o === 'loss') { st.losses++; st.sumLoss += n; cl++; cw = 0; }
+    else { st.be++; cw = 0; cl = 0; }
+    st.maxW = Math.max(st.maxW, cw); st.maxL = Math.max(st.maxL, cl);
+    if (!st.best || n > tradeNet(st.best)) st.best = t;
+    if (!st.worst || n < tradeNet(st.worst)) st.worst = t;
+    const r = tradeR(t);
+    if (r != null) { st.rSum += r; st.rN++; }
+    cum += n;
+    const bal = start + cum;
+    if (bal > peak) peak = bal;
+    const dd = peak - bal;
+    if (dd > st.maxDD) { st.maxDD = dd; st.maxDDPct = peak > 0 ? dd / peak : null; }
+    st.equity.push({ t, n, cum });
+  }
+  st.cur = cw ? { type: 'win', n: cw } : cl ? { type: 'loss', n: cl } : null;
+  st.winRate = st.wins + st.losses ? st.wins / (st.wins + st.losses) : null;
+  st.pf = st.grossLoss < 0 ? st.grossWin / -st.grossLoss : (st.grossWin > 0 ? Infinity : null);
+  st.exp = st.n ? st.net / st.n : null;
+  st.avgWin = st.wins ? st.sumWin / st.wins : null;
+  st.avgLoss = st.losses ? st.sumLoss / st.losses : null;
+  st.payoff = st.avgWin != null && st.avgLoss ? st.avgWin / -st.avgLoss : null;
+  st.avgR = st.rN ? st.rSum / st.rN : null;
+  return st;
+}
+function groupStats(list, keyFn) {
+  const m = new Map();
+  for (const t of list) {
+    const k = keyFn(t);
+    for (const key of Array.isArray(k) ? k : [k]) { if (!m.has(key)) m.set(key, []); m.get(key).push(t); }
+  }
+  return [...m].map(([key, items]) => ({ key, list: items, st: stats(items) }));
+}
+
+/* ---------- filters ---------- */
+function shiftDays(n) { const d = new Date(); d.setDate(d.getDate() + n); return ymd(d); }
+function periodBounds(f) {
+  const d = new Date(), y = d.getFullYear(), m = d.getMonth();
+  switch (f.period) {
+    case 'today': return [todayStr(), todayStr()];
+    case '7d': return [shiftDays(-6), ''];
+    case '30d': return [shiftDays(-29), ''];
+    case '90d': return [shiftDays(-89), ''];
+    case 'month': return [`${y}-${pad(m + 1)}-01`, ''];
+    case 'prev': { const p = new Date(y, m - 1, 1), last = new Date(y, m, 0); return [ymd(p), ymd(last)]; }
+    case 'year': return [`${y}-01-01`, ''];
+    case 'custom': return [f.from || '', f.to || ''];
+    default: return ['', ''];
+  }
+}
+function haystack(t) { return [t.symbol, t.strategy, t.timeframe, t.analysis, t.offPlan, t.lesson, ...t.tags, ...t.mistakes, ...t.emotions].join(' ').toLowerCase(); }
+function applyFilters(list) {
+  const f = S.f, [from, to] = periodBounds(f), q = f.q.trim().toLowerCase();
+  return list.filter(t =>
+    (!from || t.date >= from) && (!to || t.date <= to) &&
+    (!f.strategy || (f.strategy === '__none' ? !t.strategy : t.strategy === f.strategy)) &&
+    (!f.symbol || t.symbol === f.symbol) &&
+    (!f.dir || t.direction === f.dir) &&
+    (!f.result || (f.result === 'open' ? t.status === 'open' : isClosed(t) && outcome(t) === f.result)) &&
+    (!f.mistake || (f.mistake === '__any' ? t.mistakes.length > 0 : f.mistake === '__none' ? t.mistakes.length === 0 : t.mistakes.includes(f.mistake))) &&
+    (!f.plan || (f.plan === 'yes' ? t.followedPlan === true : t.followedPlan === false)) &&
+    (!q || haystack(t).includes(q)));
+}
+function activeFilterCount() { const f = S.f; return ['strategy', 'symbol', 'dir', 'result', 'mistake', 'plan', 'q'].filter(k => f[k]).length + (f.period !== 'all' ? 1 : 0); }
+function strategyNames() { return uniq([...cfg().strategies.map(s => s.name), ...D().trades.map(t => t.strategy).filter(Boolean)]); }
+function symbolsList() { return uniq(D().trades.map(t => t.symbol).filter(Boolean)).sort(); }
+function setOptions(sel, opts, val) {
+  const key = JSON.stringify(opts);
+  if (sel._k !== key) { sel.innerHTML = opts.map(([v, l]) => `<option value="${esc(v)}">${esc(l)}</option>`).join(''); sel._k = key; }
+  const ok = opts.some(o => o[0] === val);
+  sel.value = ok ? val : '';
+  return ok;
+}
+function syncFilters() {
+  const f = S.f, hasAny = D().trades.length > 0;
+  $('#filters').hidden = !hasAny;
+  if (!hasAny) return;
+  if (!setOptions($('#fStrategy'), [['', 'Усі стратегії'], ...strategyNames().map(n => [n, n]), ...(D().trades.some(t => !t.strategy) ? [['__none', 'Без стратегії']] : [])], f.strategy)) f.strategy = '';
+  if (!setOptions($('#fSymbol'), [['', 'Усі інструменти'], ...symbolsList().map(s => [s, s])], f.symbol)) f.symbol = '';
+  if (!setOptions($('#fMistake'), [['', 'Помилки: усі угоди'], ['__any', 'Лише з помилками'], ['__none', 'Без помилок'], ...uniq([...cfg().mistakes, ...D().trades.flatMap(t => t.mistakes)]).map(m => [m, m])], f.mistake)) f.mistake = '';
+  $('#fPeriod').value = f.period; $('#fDir').value = f.dir; $('#fResult').value = f.result; $('#fPlan').value = f.plan;
+  $('#fCustom').hidden = f.period !== 'custom';
+  $('#fFrom').value = f.from; $('#fTo').value = f.to;
+  if (document.activeElement !== $('#fQ')) $('#fQ').value = f.q;
+  const n = activeFilterCount();
+  $('#fReset').hidden = !n;
+  $('#fReset').textContent = `Скинути фільтри (${n})`;
+  const more = ['symbol', 'dir', 'result', 'mistake', 'plan', 'q'].filter(k => f[k]).length;
+  $('#fToggle').textContent = more ? `Ще фільтри · ${more}` : 'Ще фільтри';
+}
+function setFilter(patch) { Object.assign(S.f, patch); ls.set('filters', S.f); S.listLimit = 100; render(); }
+
+/* ---------- strategy colors ---------- */
+function stratColor(name) {
+  if (!name) return 'var(--muted)';
+  const i = cfg().strategies.findIndex(s => s.name === name);
+  return i >= 0 && i < 8 ? `var(--s${i + 1})` : 'var(--muted)';
+}
+const stratChip = name => `<span class="schip"><i style="background:${stratColor(name)}"></i><span>${esc(name || 'Без стратегії')}</span></span>`;
+
+/* ---------- images ---------- */
+const urlCache = new Map();
+function dataURLtoBlob(du) {
+  const [head, body] = du.split(',');
+  const type = (head.match(/data:([^;]+)/) || [])[1] || 'application/octet-stream';
+  if (/;base64/.test(head)) { const bin = atob(body); const u8 = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i); return new Blob([u8], { type }); }
+  return new Blob([decodeURIComponent(body)], { type });
+}
+async function getBlob(ref) {
+  if (ref.startsWith('data:')) return dataURLtoBlob(ref);
+  if (ref.startsWith('mem:')) return MEM.get(ref) || null;
+  if (ref.startsWith('idb:')) return S.store && S.store.getBlob ? S.store.getBlob(ref) : null;
+  if (ref.startsWith('asset:')) { const r = await fetch('/_blob/' + ref.slice(6)); if (!r.ok) throw new Error('Скрін не знайдено'); return r.blob(); }
+  return null;
+}
+async function imgURL(ref) {
+  if (!ref) return '';
+  if (ref.startsWith('data:') || ref.startsWith('blob:')) return ref;
+  if (ref.startsWith('asset:')) return '/_blob/' + ref.slice(6);
+  if (urlCache.has(ref)) return urlCache.get(ref);
+  const b = await getBlob(ref);
+  if (!b) return '';
+  const u = URL.createObjectURL(b);
+  urlCache.set(ref, u);
+  return u;
+}
+function hydrateImgs(root) {
+  $$('img[data-ref]', root).forEach(async img => {
+    if (img.getAttribute('src')) return;
+    img.addEventListener('error', () => img.classList.add('broken'), { once: true });
+    try { const u = await imgURL(img.dataset.ref); if (u) img.src = u; else img.classList.add('broken'); } catch { img.classList.add('broken'); }
+  });
+}
+function blobToDataURL(b) { return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = () => rej(r.error); r.readAsDataURL(b); }); }
+async function decodeImage(file) {
+  if (window.createImageBitmap) { try { return await createImageBitmap(file); } catch { /* fall back to <img> */ } }
+  const url = URL.createObjectURL(file);
+  try {
+    const img = new Image();
+    await new Promise((res, rej) => { img.onload = res; img.onerror = () => rej(new Error('Не вдалося прочитати зображення')); img.src = url; });
+    return img;
+  } finally { setTimeout(() => URL.revokeObjectURL(url), 1000); }
+}
+/* Screenshots are re-encoded (WebP, JPEG fallback) and capped at 2560px so the journal stays light. */
+async function processImage(file) {
+  const src = await decodeImage(file);
+  const w = src.width || src.naturalWidth, h = src.height || src.naturalHeight;
+  if (!w || !h) throw new Error('Порожнє зображення');
+  const k = Math.min(1, 2560 / Math.max(w, h));
+  const c = document.createElement('canvas');
+  c.width = Math.round(w * k); c.height = Math.round(h * k);
+  c.getContext('2d').drawImage(src, 0, 0, c.width, c.height);
+  if (src.close) src.close();
+  let blob = await new Promise(r => c.toBlob(r, 'image/webp', 0.9));
+  if (!blob || blob.type !== 'image/webp') blob = await new Promise(r => c.toBlob(r, 'image/jpeg', 0.9));
+  if (!blob) throw new Error('Не вдалося обробити зображення');
+  if (k === 1 && file.size <= blob.size && /^image\/(png|jpeg|webp)$/.test(file.type)) return file;
+  return blob;
+}
+function imagesFrom(dt) {
+  if (!dt) return [];
+  const out = [];
+  for (const it of Array.from(dt.items || [])) if (it.kind === 'file' && it.type.startsWith('image/')) { const f = it.getAsFile(); if (f) out.push(f); }
+  if (!out.length) for (const f of Array.from(dt.files || [])) if (f.type.startsWith('image/')) out.push(f);
+  return out;
+}
+
+/* ---------- toasts & tooltip ---------- */
+function toast(text, kind = '') {
+  const el = document.createElement('div');
+  el.className = 'toast ' + kind;
+  el.textContent = text;
+  $('#toasts').append(el);
+  setTimeout(() => el.remove(), kind === 'err' ? 5200 : 2800);
+}
+const tip = $('#tip');
+function showTip(text, x, y) {
+  tip.textContent = '';
+  String(text).split('\n').forEach((line, i) => { const el = document.createElement(i ? 'span' : 'b'); el.textContent = line; tip.append(el); });
+  tip.hidden = false;
+  moveTip(x, y);
+}
+function moveTip(x, y) {
+  const w = tip.offsetWidth, h = tip.offsetHeight;
+  let left = x + 14, top = y + 14;
+  if (left + w > innerWidth - 8) left = x - w - 14;
+  if (top + h > innerHeight - 8) top = y - h - 14;
+  tip.style.transform = `translate(${Math.max(8, left)}px, ${Math.max(8, top)}px)`;
+}
+function hideTip() { tip.hidden = true; }
+document.addEventListener('pointerover', e => { const t = e.target.closest && e.target.closest('[data-tip]'); if (t) showTip(t.getAttribute('data-tip'), e.clientX, e.clientY); });
+document.addEventListener('pointermove', e => { if (!tip.hidden && e.target.closest && e.target.closest('[data-tip]')) moveTip(e.clientX, e.clientY); });
+document.addEventListener('pointerout', e => { const t = e.target.closest && e.target.closest('[data-tip]'); if (t && !t.contains(e.relatedTarget)) hideTip(); });
+document.addEventListener('focusin', e => { const t = e.target.closest && e.target.closest('[data-tip]'); if (t) { const r = t.getBoundingClientRect(); showTip(t.getAttribute('data-tip'), r.left + r.width / 2, r.top); } });
+document.addEventListener('focusout', hideTip);
+
+/* ---------- charts ---------- */
+const CH = new Map();
+let chSeq = 0;
+function chart(type, data, height) { const id = 'c' + (++chSeq); CH.set(id, { type, data }); return `<div class="chart" data-ch="${id}" style="height:${height}px"></div>`; }
+function drawCharts(root = document) {
+  $$('[data-ch]', root).forEach(el => {
+    const c = CH.get(el.dataset.ch);
+    if (!c || !el.clientWidth) return;
+    if (c.type === 'equity') drawEquity(el, c.data);
+    else if (c.type === 'cols') drawCols(el, c.data);
+  });
+}
+function niceTicks(lo, hi, n) {
+  const span = hi - lo || 1, raw = span / Math.max(1, n - 1), mag = Math.pow(10, Math.floor(Math.log10(raw))), e = raw / mag;
+  const step = (e >= 7.5 ? 10 : e >= 3.5 ? 5 : e >= 1.5 ? 2 : 1) * mag;
+  const out = [];
+  for (let v = Math.floor(lo / step) * step; v <= Math.ceil(hi / step) * step + step / 2; v += step) out.push(+v.toFixed(10));
+  return out;
+}
+function drawEquity(el, pts) {
+  const W = el.clientWidth, H = el.clientHeight, m = { l: 62, r: 16, t: 22, b: 26 };
+  const vals = [0, ...pts.map(p => p.cum)];
+  let lo = Math.min(...vals), hi = Math.max(...vals);
+  if (lo === hi) { hi += 1; lo -= 1; }
+  const ticks = niceTicks(lo, hi, 5);
+  lo = Math.min(lo, ticks[0]); hi = Math.max(hi, ticks[ticks.length - 1]);
+  const N = vals.length, iw = W - m.l - m.r, ih = H - m.t - m.b;
+  const x = i => m.l + (N === 1 ? iw / 2 : i * iw / (N - 1));
+  const y = v => m.t + (hi - v) * ih / (hi - lo);
+  let s = '';
+  for (const t of ticks) s += `<line class="${t === 0 ? 'zerol' : 'gridl'}" x1="${m.l}" x2="${W - m.r}" y1="${y(t).toFixed(1)}" y2="${y(t).toFixed(1)}"/><text x="${m.l - 8}" y="${(y(t) + 4).toFixed(1)}" text-anchor="end">${esc(moneyShort(t, false))}</text>`;
+  const line = vals.map((v, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)} ${y(v).toFixed(1)}`).join('');
+  s += `<path class="eq-area" d="${line}L${x(N - 1).toFixed(1)} ${y(0).toFixed(1)}L${x(0).toFixed(1)} ${y(0).toFixed(1)}Z"/><path class="eq-line" d="${line}"/>`;
+  const labs = Math.max(2, Math.min(6, Math.floor(iw / 110)));
+  const used = new Set();
+  for (let k = 0; k < labs && pts.length; k++) {
+    const i = 1 + Math.round(k * (pts.length - 1) / Math.max(1, labs - 1));
+    if (used.has(i)) continue;
+    used.add(i);
+    const anchor = x(i) < m.l + 40 ? 'start' : x(i) > W - m.r - 40 ? 'end' : 'middle';
+    s += `<text x="${x(i).toFixed(1)}" y="${H - 6}" text-anchor="${anchor}">${esc(fmtDate(pts[i - 1].t.date))}</text>`;
+  }
+  const lastV = vals[N - 1];
+  s += `<circle class="dot" r="4" cx="${x(N - 1).toFixed(1)}" cy="${y(lastV).toFixed(1)}"/>`;
+  s += `<text class="endlab" x="${x(N - 1).toFixed(1)}" y="${(y(lastV) - 10).toFixed(1)}" text-anchor="end">${esc(money(lastV))}</text>`;
+  s += `<line class="xh" y1="${m.t}" y2="${H - m.b}" x1="0" x2="0" visibility="hidden"/><circle class="dot hd" r="4" visibility="hidden"/>`;
+  s += `<rect class="hit" x="${m.l}" y="0" width="${iw}" height="${H}"/>`;
+  el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Крива капіталу: ${esc(money(lastV))} після ${pts.length} угод">${s}</svg>`;
+  const svg = el.firstChild, xh = svg.querySelector('.xh'), hd = svg.querySelector('.hd');
+  const at = clientX => { const r = svg.getBoundingClientRect(); return Math.max(0, Math.min(N - 1, Math.round((clientX - r.left - m.l) / (N === 1 ? 1 : iw / (N - 1))))); };
+  svg.addEventListener('pointermove', e => {
+    const i = at(e.clientX);
+    xh.setAttribute('x1', x(i)); xh.setAttribute('x2', x(i)); xh.setAttribute('visibility', 'visible');
+    hd.setAttribute('cx', x(i)); hd.setAttribute('cy', y(vals[i])); hd.setAttribute('visibility', 'visible');
+    if (i === 0) showTip(`${money(0, false)}\nСтарт`, e.clientX, e.clientY);
+    else { const p = pts[i - 1]; showTip(`${money(p.cum)}\nУгода #${i} · ${fmtDate(p.t.date, true)} · ${p.t.symbol}\nРезультат угоди: ${money(p.n)}`, e.clientX, e.clientY); }
+  });
+  svg.addEventListener('pointerleave', () => { xh.setAttribute('visibility', 'hidden'); hd.setAttribute('visibility', 'hidden'); hideTip(); });
+}
+function barPath(x, y0, y1, w, r) {
+  const h = Math.abs(y1 - y0);
+  if (h < 0.5) return '';
+  r = Math.min(r, h, w / 2);
+  const up = y1 < y0, s = up ? 1 : -1;
+  return `M${x} ${y0}V${y1 + s * r}Q${x} ${y1} ${x + r} ${y1}H${x + w - r}Q${x + w} ${y1} ${x + w} ${y1 + s * r}V${y0}Z`;
+}
+function drawCols(el, items) {
+  const W = el.clientWidth, H = el.clientHeight, m = { l: 56, r: 6, t: 10, b: 24 };
+  const vals = items.map(i => i.value || 0);
+  let lo = Math.min(0, ...vals), hi = Math.max(0, ...vals);
+  if (lo === hi) hi = 1;
+  const ticks = niceTicks(lo, hi, 4);
+  lo = Math.min(lo, ticks[0]); hi = Math.max(hi, ticks[ticks.length - 1]);
+  const iw = W - m.l - m.r, ih = H - m.t - m.b, band = iw / items.length, bw = Math.min(24, band * 0.62);
+  const y = v => m.t + (hi - v) * ih / (hi - lo);
+  const every = band < 16 ? 3 : band < 26 ? 2 : 1;
+  let s = '';
+  for (const t of ticks) s += `<line class="${t === 0 ? 'zerol' : 'gridl'}" x1="${m.l}" x2="${W - m.r}" y1="${y(t).toFixed(1)}" y2="${y(t).toFixed(1)}"/><text x="${m.l - 8}" y="${(y(t) + 4).toFixed(1)}" text-anchor="end">${esc(moneyShort(t, false))}</text>`;
+  items.forEach((it, i) => {
+    const x0 = m.l + i * band;
+    if (it.n) s += `<path class="${it.value >= 0 ? 'col-p' : 'col-n'}" d="${barPath(+(x0 + (band - bw) / 2).toFixed(1), +y(0).toFixed(1), +y(it.value).toFixed(1), +bw.toFixed(1), 4)}"/>`;
+    if (i % every === 0) s += `<text x="${(x0 + band / 2).toFixed(1)}" y="${H - 6}" text-anchor="middle">${esc(it.label)}</text>`;
+    const tipText = it.n ? `${money(it.value)}\n${it.full || it.label} · ${it.n} ${plural(it.n, 'угода', 'угоди', 'угод')}\nВінрейт ${pct(it.wr)}` : `Немає угод\n${it.full || it.label}`;
+    s += `<rect class="hit" x="${x0.toFixed(1)}" y="0" width="${band.toFixed(1)}" height="${H}" data-tip="${esc(tipText)}"/><rect class="hl" pointer-events="none" x="${x0.toFixed(1)}" y="${m.t}" width="${band.toFixed(1)}" height="${ih}" fill="transparent"/>`;
+  });
+  el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Результат по групах">${s}</svg>`;
+}
+function sparkline(list, w = 96, h = 26) {
+  const st = stats(list);
+  if (st.equity.length < 2) return '';
+  const vals = [0, ...st.equity.map(p => p.cum)];
+  const lo = Math.min(...vals), hi = Math.max(...vals), span = hi - lo || 1;
+  const pts = vals.map((v, i) => `${(1 + i * (w - 2) / (vals.length - 1)).toFixed(1)},${(2 + (hi - v) * (h - 4) / span).toFixed(1)}`).join(' ');
+  return `<svg class="spark" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" aria-hidden="true"><polyline points="${pts}" style="stroke:${st.net >= 0 ? 'var(--profit)' : 'var(--loss)'}"/></svg>`;
+}
+function divBars(rows) {
+  if (!rows.length) return '<p class="muted">Немає даних.</p>';
+  const max = Math.max(...rows.map(r => Math.abs(r.value)), 1e-9);
+  const hasNeg = rows.some(r => r.value < 0), hasPos = rows.some(r => r.value > 0);
+  const zero = hasNeg && hasPos ? 50 : hasNeg ? 100 : 0;
+  const span = hasNeg && hasPos ? 50 : 100;
+  return `<div class="bars">${rows.map(r => {
+    const w = Math.abs(r.value) / max * span;
+    const bar = r.value >= 0 ? `<i class="b p" style="left:${zero}%;width:${w.toFixed(2)}%"></i>` : `<i class="b n" style="left:${(zero - w).toFixed(2)}%;width:${w.toFixed(2)}%"></i>`;
+    return `<div class="bar-row" data-tip="${esc(`${money(r.value)}\n${r.label}${r.tip ? '\n' + r.tip : ''}`)}"><div class="lab">${r.labelHTML || esc(r.label)}${r.note ? `<small>${esc(r.note)}</small>` : ''}</div><div class="bar-track"><span class="zero" style="left:${zero}%"></span>${bar}</div><div class="val ${cls(r.value)}">${esc(money(r.value))}</div></div>`;
+  }).join('')}</div>`;
+}
+
+/* ---------- rendering: shared bits ---------- */
+function tile(label, value, sub, hint = '', c = '') {
+  return `<div class="tile"${hint ? ` title="${esc(hint)}"` : ''}><div class="lbl">${esc(label)}</div><div class="val num ${c}">${esc(value)}</div><div class="sub">${esc(sub)}</div></div>`;
+}
+function thumbHTML(t) {
+  return `<div class="thumb">${t.images.length ? `<img data-ref="${esc(t.images[0])}" alt="" loading="lazy">` : I.img}</div>`;
+}
+function tradeRowsHTML(list, compact = false) {
+  if (!list.length) return '<p class="muted">Угод немає.</p>';
+  const head = compact ? '' : '<div class="trow head" aria-hidden="true"><div></div><div>Дата</div><div>Інструмент</div><div>Стратегія</div><div class="c-r">R</div><div class="c-res">Результат</div><div style="text-align:right">Дисципліна</div></div>';
+  return `<div class="tlist">${head}${list.map(t => {
+    const net = tradeNet(t), open = t.status === 'open';
+    const flags = [
+      t.followedPlan === true ? '<span class="tag ok" title="За планом">✓ план</span>' : '',
+      t.followedPlan === false ? '<span class="tag m" title="Не за планом">✕ план</span>' : '',
+      t.mistakes.length ? `<span class="tag m" title="${esc(t.mistakes.join(', '))}">${t.mistakes.length} ${plural(t.mistakes.length, 'помилка', 'помилки', 'помилок')}</span>` : '',
+    ].join('');
+    return `<div class="trow${compact ? ' compact' : ''}" data-act="open" data-id="${esc(t.id)}" role="button" tabindex="0" aria-label="${esc(`${t.symbol} ${fmtDate(t.date, true)}`)}">
+      <div class="c-th">${thumbHTML(t)}</div>
+      <div class="c-date num">${esc(fmtDate(t.date))}<small>${esc(t.time || '')}</small></div>
+      <div class="c-sym"><span class="sym">${esc(t.symbol || '—')}</span><span class="dir ${t.direction}">${t.direction === 'long' ? 'Long' : 'Short'}</span>${open ? '<span class="tag">відкрита</span>' : ''}${t.demo ? '<span class="tag demo">демо</span>' : ''}</div>
+      <div class="c-strat">${stratChip(t.strategy)}</div>
+      <div class="c-r">${esc(rfmt(tradeR(t)))}</div>
+      <div class="c-res ${open ? '' : cls(net)}">${open ? '—' : esc(money(net))}</div>
+      <div class="c-flags">${flags}</div>
+      <div class="c-meta">${esc(fmtDate(t.date))}${t.time ? ' ' + esc(t.time) : ''} · ${esc(t.strategy || 'Без стратегії')}</div>
+    </div>`;
+  }).join('')}</div>`;
+}
+function noResultsHTML() {
+  return `<div class="panel nores"><b>За цими фільтрами угод немає.</b><span>Зміни період або інші фільтри.</span><button class="btn" data-act="reset-filters" type="button">Скинути фільтри</button></div>`;
+}
+function emptyHTML() {
+  return `<section class="panel empty">
+    <h2>Тут буде твоя торгова статистика</h2>
+    <p>Записуй кожну угоду зі скріном графіка, стратегією і коротким аналізом. Журнал сам порахує чистий P&amp;L, вінрейт і profit factor по кожній стратегії, покаже криву капіталу, календар днів і скільки коштують помилки.</p>
+    <div class="acts"><button class="btn primary" data-act="new" type="button">${I.plus}Додати першу угоду</button><button class="btn" data-act="demo" type="button">Подивитись на демо-даних</button></div>
+    <div class="steps">
+      <div><b>Скопіюй скрін графіка</b>Будь-яким інструментом: Win+Shift+S, Cmd+Ctrl+Shift+4 або скрін на телефоні.</div>
+      <div><b>Натисни <span class="kbd">Ctrl</span>+<span class="kbd">V</span> на сторінці</b>Відкриється нова угода зі скріном. На телефоні: «Нова угода» → утримуй поле скріну → «Вставити».</div>
+      <div><b>Заповни угоду</b>Інструмент, стратегія, результат, аналіз і що пішло не за планом. Решта рахується автоматично.</div>
+    </div>
+  </section>`;
+}
+
+/* ---------- overview ---------- */
+function insightsHTML(list, st) {
+  const closed = list.filter(isClosed);
+  if (closed.length < 5) return `<p class="muted">Висновки з'являться, коли у вибірці буде хоча б 5 закритих угод.</p>`;
+  const out = [];
+  const g = groupStats(closed, t => t.strategy || 'Без стратегії').filter(r => r.st.n >= 3);
+  if (g.length >= 2) {
+    const best = g.reduce((a, b) => b.st.net > a.st.net ? b : a), worst = g.reduce((a, b) => b.st.net < a.st.net ? b : a);
+    if (best.st.net > 0) out.push(['good', '▲', `Найприбутковіша стратегія — <b>${esc(best.key)}</b>: ${esc(money(best.st.net))} за ${best.st.n} угод, вінрейт ${esc(pct(best.st.winRate))}.`]);
+    if (worst.st.net < 0) out.push(['bad', '▼', `<b>${esc(worst.key)}</b> у мінусі: ${esc(money(worst.st.net))} за ${worst.st.n} угод. Перевір правила входу або зменш ризик на ній.`]);
+  }
+  const yes = stats(closed.filter(t => t.followedPlan === true)), no = stats(closed.filter(t => t.followedPlan === false));
+  if (yes.n >= 2 && no.n >= 2) {
+    out.push([no.exp < yes.exp ? 'bad' : 'info', '!', `Угоди не за планом дають у середньому ${esc(money(no.exp))} на угоду, за планом — ${esc(money(yes.exp))} (${no.n} проти ${yes.n} угод).`]);
+  }
+  const mk = groupStats(closed.filter(t => t.mistakes.length), t => t.mistakes).filter(r => r.st.net < 0).sort((a, b) => a.st.net - b.st.net)[0];
+  if (mk) out.push(['bad', '▼', `Найдорожча помилка — <b>${esc(mk.key)}</b>: ${esc(money(mk.st.net))} у ${mk.st.n} ${plural(mk.st.n, 'угоді', 'угодах', 'угодах')}.`]);
+  const wd = groupStats(closed, t => weekdayIdx(t.date)).filter(r => r.st.n >= 2);
+  if (wd.length >= 3) {
+    const b = wd.reduce((a, c) => c.st.net > a.st.net ? c : a), w = wd.reduce((a, c) => c.st.net < a.st.net ? c : a);
+    if (b.st.net > 0 && w.st.net < 0) out.push(['info', '●', `Найкращий день — ${WD[b.key]} (${esc(money(b.st.net))}), найгірший — ${WD[w.key]} (${esc(money(w.st.net))}).`]);
+  }
+  const L = stats(closed.filter(t => t.direction === 'long')), Sh = stats(closed.filter(t => t.direction === 'short'));
+  if (L.n >= 3 && Sh.n >= 3 && Math.sign(L.net) !== Math.sign(Sh.net)) {
+    const good = L.net > Sh.net ? ['Long', L] : ['Short', Sh], bad = L.net > Sh.net ? ['Short', Sh] : ['Long', L];
+    out.push(['info', '●', `${good[0]} заробляє (${esc(money(good[1].net))}), ${bad[0]} втрачає (${esc(money(bad[1].net))}).`]);
+  }
+  if (st.cur && st.cur.type === 'loss' && st.cur.n >= 3) out.push(['bad', '!', `Зараз ${st.cur.n} збиткові угоди поспіль. Варто зробити паузу і перечитати план.`]);
+  if (!out.length) out.push(['info', '●', 'Явних перекосів поки немає. Продовжуй заповнювати стратегії, помилки й дотримання плану, щоб з’явились порівняння.']);
+  return `<ul class="ins">${out.map(([k, ic, h]) => `<li class="${k}"><span class="ic" aria-hidden="true">${ic}</span><span>${h}</span></li>`).join('')}</ul>`;
+}
+function stratMiniHTML(list) {
+  const rows = groupStats(list.filter(isClosed), t => t.strategy).sort((a, b) => b.st.net - a.st.net);
+  if (!rows.length) return '<p class="muted">Немає закритих угод.</p>';
+  return `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Стратегія</th><th>Угод</th><th>Вінрейт</th><th>Net</th></tr></thead><tbody>${rows.map(r => `
+    <tr class="click" data-act="strategy" data-v="${esc(r.key || '__none')}" tabindex="0"><td>${stratChip(r.key)}</td><td>${r.st.n}</td><td>${esc(pct(r.st.winRate))}</td><td class="${cls(r.st.net)}">${esc(money(r.st.net))}</td></tr>`).join('')}</tbody></table></div>`;
+}
+function overviewHTML(list) {
+  const st = stats(list);
+  const open = list.filter(t => t.status === 'open');
+  if (!st.n) return (open.length ? `<section class="panel"><h3>Відкриті угоди</h3>${tradeRowsHTML(open, true)}</section>` : '') + noResultsHTML();
+  const first = st.equity[0].t.date, last = st.equity[st.equity.length - 1].t.date;
+  const sb = cfg().startBalance || 0;
+  return `
+  <section class="panel hero">
+    <div class="hero-main">
+      <div class="lbl">Чистий результат</div>
+      <div class="hero-num num ${cls(st.net)}">${esc(money(st.net))}</div>
+      <div class="sub">${st.n} ${plural(st.n, 'закрита угода', 'закриті угоди', 'закритих угод')} · ${esc(fmtDate(first, true))} – ${esc(fmtDate(last, true))}</div>
+      ${sb ? `<div class="sub">Баланс ${esc(money(sb + st.net, false))} · ${esc(pct(st.net / sb))} до стартових ${esc(money(sb, false))}</div>` : ''}
+      ${open.length ? `<div class="sub">${open.length} ${plural(open.length, 'відкрита угода', 'відкриті угоди', 'відкритих угод')} не враховано</div>` : ''}
+    </div>
+    <div class="tiles">
+      ${tile('Вінрейт', pct(st.winRate), `${st.wins} W · ${st.losses} L · ${st.be} BE`, 'Прибуткові ÷ (прибуткові + збиткові). Беззбиткові не враховуються.')}
+      ${tile('Profit factor', ratio(st.pf), `${money(st.grossWin)} / ${money(st.grossLoss)}`, 'Валовий прибуток ÷ валовий збиток. Більше 1 — система заробляє.', st.pf == null ? '' : st.pf >= 1 ? 'pos' : 'neg')}
+      ${tile('Очікування', money(st.exp), 'середній результат угоди', 'Чистий результат ÷ кількість угод.', cls(st.exp))}
+      ${tile('Середній R', rfmt(st.avgR), st.rN ? `по ${st.rN} ${plural(st.rN, 'угоді', 'угодах', 'угодах')} з ризиком` : 'вкажи ризик або стоп-лос', 'Результат у одиницях ризику. Рахується з ризику в грошах або з цін входу, стопу і виходу.', cls(st.avgR))}
+      ${tile('Сер. прибуток', money(st.avgWin), `payoff ${ratio(st.payoff)}`, 'Payoff = середній прибуток ÷ середній збиток.', 'pos')}
+      ${tile('Сер. збиток', money(st.avgLoss), st.worst ? `найгірша ${money(tradeNet(st.worst))}` : '—', '', 'neg')}
+      ${tile('Макс. просідання', st.maxDD ? money(-st.maxDD) : money(0, false), st.maxDDPct != null ? `${pct(st.maxDDPct)} від піку` : 'від піку кривої капіталу', 'Найбільше падіння від попереднього максимуму.', st.maxDD ? 'neg' : '')}
+      ${tile('Серії', `${st.maxW} W / ${st.maxL} L`, st.cur ? `зараз ${st.cur.n} ${st.cur.type === 'win' ? 'W' : 'L'} поспіль` : 'максимум поспіль', 'Найдовші серії прибуткових і збиткових угод.')}
+    </div>
+  </section>
+  <div class="g2">
+    <section class="panel"><h3>Крива капіталу<span class="aside">чистий P&amp;L наростаючим підсумком</span></h3>${chart('equity', st.equity, 280)}</section>
+    <section class="panel"><h3>Висновки</h3>${insightsHTML(list, st)}</section>
+  </div>
+  <div class="g2 even">
+    <section class="panel"><h3>Стратегії<button class="btn ghost sm aside" data-act="tab" data-v="strategies" type="button">Детально</button></h3>${stratMiniHTML(list)}</section>
+    <section class="panel"><h3>Останні угоди<button class="btn ghost sm aside" data-act="tab" data-v="trades" type="button">Усі угоди</button></h3>${tradeRowsHTML(sortChrono(list).reverse().slice(0, 6), true)}</section>
+  </div>`;
+}
+
+/* ---------- trades tab ---------- */
+const TRADE_SORTS = {
+  new: ['Спочатку нові', (a, b) => chronoKey(b).localeCompare(chronoKey(a)) || b.createdAt - a.createdAt],
+  old: ['Спочатку старі', (a, b) => chronoKey(a).localeCompare(chronoKey(b)) || a.createdAt - b.createdAt],
+  best: ['Найбільший прибуток', (a, b) => (tradeNet(b) ?? -Infinity) - (tradeNet(a) ?? -Infinity)],
+  worst: ['Найбільший збиток', (a, b) => (tradeNet(a) ?? Infinity) - (tradeNet(b) ?? Infinity)],
+  r: ['За R', (a, b) => (tradeR(b) ?? -Infinity) - (tradeR(a) ?? -Infinity)],
+};
+function tradesHTML(list) {
+  if (!list.length) return noResultsHTML();
+  const sorted = [...list].sort(TRADE_SORTS[S.tradeSort][1]);
+  const st = stats(list);
+  const shown = sorted.slice(0, S.listLimit);
+  return `<section class="panel">
+    <div class="list-head">
+      <span class="count">${list.length} ${plural(list.length, 'угода', 'угоди', 'угод')}</span>
+      <span class="hint">Net <b class="${cls(st.net)}">${esc(money(st.net))}</b> · вінрейт ${esc(pct(st.winRate))}</span>
+      <span class="grow"></span>
+      <select class="inp" id="tradeSort" aria-label="Сортування">${Object.entries(TRADE_SORTS).map(([k, [l]]) => `<option value="${k}"${k === S.tradeSort ? ' selected' : ''}>${l}</option>`).join('')}</select>
+      <button class="btn sm" data-act="csv" type="button">Експорт CSV</button>
+    </div>
+    ${tradeRowsHTML(shown)}
+    ${sorted.length > shown.length ? `<div style="text-align:center;margin-top:12px"><button class="btn" data-act="more" type="button">Показати ще ${Math.min(100, sorted.length - shown.length)}</button></div>` : ''}
+  </section>
+  <p class="hint">Скопіюй скрін і натисни <span class="kbd">Ctrl</span>+<span class="kbd">V</span> будь-де на сторінці, щоб одразу почати нову угоду з ним. <span class="kbd">N</span> — нова угода без скріна.</p>`;
+}
+
+/* ---------- strategies tab ---------- */
+const STRAT_COLS = [
+  ['name', 'Стратегія'], ['n', 'Угод'], ['wr', 'Вінрейт'], ['net', 'Net P&L'], ['pf', 'PF'], ['exp', 'Очікування'], ['avgR', 'Сер. R'], ['avgWin', 'Сер. +'], ['avgLoss', 'Сер. −'], ['best', 'Найкраща'], ['worst', 'Найгірша'],
+];
+function stratSortVal(r, k) {
+  const st = r.st;
+  return { name: (r.key || 'яяя').toLowerCase(), n: st.n, wr: st.winRate ?? -1, net: st.net, pf: st.pf === Infinity ? 1e12 : (st.pf ?? -1), exp: st.exp ?? -1e12, avgR: st.avgR ?? -1e12, avgWin: st.avgWin ?? -1e12, avgLoss: st.avgLoss ?? -1e12, best: st.best ? tradeNet(st.best) : -1e12, worst: st.worst ? tradeNet(st.worst) : -1e12 }[k];
+}
+function strategiesHTML(list) {
+  const closed = list.filter(isClosed);
+  if (!closed.length) return noResultsHTML();
+  const { k, d } = S.stratSort;
+  const rows = groupStats(closed, t => t.strategy).sort((a, b) => { const va = stratSortVal(a, k), vb = stratSortVal(b, k); return (va < vb ? -1 : va > vb ? 1 : 0) * d; });
+  const desc = cfg().strategies.filter(s => s.description.trim() && rows.some(r => r.key === s.name));
+  return `
+  <section class="panel">
+    <h3>Порівняння стратегій<span class="aside">клік по рядку — угоди стратегії</span></h3>
+    <div class="tbl-wrap"><table class="tbl"><thead><tr>${STRAT_COLS.map(([key, label]) => `<th class="sort" data-act="sort-strat" data-k="${key}"${key === k ? ` aria-sort="${d > 0 ? 'ascending' : 'descending'}"` : ''}>${label}${key === k ? (d > 0 ? ' ↑' : ' ↓') : ''}</th>`).join('')}<th>Динаміка</th></tr></thead>
+    <tbody>${rows.map(r => {
+      const st = r.st;
+      return `<tr class="click" data-act="strategy" data-v="${esc(r.key || '__none')}" tabindex="0">
+        <td>${stratChip(r.key)}</td><td>${st.n}</td>
+        <td><span class="wr">${esc(pct(st.winRate))}<span class="meter"><i style="width:${((st.winRate || 0) * 100).toFixed(1)}%"></i></span></span></td>
+        <td class="${cls(st.net)}"><b>${esc(money(st.net))}</b></td>
+        <td>${esc(ratio(st.pf))}</td><td class="${cls(st.exp)}">${esc(money(st.exp))}</td><td>${esc(rfmt(st.avgR))}</td>
+        <td>${esc(money(st.avgWin))}</td><td>${esc(money(st.avgLoss))}</td>
+        <td>${st.best ? esc(money(tradeNet(st.best))) : '—'}</td><td>${st.worst ? esc(money(tradeNet(st.worst))) : '—'}</td>
+        <td>${sparkline(r.list)}</td></tr>`;
+    }).join('')}</tbody></table></div>
+  </section>
+  <div class="g2 even">
+    <section class="panel"><h3>Чистий P&amp;L за стратегіями</h3>${divBars([...rows].sort((a, b) => b.st.net - a.st.net).map(r => ({ label: r.key || 'Без стратегії', labelHTML: stratChip(r.key), value: r.st.net, tip: `${r.st.n} угод · вінрейт ${pct(r.st.winRate)}` })))}</section>
+    <section class="panel"><h3>Очікування на угоду</h3>${divBars([...rows].sort((a, b) => b.st.exp - a.st.exp).map(r => ({ label: r.key || 'Без стратегії', labelHTML: stratChip(r.key), value: r.st.exp, tip: `PF ${ratio(r.st.pf)} · сер. R ${rfmt(r.st.avgR)}` })))}</section>
+  </div>
+  ${desc.length ? `<section class="panel"><h3>Правила стратегій<button class="btn ghost sm aside" data-act="settings" type="button">Редагувати</button></h3><div class="bars">${desc.map(s => `<div><div>${stratChip(s.name)}</div><p class="note" style="margin:6px 0 0;white-space:pre-wrap;color:var(--fg-2)">${esc(s.description)}</p></div>`).join('')}</div></section>` : `<p class="hint">Опиши правила кожної стратегії в <button class="btn ghost sm" data-act="settings" type="button">Налаштуваннях</button> — вони будуть підказкою у формі угоди.</p>`}`;
+}
+
+/* ---------- calendar tab ---------- */
+function calendarHTML(list) {
+  const closed = list.filter(isClosed);
+  if (!S.cal) { const lastT = sortChrono(closed).pop(); S.cal = (lastT ? lastT.date : todayStr()).slice(0, 7); }
+  const [y, m] = S.cal.split('-').map(Number);
+  const days = new Map();
+  for (const t of closed) {
+    if (!t.date.startsWith(S.cal)) continue;
+    const d = days.get(t.date) || { net: 0, n: 0, w: 0, l: 0 };
+    d.net += tradeNet(t); d.n++;
+    const o = outcome(t); if (o === 'win') d.w++; else if (o === 'loss') d.l++;
+    days.set(t.date, d);
+  }
+  const vals = [...days.values()];
+  const maxAbs = Math.max(1e-9, ...vals.map(d => Math.abs(d.net)));
+  const monthNet = vals.reduce((a, d) => a + d.net, 0);
+  const green = vals.filter(d => d.net > 0).length, red = vals.filter(d => d.net < 0).length;
+  const bestDay = [...days].sort((a, b) => b[1].net - a[1].net)[0], worstDay = [...days].sort((a, b) => a[1].net - b[1].net)[0];
+  const first = new Date(y, m - 1, 1), offset = (first.getDay() + 6) % 7, dim = new Date(y, m, 0).getDate();
+  const weeks = Math.ceil((offset + dim) / 7), today = todayStr();
+  let cells = WD.map(w => `<div class="wd">${w}</div>`).join('') + '<div class="wd wkh">Тиждень</div>';
+  for (let w = 0; w < weeks; w++) {
+    let wk = { net: 0, n: 0 };
+    for (let k = 0; k < 7; k++) {
+      const dn = w * 7 + k - offset + 1;
+      if (dn < 1 || dn > dim) { cells += '<div class="day out" aria-hidden="true"></div>'; continue; }
+      const ds = `${y}-${pad(m)}-${pad(dn)}`, d = days.get(ds);
+      if (d) { wk.net += d.net; wk.n += d.n; }
+      const tint = d && d.net ? `background:color-mix(in srgb, ${d.net > 0 ? 'var(--profit)' : 'var(--loss)'} ${Math.round(8 + 34 * Math.abs(d.net) / maxAbs)}%, var(--surface-2))` : '';
+      cells += d
+        ? `<button type="button" class="day has${ds === today ? ' today' : ''}" style="${tint}" data-act="day" data-v="${ds}" data-tip="${esc(`${money(d.net)}\n${fmtDate(ds, true)} · ${d.n} ${plural(d.n, 'угода', 'угоди', 'угод')}\n${d.w} W · ${d.l} L`)}"><span class="d">${dn}</span><span class="v"><span class="vl">${esc(moneyShort(d.net))}</span><span class="vs">${esc(signedShort(d.net))}</span></span><span class="n">${d.n} ${plural(d.n, 'угода', 'угоди', 'угод')}</span></button>`
+        : `<div class="day${ds === today ? ' today' : ''}"><span class="d">${dn}</span></div>`;
+    }
+    cells += `<div class="wk">${wk.n ? `<span class="d muted" style="font-size:12px">Тиждень ${w + 1}</span><span class="v ${cls(wk.net)}">${esc(moneyShort(wk.net))}</span><span class="n">${wk.n} ${plural(wk.n, 'угода', 'угоди', 'угод')}</span>` : ''}</div>`;
+  }
+  return `<section class="panel">
+    <div class="cal-head">
+      <button class="icon-btn" data-act="cal" data-v="-1" type="button" aria-label="Попередній місяць">${I.left}</button>
+      <h2>${MONTHS_FULL[m - 1]} ${y}</h2>
+      <button class="icon-btn" data-act="cal" data-v="1" type="button" aria-label="Наступний місяць">${I.right}</button>
+      <div class="cal-sum">
+        <span>Місяць: <b class="${cls(monthNet)}">${esc(money(monthNet))}</b></span>
+        <span>Днів у плюсі: <b>${green}</b> · у мінусі: <b>${red}</b></span>
+        ${bestDay ? `<span>Найкращий: <b class="pos">${esc(money(bestDay[1].net))}</b> (${esc(fmtDate(bestDay[0]))})</span>` : ''}
+        ${worstDay && worstDay[1].net < 0 ? `<span>Найгірший: <b class="neg">${esc(money(worstDay[1].net))}</b> (${esc(fmtDate(worstDay[0]))})</span>` : ''}
+      </div>
+    </div>
+    <div class="cal">${cells}</div>
+  </section>
+  <p class="hint">Клік по дню відкриває угоди цього дня. Колір клітинки — знак і розмір денного результату.</p>`;
+}
+
+/* ---------- analytics tab ---------- */
+function cmpCard(label, list, extra = '') {
+  const st = stats(list);
+  return `<div><span class="lbl">${esc(label)}</span><span class="big num ${cls(st.net)}">${st.n ? esc(money(st.net)) : '—'}</span><span class="sub">${st.n} ${plural(st.n, 'угода', 'угоди', 'угод')} · вінрейт ${esc(pct(st.winRate))}</span><span class="sub">очікування ${esc(money(st.exp))}${extra}</span></div>`;
+}
+function groupTable(rows, firstLabel) {
+  if (!rows.length) return '<p class="muted">Немає даних.</p>';
+  return `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>${esc(firstLabel)}</th><th>Угод</th><th>Вінрейт</th><th>Net P&amp;L</th><th>Сер.</th></tr></thead><tbody>${rows.map(r => `
+    <tr><td>${r.labelHTML || esc(r.key)}</td><td>${r.st.n}</td><td>${esc(pct(r.st.winRate))}</td><td class="${cls(r.st.net)}">${esc(money(r.st.net))}</td><td class="${cls(r.st.exp)}">${esc(money(r.st.exp))}</td></tr>`).join('')}</tbody></table></div>`;
+}
+function analyticsHTML(list) {
+  const closed = list.filter(isClosed);
+  if (!closed.length) return noResultsHTML();
+  const withM = closed.filter(t => t.mistakes.length);
+  const mk = groupStats(withM, t => t.mistakes).sort((a, b) => a.st.net - b.st.net);
+  const wd = WD.map((label, i) => { const g = closed.filter(t => weekdayIdx(t.date) === i), st = stats(g); return { label, full: ['Понеділок', 'Вівторок', 'Середа', 'Четвер', "П'ятниця", 'Субота', 'Неділя'][i], value: st.net, n: st.n, wr: st.winRate }; });
+  const timed = closed.filter(t => t.time);
+  let hrs = Array.from({ length: 24 }, (_, h) => { const g = timed.filter(t => +t.time.slice(0, 2) === h), st = stats(g); return { label: String(h), full: `${pad(h)}:00–${pad(h)}:59`, value: st.net, n: st.n, wr: st.winRate }; });
+  const used = hrs.map((h, i) => h.n ? i : -1).filter(i => i >= 0);
+  if (used.length) hrs = hrs.slice(Math.max(0, Math.min(...used) - 1), Math.min(24, Math.max(...used) + 2));
+  const emo = groupStats(closed.filter(t => t.emotions.length), t => t.emotions).sort((a, b) => b.st.n - a.st.n);
+  const sym = groupStats(closed, t => t.symbol || '—').sort((a, b) => b.st.net - a.st.net);
+  const rat = groupStats(closed.filter(t => t.rating), t => t.rating).sort((a, b) => b.key - a.key).map(r => ({ ...r, labelHTML: `<span style="color:var(--accent-text);letter-spacing:1px">${'★'.repeat(r.key)}</span><span class="muted">${'★'.repeat(5 - r.key)}</span>` }));
+  const tfs = groupStats(closed.filter(t => t.timeframe), t => t.timeframe).sort((a, b) => b.st.n - a.st.n);
+  const noPlan = closed.filter(t => t.followedPlan === null);
+  return `
+  <div class="g2 even">
+    <section class="panel"><h3>Дисципліна</h3><div class="cmp">${cmpCard('За планом', closed.filter(t => t.followedPlan === true))}${cmpCard('Не за планом', closed.filter(t => t.followedPlan === false))}${noPlan.length ? cmpCard('Не вказано', noPlan) : ''}</div></section>
+    <section class="panel"><h3>Long vs Short</h3><div class="cmp">${cmpCard('Long', closed.filter(t => t.direction === 'long'))}${cmpCard('Short', closed.filter(t => t.direction === 'short'))}</div></section>
+  </div>
+  <section class="panel"><h3>Ціна помилок<span class="aside">чистий результат угод, де була помилка</span></h3>
+    ${mk.length ? divBars(mk.map(r => ({ label: r.key, value: r.st.net, note: `× ${r.st.n}`, tip: `${r.st.n} ${plural(r.st.n, 'угода', 'угоди', 'угод')} · вінрейт ${pct(r.st.winRate)}` }))) : '<p class="muted">Помилок не відмічено. Відмічай їх у формі угоди, щоб бачити, скільки вони коштують.</p>'}
+    ${mk.length ? `<div class="cmp" style="margin-top:16px">${cmpCard('Угоди без помилок', closed.filter(t => !t.mistakes.length))}${cmpCard('Угоди з помилками', withM)}</div>` : ''}
+  </section>
+  <div class="g2 even">
+    <section class="panel"><h3>Дні тижня<span class="aside">чистий P&amp;L</span></h3>${chart('cols', wd, 220)}</section>
+    <section class="panel"><h3>Година входу<span class="aside">чистий P&amp;L</span></h3>${timed.length ? chart('cols', hrs, 220) : '<p class="muted">Вказуй час входу, щоб бачити найкращі години.</p>'}</section>
+  </div>
+  <div class="g2 even">
+    <section class="panel"><h3>Інструменти</h3>${groupTable(sym, 'Інструмент')}</section>
+    <section class="panel"><h3>Емоції</h3>${emo.length ? groupTable(emo, 'Емоція') : '<p class="muted">Емоції ще не відмічені.</p>'}</section>
+  </div>
+  <div class="g2 even">
+    <section class="panel"><h3>Оцінка виконання</h3>${rat.length ? groupTable(rat, 'Оцінка') : '<p class="muted">Став угодам оцінку від 1 до 5.</p>'}</section>
+    <section class="panel"><h3>Таймфрейми</h3>${tfs.length ? groupTable(tfs, 'Таймфрейм') : '<p class="muted">Таймфрейми ще не вказані.</p>'}</section>
+  </div>`;
+}
+
+/* ---------- main render ---------- */
+const STORE_LABELS = {
+  cloud: ['cloud', 'Хмара Claude', 'Угоди зберігаються у твоєму приватному сховищі цього артефакту і доступні з будь-якого пристрою.'],
+  local: ['', 'Цей браузер', 'Дані зберігаються в IndexedDB цього браузера. Роби резервну копію: Налаштування → Експорт.'],
+  memory: ['warn', 'Не зберігається', 'Браузер не дав доступ до сховища. Дані зникнуть після закриття сторінки — експортуй JSON.'],
+};
+function renderChrome() {
+  const chip = $('#storeChip');
+  if (S.demo) { chip.className = 'store-chip demo'; chip.lastChild.textContent = 'Демо'; chip.title = 'Демо-режим: дані не зберігаються'; }
+  else if (S.store) { const [c, l, tt] = STORE_LABELS[S.store.kind]; chip.className = 'store-chip ' + c; chip.lastChild.textContent = l; chip.title = tt; }
+  $('#demoBar').hidden = !S.demo;
+  $$('.tab').forEach(b => b.setAttribute('aria-selected', String(b.dataset.tab === S.tab)));
+}
+function render() {
+  renderChrome();
+  syncFilters();
+  const v = $('#view');
+  CH.clear();
+  const all = D().trades;
+  if (!S.ready) return;
+  if (!all.length) { v.innerHTML = emptyHTML(); return; }
+  const list = applyFilters(all);
+  const fn = { overview: overviewHTML, trades: tradesHTML, strategies: strategiesHTML, calendar: calendarHTML, analytics: analyticsHTML }[S.tab] || overviewHTML;
+  v.innerHTML = fn(list);
+  hydrateImgs(v);
+  drawCharts(v);
+}
+let rz;
+window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => drawCharts($('#view')), 120); });
+
+/* ---------- modal system ---------- */
+function modal(html, opts = {}) {
+  closeModal(true);
+  const back = document.createElement('div');
+  back.className = 'mback';
+  back.innerHTML = `<div class="modal ${opts.cls || ''}" role="dialog" aria-modal="true" aria-label="${esc(opts.label || '')}">${html}</div>`;
+  document.body.append(back);
+  document.body.classList.add('modal-open');
+  let downOnBack = false;
+  back.addEventListener('pointerdown', e => { downOnBack = e.target === back; });
+  back.addEventListener('click', e => {
+    if ((e.target === back && downOnBack && !opts.guard) || e.target.closest('[data-close]')) tryClose();
+  });
+  S.modal = { el: back, type: opts.type || '', guard: opts.guard || null, addFiles: null, onClose: opts.onClose || null };
+  hideTip();
+  return back.firstElementChild;
+}
+function closeModal(silent = false) {
+  if (!S.modal) return;
+  const m = S.modal;
+  S.modal = null;
+  m.el.remove();
+  document.body.classList.remove('modal-open');
+  if (m.onClose && !silent) m.onClose();
+  if (!silent && S.staleView) { S.staleView = false; render(); }
+}
+/* Live updates from another device re-render now, or right after the open dialog closes. */
+function refreshSoon() { if (S.demo) return; if (S.modal) S.staleView = true; else render(); }
+function tryClose() {
+  if (!S.modal) return;
+  if (S.modal.guard && S.modal.guard()) return;
+  closeModal();
+}
+
+/* ---------- trade detail ---------- */
+function galleryHTML(images) {
+  if (!images.length) return '';
+  return `<div class="gal"><button type="button" class="main" data-lb="0" aria-label="Відкрити скрін на весь екран"><img data-ref="${esc(images[0])}" alt="Скріншот угоди"></button>${images.length > 1 ? `<div class="rest">${images.slice(1).map((r, i) => `<button type="button" data-lb="${i + 1}" aria-label="Скрін ${i + 2}"><img data-ref="${esc(r)}" alt="" loading="lazy"></button>`).join('')}</div>` : ''}</div>`;
+}
+function openTrade(id) {
+  const t = D().trades.find(x => x.id === id);
+  if (!t) return;
+  const net = tradeNet(t), open = t.status === 'open', o = outcome(t);
+  const facts = [
+    ['Вхід', price(t.entry)], ['Стоп-лос', price(t.stop)], ['Тейк-профіт', price(t.take)], ['Вихід', price(t.exit)],
+    ['Обсяг', price(t.size)], ['Ризик', t.risk != null ? money(t.risk, false) : '—'], ['Комісія', t.fees ? money(t.fees, false) : '—'],
+    ['Плановий R:R', plannedRR(t) != null ? '1 : ' + NF2.format(plannedRR(t)) : '—'], ['Фактичний R', rfmt(tradeR(t))], ['Таймфрейм', t.timeframe || '—'],
+  ];
+  const notes = [['Аналіз і причина входу', t.analysis, ''], ['Що пішло не за планом', t.offPlan, 'warn'], ['Урок / висновок', t.lesson, '']].filter(n => n[1].trim());
+  const el = modal(`
+    <div class="mhead"><h2><span class="mono">${esc(t.symbol || '—')}</span><span class="dir ${t.direction}">${t.direction === 'long' ? 'Long' : 'Short'}</span>${t.demo ? '<span class="tag demo">демо</span>' : ''}</h2><span class="muted">${esc(fmtDate(t.date, true))}${t.time ? ', ' + esc(t.time) : ''}</span><button class="icon-btn" data-close type="button" aria-label="Закрити">${I.x}</button></div>
+    <div class="mbody">
+      <div class="det-top">
+        <div class="det-res num ${open ? '' : cls(net)}">${open ? 'Відкрита' : esc(money(net))}</div>
+        <div class="det-meta"><span class="num">${esc(rfmt(tradeR(t)))}</span>${stratChip(t.strategy)}${o ? `<span class="tag ${o === 'win' ? 'ok' : o === 'loss' ? 'm' : ''}">${o === 'win' ? 'Прибуток' : o === 'loss' ? 'Збиток' : 'Беззбиток'}</span>` : ''}${t.fees ? `<span class="muted">до комісії ${esc(money(t.pnl))}</span>` : ''}</div>
+      </div>
+      ${galleryHTML(t.images)}
+      <div class="facts">${facts.map(([k, v]) => `<div class="fact"><div class="k">${k}</div><div class="v">${esc(v)}</div></div>`).join('')}</div>
+      ${notes.length ? notes.map(([h, txt, c]) => `<div class="note ${c}"><h4>${h}</h4><p>${esc(txt)}</p></div>`).join('') : '<p class="muted">Нотаток немає. Додай аналіз через «Редагувати».</p>'}
+      <div class="disc-grid">
+        <div><span class="sub-lbl">Дисципліна</span><div class="tags">${t.followedPlan === true ? '<span class="tag ok">✓ За планом</span>' : t.followedPlan === false ? '<span class="tag m">✕ Не за планом</span>' : '<span class="tag">План не вказано</span>'}${t.rating ? `<span class="tag" title="Оцінка виконання">${'★'.repeat(t.rating)}${'☆'.repeat(5 - t.rating)}</span>` : ''}</div></div>
+        <div><span class="sub-lbl">Помилки</span><div class="tags">${t.mistakes.length ? t.mistakes.map(m => `<span class="tag m">${esc(m)}</span>`).join('') : '<span class="muted">немає</span>'}</div></div>
+        <div><span class="sub-lbl">Емоції</span><div class="tags">${t.emotions.length ? t.emotions.map(m => `<span class="tag">${esc(m)}</span>`).join('') : '<span class="muted">не вказано</span>'}</div></div>
+        <div><span class="sub-lbl">Теги</span><div class="tags">${t.tags.length ? t.tags.map(m => `<span class="tag">#${esc(m)}</span>`).join('') : '<span class="muted">немає</span>'}</div></div>
+      </div>
+    </div>
+    <div class="mfoot"><div class="msg" id="delBox"><button class="btn danger" data-a="del" type="button">Видалити</button></div><button class="btn" data-a="dup" type="button">Дублювати</button><button class="btn primary" data-a="edit" type="button">Редагувати</button></div>`, { label: 'Угода ' + t.symbol, type: 'detail' });
+  hydrateImgs(el);
+  el.addEventListener('click', async e => {
+    const lb = e.target.closest('[data-lb]');
+    if (lb) { lightbox(t.images, +lb.dataset.lb); return; }
+    const a = e.target.closest('[data-a]');
+    if (!a) return;
+    if (a.dataset.a === 'edit') openTradeForm(t);
+    else if (a.dataset.a === 'dup') openTradeForm(t, { dup: true });
+    else if (a.dataset.a === 'del') {
+      $('#delBox', el).innerHTML = `<span>Видалити угоду${t.images.length ? ' і скріни' : ''} назавжди?</span><button class="btn danger solid sm" data-a="del-yes" type="button">Так, видалити</button><button class="btn ghost sm" data-a="del-no" type="button">Ні</button>`;
+    } else if (a.dataset.a === 'del-no') {
+      $('#delBox', el).innerHTML = '<button class="btn danger" data-a="del" type="button">Видалити</button>';
+    } else if (a.dataset.a === 'del-yes') {
+      a.disabled = true;
+      try { await deleteTrade(t); closeModal(); toast('Угоду видалено'); render(); }
+      catch (err) { a.disabled = false; toast(errText(err), 'err'); }
+    }
+  });
+}
+async function deleteTrade(t) {
+  await store().deleteTrade(t.id);
+  D().trades = D().trades.filter(x => x.id !== t.id);
+  for (const r of t.images) { store().deleteImage(r).catch(() => {}); if (urlCache.has(r)) { URL.revokeObjectURL(urlCache.get(r)); urlCache.delete(r); } }
+}
+
+/* ---------- lightbox ---------- */
+function lightbox(items, start = 0) {
+  if (!items.length) return;
+  const lb = document.createElement('div');
+  lb.className = 'lb';
+  lb.setAttribute('role', 'dialog');
+  lb.setAttribute('aria-label', 'Перегляд скріну');
+  lb.innerHTML = `<div class="lb-bar"><span class="lb-c"></span><span class="grow"></span>${items.length > 1 ? `<button type="button" data-a="prev" aria-label="Попередній">${I.left}</button><button type="button" data-a="next" aria-label="Наступний">${I.right}</button>` : ''}<button type="button" data-a="zoom" aria-label="Масштаб 100%">${I.zoom}</button><button type="button" data-a="close" aria-label="Закрити">${I.x}</button></div><div class="lb-stage"><img alt="Скріншот угоди"></div>`;
+  document.body.append(lb);
+  const img = $('img', lb), stage = $('.lb-stage', lb), counter = $('.lb-c', lb);
+  let i = start;
+  const show = async () => {
+    stage.classList.remove('zoom');
+    img.removeAttribute('src');
+    const it = items[i];
+    counter.textContent = items.length > 1 ? `${i + 1} / ${items.length}` : '';
+    try { img.src = typeof it === 'string' ? await imgURL(it) : it.url; } catch { /* broken image */ }
+  };
+  const close = () => { lb.remove(); S.lb = null; };
+  const step = d => { i = (i + d + items.length) % items.length; show(); };
+  S.lb = { close, step };
+  lb.addEventListener('click', e => {
+    const a = e.target.closest('[data-a]');
+    if (a) { const k = a.dataset.a; if (k === 'close') close(); else if (k === 'prev') step(-1); else if (k === 'next') step(1); else stage.classList.toggle('zoom'); return; }
+    if (e.target === img) stage.classList.toggle('zoom');
+    else if (e.target === stage) close();
+  });
+  let sx = null;
+  stage.addEventListener('pointerdown', e => { sx = stage.classList.contains('zoom') ? null : e.clientX; });
+  stage.addEventListener('pointerup', e => { if (sx != null && Math.abs(e.clientX - sx) > 60 && items.length > 1) step(e.clientX < sx ? 1 : -1); sx = null; });
+  show();
+}
+
+/* ---------- trade form ---------- */
+const fld = (id, label, val, attrs = '', c = '') => `<label class="fld ${c}" for="${id}"><span>${label}</span><input id="${id}" value="${esc(val ?? '')}" ${attrs}></label>`;
+const numStr = v => v == null ? '' : String(v);
+const seg = (id, opts, val) => `<div class="seg" id="${id}" role="group">${opts.map(([v, l]) => `<button type="button" data-v="${v}" aria-pressed="${String(v === val)}">${l}</button>`).join('')}</div>`;
+const segVal = (root, id) => { const b = $(`#${id} [aria-pressed="true"]`, root); return b ? b.dataset.v : ''; };
+function chipsHTML(id, all, selected, m = false) {
+  return `<div class="chips" id="${id}">${uniq([...all, ...selected]).map(x => `<button type="button" class="chip${m ? ' m' : ''}" data-v="${esc(x)}" aria-pressed="${String(selected.includes(x))}">${esc(x)}</button>`).join('')}<input class="chip-add" data-for="${id}" placeholder="+ своя" aria-label="Додати свій варіант" maxlength="40"></div>`;
+}
+function openTradeForm(src, { files = [], dup = false } = {}) {
+  const isNew = !src || dup;
+  const c = cfg();
+  const t = src ? clone(src) : { date: todayStr(), time: nowTime(), direction: 'long', status: 'closed', strategy: '', mistakes: [], emotions: [], tags: [], images: [], risk: c.defaultRisk, followedPlan: null, rating: null };
+  if (dup) { delete t.id; t.images = []; t.date = todayStr(); t.time = nowTime(); t.exit = null; t.pnl = null; t.fees = null; t.offPlan = ''; t.lesson = ''; t.mistakes = []; t.emotions = []; t.rating = null; t.followedPlan = null; delete t.demo; }
+  const draft = { images: (isNew ? [] : t.images).map(ref => ({ ref })), orig: isNew ? [] : [...t.images], dirty: false, busy: 0 };
+  const canClip = !!(navigator.clipboard && navigator.clipboard.read) && !window.claude;
+  const el = modal(`
+  <form id="tradeForm" novalidate>
+    <div class="mhead"><h2>${isNew ? (dup ? 'Копія угоди' : 'Нова угода') : 'Редагування угоди'}</h2><button class="icon-btn" data-x type="button" aria-label="Закрити">${I.x}</button></div>
+    <div class="mbody">
+      <section class="fsec">
+        <h4>Скріншоти</h4>
+        <div class="pz-row">
+          <div class="pz" id="tf-pz" contenteditable="true" tabindex="0" role="textbox" aria-label="Поле для вставки скріншота" inputmode="none" data-ph="Встав скрін: Ctrl+V (Cmd+V). Або перетягни файл сюди. На телефоні: утримуй тут і натисни «Вставити»."></div>
+          <div class="pz-btns"><button type="button" class="btn" id="tf-pick">Обрати файл</button>${canClip ? '<button type="button" class="btn" id="tf-clip">З буфера</button>' : ''}</div>
+          <input type="file" id="tf-file" accept="image/*" multiple hidden>
+        </div>
+        <div class="thumbs" id="tf-thumbs"></div>
+      </section>
+      <section class="fsec">
+        <h4>Угода</h4>
+        <div class="fgrid">
+          ${fld('tf-date', 'Дата', t.date, 'type="date" required')}
+          ${fld('tf-time', 'Час входу', t.time, 'type="time"')}
+          ${fld('tf-symbol', 'Інструмент', t.symbol, 'list="dl-sym" autocomplete="off" placeholder="EURUSD" required class="mono" autocapitalize="characters"')}
+          <div class="fld"><span>Напрям</span>${seg('tf-dir', [['long', 'Long'], ['short', 'Short']], t.direction)}</div>
+          ${fld('tf-strategy', 'Стратегія', t.strategy, 'list="dl-strat" autocomplete="off" placeholder="Обери або введи нову"', 'span2')}
+          ${fld('tf-tf', 'Таймфрейм', t.timeframe, 'list="dl-tf" autocomplete="off" placeholder="H1"')}
+          <div class="fld"><span>Статус</span>${seg('tf-status', [['closed', 'Закрита'], ['open', 'Відкрита']], t.status)}</div>
+        </div>
+        <div class="srules" id="tf-srules" hidden></div>
+        <datalist id="dl-sym">${symbolsList().map(s => `<option value="${esc(s)}"></option>`).join('')}</datalist>
+        <datalist id="dl-strat">${strategyNames().map(s => `<option value="${esc(s)}"></option>`).join('')}</datalist>
+        <datalist id="dl-tf">${c.timeframes.map(s => `<option value="${esc(s)}"></option>`).join('')}</datalist>
+      </section>
+      <section class="fsec">
+        <h4>Ціни і результат</h4>
+        <div class="fgrid">
+          ${fld('tf-entry', 'Вхід', numStr(t.entry), 'inputmode="decimal" autocomplete="off" class="mono"')}
+          ${fld('tf-stop', 'Стоп-лос', numStr(t.stop), 'inputmode="decimal" autocomplete="off" class="mono"')}
+          ${fld('tf-take', 'Тейк-профіт', numStr(t.take), 'inputmode="decimal" autocomplete="off" class="mono"')}
+          ${fld('tf-exit', 'Вихід', numStr(t.exit), 'inputmode="decimal" autocomplete="off" class="mono"')}
+          ${fld('tf-size', 'Обсяг (лот / к-сть)', numStr(t.size), 'inputmode="decimal" autocomplete="off" class="mono"')}
+          ${fld('tf-risk', `Ризик, ${esc(c.currency)}`, numStr(t.risk), 'inputmode="decimal" autocomplete="off" class="mono" placeholder="на скільки готовий втратити"')}
+          <label class="fld" for="tf-pnl"><span>Результат, ${esc(c.currency)} <span class="muted">(мінус для збитку)</span></span><span class="with-btn"><input id="tf-pnl" value="${esc(numStr(t.pnl))}" inputmode="decimal" autocomplete="off" class="mono" placeholder="-50 або 120"><button type="button" class="btn sm" id="tf-neg" title="Змінити знак (на телефоні немає мінуса)" aria-label="Змінити знак результату">±</button><button type="button" class="btn sm" id="tf-calcbtn" title="(вихід − вхід) × обсяг. Для форексу і ф'ючерсів вводь результат вручну з терміналу." hidden>= з цін</button></span></label>
+          ${fld('tf-fees', `Комісія, ${esc(c.currency)}`, numStr(t.fees), 'inputmode="decimal" autocomplete="off" class="mono" placeholder="0"')}
+        </div>
+        <div class="calc" id="tf-calc"></div>
+      </section>
+      <section class="fsec">
+        <h4>Аналіз</h4>
+        <div class="fgrid">
+          <label class="fld full" for="tf-analysis"><span>Аналіз і причина входу</span><textarea id="tf-analysis" rows="4" placeholder="Що побачив на графіку, контекст ринку, чому увійшов саме тут">${esc(t.analysis || '')}</textarea></label>
+          <label class="fld span2" for="tf-offplan"><span>Що пішло не за планом</span><textarea id="tf-offplan" rows="3" placeholder="Де відхилився від плану і чому">${esc(t.offPlan || '')}</textarea></label>
+          <label class="fld span2" for="tf-lesson"><span>Урок / висновок</span><textarea id="tf-lesson" rows="3" placeholder="Що зроблю інакше наступного разу">${esc(t.lesson || '')}</textarea></label>
+        </div>
+      </section>
+      <section class="fsec">
+        <h4>Дисципліна і емоції</h4>
+        <div class="disc-grid">
+          <div><span class="sub-lbl">Дотримався плану?</span>${seg('tf-plan', [['yes', 'Так'], ['no', 'Ні'], ['', 'Не вказано']], t.followedPlan === true ? 'yes' : t.followedPlan === false ? 'no' : '')}</div>
+          <div><span class="sub-lbl">Оцінка виконання</span><div class="stars" id="tf-stars" role="group" aria-label="Оцінка від 1 до 5">${[1, 2, 3, 4, 5].map(n => `<button type="button" data-v="${n}" class="${t.rating >= n ? 'on' : ''}" aria-label="Оцінка ${n} з 5">★</button>`).join('')}</div></div>
+          <div><span class="sub-lbl">Помилки</span>${chipsHTML('tf-mistakes', c.mistakes, t.mistakes, true)}</div>
+          <div><span class="sub-lbl">Емоції</span>${chipsHTML('tf-emotions', c.emotions, t.emotions)}</div>
+          ${fld('tf-tags', 'Теги через кому', t.tags.join(', '), 'autocomplete="off" placeholder="новини, азія, перший вхід"', 'full')}
+        </div>
+      </section>
+    </div>
+    <div class="mfoot"><div class="msg" id="tf-msg"></div><button class="btn ghost" data-x type="button">Скасувати</button><button class="btn primary" type="submit" id="tf-save">Зберегти</button></div>
+  </form>`, { label: 'Угода', type: 'form', guard: () => draft.dirty && confirmLeave() });
+  const form = $('#tradeForm', el);
+  let rating = t.rating || null;
+  const msg = $('#tf-msg', el);
+  function confirmLeave() {
+    if (msg.dataset.pending) return false;
+    msg.className = 'msg';
+    msg.dataset.pending = '1';
+    msg.innerHTML = '<span>Є незбережені зміни.</span><button type="button" class="btn danger sm" data-leave="yes">Закрити без збереження</button>';
+    return true;
+  }
+  el.addEventListener('click', e => {
+    if (e.target.closest('[data-leave]')) { closeModal(); return; }
+    if (e.target.closest('[data-x]')) { if (!draft.dirty || !confirmLeave()) closeModal(); return; }
+  });
+  form.addEventListener('input', e => { if (e.target.id !== 'tf-pz') { draft.dirty = true; if (msg.dataset.pending) { delete msg.dataset.pending; msg.textContent = ''; } } });
+  // segmented controls, chips, stars
+  form.addEventListener('click', e => {
+    const sb = e.target.closest('.seg button');
+    if (sb) { $$('button', sb.parentElement).forEach(b => b.setAttribute('aria-pressed', String(b === sb))); draft.dirty = true; updCalc(); return; }
+    const ch = e.target.closest('.chip');
+    if (ch) { ch.setAttribute('aria-pressed', String(ch.getAttribute('aria-pressed') !== 'true')); draft.dirty = true; return; }
+    const st = e.target.closest('#tf-stars button');
+    if (st) { const v = +st.dataset.v; rating = rating === v ? null : v; $$('#tf-stars button', form).forEach(b => b.classList.toggle('on', +b.dataset.v <= (rating || 0))); draft.dirty = true; }
+  });
+  form.addEventListener('keydown', e => {
+    const add = e.target.closest('.chip-add');
+    if (add && e.key === 'Enter') {
+      e.preventDefault();
+      const v = add.value.trim();
+      if (!v) return;
+      const box = $('#' + add.dataset.for, form);
+      let chip = $$('.chip', box).find(c2 => c2.dataset.v === v);
+      if (!chip) { chip = document.createElement('button'); chip.type = 'button'; chip.className = 'chip' + (add.dataset.for === 'tf-mistakes' ? ' m' : ''); chip.dataset.v = v; chip.textContent = v; box.insertBefore(chip, add); }
+      chip.setAttribute('aria-pressed', 'true');
+      add.value = '';
+      draft.dirty = true;
+    }
+    if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); $('#tf-save', el).click(); }
+  });
+  // strategy rules hint
+  const srules = $('#tf-srules', el);
+  const showRules = () => {
+    const s = cfg().strategies.find(x => x.name === $('#tf-strategy', el).value.trim());
+    srules.hidden = !(s && s.description.trim());
+    if (!srules.hidden) { srules.textContent = ''; const b = document.createElement('b'); b.textContent = 'Правила: '; srules.append(b, document.createTextNode(s.description)); }
+  };
+  $('#tf-strategy', el).addEventListener('input', showRules);
+  showRules();
+  // live calc
+  const g = id => $('#' + id, el).value;
+  function updCalc() {
+    const dir = segVal(el, 'tf-dir') === 'short' ? -1 : 1;
+    const tt = { direction: dir > 0 ? 'long' : 'short', entry: num(g('tf-entry')), stop: num(g('tf-stop')), take: num(g('tf-take')), exit: num(g('tf-exit')), risk: num(g('tf-risk')), pnl: num(g('tf-pnl')), fees: num(g('tf-fees')), size: num(g('tf-size')) };
+    const rr = plannedRR(tt), r = tradeR(tt);
+    const bal = (cfg().startBalance || 0) + stats(D().trades).net;
+    const parts = [
+      `Плановий R:R <b>${rr != null ? '1 : ' + esc(NF2.format(rr)) : '—'}</b>`,
+      `Фактичний R <b>${esc(rfmt(r))}</b>`,
+      tt.pnl != null && tt.fees ? `Чистий результат <b>${esc(money(tt.pnl - tt.fees))}</b>` : '',
+      tt.risk && bal > 0 ? `Ризик <b>${esc(pct(tt.risk / bal))}</b> від балансу` : '',
+    ].filter(Boolean);
+    $('#tf-calc', el).innerHTML = parts.join('<span class="muted">·</span>');
+    $('#tf-calcbtn', el).hidden = !(tt.entry != null && tt.exit != null && tt.size);
+  }
+  form.addEventListener('input', updCalc);
+  $('#tf-neg', el).addEventListener('click', () => {
+    const inp = $('#tf-pnl', el), v = num(inp.value);
+    inp.value = v == null ? '-' : String(-v);
+    inp.focus();
+    draft.dirty = true;
+    updCalc();
+  });
+  $('#tf-calcbtn', el).addEventListener('click', () => {
+    const dir = segVal(el, 'tf-dir') === 'short' ? -1 : 1;
+    const v = round2(dir * (num(g('tf-exit')) - num(g('tf-entry'))) * num(g('tf-size')));
+    $('#tf-pnl', el).value = String(v);
+    draft.dirty = true;
+    updCalc();
+  });
+  updCalc();
+  // screenshots
+  const thumbs = $('#tf-thumbs', el);
+  function renderThumbs() {
+    thumbs.innerHTML = draft.images.map((im, i) => `<figure>${im.ref ? `<img data-ref="${esc(im.ref)}" alt="Скрін ${i + 1}" data-i="${i}">` : `<img src="${esc(im.url)}" alt="Скрін ${i + 1}" data-i="${i}">`}<button type="button" class="rm" data-rm="${i}" aria-label="Прибрати скрін">${I.x}</button>${i === 0 ? '<span class="cover">обкладинка</span>' : ''}</figure>`).join('') + (draft.busy ? `<figure class="busy">Обробка…</figure>` : '');
+    hydrateImgs(thumbs);
+  }
+  thumbs.addEventListener('click', e => {
+    const rm = e.target.closest('[data-rm]');
+    if (rm) { const [im] = draft.images.splice(+rm.dataset.rm, 1); if (im && im.url) URL.revokeObjectURL(im.url); draft.dirty = true; renderThumbs(); return; }
+    const im = e.target.closest('img[data-i]');
+    if (im) lightbox(draft.images.map(x => x.ref || { url: x.url }), +im.dataset.i);
+  });
+  async function addFiles(list) {
+    const imgs = Array.from(list || []).filter(f => f && f.type && f.type.startsWith('image/'));
+    if (!imgs.length) { toast('У буфері або файлі немає зображення', 'err'); return; }
+    draft.busy += imgs.length; renderThumbs();
+    for (const f of imgs) {
+      try { const blob = await processImage(f); draft.images.push({ blob, url: URL.createObjectURL(blob) }); draft.dirty = true; }
+      catch (err) { toast(errText(err), 'err'); }
+      draft.busy--; renderThumbs();
+    }
+  }
+  S.modal.addFiles = addFiles;
+  const pz = $('#tf-pz', el);
+  pz.addEventListener('input', () => { pz.textContent = ''; });
+  pz.addEventListener('keydown', e => { if (!(e.ctrlKey || e.metaKey) && e.key.length === 1) e.preventDefault(); });
+  $('#tf-pick', el).addEventListener('click', () => $('#tf-file', el).click());
+  $('#tf-file', el).addEventListener('change', e => { addFiles(e.target.files); e.target.value = ''; });
+  const clipBtn = $('#tf-clip', el);
+  if (clipBtn) clipBtn.addEventListener('click', async () => {
+    try {
+      const items = await navigator.clipboard.read();
+      const out = [];
+      for (const it of items) { const type = it.types.find(x => x.startsWith('image/')); if (type) out.push(new File([await it.getType(type)], 'clipboard', { type })); }
+      addFiles(out);
+    } catch { toast('Браузер не дав доступ до буфера. Натисни Ctrl+V.', 'err'); }
+  });
+  const modalEl = el;
+  modalEl.addEventListener('dragover', e => { if (e.dataTransfer && Array.from(e.dataTransfer.types || []).includes('Files')) { e.preventDefault(); modalEl.classList.add('drag'); } });
+  modalEl.addEventListener('dragleave', e => { if (e.target === modalEl || !modalEl.contains(e.relatedTarget)) modalEl.classList.remove('drag'); });
+  modalEl.addEventListener('drop', e => { e.preventDefault(); e.stopPropagation(); modalEl.classList.remove('drag'); addFiles(imagesFrom(e.dataTransfer)); });
+  renderThumbs();
+  if (files.length) addFiles(files);
+  // save
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    if (draft.busy) { msg.className = 'msg err'; msg.textContent = 'Зачекай, скріни ще обробляються.'; return; }
+    const symbol = g('tf-symbol').trim().toUpperCase().replace(/\s+/g, '');
+    const status = segVal(el, 'tf-status') || 'closed';
+    const pnl = num(g('tf-pnl'));
+    const date = g('tf-date');
+    const errs = [];
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) errs.push('вкажи дату');
+    if (!symbol) errs.push('вкажи інструмент');
+    if (status === 'closed' && pnl == null) errs.push('вкажи результат або познач угоду як відкриту');
+    for (const [id, label] of [['tf-entry', 'вхід'], ['tf-stop', 'стоп'], ['tf-take', 'тейк'], ['tf-exit', 'вихід'], ['tf-size', 'обсяг'], ['tf-risk', 'ризик'], ['tf-pnl', 'результат'], ['tf-fees', 'комісія']]) if (g(id).trim() && num(g(id)) == null) errs.push(`«${label}» має бути числом`);
+    if (errs.length) { msg.className = 'msg err'; msg.textContent = 'Перевір: ' + errs.join(', ') + '.'; return; }
+    const pressed = id => $$(`#${id} .chip[aria-pressed="true"]`, el).map(b => b.dataset.v);
+    const plan = segVal(el, 'tf-plan');
+    const out = normTrade({
+      ...t,
+      id: isNew ? uid('t') : t.id,
+      date, time: g('tf-time'), symbol,
+      direction: segVal(el, 'tf-dir') || 'long', status,
+      strategy: g('tf-strategy').trim(), timeframe: g('tf-tf').trim(),
+      entry: g('tf-entry'), stop: g('tf-stop'), take: g('tf-take'), exit: g('tf-exit'), size: g('tf-size'), risk: g('tf-risk'), pnl: g('tf-pnl'), fees: g('tf-fees'),
+      analysis: g('tf-analysis').trim(), offPlan: g('tf-offplan').trim(), lesson: g('tf-lesson').trim(),
+      followedPlan: plan === 'yes' ? true : plan === 'no' ? false : null,
+      rating, mistakes: pressed('tf-mistakes'), emotions: pressed('tf-emotions'),
+      tags: g('tf-tags').split(',').map(s => s.trim().replace(/^#/, '')).filter(Boolean),
+      createdAt: isNew ? Date.now() : t.createdAt, updatedAt: Date.now(),
+    });
+    if (S.demo) out.demo = true;
+    const btn = $('#tf-save', el);
+    btn.disabled = true; btn.textContent = 'Збереження…';
+    msg.className = 'msg'; msg.textContent = '';
+    try {
+      await readyP;
+      const st = store();
+      const refs = [];
+      for (const im of draft.images) {
+        if (!im.ref) { msg.textContent = `Завантаження скрінів ${refs.length + 1}/${draft.images.length}…`; im.ref = await st.putImage(im.blob); urlCache.set(im.ref, im.url); }
+        refs.push(im.ref);
+      }
+      out.images = refs;
+      await ensureLists(out);
+      await st.putTrade(out);
+      upsertTrade(out);
+      for (const r of draft.orig) if (!refs.includes(r)) st.deleteImage(r).catch(() => {});
+      closeModal();
+      toast(isNew ? 'Угоду збережено' : 'Зміни збережено');
+      render();
+    } catch (err) {
+      btn.disabled = false; btn.textContent = 'Зберегти';
+      msg.className = 'msg err'; msg.textContent = 'Не вдалося зберегти: ' + errText(err);
+    }
+  });
+  setTimeout(() => { if (!files.length && isNew && !dup) $('#tf-symbol', el).focus({ preventScroll: true }); }, 30);
+}
+/* New strategy names, mistakes and emotions typed in a trade join the settings lists. */
+async function ensureLists(t) {
+  const c = cfg();
+  let changed = false;
+  if (t.strategy && !c.strategies.some(s => s.name === t.strategy)) { c.strategies.push({ id: uid('s'), name: t.strategy, description: '' }); changed = true; }
+  for (const [k, vals] of [['mistakes', t.mistakes], ['emotions', t.emotions]]) for (const v of vals) if (!c[k].includes(v)) { c[k].push(v); changed = true; }
+  if (t.timeframe && !c.timeframes.includes(t.timeframe)) { c.timeframes.push(t.timeframe); changed = true; }
+  if (changed) await store().putSettings(c);
+}
+
+/* ---------- settings ---------- */
+function openSettings() {
+  const c = clone(cfg());
+  const counts = new Map();
+  for (const t of D().trades) if (t.strategy) counts.set(t.strategy, (counts.get(t.strategy) || 0) + 1);
+  const rows = c.strategies.map(s => ({ ...s, orig: s.name, del: false }));
+  const kind = S.demo ? 'demo' : S.store ? S.store.kind : 'memory';
+  const info = {
+    demo: 'Зараз увімкнено демо-режим: усе, що бачиш, — згенеровані приклади, вони не зберігаються.',
+    cloud: 'Угоди і скріни зберігаються в хмарі Claude, у твоєму приватному розділі цього артефакту. Відкривай журнал з телефона чи комп’ютера — дані ті самі. Інші люди, з якими ти поділишся посиланням, твоїх угод не бачать.',
+    local: 'Угоди і скріни зберігаються в цьому браузері (IndexedDB). Вони не синхронізуються з іншими пристроями, а очищення даних сайту їх видалить. Регулярно роби експорт JSON — це повна резервна копія разом зі скрінами.',
+    memory: 'Браузер не дав доступу до сховища, тому дані живуть лише до закриття сторінки. Експортуй JSON, щоб не втратити записи.',
+  }[kind];
+  const el = modal(`
+    <div class="mhead"><h2>Налаштування</h2><button class="icon-btn" data-close type="button" aria-label="Закрити">${I.x}</button></div>
+    <div class="mbody">
+      <section class="fsec">
+        <h4>Стратегії</h4>
+        <div class="slist" id="set-slist"></div>
+        <div class="row-add"><input class="inp" id="set-newstrat" placeholder="Назва нової стратегії" maxlength="60"><button class="btn" type="button" data-a="add">Додати стратегію</button></div>
+      </section>
+      <section class="fsec">
+        <h4>Рахунок</h4>
+        <div class="fgrid">
+          ${fld('set-cur', 'Валюта', c.currency, 'maxlength="5" autocomplete="off"')}
+          ${fld('set-bal', 'Стартовий баланс', numStr(c.startBalance || ''), 'inputmode="decimal" autocomplete="off" placeholder="0"')}
+          ${fld('set-risk', 'Ризик за замовчуванням', numStr(c.defaultRisk), 'inputmode="decimal" autocomplete="off" placeholder="напр. 50"')}
+          ${fld('set-be', 'Поріг беззбитку ±', numStr(c.beThreshold || ''), 'inputmode="decimal" autocomplete="off" placeholder="0"')}
+        </div>
+      </section>
+      <section class="fsec">
+        <h4>Списки для швидкого вибору</h4>
+        <div class="fgrid">
+          <label class="fld span2" for="set-mist"><span>Помилки (кожна з нового рядка)</span><textarea id="set-mist" rows="6">${esc(c.mistakes.join('\n'))}</textarea></label>
+          <label class="fld" for="set-emo"><span>Емоції</span><textarea id="set-emo" rows="6">${esc(c.emotions.join('\n'))}</textarea></label>
+          <label class="fld" for="set-tf"><span>Таймфрейми</span><textarea id="set-tf" rows="6">${esc(c.timeframes.join('\n'))}</textarea></label>
+        </div>
+      </section>
+      <section class="fsec">
+        <h4>Дані</h4>
+        <p class="store-info">${esc(info)}</p>
+        <div class="data-acts">
+          <button class="btn" type="button" data-a="export">Експорт JSON (зі скрінами)</button>
+          <button class="btn" type="button" data-a="csv">Експорт CSV</button>
+          <button class="btn" type="button" data-a="import">Імпорт JSON</button>
+          <input type="file" id="set-file" accept="application/json,.json" hidden>
+          <button class="btn" type="button" data-a="demo">${S.demo ? 'Вийти з демо' : 'Демо-режим'}</button>
+        </div>
+        ${!S.demo && D().trades.length ? `<div class="danger-zone" id="set-danger"><button class="btn danger" type="button" data-a="wipe">Видалити всі угоди</button></div>` : ''}
+      </section>
+    </div>
+    <div class="mfoot"><div class="msg" id="set-msg"></div><button class="btn ghost" data-close type="button">Скасувати</button><button class="btn primary" type="button" data-a="save">Зберегти</button></div>`, { label: 'Налаштування', cls: 'narrow' });
+  const list = $('#set-slist', el), msg = $('#set-msg', el);
+  function drawRows() {
+    list.innerHTML = rows.length ? rows.map((s, i) => `<div class="srow${s.del ? ' del' : ''}">
+      <span class="dotc" style="background:${i < 8 ? `var(--s${i + 1})` : 'var(--muted)'}"></span>
+      <div class="sfields"><input data-i="${i}" data-k="name" value="${esc(s.name)}" aria-label="Назва стратегії" maxlength="60"><textarea data-i="${i}" data-k="description" rows="2" placeholder="Правила входу і виходу (підказка у формі угоди)">${esc(s.description)}</textarea><span class="scount">${counts.get(s.orig) || 0} ${plural(counts.get(s.orig) || 0, 'угода', 'угоди', 'угод')}${s.del && counts.get(s.orig) ? ' залишаться без стратегії' : ''}</span></div>
+      <button class="btn ${s.del ? '' : 'danger'} sm" type="button" data-del="${i}">${s.del ? 'Повернути' : 'Видалити'}</button></div>`).join('') : '<p class="muted" style="margin:0">Стратегій ще немає. Додай тут або просто введи назву у формі угоди.</p>';
+  }
+  drawRows();
+  list.addEventListener('input', e => { const i = e.target.dataset.i; if (i != null) rows[+i][e.target.dataset.k] = e.target.value; });
+  list.addEventListener('click', e => { const b = e.target.closest('[data-del]'); if (b) { const r = rows[+b.dataset.del]; if (!counts.get(r.orig) && !r.orig) rows.splice(+b.dataset.del, 1); else r.del = !r.del; drawRows(); } });
+  const addStrat = () => { const inp = $('#set-newstrat', el), v = inp.value.trim(); if (!v) return; rows.push({ id: uid('s'), name: v, description: '', orig: '', del: false }); inp.value = ''; drawRows(); };
+  $('#set-newstrat', el).addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); addStrat(); } });
+  el.addEventListener('click', async e => {
+    const a = e.target.closest('[data-a]');
+    if (!a) return;
+    const k = a.dataset.a;
+    if (k === 'add') addStrat();
+    else if (k === 'export') { a.disabled = true; try { await exportJSON(); } finally { a.disabled = false; } }
+    else if (k === 'csv') exportCSV(D().trades);
+    else if (k === 'import') $('#set-file', el).click();
+    else if (k === 'demo') { closeModal(); toggleDemo(); }
+    else if (k === 'wipe') $('#set-danger', el).innerHTML = `<span>Видалити ${D().trades.length} ${plural(D().trades.length, 'угоду', 'угоди', 'угод')} і всі скріни? Відновити можна лише з експорту.</span><button class="btn danger solid sm" type="button" data-a="wipe-yes">Так, видалити все</button><button class="btn ghost sm" type="button" data-a="wipe-no">Скасувати</button>`;
+    else if (k === 'wipe-no') $('#set-danger', el).innerHTML = '<button class="btn danger" type="button" data-a="wipe">Видалити всі угоди</button>';
+    else if (k === 'wipe-yes') {
+      a.disabled = true;
+      try { for (const t of [...D().trades]) await deleteTrade(t); closeModal(); toast('Усі угоди видалено'); render(); }
+      catch (err) { toast(errText(err), 'err'); a.disabled = false; }
+    } else if (k === 'save') {
+      const live = rows.filter(r => !r.del);
+      const names = live.map(r => r.name.trim());
+      if (names.some(n => !n)) { msg.className = 'msg err'; msg.textContent = 'У стратегії має бути назва.'; return; }
+      if (new Set(names).size !== names.length) { msg.className = 'msg err'; msg.textContent = 'Назви стратегій мають бути різними.'; return; }
+      const bal = $('#set-bal', el).value.trim(), risk = $('#set-risk', el).value.trim(), be = $('#set-be', el).value.trim();
+      if ((bal && num(bal) == null) || (risk && num(risk) == null) || (be && num(be) == null)) { msg.className = 'msg err'; msg.textContent = 'Баланс, ризик і поріг мають бути числами.'; return; }
+      const lines = id => uniq($('#' + id, el).value.split(/\n|,/).map(s => s.trim()).filter(Boolean));
+      const next = normSettings({
+        currency: $('#set-cur', el).value.trim() || '$', startBalance: bal, defaultRisk: risk, beThreshold: be,
+        strategies: live.map(r => ({ id: r.id, name: r.name.trim(), description: r.description })),
+        mistakes: lines('set-mist'), emotions: lines('set-emo'), timeframes: lines('set-tf'),
+      });
+      const renames = new Map(live.filter(r => r.orig && r.orig !== r.name.trim()).map(r => [r.orig, r.name.trim()]));
+      const removed = new Set(rows.filter(r => r.del && r.orig).map(r => r.orig));
+      a.disabled = true;
+      try {
+        await store().putSettings(next);
+        D().settings = next;
+        for (const t of D().trades) {
+          const nn = renames.has(t.strategy) ? renames.get(t.strategy) : removed.has(t.strategy) ? '' : null;
+          if (nn == null) continue;
+          const u = { ...t, strategy: nn, updatedAt: Date.now() };
+          await store().putTrade(u);
+          upsertTrade(u);
+        }
+        if (renames.has(S.f.strategy)) S.f.strategy = renames.get(S.f.strategy);
+        if (removed.has(S.f.strategy)) S.f.strategy = '';
+        closeModal(); toast('Налаштування збережено'); render();
+      } catch (err) { a.disabled = false; msg.className = 'msg err'; msg.textContent = errText(err); }
+    }
+  });
+  $('#set-file', el).addEventListener('change', async e => {
+    const f = e.target.files[0];
+    e.target.value = '';
+    if (!f) return;
+    try { const n = await importJSON(f, txt => { msg.className = 'msg'; msg.textContent = txt; }); closeModal(); toast(`Імпортовано ${n} ${plural(n, 'угоду', 'угоди', 'угод')}`); render(); }
+    catch (err) { msg.className = 'msg err'; msg.textContent = 'Імпорт не вдався: ' + errText(err); }
+  });
+}
+
+/* ---------- export / import ---------- */
+async function downloadFile(name, data, type) {
+  const blob = data instanceof Blob ? data : new Blob([data], { type });
+  if (S.downloads) {
+    try { await S.downloads.save({ filename: name, data: blob }); }
+    catch (e) { if (!e || e.code !== 'declined') toast('Не вдалося зберегти файл: ' + errText(e), 'err'); }
+    return;
+  }
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = name;
+  document.body.append(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 4000);
+}
+async function exportJSON() {
+  const d = D(), keys = new Map(), images = {};
+  const trades = d.trades.map(t => ({ ...t, images: t.images.map(ref => { if (!keys.has(ref)) keys.set(ref, 'img' + keys.size); return keys.get(ref); }) }));
+  let failed = 0, i = 0;
+  for (const [ref, k] of keys) {
+    i++;
+    if (keys.size > 5) toast(`Пакую скріни ${i}/${keys.size}…`);
+    try { const b = await getBlob(ref); if (b) images[k] = await blobToDataURL(b); else failed++; } catch { failed++; }
+  }
+  const payload = { app: 'edge-journal', version: 1, exportedAt: new Date().toISOString(), settings: d.settings, trades, images };
+  await downloadFile(`edge-journal-${todayStr()}.json`, JSON.stringify(payload), 'application/json');
+  if (failed) toast(`${failed} скрінів не вдалося додати в експорт`, 'err');
+}
+function exportCSV(trades) {
+  const cols = [['Дата', t => t.date], ['Час', t => t.time], ['Інструмент', t => t.symbol], ['Напрям', t => t.direction], ['Стратегія', t => t.strategy], ['Таймфрейм', t => t.timeframe], ['Статус', t => t.status],
+    ['Вхід', t => t.entry], ['Стоп', t => t.stop], ['Тейк', t => t.take], ['Вихід', t => t.exit], ['Обсяг', t => t.size], ['Ризик', t => t.risk], ['Результат', t => t.pnl], ['Комісія', t => t.fees], ['Чистий', t => tradeNet(t)], ['R', t => { const r = tradeR(t); return r == null ? null : round2(r); }],
+    ['За планом', t => t.followedPlan == null ? '' : t.followedPlan ? 'так' : 'ні'], ['Помилки', t => t.mistakes.join(', ')], ['Емоції', t => t.emotions.join(', ')], ['Оцінка', t => t.rating], ['Теги', t => t.tags.join(', ')],
+    ['Аналіз', t => t.analysis], ['Не за планом', t => t.offPlan], ['Урок', t => t.lesson], ['Скрінів', t => t.images.length]];
+  const cell = v => { if (v == null) return ''; let s = typeof v === 'number' ? String(v).replace('.', ',') : String(v); if (/[";\n\r]/.test(s)) s = '"' + s.replace(/"/g, '""') + '"'; return s; };
+  const rows = [cols.map(c => c[0]).join(';'), ...sortChrono(trades).map(t => cols.map(c => cell(c[1](t))).join(';'))];
+  downloadFile(`edge-journal-${todayStr()}.csv`, '﻿' + rows.join('\r\n'), 'text/csv');
+}
+async function importJSON(file, progress) {
+  let j;
+  try { j = JSON.parse(await file.text()); } catch { throw new Error('файл пошкоджений або це не JSON'); }
+  if (!j || j.app !== 'edge-journal' || !Array.isArray(j.trades)) throw new Error('це не резервна копія Edge Journal');
+  const st = store(), refMap = new Map();
+  let n = 0;
+  for (const raw of j.trades) {
+    const t = normTrade(raw);
+    const refs = [];
+    for (const k of t.images) {
+      if (!refMap.has(k)) {
+        const du = j.images && j.images[k];
+        if (typeof du !== 'string' || !du.startsWith('data:image/')) continue;
+        refMap.set(k, await st.putImage(dataURLtoBlob(du)));
+      }
+      refs.push(refMap.get(k));
+    }
+    t.images = refs;
+    if (S.demo) t.demo = true; else delete t.demo;
+    await st.putTrade(t);
+    upsertTrade(t);
+    n++;
+    progress(`Імпорт ${n}/${j.trades.length}…`);
+  }
+  const cur = cfg(), inc = normSettings(j.settings);
+  const merged = normSettings({
+    ...cur,
+    currency: cur.startBalance || D().trades.length > n ? cur.currency : inc.currency,
+    startBalance: cur.startBalance || inc.startBalance,
+    strategies: [...cur.strategies, ...inc.strategies.filter(s => !cur.strategies.some(x => x.name === s.name))],
+    mistakes: uniq([...cur.mistakes, ...inc.mistakes]), emotions: uniq([...cur.emotions, ...inc.emotions]), timeframes: uniq([...cur.timeframes, ...inc.timeframes]),
+  });
+  await st.putSettings(merged);
+  D().settings = merged;
+  return n;
+}
+
+/* ---------- demo data ---------- */
+function mulberry32(a) { return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function demoShot(seed, dir, rMult, symbol, tf) {
+  const R = mulberry32(seed), W = 1200, H = 675;
+  const c = document.createElement('canvas'); c.width = W; c.height = H;
+  const g = c.getContext('2d');
+  g.fillStyle = '#10141b'; g.fillRect(0, 0, W, H);
+  g.strokeStyle = '#1b222c'; g.lineWidth = 1;
+  for (let x = 0; x < W; x += 100) { g.beginPath(); g.moveTo(x + .5, 0); g.lineTo(x + .5, H); g.stroke(); }
+  for (let yy = 0; yy < H; yy += 75) { g.beginPath(); g.moveTo(0, yy + .5); g.lineTo(W, yy + .5); g.stroke(); }
+  const N = 84, entryI = 56, sgn = dir === 'long' ? 1 : -1, risk = 3;
+  const bars = []; let p = 100, entryP = 0;
+  for (let i = 0; i < N; i++) {
+    const o = p;
+    let mv;
+    if (i <= entryI) mv = (R() - 0.5) * 1.8 + (i > entryI - 12 ? sgn * 0.12 : -sgn * 0.04);
+    else mv = (entryP + sgn * rMult * risk - p) * 0.14 + (R() - 0.5) * 1.1;
+    const cl = o + mv, hi = Math.max(o, cl) + R() * 0.8, lo = Math.min(o, cl) - R() * 0.8;
+    bars.push([o, hi, lo, cl]); p = cl;
+    if (i === entryI) entryP = cl;
+  }
+  const sl = entryP - sgn * risk, tp = entryP + sgn * risk * 2.2;
+  const all = bars.flatMap(b => [b[1], b[2]]).concat([sl, tp]);
+  const lo = Math.min(...all) - 1, hi = Math.max(...all) + 1;
+  const y = v => 40 + (hi - v) * (H - 80) / (hi - lo), bw = (W - 140) / N;
+  bars.forEach(([o, h, l, cl], i) => {
+    const x = 20 + i * bw, up = cl >= o;
+    g.strokeStyle = g.fillStyle = up ? '#26a69a' : '#ef5350';
+    g.beginPath(); g.moveTo(x + bw / 2, y(h)); g.lineTo(x + bw / 2, y(l)); g.stroke();
+    g.fillRect(x + 2, Math.min(y(o), y(cl)), bw - 4, Math.max(1, Math.abs(y(o) - y(cl))));
+  });
+  const level = (v, col, label) => {
+    g.strokeStyle = col; g.setLineDash([6, 5]); g.beginPath(); g.moveTo(20 + entryI * bw, y(v)); g.lineTo(W - 110, y(v)); g.stroke(); g.setLineDash([]);
+    g.fillStyle = col; g.fillRect(W - 108, y(v) - 11, 100, 22);
+    g.fillStyle = '#0b0e13'; g.font = '600 13px system-ui, sans-serif'; g.fillText(label, W - 100, y(v) + 5);
+  };
+  level(tp, '#26a69a', 'TP'); level(sl, '#ef5350', 'SL'); level(entryP, '#d1d4dc', 'ENTRY');
+  g.fillStyle = '#d1d4dc'; g.font = '600 22px system-ui, sans-serif'; g.fillText(`${symbol} · ${tf}`, 24, 34);
+  g.fillStyle = '#f2a93b'; g.font = '700 14px system-ui, sans-serif'; g.fillText('DEMO', W - 70, 30);
+  return c.toDataURL('image/jpeg', 0.82);
+}
+function makeDemo() {
+  const R = mulberry32(20261009);
+  const pick = a => a[Math.floor(R() * a.length)];
+  const strategies = [
+    { id: 's_demo1', name: 'Пробій рівня', description: 'Вхід після закриття свічки за рівнем.\nСтоп — за протилежним краєм свічки пробою.\nЦіль — 2R або наступний рівень.' },
+    { id: 's_demo2', name: 'Відбій від рівня', description: 'Реакція від денного рівня з підтвердженням на M15.\nНе входити проти тренду H4.' },
+    { id: 's_demo3', name: 'Ретест', description: 'Пробій → відкат до рівня → вхід на підтвердженні.\nСтоп за рівнем, ціль 2R.' },
+    { id: 's_demo4', name: 'Сесія Лондона', description: 'Пробій діапазону азійської сесії в першу годину Лондона.' },
+  ];
+  const prof = { 'Пробій рівня': [0.47, 2.1], 'Відбій від рівня': [0.57, 1.6], 'Ретест': [0.62, 1.9], 'Сесія Лондона': [0.36, 1.3] };
+  const syms = { EURUSD: [1.085, 5], GBPUSD: [1.27, 5], XAUUSD: [2380, 2], BTCUSDT: [62000, 1], ETHUSDT: [3100, 2], NAS100: [19500, 1] };
+  const why = {
+    'Пробій рівня': ['Консолідація під рівнем 3 дні, обсяг росте. Закриття H1 за рівнем.', 'Чистий пробій максимуму тижня, ретесту не чекав за правилами.'],
+    'Відбій від рівня': ['Денний рівень підтримки, пін-бар на M15, тренд H4 не зламаний.', 'Третій дотик рівня, дивергенція на RSI.'],
+    'Ретест': ['Пробій опору, відкат до рівня, бичаче поглинання на ретесті.', 'Ретест зламаного рівня з малим тілом свічки, вхід на закритті.'],
+    'Сесія Лондона': ['Вузький азійський діапазон, пробій у першу годину Лондона.', 'Пробій азійського максимуму з імпульсом.'],
+  };
+  const offs = ['Увійшов до закриття свічки, не дочекався підтвердження.', 'Пересунув стоп, коли ціна підійшла до нього.', 'Закрив раніше тейку через страх віддати прибуток.', 'Подвоїв обсяг після збитку.', 'Торгував під час новин, хоча план забороняє.'];
+  const lessons = ['Чекати закриття свічки.', 'Стоп не чіпати після входу.', 'Після двох збитків поспіль — пауза до кінця дня.', 'Перевіряти календар новин перед сесією.'];
+  const trades = [];
+  const day = new Date(); day.setDate(day.getDate() - 92);
+  let shots = 0;
+  for (let k = 0; k < 92; k++) {
+    day.setDate(day.getDate() + 1);
+    const wdN = day.getDay();
+    if (wdN === 0 || wdN === 6) continue;
+    const cnt = R() < 0.3 ? 0 : R() < 0.65 ? 1 : 2;
+    for (let j = 0; j < cnt; j++) {
+      const s = pick(strategies), [wp, rr] = prof[s.name];
+      const sym = pick(Object.keys(syms)), [base, dec] = syms[sym];
+      const followed = R() > 0.27;
+      const r = R(), p = followed ? wp : wp - 0.22;
+      const o = r < p ? 'win' : r < p + 0.07 ? 'be' : 'loss';
+      const risk = pick([50, 50, 75, 100]);
+      const rMult = o === 'win' ? round2(rr * (0.6 + R() * 0.8)) : o === 'be' ? 0 : -(followed ? 1 : round2(1 + R() * 0.7));
+      const dir = R() < 0.55 ? 'long' : 'short', sg = dir === 'long' ? 1 : -1;
+      const entry = base * (1 + (R() - 0.5) * 0.05), dist = base * (0.0015 + R() * 0.004);
+      const f = v => +v.toFixed(dec);
+      const fees = sym.endsWith('USDT') ? round2(risk * 0.03) : 0;
+      const tf = s.name === 'Сесія Лондона' ? 'M15' : pick(['M15', 'H1', 'H1', 'H4']);
+      const mistakes = !followed ? uniq([pick(['Ранній вхід', 'Пересунув стоп', 'Рано закрив', 'Завеликий ризик', 'Вхід без сетапу', 'Ігнорував новини', 'Помста ринку']), ...(R() < 0.3 ? [pick(['Овертрейдинг', 'Проти тренду'])] : [])]) : (o === 'win' && R() < 0.12 ? ['Рано закрив'] : []);
+      const hour = s.name === 'Сесія Лондона' ? 10 : 8 + Math.floor(R() * 10);
+      const t = normTrade({
+        id: uid('demo'), demo: true, date: ymd(day), time: `${pad(hour)}:${pad(Math.floor(R() * 12) * 5)}`,
+        symbol: sym, direction: dir, status: 'closed', strategy: s.name, timeframe: tf,
+        entry: f(entry), stop: f(entry - sg * dist), take: f(entry + sg * dist * rr), exit: f(entry + sg * dist * rMult),
+        size: null, risk, pnl: round2(risk * rMult + (o === 'be' ? 0 : 0)), fees,
+        followedPlan: followed, mistakes,
+        emotions: [followed ? pick(['Спокій', 'Впевненість', 'Спокій']) : pick(['FOMO', 'Нетерпіння', 'Страх', 'Злість'])],
+        rating: followed ? 4 + (R() < 0.5 ? 1 : 0) : 1 + Math.floor(R() * 3),
+        analysis: pick(why[s.name]), offPlan: !followed ? pick(offs) : '', lesson: !followed && R() < 0.6 ? pick(lessons) : '',
+        tags: R() < 0.2 ? ['новини'] : [], createdAt: day.getTime() + j,
+      });
+      trades.push(t);
+    }
+  }
+  const recent = sortChrono(trades).reverse();
+  for (const t of recent) {
+    if (shots >= 8) break;
+    t.images = [demoShot(shots + 11, t.direction, tradeR(t) ?? 0, t.symbol, t.timeframe)];
+    shots++;
+  }
+  trades.push(normTrade({ id: uid('demo'), demo: true, date: todayStr(), time: '09:40', symbol: 'XAUUSD', direction: 'long', status: 'open', strategy: 'Ретест', timeframe: 'H1', entry: 2391.4, stop: 2384.9, take: 2405.7, risk: 75, analysis: 'Ретест пробитого рівня 2390, чекаю продовження імпульсу.', followedPlan: true, emotions: ['Спокій'] }));
+  return { trades, settings: normSettings({ ...defaultSettings(), strategies, startBalance: 10000, beThreshold: 5, defaultRisk: 50 }) };
+}
+function toggleDemo() {
+  if (S.demo) { S.demo = false; S.demoData = null; S.demoStore = null; toast('Демо вимкнено'); }
+  else { S.demoData = makeDemo(); S.demoStore = new MemoryStore(); S.demo = true; S.tab = 'overview'; }
+  S.cal = null; S.f = blankFilters(); ls.set('filters', S.f);
+  render();
+}
+
+/* ---------- theme ---------- */
+const THEMES = { system: ['auto', 'Тема: як у системі'], light: ['sun', 'Тема: світла'], dark: ['moon', 'Тема: темна'] };
+let theme = ls.get('theme', 'system');
+function applyTheme(init = false) {
+  const [ic, label] = THEMES[theme] || THEMES.system;
+  $('#btnTheme').innerHTML = I[ic];
+  $('#btnTheme').title = label;
+  if (theme === 'system') { if (!init) document.documentElement.removeAttribute('data-theme'); }
+  else document.documentElement.setAttribute('data-theme', theme);
+}
+
+/* ---------- global wiring ---------- */
+function bindStatic() {
+  $('#btnNew').innerHTML = `${I.plus}<span class="btn-new-label">Нова угода</span>`;
+  $('#btnSettings').innerHTML = I.gear;
+  $('#btnNew').addEventListener('click', () => openTradeForm(null));
+  $('#btnSettings').addEventListener('click', openSettings);
+  $('#btnTheme').addEventListener('click', () => { theme = { system: 'light', light: 'dark', dark: 'system' }[theme] || 'system'; ls.set('theme', theme); applyTheme(); });
+  $('#btnExitDemo').addEventListener('click', toggleDemo);
+  $$('.tab').forEach(b => b.addEventListener('click', () => { S.tab = b.dataset.tab; ls.set('tab', S.tab); render(); }));
+  const fmap = { fPeriod: 'period', fStrategy: 'strategy', fSymbol: 'symbol', fDir: 'dir', fResult: 'result', fMistake: 'mistake', fPlan: 'plan', fFrom: 'from', fTo: 'to' };
+  for (const [id, k] of Object.entries(fmap)) $('#' + id).addEventListener('change', e => setFilter({ [k]: e.target.value }));
+  let qt;
+  $('#fQ').addEventListener('input', e => { clearTimeout(qt); qt = setTimeout(() => setFilter({ q: e.target.value }), 220); });
+  $('#fReset').addEventListener('click', () => setFilter(blankFilters()));
+  $('#fToggle').addEventListener('click', () => $('#filters').classList.toggle('open'));
+  const view = $('#view');
+  view.addEventListener('change', e => { if (e.target.id === 'tradeSort') { S.tradeSort = e.target.value; render(); } });
+  const act = async el => {
+    const a = el.dataset.act, v = el.dataset.v;
+    if (a === 'open') openTrade(el.dataset.id);
+    else if (a === 'new') openTradeForm(null);
+    else if (a === 'demo') toggleDemo();
+    else if (a === 'tab') { S.tab = v; ls.set('tab', v); render(); window.scrollTo({ top: 0 }); }
+    else if (a === 'strategy') { S.tab = 'trades'; ls.set('tab', 'trades'); setFilter({ strategy: v }); window.scrollTo({ top: 0 }); }
+    else if (a === 'day') { S.tab = 'trades'; ls.set('tab', 'trades'); setFilter({ period: 'custom', from: v, to: v }); window.scrollTo({ top: 0 }); }
+    else if (a === 'cal') { const [y, m] = S.cal.split('-').map(Number); const d = new Date(y, m - 1 + Number(v), 1); S.cal = `${d.getFullYear()}-${pad(d.getMonth() + 1)}`; render(); }
+    else if (a === 'sort-strat') { const k = el.dataset.k; S.stratSort = S.stratSort.k === k ? { k, d: -S.stratSort.d } : { k, d: k === 'name' ? 1 : -1 }; render(); }
+    else if (a === 'more') { S.listLimit += 100; render(); }
+    else if (a === 'csv') exportCSV(applyFilters(D().trades));
+    else if (a === 'settings') openSettings();
+    else if (a === 'reset-filters') setFilter(blankFilters());
+  };
+  view.addEventListener('click', e => { const el = e.target.closest('[data-act]'); if (el) act(el); });
+  view.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('[data-act][tabindex]')) { e.preventDefault(); act(e.target); } });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { if (S.lb) S.lb.close(); else if (S.modal) tryClose(); return; }
+    if (S.lb && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) { S.lb.step(e.key === 'ArrowLeft' ? -1 : 1); return; }
+    const typing = e.target.closest && e.target.closest('input, textarea, select, [contenteditable="true"]');
+    if (!typing && !S.modal && !S.lb && !e.ctrlKey && !e.metaKey && !e.altKey && (e.key === 'n' || e.key === 'N' || e.key === 'т' || e.key === 'Т')) { e.preventDefault(); openTradeForm(null); }
+  });
+  document.addEventListener('paste', e => {
+    const files = imagesFrom(e.clipboardData);
+    const inPz = e.target.closest && e.target.closest('#tf-pz');
+    if (inPz) e.preventDefault();
+    else if (e.target.closest && e.target.closest('input, textarea') && Array.from(e.clipboardData ? e.clipboardData.types : []).includes('text/plain')) return;
+    if (!files.length) { if (inPz) toast('У буфері немає зображення. Скопіюй скрін і спробуй ще раз.', 'err'); return; }
+    if (S.lb) return;
+    if (S.modal && S.modal.type === 'form') { e.preventDefault(); S.modal.addFiles(files); return; }
+    if (S.modal) return;
+    e.preventDefault();
+    openTradeForm(null, { files });
+  });
+  document.addEventListener('dragover', e => { if (!S.modal && e.dataTransfer && Array.from(e.dataTransfer.types || []).includes('Files')) e.preventDefault(); });
+  document.addEventListener('drop', e => {
+    if (S.modal) return;
+    const files = imagesFrom(e.dataTransfer);
+    if (!files.length) return;
+    e.preventDefault();
+    openTradeForm(null, { files });
+  });
+}
+
+/* ---------- boot ---------- */
+async function connectCloud() {
+  const cl = window.claude;
+  if (!cl || typeof cl.use !== 'function') return null;
+  const [db, user, assets, downloads] = await Promise.all(['db', 'user', 'assets', 'downloads'].map(n => cl.use(n).catch(() => null)));
+  S.downloads = downloads;
+  if (!db || !user) return null;
+  const id = await user.id().catch(() => null);
+  if (!id) return null;
+  const st = new CloudStore(db, assets, id);
+  const data = await st.load();
+  return { st, data };
+}
+async function boot() {
+  applyTheme(true);
+  bindStatic();
+  render();
+  let loaded = null;
+  try { const c = await connectCloud(); if (c) { S.store = c.st; loaded = c.data; } }
+  catch (e) { console.warn('Cloud storage unavailable', e); toast('Хмарне сховище недоступне, працюю в цьому браузері', 'err'); }
+  if (!S.store) {
+    try { S.store = await LocalStore.open(); loaded = await S.store.load(); try { navigator.storage && navigator.storage.persist && navigator.storage.persist().catch(() => {}); } catch { /* not supported */ } }
+    catch (e) { console.warn('IndexedDB unavailable', e); S.store = new MemoryStore(); loaded = await S.store.load(); }
+  }
+  S.data.trades = (loaded.trades || []).map(normTrade);
+  S.data.settings = normSettings(loaded.settings);
+  if (S.store.subscribe) {
+    S.store.subscribe(
+      list => { S.data.trades = list.map(normTrade); refreshSoon(); },
+      s => { S.data.settings = normSettings(s); refreshSoon(); },
+      e => toast('Синхронізацію зупинено: ' + errText(e), 'err'));
+  }
+  S.ready = true;
+  readyResolve();
+  render();
+}
+boot();
+})();
+</script>
+</body>
+</html>
