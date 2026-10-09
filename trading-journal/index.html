@@ -163,8 +163,8 @@ img { max-width: 100%; }
 .tile .sub { font-size: 12px; color: var(--muted); margin-top: 2px; overflow-wrap: anywhere; }
 
 /* compare cards */
-.cmp { display: grid; gap: 1px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
-.cmp > div { background: var(--surface); padding: 12px 14px; display: grid; gap: 2px; }
+.cmp { display: flex; flex-wrap: wrap; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.cmp > div { background: var(--surface); padding: 12px 14px; display: grid; gap: 2px; flex: 1 1 150px; min-width: 0; }
 .cmp .big { font-size: 20px; font-weight: 600; }
 .cmp .sub { font-size: 12px; color: var(--muted); }
 
@@ -181,16 +181,17 @@ table.tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
 .tbl th.sort { cursor: pointer; user-select: none; }
 .tbl th.sort:hover, .tbl th[aria-sort] { color: var(--fg); }
 .tbl .wr { display: inline-grid; gap: 3px; justify-items: end; }
-.meter { width: 64px; height: 4px; border-radius: 2px; background: var(--line-2); position: relative; overflow: hidden; }
+.meter { width: 64px; height: 4px; border-radius: 2px; background: var(--line-2); position: relative; }
 .meter i { position: absolute; inset: 0 auto 0 0; background: var(--fg-2); border-radius: 2px; }
+.meter b { position: absolute; top: -3px; height: 10px; width: 2px; margin-left: -1px; background: var(--fg); border-radius: 1px; }
 
 /* strategy chip, tags */
 .schip { display: inline-flex; align-items: center; gap: 7px; min-width: 0; max-width: 100%; }
 .schip i { width: 8px; height: 8px; border-radius: 50%; flex: none; }
 .schip span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .dir { font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; padding: 1px 6px; border-radius: 4px; border: 1px solid; }
-.dir.long { color: var(--profit); border-color: color-mix(in srgb, var(--profit) 40%, transparent); }
-.dir.short { color: var(--loss); border-color: color-mix(in srgb, var(--loss) 40%, transparent); }
+.dir.up { color: var(--profit); border-color: color-mix(in srgb, var(--profit) 40%, transparent); }
+.dir.down { color: var(--loss); border-color: color-mix(in srgb, var(--loss) 40%, transparent); }
 .tag { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; padding: 2px 8px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--line-2); color: var(--fg-2); white-space: nowrap; }
 .tag.m { border-color: color-mix(in srgb, var(--loss) 40%, var(--line-2)); background: var(--loss-wash); color: var(--fg); }
 .tag.ok { border-color: color-mix(in srgb, var(--profit) 40%, var(--line-2)); background: var(--profit-wash); color: var(--fg); }
@@ -199,7 +200,7 @@ table.tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
 
 /* trade list */
 .tlist { display: grid; }
-.trow { display: grid; grid-template-columns: 60px 86px minmax(130px, 1.3fr) minmax(120px, 1fr) 72px 118px 96px; gap: 12px; align-items: center; padding: 9px 6px; border-bottom: 1px solid var(--line); cursor: pointer; border-radius: 6px; }
+.trow { display: grid; grid-template-columns: 60px 86px minmax(150px, 1.3fr) minmax(120px, 1fr) 112px 104px 96px; gap: 12px; align-items: center; padding: 9px 6px; border-bottom: 1px solid var(--line); cursor: pointer; border-radius: 6px; }
 .trow:last-child { border-bottom: 0; }
 .trow.head { cursor: default; color: var(--muted); font-size: 12px; padding-block: 4px 8px; border-radius: 0; }
 .trow:not(.head):hover { background: var(--surface-2); }
@@ -337,14 +338,14 @@ table.tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
 .fld input.mono { font-family: var(--font-mono); font-size: 13px; }
 .fld.span2 { grid-column: span 2; }
 .fld.full { grid-column: 1 / -1; }
-.fld .with-btn { display: flex; gap: 6px; }
-.fld .with-btn .btn { height: 38px; flex: none; }
+.seg.big { height: 46px; }
+.seg.big button { font-weight: 600; font-size: 15px; color: var(--fg); }
 .seg { display: flex; border: 1px solid var(--line-2); border-radius: var(--r-sm); overflow: hidden; height: 38px; background: var(--bg); }
 .seg button { flex: 1; appearance: none; border: 0; background: transparent; color: var(--fg-2); cursor: pointer; font-weight: 500; padding: 0 8px; min-width: 0; }
 .seg button + button { border-left: 1px solid var(--line-2); }
 .seg button[aria-pressed="true"] { background: var(--accent-wash); color: var(--fg); box-shadow: inset 0 -2px 0 var(--accent); }
-.seg button[data-v="long"][aria-pressed="true"], .seg button[data-v="yes"][aria-pressed="true"] { background: var(--profit-wash); box-shadow: inset 0 -2px 0 var(--profit); }
-.seg button[data-v="short"][aria-pressed="true"], .seg button[data-v="no"][aria-pressed="true"] { background: var(--loss-wash); box-shadow: inset 0 -2px 0 var(--loss); }
+.seg button[data-v="up"][aria-pressed="true"], .seg button[data-v="win"][aria-pressed="true"], .seg button[data-v="yes"][aria-pressed="true"] { background: var(--profit-wash); box-shadow: inset 0 -2px 0 var(--profit); }
+.seg button[data-v="down"][aria-pressed="true"], .seg button[data-v="loss"][aria-pressed="true"], .seg button[data-v="no"][aria-pressed="true"] { background: var(--loss-wash); box-shadow: inset 0 -2px 0 var(--loss); }
 .srules { margin: 10px 0 0; padding: 10px 12px; border-radius: var(--r-sm); background: var(--surface-2); border: 1px solid var(--line); font-size: 13px; color: var(--fg-2); white-space: pre-wrap; line-height: 1.5; }
 .srules b { color: var(--fg); }
 .calc { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 12px; font-size: 13px; color: var(--fg-2); }
@@ -477,16 +478,16 @@ img.broken { opacity: .3; }
     <div class="f-more">
       <select id="fSymbol" aria-label="Інструмент"></select>
       <select id="fDir" aria-label="Напрям">
-        <option value="">Long і Short</option>
-        <option value="long">Лише Long</option>
-        <option value="short">Лише Short</option>
+        <option value="">Вгору і вниз</option>
+        <option value="up">Лише вгору</option>
+        <option value="down">Лише вниз</option>
       </select>
       <select id="fResult" aria-label="Результат">
         <option value="">Будь-який результат</option>
-        <option value="win">Прибуткові</option>
-        <option value="loss">Збиткові</option>
-        <option value="be">Беззбиткові</option>
-        <option value="open">Відкриті</option>
+        <option value="win">Плюс</option>
+        <option value="loss">Мінус</option>
+        <option value="draw">Повернення</option>
+        <option value="open">Ще йдуть</option>
       </select>
       <select id="fMistake" aria-label="Помилки"></select>
       <select id="fPlan" aria-label="План">
@@ -494,7 +495,7 @@ img.broken { opacity: .3; }
         <option value="yes">За планом</option>
         <option value="no">Не за планом</option>
       </select>
-      <input id="fQ" type="search" placeholder="Пошук: тикер, нотатки, теги" aria-label="Пошук">
+      <input id="fQ" type="search" placeholder="Пошук: актив, нотатки" aria-label="Пошук">
     </div>
     <button type="button" class="btn ghost sm" id="fReset" hidden>Скинути</button>
   </section>
@@ -525,7 +526,7 @@ const round2 = v => Math.round(v * 100) / 100;
 function num(v) {
   if (v === '' || v == null) return null;
   if (typeof v === 'number') return isFinite(v) ? v : null;
-  const s = String(v).replace(/[\s ]/g, '').replace(/−/g, '-').replace(',', '.');
+  const s = String(v).replace(/[\s %$€£₴]/g, '').replace(/−/g, '-').replace(',', '.');
   if (!/^[-+]?(\d+\.?\d*|\.\d+)(e[-+]?\d+)?$/i.test(s)) return null;
   const n = parseFloat(s);
   return isFinite(n) ? n : null;
@@ -541,17 +542,20 @@ function plural(n, one, few, many) {
   if (b >= 2 && b <= 4) return few;
   return many;
 }
+const nTrades = n => `${n} ${plural(n, 'угода', 'угоди', 'угод')}`;
+const nTradesAcc = n => `${n} ${plural(n, 'угоду', 'угоди', 'угод')}`;
 
 /* ---------- formatting ---------- */
 const NF2 = new Intl.NumberFormat('uk-UA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const NF1 = new Intl.NumberFormat('uk-UA', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 const NF0 = new Intl.NumberFormat('uk-UA', { maximumFractionDigits: 0 });
 const NFk = new Intl.NumberFormat('uk-UA', { maximumFractionDigits: 1 });
-const NFP = new Intl.NumberFormat('uk-UA', { maximumFractionDigits: 8 });
+const NFm = new Intl.NumberFormat('uk-UA', { maximumFractionDigits: 2 });
 const MINUS = '−';
 const MONTHS = ['січ', 'лют', 'бер', 'кві', 'тра', 'чер', 'лип', 'сер', 'вер', 'жов', 'лис', 'гру'];
 const MONTHS_FULL = ['Січень', 'Лютий', 'Березень', 'Квітень', 'Травень', 'Червень', 'Липень', 'Серпень', 'Вересень', 'Жовтень', 'Листопад', 'Грудень'];
 const WD = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'];
+const WD_FULL = ['Понеділок', 'Вівторок', 'Середа', 'Четвер', "П'ятниця", 'Субота', 'Неділя'];
 function withCur(body, sign) {
   const cur = String(cfg().currency || '$').trim() || '$';
   return /^[$€£]$/.test(cur) ? `${sign}${cur}${body}` : `${sign}${body} ${cur}`;
@@ -560,17 +564,16 @@ function money(v, sign = true) {
   if (v == null || !isFinite(v)) return '—';
   return withCur(NF2.format(Math.abs(v)), v < 0 ? MINUS : (sign && v > 0 ? '+' : ''));
 }
+function compactNum(a) { return a >= 1e6 ? NFk.format(a / 1e6) + 'M' : a >= 1e4 ? NF0.format(a / 1e3) + 'k' : a >= 1e3 ? NFk.format(a / 1e3) + 'k' : NF0.format(a); }
 function moneyShort(v, sign = true) {
   if (v == null || !isFinite(v)) return '—';
-  const a = Math.abs(v);
   return withCur(compactNum(Math.abs(v)), v < 0 ? MINUS : (sign && v > 0 ? '+' : ''));
 }
-function compactNum(a) { return a >= 1e6 ? NFk.format(a / 1e6) + 'M' : a >= 1e4 ? NF0.format(a / 1e3) + 'k' : a >= 1e3 ? NFk.format(a / 1e3) + 'k' : NF0.format(a); }
 const signedShort = v => (v < 0 ? MINUS : v > 0 ? '+' : '') + compactNum(Math.abs(v));
 const pct = v => v == null || !isFinite(v) ? '—' : NF1.format(v * 100) + '%';
-const rfmt = v => v == null || !isFinite(v) ? '—' : (v > 0 ? '+' : v < 0 ? MINUS : '') + NF2.format(Math.abs(v)) + 'R';
+const pp = v => v == null || !isFinite(v) ? '—' : (v > 0 ? '+' : v < 0 ? MINUS : '') + NF1.format(Math.abs(v) * 100) + ' п.п.';
 const ratio = v => v == null ? '—' : v === Infinity ? '∞' : NF2.format(v);
-const price = v => v == null ? '—' : NFP.format(v);
+const payoutFmt = v => v == null ? '—' : NFm.format(v) + '%';
 const cls = v => v > 0 ? 'pos' : v < 0 ? 'neg' : '';
 function fmtDate(s, year = false) {
   if (!s) return '—';
@@ -578,6 +581,9 @@ function fmtDate(s, year = false) {
   return `${+d} ${MONTHS[+m - 1] || ''}${year ? ' ' + y : ''}`;
 }
 function weekdayIdx(s) { const [y, m, d] = s.split('-').map(Number); return (new Date(y, m - 1, d).getDay() + 6) % 7; }
+const DIR = { up: ['↑ Вгору', 'Вгору'], down: ['↓ Вниз', 'Вниз'] };
+const RES = { win: 'Плюс', loss: 'Мінус', draw: 'Повернення', open: 'Ще йде' };
+const dirBadge = d => `<span class="dir ${d}">${DIR[d][0]}</span>`;
 
 /* ---------- icons ---------- */
 const I = {
@@ -594,12 +600,11 @@ const I = {
 };
 
 /* ---------- defaults ---------- */
-const DEFAULT_MISTAKES = ['Вхід без сетапу', 'Ранній вхід', 'Запізнений вхід', 'Пересунув стоп', 'Без стоп-лосу', 'Рано закрив', 'Пересидів збиток', 'Завеликий ризик', 'Овертрейдинг', 'Проти тренду', 'Ігнорував новини', 'Помста ринку'];
+const DEFAULT_MISTAKES = ['Вхід без сигналу', 'Ранній вхід', 'Запізнений вхід', 'Не та експірація', 'Завелика ставка', 'Відіграш після мінуса', 'Овертрейдинг', 'Проти тренду', 'Торгував на новинах', 'Торгував втомленим'];
 const DEFAULT_EMOTIONS = ['Спокій', 'Впевненість', 'FOMO', 'Страх', 'Жадібність', 'Нетерпіння', 'Втома', 'Злість'];
-const DEFAULT_TF = ['M1', 'M5', 'M15', 'M30', 'H1', 'H4', 'D1', 'W1'];
-const NUM_FIELDS = ['entry', 'stop', 'take', 'exit', 'size', 'risk', 'pnl', 'fees', 'rating'];
+const DEFAULT_EXPIRIES = ['30 с', '1 хв', '2 хв', '3 хв', '5 хв', '15 хв'];
 function defaultSettings() {
-  return { currency: '$', startBalance: 0, beThreshold: 0, defaultRisk: null, strategies: [], mistakes: [...DEFAULT_MISTAKES], emotions: [...DEFAULT_EMOTIONS], timeframes: [...DEFAULT_TF] };
+  return { currency: '$', startBalance: 0, defaultStake: null, strategies: [], mistakes: [...DEFAULT_MISTAKES], emotions: [...DEFAULT_EMOTIONS], expiries: [...DEFAULT_EXPIRIES] };
 }
 function normSettings(s) {
   const d = defaultSettings();
@@ -608,32 +613,36 @@ function normSettings(s) {
   return {
     currency: typeof s.currency === 'string' && s.currency.trim() ? s.currency.trim() : d.currency,
     startBalance: num(s.startBalance) ?? 0,
-    beThreshold: Math.abs(num(s.beThreshold) ?? 0),
-    defaultRisk: num(s.defaultRisk),
+    defaultStake: num(s.defaultStake),
     strategies,
     mistakes: Array.isArray(s.mistakes) ? strList(s.mistakes) : d.mistakes,
     emotions: Array.isArray(s.emotions) ? strList(s.emotions) : d.emotions,
-    timeframes: Array.isArray(s.timeframes) ? strList(s.timeframes) : d.timeframes,
+    expiries: Array.isArray(s.expiries) ? strList(s.expiries) : d.expiries,
   };
 }
+const normSymbol = v => String(v || '').trim().toUpperCase().replace(/\s+/g, ' ');
 function normTrade(t) {
   t = { ...(t || {}) };
   t.id = String(t.id || '').replace(/[^A-Za-z0-9_\-.~:@+]/g, '_').slice(0, 120);
   if (!t.id || /^\.+$/.test(t.id)) t.id = uid('t');
   t.date = /^\d{4}-\d{2}-\d{2}$/.test(t.date) ? t.date : todayStr();
   t.time = /^\d{2}:\d{2}/.test(t.time || '') ? String(t.time).slice(0, 5) : '';
-  t.symbol = String(t.symbol || '').toUpperCase();
-  t.direction = t.direction === 'short' ? 'short' : 'long';
-  t.status = t.status === 'open' ? 'open' : 'closed';
+  t.symbol = normSymbol(t.symbol);
+  t.direction = t.direction === 'down' || t.direction === 'short' ? 'down' : 'up';
+  t.stake = num(t.stake);
+  t.payout = num(t.payout);
+  t.pnl = num(t.pnl);
+  if (!['win', 'loss', 'draw', 'open'].includes(t.result)) {
+    t.result = t.status === 'open' || t.pnl == null ? 'open' : t.pnl > 0 ? 'win' : t.pnl < 0 ? 'loss' : 'draw';
+  }
+  delete t.status;
   t.strategy = String(t.strategy || '').trim();
-  t.timeframe = String(t.timeframe || '');
-  for (const k of NUM_FIELDS) t[k] = num(t[k]);
+  t.expiry = String(t.expiry || '').trim();
   t.images = Array.isArray(t.images) ? t.images.filter(x => typeof x === 'string' && x) : [];
   t.mistakes = strList(t.mistakes);
   t.emotions = strList(t.emotions);
-  t.tags = strList(t.tags);
   t.followedPlan = t.followedPlan === true ? true : t.followedPlan === false ? false : null;
-  for (const k of ['analysis', 'offPlan', 'lesson']) t[k] = String(t[k] || '');
+  for (const k of ['analysis', 'offPlan']) t[k] = String(t[k] || '');
   t.createdAt = num(t.createdAt) || Date.now();
   t.updatedAt = num(t.updatedAt) || t.createdAt;
   return t;
@@ -696,7 +705,7 @@ async function withRetry(fn) {
     throw e;
   }
 }
-/* Claude artifact runtime: trades in the viewer's private db subtree, screenshots in the artifact's asset store. */
+/* Claude artifact runtime: one private journal per user (db), screenshots in the artifact's asset store. */
 class CloudStore {
   constructor(db, assets, userId) {
     this.kind = 'cloud';
@@ -724,6 +733,7 @@ class CloudStore {
     return 'asset:' + r.id;
   }
   async deleteImage(ref) { if (this.assets) await this.assets.delete(ref.slice(6)); }
+  async usage() { if (!this.assets) return null; const r = await this.assets.list(); return r && r.usage; }
 }
 function errText(e) {
   const map = {
@@ -751,7 +761,7 @@ const S = {
   tab: ls.get('tab', 'overview'),
   f: Object.assign(blankFilters(), ls.get('filters', {})),
   tradeSort: 'new', stratSort: { k: 'net', d: -1 }, cal: null, listLimit: 100,
-  modal: null, lb: null,
+  modal: null, lb: null, staleView: false,
 };
 let readyResolve;
 const readyP = new Promise(r => { readyResolve = r; });
@@ -760,62 +770,56 @@ const cfg = () => D().settings;
 const store = () => S.demo ? S.demoStore : S.store;
 function upsertTrade(t) { const a = D().trades; const i = a.findIndex(x => x.id === t.id); if (i >= 0) a[i] = t; else a.push(t); }
 
-/* ---------- trade math ---------- */
-function tradeNet(t) { if (t.pnl == null) return null; return t.pnl - (t.fees || 0); }
-function isClosed(t) { return t.status !== 'open' && tradeNet(t) != null; }
-function outcome(t) {
-  const n = tradeNet(t);
-  if (n == null) return null;
-  if (Math.abs(n) <= (cfg().beThreshold || 0)) return 'be';
-  return n > 0 ? 'win' : 'loss';
+/* ---------- trade math (binary options) ---------- */
+/* Win pays stake × payout%, loss costs the stake, a draw returns it. */
+function tradeNet(t) {
+  if (t.result === 'open') return null;
+  if (t.stake != null) {
+    if (t.result === 'loss') return -t.stake;
+    if (t.result === 'draw') return 0;
+    if (t.payout != null) return round2(t.stake * t.payout / 100);
+  }
+  return t.pnl;
 }
-function tradeR(t) {
-  const n = tradeNet(t);
-  if (n != null && t.risk > 0) return n / t.risk;
-  const { entry: e, stop: s, exit: x } = t;
-  if (e != null && s != null && x != null && e !== s) return (t.direction === 'short' ? -1 : 1) * (x - e) / Math.abs(e - s);
-  return null;
-}
-function plannedRR(t) {
-  const { entry: e, stop: s, take: tp } = t;
-  if (e == null || s == null || tp == null || e === s) return null;
-  return Math.abs(tp - e) / Math.abs(e - s);
-}
+const isClosed = t => tradeNet(t) != null;
+const outcome = t => isClosed(t) ? t.result : null;
+const breakEven = payout => payout > 0 ? 1 / (1 + payout / 100) : null;
 const chronoKey = t => `${t.date} ${t.time || '99:99'}`;
 function sortChrono(list) { return [...list].sort((a, b) => chronoKey(a).localeCompare(chronoKey(b)) || a.createdAt - b.createdAt); }
 
 function stats(list) {
   const closed = sortChrono(list.filter(isClosed));
-  const st = { n: closed.length, wins: 0, losses: 0, be: 0, net: 0, grossWin: 0, grossLoss: 0, sumWin: 0, sumLoss: 0, best: null, worst: null, rSum: 0, rN: 0, maxW: 0, maxL: 0, maxDD: 0, maxDDPct: null, equity: [], cur: null };
+  const st = { n: closed.length, wins: 0, losses: 0, draws: 0, net: 0, grossWin: 0, grossLoss: 0, turnover: 0, staked: 0, payoutSum: 0, payoutN: 0, best: null, worst: null, maxW: 0, maxL: 0, maxDD: 0, maxDDPct: null, equity: [], cur: null };
   const start = cfg().startBalance || 0;
   let cw = 0, cl = 0, cum = 0, peak = start;
   for (const t of closed) {
-    const n = tradeNet(t), o = outcome(t);
+    const n = tradeNet(t);
     st.net += n;
     if (n > 0) st.grossWin += n; else st.grossLoss += n;
-    if (o === 'win') { st.wins++; st.sumWin += n; cw++; cl = 0; }
-    else if (o === 'loss') { st.losses++; st.sumLoss += n; cl++; cw = 0; }
-    else { st.be++; cw = 0; cl = 0; }
+    if (t.stake != null) { st.turnover += t.stake; st.staked++; }
+    if (t.payout != null && t.result !== 'draw') { st.payoutSum += t.payout; st.payoutN++; }
+    if (t.result === 'win') { st.wins++; cw++; cl = 0; }
+    else if (t.result === 'loss') { st.losses++; cl++; cw = 0; }
+    else { st.draws++; }
     st.maxW = Math.max(st.maxW, cw); st.maxL = Math.max(st.maxL, cl);
     if (!st.best || n > tradeNet(st.best)) st.best = t;
     if (!st.worst || n < tradeNet(st.worst)) st.worst = t;
-    const r = tradeR(t);
-    if (r != null) { st.rSum += r; st.rN++; }
     cum += n;
     const bal = start + cum;
     if (bal > peak) peak = bal;
     const dd = peak - bal;
-    if (dd > st.maxDD) { st.maxDD = dd; st.maxDDPct = peak > 0 ? dd / peak : null; }
+    if (dd > st.maxDD) { st.maxDD = dd; st.maxDDPct = start > 0 && peak > 0 ? dd / peak : null; }
     st.equity.push({ t, n, cum });
   }
   st.cur = cw ? { type: 'win', n: cw } : cl ? { type: 'loss', n: cl } : null;
   st.winRate = st.wins + st.losses ? st.wins / (st.wins + st.losses) : null;
+  st.avgPayout = st.payoutN ? st.payoutSum / st.payoutN : null;
+  st.beWR = st.avgPayout != null ? breakEven(st.avgPayout) : null;
+  st.edge = st.winRate != null && st.beWR != null ? st.winRate - st.beWR : null;
   st.pf = st.grossLoss < 0 ? st.grossWin / -st.grossLoss : (st.grossWin > 0 ? Infinity : null);
   st.exp = st.n ? st.net / st.n : null;
-  st.avgWin = st.wins ? st.sumWin / st.wins : null;
-  st.avgLoss = st.losses ? st.sumLoss / st.losses : null;
-  st.payoff = st.avgWin != null && st.avgLoss ? st.avgWin / -st.avgLoss : null;
-  st.avgR = st.rN ? st.rSum / st.rN : null;
+  st.roi = st.turnover ? st.net / st.turnover : null;
+  st.avgStake = st.staked ? st.turnover / st.staked : null;
   return st;
 }
 function groupStats(list, keyFn) {
@@ -825,6 +829,15 @@ function groupStats(list, keyFn) {
     for (const key of Array.isArray(k) ? k : [k]) { if (!m.has(key)) m.set(key, []); m.get(key).push(t); }
   }
   return [...m].map(([key, items]) => ({ key, list: items, st: stats(items) }));
+}
+/* Trades opened right after a loss on the same day with a bigger stake (chasing losses). */
+function chaseTrades(closed) {
+  const s = sortChrono(closed), out = [];
+  for (let i = 1; i < s.length; i++) {
+    const p = s[i - 1], t = s[i];
+    if (p.result === 'loss' && p.date === t.date && t.stake != null && p.stake != null && t.stake > p.stake) out.push(t);
+  }
+  return out;
 }
 
 /* ---------- filters ---------- */
@@ -843,7 +856,7 @@ function periodBounds(f) {
     default: return ['', ''];
   }
 }
-function haystack(t) { return [t.symbol, t.strategy, t.timeframe, t.analysis, t.offPlan, t.lesson, ...t.tags, ...t.mistakes, ...t.emotions].join(' ').toLowerCase(); }
+function haystack(t) { return [t.symbol, t.strategy, t.expiry, t.analysis, t.offPlan, ...t.mistakes, ...t.emotions].join(' ').toLowerCase(); }
 function applyFilters(list) {
   const f = S.f, [from, to] = periodBounds(f), q = f.q.trim().toLowerCase();
   return list.filter(t =>
@@ -851,7 +864,7 @@ function applyFilters(list) {
     (!f.strategy || (f.strategy === '__none' ? !t.strategy : t.strategy === f.strategy)) &&
     (!f.symbol || t.symbol === f.symbol) &&
     (!f.dir || t.direction === f.dir) &&
-    (!f.result || (f.result === 'open' ? t.status === 'open' : isClosed(t) && outcome(t) === f.result)) &&
+    (!f.result || t.result === f.result) &&
     (!f.mistake || (f.mistake === '__any' ? t.mistakes.length > 0 : f.mistake === '__none' ? t.mistakes.length === 0 : t.mistakes.includes(f.mistake))) &&
     (!f.plan || (f.plan === 'yes' ? t.followedPlan === true : t.followedPlan === false)) &&
     (!q || haystack(t).includes(q)));
@@ -871,7 +884,7 @@ function syncFilters() {
   $('#filters').hidden = !hasAny;
   if (!hasAny) return;
   if (!setOptions($('#fStrategy'), [['', 'Усі стратегії'], ...strategyNames().map(n => [n, n]), ...(D().trades.some(t => !t.strategy) ? [['__none', 'Без стратегії']] : [])], f.strategy)) f.strategy = '';
-  if (!setOptions($('#fSymbol'), [['', 'Усі інструменти'], ...symbolsList().map(s => [s, s])], f.symbol)) f.symbol = '';
+  if (!setOptions($('#fSymbol'), [['', 'Усі активи'], ...symbolsList().map(s => [s, s])], f.symbol)) f.symbol = '';
   if (!setOptions($('#fMistake'), [['', 'Помилки: усі угоди'], ['__any', 'Лише з помилками'], ['__none', 'Без помилок'], ...uniq([...cfg().mistakes, ...D().trades.flatMap(t => t.mistakes)]).map(m => [m, m])], f.mistake)) f.mistake = '';
   $('#fPeriod').value = f.period; $('#fDir').value = f.dir; $('#fResult').value = f.result; $('#fPlan').value = f.plan;
   $('#fCustom').hidden = f.period !== 'custom';
@@ -936,18 +949,18 @@ async function decodeImage(file) {
     return img;
   } finally { setTimeout(() => URL.revokeObjectURL(url), 1000); }
 }
-/* Screenshots are re-encoded (WebP, JPEG fallback) and capped at 2560px so the journal stays light. */
+/* Screenshots are re-encoded (WebP, JPEG fallback) and capped at 1920px so the journal stays light. */
 async function processImage(file) {
   const src = await decodeImage(file);
   const w = src.width || src.naturalWidth, h = src.height || src.naturalHeight;
   if (!w || !h) throw new Error('Порожнє зображення');
-  const k = Math.min(1, 2560 / Math.max(w, h));
+  const k = Math.min(1, 1920 / Math.max(w, h));
   const c = document.createElement('canvas');
   c.width = Math.round(w * k); c.height = Math.round(h * k);
   c.getContext('2d').drawImage(src, 0, 0, c.width, c.height);
   if (src.close) src.close();
-  let blob = await new Promise(r => c.toBlob(r, 'image/webp', 0.9));
-  if (!blob || blob.type !== 'image/webp') blob = await new Promise(r => c.toBlob(r, 'image/jpeg', 0.9));
+  let blob = await new Promise(r => c.toBlob(r, 'image/webp', 0.86));
+  if (!blob || blob.type !== 'image/webp') blob = await new Promise(r => c.toBlob(r, 'image/jpeg', 0.88));
   if (!blob) throw new Error('Не вдалося обробити зображення');
   if (k === 1 && file.size <= blob.size && /^image\/(png|jpeg|webp)$/.test(file.type)) return file;
   return blob;
@@ -1044,7 +1057,7 @@ function drawEquity(el, pts) {
     xh.setAttribute('x1', x(i)); xh.setAttribute('x2', x(i)); xh.setAttribute('visibility', 'visible');
     hd.setAttribute('cx', x(i)); hd.setAttribute('cy', y(vals[i])); hd.setAttribute('visibility', 'visible');
     if (i === 0) showTip(`${money(0, false)}\nСтарт`, e.clientX, e.clientY);
-    else { const p = pts[i - 1]; showTip(`${money(p.cum)}\nУгода #${i} · ${fmtDate(p.t.date, true)} · ${p.t.symbol}\nРезультат угоди: ${money(p.n)}`, e.clientX, e.clientY); }
+    else { const p = pts[i - 1]; showTip(`${money(p.cum)}\nУгода #${i} · ${fmtDate(p.t.date, true)} · ${p.t.symbol}\n${RES[p.t.result]}: ${money(p.n)}`, e.clientX, e.clientY); }
   });
   svg.addEventListener('pointerleave', () => { xh.setAttribute('visibility', 'hidden'); hd.setAttribute('visibility', 'hidden'); hideTip(); });
 }
@@ -1052,7 +1065,7 @@ function barPath(x, y0, y1, w, r) {
   const h = Math.abs(y1 - y0);
   if (h < 0.5) return '';
   r = Math.min(r, h, w / 2);
-  const up = y1 < y0, s = up ? 1 : -1;
+  const s = y1 < y0 ? 1 : -1;
   return `M${x} ${y0}V${y1 + s * r}Q${x} ${y1} ${x + r} ${y1}H${x + w - r}Q${x + w} ${y1} ${x + w} ${y1 + s * r}V${y0}Z`;
 }
 function drawCols(el, items) {
@@ -1071,7 +1084,7 @@ function drawCols(el, items) {
     const x0 = m.l + i * band;
     if (it.n) s += `<path class="${it.value >= 0 ? 'col-p' : 'col-n'}" d="${barPath(+(x0 + (band - bw) / 2).toFixed(1), +y(0).toFixed(1), +y(it.value).toFixed(1), +bw.toFixed(1), 4)}"/>`;
     if (i % every === 0) s += `<text x="${(x0 + band / 2).toFixed(1)}" y="${H - 6}" text-anchor="middle">${esc(it.label)}</text>`;
-    const tipText = it.n ? `${money(it.value)}\n${it.full || it.label} · ${it.n} ${plural(it.n, 'угода', 'угоди', 'угод')}\nВінрейт ${pct(it.wr)}` : `Немає угод\n${it.full || it.label}`;
+    const tipText = it.n ? `${money(it.value)}\n${it.full || it.label} · ${nTrades(it.n)}\nВінрейт ${pct(it.wr)}` : `Немає угод\n${it.full || it.label}`;
     s += `<rect class="hit" x="${x0.toFixed(1)}" y="0" width="${band.toFixed(1)}" height="${H}" data-tip="${esc(tipText)}"/><rect class="hl" pointer-events="none" x="${x0.toFixed(1)}" y="${m.t}" width="${band.toFixed(1)}" height="${ih}" fill="transparent"/>`;
   });
   el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Результат по групах">${s}</svg>`;
@@ -1084,7 +1097,7 @@ function sparkline(list, w = 96, h = 26) {
   const pts = vals.map((v, i) => `${(1 + i * (w - 2) / (vals.length - 1)).toFixed(1)},${(2 + (hi - v) * (h - 4) / span).toFixed(1)}`).join(' ');
   return `<svg class="spark" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" aria-hidden="true"><polyline points="${pts}" style="stroke:${st.net >= 0 ? 'var(--profit)' : 'var(--loss)'}"/></svg>`;
 }
-function divBars(rows) {
+function divBars(rows, fmt = money) {
   if (!rows.length) return '<p class="muted">Немає даних.</p>';
   const max = Math.max(...rows.map(r => Math.abs(r.value)), 1e-9);
   const hasNeg = rows.some(r => r.value < 0), hasPos = rows.some(r => r.value > 0);
@@ -1093,34 +1106,36 @@ function divBars(rows) {
   return `<div class="bars">${rows.map(r => {
     const w = Math.abs(r.value) / max * span;
     const bar = r.value >= 0 ? `<i class="b p" style="left:${zero}%;width:${w.toFixed(2)}%"></i>` : `<i class="b n" style="left:${(zero - w).toFixed(2)}%;width:${w.toFixed(2)}%"></i>`;
-    return `<div class="bar-row" data-tip="${esc(`${money(r.value)}\n${r.label}${r.tip ? '\n' + r.tip : ''}`)}"><div class="lab">${r.labelHTML || esc(r.label)}${r.note ? `<small>${esc(r.note)}</small>` : ''}</div><div class="bar-track"><span class="zero" style="left:${zero}%"></span>${bar}</div><div class="val ${cls(r.value)}">${esc(money(r.value))}</div></div>`;
+    return `<div class="bar-row" data-tip="${esc(`${fmt(r.value)}\n${r.label}${r.tip ? '\n' + r.tip : ''}`)}"><div class="lab">${r.labelHTML || esc(r.label)}${r.note ? `<small>${esc(r.note)}</small>` : ''}</div><div class="bar-track"><span class="zero" style="left:${zero}%"></span>${bar}</div><div class="val ${cls(r.value)}">${esc(fmt(r.value))}</div></div>`;
   }).join('')}</div>`;
 }
 
 /* ---------- rendering: shared bits ---------- */
-function tile(label, value, sub, hint = '', c = '') {
-  return `<div class="tile"${hint ? ` title="${esc(hint)}"` : ''}><div class="lbl">${esc(label)}</div><div class="val num ${c}">${esc(value)}</div><div class="sub">${esc(sub)}</div></div>`;
+function tile(label, value, sub, hint = '', c = '', subCls = '') {
+  return `<div class="tile"${hint ? ` title="${esc(hint)}"` : ''}><div class="lbl">${esc(label)}</div><div class="val num ${c}">${esc(value)}</div><div class="sub ${subCls}">${esc(sub)}</div></div>`;
 }
 function thumbHTML(t) {
   return `<div class="thumb">${t.images.length ? `<img data-ref="${esc(t.images[0])}" alt="" loading="lazy">` : I.img}</div>`;
 }
+function stakeLine(t) { return [t.stake != null ? money(t.stake, false) : '', t.expiry].filter(Boolean).join(' · ') || '—'; }
 function tradeRowsHTML(list, compact = false) {
   if (!list.length) return '<p class="muted">Угод немає.</p>';
-  const head = compact ? '' : '<div class="trow head" aria-hidden="true"><div></div><div>Дата</div><div>Інструмент</div><div>Стратегія</div><div class="c-r">R</div><div class="c-res">Результат</div><div style="text-align:right">Дисципліна</div></div>';
+  const head = compact ? '' : '<div class="trow head" aria-hidden="true"><div></div><div>Дата</div><div>Актив</div><div>Стратегія</div><div class="c-r">Ставка</div><div class="c-res">Результат</div><div style="text-align:right">Дисципліна</div></div>';
   return `<div class="tlist">${head}${list.map(t => {
-    const net = tradeNet(t), open = t.status === 'open';
+    const net = tradeNet(t), open = t.result === 'open';
     const flags = [
       t.followedPlan === true ? '<span class="tag ok" title="За планом">✓ план</span>' : '',
       t.followedPlan === false ? '<span class="tag m" title="Не за планом">✕ план</span>' : '',
       t.mistakes.length ? `<span class="tag m" title="${esc(t.mistakes.join(', '))}">${t.mistakes.length} ${plural(t.mistakes.length, 'помилка', 'помилки', 'помилок')}</span>` : '',
     ].join('');
+    const res = open ? '<span class="tag">йде</span>' : t.result === 'draw' ? `<span class="muted">${esc(money(0, false))}</span>` : esc(money(net));
     return `<div class="trow${compact ? ' compact' : ''}" data-act="open" data-id="${esc(t.id)}" role="button" tabindex="0" aria-label="${esc(`${t.symbol} ${fmtDate(t.date, true)}`)}">
       <div class="c-th">${thumbHTML(t)}</div>
       <div class="c-date num">${esc(fmtDate(t.date))}<small>${esc(t.time || '')}</small></div>
-      <div class="c-sym"><span class="sym">${esc(t.symbol || '—')}</span><span class="dir ${t.direction}">${t.direction === 'long' ? 'Long' : 'Short'}</span>${open ? '<span class="tag">відкрита</span>' : ''}${t.demo ? '<span class="tag demo">демо</span>' : ''}</div>
+      <div class="c-sym"><span class="sym">${esc(t.symbol || '—')}</span>${dirBadge(t.direction)}${t.demo ? '<span class="tag demo">демо</span>' : ''}</div>
       <div class="c-strat">${stratChip(t.strategy)}</div>
-      <div class="c-r">${esc(rfmt(tradeR(t)))}</div>
-      <div class="c-res ${open ? '' : cls(net)}">${open ? '—' : esc(money(net))}</div>
+      <div class="c-r">${esc(stakeLine(t))}</div>
+      <div class="c-res ${open ? '' : cls(net)}">${res}</div>
       <div class="c-flags">${flags}</div>
       <div class="c-meta">${esc(fmtDate(t.date))}${t.time ? ' ' + esc(t.time) : ''} · ${esc(t.strategy || 'Без стратегії')}</div>
     </div>`;
@@ -1132,12 +1147,12 @@ function noResultsHTML() {
 function emptyHTML() {
   return `<section class="panel empty">
     <h2>Тут буде твоя торгова статистика</h2>
-    <p>Записуй кожну угоду зі скріном графіка, стратегією і коротким аналізом. Журнал сам порахує чистий P&amp;L, вінрейт і profit factor по кожній стратегії, покаже криву капіталу, календар днів і скільки коштують помилки.</p>
+    <p>Записуй кожну угоду зі скріном: актив, вгору чи вниз, ставку, експірацію і результат. Журнал сам порахує прибуток з виплати, вінрейт і скільки потрібно вигравати при твоїй виплаті, покаже результат по кожній стратегії, календар днів і скільки коштують помилки.</p>
     <div class="acts"><button class="btn primary" data-act="new" type="button">${I.plus}Додати першу угоду</button><button class="btn" data-act="demo" type="button">Подивитись на демо-даних</button></div>
     <div class="steps">
-      <div><b>Скопіюй скрін графіка</b>Будь-яким інструментом: Win+Shift+S, Cmd+Ctrl+Shift+4 або скрін на телефоні.</div>
+      <div><b>Скопіюй скрін графіка</b>Win+Shift+S, Cmd+Ctrl+Shift+4 або скрін на телефоні.</div>
       <div><b>Натисни <span class="kbd">Ctrl</span>+<span class="kbd">V</span> на сторінці</b>Відкриється нова угода зі скріном. На телефоні: «Нова угода» → утримуй поле скріну → «Вставити».</div>
-      <div><b>Заповни угоду</b>Інструмент, стратегія, результат, аналіз і що пішло не за планом. Решта рахується автоматично.</div>
+      <div><b>Обери вгору/вниз і плюс/мінус</b>Ставка, виплата й експірація підставляються з попередньої угоди. Прибуток рахується сам.</div>
     </div>
   </section>`;
 }
@@ -1147,30 +1162,35 @@ function insightsHTML(list, st) {
   const closed = list.filter(isClosed);
   if (closed.length < 5) return `<p class="muted">Висновки з'являться, коли у вибірці буде хоча б 5 закритих угод.</p>`;
   const out = [];
+  if (st.beWR != null && st.winRate != null) {
+    const gap = esc(pp(Math.abs(st.edge)).replace(/^[+\u2212]/, ''));
+    const tail = st.edge >= 0 ? (st.net < 0 ? `Ти вище на ${gap}, але в мінусі через різні ставки: програші були більшими за виграші.` : `Ти вище на ${gap}`) : `Не вистачає ${gap}`;
+    out.push([st.edge >= 0 && st.net >= 0 ? 'good' : 'bad', st.edge >= 0 && st.net >= 0 ? '▲' : '▼', `Вінрейт ${esc(pct(st.winRate))} при середній виплаті ${esc(payoutFmt(round2(st.avgPayout)))}. Щоб бути в плюсі, потрібно від ${esc(pct(st.beWR))}. ${tail}`]);
+  }
   const g = groupStats(closed, t => t.strategy || 'Без стратегії').filter(r => r.st.n >= 3);
   if (g.length >= 2) {
     const best = g.reduce((a, b) => b.st.net > a.st.net ? b : a), worst = g.reduce((a, b) => b.st.net < a.st.net ? b : a);
-    if (best.st.net > 0) out.push(['good', '▲', `Найприбутковіша стратегія — <b>${esc(best.key)}</b>: ${esc(money(best.st.net))} за ${best.st.n} угод, вінрейт ${esc(pct(best.st.winRate))}.`]);
-    if (worst.st.net < 0) out.push(['bad', '▼', `<b>${esc(worst.key)}</b> у мінусі: ${esc(money(worst.st.net))} за ${worst.st.n} угод. Перевір правила входу або зменш ризик на ній.`]);
+    if (best.st.net > 0) out.push(['good', '▲', `Найприбутковіша стратегія — <b>${esc(best.key)}</b>: ${esc(money(best.st.net))} за ${nTradesAcc(best.st.n)}, вінрейт ${esc(pct(best.st.winRate))}.`]);
+    if (worst.st.net < 0) out.push(['bad', '▼', `<b>${esc(worst.key)}</b> у мінусі: ${esc(money(worst.st.net))} за ${nTradesAcc(worst.st.n)}, вінрейт ${esc(pct(worst.st.winRate))}.`]);
+  }
+  const ex = groupStats(closed.filter(t => t.expiry), t => t.expiry).filter(r => r.st.n >= 3);
+  if (ex.length >= 2) {
+    const b = ex.reduce((a, c) => c.st.net > a.st.net ? c : a);
+    if (b.st.net > 0) out.push(['info', '●', `Найкраща експірація — <b>${esc(b.key)}</b>: ${esc(money(b.st.net))}, вінрейт ${esc(pct(b.st.winRate))}.`]);
   }
   const yes = stats(closed.filter(t => t.followedPlan === true)), no = stats(closed.filter(t => t.followedPlan === false));
-  if (yes.n >= 2 && no.n >= 2) {
-    out.push([no.exp < yes.exp ? 'bad' : 'info', '!', `Угоди не за планом дають у середньому ${esc(money(no.exp))} на угоду, за планом — ${esc(money(yes.exp))} (${no.n} проти ${yes.n} угод).`]);
-  }
+  if (yes.n >= 2 && no.n >= 2) out.push([no.exp < yes.exp ? 'bad' : 'info', '!', `Не за планом: вінрейт ${esc(pct(no.winRate))} і ${esc(money(no.net))} за ${nTradesAcc(no.n)}. За планом: ${esc(pct(yes.winRate))} і ${esc(money(yes.net))}.`]);
+  const chase = chaseTrades(closed);
+  if (chase.length >= 2) { const cs = stats(chase); out.push([cs.net < 0 ? 'bad' : 'info', '!', `Після мінуса ти ${chase.length} ${plural(chase.length, 'раз', 'рази', 'разів')} піднімав ставку. Ці угоди дали ${esc(money(cs.net))}, вінрейт ${esc(pct(cs.winRate))}.`]); }
   const mk = groupStats(closed.filter(t => t.mistakes.length), t => t.mistakes).filter(r => r.st.net < 0).sort((a, b) => a.st.net - b.st.net)[0];
   if (mk) out.push(['bad', '▼', `Найдорожча помилка — <b>${esc(mk.key)}</b>: ${esc(money(mk.st.net))} у ${mk.st.n} ${plural(mk.st.n, 'угоді', 'угодах', 'угодах')}.`]);
-  const wd = groupStats(closed, t => weekdayIdx(t.date)).filter(r => r.st.n >= 2);
-  if (wd.length >= 3) {
-    const b = wd.reduce((a, c) => c.st.net > a.st.net ? c : a), w = wd.reduce((a, c) => c.st.net < a.st.net ? c : a);
-    if (b.st.net > 0 && w.st.net < 0) out.push(['info', '●', `Найкращий день — ${WD[b.key]} (${esc(money(b.st.net))}), найгірший — ${WD[w.key]} (${esc(money(w.st.net))}).`]);
+  const hr = groupStats(closed.filter(t => t.time), t => +t.time.slice(0, 2)).filter(r => r.st.n >= 3);
+  if (hr.length >= 3) {
+    const b = hr.reduce((a, c) => c.st.net > a.st.net ? c : a), w = hr.reduce((a, c) => c.st.net < a.st.net ? c : a);
+    if (b.st.net > 0 && w.st.net < 0) out.push(['info', '●', `Найкраща година входу — ${pad(b.key)}:00 (${esc(money(b.st.net))}), найгірша — ${pad(w.key)}:00 (${esc(money(w.st.net))}).`]);
   }
-  const L = stats(closed.filter(t => t.direction === 'long')), Sh = stats(closed.filter(t => t.direction === 'short'));
-  if (L.n >= 3 && Sh.n >= 3 && Math.sign(L.net) !== Math.sign(Sh.net)) {
-    const good = L.net > Sh.net ? ['Long', L] : ['Short', Sh], bad = L.net > Sh.net ? ['Short', Sh] : ['Long', L];
-    out.push(['info', '●', `${good[0]} заробляє (${esc(money(good[1].net))}), ${bad[0]} втрачає (${esc(money(bad[1].net))}).`]);
-  }
-  if (st.cur && st.cur.type === 'loss' && st.cur.n >= 3) out.push(['bad', '!', `Зараз ${st.cur.n} збиткові угоди поспіль. Варто зробити паузу і перечитати план.`]);
-  if (!out.length) out.push(['info', '●', 'Явних перекосів поки немає. Продовжуй заповнювати стратегії, помилки й дотримання плану, щоб з’явились порівняння.']);
+  if (st.cur && st.cur.type === 'loss' && st.cur.n >= 3) out.push(['bad', '!', `Зараз ${st.cur.n} мінуси поспіль. Зроби паузу, не відігравайся.`]);
+  if (!out.length) out.push(['info', '●', 'Явних перекосів поки немає. Заповнюй стратегії, помилки й дотримання плану, щоб з’явились порівняння.']);
   return `<ul class="ins">${out.map(([k, ic, h]) => `<li class="${k}"><span class="ic" aria-hidden="true">${ic}</span><span>${h}</span></li>`).join('')}</ul>`;
 }
 function stratMiniHTML(list) {
@@ -1181,8 +1201,8 @@ function stratMiniHTML(list) {
 }
 function overviewHTML(list) {
   const st = stats(list);
-  const open = list.filter(t => t.status === 'open');
-  if (!st.n) return (open.length ? `<section class="panel"><h3>Відкриті угоди</h3>${tradeRowsHTML(open, true)}</section>` : '') + noResultsHTML();
+  const open = list.filter(t => t.result === 'open');
+  if (!st.n) return (open.length ? `<section class="panel"><h3>Угоди, що ще йдуть</h3>${tradeRowsHTML(open, true)}</section>` : '') + noResultsHTML();
   const first = st.equity[0].t.date, last = st.equity[st.equity.length - 1].t.date;
   const sb = cfg().startBalance || 0;
   return `
@@ -1190,23 +1210,23 @@ function overviewHTML(list) {
     <div class="hero-main">
       <div class="lbl">Чистий результат</div>
       <div class="hero-num num ${cls(st.net)}">${esc(money(st.net))}</div>
-      <div class="sub">${st.n} ${plural(st.n, 'закрита угода', 'закриті угоди', 'закритих угод')} · ${esc(fmtDate(first, true))} – ${esc(fmtDate(last, true))}</div>
+      <div class="sub">${nTrades(st.n)} · ${esc(fmtDate(first, true))} – ${esc(fmtDate(last, true))}</div>
       ${sb ? `<div class="sub">Баланс ${esc(money(sb + st.net, false))} · ${esc(pct(st.net / sb))} до стартових ${esc(money(sb, false))}</div>` : ''}
-      ${open.length ? `<div class="sub">${open.length} ${plural(open.length, 'відкрита угода', 'відкриті угоди', 'відкритих угод')} не враховано</div>` : ''}
+      ${open.length ? `<div class="sub">${nTrades(open.length)} ще ${plural(open.length, 'йде', 'йдуть', 'йдуть')}, не враховано</div>` : ''}
     </div>
     <div class="tiles">
-      ${tile('Вінрейт', pct(st.winRate), `${st.wins} W · ${st.losses} L · ${st.be} BE`, 'Прибуткові ÷ (прибуткові + збиткові). Беззбиткові не враховуються.')}
-      ${tile('Profit factor', ratio(st.pf), `${money(st.grossWin)} / ${money(st.grossLoss)}`, 'Валовий прибуток ÷ валовий збиток. Більше 1 — система заробляє.', st.pf == null ? '' : st.pf >= 1 ? 'pos' : 'neg')}
-      ${tile('Очікування', money(st.exp), 'середній результат угоди', 'Чистий результат ÷ кількість угод.', cls(st.exp))}
-      ${tile('Середній R', rfmt(st.avgR), st.rN ? `по ${st.rN} ${plural(st.rN, 'угоді', 'угодах', 'угодах')} з ризиком` : 'вкажи ризик або стоп-лос', 'Результат у одиницях ризику. Рахується з ризику в грошах або з цін входу, стопу і виходу.', cls(st.avgR))}
-      ${tile('Сер. прибуток', money(st.avgWin), `payoff ${ratio(st.payoff)}`, 'Payoff = середній прибуток ÷ середній збиток.', 'pos')}
-      ${tile('Сер. збиток', money(st.avgLoss), st.worst ? `найгірша ${money(tradeNet(st.worst))}` : '—', '', 'neg')}
+      ${tile('Вінрейт', pct(st.winRate), `${st.wins} плюс · ${st.losses} мінус${st.draws ? ` · ${st.draws} поверн.` : ''}`, 'Плюсові ÷ (плюсові + мінусові). Повернення не враховуються.')}
+      ${tile('Потрібний вінрейт', pct(st.beWR), st.edge != null ? `перевага ${pp(st.edge)}` : 'вкажи виплату', 'Мінімальний вінрейт, щоб не втрачати при твоїй середній виплаті: 1 ÷ (1 + виплата).', '', cls(st.edge))}
+      ${tile('Profit factor', ratio(st.pf), `${money(st.grossWin)} / ${money(st.grossLoss)}`, 'Сума виграшів ÷ сума програшів. Більше 1 — заробляєш.', st.pf == null ? '' : st.pf >= 1 ? 'pos' : 'neg')}
+      ${tile('ROI оборота', pct(st.roi), `оборот ${money(st.turnover, false)}`, 'Чистий результат ÷ сума всіх ставок.', cls(st.roi))}
+      ${tile('Середня угода', money(st.exp), 'чистий результат ÷ угоди', 'Скільки в середньому приносить одна угода.', cls(st.exp))}
+      ${tile('Середня ставка', money(st.avgStake, false), `виплата ${payoutFmt(st.avgPayout != null ? round2(st.avgPayout) : null)}`, 'Середня сума ставки і середня виплата за виграш.')}
       ${tile('Макс. просідання', st.maxDD ? money(-st.maxDD) : money(0, false), st.maxDDPct != null ? `${pct(st.maxDDPct)} від піку` : 'від піку кривої капіталу', 'Найбільше падіння від попереднього максимуму.', st.maxDD ? 'neg' : '')}
-      ${tile('Серії', `${st.maxW} W / ${st.maxL} L`, st.cur ? `зараз ${st.cur.n} ${st.cur.type === 'win' ? 'W' : 'L'} поспіль` : 'максимум поспіль', 'Найдовші серії прибуткових і збиткових угод.')}
+      ${tile('Серії плюс / мінус', `${st.maxW} / ${st.maxL}`, st.cur ? `зараз ${st.cur.n} ${st.cur.type === 'win' ? 'плюс' : 'мінус'} поспіль` : 'найдовші серії поспіль', 'Найдовші серії плюсових і мінусових угод поспіль.')}
     </div>
   </section>
   <div class="g2">
-    <section class="panel"><h3>Крива капіталу<span class="aside">чистий P&amp;L наростаючим підсумком</span></h3>${chart('equity', st.equity, 280)}</section>
+    <section class="panel"><h3>Крива капіталу<span class="aside">чистий результат наростаючим підсумком</span></h3>${chart('equity', st.equity, 280)}</section>
     <section class="panel"><h3>Висновки</h3>${insightsHTML(list, st)}</section>
   </div>
   <div class="g2 even">
@@ -1219,9 +1239,9 @@ function overviewHTML(list) {
 const TRADE_SORTS = {
   new: ['Спочатку нові', (a, b) => chronoKey(b).localeCompare(chronoKey(a)) || b.createdAt - a.createdAt],
   old: ['Спочатку старі', (a, b) => chronoKey(a).localeCompare(chronoKey(b)) || a.createdAt - b.createdAt],
-  best: ['Найбільший прибуток', (a, b) => (tradeNet(b) ?? -Infinity) - (tradeNet(a) ?? -Infinity)],
-  worst: ['Найбільший збиток', (a, b) => (tradeNet(a) ?? Infinity) - (tradeNet(b) ?? Infinity)],
-  r: ['За R', (a, b) => (tradeR(b) ?? -Infinity) - (tradeR(a) ?? -Infinity)],
+  best: ['Найбільший плюс', (a, b) => (tradeNet(b) ?? -Infinity) - (tradeNet(a) ?? -Infinity)],
+  worst: ['Найбільший мінус', (a, b) => (tradeNet(a) ?? Infinity) - (tradeNet(b) ?? Infinity)],
+  stake: ['Найбільша ставка', (a, b) => (b.stake ?? -Infinity) - (a.stake ?? -Infinity)],
 };
 function tradesHTML(list) {
   if (!list.length) return noResultsHTML();
@@ -1230,7 +1250,7 @@ function tradesHTML(list) {
   const shown = sorted.slice(0, S.listLimit);
   return `<section class="panel">
     <div class="list-head">
-      <span class="count">${list.length} ${plural(list.length, 'угода', 'угоди', 'угод')}</span>
+      <span class="count">${nTrades(list.length)}</span>
       <span class="hint">Net <b class="${cls(st.net)}">${esc(money(st.net))}</b> · вінрейт ${esc(pct(st.winRate))}</span>
       <span class="grow"></span>
       <select class="inp" id="tradeSort" aria-label="Сортування">${Object.entries(TRADE_SORTS).map(([k, [l]]) => `<option value="${k}"${k === S.tradeSort ? ' selected' : ''}>${l}</option>`).join('')}</select>
@@ -1244,11 +1264,11 @@ function tradesHTML(list) {
 
 /* ---------- strategies tab ---------- */
 const STRAT_COLS = [
-  ['name', 'Стратегія'], ['n', 'Угод'], ['wr', 'Вінрейт'], ['net', 'Net P&L'], ['pf', 'PF'], ['exp', 'Очікування'], ['avgR', 'Сер. R'], ['avgWin', 'Сер. +'], ['avgLoss', 'Сер. −'], ['best', 'Найкраща'], ['worst', 'Найгірша'],
+  ['name', 'Стратегія'], ['n', 'Угод'], ['wr', 'Вінрейт'], ['need', 'Потрібно'], ['net', 'Net'], ['roi', 'ROI'], ['pf', 'PF'], ['exp', 'Сер. угода'], ['maxL', 'Мінусів поспіль'],
 ];
 function stratSortVal(r, k) {
   const st = r.st;
-  return { name: (r.key || 'яяя').toLowerCase(), n: st.n, wr: st.winRate ?? -1, net: st.net, pf: st.pf === Infinity ? 1e12 : (st.pf ?? -1), exp: st.exp ?? -1e12, avgR: st.avgR ?? -1e12, avgWin: st.avgWin ?? -1e12, avgLoss: st.avgLoss ?? -1e12, best: st.best ? tradeNet(st.best) : -1e12, worst: st.worst ? tradeNet(st.worst) : -1e12 }[k];
+  return { name: (r.key || 'яяя').toLowerCase(), n: st.n, wr: st.winRate ?? -1, need: st.beWR ?? 2, net: st.net, roi: st.roi ?? -1e12, pf: st.pf === Infinity ? 1e12 : (st.pf ?? -1), exp: st.exp ?? -1e12, maxL: st.maxL }[k];
 }
 function strategiesHTML(list) {
   const closed = list.filter(isClosed);
@@ -1256,6 +1276,7 @@ function strategiesHTML(list) {
   const { k, d } = S.stratSort;
   const rows = groupStats(closed, t => t.strategy).sort((a, b) => { const va = stratSortVal(a, k), vb = stratSortVal(b, k); return (va < vb ? -1 : va > vb ? 1 : 0) * d; });
   const desc = cfg().strategies.filter(s => s.description.trim() && rows.some(r => r.key === s.name));
+  const edgeRows = rows.filter(r => r.st.edge != null).sort((a, b) => b.st.edge - a.st.edge);
   return `
   <section class="panel">
     <h3>Порівняння стратегій<span class="aside">клік по рядку — угоди стратегії</span></h3>
@@ -1264,17 +1285,17 @@ function strategiesHTML(list) {
       const st = r.st;
       return `<tr class="click" data-act="strategy" data-v="${esc(r.key || '__none')}" tabindex="0">
         <td>${stratChip(r.key)}</td><td>${st.n}</td>
-        <td><span class="wr">${esc(pct(st.winRate))}<span class="meter"><i style="width:${((st.winRate || 0) * 100).toFixed(1)}%"></i></span></span></td>
+        <td><span class="wr ${cls(st.edge)}">${esc(pct(st.winRate))}<span class="meter"><i style="width:${((st.winRate || 0) * 100).toFixed(1)}%"></i>${st.beWR != null ? `<b style="left:${(st.beWR * 100).toFixed(1)}%"></b>` : ''}</span></span></td>
+        <td class="muted">${esc(pct(st.beWR))}</td>
         <td class="${cls(st.net)}"><b>${esc(money(st.net))}</b></td>
-        <td>${esc(ratio(st.pf))}</td><td class="${cls(st.exp)}">${esc(money(st.exp))}</td><td>${esc(rfmt(st.avgR))}</td>
-        <td>${esc(money(st.avgWin))}</td><td>${esc(money(st.avgLoss))}</td>
-        <td>${st.best ? esc(money(tradeNet(st.best))) : '—'}</td><td>${st.worst ? esc(money(tradeNet(st.worst))) : '—'}</td>
+        <td class="${cls(st.roi)}">${esc(pct(st.roi))}</td><td>${esc(ratio(st.pf))}</td><td class="${cls(st.exp)}">${esc(money(st.exp))}</td><td>${st.maxL}</td>
         <td>${sparkline(r.list)}</td></tr>`;
     }).join('')}</tbody></table></div>
+    <p class="hint" style="margin:10px 0 0">Риска на шкалі вінрейту — потрібний вінрейт при середній виплаті стратегії.</p>
   </section>
   <div class="g2 even">
-    <section class="panel"><h3>Чистий P&amp;L за стратегіями</h3>${divBars([...rows].sort((a, b) => b.st.net - a.st.net).map(r => ({ label: r.key || 'Без стратегії', labelHTML: stratChip(r.key), value: r.st.net, tip: `${r.st.n} угод · вінрейт ${pct(r.st.winRate)}` })))}</section>
-    <section class="panel"><h3>Очікування на угоду</h3>${divBars([...rows].sort((a, b) => b.st.exp - a.st.exp).map(r => ({ label: r.key || 'Без стратегії', labelHTML: stratChip(r.key), value: r.st.exp, tip: `PF ${ratio(r.st.pf)} · сер. R ${rfmt(r.st.avgR)}` })))}</section>
+    <section class="panel"><h3>Чистий результат за стратегіями</h3>${divBars([...rows].sort((a, b) => b.st.net - a.st.net).map(r => ({ label: r.key || 'Без стратегії', labelHTML: stratChip(r.key), value: r.st.net, tip: `${nTrades(r.st.n)} · вінрейт ${pct(r.st.winRate)}` })))}</section>
+    <section class="panel"><h3>Вінрейт мінус потрібний<span class="aside">перевага в п.п.</span></h3>${edgeRows.length ? divBars(edgeRows.map(r => ({ label: r.key || 'Без стратегії', labelHTML: stratChip(r.key), value: r.st.edge, tip: `вінрейт ${pct(r.st.winRate)}, потрібно ${pct(r.st.beWR)}` })), pp) : '<p class="muted">Вкажи виплату в угодах, щоб бачити перевагу.</p>'}</section>
   </div>
   ${desc.length ? `<section class="panel"><h3>Правила стратегій<button class="btn ghost sm aside" data-act="settings" type="button">Редагувати</button></h3><div class="bars">${desc.map(s => `<div><div>${stratChip(s.name)}</div><p class="note" style="margin:6px 0 0;white-space:pre-wrap;color:var(--fg-2)">${esc(s.description)}</p></div>`).join('')}</div></section>` : `<p class="hint">Опиши правила кожної стратегії в <button class="btn ghost sm" data-act="settings" type="button">Налаштуваннях</button> — вони будуть підказкою у формі угоди.</p>`}`;
 }
@@ -1289,7 +1310,7 @@ function calendarHTML(list) {
     if (!t.date.startsWith(S.cal)) continue;
     const d = days.get(t.date) || { net: 0, n: 0, w: 0, l: 0 };
     d.net += tradeNet(t); d.n++;
-    const o = outcome(t); if (o === 'win') d.w++; else if (o === 'loss') d.l++;
+    if (t.result === 'win') d.w++; else if (t.result === 'loss') d.l++;
     days.set(t.date, d);
   }
   const vals = [...days.values()];
@@ -1301,7 +1322,7 @@ function calendarHTML(list) {
   const weeks = Math.ceil((offset + dim) / 7), today = todayStr();
   let cells = WD.map(w => `<div class="wd">${w}</div>`).join('') + '<div class="wd wkh">Тиждень</div>';
   for (let w = 0; w < weeks; w++) {
-    let wk = { net: 0, n: 0 };
+    const wk = { net: 0, n: 0 };
     for (let k = 0; k < 7; k++) {
       const dn = w * 7 + k - offset + 1;
       if (dn < 1 || dn > dim) { cells += '<div class="day out" aria-hidden="true"></div>'; continue; }
@@ -1309,10 +1330,10 @@ function calendarHTML(list) {
       if (d) { wk.net += d.net; wk.n += d.n; }
       const tint = d && d.net ? `background:color-mix(in srgb, ${d.net > 0 ? 'var(--profit)' : 'var(--loss)'} ${Math.round(8 + 34 * Math.abs(d.net) / maxAbs)}%, var(--surface-2))` : '';
       cells += d
-        ? `<button type="button" class="day has${ds === today ? ' today' : ''}" style="${tint}" data-act="day" data-v="${ds}" data-tip="${esc(`${money(d.net)}\n${fmtDate(ds, true)} · ${d.n} ${plural(d.n, 'угода', 'угоди', 'угод')}\n${d.w} W · ${d.l} L`)}"><span class="d">${dn}</span><span class="v"><span class="vl">${esc(moneyShort(d.net))}</span><span class="vs">${esc(signedShort(d.net))}</span></span><span class="n">${d.n} ${plural(d.n, 'угода', 'угоди', 'угод')}</span></button>`
+        ? `<button type="button" class="day has${ds === today ? ' today' : ''}" style="${tint}" data-act="day" data-v="${ds}" data-tip="${esc(`${money(d.net)}\n${fmtDate(ds, true)} · ${nTrades(d.n)}\n${d.w} плюс · ${d.l} мінус`)}"><span class="d">${dn}</span><span class="v"><span class="vl">${esc(moneyShort(d.net))}</span><span class="vs">${esc(signedShort(d.net))}</span></span><span class="n">${d.w}+ / ${d.l}−</span></button>`
         : `<div class="day${ds === today ? ' today' : ''}"><span class="d">${dn}</span></div>`;
     }
-    cells += `<div class="wk">${wk.n ? `<span class="d muted" style="font-size:12px">Тиждень ${w + 1}</span><span class="v ${cls(wk.net)}">${esc(moneyShort(wk.net))}</span><span class="n">${wk.n} ${plural(wk.n, 'угода', 'угоди', 'угод')}</span>` : ''}</div>`;
+    cells += `<div class="wk">${wk.n ? `<span class="d muted" style="font-size:12px">Тиждень ${w + 1}</span><span class="v ${cls(wk.net)}">${esc(moneyShort(wk.net))}</span><span class="n">${nTrades(wk.n)}</span>` : ''}</div>`;
   }
   return `<section class="panel">
     <div class="cal-head">
@@ -1322,66 +1343,68 @@ function calendarHTML(list) {
       <div class="cal-sum">
         <span>Місяць: <b class="${cls(monthNet)}">${esc(money(monthNet))}</b></span>
         <span>Днів у плюсі: <b>${green}</b> · у мінусі: <b>${red}</b></span>
-        ${bestDay ? `<span>Найкращий: <b class="pos">${esc(money(bestDay[1].net))}</b> (${esc(fmtDate(bestDay[0]))})</span>` : ''}
+        ${bestDay && bestDay[1].net > 0 ? `<span>Найкращий: <b class="pos">${esc(money(bestDay[1].net))}</b> (${esc(fmtDate(bestDay[0]))})</span>` : ''}
         ${worstDay && worstDay[1].net < 0 ? `<span>Найгірший: <b class="neg">${esc(money(worstDay[1].net))}</b> (${esc(fmtDate(worstDay[0]))})</span>` : ''}
       </div>
     </div>
     <div class="cal">${cells}</div>
   </section>
-  <p class="hint">Клік по дню відкриває угоди цього дня. Колір клітинки — знак і розмір денного результату.</p>`;
+  <p class="hint">Клік по дню відкриває угоди цього дня. Колір клітинки — знак і розмір денного результату, під сумою — плюсові / мінусові угоди.</p>`;
 }
 
 /* ---------- analytics tab ---------- */
-function cmpCard(label, list, extra = '') {
+function cmpCard(label, list) {
   const st = stats(list);
-  return `<div><span class="lbl">${esc(label)}</span><span class="big num ${cls(st.net)}">${st.n ? esc(money(st.net)) : '—'}</span><span class="sub">${st.n} ${plural(st.n, 'угода', 'угоди', 'угод')} · вінрейт ${esc(pct(st.winRate))}</span><span class="sub">очікування ${esc(money(st.exp))}${extra}</span></div>`;
+  return `<div><span class="lbl">${esc(label)}</span><span class="big num ${cls(st.net)}">${st.n ? esc(money(st.net)) : '—'}</span><span class="sub">${nTrades(st.n)} · вінрейт ${esc(pct(st.winRate))}</span><span class="sub">середня угода ${esc(money(st.exp))}</span></div>`;
 }
 function groupTable(rows, firstLabel) {
   if (!rows.length) return '<p class="muted">Немає даних.</p>';
-  return `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>${esc(firstLabel)}</th><th>Угод</th><th>Вінрейт</th><th>Net P&amp;L</th><th>Сер.</th></tr></thead><tbody>${rows.map(r => `
+  return `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>${esc(firstLabel)}</th><th>Угод</th><th>Вінрейт</th><th>Net</th><th>Сер.</th></tr></thead><tbody>${rows.map(r => `
     <tr><td>${r.labelHTML || esc(r.key)}</td><td>${r.st.n}</td><td>${esc(pct(r.st.winRate))}</td><td class="${cls(r.st.net)}">${esc(money(r.st.net))}</td><td class="${cls(r.st.exp)}">${esc(money(r.st.exp))}</td></tr>`).join('')}</tbody></table></div>`;
 }
+function expiryOrder(a) { const m = String(a).match(/([\d.,]+)\s*(с|s|хв|m|год|г|h)?/i); if (!m) return 1e9; const v = parseFloat(m[1].replace(',', '.')); const u = (m[2] || 'хв').toLowerCase(); return v * (u === 'с' || u === 's' ? 1 : u.startsWith('г') || u === 'h' ? 3600 : 60); }
 function analyticsHTML(list) {
   const closed = list.filter(isClosed);
   if (!closed.length) return noResultsHTML();
   const withM = closed.filter(t => t.mistakes.length);
   const mk = groupStats(withM, t => t.mistakes).sort((a, b) => a.st.net - b.st.net);
-  const wd = WD.map((label, i) => { const g = closed.filter(t => weekdayIdx(t.date) === i), st = stats(g); return { label, full: ['Понеділок', 'Вівторок', 'Середа', 'Четвер', "П'ятниця", 'Субота', 'Неділя'][i], value: st.net, n: st.n, wr: st.winRate }; });
+  const wd = WD.map((label, i) => { const st = stats(closed.filter(t => weekdayIdx(t.date) === i)); return { label, full: WD_FULL[i], value: st.net, n: st.n, wr: st.winRate }; });
   const timed = closed.filter(t => t.time);
-  let hrs = Array.from({ length: 24 }, (_, h) => { const g = timed.filter(t => +t.time.slice(0, 2) === h), st = stats(g); return { label: String(h), full: `${pad(h)}:00–${pad(h)}:59`, value: st.net, n: st.n, wr: st.winRate }; });
+  let hrs = Array.from({ length: 24 }, (_, h) => { const st = stats(timed.filter(t => +t.time.slice(0, 2) === h)); return { label: String(h), full: `${pad(h)}:00–${pad(h)}:59`, value: st.net, n: st.n, wr: st.winRate }; });
   const used = hrs.map((h, i) => h.n ? i : -1).filter(i => i >= 0);
   if (used.length) hrs = hrs.slice(Math.max(0, Math.min(...used) - 1), Math.min(24, Math.max(...used) + 2));
   const emo = groupStats(closed.filter(t => t.emotions.length), t => t.emotions).sort((a, b) => b.st.n - a.st.n);
   const sym = groupStats(closed, t => t.symbol || '—').sort((a, b) => b.st.net - a.st.net);
-  const rat = groupStats(closed.filter(t => t.rating), t => t.rating).sort((a, b) => b.key - a.key).map(r => ({ ...r, labelHTML: `<span style="color:var(--accent-text);letter-spacing:1px">${'★'.repeat(r.key)}</span><span class="muted">${'★'.repeat(5 - r.key)}</span>` }));
-  const tfs = groupStats(closed.filter(t => t.timeframe), t => t.timeframe).sort((a, b) => b.st.n - a.st.n);
+  const exp = groupStats(closed.filter(t => t.expiry), t => t.expiry).sort((a, b) => expiryOrder(a.key) - expiryOrder(b.key));
+  const stakes = groupStats(closed.filter(t => t.stake != null), t => t.stake).sort((a, b) => a.key - b.key).map(r => ({ ...r, labelHTML: esc(money(r.key, false)) }));
   const noPlan = closed.filter(t => t.followedPlan === null);
+  const chase = chaseTrades(closed);
   return `
   <div class="g2 even">
     <section class="panel"><h3>Дисципліна</h3><div class="cmp">${cmpCard('За планом', closed.filter(t => t.followedPlan === true))}${cmpCard('Не за планом', closed.filter(t => t.followedPlan === false))}${noPlan.length ? cmpCard('Не вказано', noPlan) : ''}</div></section>
-    <section class="panel"><h3>Long vs Short</h3><div class="cmp">${cmpCard('Long', closed.filter(t => t.direction === 'long'))}${cmpCard('Short', closed.filter(t => t.direction === 'short'))}</div></section>
+    <section class="panel"><h3>Вгору vs Вниз</h3><div class="cmp">${cmpCard('↑ Вгору', closed.filter(t => t.direction === 'up'))}${cmpCard('↓ Вниз', closed.filter(t => t.direction === 'down'))}</div></section>
   </div>
   <section class="panel"><h3>Ціна помилок<span class="aside">чистий результат угод, де була помилка</span></h3>
-    ${mk.length ? divBars(mk.map(r => ({ label: r.key, value: r.st.net, note: `× ${r.st.n}`, tip: `${r.st.n} ${plural(r.st.n, 'угода', 'угоди', 'угод')} · вінрейт ${pct(r.st.winRate)}` }))) : '<p class="muted">Помилок не відмічено. Відмічай їх у формі угоди, щоб бачити, скільки вони коштують.</p>'}
-    ${mk.length ? `<div class="cmp" style="margin-top:16px">${cmpCard('Угоди без помилок', closed.filter(t => !t.mistakes.length))}${cmpCard('Угоди з помилками', withM)}</div>` : ''}
+    ${mk.length ? divBars(mk.map(r => ({ label: r.key, value: r.st.net, note: `× ${r.st.n}`, tip: `${nTrades(r.st.n)} · вінрейт ${pct(r.st.winRate)}` }))) : '<p class="muted">Помилок не відмічено. Відмічай їх у формі угоди, щоб бачити, скільки вони коштують.</p>'}
+    <div class="cmp" style="margin-top:16px">${cmpCard('Угоди без помилок', closed.filter(t => !t.mistakes.length))}${cmpCard('Угоди з помилками', withM)}${chase.length ? cmpCard('Підняв ставку після мінуса', chase) : ''}</div>
   </section>
   <div class="g2 even">
-    <section class="panel"><h3>Дні тижня<span class="aside">чистий P&amp;L</span></h3>${chart('cols', wd, 220)}</section>
-    <section class="panel"><h3>Година входу<span class="aside">чистий P&amp;L</span></h3>${timed.length ? chart('cols', hrs, 220) : '<p class="muted">Вказуй час входу, щоб бачити найкращі години.</p>'}</section>
+    <section class="panel"><h3>Дні тижня<span class="aside">чистий результат</span></h3>${chart('cols', wd, 220)}</section>
+    <section class="panel"><h3>Година входу<span class="aside">чистий результат</span></h3>${timed.length ? chart('cols', hrs, 220) : '<p class="muted">Вказуй час входу, щоб бачити найкращі години.</p>'}</section>
   </div>
   <div class="g2 even">
-    <section class="panel"><h3>Інструменти</h3>${groupTable(sym, 'Інструмент')}</section>
+    <section class="panel"><h3>Активи</h3>${groupTable(sym, 'Актив')}</section>
+    <section class="panel"><h3>Експірація</h3>${exp.length ? groupTable(exp, 'Експірація') : '<p class="muted">Експірація ще не вказана.</p>'}</section>
+  </div>
+  <div class="g2 even">
     <section class="panel"><h3>Емоції</h3>${emo.length ? groupTable(emo, 'Емоція') : '<p class="muted">Емоції ще не відмічені.</p>'}</section>
-  </div>
-  <div class="g2 even">
-    <section class="panel"><h3>Оцінка виконання</h3>${rat.length ? groupTable(rat, 'Оцінка') : '<p class="muted">Став угодам оцінку від 1 до 5.</p>'}</section>
-    <section class="panel"><h3>Таймфрейми</h3>${tfs.length ? groupTable(tfs, 'Таймфрейм') : '<p class="muted">Таймфрейми ще не вказані.</p>'}</section>
+    <section class="panel"><h3>Розмір ставки</h3>${stakes.length ? groupTable(stakes, 'Ставка') : '<p class="muted">Ставки ще не вказані.</p>'}</section>
   </div>`;
 }
 
 /* ---------- main render ---------- */
 const STORE_LABELS = {
-  cloud: ['cloud', 'Хмара Claude', 'Угоди зберігаються у твоєму приватному сховищі цього артефакту і доступні з будь-якого пристрою.'],
+  cloud: ['cloud', 'Хмара Claude', 'Одна база для всіх пристроїв: записав на телефоні — бачиш на комп’ютері.'],
   local: ['', 'Цей браузер', 'Дані зберігаються в IndexedDB цього браузера. Роби резервну копію: Налаштування → Експорт.'],
   memory: ['warn', 'Не зберігається', 'Браузер не дав доступ до сховища. Дані зникнуть після закриття сторінки — експортуй JSON.'],
 };
@@ -1397,8 +1420,8 @@ function render() {
   syncFilters();
   const v = $('#view');
   CH.clear();
-  const all = D().trades;
   if (!S.ready) return;
+  const all = D().trades;
   if (!all.length) { v.innerHTML = emptyHTML(); return; }
   const list = applyFilters(all);
   const fn = { overview: overviewHTML, trades: tradesHTML, strategies: strategiesHTML, calendar: calendarHTML, analytics: analyticsHTML }[S.tab] || overviewHTML;
@@ -1422,7 +1445,7 @@ function modal(html, opts = {}) {
   back.addEventListener('click', e => {
     if ((e.target === back && downOnBack && !opts.guard) || e.target.closest('[data-close]')) tryClose();
   });
-  S.modal = { el: back, type: opts.type || '', guard: opts.guard || null, addFiles: null, onClose: opts.onClose || null };
+  S.modal = { el: back, type: opts.type || '', guard: opts.guard || null, addFiles: null };
   hideTip();
   return back.firstElementChild;
 }
@@ -1432,7 +1455,6 @@ function closeModal(silent = false) {
   S.modal = null;
   m.el.remove();
   document.body.classList.remove('modal-open');
-  if (m.onClose && !silent) m.onClose();
   if (!silent && S.staleView) { S.staleView = false; render(); }
 }
 /* Live updates from another device re-render now, or right after the open dialog closes. */
@@ -1451,31 +1473,29 @@ function galleryHTML(images) {
 function openTrade(id) {
   const t = D().trades.find(x => x.id === id);
   if (!t) return;
-  const net = tradeNet(t), open = t.status === 'open', o = outcome(t);
+  const net = tradeNet(t), open = t.result === 'open';
   const facts = [
-    ['Вхід', price(t.entry)], ['Стоп-лос', price(t.stop)], ['Тейк-профіт', price(t.take)], ['Вихід', price(t.exit)],
-    ['Обсяг', price(t.size)], ['Ризик', t.risk != null ? money(t.risk, false) : '—'], ['Комісія', t.fees ? money(t.fees, false) : '—'],
-    ['Плановий R:R', plannedRR(t) != null ? '1 : ' + NF2.format(plannedRR(t)) : '—'], ['Фактичний R', rfmt(tradeR(t))], ['Таймфрейм', t.timeframe || '—'],
+    ['Ставка', t.stake != null ? money(t.stake, false) : '—'], ['Виплата', payoutFmt(t.payout)], ['Експірація', t.expiry || '—'],
+    ['Результат', RES[t.result]], ['Потрібний вінрейт', pct(breakEven(t.payout))], ['Час входу', t.time || '—'],
   ];
-  const notes = [['Аналіз і причина входу', t.analysis, ''], ['Що пішло не за планом', t.offPlan, 'warn'], ['Урок / висновок', t.lesson, '']].filter(n => n[1].trim());
+  const notes = [['Аналіз', t.analysis, ''], ['Що пішло не за планом', t.offPlan, 'warn'], ['Урок', t.lesson || '', '']].filter(n => n[1].trim());
   const el = modal(`
-    <div class="mhead"><h2><span class="mono">${esc(t.symbol || '—')}</span><span class="dir ${t.direction}">${t.direction === 'long' ? 'Long' : 'Short'}</span>${t.demo ? '<span class="tag demo">демо</span>' : ''}</h2><span class="muted">${esc(fmtDate(t.date, true))}${t.time ? ', ' + esc(t.time) : ''}</span><button class="icon-btn" data-close type="button" aria-label="Закрити">${I.x}</button></div>
+    <div class="mhead"><h2><span class="mono">${esc(t.symbol || '—')}</span>${dirBadge(t.direction)}${t.demo ? '<span class="tag demo">демо</span>' : ''}</h2><span class="muted">${esc(fmtDate(t.date, true))}${t.time ? ', ' + esc(t.time) : ''}</span><button class="icon-btn" data-close type="button" aria-label="Закрити">${I.x}</button></div>
     <div class="mbody">
       <div class="det-top">
-        <div class="det-res num ${open ? '' : cls(net)}">${open ? 'Відкрита' : esc(money(net))}</div>
-        <div class="det-meta"><span class="num">${esc(rfmt(tradeR(t)))}</span>${stratChip(t.strategy)}${o ? `<span class="tag ${o === 'win' ? 'ok' : o === 'loss' ? 'm' : ''}">${o === 'win' ? 'Прибуток' : o === 'loss' ? 'Збиток' : 'Беззбиток'}</span>` : ''}${t.fees ? `<span class="muted">до комісії ${esc(money(t.pnl))}</span>` : ''}</div>
+        <div class="det-res num ${open ? '' : cls(net)}">${open ? 'Ще йде' : esc(money(net))}</div>
+        <div class="det-meta">${stratChip(t.strategy)}<span class="tag ${t.result === 'win' ? 'ok' : t.result === 'loss' ? 'm' : ''}">${RES[t.result]}</span></div>
       </div>
       ${galleryHTML(t.images)}
       <div class="facts">${facts.map(([k, v]) => `<div class="fact"><div class="k">${k}</div><div class="v">${esc(v)}</div></div>`).join('')}</div>
       ${notes.length ? notes.map(([h, txt, c]) => `<div class="note ${c}"><h4>${h}</h4><p>${esc(txt)}</p></div>`).join('') : '<p class="muted">Нотаток немає. Додай аналіз через «Редагувати».</p>'}
       <div class="disc-grid">
-        <div><span class="sub-lbl">Дисципліна</span><div class="tags">${t.followedPlan === true ? '<span class="tag ok">✓ За планом</span>' : t.followedPlan === false ? '<span class="tag m">✕ Не за планом</span>' : '<span class="tag">План не вказано</span>'}${t.rating ? `<span class="tag" title="Оцінка виконання">${'★'.repeat(t.rating)}${'☆'.repeat(5 - t.rating)}</span>` : ''}</div></div>
-        <div><span class="sub-lbl">Помилки</span><div class="tags">${t.mistakes.length ? t.mistakes.map(m => `<span class="tag m">${esc(m)}</span>`).join('') : '<span class="muted">немає</span>'}</div></div>
+        <div><span class="sub-lbl">Дисципліна</span><div class="tags">${t.followedPlan === true ? '<span class="tag ok">✓ За планом</span>' : t.followedPlan === false ? '<span class="tag m">✕ Не за планом</span>' : '<span class="tag">План не вказано</span>'}</div></div>
         <div><span class="sub-lbl">Емоції</span><div class="tags">${t.emotions.length ? t.emotions.map(m => `<span class="tag">${esc(m)}</span>`).join('') : '<span class="muted">не вказано</span>'}</div></div>
-        <div><span class="sub-lbl">Теги</span><div class="tags">${t.tags.length ? t.tags.map(m => `<span class="tag">#${esc(m)}</span>`).join('') : '<span class="muted">немає</span>'}</div></div>
+        <div style="grid-column:1/-1"><span class="sub-lbl">Помилки</span><div class="tags">${t.mistakes.length ? t.mistakes.map(m => `<span class="tag m">${esc(m)}</span>`).join('') : '<span class="muted">немає</span>'}</div></div>
       </div>
     </div>
-    <div class="mfoot"><div class="msg" id="delBox"><button class="btn danger" data-a="del" type="button">Видалити</button></div><button class="btn" data-a="dup" type="button">Дублювати</button><button class="btn primary" data-a="edit" type="button">Редагувати</button></div>`, { label: 'Угода ' + t.symbol, type: 'detail' });
+    <div class="mfoot"><div class="msg" id="delBox"><button class="btn danger" data-a="del" type="button">Видалити</button></div><button class="btn" data-a="dup" type="button">Повторити</button><button class="btn primary" data-a="edit" type="button">Редагувати</button></div>`, { label: 'Угода ' + t.symbol, type: 'detail' });
   hydrateImgs(el);
   el.addEventListener('click', async e => {
     const lb = e.target.closest('[data-lb]');
@@ -1537,21 +1557,23 @@ function lightbox(items, start = 0) {
 /* ---------- trade form ---------- */
 const fld = (id, label, val, attrs = '', c = '') => `<label class="fld ${c}" for="${id}"><span>${label}</span><input id="${id}" value="${esc(val ?? '')}" ${attrs}></label>`;
 const numStr = v => v == null ? '' : String(v);
-const seg = (id, opts, val) => `<div class="seg" id="${id}" role="group">${opts.map(([v, l]) => `<button type="button" data-v="${v}" aria-pressed="${String(v === val)}">${l}</button>`).join('')}</div>`;
+const seg = (id, opts, val, c = '') => `<div class="seg ${c}" id="${id}" role="group">${opts.map(([v, l]) => `<button type="button" data-v="${v}" aria-pressed="${String(v === val)}">${l}</button>`).join('')}</div>`;
 const segVal = (root, id) => { const b = $(`#${id} [aria-pressed="true"]`, root); return b ? b.dataset.v : ''; };
-function chipsHTML(id, all, selected, m = false) {
-  return `<div class="chips" id="${id}">${uniq([...all, ...selected]).map(x => `<button type="button" class="chip${m ? ' m' : ''}" data-v="${esc(x)}" aria-pressed="${String(selected.includes(x))}">${esc(x)}</button>`).join('')}<input class="chip-add" data-for="${id}" placeholder="+ своя" aria-label="Додати свій варіант" maxlength="40"></div>`;
+function chipsHTML(id, all, selected, { m = false, single = false } = {}) {
+  return `<div class="chips${single ? ' single' : ''}" id="${id}">${uniq([...all, ...selected]).map(x => `<button type="button" class="chip${m ? ' m' : ''}" data-v="${esc(x)}" aria-pressed="${String(selected.includes(x))}">${esc(x)}</button>`).join('')}<input class="chip-add" data-for="${id}" placeholder="+ своя" aria-label="Додати свій варіант" maxlength="40"></div>`;
 }
+function lastTrade(pred = () => true) { return D().trades.filter(pred).reduce((a, b) => !a || b.createdAt > a.createdAt ? b : a, null); }
 function openTradeForm(src, { files = [], dup = false } = {}) {
   const isNew = !src || dup;
   const c = cfg();
-  const t = src ? clone(src) : { date: todayStr(), time: nowTime(), direction: 'long', status: 'closed', strategy: '', mistakes: [], emotions: [], tags: [], images: [], risk: c.defaultRisk, followedPlan: null, rating: null };
-  if (dup) { delete t.id; t.images = []; t.date = todayStr(); t.time = nowTime(); t.exit = null; t.pnl = null; t.fees = null; t.offPlan = ''; t.lesson = ''; t.mistakes = []; t.emotions = []; t.rating = null; t.followedPlan = null; delete t.demo; }
+  const last = lastTrade();
+  const t = src ? clone(src) : { date: todayStr(), time: nowTime(), direction: '', result: '', strategy: last ? last.strategy : '', expiry: last ? last.expiry : '', stake: last ? last.stake : c.defaultStake, payout: last ? last.payout : null, mistakes: [], emotions: [], images: [], followedPlan: null };
+  if (dup) { delete t.id; t.images = []; t.date = todayStr(); t.time = nowTime(); t.result = ''; t.offPlan = ''; t.mistakes = []; t.emotions = []; t.followedPlan = null; delete t.demo; delete t.lesson; }
   const draft = { images: (isNew ? [] : t.images).map(ref => ({ ref })), orig: isNew ? [] : [...t.images], dirty: false, busy: 0 };
   const canClip = !!(navigator.clipboard && navigator.clipboard.read) && !window.claude;
   const el = modal(`
   <form id="tradeForm" novalidate>
-    <div class="mhead"><h2>${isNew ? (dup ? 'Копія угоди' : 'Нова угода') : 'Редагування угоди'}</h2><button class="icon-btn" data-x type="button" aria-label="Закрити">${I.x}</button></div>
+    <div class="mhead"><h2>${isNew ? (dup ? 'Повтор угоди' : 'Нова угода') : 'Редагування угоди'}</h2><button class="icon-btn" data-x type="button" aria-label="Закрити">${I.x}</button></div>
     <div class="mbody">
       <section class="fsec">
         <h4>Скріншоти</h4>
@@ -1567,55 +1589,40 @@ function openTradeForm(src, { files = [], dup = false } = {}) {
         <div class="fgrid">
           ${fld('tf-date', 'Дата', t.date, 'type="date" required')}
           ${fld('tf-time', 'Час входу', t.time, 'type="time"')}
-          ${fld('tf-symbol', 'Інструмент', t.symbol, 'list="dl-sym" autocomplete="off" placeholder="EURUSD" required class="mono" autocapitalize="characters"')}
-          <div class="fld"><span>Напрям</span>${seg('tf-dir', [['long', 'Long'], ['short', 'Short']], t.direction)}</div>
+          ${fld('tf-symbol', 'Актив', t.symbol, 'list="dl-sym" autocomplete="off" placeholder="EUR/USD OTC" required class="mono" autocapitalize="characters"', 'span2')}
+          <div class="fld span2"><span>Напрям</span>${seg('tf-dir', [['up', '↑ Вгору'], ['down', '↓ Вниз']], t.direction, 'big')}</div>
           ${fld('tf-strategy', 'Стратегія', t.strategy, 'list="dl-strat" autocomplete="off" placeholder="Обери або введи нову"', 'span2')}
-          ${fld('tf-tf', 'Таймфрейм', t.timeframe, 'list="dl-tf" autocomplete="off" placeholder="H1"')}
-          <div class="fld"><span>Статус</span>${seg('tf-status', [['closed', 'Закрита'], ['open', 'Відкрита']], t.status)}</div>
+          ${fld('tf-stake', `Ставка, ${esc(c.currency)}`, numStr(t.stake), 'inputmode="decimal" autocomplete="off" class="mono" placeholder="10"')}
+          ${fld('tf-payout', 'Виплата, %', numStr(t.payout), 'inputmode="decimal" autocomplete="off" class="mono" placeholder="85"')}
+          <div class="fld span2"><span>Експірація</span>${chipsHTML('tf-exp', c.expiries, t.expiry ? [t.expiry] : [], { single: true })}</div>
+          <div class="fld full"><span>Результат</span>${seg('tf-res', [['win', 'Плюс'], ['loss', 'Мінус'], ['draw', 'Повернення'], ['open', 'Ще йде']], t.result, 'big')}</div>
         </div>
+        <div class="calc" id="tf-calc"></div>
         <div class="srules" id="tf-srules" hidden></div>
         <datalist id="dl-sym">${symbolsList().map(s => `<option value="${esc(s)}"></option>`).join('')}</datalist>
         <datalist id="dl-strat">${strategyNames().map(s => `<option value="${esc(s)}"></option>`).join('')}</datalist>
-        <datalist id="dl-tf">${c.timeframes.map(s => `<option value="${esc(s)}"></option>`).join('')}</datalist>
-      </section>
-      <section class="fsec">
-        <h4>Ціни і результат</h4>
-        <div class="fgrid">
-          ${fld('tf-entry', 'Вхід', numStr(t.entry), 'inputmode="decimal" autocomplete="off" class="mono"')}
-          ${fld('tf-stop', 'Стоп-лос', numStr(t.stop), 'inputmode="decimal" autocomplete="off" class="mono"')}
-          ${fld('tf-take', 'Тейк-профіт', numStr(t.take), 'inputmode="decimal" autocomplete="off" class="mono"')}
-          ${fld('tf-exit', 'Вихід', numStr(t.exit), 'inputmode="decimal" autocomplete="off" class="mono"')}
-          ${fld('tf-size', 'Обсяг (лот / к-сть)', numStr(t.size), 'inputmode="decimal" autocomplete="off" class="mono"')}
-          ${fld('tf-risk', `Ризик, ${esc(c.currency)}`, numStr(t.risk), 'inputmode="decimal" autocomplete="off" class="mono" placeholder="на скільки готовий втратити"')}
-          <label class="fld" for="tf-pnl"><span>Результат, ${esc(c.currency)} <span class="muted">(мінус для збитку)</span></span><span class="with-btn"><input id="tf-pnl" value="${esc(numStr(t.pnl))}" inputmode="decimal" autocomplete="off" class="mono" placeholder="-50 або 120"><button type="button" class="btn sm" id="tf-neg" title="Змінити знак (на телефоні немає мінуса)" aria-label="Змінити знак результату">±</button><button type="button" class="btn sm" id="tf-calcbtn" title="(вихід − вхід) × обсяг. Для форексу і ф'ючерсів вводь результат вручну з терміналу." hidden>= з цін</button></span></label>
-          ${fld('tf-fees', `Комісія, ${esc(c.currency)}`, numStr(t.fees), 'inputmode="decimal" autocomplete="off" class="mono" placeholder="0"')}
-        </div>
-        <div class="calc" id="tf-calc"></div>
       </section>
       <section class="fsec">
         <h4>Аналіз</h4>
         <div class="fgrid">
-          <label class="fld full" for="tf-analysis"><span>Аналіз і причина входу</span><textarea id="tf-analysis" rows="4" placeholder="Що побачив на графіку, контекст ринку, чому увійшов саме тут">${esc(t.analysis || '')}</textarea></label>
-          <label class="fld span2" for="tf-offplan"><span>Що пішло не за планом</span><textarea id="tf-offplan" rows="3" placeholder="Де відхилився від плану і чому">${esc(t.offPlan || '')}</textarea></label>
-          <label class="fld span2" for="tf-lesson"><span>Урок / висновок</span><textarea id="tf-lesson" rows="3" placeholder="Що зроблю інакше наступного разу">${esc(t.lesson || '')}</textarea></label>
+          <label class="fld full" for="tf-analysis"><span>Аналіз: чому увійшов</span><textarea id="tf-analysis" rows="3" placeholder="Що побачив на графіку, який був сигнал">${esc(t.analysis || '')}</textarea></label>
+          <label class="fld full" for="tf-offplan"><span>Що пішло не за планом</span><textarea id="tf-offplan" rows="2" placeholder="Де відхилився від плану і чому">${esc(t.offPlan || '')}</textarea></label>
         </div>
       </section>
       <section class="fsec">
         <h4>Дисципліна і емоції</h4>
         <div class="disc-grid">
           <div><span class="sub-lbl">Дотримався плану?</span>${seg('tf-plan', [['yes', 'Так'], ['no', 'Ні'], ['', 'Не вказано']], t.followedPlan === true ? 'yes' : t.followedPlan === false ? 'no' : '')}</div>
-          <div><span class="sub-lbl">Оцінка виконання</span><div class="stars" id="tf-stars" role="group" aria-label="Оцінка від 1 до 5">${[1, 2, 3, 4, 5].map(n => `<button type="button" data-v="${n}" class="${t.rating >= n ? 'on' : ''}" aria-label="Оцінка ${n} з 5">★</button>`).join('')}</div></div>
-          <div><span class="sub-lbl">Помилки</span>${chipsHTML('tf-mistakes', c.mistakes, t.mistakes, true)}</div>
           <div><span class="sub-lbl">Емоції</span>${chipsHTML('tf-emotions', c.emotions, t.emotions)}</div>
-          ${fld('tf-tags', 'Теги через кому', t.tags.join(', '), 'autocomplete="off" placeholder="новини, азія, перший вхід"', 'full')}
+          <div style="grid-column:1/-1"><span class="sub-lbl">Помилки</span>${chipsHTML('tf-mistakes', c.mistakes, t.mistakes, { m: true })}</div>
         </div>
       </section>
     </div>
     <div class="mfoot"><div class="msg" id="tf-msg"></div><button class="btn ghost" data-x type="button">Скасувати</button><button class="btn primary" type="submit" id="tf-save">Зберегти</button></div>
   </form>`, { label: 'Угода', type: 'form', guard: () => draft.dirty && confirmLeave() });
   const form = $('#tradeForm', el);
-  let rating = t.rating || null;
   const msg = $('#tf-msg', el);
+  let payoutTouched = !isNew || dup;
   function confirmLeave() {
     if (msg.dataset.pending) return false;
     msg.className = 'msg';
@@ -1625,17 +1632,24 @@ function openTradeForm(src, { files = [], dup = false } = {}) {
   }
   el.addEventListener('click', e => {
     if (e.target.closest('[data-leave]')) { closeModal(); return; }
-    if (e.target.closest('[data-x]')) { if (!draft.dirty || !confirmLeave()) closeModal(); return; }
+    if (e.target.closest('[data-x]')) { if (!draft.dirty || !confirmLeave()) closeModal(); }
   });
-  form.addEventListener('input', e => { if (e.target.id !== 'tf-pz') { draft.dirty = true; if (msg.dataset.pending) { delete msg.dataset.pending; msg.textContent = ''; } } });
-  // segmented controls, chips, stars
+  form.addEventListener('input', e => {
+    if (e.target.id === 'tf-pz') return;
+    draft.dirty = true;
+    if (e.target.id === 'tf-payout') payoutTouched = true;
+    if (msg.dataset.pending) { delete msg.dataset.pending; msg.textContent = ''; }
+  });
   form.addEventListener('click', e => {
     const sb = e.target.closest('.seg button');
     if (sb) { $$('button', sb.parentElement).forEach(b => b.setAttribute('aria-pressed', String(b === sb))); draft.dirty = true; updCalc(); return; }
     const ch = e.target.closest('.chip');
-    if (ch) { ch.setAttribute('aria-pressed', String(ch.getAttribute('aria-pressed') !== 'true')); draft.dirty = true; return; }
-    const st = e.target.closest('#tf-stars button');
-    if (st) { const v = +st.dataset.v; rating = rating === v ? null : v; $$('#tf-stars button', form).forEach(b => b.classList.toggle('on', +b.dataset.v <= (rating || 0))); draft.dirty = true; }
+    if (ch) {
+      const on = ch.getAttribute('aria-pressed') !== 'true';
+      if (ch.parentElement.classList.contains('single')) $$('.chip', ch.parentElement).forEach(b => b.setAttribute('aria-pressed', 'false'));
+      ch.setAttribute('aria-pressed', String(on));
+      draft.dirty = true;
+    }
   });
   form.addEventListener('keydown', e => {
     const add = e.target.closest('.chip-add');
@@ -1646,6 +1660,7 @@ function openTradeForm(src, { files = [], dup = false } = {}) {
       const box = $('#' + add.dataset.for, form);
       let chip = $$('.chip', box).find(c2 => c2.dataset.v === v);
       if (!chip) { chip = document.createElement('button'); chip.type = 'button'; chip.className = 'chip' + (add.dataset.for === 'tf-mistakes' ? ' m' : ''); chip.dataset.v = v; chip.textContent = v; box.insertBefore(chip, add); }
+      if (box.classList.contains('single')) $$('.chip', box).forEach(b => b.setAttribute('aria-pressed', 'false'));
       chip.setAttribute('aria-pressed', 'true');
       add.value = '';
       draft.dirty = true;
@@ -1661,37 +1676,25 @@ function openTradeForm(src, { files = [], dup = false } = {}) {
   };
   $('#tf-strategy', el).addEventListener('input', showRules);
   showRules();
-  // live calc
+  // payout follows the asset: reuse the last payout seen on the same asset unless typed by hand
+  $('#tf-symbol', el).addEventListener('change', () => {
+    if (payoutTouched) return;
+    const sym = normSymbol($('#tf-symbol', el).value);
+    const prev = lastTrade(x => x.symbol === sym && x.payout != null);
+    if (prev) { $('#tf-payout', el).value = String(prev.payout); updCalc(); }
+  });
   const g = id => $('#' + id, el).value;
   function updCalc() {
-    const dir = segVal(el, 'tf-dir') === 'short' ? -1 : 1;
-    const tt = { direction: dir > 0 ? 'long' : 'short', entry: num(g('tf-entry')), stop: num(g('tf-stop')), take: num(g('tf-take')), exit: num(g('tf-exit')), risk: num(g('tf-risk')), pnl: num(g('tf-pnl')), fees: num(g('tf-fees')), size: num(g('tf-size')) };
-    const rr = plannedRR(tt), r = tradeR(tt);
-    const bal = (cfg().startBalance || 0) + stats(D().trades).net;
+    const stake = num(g('tf-stake')), payout = num(g('tf-payout')), res = segVal(el, 'tf-res');
+    const net = tradeNet({ result: res || 'open', stake, payout });
     const parts = [
-      `Плановий R:R <b>${rr != null ? '1 : ' + esc(NF2.format(rr)) : '—'}</b>`,
-      `Фактичний R <b>${esc(rfmt(r))}</b>`,
-      tt.pnl != null && tt.fees ? `Чистий результат <b>${esc(money(tt.pnl - tt.fees))}</b>` : '',
-      tt.risk && bal > 0 ? `Ризик <b>${esc(pct(tt.risk / bal))}</b> від балансу` : '',
+      stake != null && payout != null ? `Виграш дасть <b class="pos">${esc(money(round2(stake * payout / 100)))}</b>, програш — <b class="neg">${esc(money(-stake))}</b>` : '',
+      res && res !== 'open' && net != null ? `Результат <b class="${cls(net)}">${esc(money(net))}</b>` : '',
+      payout != null ? `Потрібний вінрейт при ${esc(payoutFmt(payout))}: <b>${esc(pct(breakEven(payout)))}</b>` : '',
     ].filter(Boolean);
-    $('#tf-calc', el).innerHTML = parts.join('<span class="muted">·</span>');
-    $('#tf-calcbtn', el).hidden = !(tt.entry != null && tt.exit != null && tt.size);
+    $('#tf-calc', el).innerHTML = parts.map(x => `<span>${x}</span>`).join('<span class="muted">·</span>');
   }
   form.addEventListener('input', updCalc);
-  $('#tf-neg', el).addEventListener('click', () => {
-    const inp = $('#tf-pnl', el), v = num(inp.value);
-    inp.value = v == null ? '-' : String(-v);
-    inp.focus();
-    draft.dirty = true;
-    updCalc();
-  });
-  $('#tf-calcbtn', el).addEventListener('click', () => {
-    const dir = segVal(el, 'tf-dir') === 'short' ? -1 : 1;
-    const v = round2(dir * (num(g('tf-exit')) - num(g('tf-entry'))) * num(g('tf-size')));
-    $('#tf-pnl', el).value = String(v);
-    draft.dirty = true;
-    updCalc();
-  });
   updCalc();
   // screenshots
   const thumbs = $('#tf-thumbs', el);
@@ -1730,41 +1733,44 @@ function openTradeForm(src, { files = [], dup = false } = {}) {
       addFiles(out);
     } catch { toast('Браузер не дав доступ до буфера. Натисни Ctrl+V.', 'err'); }
   });
-  const modalEl = el;
-  modalEl.addEventListener('dragover', e => { if (e.dataTransfer && Array.from(e.dataTransfer.types || []).includes('Files')) { e.preventDefault(); modalEl.classList.add('drag'); } });
-  modalEl.addEventListener('dragleave', e => { if (e.target === modalEl || !modalEl.contains(e.relatedTarget)) modalEl.classList.remove('drag'); });
-  modalEl.addEventListener('drop', e => { e.preventDefault(); e.stopPropagation(); modalEl.classList.remove('drag'); addFiles(imagesFrom(e.dataTransfer)); });
+  el.addEventListener('dragover', e => { if (e.dataTransfer && Array.from(e.dataTransfer.types || []).includes('Files')) { e.preventDefault(); el.classList.add('drag'); } });
+  el.addEventListener('dragleave', e => { if (e.target === el || !el.contains(e.relatedTarget)) el.classList.remove('drag'); });
+  el.addEventListener('drop', e => { e.preventDefault(); e.stopPropagation(); el.classList.remove('drag'); addFiles(imagesFrom(e.dataTransfer)); });
   renderThumbs();
   if (files.length) addFiles(files);
   // save
   form.addEventListener('submit', async e => {
     e.preventDefault();
     if (draft.busy) { msg.className = 'msg err'; msg.textContent = 'Зачекай, скріни ще обробляються.'; return; }
-    const symbol = g('tf-symbol').trim().toUpperCase().replace(/\s+/g, '');
-    const status = segVal(el, 'tf-status') || 'closed';
-    const pnl = num(g('tf-pnl'));
+    const symbol = normSymbol(g('tf-symbol'));
+    const result = segVal(el, 'tf-res'), direction = segVal(el, 'tf-dir');
+    const stake = num(g('tf-stake')), payout = num(g('tf-payout'));
     const date = g('tf-date');
     const errs = [];
     if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) errs.push('вкажи дату');
-    if (!symbol) errs.push('вкажи інструмент');
-    if (status === 'closed' && pnl == null) errs.push('вкажи результат або познач угоду як відкриту');
-    for (const [id, label] of [['tf-entry', 'вхід'], ['tf-stop', 'стоп'], ['tf-take', 'тейк'], ['tf-exit', 'вихід'], ['tf-size', 'обсяг'], ['tf-risk', 'ризик'], ['tf-pnl', 'результат'], ['tf-fees', 'комісія']]) if (g(id).trim() && num(g(id)) == null) errs.push(`«${label}» має бути числом`);
+    if (!symbol) errs.push('вкажи актив');
+    if (!direction) errs.push('обери вгору чи вниз');
+    if (!result) errs.push('обери результат');
+    if (g('tf-stake').trim() && stake == null) errs.push('ставка має бути числом');
+    else if (stake == null && result && result !== 'open') errs.push('вкажи ставку');
+    else if (stake != null && stake <= 0) errs.push('ставка має бути більше нуля');
+    if (g('tf-payout').trim() && payout == null) errs.push('виплата має бути числом');
+    else if (payout == null && result === 'win') errs.push('вкажи виплату %');
     if (errs.length) { msg.className = 'msg err'; msg.textContent = 'Перевір: ' + errs.join(', ') + '.'; return; }
     const pressed = id => $$(`#${id} .chip[aria-pressed="true"]`, el).map(b => b.dataset.v);
     const plan = segVal(el, 'tf-plan');
     const out = normTrade({
       ...t,
       id: isNew ? uid('t') : t.id,
-      date, time: g('tf-time'), symbol,
-      direction: segVal(el, 'tf-dir') || 'long', status,
-      strategy: g('tf-strategy').trim(), timeframe: g('tf-tf').trim(),
-      entry: g('tf-entry'), stop: g('tf-stop'), take: g('tf-take'), exit: g('tf-exit'), size: g('tf-size'), risk: g('tf-risk'), pnl: g('tf-pnl'), fees: g('tf-fees'),
-      analysis: g('tf-analysis').trim(), offPlan: g('tf-offplan').trim(), lesson: g('tf-lesson').trim(),
+      date, time: g('tf-time'), symbol, direction, result, stake, payout,
+      expiry: pressed('tf-exp')[0] || '',
+      strategy: g('tf-strategy').trim(),
+      analysis: g('tf-analysis').trim(), offPlan: g('tf-offplan').trim(),
       followedPlan: plan === 'yes' ? true : plan === 'no' ? false : null,
-      rating, mistakes: pressed('tf-mistakes'), emotions: pressed('tf-emotions'),
-      tags: g('tf-tags').split(',').map(s => s.trim().replace(/^#/, '')).filter(Boolean),
+      mistakes: pressed('tf-mistakes'), emotions: pressed('tf-emotions'),
       createdAt: isNew ? Date.now() : t.createdAt, updatedAt: Date.now(),
     });
+    out.pnl = tradeNet(out);
     if (S.demo) out.demo = true;
     const btn = $('#tf-save', el);
     btn.disabled = true; btn.textContent = 'Збереження…';
@@ -1792,13 +1798,12 @@ function openTradeForm(src, { files = [], dup = false } = {}) {
   });
   setTimeout(() => { if (!files.length && isNew && !dup) $('#tf-symbol', el).focus({ preventScroll: true }); }, 30);
 }
-/* New strategy names, mistakes and emotions typed in a trade join the settings lists. */
+/* New strategy names, mistakes, emotions and expiries typed in a trade join the settings lists. */
 async function ensureLists(t) {
   const c = cfg();
   let changed = false;
   if (t.strategy && !c.strategies.some(s => s.name === t.strategy)) { c.strategies.push({ id: uid('s'), name: t.strategy, description: '' }); changed = true; }
-  for (const [k, vals] of [['mistakes', t.mistakes], ['emotions', t.emotions]]) for (const v of vals) if (!c[k].includes(v)) { c[k].push(v); changed = true; }
-  if (t.timeframe && !c.timeframes.includes(t.timeframe)) { c.timeframes.push(t.timeframe); changed = true; }
+  for (const [k, vals] of [['mistakes', t.mistakes], ['emotions', t.emotions], ['expiries', t.expiry ? [t.expiry] : []]]) for (const v of vals) if (!c[k].includes(v)) { c[k].push(v); changed = true; }
   if (changed) await store().putSettings(c);
 }
 
@@ -1811,8 +1816,8 @@ function openSettings() {
   const kind = S.demo ? 'demo' : S.store ? S.store.kind : 'memory';
   const info = {
     demo: 'Зараз увімкнено демо-режим: усе, що бачиш, — згенеровані приклади, вони не зберігаються.',
-    cloud: 'Угоди і скріни зберігаються в хмарі Claude, у твоєму приватному розділі цього артефакту. Відкривай журнал з телефона чи комп’ютера — дані ті самі. Інші люди, з якими ти поділишся посиланням, твоїх угод не бачать.',
-    local: 'Угоди і скріни зберігаються в цьому браузері (IndexedDB). Вони не синхронізуються з іншими пристроями, а очищення даних сайту їх видалить. Регулярно роби експорт JSON — це повна резервна копія разом зі скрінами.',
+    cloud: 'Одна база для всіх пристроїв. Угоди і скріни зберігаються в хмарі Claude, у твоєму приватному розділі цього журналу. Записав на телефоні — бачиш на комп’ютері. Інші люди твоїх угод не бачать.',
+    local: 'Це локальна копія: угоди і скріни лежать лише в цьому браузері (IndexedDB) і не синхронізуються. Щоб журнал був однаковим на телефоні й комп’ютері, відкривай його за посиланням у Claude. Перенести записи звідси: Експорт JSON тут → Імпорт JSON там.',
     memory: 'Браузер не дав доступу до сховища, тому дані живуть лише до закриття сторінки. Експортуй JSON, щоб не втратити записи.',
   }[kind];
   const el = modal(`
@@ -1828,8 +1833,7 @@ function openSettings() {
         <div class="fgrid">
           ${fld('set-cur', 'Валюта', c.currency, 'maxlength="5" autocomplete="off"')}
           ${fld('set-bal', 'Стартовий баланс', numStr(c.startBalance || ''), 'inputmode="decimal" autocomplete="off" placeholder="0"')}
-          ${fld('set-risk', 'Ризик за замовчуванням', numStr(c.defaultRisk), 'inputmode="decimal" autocomplete="off" placeholder="напр. 50"')}
-          ${fld('set-be', 'Поріг беззбитку ±', numStr(c.beThreshold || ''), 'inputmode="decimal" autocomplete="off" placeholder="0"')}
+          ${fld('set-stake', 'Ставка для першої угоди', numStr(c.defaultStake), 'inputmode="decimal" autocomplete="off" placeholder="далі береться з попередньої"', 'span2')}
         </div>
       </section>
       <section class="fsec">
@@ -1837,12 +1841,13 @@ function openSettings() {
         <div class="fgrid">
           <label class="fld span2" for="set-mist"><span>Помилки (кожна з нового рядка)</span><textarea id="set-mist" rows="6">${esc(c.mistakes.join('\n'))}</textarea></label>
           <label class="fld" for="set-emo"><span>Емоції</span><textarea id="set-emo" rows="6">${esc(c.emotions.join('\n'))}</textarea></label>
-          <label class="fld" for="set-tf"><span>Таймфрейми</span><textarea id="set-tf" rows="6">${esc(c.timeframes.join('\n'))}</textarea></label>
+          <label class="fld" for="set-exp"><span>Експірації</span><textarea id="set-exp" rows="6">${esc(c.expiries.join('\n'))}</textarea></label>
         </div>
       </section>
       <section class="fsec">
         <h4>Дані</h4>
         <p class="store-info">${esc(info)}</p>
+        <p class="store-info" id="set-usage" hidden></p>
         <div class="data-acts">
           <button class="btn" type="button" data-a="export">Експорт JSON (зі скрінами)</button>
           <button class="btn" type="button" data-a="csv">Експорт CSV</button>
@@ -1854,16 +1859,26 @@ function openSettings() {
       </section>
     </div>
     <div class="mfoot"><div class="msg" id="set-msg"></div><button class="btn ghost" data-close type="button">Скасувати</button><button class="btn primary" type="button" data-a="save">Зберегти</button></div>`, { label: 'Налаштування', cls: 'narrow' });
+  if (kind === 'cloud' && S.store.usage) {
+    S.store.usage().then(u => {
+      if (!u || !u.maxBytes) return;
+      const mb = b => NF1.format(b / 1048576) + ' МБ';
+      const box = $('#set-usage', el);
+      if (!box) return;
+      box.hidden = false;
+      box.textContent = `Скріни в хмарі: ${u.files} ${plural(u.files, 'файл', 'файли', 'файлів')}, ${mb(u.bytes)} з ${mb(u.maxBytes)}.`;
+    }).catch(() => {});
+  }
   const list = $('#set-slist', el), msg = $('#set-msg', el);
   function drawRows() {
     list.innerHTML = rows.length ? rows.map((s, i) => `<div class="srow${s.del ? ' del' : ''}">
       <span class="dotc" style="background:${i < 8 ? `var(--s${i + 1})` : 'var(--muted)'}"></span>
-      <div class="sfields"><input data-i="${i}" data-k="name" value="${esc(s.name)}" aria-label="Назва стратегії" maxlength="60"><textarea data-i="${i}" data-k="description" rows="2" placeholder="Правила входу і виходу (підказка у формі угоди)">${esc(s.description)}</textarea><span class="scount">${counts.get(s.orig) || 0} ${plural(counts.get(s.orig) || 0, 'угода', 'угоди', 'угод')}${s.del && counts.get(s.orig) ? ' залишаться без стратегії' : ''}</span></div>
+      <div class="sfields"><input data-i="${i}" data-k="name" value="${esc(s.name)}" aria-label="Назва стратегії" maxlength="60"><textarea data-i="${i}" data-k="description" rows="2" placeholder="Правила: сигнал, експірація, коли не входити (підказка у формі угоди)">${esc(s.description)}</textarea><span class="scount">${nTrades(counts.get(s.orig) || 0)}${s.del && counts.get(s.orig) ? ' залишаться без стратегії' : ''}</span></div>
       <button class="btn ${s.del ? '' : 'danger'} sm" type="button" data-del="${i}">${s.del ? 'Повернути' : 'Видалити'}</button></div>`).join('') : '<p class="muted" style="margin:0">Стратегій ще немає. Додай тут або просто введи назву у формі угоди.</p>';
   }
   drawRows();
   list.addEventListener('input', e => { const i = e.target.dataset.i; if (i != null) rows[+i][e.target.dataset.k] = e.target.value; });
-  list.addEventListener('click', e => { const b = e.target.closest('[data-del]'); if (b) { const r = rows[+b.dataset.del]; if (!counts.get(r.orig) && !r.orig) rows.splice(+b.dataset.del, 1); else r.del = !r.del; drawRows(); } });
+  list.addEventListener('click', e => { const b = e.target.closest('[data-del]'); if (b) { const r = rows[+b.dataset.del]; if (!r.orig) rows.splice(+b.dataset.del, 1); else r.del = !r.del; drawRows(); } });
   const addStrat = () => { const inp = $('#set-newstrat', el), v = inp.value.trim(); if (!v) return; rows.push({ id: uid('s'), name: v, description: '', orig: '', del: false }); inp.value = ''; drawRows(); };
   $('#set-newstrat', el).addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); addStrat(); } });
   el.addEventListener('click', async e => {
@@ -1875,7 +1890,7 @@ function openSettings() {
     else if (k === 'csv') exportCSV(D().trades);
     else if (k === 'import') $('#set-file', el).click();
     else if (k === 'demo') { closeModal(); toggleDemo(); }
-    else if (k === 'wipe') $('#set-danger', el).innerHTML = `<span>Видалити ${D().trades.length} ${plural(D().trades.length, 'угоду', 'угоди', 'угод')} і всі скріни? Відновити можна лише з експорту.</span><button class="btn danger solid sm" type="button" data-a="wipe-yes">Так, видалити все</button><button class="btn ghost sm" type="button" data-a="wipe-no">Скасувати</button>`;
+    else if (k === 'wipe') $('#set-danger', el).innerHTML = `<span>Видалити ${nTrades(D().trades.length)} і всі скріни? Відновити можна лише з експорту.</span><button class="btn danger solid sm" type="button" data-a="wipe-yes">Так, видалити все</button><button class="btn ghost sm" type="button" data-a="wipe-no">Скасувати</button>`;
     else if (k === 'wipe-no') $('#set-danger', el).innerHTML = '<button class="btn danger" type="button" data-a="wipe">Видалити всі угоди</button>';
     else if (k === 'wipe-yes') {
       a.disabled = true;
@@ -1886,13 +1901,13 @@ function openSettings() {
       const names = live.map(r => r.name.trim());
       if (names.some(n => !n)) { msg.className = 'msg err'; msg.textContent = 'У стратегії має бути назва.'; return; }
       if (new Set(names).size !== names.length) { msg.className = 'msg err'; msg.textContent = 'Назви стратегій мають бути різними.'; return; }
-      const bal = $('#set-bal', el).value.trim(), risk = $('#set-risk', el).value.trim(), be = $('#set-be', el).value.trim();
-      if ((bal && num(bal) == null) || (risk && num(risk) == null) || (be && num(be) == null)) { msg.className = 'msg err'; msg.textContent = 'Баланс, ризик і поріг мають бути числами.'; return; }
+      const bal = $('#set-bal', el).value.trim(), stake = $('#set-stake', el).value.trim();
+      if ((bal && num(bal) == null) || (stake && num(stake) == null)) { msg.className = 'msg err'; msg.textContent = 'Баланс і ставка мають бути числами.'; return; }
       const lines = id => uniq($('#' + id, el).value.split(/\n|,/).map(s => s.trim()).filter(Boolean));
       const next = normSettings({
-        currency: $('#set-cur', el).value.trim() || '$', startBalance: bal, defaultRisk: risk, beThreshold: be,
+        currency: $('#set-cur', el).value.trim() || '$', startBalance: bal, defaultStake: stake,
         strategies: live.map(r => ({ id: r.id, name: r.name.trim(), description: r.description })),
-        mistakes: lines('set-mist'), emotions: lines('set-emo'), timeframes: lines('set-tf'),
+        mistakes: lines('set-mist'), emotions: lines('set-emo'), expiries: lines('set-exp'),
       });
       const renames = new Map(live.filter(r => r.orig && r.orig !== r.name.trim()).map(r => [r.orig, r.name.trim()]));
       const removed = new Set(rows.filter(r => r.del && r.orig).map(r => r.orig));
@@ -1942,18 +1957,18 @@ async function exportJSON() {
   let failed = 0, i = 0;
   for (const [ref, k] of keys) {
     i++;
-    if (keys.size > 5) toast(`Пакую скріни ${i}/${keys.size}…`);
+    if (keys.size > 5 && i % 10 === 1) toast(`Пакую скріни ${i}/${keys.size}…`);
     try { const b = await getBlob(ref); if (b) images[k] = await blobToDataURL(b); else failed++; } catch { failed++; }
   }
-  const payload = { app: 'edge-journal', version: 1, exportedAt: new Date().toISOString(), settings: d.settings, trades, images };
+  const payload = { app: 'edge-journal', version: 2, kind: 'binary', exportedAt: new Date().toISOString(), settings: d.settings, trades, images };
   await downloadFile(`edge-journal-${todayStr()}.json`, JSON.stringify(payload), 'application/json');
   if (failed) toast(`${failed} скрінів не вдалося додати в експорт`, 'err');
 }
 function exportCSV(trades) {
-  const cols = [['Дата', t => t.date], ['Час', t => t.time], ['Інструмент', t => t.symbol], ['Напрям', t => t.direction], ['Стратегія', t => t.strategy], ['Таймфрейм', t => t.timeframe], ['Статус', t => t.status],
-    ['Вхід', t => t.entry], ['Стоп', t => t.stop], ['Тейк', t => t.take], ['Вихід', t => t.exit], ['Обсяг', t => t.size], ['Ризик', t => t.risk], ['Результат', t => t.pnl], ['Комісія', t => t.fees], ['Чистий', t => tradeNet(t)], ['R', t => { const r = tradeR(t); return r == null ? null : round2(r); }],
-    ['За планом', t => t.followedPlan == null ? '' : t.followedPlan ? 'так' : 'ні'], ['Помилки', t => t.mistakes.join(', ')], ['Емоції', t => t.emotions.join(', ')], ['Оцінка', t => t.rating], ['Теги', t => t.tags.join(', ')],
-    ['Аналіз', t => t.analysis], ['Не за планом', t => t.offPlan], ['Урок', t => t.lesson], ['Скрінів', t => t.images.length]];
+  const cols = [['Дата', t => t.date], ['Час', t => t.time], ['Актив', t => t.symbol], ['Напрям', t => DIR[t.direction][1]], ['Стратегія', t => t.strategy], ['Експірація', t => t.expiry],
+    ['Ставка', t => t.stake], ['Виплата %', t => t.payout], ['Результат', t => RES[t.result]], ['Прибуток', t => tradeNet(t)],
+    ['За планом', t => t.followedPlan == null ? '' : t.followedPlan ? 'так' : 'ні'], ['Помилки', t => t.mistakes.join(', ')], ['Емоції', t => t.emotions.join(', ')],
+    ['Аналіз', t => t.analysis], ['Не за планом', t => t.offPlan], ['Скрінів', t => t.images.length]];
   const cell = v => { if (v == null) return ''; let s = typeof v === 'number' ? String(v).replace('.', ',') : String(v); if (/[";\n\r]/.test(s)) s = '"' + s.replace(/"/g, '""') + '"'; return s; };
   const rows = [cols.map(c => c[0]).join(';'), ...sortChrono(trades).map(t => cols.map(c => cell(c[1](t))).join(';'))];
   downloadFile(`edge-journal-${todayStr()}.csv`, '﻿' + rows.join('\r\n'), 'text/csv');
@@ -1988,7 +2003,7 @@ async function importJSON(file, progress) {
     currency: cur.startBalance || D().trades.length > n ? cur.currency : inc.currency,
     startBalance: cur.startBalance || inc.startBalance,
     strategies: [...cur.strategies, ...inc.strategies.filter(s => !cur.strategies.some(x => x.name === s.name))],
-    mistakes: uniq([...cur.mistakes, ...inc.mistakes]), emotions: uniq([...cur.emotions, ...inc.emotions]), timeframes: uniq([...cur.timeframes, ...inc.timeframes]),
+    mistakes: uniq([...cur.mistakes, ...inc.mistakes]), emotions: uniq([...cur.emotions, ...inc.emotions]), expiries: uniq([...cur.expiries, ...inc.expiries]),
   });
   await st.putSettings(merged);
   D().settings = merged;
@@ -1997,7 +2012,7 @@ async function importJSON(file, progress) {
 
 /* ---------- demo data ---------- */
 function mulberry32(a) { return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
-function demoShot(seed, dir, rMult, symbol, tf) {
+function demoShot(seed, dir, result, symbol, expiry) {
   const R = mulberry32(seed), W = 1200, H = 675;
   const c = document.createElement('canvas'); c.width = W; c.height = H;
   const g = c.getContext('2d');
@@ -2005,101 +2020,95 @@ function demoShot(seed, dir, rMult, symbol, tf) {
   g.strokeStyle = '#1b222c'; g.lineWidth = 1;
   for (let x = 0; x < W; x += 100) { g.beginPath(); g.moveTo(x + .5, 0); g.lineTo(x + .5, H); g.stroke(); }
   for (let yy = 0; yy < H; yy += 75) { g.beginPath(); g.moveTo(0, yy + .5); g.lineTo(W, yy + .5); g.stroke(); }
-  const N = 84, entryI = 56, sgn = dir === 'long' ? 1 : -1, risk = 3;
+  const N = 80, entryI = 62, expI = 72, sgn = dir === 'up' ? 1 : -1, target = result === 'win' ? 2.4 : result === 'loss' ? -2.4 : 0;
   const bars = []; let p = 100, entryP = 0;
   for (let i = 0; i < N; i++) {
     const o = p;
     let mv;
-    if (i <= entryI) mv = (R() - 0.5) * 1.8 + (i > entryI - 12 ? sgn * 0.12 : -sgn * 0.04);
-    else mv = (entryP + sgn * rMult * risk - p) * 0.14 + (R() - 0.5) * 1.1;
-    const cl = o + mv, hi = Math.max(o, cl) + R() * 0.8, lo = Math.min(o, cl) - R() * 0.8;
+    if (i <= entryI) mv = (R() - 0.5) * 1.6 + (i > entryI - 10 ? -sgn * 0.12 : 0);
+    else if (i <= expI) mv = (entryP + sgn * target - p) * 0.22 + (R() - 0.5) * 0.9;
+    else mv = (R() - 0.5) * 1.4;
+    const cl = o + mv, hi = Math.max(o, cl) + R() * 0.7, lo = Math.min(o, cl) - R() * 0.7;
     bars.push([o, hi, lo, cl]); p = cl;
     if (i === entryI) entryP = cl;
   }
-  const sl = entryP - sgn * risk, tp = entryP + sgn * risk * 2.2;
-  const all = bars.flatMap(b => [b[1], b[2]]).concat([sl, tp]);
+  const all = bars.flatMap(b => [b[1], b[2]]);
   const lo = Math.min(...all) - 1, hi = Math.max(...all) + 1;
-  const y = v => 40 + (hi - v) * (H - 80) / (hi - lo), bw = (W - 140) / N;
+  const y = v => 50 + (hi - v) * (H - 100) / (hi - lo), bw = (W - 60) / N, xc = i => 20 + i * bw + bw / 2;
   bars.forEach(([o, h, l, cl], i) => {
-    const x = 20 + i * bw, up = cl >= o;
-    g.strokeStyle = g.fillStyle = up ? '#26a69a' : '#ef5350';
-    g.beginPath(); g.moveTo(x + bw / 2, y(h)); g.lineTo(x + bw / 2, y(l)); g.stroke();
-    g.fillRect(x + 2, Math.min(y(o), y(cl)), bw - 4, Math.max(1, Math.abs(y(o) - y(cl))));
+    g.strokeStyle = g.fillStyle = cl >= o ? '#26a69a' : '#ef5350';
+    g.beginPath(); g.moveTo(xc(i), y(h)); g.lineTo(xc(i), y(l)); g.stroke();
+    g.fillRect(xc(i) - bw / 2 + 2, Math.min(y(o), y(cl)), bw - 4, Math.max(1, Math.abs(y(o) - y(cl))));
   });
-  const level = (v, col, label) => {
-    g.strokeStyle = col; g.setLineDash([6, 5]); g.beginPath(); g.moveTo(20 + entryI * bw, y(v)); g.lineTo(W - 110, y(v)); g.stroke(); g.setLineDash([]);
-    g.fillStyle = col; g.fillRect(W - 108, y(v) - 11, 100, 22);
-    g.fillStyle = '#0b0e13'; g.font = '600 13px system-ui, sans-serif'; g.fillText(label, W - 100, y(v) + 5);
-  };
-  level(tp, '#26a69a', 'TP'); level(sl, '#ef5350', 'SL'); level(entryP, '#d1d4dc', 'ENTRY');
-  g.fillStyle = '#d1d4dc'; g.font = '600 22px system-ui, sans-serif'; g.fillText(`${symbol} · ${tf}`, 24, 34);
+  g.strokeStyle = '#d1d4dc'; g.setLineDash([6, 5]);
+  g.beginPath(); g.moveTo(xc(entryI), y(entryP)); g.lineTo(xc(expI), y(entryP)); g.stroke();
+  g.strokeStyle = '#f2a93b'; g.beginPath(); g.moveTo(xc(expI), 40); g.lineTo(xc(expI), H - 30); g.stroke(); g.setLineDash([]);
+  g.fillStyle = sgn > 0 ? '#26a69a' : '#ef5350';
+  g.beginPath();
+  const ax = xc(entryI), ay = y(entryP) + (sgn > 0 ? 26 : -26);
+  g.moveTo(ax, ay - sgn * 18); g.lineTo(ax - 10, ay); g.lineTo(ax + 10, ay); g.closePath(); g.fill();
+  g.fillStyle = '#d1d4dc'; g.font = '600 22px system-ui, sans-serif'; g.fillText(`${symbol} · ${expiry}`, 24, 34);
   g.fillStyle = '#f2a93b'; g.font = '700 14px system-ui, sans-serif'; g.fillText('DEMO', W - 70, 30);
-  return c.toDataURL('image/jpeg', 0.82);
+  return c.toDataURL('image/jpeg', 0.8);
 }
+const DEMO_SEED = 42;
 function makeDemo() {
-  const R = mulberry32(20261009);
+  const R = mulberry32(DEMO_SEED);
   const pick = a => a[Math.floor(R() * a.length)];
   const strategies = [
-    { id: 's_demo1', name: 'Пробій рівня', description: 'Вхід після закриття свічки за рівнем.\nСтоп — за протилежним краєм свічки пробою.\nЦіль — 2R або наступний рівень.' },
-    { id: 's_demo2', name: 'Відбій від рівня', description: 'Реакція від денного рівня з підтвердженням на M15.\nНе входити проти тренду H4.' },
-    { id: 's_demo3', name: 'Ретест', description: 'Пробій → відкат до рівня → вхід на підтвердженні.\nСтоп за рівнем, ціль 2R.' },
-    { id: 's_demo4', name: 'Сесія Лондона', description: 'Пробій діапазону азійської сесії в першу годину Лондона.' },
+    { id: 's_demo1', name: 'Відбій від рівня', description: 'Ціна торкається сильного рівня і дає свічку відбою.\nВхід у бік відбою, експірація 1–3 хв.' },
+    { id: 's_demo2', name: 'Пробій рівня', description: 'Свічка закривається за рівнем з імпульсом.\nВхід на наступній свічці, експірація 2–5 хв.' },
+    { id: 's_demo3', name: 'RSI + Bollinger', description: 'Ціна за межею смуги Боллінджера, RSI вище 70 або нижче 30.\nВхід проти руху, експірація 1 хв.' },
+    { id: 's_demo4', name: 'Новинний імпульс', description: 'Вхід у бік імпульсу після виходу новини.' },
   ];
-  const prof = { 'Пробій рівня': [0.47, 2.1], 'Відбій від рівня': [0.57, 1.6], 'Ретест': [0.62, 1.9], 'Сесія Лондона': [0.36, 1.3] };
-  const syms = { EURUSD: [1.085, 5], GBPUSD: [1.27, 5], XAUUSD: [2380, 2], BTCUSDT: [62000, 1], ETHUSDT: [3100, 2], NAS100: [19500, 1] };
+  const prof = { 'Відбій від рівня': 0.66, 'Пробій рівня': 0.62, 'RSI + Bollinger': 0.59, 'Новинний імпульс': 0.47 };
+  const exps = { 'Відбій від рівня': ['1 хв', '2 хв', '3 хв'], 'Пробій рівня': ['2 хв', '3 хв', '5 хв'], 'RSI + Bollinger': ['1 хв', '1 хв', '30 с'], 'Новинний імпульс': ['1 хв', '5 хв'] };
+  const assets = ['EUR/USD', 'GBP/USD', 'EUR/USD OTC', 'AUD/CAD OTC', 'USD/JPY', 'BTC/USD'];
   const why = {
-    'Пробій рівня': ['Консолідація під рівнем 3 дні, обсяг росте. Закриття H1 за рівнем.', 'Чистий пробій максимуму тижня, ретесту не чекав за правилами.'],
-    'Відбій від рівня': ['Денний рівень підтримки, пін-бар на M15, тренд H4 не зламаний.', 'Третій дотик рівня, дивергенція на RSI.'],
-    'Ретест': ['Пробій опору, відкат до рівня, бичаче поглинання на ретесті.', 'Ретест зламаного рівня з малим тілом свічки, вхід на закритті.'],
-    'Сесія Лондона': ['Вузький азійський діапазон, пробій у першу годину Лондона.', 'Пробій азійського максимуму з імпульсом.'],
+    'Відбій від рівня': ['Третій дотик рівня, пін-бар на M1.', 'Сильний рівень підтримки, свічка поглинання.'],
+    'Пробій рівня': ['Закриття свічки за рівнем з великим тілом.', 'Пробій максимуму сесії з імпульсом.'],
+    'RSI + Bollinger': ['Ціна за верхньою смугою, RSI 78.', 'Вихід за нижню смугу, RSI 24, розворотна свічка.'],
+    'Новинний імпульс': ['Сильна новина по USD, вхід у бік імпульсу.', 'Різкий рух після новини, увійшов на відкаті.'],
   };
-  const offs = ['Увійшов до закриття свічки, не дочекався підтвердження.', 'Пересунув стоп, коли ціна підійшла до нього.', 'Закрив раніше тейку через страх віддати прибуток.', 'Подвоїв обсяг після збитку.', 'Торгував під час новин, хоча план забороняє.'];
-  const lessons = ['Чекати закриття свічки.', 'Стоп не чіпати після входу.', 'Після двох збитків поспіль — пауза до кінця дня.', 'Перевіряти календар новин перед сесією.'];
+  const offs = ['Увійшов раніше закриття свічки.', 'Після мінуса одразу поставив більше, щоб відігратись.', 'Взяв не ту експірацію, яку планував.', 'Увійшов без сигналу від нудьги.', 'Торгував під час новини, хоча план забороняє.'];
   const trades = [];
-  const day = new Date(); day.setDate(day.getDate() - 92);
-  let shots = 0;
-  for (let k = 0; k < 92; k++) {
-    day.setDate(day.getDate() + 1);
-    const wdN = day.getDay();
-    if (wdN === 0 || wdN === 6) continue;
-    const cnt = R() < 0.3 ? 0 : R() < 0.65 ? 1 : 2;
+  // nine weeks from a Monday, so the random sequence (and the demo's story) is the same whatever today is
+  const start = new Date(); start.setHours(12, 0, 0, 0);
+  start.setDate(start.getDate() - ((start.getDay() + 6) % 7) - 56);
+  for (let k = 0; k < 63; k++) {
+    const day = new Date(start); day.setDate(start.getDate() + k);
+    if (ymd(day) > todayStr()) break;
+    const weekend = k % 7 >= 5;
+    const cnt = weekend ? (R() < 0.6 ? 0 : 1 + Math.floor(R() * 3)) : (R() < 0.15 ? 0 : 2 + Math.floor(R() * 5));
+    let prev = null, hour = 9 + Math.floor(R() * 6), min = Math.floor(R() * 50);
     for (let j = 0; j < cnt; j++) {
-      const s = pick(strategies), [wp, rr] = prof[s.name];
-      const sym = pick(Object.keys(syms)), [base, dec] = syms[sym];
-      const followed = R() > 0.27;
-      const r = R(), p = followed ? wp : wp - 0.22;
-      const o = r < p ? 'win' : r < p + 0.07 ? 'be' : 'loss';
-      const risk = pick([50, 50, 75, 100]);
-      const rMult = o === 'win' ? round2(rr * (0.6 + R() * 0.8)) : o === 'be' ? 0 : -(followed ? 1 : round2(1 + R() * 0.7));
-      const dir = R() < 0.55 ? 'long' : 'short', sg = dir === 'long' ? 1 : -1;
-      const entry = base * (1 + (R() - 0.5) * 0.05), dist = base * (0.0015 + R() * 0.004);
-      const f = v => +v.toFixed(dec);
-      const fees = sym.endsWith('USDT') ? round2(risk * 0.03) : 0;
-      const tf = s.name === 'Сесія Лондона' ? 'M15' : pick(['M15', 'H1', 'H1', 'H4']);
-      const mistakes = !followed ? uniq([pick(['Ранній вхід', 'Пересунув стоп', 'Рано закрив', 'Завеликий ризик', 'Вхід без сетапу', 'Ігнорував новини', 'Помста ринку']), ...(R() < 0.3 ? [pick(['Овертрейдинг', 'Проти тренду'])] : [])]) : (o === 'win' && R() < 0.12 ? ['Рано закрив'] : []);
-      const hour = s.name === 'Сесія Лондона' ? 10 : 8 + Math.floor(R() * 10);
+      const s = pick(strategies);
+      const sym = weekend ? pick(['EUR/USD OTC', 'AUD/CAD OTC', 'BTC/USD']) : pick(assets);
+      const chasing = prev && prev.result === 'loss' && R() < 0.3;
+      const followed = !chasing && R() > 0.18;
+      const r = R(), p = chasing ? prof[s.name] - 0.3 : followed ? prof[s.name] : prof[s.name] - 0.25;
+      const result = r < 0.03 ? 'draw' : r < 0.03 + p * 0.97 ? 'win' : 'loss';
+      const stake = chasing ? (prev.stake || 10) * 2 : pick([10, 10, 10, 15, 20]);
+      const payout = sym.includes('OTC') ? pick([80, 82, 85]) : pick([82, 85, 87, 88, 90, 92]);
+      const mistakes = chasing ? ['Відіграш після мінуса', ...(R() < 0.4 ? ['Завелика ставка'] : [])] : !followed ? [pick(['Вхід без сигналу', 'Ранній вхід', 'Запізнений вхід', 'Не та експірація', 'Торгував на новинах', 'Проти тренду', 'Овертрейдинг'])] : [];
+      min += 4 + Math.floor(R() * 20);
+      if (min >= 60) { hour += Math.floor(min / 60); min %= 60; }
+      if (hour > 22) break;
       const t = normTrade({
-        id: uid('demo'), demo: true, date: ymd(day), time: `${pad(hour)}:${pad(Math.floor(R() * 12) * 5)}`,
-        symbol: sym, direction: dir, status: 'closed', strategy: s.name, timeframe: tf,
-        entry: f(entry), stop: f(entry - sg * dist), take: f(entry + sg * dist * rr), exit: f(entry + sg * dist * rMult),
-        size: null, risk, pnl: round2(risk * rMult + (o === 'be' ? 0 : 0)), fees,
-        followedPlan: followed, mistakes,
-        emotions: [followed ? pick(['Спокій', 'Впевненість', 'Спокій']) : pick(['FOMO', 'Нетерпіння', 'Страх', 'Злість'])],
-        rating: followed ? 4 + (R() < 0.5 ? 1 : 0) : 1 + Math.floor(R() * 3),
-        analysis: pick(why[s.name]), offPlan: !followed ? pick(offs) : '', lesson: !followed && R() < 0.6 ? pick(lessons) : '',
-        tags: R() < 0.2 ? ['новини'] : [], createdAt: day.getTime() + j,
+        id: uid('demo'), demo: true, date: ymd(day), time: `${pad(hour)}:${pad(min)}`,
+        symbol: sym, direction: R() < 0.5 ? 'up' : 'down', result, stake, payout, expiry: pick(exps[s.name]), strategy: s.name,
+        followedPlan: chasing ? false : followed, mistakes,
+        emotions: [followed ? pick(['Спокій', 'Впевненість', 'Спокій']) : pick(['FOMO', 'Нетерпіння', 'Злість', 'Страх'])],
+        analysis: pick(why[s.name]), offPlan: !followed ? (chasing ? offs[1] : pick(offs)) : '', createdAt: day.getTime() + j,
       });
+      t.pnl = tradeNet(t);
       trades.push(t);
+      prev = t;
     }
   }
   const recent = sortChrono(trades).reverse();
-  for (const t of recent) {
-    if (shots >= 8) break;
-    t.images = [demoShot(shots + 11, t.direction, tradeR(t) ?? 0, t.symbol, t.timeframe)];
-    shots++;
-  }
-  trades.push(normTrade({ id: uid('demo'), demo: true, date: todayStr(), time: '09:40', symbol: 'XAUUSD', direction: 'long', status: 'open', strategy: 'Ретест', timeframe: 'H1', entry: 2391.4, stop: 2384.9, take: 2405.7, risk: 75, analysis: 'Ретест пробитого рівня 2390, чекаю продовження імпульсу.', followedPlan: true, emotions: ['Спокій'] }));
-  return { trades, settings: normSettings({ ...defaultSettings(), strategies, startBalance: 10000, beThreshold: 5, defaultRisk: 50 }) };
+  recent.slice(0, 8).forEach((t, i) => { t.images = [demoShot(i + 11, t.direction, t.result, t.symbol, t.expiry)]; });
+  return { trades, settings: normSettings({ ...defaultSettings(), strategies, startBalance: 1000, defaultStake: 10 }) };
 }
 function toggleDemo() {
   if (S.demo) { S.demo = false; S.demoData = null; S.demoStore = null; toast('Демо вимкнено'); }
@@ -2136,7 +2145,7 @@ function bindStatic() {
   $('#fToggle').addEventListener('click', () => $('#filters').classList.toggle('open'));
   const view = $('#view');
   view.addEventListener('change', e => { if (e.target.id === 'tradeSort') { S.tradeSort = e.target.value; render(); } });
-  const act = async el => {
+  const act = el => {
     const a = el.dataset.act, v = el.dataset.v;
     if (a === 'open') openTrade(el.dataset.id);
     else if (a === 'new') openTradeForm(null);
@@ -2145,7 +2154,7 @@ function bindStatic() {
     else if (a === 'strategy') { S.tab = 'trades'; ls.set('tab', 'trades'); setFilter({ strategy: v }); window.scrollTo({ top: 0 }); }
     else if (a === 'day') { S.tab = 'trades'; ls.set('tab', 'trades'); setFilter({ period: 'custom', from: v, to: v }); window.scrollTo({ top: 0 }); }
     else if (a === 'cal') { const [y, m] = S.cal.split('-').map(Number); const d = new Date(y, m - 1 + Number(v), 1); S.cal = `${d.getFullYear()}-${pad(d.getMonth() + 1)}`; render(); }
-    else if (a === 'sort-strat') { const k = el.dataset.k; S.stratSort = S.stratSort.k === k ? { k, d: -S.stratSort.d } : { k, d: k === 'name' ? 1 : -1 }; render(); }
+    else if (a === 'sort-strat') { const k = el.dataset.k; S.stratSort = S.stratSort.k === k ? { k, d: -S.stratSort.d } : { k, d: k === 'name' || k === 'need' ? 1 : -1 }; render(); }
     else if (a === 'more') { S.listLimit += 100; render(); }
     else if (a === 'csv') exportCSV(applyFilters(D().trades));
     else if (a === 'settings') openSettings();
