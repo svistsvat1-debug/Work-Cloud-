@@ -357,6 +357,14 @@ table.tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
 .seg { display: flex; border: 1px solid var(--line-2); border-radius: var(--r-sm); overflow: hidden; height: 38px; background: var(--bg); }
 .seg button { flex: 1; appearance: none; border: 0; background: transparent; color: var(--fg-2); cursor: pointer; font-weight: 500; padding: 0 8px; min-width: 0; }
 .seg button + button { border-left: 1px solid var(--line-2); }
+.seg button { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.seg.quad { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 560px) {
+  .seg.quad { grid-template-columns: repeat(2, minmax(0, 1fr)); height: auto; }
+  .seg.quad button { height: 44px; }
+  .seg.quad button:nth-child(3) { border-left: 0; }
+  .seg.quad button:nth-child(n+3) { border-top: 1px solid var(--line-2); }
+}
 .seg button[aria-pressed="true"] { background: var(--accent-wash); color: var(--fg); box-shadow: inset 0 -2px 0 var(--accent); }
 .seg button[data-v="up"][aria-pressed="true"], .seg button[data-v="win"][aria-pressed="true"], .seg button[data-v="yes"][aria-pressed="true"] { background: var(--profit-wash); box-shadow: inset 0 -2px 0 var(--profit); }
 .seg button[data-v="down"][aria-pressed="true"], .seg button[data-v="loss"][aria-pressed="true"], .seg button[data-v="no"][aria-pressed="true"] { background: var(--loss-wash); box-shadow: inset 0 -2px 0 var(--loss); }
@@ -446,6 +454,19 @@ img.broken { opacity: .3; }
 @keyframes tin { from { transform: translateY(6px); opacity: 0; } to { transform: none; opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .toast { animation: none; } }
 .loading { padding: 48px 0; color: var(--fg-2); text-align: center; }
+
+/* phones: nothing may be wider than the screen, no auto-zoom on focus, no double-tap zoom */
+body { overflow-x: clip; }
+.mback { overflow-x: hidden; }
+button, a, input, select, textarea, label, .trow, .chip, .pz { touch-action: manipulation; }
+input[type="date"], input[type="time"] { -webkit-appearance: none; appearance: none; display: block; min-width: 0; max-width: 100%; text-align: left; }
+input::-webkit-date-and-time-value { text-align: left; }
+input::-webkit-datetime-edit { padding: 0; }
+@media (max-width: 720px), (pointer: coarse) {
+  /* iOS zooms into any field with text smaller than 16px when it gets focus */
+  input, select, textarea, .pz { font-size: 16px !important; }
+  .chip-add { height: 34px; }
+}
 
 /* terminal touches */
 .tab { font-family: var(--font-mono); font-size: 12.5px; text-transform: uppercase; letter-spacing: .05em; }
@@ -1890,7 +1911,7 @@ function openTradeForm(src, { files = [], dup = false } = {}) {
           ${fld('tf-stake', `Ставка, ${esc(c.currency)}`, numStr(t.stake), 'inputmode="decimal" autocomplete="off" class="mono" placeholder="10"')}
           ${fld('tf-payout', 'Виплата, %', numStr(t.payout), 'inputmode="decimal" autocomplete="off" class="mono" placeholder="85"')}
           <div class="fld span2"><span>Експірація</span>${chipsHTML('tf-exp', c.expiries, t.expiry ? [t.expiry] : [], { single: true })}</div>
-          <div class="fld span3"><span>Результат</span>${seg('tf-res', [['win', 'Плюс'], ['loss', 'Мінус'], ['draw', 'Повернення'], ['open', 'Ще йде']], t.result, 'big')}</div>
+          <div class="fld span3"><span>Результат</span>${seg('tf-res', [['win', 'Плюс'], ['loss', 'Мінус'], ['draw', 'Повернення'], ['open', 'Ще йде']], t.result, 'big quad')}</div>
           <div class="fld"><label for="tf-pips">Рух, пунктів</label><div class="with-btn"><input id="tf-pips" value="${esc(numStr(t.pips))}" inputmode="decimal" autocomplete="off" class="mono" placeholder="напр. 2,5" title="На скільки пунктів ціна пройшла від входу до експірації. Знак береться з результату: плюс — у твій бік, мінус — проти.">${S.store && S.store.kind === 'server' && S.quotes && !S.demo ? '<button type="button" class="btn sm" id="tf-qpips" title="Порахувати з хвилинних котирувань">авто</button>' : ''}</div></div>
         </div>
         <div class="calc" id="tf-calc"></div>
