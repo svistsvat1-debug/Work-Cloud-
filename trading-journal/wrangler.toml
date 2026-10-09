@@ -1,0 +1,23 @@
+# Edge Journal on Cloudflare Workers.
+# D1 database and R2 bucket are created automatically on the first `wrangler deploy`.
+# Secrets (Worker → Settings → Variables and Secrets, or `wrangler secret put`):
+#   JOURNAL_PASSWORD  — password for signing in (required)
+#   TWELVE_DATA_KEY   — API key for 1-minute forex candles (optional; without it the trade chart is off)
+name = "edge-journal"
+main = "src/worker.js"
+compatibility_date = "2025-09-01"
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "edge-journal"
+
+[[r2_buckets]]
+binding = "SHOTS"
+bucket_name = "edge-journal-shots"
+
+[observability]
+enabled = true

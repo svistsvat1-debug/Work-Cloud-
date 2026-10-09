@@ -8,59 +8,62 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Unbounded:wght@600;700&display=swap">
 <style>
-/* Layout: sticky terminal-style header + one filter row that scopes a tabbed workspace of panels on a graphite plane.
-   Color: graphite neutrals with a slight blue bias, amber accent (terminal amber), profit/loss as status colors. */
+/* Layout: sticky terminal-style header + one filter row that scopes a tabbed workspace of panels.
+   Color: trading-terminal black with a green tint, green = up/profit/action, red = down/loss. Mono face for figures. */
 :root {
   color-scheme: dark;
-  --bg: #0d1015;
-  --surface: #141920;
-  --surface-2: #1a2029;
-  --raise: #222a35;
-  --line: #252c37;
-  --line-2: #323b48;
-  --fg: #e9edf2;
-  --fg-2: #a6afbc;
-  --muted: #7d8796;
-  --accent: #f2a93b;
-  --accent-ink: #1c1405;
-  --accent-text: #f5b65a;
-  --accent-wash: rgba(242, 169, 59, .13);
-  --profit: #3cc774;
-  --loss: #f26b6b;
-  --profit-wash: rgba(60, 199, 116, .14);
-  --loss-wash: rgba(242, 107, 107, .14);
-  --focus: #8ab4ff;
-  --overlay: rgba(4, 6, 10, .66);
-  --shadow: 0 14px 40px rgba(0, 0, 0, .5);
+  --bg: #040605;
+  --surface: #0a0e0c;
+  --surface-2: #0f1512;
+  --raise: #152019;
+  --line: #18221c;
+  --line-2: #24312a;
+  --fg: #e4f1e8;
+  --fg-2: #9bb1a2;
+  --muted: #768b7d;
+  --accent: #19e27c;
+  --accent-ink: #011a0b;
+  --accent-text: #3cf093;
+  --accent-wash: rgba(25, 226, 124, .12);
+  --profit: #23e081;
+  --loss: #ff4d5e;
+  --profit-wash: rgba(35, 224, 129, .13);
+  --loss-wash: rgba(255, 77, 94, .13);
+  --hl-band: rgba(228, 241, 232, .08);
+  --focus: #3cf093;
+  --overlay: rgba(0, 0, 0, .74);
+  --shadow: 0 16px 44px rgba(0, 0, 0, .65);
   --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500;
   --s5: #d55181; --s6: #2f9a2f; --s7: #9085e9; --s8: #e66767;
   --font-ui: "Onest", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
   --font-display: "Unbounded", "Onest", system-ui, sans-serif;
-  --r: 12px;
-  --r-sm: 8px;
+  --r: 10px;
+  --r-sm: 6px;
 }
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
     color-scheme: light;
-    --bg: #eef1f5; --surface: #ffffff; --surface-2: #f5f7fa; --raise: #e9edf2;
-    --line: #e0e5eb; --line-2: #ccd3dc;
-    --fg: #10151c; --fg-2: #4a5462; --muted: #6a7483;
-    --accent: #f2a93b; --accent-ink: #1c1405; --accent-text: #985a00; --accent-wash: rgba(242, 169, 59, .16);
-    --profit: #0b7d39; --loss: #c42b2b; --profit-wash: rgba(11, 125, 57, .10); --loss-wash: rgba(196, 43, 43, .09);
-    --focus: #2f6fd8; --overlay: rgba(16, 21, 28, .45); --shadow: 0 14px 40px rgba(16, 21, 28, .16);
+    --bg: #eef3f0; --surface: #ffffff; --surface-2: #f4f8f5; --raise: #e7eee9;
+    --line: #dbe5de; --line-2: #c6d3ca;
+    --fg: #07120b; --fg-2: #415246; --muted: #5d7064;
+    --accent: #14c466; --accent-ink: #011a0b; --accent-text: #08743c; --accent-wash: rgba(20, 196, 102, .14);
+    --profit: #0b7d39; --loss: #d12a3c; --profit-wash: rgba(11, 125, 57, .10); --loss-wash: rgba(209, 42, 60, .09);
+    --hl-band: rgba(7, 18, 11, .07);
+    --focus: #08743c; --overlay: rgba(7, 18, 11, .45); --shadow: 0 14px 40px rgba(7, 18, 11, .16);
     --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100;
     --s5: #e87ba4; --s6: #008300; --s7: #4a3aa7; --s8: #e34948;
   }
 }
 :root[data-theme="light"] {
   color-scheme: light;
-  --bg: #eef1f5; --surface: #ffffff; --surface-2: #f5f7fa; --raise: #e9edf2;
-  --line: #e0e5eb; --line-2: #ccd3dc;
-  --fg: #10151c; --fg-2: #4a5462; --muted: #6a7483;
-  --accent: #f2a93b; --accent-ink: #1c1405; --accent-text: #985a00; --accent-wash: rgba(242, 169, 59, .16);
-  --profit: #0b7d39; --loss: #c42b2b; --profit-wash: rgba(11, 125, 57, .10); --loss-wash: rgba(196, 43, 43, .09);
-  --focus: #2f6fd8; --overlay: rgba(16, 21, 28, .45); --shadow: 0 14px 40px rgba(16, 21, 28, .16);
+  --bg: #eef3f0; --surface: #ffffff; --surface-2: #f4f8f5; --raise: #e7eee9;
+  --line: #dbe5de; --line-2: #c6d3ca;
+  --fg: #07120b; --fg-2: #415246; --muted: #5d7064;
+  --accent: #14c466; --accent-ink: #011a0b; --accent-text: #08743c; --accent-wash: rgba(20, 196, 102, .14);
+  --profit: #0b7d39; --loss: #d12a3c; --profit-wash: rgba(11, 125, 57, .10); --loss-wash: rgba(209, 42, 60, .09);
+  --hl-band: rgba(7, 18, 11, .07);
+  --focus: #08743c; --overlay: rgba(7, 18, 11, .45); --shadow: 0 14px 40px rgba(7, 18, 11, .16);
   --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100;
   --s5: #e87ba4; --s6: #008300; --s7: #4a3aa7; --s8: #e34948;
 }
@@ -322,6 +325,9 @@ table.tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
 .mfoot .msg { margin-right: auto; font-size: 13px; color: var(--fg-2); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 .mfoot .msg.err { color: var(--loss); }
 @media (max-width: 640px) {
+  .mhead h2 { flex: 1 1 auto; min-width: 0; }
+  .mhead .icon-btn { order: 2; }
+  .mhead > .muted { order: 3; flex-basis: 100%; }
   .mback { padding: 0; }
   .modal { border-radius: 0; min-height: 100%; border: 0; margin: 0; }
   .mfoot { border-radius: 0; bottom: 0; padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px)); }
@@ -436,6 +442,28 @@ img.broken { opacity: .3; }
 @keyframes tin { from { transform: translateY(6px); opacity: 0; } to { transform: none; opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .toast { animation: none; } }
 .loading { padding: 48px 0; color: var(--fg-2); text-align: center; }
+
+/* terminal touches */
+.tab { font-family: var(--font-mono); font-size: 12.5px; text-transform: uppercase; letter-spacing: .05em; }
+.panel h3 { font-family: var(--font-mono); }
+.hero-num, .tile .val, .det-res, .cmp .big { font-family: var(--font-mono); letter-spacing: -.03em; }
+.btn.primary { box-shadow: 0 6px 22px -10px var(--accent); }
+.fld .with-btn { display: flex; gap: 6px; }
+.fld .with-btn .btn { height: 38px; flex: none; }
+
+/* trade chart from quotes, TradingView row */
+.qchart { border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); overflow: hidden; }
+.qchart .holder { height: 320px; }
+.qchart .qmeta { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; padding: 10px 12px; border-top: 1px solid var(--line); font-size: 13px; color: var(--fg-2); }
+.qchart .qmeta b { color: var(--fg); font-family: var(--font-mono); font-weight: 600; }
+.qwait { padding: 18px 14px; color: var(--fg-2); font-size: 13px; }
+.tvrow { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; font-size: 13px; color: var(--fg-2); }
+
+/* sign-in */
+.login { max-width: 400px; width: 100%; margin: 8vh auto 0; display: grid; gap: 14px; }
+.login h2 { font-family: var(--font-display); font-size: 20px; margin: 0; }
+.login .msg { min-height: 18px; font-size: 13px; color: var(--loss); }
+.login .btn { height: 42px; }
 </style>
 </head>
 <body>
@@ -601,6 +629,7 @@ const I = {
   right: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>',
   img: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 16l5-5 4 4 3-3 6 6"/></svg>',
   zoom: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-5-5M11 8v6M8 11h6"/></svg>',
+  ext: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
 };
 
 /* ---------- defaults ---------- */
@@ -608,8 +637,10 @@ const DEFAULT_MISTAKES = ['Вхід без сигналу', 'Ранній вхі
 const DEFAULT_EMOTIONS = ['Спокій', 'Впевненість', 'FOMO', 'Страх', 'Жадібність', 'Нетерпіння', 'Втома', 'Злість'];
 const DEFAULT_EXPIRIES = ['30 с', '1 хв', '2 хв', '3 хв', '5 хв', '15 хв'];
 const MAJORS = ['EUR/USD', 'GBP/USD', 'USD/JPY', 'USD/CHF', 'AUD/USD', 'USD/CAD', 'NZD/USD', 'EUR/GBP', 'EUR/JPY', 'GBP/JPY', 'AUD/CAD', 'AUD/JPY', 'EUR/CHF', 'CAD/JPY'];
+const BROWSER_TZ = (() => { try { return Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC'; } catch { return 'UTC'; } })();
+function validTZ(z) { try { new Intl.DateTimeFormat('en-US', { timeZone: z }); return true; } catch { return false; } }
 function defaultSettings() {
-  return { currency: '$', startBalance: 0, defaultStake: null, strategies: [], mistakes: [...DEFAULT_MISTAKES], emotions: [...DEFAULT_EMOTIONS], expiries: [...DEFAULT_EXPIRIES] };
+  return { currency: '$', startBalance: 0, defaultStake: null, tz: BROWSER_TZ, strategies: [], mistakes: [...DEFAULT_MISTAKES], emotions: [...DEFAULT_EMOTIONS], expiries: [...DEFAULT_EXPIRIES] };
 }
 function normSettings(s) {
   const d = defaultSettings();
@@ -623,6 +654,7 @@ function normSettings(s) {
     mistakes: Array.isArray(s.mistakes) ? strList(s.mistakes) : d.mistakes,
     emotions: Array.isArray(s.emotions) ? strList(s.emotions) : d.emotions,
     expiries: Array.isArray(s.expiries) ? strList(s.expiries) : d.expiries,
+    tz: typeof s.tz === 'string' && s.tz && validTZ(s.tz) ? s.tz : d.tz,
   };
 }
 const normSymbol = v => String(v || '').trim().toUpperCase().replace(/\s+/g, ' ');
@@ -742,6 +774,46 @@ class CloudStore {
   async deleteImage(ref) { if (this.assets) await this.assets.delete(ref.slice(6)); }
   async usage() { if (!this.assets) return null; const r = await this.assets.list(); return r && r.usage; }
 }
+/* Own Cloudflare Worker (see src/worker.js): one journal behind a password, trades in D1, screenshots in R2. */
+async function apiCall(method, path, body) {
+  const opt = { method, credentials: 'same-origin', headers: { accept: 'application/json' } };
+  if (body !== undefined) { opt.headers['content-type'] = 'application/json'; opt.body = JSON.stringify(body); }
+  const r = await fetch(path, opt);
+  const d = await r.json().catch(() => ({}));
+  if (r.status === 401 && path !== '/api/login' && S.ready) { toast('Сесія завершилась, увійди знову', 'err'); setTimeout(() => location.reload(), 1500); }
+  if (!r.ok) throw Object.assign(new Error(d.error || `Помилка сервера (${r.status})`), { status: r.status });
+  return d;
+}
+class ApiStore {
+  constructor() { this.kind = 'server'; this.sig = ''; }
+  async load() {
+    const d = await apiCall('GET', '/api/data');
+    this.sig = JSON.stringify(d);
+    return { trades: Array.isArray(d.trades) ? d.trades : [], settings: d.settings || null };
+  }
+  putTrade(t) { return apiCall('PUT', '/api/trades/' + encodeURIComponent(t.id), clone(t)); }
+  deleteTrade(id) { return apiCall('DELETE', '/api/trades/' + encodeURIComponent(id)); }
+  putSettings(v) { return apiCall('PUT', '/api/settings', clone(v)); }
+  async putImage(blob) {
+    const r = await fetch('/api/images', { method: 'POST', credentials: 'same-origin', headers: { 'content-type': blob.type || 'image/png' }, body: blob });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(d.error || 'Не вдалося завантажити скрін');
+    return 'srv:' + d.id;
+  }
+  async deleteImage(ref) { await apiCall('DELETE', '/api/images/' + ref.slice(4)); }
+  /* Changes from another device arrive when the tab comes back into view, and once a minute while it is open. */
+  subscribe(onTrades, onSettings) {
+    const pull = async () => {
+      if (document.visibilityState !== 'visible' || S.modal) return;
+      try {
+        const before = this.sig, d = await this.load();
+        if (this.sig !== before) { if (d.settings) onSettings(d.settings); onTrades(d.trades); }
+      } catch { /* offline: keep what is on screen */ }
+    };
+    document.addEventListener('visibilitychange', pull);
+    setInterval(pull, 60000);
+  }
+}
 function errText(e) {
   const map = {
     quota_exceeded: 'Сховище заповнене. Видали старі угоди або скріни.',
@@ -768,7 +840,7 @@ const S = {
   tab: ls.get('tab', 'overview'),
   f: Object.assign(blankFilters(), ls.get('filters', {})),
   tradeSort: 'new', stratSort: { k: 'net', d: -1 }, cal: null, listLimit: 100,
-  modal: null, lb: null, staleView: false,
+  modal: null, lb: null, staleView: false, quotes: false,
 };
 let readyResolve;
 const readyP = new Promise(r => { readyResolve = r; });
@@ -800,6 +872,44 @@ function expirySeconds(e) {
   if (!isFinite(v)) return null;
   const u = (m[2] || 'хв').toLowerCase();
   return Math.round(v * (u.startsWith('с') || u === 's' ? 1 : u.startsWith('г') || u === 'h' ? 3600 : 60));
+}
+function tzOffset(ts, tz) {
+  const p = new Intl.DateTimeFormat('en-US', { timeZone: tz, hourCycle: 'h23', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).formatToParts(new Date(ts));
+  const v = k => +p.find(x => x.type === k).value;
+  return Date.UTC(v('year'), v('month') - 1, v('day'), v('hour') % 24, v('minute'), v('second')) - ts;
+}
+/* Trade date and time are wall-clock time in the journal's time zone; quotes come in UTC. */
+function zonedToUTC(date, time, tz) {
+  const [y, mo, d] = date.split('-').map(Number), [h, mi] = time.split(':').map(Number);
+  const wall = Date.UTC(y, mo - 1, d, h, mi);
+  let ts = wall;
+  for (let i = 0; i < 2; i++) ts = wall - tzOffset(ts, tz);
+  return ts;
+}
+const quotePair = sym => /^[A-Z]{3}\/[A-Z]{3}$/.test(sym || '') ? sym : null;
+const pipSize = pair => pair.includes('JPY') ? 0.01 : 0.0001;
+function tvSymbol(sym) { const m = /^([A-Z]{3})\/([A-Z]{3})/.exec(sym || ''); return m ? `FX:${m[1]}${m[2]}` : null; }
+const tvURL = sym => `https://www.tradingview.com/chart/?symbol=${encodeURIComponent(sym)}&interval=1`;
+function tradeWindow(t) {
+  if (!/^\d{2}:\d{2}/.test(t.time || '') || !/^\d{4}-\d{2}-\d{2}$/.test(t.date || '')) return null;
+  const start = zonedToUTC(t.date, t.time, cfg().tz);
+  return { start, end: start + (expirySeconds(t.expiry) ?? 60) * 1000 };
+}
+/* Price at a moment from 1-minute candles: on a minute boundary that minute's open, inside a minute the nearer edge. */
+function priceAt(candles, ts) {
+  const m0 = Math.floor(ts / 60e3) * 60e3, c = candles.find(x => x.t === m0);
+  if (c) return ts - m0 < 30e3 ? c.o : c.c;
+  const prev = [...candles].reverse().find(x => x.t < ts);
+  return prev && ts - prev.t <= 120e3 ? prev.c : null;
+}
+async function quoteMove(t) {
+  const pair = quotePair(t.symbol), w = tradeWindow(t);
+  if (!pair || !w) return null;
+  const d = await apiCall('GET', `/api/candles?pair=${encodeURIComponent(pair)}&from=${w.start - 40 * 60e3}&to=${w.end + 15 * 60e3}`);
+  const candles = Array.isArray(d.candles) ? d.candles : [];
+  const entry = priceAt(candles, w.start), exit = priceAt(candles, w.end);
+  const pips = entry != null && exit != null ? Math.round((exit - entry) / pipSize(pair) * (t.direction === 'down' ? -1 : 1) * 10) / 10 : null;
+  return { pair, w, candles, entry, exit, pips, source: d.source || 'котирування' };
 }
 function closeTime(time, expiry) {
   const sec = expirySeconds(expiry);
@@ -944,12 +1054,14 @@ async function getBlob(ref) {
   if (ref.startsWith('mem:')) return MEM.get(ref) || null;
   if (ref.startsWith('idb:')) return S.store && S.store.getBlob ? S.store.getBlob(ref) : null;
   if (ref.startsWith('asset:')) { const r = await fetch('/_blob/' + ref.slice(6)); if (!r.ok) throw new Error('Скрін не знайдено'); return r.blob(); }
+  if (ref.startsWith('srv:')) { const r = await fetch('/api/images/' + ref.slice(4), { credentials: 'same-origin' }); if (!r.ok) throw new Error('Скрін не знайдено'); return r.blob(); }
   return null;
 }
 async function imgURL(ref) {
   if (!ref) return '';
   if (ref.startsWith('data:') || ref.startsWith('blob:')) return ref;
   if (ref.startsWith('asset:')) return '/_blob/' + ref.slice(6);
+  if (ref.startsWith('srv:')) return '/api/images/' + ref.slice(4);
   if (urlCache.has(ref)) return urlCache.get(ref);
   const b = await getBlob(ref);
   if (!b) return '';
@@ -1446,6 +1558,7 @@ function analyticsHTML(list) {
 
 /* ---------- main render ---------- */
 const STORE_LABELS = {
+  server: ['cloud', 'Cloudflare', 'Твій сервер на Cloudflare: одна база для телефона й комп’ютера.'],
   cloud: ['cloud', 'Хмара Claude', 'Одна база для всіх пристроїв: записав на телефоні — бачиш на комп’ютері.'],
   local: ['', 'Цей браузер', 'Дані зберігаються в IndexedDB цього браузера. Роби резервну копію: Налаштування → Експорт.'],
   memory: ['warn', 'Не зберігається', 'Браузер не дав доступ до сховища. Дані зникнуть після закриття сторінки — експортуй JSON.'],
@@ -1487,7 +1600,7 @@ function modal(html, opts = {}) {
   back.addEventListener('click', e => {
     if ((e.target === back && downOnBack && !opts.guard) || e.target.closest('[data-close]')) tryClose();
   });
-  S.modal = { el: back, type: opts.type || '', guard: opts.guard || null, addFiles: null };
+  S.modal = { el: back, type: opts.type || '', guard: opts.guard || null, addFiles: null, cleanup: [] };
   hideTip();
   return back.firstElementChild;
 }
@@ -1495,6 +1608,7 @@ function closeModal(silent = false) {
   if (!S.modal) return;
   const m = S.modal;
   S.modal = null;
+  for (const f of m.cleanup) { try { f(); } catch { /* chart already gone */ } }
   m.el.remove();
   document.body.classList.remove('modal-open');
   if (!silent && S.staleView) { S.staleView = false; render(); }
@@ -1523,6 +1637,13 @@ function openTrade(id) {
     ['Потрібний вінрейт', pct(breakEven(t.payout))],
   ];
   const notes = [['Аналіз', t.analysis, ''], ['Що пішло не за планом', t.offPlan, 'warn'], ['Урок', t.lesson || '', '']].filter(n => n[1].trim());
+  const tvs = tvSymbol(t.symbol), otc = /\bOTC\b/.test(t.symbol);
+  const tvRow = tvs ? `<div class="tvrow"><a class="btn" href="${esc(tvURL(tvs))}" target="_blank" rel="noopener noreferrer">${I.ext}Відкрити в TradingView</a>${t.time ? `<button class="btn sm" type="button" data-a="copy-dt">Копіювати ${esc(t.date)} ${esc(t.time)}</button>` : ''}<span>Відкриється ${esc(tvs.slice(3, 6) + '/' + tvs.slice(6))} на хвилинному графіку. Щоб перейти до угоди: <span class="kbd">Alt</span>+<span class="kbd">G</span> і встав дату й час.${otc ? ' Для OTC це ринкова пара: котирувань брокера в TradingView немає.' : ''}</span></div>` : '';
+  let chartBox = '';
+  if (S.store && S.store.kind === 'server' && !S.demo) {
+    if (otc) chartBox = '<p class="muted" style="margin:0">OTC — котирування брокера, їх немає в інших джерелах, тому графіка угоди тут немає. Дивись свій скрін.</p>';
+    else if (quotePair(t.symbol) && t.time) chartBox = S.quotes ? '<div class="qchart" id="qchart"><div class="qwait">Завантажую котирування…</div></div>' : '<p class="muted" style="margin:0">Графік угоди з’явиться, коли в налаштуваннях Worker буде ключ котирувань TWELVE_DATA_KEY.</p>';
+  }
   const el = modal(`
     <div class="mhead"><h2><span class="mono">${esc(t.symbol || '—')}</span>${dirBadge(t.direction)}${t.demo ? '<span class="tag demo">демо</span>' : ''}</h2><span class="muted">${esc(fmtDate(t.date, true))}${t.time ? ', ' + esc(t.time) : ''}</span><button class="icon-btn" data-close type="button" aria-label="Закрити">${I.x}</button></div>
     <div class="mbody">
@@ -1531,7 +1652,9 @@ function openTrade(id) {
         <div class="det-meta">${stratChip(t.strategy)}<span class="tag ${t.result === 'win' ? 'ok' : t.result === 'loss' ? 'm' : ''}">${RES[t.result]}</span></div>
       </div>
       ${galleryHTML(t.images)}
+      ${chartBox}
       <div class="facts">${facts.map(([k, v]) => `<div class="fact"><div class="k">${k}</div><div class="v">${esc(v)}</div></div>`).join('')}</div>
+      ${tvRow}
       ${notes.length ? notes.map(([h, txt, c]) => `<div class="note ${c}"><h4>${h}</h4><p>${esc(txt)}</p></div>`).join('') : '<p class="muted">Нотаток немає. Додай аналіз через «Редагувати».</p>'}
       <div class="disc-grid">
         <div><span class="sub-lbl">Дисципліна</span><div class="tags">${t.followedPlan === true ? '<span class="tag ok">✓ За планом</span>' : t.followedPlan === false ? '<span class="tag m">✕ Не за планом</span>' : '<span class="tag">План не вказано</span>'}</div></div>
@@ -1541,12 +1664,21 @@ function openTrade(id) {
     </div>
     <div class="mfoot"><div class="msg" id="delBox"><button class="btn danger" data-a="del" type="button">Видалити</button></div><button class="btn" data-a="dup" type="button">Повторити</button><button class="btn primary" data-a="edit" type="button">Редагувати</button></div>`, { label: 'Угода ' + t.symbol, type: 'detail' });
   hydrateImgs(el);
+  const qb = $('#qchart', el);
+  if (qb) loadQuoteChart(qb, t);
   el.addEventListener('click', async e => {
     const lb = e.target.closest('[data-lb]');
     if (lb) { lightbox(t.images, +lb.dataset.lb); return; }
     const a = e.target.closest('[data-a]');
     if (!a) return;
-    if (a.dataset.a === 'edit') openTradeForm(t);
+    if (a.dataset.a === 'copy-dt') {
+      const txt = `${t.date} ${t.time}`;
+      try { await navigator.clipboard.writeText(txt); toast('Скопійовано: ' + txt); } catch { toast('Скопіюй вручну: ' + txt); }
+    } else if (a.dataset.a === 'save-pips') {
+      a.disabled = true;
+      try { const u = { ...t, pips: num(a.dataset.v), updatedAt: Date.now() }; await store().putTrade(u); upsertTrade(u); toast('Рух записано в угоду'); render(); openTrade(u.id); }
+      catch (err) { a.disabled = false; toast(errText(err), 'err'); }
+    } else if (a.dataset.a === 'edit') openTradeForm(t);
     else if (a.dataset.a === 'dup') openTradeForm(t, { dup: true });
     else if (a.dataset.a === 'del') {
       $('#delBox', el).innerHTML = `<span>Видалити угоду${t.images.length ? ' і скріни' : ''} назавжди?</span><button class="btn danger solid sm" data-a="del-yes" type="button">Так, видалити</button><button class="btn ghost sm" data-a="del-no" type="button">Ні</button>`;
@@ -1558,6 +1690,64 @@ function openTrade(id) {
       catch (err) { a.disabled = false; toast(errText(err), 'err'); }
     }
   });
+}
+/* ---------- trade chart from 1-minute quotes ---------- */
+let chartLibP = null;
+function loadChartLib() {
+  if (window.LightweightCharts) return Promise.resolve(window.LightweightCharts);
+  if (!chartLibP) chartLibP = new Promise((res, rej) => {
+    const sc = document.createElement('script');
+    sc.src = '/vendor/lightweight-charts.standalone.production.js';
+    sc.onload = () => res(window.LightweightCharts);
+    sc.onerror = () => { chartLibP = null; rej(new Error('не вдалося завантажити бібліотеку графіків')); };
+    document.head.append(sc);
+  });
+  return chartLibP;
+}
+async function loadQuoteChart(box, t) {
+  const owner = S.modal;
+  try {
+    const [LC, q] = await Promise.all([loadChartLib(), quoteMove(t)]);
+    if (!box.isConnected || S.modal !== owner) return;
+    if (!q || !q.candles.length) { box.innerHTML = '<div class="qwait">Котирувань за цей час немає: вихідний, свято або пара не торгувалась.</div>'; return; }
+    box.innerHTML = '<div class="holder"></div><div class="qmeta"></div>';
+    const css = getComputedStyle(document.documentElement), tok = n => css.getPropertyValue(n).trim();
+    const shift = tzOffset(q.w.start, cfg().tz) / 1000;
+    const T = ms => Math.floor(ms / 1000) + shift;
+    const jpy = q.pair.includes('JPY'), digits = jpy ? 3 : 5;
+    const chart = LC.createChart($('.holder', box), {
+      autoSize: true,
+      localization: { locale: 'uk-UA' },
+      layout: { background: { type: 'solid', color: tok('--surface') }, textColor: tok('--muted'), fontFamily: 'JetBrains Mono, ui-monospace, monospace', fontSize: 11 },
+      grid: { vertLines: { color: tok('--line') }, horzLines: { color: tok('--line') } },
+      rightPriceScale: { borderColor: tok('--line-2') },
+      timeScale: { borderColor: tok('--line-2'), timeVisible: true, secondsVisible: false },
+    });
+    owner.cleanup.push(() => chart.remove());
+    const band = chart.addSeries(LC.HistogramSeries, { priceScaleId: 'band', color: tok('--hl-band'), priceLineVisible: false, lastValueVisible: false });
+    chart.priceScale('band').applyOptions({ scaleMargins: { top: 0, bottom: 0 }, visible: false });
+    band.setData(q.candles.map(c => ({ time: T(c.t), value: c.t + 60e3 > q.w.start && c.t < q.w.end ? 1 : 0 })));
+    const cs = chart.addSeries(LC.CandlestickSeries, { upColor: tok('--profit'), downColor: tok('--loss'), wickUpColor: tok('--profit'), wickDownColor: tok('--loss'), borderVisible: false, priceFormat: { type: 'price', precision: digits, minMove: Math.pow(10, -digits) } });
+    cs.setData(q.candles.map(c => ({ time: T(c.t), open: c.o, high: c.h, low: c.l, close: c.c })));
+    if (q.entry != null) cs.createPriceLine({ price: q.entry, color: tok('--fg-2'), lineWidth: 1, lineStyle: LC.LineStyle.Dashed, axisLabelVisible: true, title: 'вхід' });
+    const near = ts => q.candles.reduce((best, c) => Math.abs(c.t - ts) < Math.abs(best.t - ts) ? c : best, q.candles[0]);
+    const up = t.direction !== 'down';
+    LC.createSeriesMarkers(cs, [
+      { time: T(near(q.w.start).t), position: up ? 'belowBar' : 'aboveBar', color: up ? tok('--profit') : tok('--loss'), shape: up ? 'arrowUp' : 'arrowDown', text: 'вхід ' + t.time },
+      { time: T(near(q.w.end).t), position: up ? 'aboveBar' : 'belowBar', color: tok('--accent-text'), shape: 'circle', text: 'експірація ' + (closeTime(t.time, t.expiry) || '') },
+    ].sort((a, b) => a.time - b.time));
+    chart.timeScale().fitContent();
+    const agree = q.pips == null || t.result === 'open' || t.result === 'draw' ? null : (q.pips > 0) === (t.result === 'win');
+    const parts = [`<span>${esc(q.source)}, хвилинні свічки</span>`];
+    if (q.pips != null) {
+      parts.push(`<span>вхід <b>${q.entry.toFixed(digits)}</b> → експірація <b>${q.exit.toFixed(digits)}</b></span>`, `<span>рух <b>${esc(pipsFmt(q.pips))}</b> ${q.pips > 0 ? 'у твій бік' : q.pips < 0 ? 'проти' : ''}</span>`);
+      if (agree === false) parts.push(`<span class="neg">У брокера «${RES[t.result]}»: його котирування відрізнялись від ринкових.</span>`);
+      if (agree && t.pips !== Math.abs(q.pips)) parts.push(`<button class="btn sm" type="button" data-a="save-pips" data-v="${Math.abs(q.pips)}">Записати ${esc(NFk.format(Math.abs(q.pips)))} п. в угоду</button>`);
+    } else parts.push('<span>Немає ціни на момент входу або експірації.</span>');
+    $('.qmeta', box).innerHTML = parts.join('');
+  } catch (e) {
+    if (box.isConnected) box.innerHTML = `<div class="qwait">Графік недоступний: ${esc(errText(e))}</div>`;
+  }
 }
 async function deleteTrade(t) {
   await store().deleteTrade(t.id);
@@ -1641,7 +1831,7 @@ function openTradeForm(src, { files = [], dup = false } = {}) {
           ${fld('tf-payout', 'Виплата, %', numStr(t.payout), 'inputmode="decimal" autocomplete="off" class="mono" placeholder="85"')}
           <div class="fld span2"><span>Експірація</span>${chipsHTML('tf-exp', c.expiries, t.expiry ? [t.expiry] : [], { single: true })}</div>
           <div class="fld span3"><span>Результат</span>${seg('tf-res', [['win', 'Плюс'], ['loss', 'Мінус'], ['draw', 'Повернення'], ['open', 'Ще йде']], t.result, 'big')}</div>
-          ${fld('tf-pips', 'Рух, пунктів', numStr(t.pips), 'inputmode="decimal" autocomplete="off" class="mono" placeholder="напр. 2,5" title="На скільки пунктів ціна пройшла від входу до експірації. Знак береться з результату: плюс — у твій бік, мінус — проти."')}
+          <div class="fld"><label for="tf-pips">Рух, пунктів</label><div class="with-btn"><input id="tf-pips" value="${esc(numStr(t.pips))}" inputmode="decimal" autocomplete="off" class="mono" placeholder="напр. 2,5" title="На скільки пунктів ціна пройшла від входу до експірації. Знак береться з результату: плюс — у твій бік, мінус — проти.">${S.store && S.store.kind === 'server' && S.quotes && !S.demo ? '<button type="button" class="btn sm" id="tf-qpips" title="Порахувати з хвилинних котирувань">авто</button>' : ''}</div></div>
         </div>
         <div class="calc" id="tf-calc"></div>
         <div class="srules" id="tf-srules" hidden></div>
@@ -1733,6 +1923,26 @@ function openTradeForm(src, { files = [], dup = false } = {}) {
     if (prev) { $('#tf-payout', el).value = String(prev.payout); updCalc(); }
   });
   const g = id => $('#' + id, el).value;
+  const qbtn = $('#tf-qpips', el);
+  if (qbtn) qbtn.addEventListener('click', async () => {
+    const exChip = $('#tf-exp .chip[aria-pressed="true"]', el);
+    const probe = { symbol: normSymbol(g('tf-symbol')), date: g('tf-date'), time: g('tf-time'), expiry: exChip ? exChip.dataset.v : '', direction: segVal(el, 'tf-dir') };
+    msg.className = 'msg err';
+    if (!quotePair(probe.symbol)) { msg.textContent = 'Авторозрахунок працює для звичайних пар (EUR/USD), не для OTC.'; return; }
+    if (!probe.time || !probe.direction) { msg.textContent = 'Спершу вкажи час входу і напрям.'; return; }
+    qbtn.disabled = true; msg.className = 'msg'; msg.textContent = 'Рахую з котирувань…';
+    try {
+      const q = await quoteMove(probe);
+      if (!q || q.pips == null) throw new Error('за цей час котирувань немає');
+      const res = segVal(el, 'tf-res');
+      $('#tf-pips', el).value = String(Math.abs(q.pips)).replace('.', ',');
+      draft.dirty = true;
+      const clash = res === 'win' || res === 'loss' ? (q.pips > 0) !== (res === 'win') : false;
+      msg.className = clash ? 'msg err' : 'msg';
+      msg.textContent = `За котируваннями: ${pipsFmt(q.pips)} ${q.pips > 0 ? 'у твій бік' : q.pips < 0 ? 'проти' : ''}.${clash ? ' Не збігається з результатом у брокера, перевір.' : ''}`;
+    } catch (err) { msg.className = 'msg err'; msg.textContent = 'Не вдалося порахувати: ' + errText(err); }
+    finally { qbtn.disabled = false; }
+  });
   function updCalc() {
     const stake = num(g('tf-stake')), payout = num(g('tf-payout')), res = segVal(el, 'tf-res');
     const net = tradeNet({ result: res || 'open', stake, payout });
@@ -1872,6 +2082,7 @@ function openSettings() {
     cloud: 'Одна база для всіх пристроїв. Угоди і скріни зберігаються в хмарі Claude, у твоєму приватному розділі цього журналу. Записав на телефоні — бачиш на комп’ютері. Інші люди твоїх угод не бачать.',
     local: 'Це локальна копія: угоди і скріни лежать лише в цьому браузері (IndexedDB) і не синхронізуються. Щоб журнал був однаковим на телефоні й комп’ютері, відкривай його за посиланням у Claude. Перенести записи звідси: Експорт JSON тут → Імпорт JSON там.',
     memory: 'Браузер не дав доступу до сховища, тому дані живуть лише до закриття сторінки. Експортуй JSON, щоб не втратити записи.',
+    server: 'Угоди зберігаються на твоєму сервері Cloudflare (база D1), скріни — у сховищі R2. Одна база для телефона й комп’ютера, вхід за паролем. Резервна копія: Експорт JSON.',
   }[kind];
   const el = modal(`
     <div class="mhead"><h2>Налаштування</h2><button class="icon-btn" data-close type="button" aria-label="Закрити">${I.x}</button></div>
@@ -1887,6 +2098,8 @@ function openSettings() {
           ${fld('set-cur', 'Валюта', c.currency, 'maxlength="5" autocomplete="off"')}
           ${fld('set-bal', 'Стартовий баланс', numStr(c.startBalance || ''), 'inputmode="decimal" autocomplete="off" placeholder="0"')}
           ${fld('set-stake', 'Ставка для першої угоди', numStr(c.defaultStake), 'inputmode="decimal" autocomplete="off" placeholder="далі береться з попередньої"', 'span2')}
+          ${fld('set-tz', 'Часовий пояс часу угод', c.tz, 'list="dl-tz" autocomplete="off" title="Час угод вводиться в цьому поясі. Потрібно, щоб графік з котирувань показав правильний відрізок."', 'span2')}
+          <datalist id="dl-tz">${uniq([BROWSER_TZ, 'Europe/Kyiv', 'Europe/Warsaw', 'Europe/Berlin', 'Europe/London', 'UTC']).map(z => `<option value="${esc(z)}"></option>`).join('')}</datalist>
         </div>
       </section>
       <section class="fsec">
@@ -1907,6 +2120,7 @@ function openSettings() {
           <button class="btn" type="button" data-a="import">Імпорт JSON</button>
           <input type="file" id="set-file" accept="application/json,.json" hidden>
           <button class="btn" type="button" data-a="demo">${S.demo ? 'Вийти з демо' : 'Демо-режим'}</button>
+          ${kind === 'server' ? '<button class="btn" type="button" data-a="logout">Вийти з журналу</button>' : ''}
         </div>
         ${!S.demo && D().trades.length ? `<div class="danger-zone" id="set-danger"><button class="btn danger" type="button" data-a="wipe">Видалити всі угоди</button></div>` : ''}
       </section>
@@ -1939,6 +2153,7 @@ function openSettings() {
     if (!a) return;
     const k = a.dataset.a;
     if (k === 'add') addStrat();
+    else if (k === 'logout') { a.disabled = true; try { await apiCall('POST', '/api/logout'); } finally { location.reload(); } }
     else if (k === 'export') { a.disabled = true; try { await exportJSON(); } finally { a.disabled = false; } }
     else if (k === 'csv') exportCSV(D().trades);
     else if (k === 'import') $('#set-file', el).click();
@@ -1954,11 +2169,12 @@ function openSettings() {
       const names = live.map(r => r.name.trim());
       if (names.some(n => !n)) { msg.className = 'msg err'; msg.textContent = 'У стратегії має бути назва.'; return; }
       if (new Set(names).size !== names.length) { msg.className = 'msg err'; msg.textContent = 'Назви стратегій мають бути різними.'; return; }
-      const bal = $('#set-bal', el).value.trim(), stake = $('#set-stake', el).value.trim();
+      const bal = $('#set-bal', el).value.trim(), stake = $('#set-stake', el).value.trim(), tz = $('#set-tz', el).value.trim();
       if ((bal && num(bal) == null) || (stake && num(stake) == null)) { msg.className = 'msg err'; msg.textContent = 'Баланс і ставка мають бути числами.'; return; }
+      if (tz && !validTZ(tz)) { msg.className = 'msg err'; msg.textContent = 'Невідомий часовий пояс. Приклад: Europe/Kyiv.'; return; }
       const lines = id => uniq($('#' + id, el).value.split(/\n|,/).map(s => s.trim()).filter(Boolean));
       const next = normSettings({
-        currency: $('#set-cur', el).value.trim() || '$', startBalance: bal, defaultStake: stake,
+        currency: $('#set-cur', el).value.trim() || '$', startBalance: bal, defaultStake: stake, tz: tz || BROWSER_TZ,
         strategies: live.map(r => ({ id: r.id, name: r.name.trim(), description: r.description })),
         mistakes: lines('set-mist'), emotions: lines('set-emo'), expiries: lines('set-exp'),
       });
@@ -2259,6 +2475,48 @@ async function connectCloud() {
   const data = await st.load();
   return { st, data };
 }
+function loginScreen() {
+  return new Promise(resolve => {
+    $('#filters').hidden = true;
+    $('.top-actions').hidden = true;
+    $('#storeChip').lastChild.textContent = 'Вхід';
+    $('#view').innerHTML = `<form class="panel login" id="loginForm" novalidate>
+      <h2>Вхід у журнал</h2>
+      <p class="muted" style="margin:0">Журнал приватний. Введи пароль, який задав у налаштуваннях Worker на Cloudflare.</p>
+      <label class="fld" for="lg-pass"><span>Пароль</span><input id="lg-pass" type="password" autocomplete="current-password" required></label>
+      <div class="msg" id="lg-msg" role="alert"></div>
+      <button class="btn primary" type="submit">Увійти</button>
+    </form>`;
+    const f = $('#loginForm'), msg = $('#lg-msg'), btn = $('button[type=submit]', f);
+    $('#lg-pass').focus();
+    f.addEventListener('submit', async e => {
+      e.preventDefault();
+      btn.disabled = true; msg.textContent = '';
+      try { await apiCall('POST', '/api/login', { password: $('#lg-pass').value }); $('.top-actions').hidden = false; resolve(); }
+      catch (err) { msg.textContent = errText(err); btn.disabled = false; }
+    });
+  });
+}
+function serverProblem(text) {
+  $('#filters').hidden = true;
+  $('#storeChip').className = 'store-chip warn';
+  $('#storeChip').lastChild.textContent = 'Сервер';
+  $('#view').innerHTML = `<section class="panel nores"><b>Журнал на сервері недоступний</b><span>${esc(text)}</span><button class="btn" type="button" id="btnRetry">Спробувати ще раз</button></section>`;
+  $('#btnRetry').addEventListener('click', () => location.reload());
+}
+/* Served by the Worker: /api/me answers JSON (200 or 401). A plain file or another host does not. */
+async function connectServer() {
+  if (!/^https?:$/.test(location.protocol) || window.claude) return null;
+  let r;
+  try { r = await fetch('/api/me', { credentials: 'same-origin', headers: { accept: 'application/json' } }); } catch { return null; }
+  if (!(r.headers.get('content-type') || '').includes('application/json')) return null;
+  const d = await r.json().catch(() => ({}));
+  if (r.status === 401) { await loginScreen(); return connectServer(); }
+  if (!r.ok) return { problem: d.error || `Сервер відповів ${r.status}` };
+  S.quotes = Boolean(d.quotes);
+  const st = new ApiStore();
+  return { st, data: await st.load() };
+}
 async function boot() {
   applyTheme(true);
   bindStatic();
@@ -2266,6 +2524,13 @@ async function boot() {
   let loaded = null;
   try { const c = await connectCloud(); if (c) { S.store = c.st; loaded = c.data; } }
   catch (e) { console.warn('Cloud storage unavailable', e); toast('Хмарне сховище недоступне, працюю в цьому браузері', 'err'); }
+  if (!S.store) {
+    let sv = null;
+    try { sv = await connectServer(); }
+    catch (e) { serverProblem('Не вдалося завантажити угоди: ' + errText(e)); return; }
+    if (sv && sv.problem) { serverProblem(sv.problem); return; }
+    if (sv) { S.store = sv.st; loaded = sv.data; }
+  }
   if (!S.store) {
     try { S.store = await LocalStore.open(); loaded = await S.store.load(); try { navigator.storage && navigator.storage.persist && navigator.storage.persist().catch(() => {}); } catch { /* not supported */ } }
     catch (e) { console.warn('IndexedDB unavailable', e); S.store = new MemoryStore(); loaded = await S.store.load(); }
