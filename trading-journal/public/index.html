@@ -30,6 +30,8 @@
   --profit-wash: rgba(35, 224, 129, .13);
   --loss-wash: rgba(255, 77, 94, .13);
   --hl-band: rgba(228, 241, 232, .08);
+  --box-up: rgba(35, 224, 129, .22);
+  --box-down: rgba(255, 77, 94, .22);
   --focus: #3cf093;
   --overlay: rgba(0, 0, 0, .74);
   --shadow: 0 16px 44px rgba(0, 0, 0, .65);
@@ -50,6 +52,7 @@
     --accent: #14c466; --accent-ink: #011a0b; --accent-text: #08743c; --accent-wash: rgba(20, 196, 102, .14);
     --profit: #0b7d39; --loss: #d12a3c; --profit-wash: rgba(11, 125, 57, .10); --loss-wash: rgba(209, 42, 60, .09);
     --hl-band: rgba(7, 18, 11, .07);
+    --box-up: rgba(11, 125, 57, .16); --box-down: rgba(209, 42, 60, .14);
     --focus: #08743c; --overlay: rgba(7, 18, 11, .45); --shadow: 0 14px 40px rgba(7, 18, 11, .16);
     --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100;
     --s5: #e87ba4; --s6: #008300; --s7: #4a3aa7; --s8: #e34948;
@@ -63,6 +66,7 @@
   --accent: #14c466; --accent-ink: #011a0b; --accent-text: #08743c; --accent-wash: rgba(20, 196, 102, .14);
   --profit: #0b7d39; --loss: #d12a3c; --profit-wash: rgba(11, 125, 57, .10); --loss-wash: rgba(209, 42, 60, .09);
   --hl-band: rgba(7, 18, 11, .07);
+  --box-up: rgba(11, 125, 57, .16); --box-down: rgba(209, 42, 60, .14);
   --focus: #08743c; --overlay: rgba(7, 18, 11, .45); --shadow: 0 14px 40px rgba(7, 18, 11, .16);
   --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100;
   --s5: #e87ba4; --s6: #008300; --s7: #4a3aa7; --s8: #e34948;
@@ -1705,6 +1709,59 @@ function loadChartLib() {
   });
   return chartLibP;
 }
+/* The trade drawn like TradingView's position tool: a box from entry (time, price) to expiry (time, price),
+   green when the price went the trade's way, red when against, with dashed guides at entry and expiry. */
+class TradeBox {
+  constructor(o) {
+    this.o = o;
+    this.p = null;
+    this.views = [
+      { zOrder: () => 'bottom', renderer: () => ({ draw: tg => this.draw(tg, false) }) },
+      { zOrder: () => 'top', renderer: () => ({ draw: tg => this.draw(tg, true) }) },
+    ];
+  }
+  attached(p) { this.p = p; }
+  detached() { this.p = null; }
+  paneViews() { return this.views; }
+  autoscaleInfo() { const o = this.o; return o.p1 == null || o.p2 == null ? null : { priceRange: { minValue: Math.min(o.p1, o.p2), maxValue: Math.max(o.p1, o.p2) } }; }
+  // Minute candles are evenly spaced, so a moment inside the window maps linearly from the entry candle.
+  xAt(sec) {
+    const ts = this.p.chart.timeScale(), sp = ts.options().barSpacing, xb = ts.timeToCoordinate(this.o.base);
+    return xb == null ? null : xb - sp / 2 + sp * (sec - this.o.base) / 60;
+  }
+  draw(target, front) {
+    if (!this.p) return;
+    const o = this.o, x1 = this.xAt(o.t1), x2 = this.xAt(o.t2);
+    if (x1 == null || x2 == null) return;
+    const ya = o.p1 == null ? null : this.p.series.priceToCoordinate(o.p1), yb = o.p2 == null ? null : this.p.series.priceToCoordinate(o.p2);
+    target.useMediaCoordinateSpace(({ context: ctx, mediaSize }) => {
+      const hasBox = ya != null && yb != null, h = hasBox ? Math.max(3, Math.abs(yb - ya)) : 0, top = hasBox ? Math.min(ya, yb) - (Math.abs(yb - ya) < 3 ? 1.5 : 0) : 0;
+      if (!front) {
+        ctx.save();
+        ctx.strokeStyle = o.guide; ctx.lineWidth = 1; ctx.setLineDash([3, 4]);
+        for (const x of [x1, x2]) { ctx.beginPath(); ctx.moveTo(Math.round(x) + 0.5, 0); ctx.lineTo(Math.round(x) + 0.5, mediaSize.height); ctx.stroke(); }
+        ctx.restore();
+        if (hasBox) { ctx.fillStyle = o.fill; ctx.fillRect(x1, top, x2 - x1, h); }
+        return;
+      }
+      if (!hasBox) return;
+      ctx.strokeStyle = o.stroke; ctx.lineWidth = 1.5;
+      ctx.strokeRect(x1, top, x2 - x1, h);
+      if (o.label) {
+        ctx.font = '600 11px "JetBrains Mono", ui-monospace, monospace';
+        ctx.fillStyle = o.stroke;
+        const above = top > 18, w = ctx.measureText(o.label).width;
+        const lx = Math.max(2, Math.min(x1, mediaSize.width - w - 4)), ly = above ? top - 4 : top + h + 4;
+        ctx.save();
+        ctx.globalAlpha = 0.85; ctx.fillStyle = o.bg;
+        ctx.fillRect(lx - 3, above ? ly - 14 : ly - 1, w + 6, 15);
+        ctx.restore();
+        ctx.textBaseline = above ? 'bottom' : 'top';
+        ctx.fillText(o.label, lx, ly);
+      }
+    });
+  }
+}
 async function loadQuoteChart(box, t) {
   const owner = S.modal;
   try {
@@ -1725,18 +1782,20 @@ async function loadQuoteChart(box, t) {
       timeScale: { borderColor: tok('--line-2'), timeVisible: true, secondsVisible: false },
     });
     owner.cleanup.push(() => chart.remove());
-    const band = chart.addSeries(LC.HistogramSeries, { priceScaleId: 'band', color: tok('--hl-band'), priceLineVisible: false, lastValueVisible: false });
-    chart.priceScale('band').applyOptions({ scaleMargins: { top: 0, bottom: 0 }, visible: false });
-    band.setData(q.candles.map(c => ({ time: T(c.t), value: c.t + 60e3 > q.w.start && c.t < q.w.end ? 1 : 0 })));
     const cs = chart.addSeries(LC.CandlestickSeries, { upColor: tok('--profit'), downColor: tok('--loss'), wickUpColor: tok('--profit'), wickDownColor: tok('--loss'), borderVisible: false, priceFormat: { type: 'price', precision: digits, minMove: Math.pow(10, -digits) } });
     cs.setData(q.candles.map(c => ({ time: T(c.t), open: c.o, high: c.h, low: c.l, close: c.c })));
     if (q.entry != null) cs.createPriceLine({ price: q.entry, color: tok('--fg-2'), lineWidth: 1, lineStyle: LC.LineStyle.Dashed, axisLabelVisible: true, title: 'вхід' });
     const near = ts => q.candles.reduce((best, c) => Math.abs(c.t - ts) < Math.abs(best.t - ts) ? c : best, q.candles[0]);
     const up = t.direction !== 'down';
-    LC.createSeriesMarkers(cs, [
-      { time: T(near(q.w.start).t), position: up ? 'belowBar' : 'aboveBar', color: up ? tok('--profit') : tok('--loss'), shape: up ? 'arrowUp' : 'arrowDown', text: 'вхід ' + t.time },
-      { time: T(near(q.w.end).t), position: up ? 'aboveBar' : 'belowBar', color: tok('--accent-text'), shape: 'circle', text: 'експірація ' + (closeTime(t.time, t.expiry) || '') },
-    ].sort((a, b) => a.time - b.time));
+    LC.createSeriesMarkers(cs, [{ time: T(near(q.w.start).t), position: up ? 'belowBar' : 'aboveBar', color: up ? tok('--profit') : tok('--loss'), shape: up ? 'arrowUp' : 'arrowDown' }]);
+    const way = q.pips == null ? 0 : q.pips;
+    cs.attachPrimitive(new TradeBox({
+      base: T(near(q.w.start).t), t1: T(q.w.start), t2: T(q.w.end), p1: q.entry, p2: q.exit,
+      fill: way > 0 ? tok('--box-up') : way < 0 ? tok('--box-down') : tok('--hl-band'),
+      stroke: way > 0 ? tok('--profit') : way < 0 ? tok('--loss') : tok('--fg-2'),
+      guide: tok('--line-2'), bg: tok('--surface'),
+      label: `${t.time} → ${closeTime(t.time, t.expiry) || ''}${q.pips != null ? ' · ' + pipsFmt(q.pips) : ''}`,
+    }));
     chart.timeScale().fitContent();
     const agree = q.pips == null || t.result === 'open' || t.result === 'draw' ? null : (q.pips > 0) === (t.result === 'win');
     const parts = [`<span>${esc(q.source)}, хвилинні свічки</span>`];
