@@ -1,6 +1,8 @@
 // Edge Journal API on Cloudflare Workers.
-// One private journal behind a password: trades and settings in D1, screenshots in R2,
-// 1-minute forex candles from Twelve Data (cached in D1 once the window is in the past).
+// One private journal: trades and settings in D1, screenshots in R2, 1-minute forex candles from
+// Dukascopy (no key needed; Twelve Data as a fallback when TWELVE_DATA_KEY is set), cached in D1.
+// The password is created on the site at first visit (stored as PBKDF2 in D1), or set as the
+// JOURNAL_PASSWORD secret, which then takes precedence.
 // Static files in ./public are served by Workers Assets; only /api/* reaches this code.
 
 const SESSION_DAYS = 180;
@@ -13,6 +15,9 @@ const MAX_IMAGE = 15 * 1024 * 1024;
 const IMAGE_TYPES = new Set(['image/webp', 'image/jpeg', 'image/png', 'image/gif']);
 const LOGIN_WINDOW = 15 * 60 * 1000;
 const LOGIN_MAX_FAILS = 10;
+const PBKDF2_ITERATIONS = 20000;
+const MIN_PASSWORD = 8;
+const DUKASCOPY_ROOT = 'https://jetta.dukascopy.com/v1';
 
 let schemaReady = null;
 function ensureSchema(db) {
@@ -23,6 +28,7 @@ function ensureSchema(db) {
       db.prepare('CREATE TABLE IF NOT EXISTS candles (key TEXT PRIMARY KEY, data TEXT NOT NULL, created_at INTEGER NOT NULL)'),
       db.prepare('CREATE TABLE IF NOT EXISTS login_fails (ip TEXT NOT NULL, ts INTEGER NOT NULL)'),
       db.prepare('CREATE INDEX IF NOT EXISTS login_fails_ip_ts ON login_fails (ip, ts)'),
+      db.prepare('CREATE TABLE IF NOT EXISTS auth (id INTEGER PRIMARY KEY CHECK (id = 1), salt TEXT NOT NULL, hash TEXT NOT NULL, updated_at INTEGER NOT NULL)'),
     ]).catch(e => { schemaReady = null; throw e; });
   }
   return schemaReady;
@@ -32,26 +38,48 @@ const json = (data, status = 200, headers = {}) => new Response(JSON.stringify(d
   status,
   headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store', 'x-content-type-options': 'nosniff', ...headers },
 });
-const fail = (status, error) => json({ error }, status);
+const fail = (status, error, extra = {}) => json({ error, ...extra }, status);
 
-/* ---------- sessions ---------- */
-// The signing key is derived from JOURNAL_PASSWORD, so changing the password signs out every device.
+/* ---------- password & sessions ---------- */
 const enc = new TextEncoder();
 const hex = buf => [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
-async function signingKey(env) {
-  const raw = await crypto.subtle.digest('SHA-256', enc.encode('edge-journal/session/' + env.JOURNAL_PASSWORD));
+const sameBytes = (a, b) => { if (a.length !== b.length) return false; let d = 0; for (let i = 0; i < a.length; i++) d |= a[i] ^ b[i]; return d === 0; };
+async function pbkdf2(password, salt) {
+  const key = await crypto.subtle.importKey('raw', enc.encode(password), 'PBKDF2', false, ['deriveBits']);
+  return hex(await crypto.subtle.deriveBits({ name: 'PBKDF2', hash: 'SHA-256', salt: enc.encode(salt), iterations: PBKDF2_ITERATIONS }, key, 256));
+}
+const storedAuth = env => env.DB.prepare('SELECT salt, hash FROM auth WHERE id = 1').first();
+/* Whatever the password is, sessions are signed with a key derived from it: a new password signs out every device. */
+async function passwordSource(env) {
+  if (env.JOURNAL_PASSWORD) return { kind: 'secret', material: 'secret:' + env.JOURNAL_PASSWORD, secret: env.JOURNAL_PASSWORD };
+  const a = await storedAuth(env);
+  return a ? { kind: 'stored', material: 'stored:' + a.hash, salt: a.salt, hash: a.hash } : null;
+}
+async function signingKey(src) {
+  const raw = await crypto.subtle.digest('SHA-256', enc.encode('edge-journal/session/' + src.material));
   return crypto.subtle.importKey('raw', raw, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign', 'verify']);
 }
-async function newSession(env) {
+async function newSessionCookie(src) {
   const exp = String(Date.now() + SESSION_DAYS * 864e5);
-  const sig = await crypto.subtle.sign('HMAC', await signingKey(env), enc.encode(exp));
-  return `${exp}.${hex(sig)}`;
+  const sig = await crypto.subtle.sign('HMAC', await signingKey(src), enc.encode(exp));
+  return sessionCookie(`${exp}.${hex(sig)}`, SESSION_DAYS * 86400);
 }
-async function sessionValid(env, token) {
+async function sessionValid(src, token) {
   const m = /^(\d{13})\.([a-f0-9]{64})$/.exec(token || '');
-  if (!m || Number(m[1]) < Date.now()) return false;
+  if (!src || !m || Number(m[1]) < Date.now()) return false;
   const sig = new Uint8Array(m[2].match(/../g).map(h => parseInt(h, 16)));
-  return crypto.subtle.verify('HMAC', await signingKey(env), sig, enc.encode(m[1]));
+  return crypto.subtle.verify('HMAC', await signingKey(src), sig, enc.encode(m[1]));
+}
+async function passwordMatches(src, given) {
+  if (typeof given !== 'string' || !given) return false;
+  if (src.kind === 'stored') return sameBytes(enc.encode(await pbkdf2(given, src.salt)), enc.encode(src.hash));
+  // Secret password: compare HMACs of both strings, so the check never exits early on the secret itself.
+  const key = await signingKey(src);
+  const [a, b] = await Promise.all([
+    crypto.subtle.sign('HMAC', key, enc.encode('pw:' + given)),
+    crypto.subtle.sign('HMAC', key, enc.encode('pw:' + src.secret)),
+  ]);
+  return sameBytes(new Uint8Array(a), new Uint8Array(b));
 }
 function readCookie(req, name) {
   for (const part of (req.headers.get('cookie') || '').split(';')) {
@@ -61,72 +89,129 @@ function readCookie(req, name) {
   return '';
 }
 const sessionCookie = (value, maxAge) => `${COOKIE}=${value}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=${maxAge}`;
-async function passwordMatches(env, given) {
-  // Compare HMACs of both strings: equal-length digests, no early exit on the secret itself.
-  const key = await signingKey(env);
-  const [a, b] = await Promise.all([
-    crypto.subtle.sign('HMAC', key, enc.encode('pw:' + String(given))),
-    crypto.subtle.sign('HMAC', key, enc.encode('pw:' + env.JOURNAL_PASSWORD)),
-  ]);
-  const x = new Uint8Array(a), y = new Uint8Array(b);
-  let diff = 0;
-  for (let i = 0; i < x.length; i++) diff |= x[i] ^ y[i];
-  return diff === 0;
-}
 
 async function readJSON(req) {
   const text = await req.text();
   if (text.length > MAX_JSON) return null;
   try { const v = JSON.parse(text); return v && typeof v === 'object' && !Array.isArray(v) ? v : null; } catch { return null; }
 }
+const validNewPassword = pw => typeof pw === 'string' && pw.length >= MIN_PASSWORD && pw.length <= 200;
 
-/* ---------- handlers ---------- */
-async function login(req, env) {
+/* ---------- auth handlers ---------- */
+async function tooManyFails(env, ip) {
+  const row = await env.DB.prepare('SELECT COUNT(*) AS n FROM login_fails WHERE ip = ? AND ts > ?').bind(ip, Date.now() - LOGIN_WINDOW).first();
+  return row && row.n >= LOGIN_MAX_FAILS;
+}
+const noteFail = (env, ip) => env.DB.prepare('INSERT INTO login_fails (ip, ts) VALUES (?, ?)').bind(ip, Date.now()).run();
+
+async function login(req, env, src) {
+  if (!src) return fail(409, 'Пароль ще не створено', { setup: true });
   const ip = req.headers.get('cf-connecting-ip') || 'local';
-  const since = Date.now() - LOGIN_WINDOW;
-  const row = await env.DB.prepare('SELECT COUNT(*) AS n FROM login_fails WHERE ip = ? AND ts > ?').bind(ip, since).first();
-  if (row && row.n >= LOGIN_MAX_FAILS) return fail(429, 'Забагато невдалих спроб. Спробуй через 15 хвилин.');
+  if (await tooManyFails(env, ip)) return fail(429, 'Забагато невдалих спроб. Спробуй через 15 хвилин.');
   const body = await readJSON(req);
-  if (!body || typeof body.password !== 'string' || !(await passwordMatches(env, body.password))) {
-    await env.DB.prepare('INSERT INTO login_fails (ip, ts) VALUES (?, ?)').bind(ip, Date.now()).run();
-    return fail(401, 'Неправильний пароль');
-  }
-  await env.DB.prepare('DELETE FROM login_fails WHERE ip = ? OR ts < ?').bind(ip, since).run();
-  return json({ ok: true }, 200, { 'set-cookie': sessionCookie(await newSession(env), SESSION_DAYS * 86400) });
+  if (!body || !(await passwordMatches(src, body.password))) { await noteFail(env, ip); return fail(401, 'Неправильний пароль'); }
+  await env.DB.prepare('DELETE FROM login_fails WHERE ip = ? OR ts < ?').bind(ip, Date.now() - LOGIN_WINDOW).run();
+  return json({ ok: true }, 200, { 'set-cookie': await newSessionCookie(src) });
+}
+/* First visit: whoever opens the fresh site first creates the password. Open it right after the first deploy. */
+async function setup(req, env, src) {
+  if (src) return fail(409, 'Пароль уже створено. Увійди.');
+  const body = await readJSON(req);
+  if (!body || !validNewPassword(body.password)) return fail(400, `Пароль має бути від ${MIN_PASSWORD} символів`);
+  const salt = hex(crypto.getRandomValues(new Uint8Array(16)));
+  const hash = await pbkdf2(body.password, salt);
+  const r = await env.DB.prepare('INSERT INTO auth (id, salt, hash, updated_at) VALUES (1, ?, ?, ?) ON CONFLICT(id) DO NOTHING').bind(salt, hash, Date.now()).run();
+  if (!r.meta || !r.meta.changes) return fail(409, 'Пароль уже створено. Увійди.');
+  return json({ ok: true }, 200, { 'set-cookie': await newSessionCookie({ kind: 'stored', material: 'stored:' + hash }) });
+}
+async function changePassword(req, env, src) {
+  if (src.kind === 'secret') return fail(409, 'Пароль задано секретом JOURNAL_PASSWORD у Cloudflare. Зміни його там.');
+  const ip = req.headers.get('cf-connecting-ip') || 'local';
+  if (await tooManyFails(env, ip)) return fail(429, 'Забагато невдалих спроб. Спробуй через 15 хвилин.');
+  const body = await readJSON(req);
+  if (!body || !(await passwordMatches(src, body.current))) { await noteFail(env, ip); return fail(401, 'Поточний пароль неправильний'); }
+  if (!validNewPassword(body.next)) return fail(400, `Новий пароль має бути від ${MIN_PASSWORD} символів`);
+  const salt = hex(crypto.getRandomValues(new Uint8Array(16)));
+  const hash = await pbkdf2(body.next, salt);
+  await env.DB.prepare('UPDATE auth SET salt = ?, hash = ?, updated_at = ? WHERE id = 1').bind(salt, hash, Date.now()).run();
+  return json({ ok: true }, 200, { 'set-cookie': await newSessionCookie({ kind: 'stored', material: 'stored:' + hash }) });
 }
 
+/* ---------- quotes ---------- */
+/* Dukascopy candle response: base OHLC, a price multiplier, a step (shift, ms) and per-candle deltas.
+   Candles with zero volume are weekend/holiday fillers and are skipped. */
+function decodeDukascopy(d) {
+  if (!d || !Array.isArray(d.times) || !Number.isFinite(d.timestamp)) throw new Error('Dukascopy: неочікувана відповідь');
+  const n = d.times.length;
+  if (!n) return [];
+  const m = d.multiplier, step = d.shift;
+  if (!(m > 0) || !(step > 0)) throw new Error('Dukascopy: неочікувана відповідь');
+  const digits = Math.max(0, Math.min(8, Math.round(-Math.log10(m))));
+  const px = u => Number((u * m).toFixed(digits));
+  let ts = d.timestamp, o = Math.round(d.open / m), h = Math.round(d.high / m), l = Math.round(d.low / m), c = Math.round(d.close / m);
+  const out = [];
+  for (let i = 0; i < n; i++) {
+    ts += d.times[i] * step;
+    o += d.opens[i]; h += d.highs[i]; l += d.lows[i]; c += d.closes[i];
+    if (Array.isArray(d.volumes) && d.volumes[i] === 0) continue;
+    out.push({ t: ts, o: px(o), h: px(h), l: px(l), c: px(c) });
+  }
+  return out;
+}
+async function dukascopy(env, pair, start, end) {
+  const root = env.DUKASCOPY_ROOT || DUKASCOPY_ROOT, code = pair.replace('/', '-'), now = Date.now(), out = [];
+  for (let day = Math.floor(start / 864e5) * 864e5; day <= end && day < now; day += 864e5) {
+    const d = new Date(day), active = now < day + 864e5;
+    const url = active
+      ? `${root}/candles/minute/${code}/BID?from=${day}`
+      : `${root}/candles/minute/${code}/BID/${d.getUTCFullYear()}/${d.getUTCMonth() + 1}/${d.getUTCDate()}`;
+    const res = await fetch(url, active ? {} : { cf: { cacheTtl: 86400, cacheEverything: true } });
+    if (res.status === 404) continue;
+    if (!res.ok) throw new Error(`Dukascopy відповів ${res.status}`);
+    const text = await res.text();
+    if (!text.trim()) continue;
+    for (const c of decodeDukascopy(JSON.parse(text))) if (c.t >= start - 60e3 && c.t <= end) out.push(c);
+  }
+  return out.sort((a, b) => a.t - b.t);
+}
+async function twelveData(env, pair, start, end) {
+  const day = ms => new Date(ms).toISOString().slice(0, 19).replace('T', ' ');
+  const api = new URL('https://api.twelvedata.com/time_series');
+  api.search = new URLSearchParams({ symbol: pair, interval: '1min', start_date: day(start), end_date: day(end), timezone: 'UTC', order: 'ASC', outputsize: '5000', apikey: env.TWELVE_DATA_KEY }).toString();
+  const res = await fetch(api, { headers: { accept: 'application/json' } });
+  const data = await res.json().catch(() => null);
+  if (!res.ok || !data || data.status === 'error') throw new Error('Twelve Data: ' + String((data && data.message) || `HTTP ${res.status}`).replace(/apikey=\S+/gi, 'apikey=…').slice(0, 200));
+  return (Array.isArray(data.values) ? data.values : [])
+    .map(v => ({ t: Date.parse(String(v.datetime).replace(' ', 'T') + 'Z'), o: Number(v.open), h: Number(v.high), l: Number(v.low), c: Number(v.close) }))
+    .filter(c => Number.isFinite(c.t) && [c.o, c.h, c.l, c.c].every(Number.isFinite))
+    .sort((a, b) => a.t - b.t);
+}
 async function candles(env, url) {
   const pair = (url.searchParams.get('pair') || '').toUpperCase();
   const from = Number(url.searchParams.get('from')), to = Number(url.searchParams.get('to'));
   if (!PAIR.test(pair)) return fail(400, 'Потрібна валютна пара у форматі EUR/USD');
   if (!Number.isFinite(from) || !Number.isFinite(to) || to <= from || to - from > 6 * 3600e3) return fail(400, 'Некоректний проміжок часу');
-  if (!env.TWELVE_DATA_KEY) return fail(503, 'Котирування не підключено: додай секрет TWELVE_DATA_KEY у налаштуваннях Worker.');
   const start = Math.floor(from / 60e3) * 60e3, end = Math.ceil(to / 60e3) * 60e3;
-  const key = `twelvedata:${pair}:1min:${start}:${end}`;
+  const key = `m1:${pair}:${start}:${end}`;
   const hit = await env.DB.prepare('SELECT data FROM candles WHERE key = ?').bind(key).first();
-  if (hit) return json({ candles: JSON.parse(hit.data), source: 'Twelve Data', interval: '1min', cached: true });
-  const day = ms => new Date(ms).toISOString().slice(0, 19).replace('T', ' ');
-  const api = new URL('https://api.twelvedata.com/time_series');
-  api.search = new URLSearchParams({ symbol: pair, interval: '1min', start_date: day(start), end_date: day(end), timezone: 'UTC', order: 'ASC', outputsize: '5000', apikey: env.TWELVE_DATA_KEY }).toString();
-  let res, data;
-  try { res = await fetch(api, { headers: { accept: 'application/json' } }); data = await res.json(); } catch { return fail(502, 'Постачальник котирувань недоступний. Спробуй пізніше.'); }
-  if (!res.ok || !data || data.status === 'error') {
-    const msg = String((data && data.message) || `HTTP ${res.status}`).replace(/apikey=\S+/gi, 'apikey=…').slice(0, 240);
-    return fail(502, 'Twelve Data: ' + msg);
+  if (hit) { const c = JSON.parse(hit.data); return json({ candles: c.list, source: c.source, interval: '1min', cached: true }); }
+  const providers = [['Dukascopy', () => dukascopy(env, pair, start, end)]];
+  if (env.TWELVE_DATA_KEY) providers.push(['Twelve Data', () => twelveData(env, pair, start, end)]);
+  const errors = [];
+  for (const [source, load] of providers) {
+    let list;
+    try { list = await load(); } catch (e) { errors.push(String(e && e.message || e)); continue; }
+    if (!list.length) continue;
+    // Cache only windows that are fully closed: recent minutes can still change.
+    if (end < Date.now() - 15 * 60e3) await env.DB.prepare('INSERT OR REPLACE INTO candles (key, data, created_at) VALUES (?, ?, ?)').bind(key, JSON.stringify({ source, list }), Date.now()).run();
+    return json({ candles: list, source, interval: '1min' });
   }
-  const list = (Array.isArray(data.values) ? data.values : [])
-    .map(v => ({ t: Date.parse(String(v.datetime).replace(' ', 'T') + 'Z'), o: Number(v.open), h: Number(v.high), l: Number(v.low), c: Number(v.close) }))
-    .filter(c => Number.isFinite(c.t) && [c.o, c.h, c.l, c.c].every(Number.isFinite))
-    .sort((a, b) => a.t - b.t);
-  // Cache only windows that are fully closed: recent minutes can still change.
-  if (list.length && end < Date.now() - 15 * 60e3) {
-    await env.DB.prepare('INSERT OR REPLACE INTO candles (key, data, created_at) VALUES (?, ?, ?)').bind(key, JSON.stringify(list), Date.now()).run();
-  }
-  return json({ candles: list, source: 'Twelve Data', interval: '1min' });
+  if (errors.length) return fail(502, 'Котирування недоступні: ' + errors.join('; ').slice(0, 300));
+  return json({ candles: [], source: providers[0][0], interval: '1min' });
 }
 
+/* ---------- router ---------- */
 async function api(req, env, url) {
-  if (!env.JOURNAL_PASSWORD) return fail(503, 'Пароль не налаштовано: додай секрет JOURNAL_PASSWORD у налаштуваннях Worker.');
   if (!env.DB || !env.SHOTS) return fail(503, 'Немає підключення до D1 або R2. Перевір прив’язки DB і SHOTS у wrangler.toml.');
   await ensureSchema(env.DB);
   const method = req.method, path = url.pathname;
@@ -134,11 +219,14 @@ async function api(req, env, url) {
     const origin = req.headers.get('origin');
     if (origin && origin !== url.origin) return fail(403, 'Запит з чужого сайту');
   }
-  if (path === '/api/login' && method === 'POST') return login(req, env);
+  const src = await passwordSource(env);
+  if (path === '/api/setup' && method === 'POST') return setup(req, env, src);
+  if (path === '/api/login' && method === 'POST') return login(req, env, src);
   if (path === '/api/logout' && method === 'POST') return json({ ok: true }, 200, { 'set-cookie': sessionCookie('', 0) });
-  if (!(await sessionValid(env, readCookie(req, COOKIE)))) return fail(401, 'Потрібен вхід');
+  if (!(await sessionValid(src, readCookie(req, COOKIE)))) return fail(401, src ? 'Потрібен вхід' : 'Пароль ще не створено', { setup: !src });
 
-  if (path === '/api/me' && method === 'GET') return json({ ok: true, quotes: Boolean(env.TWELVE_DATA_KEY) });
+  if (path === '/api/me' && method === 'GET') return json({ ok: true, quotes: true, password: src.kind });
+  if (path === '/api/password' && method === 'POST') return changePassword(req, env, src);
   if (path === '/api/data' && method === 'GET') {
     const [t, s] = await env.DB.batch([
       env.DB.prepare('SELECT data FROM trades ORDER BY updated_at'),
@@ -193,6 +281,6 @@ export default {
     const url = new URL(req.url);
     if (!url.pathname.startsWith('/api/')) return env.ASSETS.fetch(req);
     try { return await api(req, env, url); }
-    catch (e) { console.error('api error', e && e.stack || e); return fail(500, 'Помилка сервера'); }
+    catch (e) { console.error('api error', (e && e.stack) || e); return fail(500, 'Помилка сервера'); }
   },
 };

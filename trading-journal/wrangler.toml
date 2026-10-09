@@ -1,8 +1,9 @@
 # Edge Journal on Cloudflare Workers.
-# D1 database and R2 bucket are created automatically on the first `wrangler deploy`.
-# Secrets (Worker → Settings → Variables and Secrets, or `wrangler secret put`):
-#   JOURNAL_PASSWORD  — password for signing in (required)
-#   TWELVE_DATA_KEY   — API key for 1-minute forex candles (optional; without it the trade chart is off)
+# D1 database and R2 bucket are created automatically on the first deploy; tables on the first request.
+# No secrets are required: the password is created on the site at first visit, quotes come from Dukascopy.
+# Optional secrets (Worker -> Settings -> Variables and Secrets):
+#   JOURNAL_PASSWORD  - overrides the password created on the site
+#   TWELVE_DATA_KEY   - fallback source of 1-minute candles if Dukascopy is unavailable
 name = "edge-journal"
 main = "src/worker.js"
 compatibility_date = "2025-09-01"

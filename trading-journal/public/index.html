@@ -840,7 +840,7 @@ const S = {
   tab: ls.get('tab', 'overview'),
   f: Object.assign(blankFilters(), ls.get('filters', {})),
   tradeSort: 'new', stratSort: { k: 'net', d: -1 }, cal: null, listLimit: 100,
-  modal: null, lb: null, staleView: false, quotes: false,
+  modal: null, lb: null, staleView: false, quotes: false, passwordKind: '',
 };
 let readyResolve;
 const readyP = new Promise(r => { readyResolve = r; });
@@ -890,6 +890,7 @@ const quotePair = sym => /^[A-Z]{3}\/[A-Z]{3}$/.test(sym || '') ? sym : null;
 const pipSize = pair => pair.includes('JPY') ? 0.01 : 0.0001;
 function tvSymbol(sym) { const m = /^([A-Z]{3})\/([A-Z]{3})/.exec(sym || ''); return m ? `FX:${m[1]}${m[2]}` : null; }
 const tvURL = sym => `https://www.tradingview.com/chart/?symbol=${encodeURIComponent(sym)}&interval=1`;
+const touchUI = (() => { try { return matchMedia('(pointer: coarse)').matches; } catch { return false; } })();
 function tradeWindow(t) {
   if (!/^\d{2}:\d{2}/.test(t.time || '') || !/^\d{4}-\d{2}-\d{2}$/.test(t.date || '')) return null;
   const start = zonedToUTC(t.date, t.time, cfg().tz);
@@ -1638,11 +1639,11 @@ function openTrade(id) {
   ];
   const notes = [['Аналіз', t.analysis, ''], ['Що пішло не за планом', t.offPlan, 'warn'], ['Урок', t.lesson || '', '']].filter(n => n[1].trim());
   const tvs = tvSymbol(t.symbol), otc = /\bOTC\b/.test(t.symbol);
-  const tvRow = tvs ? `<div class="tvrow"><a class="btn" href="${esc(tvURL(tvs))}" target="_blank" rel="noopener noreferrer">${I.ext}Відкрити в TradingView</a>${t.time ? `<button class="btn sm" type="button" data-a="copy-dt">Копіювати ${esc(t.date)} ${esc(t.time)}</button>` : ''}<span>Відкриється ${esc(tvs.slice(3, 6) + '/' + tvs.slice(6))} на хвилинному графіку. Щоб перейти до угоди: <span class="kbd">Alt</span>+<span class="kbd">G</span> і встав дату й час.${otc ? ' Для OTC це ринкова пара: котирувань брокера в TradingView немає.' : ''}</span></div>` : '';
+  const tvRow = tvs ? `<div class="tvrow"><a class="btn" href="${esc(tvURL(tvs))}" target="_blank" rel="noopener noreferrer">${I.ext}Відкрити в TradingView</a>${t.time ? `<button class="btn sm" type="button" data-a="copy-dt">Копіювати ${esc(t.date)} ${esc(t.time)}</button>` : ''}<span>Відкриється ${esc(tvs.slice(3, 6) + '/' + tvs.slice(6))} на хвилинному графіку. ${touchUI ? 'Щоб перейти до угоди: під графіком торкнись кнопки періоду (1Д, 5Д…) → «Перейти до…» → дата й час.' : 'Щоб перейти до угоди: <span class="kbd">Alt</span>+<span class="kbd">G</span> і встав дату й час.'}${otc ? ' Для OTC це ринкова пара: котирувань брокера в TradingView немає.' : ''}</span></div>` : '';
   let chartBox = '';
   if (S.store && S.store.kind === 'server' && !S.demo) {
     if (otc) chartBox = '<p class="muted" style="margin:0">OTC — котирування брокера, їх немає в інших джерелах, тому графіка угоди тут немає. Дивись свій скрін.</p>';
-    else if (quotePair(t.symbol) && t.time) chartBox = S.quotes ? '<div class="qchart" id="qchart"><div class="qwait">Завантажую котирування…</div></div>' : '<p class="muted" style="margin:0">Графік угоди з’явиться, коли в налаштуваннях Worker буде ключ котирувань TWELVE_DATA_KEY.</p>';
+    else if (quotePair(t.symbol) && t.time) chartBox = S.quotes ? '<div class="qchart" id="qchart"><div class="qwait">Завантажую котирування…</div></div>' : '';
   }
   const el = modal(`
     <div class="mhead"><h2><span class="mono">${esc(t.symbol || '—')}</span>${dirBadge(t.direction)}${t.demo ? '<span class="tag demo">демо</span>' : ''}</h2><span class="muted">${esc(fmtDate(t.date, true))}${t.time ? ', ' + esc(t.time) : ''}</span><button class="icon-btn" data-close type="button" aria-label="Закрити">${I.x}</button></div>
@@ -2122,6 +2123,12 @@ function openSettings() {
           <button class="btn" type="button" data-a="demo">${S.demo ? 'Вийти з демо' : 'Демо-режим'}</button>
           ${kind === 'server' ? '<button class="btn" type="button" data-a="logout">Вийти з журналу</button>' : ''}
         </div>
+        ${kind === 'server' && S.passwordKind === 'stored' ? `<div class="fgrid" style="margin-top:14px" id="set-pw">
+          <label class="fld" for="pw-cur"><span>Поточний пароль</span><input id="pw-cur" type="password" autocomplete="current-password"></label>
+          <label class="fld" for="pw-new"><span>Новий пароль</span><input id="pw-new" type="password" autocomplete="new-password" minlength="8"></label>
+          <label class="fld" for="pw-new2"><span>Новий ще раз</span><input id="pw-new2" type="password" autocomplete="new-password" minlength="8"></label>
+          <div class="fld"><span>&nbsp;</span><button class="btn" type="button" data-a="pw">Змінити пароль</button></div>
+        </div>` : ''}
         ${!S.demo && D().trades.length ? `<div class="danger-zone" id="set-danger"><button class="btn danger" type="button" data-a="wipe">Видалити всі угоди</button></div>` : ''}
       </section>
     </div>
@@ -2154,6 +2161,16 @@ function openSettings() {
     const k = a.dataset.a;
     if (k === 'add') addStrat();
     else if (k === 'logout') { a.disabled = true; try { await apiCall('POST', '/api/logout'); } finally { location.reload(); } }
+    else if (k === 'pw') {
+      const cur = $('#pw-cur', el).value, next = $('#pw-new', el).value;
+      msg.className = 'msg err';
+      if (next.length < 8) { msg.textContent = 'Новий пароль має бути від 8 символів.'; return; }
+      if (next !== $('#pw-new2', el).value) { msg.textContent = 'Нові паролі не збігаються.'; return; }
+      a.disabled = true;
+      try { await apiCall('POST', '/api/password', { current: cur, next }); msg.className = 'msg'; msg.textContent = 'Пароль змінено. Інші пристрої попросять увійти знову.'; $$('#set-pw input', el).forEach(i => { i.value = ''; }); }
+      catch (err) { msg.textContent = errText(err); }
+      finally { a.disabled = false; }
+    }
     else if (k === 'export') { a.disabled = true; try { await exportJSON(); } finally { a.disabled = false; } }
     else if (k === 'csv') exportCSV(D().trades);
     else if (k === 'import') $('#set-file', el).click();
@@ -2475,25 +2492,43 @@ async function connectCloud() {
   const data = await st.load();
   return { st, data };
 }
-function loginScreen() {
+/* Sign-in, or on a fresh site the one-time password creation. Resolves once a session cookie is set. */
+function loginScreen(setup = false) {
   return new Promise(resolve => {
     $('#filters').hidden = true;
     $('.top-actions').hidden = true;
     $('#storeChip').lastChild.textContent = 'Вхід';
-    $('#view').innerHTML = `<form class="panel login" id="loginForm" novalidate>
-      <h2>Вхід у журнал</h2>
-      <p class="muted" style="margin:0">Журнал приватний. Введи пароль, який задав у налаштуваннях Worker на Cloudflare.</p>
-      <label class="fld" for="lg-pass"><span>Пароль</span><input id="lg-pass" type="password" autocomplete="current-password" required></label>
-      <div class="msg" id="lg-msg" role="alert"></div>
-      <button class="btn primary" type="submit">Увійти</button>
-    </form>`;
+    $('#view').innerHTML = setup
+      ? `<form class="panel login" id="loginForm" novalidate>
+          <h2>Створи пароль</h2>
+          <p class="muted" style="margin:0">Це перший вхід у журнал. Пароль захищає твої угоди; з ним ти входитимеш з телефона й комп’ютера.</p>
+          <label class="fld" for="lg-pass"><span>Новий пароль (від 8 символів)</span><input id="lg-pass" type="password" autocomplete="new-password" minlength="8" required></label>
+          <label class="fld" for="lg-pass2"><span>Ще раз</span><input id="lg-pass2" type="password" autocomplete="new-password" minlength="8" required></label>
+          <div class="msg" id="lg-msg" role="alert"></div>
+          <button class="btn primary" type="submit">Створити і увійти</button>
+        </form>`
+      : `<form class="panel login" id="loginForm" novalidate>
+          <h2>Вхід у журнал</h2>
+          <p class="muted" style="margin:0">Журнал приватний. Введи свій пароль.</p>
+          <label class="fld" for="lg-pass"><span>Пароль</span><input id="lg-pass" type="password" autocomplete="current-password" required></label>
+          <div class="msg" id="lg-msg" role="alert"></div>
+          <button class="btn primary" type="submit">Увійти</button>
+        </form>`;
     const f = $('#loginForm'), msg = $('#lg-msg'), btn = $('button[type=submit]', f);
     $('#lg-pass').focus();
     f.addEventListener('submit', async e => {
       e.preventDefault();
+      const pw = $('#lg-pass').value;
+      if (setup) {
+        if (pw.length < 8) { msg.textContent = 'Пароль має бути від 8 символів.'; return; }
+        if (pw !== $('#lg-pass2').value) { msg.textContent = 'Паролі не збігаються.'; return; }
+      }
       btn.disabled = true; msg.textContent = '';
-      try { await apiCall('POST', '/api/login', { password: $('#lg-pass').value }); $('.top-actions').hidden = false; resolve(); }
-      catch (err) { msg.textContent = errText(err); btn.disabled = false; }
+      try { await apiCall('POST', setup ? '/api/setup' : '/api/login', { password: pw }); $('.top-actions').hidden = false; resolve(); }
+      catch (err) {
+        if (err.status === 409) { resolve(loginScreen(!setup)); return; }
+        msg.textContent = errText(err); btn.disabled = false;
+      }
     });
   });
 }
@@ -2511,9 +2546,10 @@ async function connectServer() {
   try { r = await fetch('/api/me', { credentials: 'same-origin', headers: { accept: 'application/json' } }); } catch { return null; }
   if (!(r.headers.get('content-type') || '').includes('application/json')) return null;
   const d = await r.json().catch(() => ({}));
-  if (r.status === 401) { await loginScreen(); return connectServer(); }
+  if (r.status === 401) { await loginScreen(Boolean(d.setup)); return connectServer(); }
   if (!r.ok) return { problem: d.error || `Сервер відповів ${r.status}` };
   S.quotes = Boolean(d.quotes);
+  S.passwordKind = d.password || '';
   const st = new ApiStore();
   return { st, data: await st.load() };
 }
