@@ -200,7 +200,7 @@ table.tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
 
 /* trade list */
 .tlist { display: grid; }
-.trow { display: grid; grid-template-columns: 60px 86px minmax(150px, 1.3fr) minmax(120px, 1fr) 112px 104px 96px; gap: 12px; align-items: center; padding: 9px 6px; border-bottom: 1px solid var(--line); cursor: pointer; border-radius: 6px; }
+.trow { display: grid; grid-template-columns: 60px 86px minmax(150px, 1.3fr) minmax(110px, 1fr) 136px 96px 96px; gap: 12px; align-items: center; padding: 9px 6px; border-bottom: 1px solid var(--line); cursor: pointer; border-radius: 6px; }
 .trow:last-child { border-bottom: 0; }
 .trow.head { cursor: default; color: var(--muted); font-size: 12px; padding-block: 4px 8px; border-radius: 0; }
 .trow:not(.head):hover { background: var(--surface-2); }
@@ -338,6 +338,10 @@ table.tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
 .fld input.mono { font-family: var(--font-mono); font-size: 13px; }
 .fld.span2 { grid-column: span 2; }
 .fld.full { grid-column: 1 / -1; }
+.fld.span3 { grid-column: span 3; }
+@media (max-width: 720px) { .fld.span3 { grid-column: 1 / -1; } }
+.chips.mini { margin-top: 2px; }
+.chips.mini .chip { padding: 3px 9px; font-size: 12px; font-family: var(--font-mono); }
 .seg.big { height: 46px; }
 .seg.big button { font-weight: 600; font-size: 15px; color: var(--fg); }
 .seg { display: flex; border: 1px solid var(--line-2); border-radius: var(--r-sm); overflow: hidden; height: 38px; background: var(--bg); }
@@ -603,6 +607,7 @@ const I = {
 const DEFAULT_MISTAKES = ['Вхід без сигналу', 'Ранній вхід', 'Запізнений вхід', 'Не та експірація', 'Завелика ставка', 'Відіграш після мінуса', 'Овертрейдинг', 'Проти тренду', 'Торгував на новинах', 'Торгував втомленим'];
 const DEFAULT_EMOTIONS = ['Спокій', 'Впевненість', 'FOMO', 'Страх', 'Жадібність', 'Нетерпіння', 'Втома', 'Злість'];
 const DEFAULT_EXPIRIES = ['30 с', '1 хв', '2 хв', '3 хв', '5 хв', '15 хв'];
+const MAJORS = ['EUR/USD', 'GBP/USD', 'USD/JPY', 'USD/CHF', 'AUD/USD', 'USD/CAD', 'NZD/USD', 'EUR/GBP', 'EUR/JPY', 'GBP/JPY', 'AUD/CAD', 'AUD/JPY', 'EUR/CHF', 'CAD/JPY'];
 function defaultSettings() {
   return { currency: '$', startBalance: 0, defaultStake: null, strategies: [], mistakes: [...DEFAULT_MISTAKES], emotions: [...DEFAULT_EMOTIONS], expiries: [...DEFAULT_EXPIRIES] };
 }
@@ -632,6 +637,8 @@ function normTrade(t) {
   t.stake = num(t.stake);
   t.payout = num(t.payout);
   t.pnl = num(t.pnl);
+  t.pips = num(t.pips);
+  if (t.pips != null) t.pips = Math.abs(t.pips);
   if (!['win', 'loss', 'draw', 'open'].includes(t.result)) {
     t.result = t.status === 'open' || t.pnl == null ? 'open' : t.pnl > 0 ? 'win' : t.pnl < 0 ? 'loss' : 'draw';
   }
@@ -782,6 +789,24 @@ function tradeNet(t) {
   return t.pnl;
 }
 const isClosed = t => tradeNet(t) != null;
+/* Pips are entered as a distance; the sign follows the result (a win moved the price your way). */
+function signedPips(t) { if (t.pips == null || t.result === 'open') return null; return t.result === 'win' ? t.pips : t.result === 'loss' ? -t.pips : 0; }
+const pipsFmt = v => v == null || !isFinite(v) ? '—' : (v > 0 ? '+' : v < 0 ? MINUS : '') + NFk.format(Math.abs(v)) + ' п.';
+const avgOf = a => a.length ? a.reduce((x, y) => x + y, 0) / a.length : null;
+function expirySeconds(e) {
+  const m = String(e || '').match(/([\d.,]+)\s*(сек|с|s|хв|хвил\S*|min|m|год|г|h)?/i);
+  if (!m) return null;
+  const v = parseFloat(m[1].replace(',', '.'));
+  if (!isFinite(v)) return null;
+  const u = (m[2] || 'хв').toLowerCase();
+  return Math.round(v * (u.startsWith('с') || u === 's' ? 1 : u.startsWith('г') || u === 'h' ? 3600 : 60));
+}
+function closeTime(time, expiry) {
+  const sec = expirySeconds(expiry);
+  if (!/^\d{2}:\d{2}/.test(time || '') || sec == null) return '';
+  const [h, m] = time.split(':').map(Number), total = h * 3600 + m * 60 + sec;
+  return `${pad(Math.floor(total / 3600) % 24)}:${pad(Math.floor(total / 60) % 60)}${total % 60 ? ':' + pad(total % 60) : ''}`;
+}
 const outcome = t => isClosed(t) ? t.result : null;
 const breakEven = payout => payout > 0 ? 1 / (1 + payout / 100) : null;
 const chronoKey = t => `${t.date} ${t.time || '99:99'}`;
@@ -1117,7 +1142,7 @@ function tile(label, value, sub, hint = '', c = '', subCls = '') {
 function thumbHTML(t) {
   return `<div class="thumb">${t.images.length ? `<img data-ref="${esc(t.images[0])}" alt="" loading="lazy">` : I.img}</div>`;
 }
-function stakeLine(t) { return [t.stake != null ? money(t.stake, false) : '', t.expiry].filter(Boolean).join(' · ') || '—'; }
+function stakeLine(t) { const p = signedPips(t); return [t.stake != null ? money(t.stake, false) : '', t.expiry, p != null ? pipsFmt(p) : ''].filter(Boolean).join(' · ') || '—'; }
 function tradeRowsHTML(list, compact = false) {
   if (!list.length) return '<p class="muted">Угод немає.</p>';
   const head = compact ? '' : '<div class="trow head" aria-hidden="true"><div></div><div>Дата</div><div>Актив</div><div>Стратегія</div><div class="c-r">Ставка</div><div class="c-res">Результат</div><div style="text-align:right">Дисципліна</div></div>';
@@ -1189,6 +1214,8 @@ function insightsHTML(list, st) {
     const b = hr.reduce((a, c) => c.st.net > a.st.net ? c : a), w = hr.reduce((a, c) => c.st.net < a.st.net ? c : a);
     if (b.st.net > 0 && w.st.net < 0) out.push(['info', '●', `Найкраща година входу — ${pad(b.key)}:00 (${esc(money(b.st.net))}), найгірша — ${pad(w.key)}:00 (${esc(money(w.st.net))}).`]);
   }
+  const lossP = closed.filter(t => t.result === 'loss' && t.pips != null), near = lossP.filter(t => t.pips <= 1);
+  if (near.length >= 3) out.push(['info', '●', `${near.length} з ${lossP.length} мінусів програні на 1 пункт або менше (${esc(money(stats(near).net))}). Варто перевірити момент входу.`]);
   if (st.cur && st.cur.type === 'loss' && st.cur.n >= 3) out.push(['bad', '!', `Зараз ${st.cur.n} мінуси поспіль. Зроби паузу, не відігравайся.`]);
   if (!out.length) out.push(['info', '●', 'Явних перекосів поки немає. Заповнюй стратегії, помилки й дотримання плану, щоб з’явились порівняння.']);
   return `<ul class="ins">${out.map(([k, ic, h]) => `<li class="${k}"><span class="ic" aria-hidden="true">${ic}</span><span>${h}</span></li>`).join('')}</ul>`;
@@ -1362,7 +1389,21 @@ function groupTable(rows, firstLabel) {
   return `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>${esc(firstLabel)}</th><th>Угод</th><th>Вінрейт</th><th>Net</th><th>Сер.</th></tr></thead><tbody>${rows.map(r => `
     <tr><td>${r.labelHTML || esc(r.key)}</td><td>${r.st.n}</td><td>${esc(pct(r.st.winRate))}</td><td class="${cls(r.st.net)}">${esc(money(r.st.net))}</td><td class="${cls(r.st.exp)}">${esc(money(r.st.exp))}</td></tr>`).join('')}</tbody></table></div>`;
 }
-function expiryOrder(a) { const m = String(a).match(/([\d.,]+)\s*(с|s|хв|m|год|г|h)?/i); if (!m) return 1e9; const v = parseFloat(m[1].replace(',', '.')); const u = (m[2] || 'хв').toLowerCase(); return v * (u === 'с' || u === 's' ? 1 : u.startsWith('г') || u === 'h' ? 3600 : 60); }
+function expiryOrder(a) { return expirySeconds(a) ?? 1e9; }
+function pipsPanel(closed) {
+  const withP = closed.filter(t => t.pips != null && t.result !== 'draw');
+  if (!withP.length) return `<section class="panel"><h3>Рух у пунктах</h3><p class="muted" style="margin:0">Вказуй у формі угоди, на скільки пунктів пройшла ціна, щоб бачити, на скільки ти виграєш і програєш.</p></section>`;
+  const wins = withP.filter(t => t.result === 'win'), losses = withP.filter(t => t.result === 'loss'), near = losses.filter(t => t.pips <= 1);
+  const bySym = groupStats(withP, t => t.symbol).map(r => ({ key: r.key, n: r.list.length, w: avgOf(r.list.filter(t => t.result === 'win').map(t => t.pips)), l: avgOf(r.list.filter(t => t.result === 'loss').map(t => -t.pips)) })).sort((a, b) => b.n - a.n);
+  return `<section class="panel"><h3>Рух у пунктах<span class="aside">від входу до експірації</span></h3>
+    <div class="cmp">
+      <div><span class="lbl">Плюсові угоди</span><span class="big num pos">${esc(pipsFmt(avgOf(wins.map(signedPips))))}</span><span class="sub">у середньому · ${nTrades(wins.length)}</span></div>
+      <div><span class="lbl">Мінусові угоди</span><span class="big num neg">${esc(pipsFmt(avgOf(losses.map(signedPips))))}</span><span class="sub">у середньому · ${nTrades(losses.length)}</span></div>
+      <div><span class="lbl">Мінус на 1 пункт і менше</span><span class="big num ${near.length ? 'neg' : ''}">${near.length}</span><span class="sub">${near.length ? `${esc(money(stats(near).net))} · ${esc(pct(near.length / losses.length))} усіх мінусів` : 'таких немає'}</span></div>
+    </div>
+    ${bySym.length > 1 ? `<div class="tbl-wrap" style="margin-top:12px"><table class="tbl"><thead><tr><th>Актив</th><th>Угод з рухом</th><th>Сер. рух у плюсі</th><th>Сер. рух у мінусі</th></tr></thead><tbody>${bySym.map(r => `<tr><td>${esc(r.key)}</td><td>${r.n}</td><td class="pos">${esc(pipsFmt(r.w))}</td><td class="neg">${esc(pipsFmt(r.l))}</td></tr>`).join('')}</tbody></table></div>` : ''}
+  </section>`;
+}
 function analyticsHTML(list) {
   const closed = list.filter(isClosed);
   if (!closed.length) return noResultsHTML();
@@ -1384,6 +1425,7 @@ function analyticsHTML(list) {
     <section class="panel"><h3>Дисципліна</h3><div class="cmp">${cmpCard('За планом', closed.filter(t => t.followedPlan === true))}${cmpCard('Не за планом', closed.filter(t => t.followedPlan === false))}${noPlan.length ? cmpCard('Не вказано', noPlan) : ''}</div></section>
     <section class="panel"><h3>Вгору vs Вниз</h3><div class="cmp">${cmpCard('↑ Вгору', closed.filter(t => t.direction === 'up'))}${cmpCard('↓ Вниз', closed.filter(t => t.direction === 'down'))}</div></section>
   </div>
+  ${pipsPanel(closed)}
   <section class="panel"><h3>Ціна помилок<span class="aside">чистий результат угод, де була помилка</span></h3>
     ${mk.length ? divBars(mk.map(r => ({ label: r.key, value: r.st.net, note: `× ${r.st.n}`, tip: `${nTrades(r.st.n)} · вінрейт ${pct(r.st.winRate)}` }))) : '<p class="muted">Помилок не відмічено. Відмічай їх у формі угоди, щоб бачити, скільки вони коштують.</p>'}
     <div class="cmp" style="margin-top:16px">${cmpCard('Угоди без помилок', closed.filter(t => !t.mistakes.length))}${cmpCard('Угоди з помилками', withM)}${chase.length ? cmpCard('Підняв ставку після мінуса', chase) : ''}</div>
@@ -1476,7 +1518,9 @@ function openTrade(id) {
   const net = tradeNet(t), open = t.result === 'open';
   const facts = [
     ['Ставка', t.stake != null ? money(t.stake, false) : '—'], ['Виплата', payoutFmt(t.payout)], ['Експірація', t.expiry || '—'],
-    ['Результат', RES[t.result]], ['Потрібний вінрейт', pct(breakEven(t.payout))], ['Час входу', t.time || '—'],
+    ['Час', t.time ? (closeTime(t.time, t.expiry) ? `${t.time} → ${closeTime(t.time, t.expiry)}` : t.time) : '—'],
+    ['Рух', signedPips(t) != null ? pipsFmt(signedPips(t)) + (signedPips(t) > 0 ? ' у мій бік' : signedPips(t) < 0 ? ' проти' : '') : '—'],
+    ['Потрібний вінрейт', pct(breakEven(t.payout))],
   ];
   const notes = [['Аналіз', t.analysis, ''], ['Що пішло не за планом', t.offPlan, 'warn'], ['Урок', t.lesson || '', '']].filter(n => n[1].trim());
   const el = modal(`
@@ -1568,8 +1612,9 @@ function openTradeForm(src, { files = [], dup = false } = {}) {
   const c = cfg();
   const last = lastTrade();
   const t = src ? clone(src) : { date: todayStr(), time: nowTime(), direction: '', result: '', strategy: last ? last.strategy : '', expiry: last ? last.expiry : '', stake: last ? last.stake : c.defaultStake, payout: last ? last.payout : null, mistakes: [], emotions: [], images: [], followedPlan: null };
-  if (dup) { delete t.id; t.images = []; t.date = todayStr(); t.time = nowTime(); t.result = ''; t.offPlan = ''; t.mistakes = []; t.emotions = []; t.followedPlan = null; delete t.demo; delete t.lesson; }
+  if (dup) { delete t.id; t.images = []; t.date = todayStr(); t.time = nowTime(); t.result = ''; t.pips = null; t.offPlan = ''; t.mistakes = []; t.emotions = []; t.followedPlan = null; delete t.demo; delete t.lesson; }
   const draft = { images: (isNew ? [] : t.images).map(ref => ({ ref })), orig: isNew ? [] : [...t.images], dirty: false, busy: 0 };
+  const recentSyms = uniq(sortChrono(D().trades).reverse().map(x => x.symbol).filter(Boolean)).slice(0, 6);
   const canClip = !!(navigator.clipboard && navigator.clipboard.read) && !window.claude;
   const el = modal(`
   <form id="tradeForm" novalidate>
@@ -1589,17 +1634,18 @@ function openTradeForm(src, { files = [], dup = false } = {}) {
         <div class="fgrid">
           ${fld('tf-date', 'Дата', t.date, 'type="date" required')}
           ${fld('tf-time', 'Час входу', t.time, 'type="time"')}
-          ${fld('tf-symbol', 'Актив', t.symbol, 'list="dl-sym" autocomplete="off" placeholder="EUR/USD OTC" required class="mono" autocapitalize="characters"', 'span2')}
+          <div class="fld span2"><label for="tf-symbol">Валютна пара</label><input id="tf-symbol" value="${esc(t.symbol || '')}" list="dl-sym" autocomplete="off" placeholder="EUR/USD" required class="mono" autocapitalize="characters">${recentSyms.length ? `<div class="chips mini" aria-label="Останні пари">${recentSyms.map(x => `<button type="button" class="chip" data-sym="${esc(x)}">${esc(x)}</button>`).join('')}</div>` : ''}</div>
           <div class="fld span2"><span>Напрям</span>${seg('tf-dir', [['up', '↑ Вгору'], ['down', '↓ Вниз']], t.direction, 'big')}</div>
           ${fld('tf-strategy', 'Стратегія', t.strategy, 'list="dl-strat" autocomplete="off" placeholder="Обери або введи нову"', 'span2')}
           ${fld('tf-stake', `Ставка, ${esc(c.currency)}`, numStr(t.stake), 'inputmode="decimal" autocomplete="off" class="mono" placeholder="10"')}
           ${fld('tf-payout', 'Виплата, %', numStr(t.payout), 'inputmode="decimal" autocomplete="off" class="mono" placeholder="85"')}
           <div class="fld span2"><span>Експірація</span>${chipsHTML('tf-exp', c.expiries, t.expiry ? [t.expiry] : [], { single: true })}</div>
-          <div class="fld full"><span>Результат</span>${seg('tf-res', [['win', 'Плюс'], ['loss', 'Мінус'], ['draw', 'Повернення'], ['open', 'Ще йде']], t.result, 'big')}</div>
+          <div class="fld span3"><span>Результат</span>${seg('tf-res', [['win', 'Плюс'], ['loss', 'Мінус'], ['draw', 'Повернення'], ['open', 'Ще йде']], t.result, 'big')}</div>
+          ${fld('tf-pips', 'Рух, пунктів', numStr(t.pips), 'inputmode="decimal" autocomplete="off" class="mono" placeholder="напр. 2,5" title="На скільки пунктів ціна пройшла від входу до експірації. Знак береться з результату: плюс — у твій бік, мінус — проти."')}
         </div>
         <div class="calc" id="tf-calc"></div>
         <div class="srules" id="tf-srules" hidden></div>
-        <datalist id="dl-sym">${symbolsList().map(s => `<option value="${esc(s)}"></option>`).join('')}</datalist>
+        <datalist id="dl-sym">${uniq([...symbolsList(), ...MAJORS, ...MAJORS.map(x => x + ' OTC')]).map(s => `<option value="${esc(s)}"></option>`).join('')}</datalist>
         <datalist id="dl-strat">${strategyNames().map(s => `<option value="${esc(s)}"></option>`).join('')}</datalist>
       </section>
       <section class="fsec">
@@ -1641,6 +1687,8 @@ function openTradeForm(src, { files = [], dup = false } = {}) {
     if (msg.dataset.pending) { delete msg.dataset.pending; msg.textContent = ''; }
   });
   form.addEventListener('click', e => {
+    const rs = e.target.closest('[data-sym]');
+    if (rs) { const inp = $('#tf-symbol', el); inp.value = rs.dataset.sym; inp.dispatchEvent(new Event('change')); draft.dirty = true; return; }
     const sb = e.target.closest('.seg button');
     if (sb) { $$('button', sb.parentElement).forEach(b => b.setAttribute('aria-pressed', String(b === sb))); draft.dirty = true; updCalc(); return; }
     const ch = e.target.closest('.chip');
@@ -1649,6 +1697,7 @@ function openTradeForm(src, { files = [], dup = false } = {}) {
       if (ch.parentElement.classList.contains('single')) $$('.chip', ch.parentElement).forEach(b => b.setAttribute('aria-pressed', 'false'));
       ch.setAttribute('aria-pressed', String(on));
       draft.dirty = true;
+      updCalc();
     }
   });
   form.addEventListener('keydown', e => {
@@ -1687,7 +1736,9 @@ function openTradeForm(src, { files = [], dup = false } = {}) {
   function updCalc() {
     const stake = num(g('tf-stake')), payout = num(g('tf-payout')), res = segVal(el, 'tf-res');
     const net = tradeNet({ result: res || 'open', stake, payout });
+    const exChip = $('#tf-exp .chip[aria-pressed="true"]', el), ct = closeTime(g('tf-time'), exChip ? exChip.dataset.v : '');
     const parts = [
+      ct ? `Вхід ${esc(g('tf-time'))} → закриття <b>${esc(ct)}</b>` : '',
       stake != null && payout != null ? `Виграш дасть <b class="pos">${esc(money(round2(stake * payout / 100)))}</b>, програш — <b class="neg">${esc(money(-stake))}</b>` : '',
       res && res !== 'open' && net != null ? `Результат <b class="${cls(net)}">${esc(money(net))}</b>` : '',
       payout != null ? `Потрібний вінрейт при ${esc(payoutFmt(payout))}: <b>${esc(pct(breakEven(payout)))}</b>` : '',
@@ -1754,6 +1805,7 @@ function openTradeForm(src, { files = [], dup = false } = {}) {
     if (g('tf-stake').trim() && stake == null) errs.push('ставка має бути числом');
     else if (stake == null && result && result !== 'open') errs.push('вкажи ставку');
     else if (stake != null && stake <= 0) errs.push('ставка має бути більше нуля');
+    if (g('tf-pips').trim() && num(g('tf-pips')) == null) errs.push('рух у пунктах має бути числом');
     if (g('tf-payout').trim() && payout == null) errs.push('виплата має бути числом');
     else if (payout == null && result === 'win') errs.push('вкажи виплату %');
     if (errs.length) { msg.className = 'msg err'; msg.textContent = 'Перевір: ' + errs.join(', ') + '.'; return; }
@@ -1766,6 +1818,7 @@ function openTradeForm(src, { files = [], dup = false } = {}) {
       expiry: pressed('tf-exp')[0] || '',
       strategy: g('tf-strategy').trim(),
       analysis: g('tf-analysis').trim(), offPlan: g('tf-offplan').trim(),
+      pips: result === 'draw' ? null : g('tf-pips'),
       followedPlan: plan === 'yes' ? true : plan === 'no' ? false : null,
       mistakes: pressed('tf-mistakes'), emotions: pressed('tf-emotions'),
       createdAt: isNew ? Date.now() : t.createdAt, updatedAt: Date.now(),
@@ -1968,6 +2021,7 @@ function exportCSV(trades) {
   const cols = [['Дата', t => t.date], ['Час', t => t.time], ['Актив', t => t.symbol], ['Напрям', t => DIR[t.direction][1]], ['Стратегія', t => t.strategy], ['Експірація', t => t.expiry],
     ['Ставка', t => t.stake], ['Виплата %', t => t.payout], ['Результат', t => RES[t.result]], ['Прибуток', t => tradeNet(t)],
     ['За планом', t => t.followedPlan == null ? '' : t.followedPlan ? 'так' : 'ні'], ['Помилки', t => t.mistakes.join(', ')], ['Емоції', t => t.emotions.join(', ')],
+    ['Закриття', t => closeTime(t.time, t.expiry)], ['Рух, пунктів', t => signedPips(t)],
     ['Аналіз', t => t.analysis], ['Не за планом', t => t.offPlan], ['Скрінів', t => t.images.length]];
   const cell = v => { if (v == null) return ''; let s = typeof v === 'number' ? String(v).replace('.', ',') : String(v); if (/[";\n\r]/.test(s)) s = '"' + s.replace(/"/g, '""') + '"'; return s; };
   const rows = [cols.map(c => c[0]).join(';'), ...sortChrono(trades).map(t => cols.map(c => cell(c[1](t))).join(';'))];
@@ -2063,7 +2117,7 @@ function makeDemo() {
   ];
   const prof = { 'Відбій від рівня': 0.66, 'Пробій рівня': 0.62, 'RSI + Bollinger': 0.59, 'Новинний імпульс': 0.47 };
   const exps = { 'Відбій від рівня': ['1 хв', '2 хв', '3 хв'], 'Пробій рівня': ['2 хв', '3 хв', '5 хв'], 'RSI + Bollinger': ['1 хв', '1 хв', '30 с'], 'Новинний імпульс': ['1 хв', '5 хв'] };
-  const assets = ['EUR/USD', 'GBP/USD', 'EUR/USD OTC', 'AUD/CAD OTC', 'USD/JPY', 'BTC/USD'];
+  const assets = ['EUR/USD', 'GBP/USD', 'EUR/USD OTC', 'AUD/CAD OTC', 'USD/JPY', 'EUR/JPY'];
   const why = {
     'Відбій від рівня': ['Третій дотик рівня, пін-бар на M1.', 'Сильний рівень підтримки, свічка поглинання.'],
     'Пробій рівня': ['Закриття свічки за рівнем з великим тілом.', 'Пробій максимуму сесії з імпульсом.'],
@@ -2083,7 +2137,7 @@ function makeDemo() {
     let prev = null, hour = 9 + Math.floor(R() * 6), min = Math.floor(R() * 50);
     for (let j = 0; j < cnt; j++) {
       const s = pick(strategies);
-      const sym = weekend ? pick(['EUR/USD OTC', 'AUD/CAD OTC', 'BTC/USD']) : pick(assets);
+      const sym = weekend ? pick(['EUR/USD OTC', 'AUD/CAD OTC', 'GBP/USD OTC']) : pick(assets);
       const chasing = prev && prev.result === 'loss' && R() < 0.3;
       const followed = !chasing && R() > 0.18;
       const r = R(), p = chasing ? prof[s.name] - 0.3 : followed ? prof[s.name] : prof[s.name] - 0.25;
@@ -2106,6 +2160,8 @@ function makeDemo() {
       prev = t;
     }
   }
+  const P = mulberry32(DEMO_SEED + 7);
+  for (const t of trades) t.pips = t.result === 'draw' ? null : Math.round((t.result === 'win' ? 0.4 + P() * 5 : P() < 0.3 ? 0.1 + P() * 0.9 : 1 + P() * 4.5) * 10) / 10;
   const recent = sortChrono(trades).reverse();
   recent.slice(0, 8).forEach((t, i) => { t.images = [demoShot(i + 11, t.direction, t.result, t.symbol, t.expiry)]; });
   return { trades, settings: normSettings({ ...defaultSettings(), strategies, startBalance: 1000, defaultStake: 10 }) };
