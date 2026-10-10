@@ -20,6 +20,8 @@
 
 ## Запуск на Cloudflare
 
+**Стан:** Worker `edge-journal` підключено до репозиторію (Workers Builds): Production branch — `workproces`, Root directory — `/trading-journal`, Deploy command — `npx wrangler deploy`. Кожен push у `workproces` оновлює сайт.
+
 Код: `wrangler.toml`, `src/worker.js` (API), `public/` (сторінка). Ключі й секрети не потрібні: база D1 `edge-journal` і бакет R2 `edge-journal-shots` створюються автоматично при першому деплої, таблиці — при першому запиті, котирування беруться з Dukascopy без ключа, пароль створюється на самому сайті.
 
 1. **dash.cloudflare.com → Workers & Pages → Create → Import a repository**, підключи GitHub і обери `svistsvat1-debug/work-cloud-`.
