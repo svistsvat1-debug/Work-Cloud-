@@ -1,0 +1,632 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2357d9">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Voice Studio">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232357d9'/%3E%3Cpath d='M9 13v6M13 10v12M17 7v18M21 11v10M25 14v4' stroke='white' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
+<title>Voice Studio</title>
+<style>
+  /* Phone first: one column with a fixed action bar; text and settings side by side on wide screens */
+  :root {
+    --bg: #f4f5f7; --panel: #ffffff; --ink: #15171c; --muted: #636975; --line: #e1e4ea;
+    --accent: #2357d9; --accent-ink: #ffffff; --soft: #edf2fd; --ok: #1a7f37; --err: #c62828;
+    --radius: 14px; color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0e1013; --panel: #171a1f; --ink: #eceef2; --muted: #9aa1ad; --line: #2a2e36;
+      --accent: #6e9bff; --accent-ink: #0b0d10; --soft: #1a2232; --ok: #3fb950; --err: #ff6b6b; color-scheme: dark;
+    }
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 20px 16px 48px; }
+  header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  header .title { flex: 1; min-width: 0; }
+  h1 { font-size: 22px; margin: 0; letter-spacing: -.01em; }
+  header p { margin: 2px 0 0; color: var(--muted); font-size: 14px; }
+  .grid { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 16px; align-items: start; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; min-width: 0; }
+  .narrow { max-width: 420px; margin: 40px auto; display: grid; gap: 12px; }
+  textarea, input[type=password] { width: 100%; border: 1px solid var(--line); border-radius: 10px; background: transparent; color: var(--ink);
+    padding: 12px; font: inherit; font-size: 16px; }
+  textarea { resize: vertical; line-height: 1.6; }
+  #text { min-height: 360px; }
+  textarea:focus, select:focus, input:focus-visible, button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .meta { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 8px; color: var(--muted); font-size: 13px; flex-wrap: wrap; }
+  label.field { display: block; font-size: 13px; color: var(--muted); margin: 0 0 6px; }
+  select { width: 100%; min-width: 0; padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); color: var(--ink); font: inherit; font-size: 16px; }
+  .row { display: flex; gap: 8px; align-items: center; }
+  .row > select { flex: 1; }
+  input[type=range] { width: 100%; accent-color: var(--accent); }
+  .range-head { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; color: var(--muted); margin: 14px 0 4px; }
+  .range-head b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+  button, .btn { font: inherit; cursor: pointer; border-radius: 10px; border: 1px solid var(--line); background: var(--panel); color: var(--ink);
+    padding: 9px 12px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+  button:hover, .btn:hover { border-color: var(--muted); }
+  button:disabled { opacity: .5; cursor: default; }
+  .primary { width: 100%; padding: 13px; background: var(--accent); color: var(--accent-ink); border: 0; font-weight: 600; font-size: 16px; }
+  .link { border: 0; background: none; color: var(--muted); padding: 0; text-decoration: underline; }
+  .hint { font-size: 12px; color: var(--muted); margin-top: 6px; }
+  details { margin-top: 14px; border-top: 1px solid var(--line); padding-top: 12px; }
+  summary { cursor: pointer; font-size: 14px; }
+  #pron { min-height: 110px; font: 13px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace; margin-top: 8px; }
+  .actions { margin-top: 16px; display: grid; gap: 10px; }
+  .bar { height: 8px; background: var(--line); border-radius: 99px; overflow: hidden; }
+  .bar > i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .3s; }
+  .msg { font-size: 13px; }
+  .msg:empty { display: none; }
+  .ok { color: var(--ok); } .err { color: var(--err); }
+  .result { margin-top: 16px; display: grid; gap: 10px; }
+  audio { width: 100%; }
+  .files { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .files .wide { grid-column: 1 / -1; }
+  .notice { background: var(--soft); border-radius: 10px; padding: 12px; font-size: 14px; }
+  .notice ol { margin: 6px 0 0; padding-left: 20px; }
+  footer { margin-top: 24px; font-size: 12px; color: var(--muted); display: grid; gap: 6px; max-width: 70ch; }
+  @media (max-width: 860px) {
+    .grid { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+    .wrap { padding: 14px 16px 150px; }
+    .card { padding: 14px; }
+    #text { min-height: 34vh; }
+    button, select, .btn { min-height: 44px; }
+    .link { min-height: 0; }
+    .actions { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; margin: 0; background: var(--panel);
+      border-top: 1px solid var(--line); padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px)); }
+  }
+  @media (prefers-reduced-motion: reduce) { .bar > i { transition: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="title">
+      <h1>Voice Studio</h1>
+      <p>Англійський текст → природний чоловічий голос (Kokoro). Будь-якої довжини.</p>
+    </div>
+    <button class="link" id="logout" type="button" hidden>Вийти</button>
+  </header>
+
+  <!-- Setup and sign-in -->
+  <section class="card narrow" id="setupBox" hidden>
+    <b>Сайт ще не налаштовано</b>
+    <div class="notice">У Cloudflare (Worker <code>voice-studio</code> → Settings → Variables and Secrets) бракує:
+      <ol id="missing"></ol>
+    </div>
+    <button type="button" id="recheck">Перевірити ще раз</button>
+  </section>
+
+  <form class="card narrow" id="loginBox" hidden>
+    <b>Вхід</b>
+    <label class="field" for="password">Пароль сайту (секрет SITE_PASSWORD)</label>
+    <input type="password" id="password" autocomplete="current-password" required>
+    <button class="primary" type="submit">Увійти</button>
+    <div class="msg err" id="loginErr"></div>
+  </form>
+
+  <!-- Studio -->
+  <div class="grid" id="studio" hidden>
+    <section class="card">
+      <textarea id="text" placeholder="Вставте англійський текст сценарію.&#10;&#10;Порожній рядок між абзацами дає довшу паузу."></textarea>
+      <div class="meta">
+        <span id="stats">0 слів</span>
+        <button class="link" id="clear" type="button">Очистити</button>
+      </div>
+    </section>
+
+    <aside class="card">
+      <label class="field" for="voice">Голос</label>
+      <div class="row">
+        <select id="voice"></select>
+        <button id="preview" type="button" aria-label="Прослухати голос">▶</button>
+      </div>
+      <div class="hint">★ — найкраща якість за оцінкою авторів моделі.</div>
+
+      <div class="range-head"><span>Швидкість</span><b id="speedVal"></b></div>
+      <input type="range" id="speed" min="0.75" max="1.3" step="0.01" value="1">
+
+      <details>
+        <summary>Паузи</summary>
+        <div class="range-head"><span>Між реченнями</span><b id="spVal"></b></div>
+        <input type="range" id="sp" min="0.1" max="1" step="0.05" value="0.35">
+        <div class="range-head"><span>Між абзацами</span><b id="ppVal"></b></div>
+        <input type="range" id="pp" min="0.3" max="2" step="0.1" value="0.8">
+      </details>
+
+      <details>
+        <summary>Словник вимови</summary>
+        <div class="hint">Один рядок: <code>слово = як читати</code>, наприклад <code>SaaS = sass</code>.</div>
+        <textarea id="pron" spellcheck="false">SaaS = sass</textarea>
+      </details>
+
+      <details>
+        <summary>Перевірка з'єднання</summary>
+        <div class="hint">Перевіряє ключ DeepInfra і баланс: озвучує коротку тестову фразу.</div>
+        <button type="button" id="check" style="margin-top:8px">Перевірити</button>
+        <div class="msg" id="checkMsg"></div>
+      </details>
+
+      <div class="actions">
+        <button class="primary" id="go" type="button">Озвучити</button>
+        <div id="progress" hidden>
+          <div class="bar"><i id="barFill"></i></div>
+          <div class="meta"><span id="progText">Готую...</span><button class="link" id="cancel" type="button">Скасувати</button></div>
+        </div>
+        <div class="msg err" id="err"></div>
+      </div>
+
+      <div class="result" id="result" hidden>
+        <div class="msg ok" id="resultText"></div>
+        <audio id="player" controls preload="metadata"></audio>
+        <div class="files">
+          <a class="btn" id="dlWav" download>⬇ WAV</a>
+          <a class="btn" id="dlSrt" download>⬇ Субтитри</a>
+          <button class="wide" type="button" id="share" hidden>Поділитися файлом…</button>
+        </div>
+        <div class="hint">Файл зберігається лише до наступної озвучки, тож скачайте його одразу.</div>
+      </div>
+    </aside>
+  </div>
+
+  <footer id="footer" hidden>
+    <span>Голос Kokoro-82M (Apache 2.0): комерційне використання й монетизація дозволені. Озвучка рахується на сервері DeepInfra, оплата за символи з вашого балансу там.</span>
+    <span>Під час озвучки довгого тексту не закривайте сторінку.</span>
+  </footer>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const store = {
+  get(k, d) { try { const v = localStorage.getItem("vs." + k); return v === null ? d : JSON.parse(v); } catch { return d; } },
+  set(k, v) { try { localStorage.setItem("vs." + k, JSON.stringify(v)); } catch {} },
+};
+
+const VOICES = [
+  ["am_michael", "Michael", "US", "середній", true], ["am_fenrir", "Fenrir", "US", "вищий", true],
+  ["am_puck", "Puck", "US", "середній", true], ["am_onyx", "Onyx", "US", "низький"], ["am_adam", "Adam", "US", "середній"],
+  ["am_echo", "Echo", "US", "середній"], ["am_liam", "Liam", "US", "вищий"], ["am_eric", "Eric", "US", "вищий"],
+  ["bm_george", "George", "UK", "вищий", true], ["bm_fable", "Fable", "UK", "середній", true],
+  ["bm_lewis", "Lewis", "UK", "низький"], ["bm_daniel", "Daniel", "UK", "середній"],
+];
+const PREVIEW = "Hey there. This is how I sound. Paste your script, and I'll read it for you.";
+const SR = 24000;
+const PARALLEL = 4;          // requests at a time
+const PRICE_PER_M = 0.62;    // USD per million characters on DeepInfra, for the estimate only
+const LEAD_IN = 0.25, TAIL = 0.5;
+
+// ---------------------------------------------------------------- text
+
+const ABBR = new Set(["mr", "mrs", "ms", "dr", "st", "jr", "sr", "prof", "inc", "ltd", "co", "corp", "no", "vol",
+  "fig", "mt", "dept", "approx", "u.s", "u.k", "a.m", "p.m", "e.g", "i.e", "vs"]);
+const SCALES = { k: "thousand", thousand: "thousand", m: "million", mn: "million", million: "million",
+  b: "billion", bn: "billion", billion: "billion", t: "trillion", trillion: "trillion" };
+const CURRENCIES = { "$": ["dollar", "dollars", "cent", "cents"], "€": ["euro", "euros", "cent", "cents"], "£": ["pound", "pounds", "penny", "pence"] };
+const MONEY_RE = /([$€£])\s?(\d[\d,]*)(?:\.(\d+))?(?:\s?(thousand|million|billion|trillion)\b|([kmbt]n?)\b)?/gi;
+const YEAR_RE = /\b(in|since|by|from|until|till|of|year|before|after|during|around|early|late|mid)\s+(1[1-9]\d\d|20\d\d)\b(?!\s*%|[.,]\d)/gi;
+const RULES = [
+  [/\bvs\.?(?=\s)/gi, "versus"], [/\be\.g\.,?/gi, "for example,"], [/\bi\.e\.,?/gi, "that is,"],
+  [/\bapprox\./gi, "approximately"], [/\b24\/7\b/g, "twenty-four seven"], [/#(\d+)/g, "number $1"],
+  [/\b(\d+)x\b/g, "$1 times"], [/\s&\s/g, " and "], [/\bw\/(?=\s)/g, "with"],
+];
+const END = /[.!?…]["”’»)\]]*$/;
+
+function cleanMarkdown(text) {
+  return text.replace(/\r\n?/g, "\n").split("\n").map((line) => {
+    if (/^\s*[-—_=*~]{3,}\s*$/.test(line)) return "";
+    return line.replace(/^\s{0,3}(#{1,6}\s+|[-*•]\s+|>\s*)/, "").replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+      .replace(/\*\*|__|[*`]/g, "").split(/\s+/).filter(Boolean).join(" ");
+  }).join("\n");
+}
+const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+function applyPronunciations(text, pron) {
+  for (const [word, say] of Object.entries(pron)) {
+    const w = word.trim();
+    if (w) text = text.replace(new RegExp(`(?<![\\p{L}\\p{N}_])${escapeRe(w)}(?![\\p{L}\\p{N}_])`, "gu"), say);
+  }
+  return text;
+}
+function money(_, sym, whole, frac, wordScale, letterScale) {
+  const scale = wordScale || letterScale, [one, many, cent, cents] = CURRENCIES[sym];
+  whole = whole.replace(/,/g, "");
+  if (scale) return `${whole}${frac ? "." + frac : ""} ${SCALES[scale.toLowerCase()]} ${many}`;
+  if (frac && frac.length === 2 && +frac > 0) {
+    const c = +frac, cw = `${c} ${c === 1 ? cent : cents}`;
+    return +whole === 0 ? cw : `${whole} ${whole === "1" ? one : many} and ${cw}`;
+  }
+  const num = whole + (frac && +frac > 0 ? "." + frac : "");
+  return `${num} ${num === "1" ? one : many}`;
+}
+function year(_, word, y) {
+  y = +y;
+  const hi = Math.floor(y / 100), lo = y % 100;
+  const words = y >= 2000 && y <= 2009 ? String(y) : lo === 0 ? `${hi} hundred` : lo < 10 ? `${hi} oh ${lo}` : `${hi} ${lo}`;
+  return `${word} ${words}`;
+}
+function normalize(text) {
+  text = text.replace(MONEY_RE, money).replace(YEAR_RE, year);
+  for (const [re, repl] of RULES) text = text.replace(re, repl);
+  return text;
+}
+function splitSentences(par) {
+  const out = [];
+  let start = 0;
+  for (const m of par.matchAll(/[.!?…]+["”’»)\]]*(?=\s|$)/g)) {
+    const words = par.slice(start, m.index).split(/\s+/).filter(Boolean);
+    const last = (words[words.length - 1] || "").toLowerCase();
+    const next = par.slice(m.index + m[0].length).trimStart().charAt(0);
+    const isDot = m[0].replace(/["”’»)\]]+$/, "") === ".";
+    const lower = next && next === next.toLowerCase() && next !== next.toUpperCase();
+    if (isDot && (ABBR.has(last) || (last.length === 1 && /\p{L}/u.test(last)) || lower)) continue;
+    out.push(par.slice(start, m.index + m[0].length).trim());
+    start = m.index + m[0].length;
+  }
+  out.push(par.slice(start).trim());
+  return out.filter(Boolean);
+}
+// Text -> [{shown, spoken, gap}]: shown goes to subtitles, spoken to the voice, gap is the pause after it
+function buildScript(text, pron, sentencePause, paragraphPause) {
+  const paragraphs = [];
+  for (const block of cleanMarkdown(text).split(/\n\s*\n/)) {
+    const merged = [];
+    for (const ln of block.split("\n").filter((l) => l.trim())) {
+      const first = ln.charAt(0), wrapped = first && first === first.toLowerCase() && first !== first.toUpperCase();
+      if (merged.length && !END.test(merged[merged.length - 1]) && wrapped) merged[merged.length - 1] += " " + ln;
+      else merged.push(ln);
+    }
+    const grouped = []; // very short sentences ride with the next one
+    for (const ln of merged) for (const s of splitSentences(ln)) {
+      if (grouped.length && grouped[grouped.length - 1].split(/\s+/).length < 3) grouped[grouped.length - 1] += " " + s;
+      else grouped.push(s);
+    }
+    const items = [];
+    for (const shown of grouped) {
+      let spoken = normalize(applyPronunciations(shown, pron));
+      if (!/[\p{L}\p{N}]/u.test(spoken)) continue;
+      if (!END.test(spoken)) spoken += ".";
+      // A run-on "sentence" without punctuation is cut at commas or spaces to keep requests short
+      for (const piece of chunk(spoken, 1200)) items.push({ shown: piece === spoken ? shown : piece, spoken: piece, gap: sentencePause });
+    }
+    if (items.length) { items[items.length - 1].gap = paragraphPause; paragraphs.push(...items); }
+  }
+  if (paragraphs.length) paragraphs[paragraphs.length - 1].gap = 0;
+  return paragraphs;
+}
+function chunk(s, max) {
+  const out = [];
+  while (s.length > max) {
+    let cut = s.lastIndexOf(", ", max);
+    if (cut < max / 2) cut = s.lastIndexOf(" ", max);
+    if (cut < 1) cut = max;
+    out.push(s.slice(0, cut + 1).trim());
+    s = s.slice(cut + 1).trim();
+  }
+  if (s) out.push(s);
+  return out;
+}
+function foreignWords(text) {
+  const found = [];
+  for (const w of text.match(/[\p{L}\p{N}_]+/gu) || []) {
+    if ([...w].some((ch) => /\p{L}/u.test(ch) && !/\p{Script=Latin}/u.test(ch)) && !found.includes(w)) found.push(w);
+    if (found.length === 3) break;
+  }
+  return found;
+}
+
+// ---------------------------------------------------------------- audio + subtitles
+
+function trimSilence(audio, thresholdDb = -45) {
+  const frame = SR / 100, n = Math.floor(audio.length / frame);
+  if (n < 3) return audio;
+  const rms = new Float32Array(n);
+  let max = 0;
+  for (let i = 0; i < n; i++) {
+    let sum = 0;
+    for (let j = i * frame; j < (i + 1) * frame; j++) sum += audio[j] * audio[j];
+    rms[i] = Math.sqrt(sum / frame); if (rms[i] > max) max = rms[i];
+  }
+  const limit = max * 10 ** (thresholdDb / 20);
+  let first = 0, last = n - 1;
+  while (first < n && rms[first] <= limit) first++;
+  while (last > first && rms[last] <= limit) last--;
+  if (first >= n) return audio;
+  return audio.subarray(Math.max(0, first - 2) * frame, Math.min(n, last + 3) * frame);
+}
+function toInt16(f) {
+  const out = new Int16Array(f.length);
+  for (let i = 0; i < f.length; i++) out[i] = Math.max(-1, Math.min(1, f[i])) * 32767;
+  return out;
+}
+const silenceCache = new Map();
+function silence(sec) {
+  const n = Math.round(sec * SR);
+  if (!silenceCache.has(n)) silenceCache.set(n, new Blob([new Int16Array(n)]));
+  return silenceCache.get(n);
+}
+function wavHeader(dataBytes) {
+  const dv = new DataView(new ArrayBuffer(44)), str = (o, s) => [...s].forEach((c, i) => dv.setUint8(o + i, c.charCodeAt(0)));
+  str(0, "RIFF"); dv.setUint32(4, 36 + dataBytes, true); str(8, "WAVE"); str(12, "fmt "); dv.setUint32(16, 16, true);
+  dv.setUint16(20, 1, true); dv.setUint16(22, 1, true); dv.setUint32(24, SR, true); dv.setUint32(28, SR * 2, true);
+  dv.setUint16(32, 2, true); dv.setUint16(34, 16, true); str(36, "data"); dv.setUint32(40, dataBytes, true);
+  return dv.buffer;
+}
+function srtTime(t) {
+  let ms = Math.round(t * 1000);
+  const h = Math.floor(ms / 3600000); ms -= h * 3600000;
+  const m = Math.floor(ms / 60000); ms -= m * 60000;
+  const s = Math.floor(ms / 1000); ms -= s * 1000;
+  const p = (n, w = 2) => String(n).padStart(w, "0");
+  return `${p(h)}:${p(m)}:${p(s)},${p(ms, 3)}`;
+}
+function wrapTwoLines(text, width = 42) {
+  if (text.length <= width || !text.includes(" ")) return text;
+  const mid = text.length / 2;
+  let cut = -1;
+  for (let i = 0; i < text.length; i++) if (text[i] === " " && (cut < 0 || Math.abs(i - mid) < Math.abs(cut - mid))) cut = i;
+  return text.slice(0, cut) + "\n" + text.slice(cut + 1);
+}
+function srtCues(sentence, start, end) {
+  const words = sentence.split(/\s+/), n = Math.max(1, Math.ceil(sentence.length / 84));
+  const ends = [];
+  let pos = 0;
+  for (const w of words) { pos += w.length + 1; ends.push(pos); }
+  const parts = [];
+  let first = 0;
+  for (let k = 1; k < n && first < words.length - 1; k++) {
+    const target = (pos * k) / n;
+    let cut = first, best = Infinity;
+    for (let i = first; i < words.length - 1; i++) {
+      const score = Math.abs(ends[i] - target) - (",;:—".includes(words[i].slice(-1)) ? 12 : 0);
+      if (score < best) { best = score; cut = i; }
+    }
+    parts.push(words.slice(first, cut + 1).join(" ")); first = cut + 1;
+  }
+  parts.push(words.slice(first).join(" "));
+  const total = parts.reduce((s, p) => s + p.length, 0) || 1;
+  let t = start;
+  return parts.filter(Boolean).map((p) => { const dt = ((end - start) * p.length) / total; const c = [t, t + dt, wrapTwoLines(p)]; t += dt; return c; });
+}
+
+// DeepInfra may answer with audio bytes or with JSON carrying base64 audio; both are decoded to 24 kHz samples
+async function samplesFrom(res) {
+  let buf;
+  if ((res.headers.get("content-type") || "").includes("json")) {
+    const data = await res.json();
+    const b64 = String(data.audio || data.output || "").replace(/^data:[^,]*,/, "");
+    if (!b64) throw new Error("Сервіс озвучки не повернув аудіо");
+    const bin = atob(b64), bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    buf = bytes.buffer;
+  } else buf = await res.arrayBuffer();
+  const Ctx = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+  const ctx = new Ctx(1, 1, SR);
+  const audio = await new Promise((resolve, reject) => {
+    const p = ctx.decodeAudioData(buf, resolve, reject);
+    if (p && p.then) p.then(resolve, reject);
+  });
+  return audio.getChannelData(0);
+}
+
+// ---------------------------------------------------------------- server
+
+class AuthError extends Error {}
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+async function api(path, body) {
+  const res = await fetch(path, { method: body ? "POST" : "GET", headers: body ? { "content-type": "application/json" } : {},
+    body: body ? JSON.stringify(body) : undefined, credentials: "same-origin" });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw Object.assign(new Error(data.error || "Помилка " + res.status), { status: res.status });
+  return data;
+}
+
+// One sentence -> Int16 samples, retrying what the server marks as temporary
+async function speak(text, voice, speed, signal) {
+  for (let attempt = 0; ; attempt++) {
+    let res;
+    try {
+      res = await fetch("/api/tts", { method: "POST", headers: { "content-type": "application/json" }, credentials: "same-origin",
+        body: JSON.stringify({ text, voice, speed }), signal });
+    } catch (e) {
+      if (signal.aborted) throw e;
+      if (attempt < 4) { await sleep(1000 * 2 ** attempt); continue; }
+      throw new Error("Немає з'єднання з сервером. Перевірте інтернет.");
+    }
+    if (res.ok) return toInt16(trimSilence(await samplesFrom(res)));
+    const data = await res.json().catch(() => ({}));
+    if (res.status === 401) throw new AuthError(data.error || "Потрібен вхід");
+    if ((data.retry || res.status >= 500) && attempt < 5) { await sleep(1000 * 2 ** attempt); continue; }
+    throw new Error(data.error || "Помилка " + res.status);
+  }
+}
+
+// ---------------------------------------------------------------- UI
+
+function fillVoices() {
+  const sel = $("voice");
+  for (const [group, label] of [["US", "Американський акцент"], ["UK", "Британський акцент"]]) {
+    const og = document.createElement("optgroup");
+    og.label = label;
+    for (const [id, name, accent, pitch, top] of VOICES.filter((v) => v[2] === group)) {
+      const o = document.createElement("option");
+      o.value = id; o.textContent = `${top ? "★ " : ""}${name} · тембр ${pitch}`;
+      og.appendChild(o);
+    }
+    sel.appendChild(og);
+  }
+  sel.value = store.get("voice", "am_michael");
+  if (!sel.value) sel.value = "am_michael";
+}
+function updateLabels() {
+  $("speedVal").textContent = (+$("speed").value).toFixed(2) + "×";
+  $("spVal").textContent = (+$("sp").value).toFixed(2) + " с";
+  $("ppVal").textContent = (+$("pp").value).toFixed(1) + " с";
+  for (const id of ["voice", "speed", "sp", "pp"]) store.set(id, $(id).value);
+}
+function updateStats() {
+  const text = $("text").value, words = (text.match(/[\p{L}\d'’]+/gu) || []).length;
+  const min = words / 155 / +$("speed").value, m = Math.floor(min), s = Math.round((min - m) * 60);
+  const cost = (text.length * PRICE_PER_M) / 1e6;
+  $("stats").textContent = words ? `${words} слів · ≈ ${m} хв ${s} с аудіо · ≈ $${cost < 0.01 ? cost.toFixed(4) : cost.toFixed(2)}` : "0 слів";
+  store.set("text", text);
+}
+function pronMap() {
+  const obj = {};
+  for (const line of $("pron").value.split("\n")) { const i = line.indexOf("="); if (i > 0) obj[line.slice(0, i).trim()] = line.slice(i + 1).trim(); }
+  store.set("pron", $("pron").value);
+  return obj;
+}
+const fmtTime = (sec) => { const h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60), s = Math.round(sec % 60);
+  return h ? `${h}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}` : `${m}:${String(s).padStart(2, "0")}`; };
+function stamp() { const d = new Date(), p = (n) => String(n).padStart(2, "0"); return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}_${p(d.getHours())}${p(d.getMinutes())}`; }
+const slug = (t) => (t.match(/[A-Za-z0-9]+/g) || []).slice(0, 4).join("-").toLowerCase() || "voice";
+
+let job = null, wakeLock = null, urls = [];
+async function keepAwake(on) {
+  try { if (on) wakeLock = await navigator.wakeLock?.request("screen"); else { await wakeLock?.release(); wakeLock = null; } } catch {}
+}
+function setBusy(on) { $("go").disabled = on; $("preview").disabled = on; $("check").disabled = on; $("progress").hidden = !on; }
+
+async function generate() {
+  if (job) return;
+  $("err").textContent = "";
+  const text = $("text").value.trim();
+  if (!text) { $("err").textContent = "Спочатку вставте текст."; return; }
+  const foreign = foreignWords(text);
+  if (foreign.length) { $("err").textContent = `Голос читає англійський текст. Замініть або видаліть: ${foreign.join(", ")}`; return; }
+  const items = buildScript(text, pronMap(), +$("sp").value, +$("pp").value);
+  if (!items.length) { $("err").textContent = "Немає тексту для озвучки."; return; }
+  const voice = $("voice").value, speed = +$("speed").value;
+  const ctrl = job = new AbortController();
+  setBusy(true); $("result").hidden = true; $("barFill").style.width = "0";
+  $("progText").textContent = `Озвучую: 0 з ${items.length}`;
+  keepAwake(true);
+  const started = performance.now(), parts = new Array(items.length);
+  let next = 0, done = 0;
+  const worker = async () => {
+    while (next < items.length && !ctrl.signal.aborted) {
+      const i = next++;
+      const pcm = await speak(items[i].spoken, voice, speed, ctrl.signal);
+      parts[i] = { blob: new Blob([pcm]), samples: pcm.length };
+      done++;
+      $("barFill").style.width = Math.round((done / items.length) * 100) + "%";
+      const left = ((performance.now() - started) / done) * (items.length - done) / 1000;
+      $("progText").textContent = `Озвучую: ${done} з ${items.length}` + (done < items.length ? ` · залишилось ≈ ${left > 90 ? Math.round(left / 60) + " хв" : Math.max(5, Math.round(left)) + " с"}` : "");
+    }
+  };
+  try {
+    await Promise.all(Array.from({ length: Math.min(PARALLEL, items.length) }, worker));
+    if (ctrl.signal.aborted) throw new Error("Скасовано");
+    // Join in order with exact pauses; subtitles get each sentence's real timing
+    const blobs = [silence(LEAD_IN)], cues = [];
+    let offset = LEAD_IN, samples = Math.round(LEAD_IN * SR);
+    items.forEach((it, i) => {
+      const dur = parts[i].samples / SR;
+      cues.push(...srtCues(it.shown, offset, offset + dur));
+      blobs.push(parts[i].blob); samples += parts[i].samples; offset += dur;
+      if (it.gap) { blobs.push(silence(it.gap)); samples += Math.round(it.gap * SR); offset += it.gap; }
+    });
+    blobs.push(silence(TAIL)); samples += Math.round(TAIL * SR);
+    const wav = new Blob([wavHeader(samples * 2), ...blobs], { type: "audio/wav" });
+    const srt = new Blob([cues.map(([a, b, line], i) => `${i + 1}\n${srtTime(a)} --> ${srtTime(b)}\n${line}\n`).join("\n")], { type: "text/plain" });
+    showResult(wav, srt, samples / SR, (performance.now() - started) / 1000, text);
+  } catch (e) {
+    ctrl.abort();
+    if (e instanceof AuthError) { await route(); $("loginErr").textContent = "Сесія закінчилась, увійдіть ще раз. Текст збережено."; }
+    else $("err").textContent = e.name === "AbortError" ? "Скасовано." : e.message;
+  } finally {
+    job = null; setBusy(false); keepAwake(false);
+  }
+}
+
+function showResult(wav, srt, duration, seconds, text) {
+  urls.forEach((u) => URL.revokeObjectURL(u));
+  const base = `voice_${stamp()}_${slug(text)}`;
+  const wavUrl = URL.createObjectURL(wav), srtUrl = URL.createObjectURL(srt);
+  urls = [wavUrl, srtUrl];
+  $("player").src = wavUrl;
+  $("dlWav").href = wavUrl; $("dlWav").download = base + ".wav";
+  $("dlSrt").href = srtUrl; $("dlSrt").download = base + ".srt";
+  $("dlWav").textContent = `⬇ WAV · ${Math.round(wav.size / 1e6) || "<1"} MB`;
+  const file = new File([wav], base + ".wav", { type: "audio/wav" });
+  $("share").hidden = !(navigator.canShare && navigator.canShare({ files: [file] }));
+  $("share").onclick = () => navigator.share({ files: [file], title: base }).catch(() => {});
+  $("resultText").textContent = `Готово: ${fmtTime(duration)} аудіо за ${fmtTime(seconds)}`;
+  $("result").hidden = false;
+  if (matchMedia("(max-width: 860px)").matches) $("result").scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+async function preview() {
+  if (job) return;
+  $("err").textContent = "";
+  const btn = $("preview");
+  btn.disabled = true; btn.textContent = "…";
+  try {
+    const pcm = await speak(PREVIEW, $("voice").value, +$("speed").value, new AbortController().signal);
+    const url = URL.createObjectURL(new Blob([wavHeader(pcm.length * 2), pcm], { type: "audio/wav" }));
+    await new Audio(url).play();
+  } catch (e) {
+    if (e instanceof AuthError) await route(); else $("err").textContent = e.message;
+  }
+  btn.disabled = false; btn.textContent = "▶";
+}
+
+async function check() {
+  const msg = $("checkMsg");
+  msg.className = "msg"; msg.textContent = "Перевіряю...";
+  try {
+    const r = await api("/api/check", {});
+    msg.className = "msg ok";
+    msg.textContent = `✓ Працює: DeepInfra повернув голос за ${(r.ms / 1000).toFixed(1)} с (маршрут ${r.route}, ${Math.round(r.bytes / 1024)} КБ).`;
+  } catch (e) {
+    msg.className = "msg err"; msg.textContent = "✗ " + e.message;
+  }
+}
+
+// Which screen to show: setup checklist, sign-in, or the studio
+async function route() {
+  let st;
+  try { st = await api("/api/status"); }
+  catch { $("setupBox").hidden = false; $("missing").innerHTML = "<li>Сервер не відповідає. Перевірте, що Worker задеплоєний.</li>"; return; }
+  const missing = [];
+  if (!st.apiKey) missing.push("<li><code>DEEPINFRA_API_KEY</code> — ключ з deepinfra.com</li>");
+  if (!st.password) missing.push("<li><code>SITE_PASSWORD</code> — пароль для цього сайту</li>");
+  $("setupBox").hidden = !missing.length; $("missing").innerHTML = missing.join("");
+  $("loginBox").hidden = !!missing.length || st.signedIn;
+  $("studio").hidden = !!missing.length || !st.signedIn;
+  $("footer").hidden = $("studio").hidden;
+  $("logout").hidden = !st.signedIn;
+  if (!$("loginBox").hidden) $("password").focus();
+}
+
+$("loginBox").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  $("loginErr").textContent = "";
+  try { await api("/api/login", { password: $("password").value }); $("password").value = ""; await route(); }
+  catch (err) { $("loginErr").textContent = err.message; }
+});
+$("logout").onclick = async () => { await api("/api/logout", {}).catch(() => {}); route(); };
+$("recheck").onclick = route;
+
+fillVoices();
+for (const id of ["speed", "sp", "pp"]) $(id).value = store.get(id, $(id).value);
+$("text").value = store.get("text", "");
+$("pron").value = store.get("pron", $("pron").value);
+updateLabels(); updateStats();
+for (const id of ["voice", "speed", "sp", "pp"]) $(id).addEventListener("input", updateLabels);
+$("speed").addEventListener("input", updateStats);
+$("text").addEventListener("input", updateStats);
+$("pron").addEventListener("change", pronMap);
+$("clear").onclick = () => { $("text").value = ""; updateStats(); $("text").focus(); };
+$("go").onclick = generate;
+$("preview").onclick = preview;
+$("check").onclick = check;
+$("cancel").onclick = () => job?.abort();
+$("text").addEventListener("keydown", (e) => { if ((e.ctrlKey || e.metaKey) && e.key === "Enter") generate(); });
+route();
+</script>
+</body>
+</html>
