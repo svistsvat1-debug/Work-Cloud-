@@ -14,7 +14,7 @@
 
 ```
 cloud/
-  wrangler.toml       налаштування Worker (назва voice-studio, сторінка з public/)
+  wrangler.toml       налаштування Worker (назва voice-studio-app, сторінка з public/)
   package.json        закріплена версія wrangler для збірки в Cloudflare
   src/worker.js       сервер: вхід за паролем, передає текст у DeepInfra, повертає аудіо
   public/index.html   сторінка: ділить текст, озвучує по 4 шматки одночасно, склеює WAV + SRT
@@ -41,35 +41,38 @@ https://claude.ai/artifact/KJReCEYhpofbafG46xzere (приватний, бачи�
 
 ✅ **Перевірка:** ключ скопійовано (довгий рядок літер і цифр). Чи він робочий, сайт покаже на кроці 6.
 
-### Крок 3. Створити Worker у Cloudflare
-1. **dash.cloudflare.com** → **Workers & Pages** → **Create** → **Import a repository**.
-2. Обери GitHub-акаунт і репозиторій **Work-Cloud-**.
-3. Налаштування проєкту:
-   - **Project name:** `voice-studio` (саме так: ця назва записана в `wrangler.toml`)
-   - **Build command:** залиш порожнім
-   - **Deploy command:** `npx wrangler deploy` (стоїть за замовчуванням)
-   - **Root directory** (у розділі Advanced / Path): `voice-studio/cloud`
-4. Натисни **Deploy**. Перша збірка, найімовірніше, **впаде**: Cloudflare бере гілку `main`, а код лежить у гілці `voice-studio`.
-   Це нормально.
-5. Worker → **Settings → Build → Branch control** → **Production branch** = `voice-studio` → **Save**.
-6. **Deployments** → **Retry deployment** (або будь-який новий deploy).
+### Крок 3. Токен Cloudflare
+Сайт розгортає GitHub (файл `.github/workflows/voice-studio.yml`), а не майстер у панелі Cloudflare:
+майстер видавав «This Worker does not exist on your account» навіть для Hello World.
+1. **dash.cloudflare.com** → іконка профілю → **My Profile** → **API Tokens** → **Create Token**.
+2. Шаблон **Edit Cloudflare Workers** → **Use template**.
+3. **Account Resources:** свій акаунт; **Zone Resources:** All zones → **Continue to summary** → **Create Token**.
+4. Скопіюй токен у нотатки (Cloudflare показує його один раз).
 
-✅ **Перевірка:** у Deployments статус **Success**, є адреса виду `https://voice-studio.<твій-піддомен>.workers.dev`.
-Відкрий її: має з'явитися сторінка **«Сайт ще не налаштовано»** зі списком із двох секретів. Отже, Worker працює.
+✅ **Перевірка:** токен у нотатках.
 
-### Крок 4. Секрети (ключ і пароль)
-Worker `voice-studio` → **Settings** → **Variables and Secrets** → **Add**:
-1. Type **Secret**, Name `DEEPINFRA_API_KEY`, Value: ключ з кроку 2 → **Save / Deploy**.
-2. Type **Secret**, Name `SITE_PASSWORD`, Value: придумай пароль **від 12 символів** → **Save / Deploy**.
+### Крок 4. Три секрети в GitHub
+https://github.com/svistsvat1-debug/Work-Cloud-/settings/secrets/actions/new, три рази **Add secret**:
 
-✅ **Перевірка:** онови сайт (кнопка «Перевірити ще раз»). Список «бракує» зник, з'явилось поле **«Вхід»**.
+| Name | Secret |
+|---|---|
+| `CLOUDFLARE_API_TOKEN` | токен з кроку 3 |
+| `DEEPINFRA_API_KEY` | ключ з кроку 2 |
+| `SITE_PASSWORD` | пароль для сайту, від 12 символів |
+
+Далі кожен пуш у гілку `voice-studio` зі змінами в `voice-studio/cloud/` сам розгортає сайт і прописує секрети
+(пробіли й переноси рядка в них обрізаються). Перезапуск вручну: GitHub → **Actions** → **Deploy Voice Studio** → **Re-run**.
+
+✅ **Перевірка:** в Actions зелений запуск, останній крок показує `{"password":true,"apiKey":true,...}`.
+Сайт: **https://voice-studio-app.svistsvat1.workers.dev**. Назва `voice-studio-app`, бо Cloudflare не дає створити
+Worker з назвою `voice-studio` (помилка 10007, ймовірно, після першої невдалої спроби через «Import a repository»).
 
 ### Крок 5. Вхід
 Введи `SITE_PASSWORD` → **Увійти**.
 
 ✅ **Перевірка:** відкрилась студія: поле для тексту, голос, кнопка «Озвучити».
 Вхід пам'ятається на пристрої 180 днів. Якщо під полем входу видно «Порада: пароль коротший за 12 символів»,
-заміни секрет `SITE_PASSWORD` на довший: з паролем можна витратити твій баланс DeepInfra.
+заміни секрет `SITE_PASSWORD` у GitHub на довший і перезапусти розгортання (крок 4): з паролем можна витратити твій баланс DeepInfra.
 
 ### Крок 6. Перевірка з'єднання з DeepInfra
 Внизу налаштувань розгорни **«Перевірка з'єднання»** → **Перевірити**.
@@ -114,7 +117,7 @@ iPhone: Safari → «Поділитися» → «На екран Додому»
 
 | Що видно | Що робити |
 |---|---|
-| Збірка в Cloudflare впала | Перевір Project name `voice-studio`, Root directory `voice-studio/cloud` і Production branch `voice-studio` (крок 3). Якщо не допомогло, скинь Claude скріншот логу збірки |
+| Розгортання в GitHub Actions червоне | Перевір три секрети (крок 4). Якщо не допомогло, скинь Claude посилання на запуск в Actions |
 | «Сайт ще не налаштовано» після додавання секретів | Перевір назви секретів (великі літери, без пробілів), зачекай хвилину й натисни «Перевірити ще раз» |
 | «DeepInfra не приймає API-ключ» | Скопіюй ключ ще раз (без пробілів) і заміни секрет `DEEPINFRA_API_KEY` |
 | «На рахунку DeepInfra закінчились кошти» | Поповни баланс на deepinfra.com, потім «Продовжити озвучку» |
@@ -123,7 +126,7 @@ iPhone: Safari → «Поділитися» → «На екран Додому»
 | «Немає з'єднання з сервером» | Перевір інтернет на телефоні й натисни «Продовжити озвучку» |
 | «Сесія закінчилась» | Увійди ще раз і натисни «Продовжити озвучку»: готові шматки не загубляться |
 | «Неправильний пароль» | Пароль = значення `SITE_PASSWORD`; після 10 помилок вхід блокується на 15 хв |
-| Хочу змінити пароль | Зміни секрет `SITE_PASSWORD`: усі пристрої вийдуть із системи |
+| Хочу змінити пароль | Зміни секрет `SITE_PASSWORD` у GitHub і перезапусти розгортання: усі пристрої вийдуть із системи |
 | Хочу вимкнути пріоритетну чергу (дешевше в 1,5 раза, але можливі черги) | Settings → Variables and Secrets → Add: Type **Text**, Name `DEEPINFRA_TIER`, Value `off` → Deploy |
 
 ## Технічно
