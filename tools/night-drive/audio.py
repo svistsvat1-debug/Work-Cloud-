@@ -97,9 +97,9 @@ def tyres(n):
     return np.stack([y, np.roll(y, 220)], axis=1)
 
 
-def wipers(n, period, stroke):
+def wipers(n, period, stroke, offset=0.0):
     out = np.zeros((n, 2))
-    t = np.arange(n) / SR
+    t = np.arange(n) / SR + offset
     ph = np.mod(t, period)
     swish_env = np.where(ph < 2 * stroke, np.sin(np.pi * np.mod(ph, stroke) / stroke) ** 1.5, 0.0)
     rub = filt(rng.standard_normal(n), "bandpass", [1200, 3800])
@@ -114,8 +114,8 @@ def wipers(n, period, stroke):
     k = 0
     while True:
         for off, amp in [(stroke, 0.6), (2 * stroke, 0.9)]:
-            p = int((k * period + off) * SR)
-            if p + L < n:
+            p = int((k * period + off - offset) * SR)
+            if 0 <= p and p + L < n:
                 thunk[p:p + L] += th * amp
         k += 1
         if k * period > n / SR:
@@ -165,7 +165,7 @@ def main():
         rain(n) * 0.55
         + engine(n) * 0.30
         + tyres(n) * 0.16
-        + wipers(n, cfg.get("wiperPeriod", 2.8), cfg.get("wiperStroke", 0.85)) * 0.20
+        + wipers(n, cfg.get("wiperPeriod", 2.8), cfg.get("wiperStroke", 0.85), cfg.get("wiperOffset", 0.0)) * 0.20
         + trucks(n, cfg.get("trucks", []), cfg.get("speed", 20)) * 0.75
     )
     # cab interior: tame the top end a little, gentle fades
