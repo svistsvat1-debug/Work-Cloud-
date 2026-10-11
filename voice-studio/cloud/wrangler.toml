@@ -2,7 +2,7 @@
 # Secrets (Worker -> Settings -> Variables and Secrets), both required:
 #   DEEPINFRA_API_KEY  - API key from deepinfra.com; the voice is Kokoro-82M, paid per character
 #   SITE_PASSWORD      - password for the site, so nobody else spends your DeepInfra balance
-name = "voice-studio"
+name = "voice-studio-app"
 main = "src/worker.js"
 compatibility_date = "2025-09-01"
 
