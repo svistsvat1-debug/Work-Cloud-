@@ -18,14 +18,11 @@ const VOICE_INFO = {
   bm_george: ["en", "en-gb"], bm_fable: ["en", "en-gb"], bm_lewis: ["en", "en-gb"], bm_daniel: ["en", "en-gb"],
   em_alex: ["en", "es"],
   de_thorsten: ["de", "de"],
-  zm_098: ["zh"], zm_029: ["zh"], zm_033: ["zh"], zm_011: ["zh"], zm_025: ["zh"],
-  zm_009: ["zh"], zm_097: ["zh"], zm_012: ["zh"], zm_010: ["zh"], zm_050: ["zh"],
 };
 const PREVIEW_TEXT = {
   en: "Hey there. This is how I sound. Paste your script, and I'll read it for you.",
   de: "Hallo! So klinge ich. Füge deinen Text ein, und ich lese ihn dir vor.",
   es: "¡Hola! Así suena mi voz. Pega tu texto y yo lo leeré por ti.",
-  zh: "你好！这就是我的声音。把你的文案粘贴进来，我来为你朗读。",
 };
 
 // ---------------------------------------------------------------- files + cache
@@ -194,18 +191,10 @@ async function getEngine(key, report) {
     engines[key] = { kind: "piper", session, cfg, sr: cfg.audio.sample_rate };
   } else {
     const v = await getVocab();
-    engines[key] = { kind: "kokoro", session, vocab: key === "zh" ? v.zh : v.v10, sr: 24000 };
+    engines[key] = { kind: "kokoro", session, vocab: v.v10, sr: 24000 };
   }
-  if (key === "zh") engines[key].zh = await getChinese();
   report({ state: "ready", pct: 100 });
   return engines[key];
-}
-
-let chinese = null;
-async function getChinese() {
-  if (!chinese) chinese = await import("./zh.mjs");
-  await chinese.ready;
-  return chinese;
 }
 
 function tensor(type, data, dims) { return new ort.Tensor(type, data, dims); }
@@ -272,11 +261,9 @@ async function mixedStyle(spec) {
   return out;
 }
 
-async function synthSentence(engine, lang, spoken, spec, style, speed) {
+async function synthSentence(engine, spoken, spec, style, speed) {
   if (engine.kind === "piper") return piperSynth(engine, await phonemize(spoken, engine.cfg.espeak.voice), speed);
-  const phonemes = lang === "zh"
-    ? await engine.zh.phonemize(spoken, (s) => phonemize(s, "en-us"))
-    : await phonemize(spoken, VOICE_INFO[spec.voice][1]);
+  const phonemes = await phonemize(spoken, VOICE_INFO[spec.voice][1]);
   return kokoroSynth(engine, phonemes, style, speed);
 }
 
@@ -315,7 +302,6 @@ const RULES = {
   ],
 };
 const END_LATIN = /[.!?…]["”’»)\]]*$/;
-const END_ZH = /[。！？!?…][”’」』）)"]*$/;
 
 function cleanMarkdown(text) {
   return text.replace(/\r\n?/g, "\n").split("\n").map((line) => {
@@ -370,50 +356,42 @@ function normalize(text, lang) {
 function splitSentences(par, lang) {
   const out = [];
   let start = 0;
-  if (lang === "zh") {
-    for (const m of par.matchAll(/[。！？!?；;…]+[”’」』）)"]*/g)) {
-      out.push(par.slice(start, m.index + m[0].length).trim());
-      start = m.index + m[0].length;
-    }
-  } else {
-    const abbr = ABBREVIATIONS[lang] || new Set();
-    for (const m of par.matchAll(/[.!?…]+["”’»)\]]*(?=\s|$)/g)) {
-      const words = par.slice(start, m.index).split(/\s+/).filter(Boolean);
-      const last = (words[words.length - 1] || "").toLowerCase();
-      const following = par.slice(m.index + m[0].length).trimStart().charAt(0);
-      const isDot = m[0].replace(/["”’»)\]]+$/, "") === ".";
-      const lower = following && following === following.toLowerCase() && following !== following.toUpperCase();
-      if (isDot && (abbr.has(last) || (last.length === 1 && /\p{L}/u.test(last)) || lower)) continue;
-      out.push(par.slice(start, m.index + m[0].length).trim());
-      start = m.index + m[0].length;
-    }
+  const abbr = ABBREVIATIONS[lang] || new Set();
+  for (const m of par.matchAll(/[.!?…]+["”’»)\]]*(?=\s|$)/g)) {
+    const words = par.slice(start, m.index).split(/\s+/).filter(Boolean);
+    const last = (words[words.length - 1] || "").toLowerCase();
+    const following = par.slice(m.index + m[0].length).trimStart().charAt(0);
+    const isDot = m[0].replace(/["”’»)\]]+$/, "") === ".";
+    const lower = following && following === following.toLowerCase() && following !== following.toUpperCase();
+    if (isDot && (abbr.has(last) || (last.length === 1 && /\p{L}/u.test(last)) || lower)) continue;
+    out.push(par.slice(start, m.index + m[0].length).trim());
+    start = m.index + m[0].length;
   }
   out.push(par.slice(start).trim());
   return out.filter(Boolean);
 }
 
-function textSize(s, lang) {
-  return lang === "zh" ? s.replace(/[^\p{L}\p{N}]/gu, "").length : s.split(/\s+/).filter(Boolean).length;
+function wordCount(s) {
+  return s.split(/\s+/).filter(Boolean).length;
 }
 
 // Text -> paragraphs of [shown, spoken] pairs: shown goes to subtitles, spoken to the voice
 function buildScript(text, lang, pron) {
-  const endRe = lang === "zh" ? END_ZH : END_LATIN;
   const paragraphs = [];
   for (const block of cleanMarkdown(text).split(/\n\s*\n/)) {
     const merged = [];
     for (const ln of block.split("\n").filter((l) => l.trim())) {
       const first = ln.charAt(0);
       const wrapped = first && first === first.toLowerCase() && first !== first.toUpperCase();
-      if (merged.length && !endRe.test(merged[merged.length - 1]) && wrapped) merged[merged.length - 1] += " " + ln;
+      if (merged.length && !END_LATIN.test(merged[merged.length - 1]) && wrapped) merged[merged.length - 1] += " " + ln;
       else merged.push(ln);
     }
     // Very short sentences sound clipped on their own, so they ride with the next one
     const grouped = [];
     for (const ln of merged) {
       for (const s of splitSentences(ln, lang)) {
-        if (grouped.length && textSize(grouped[grouped.length - 1], lang) < (lang === "zh" ? 6 : 3)) {
-          grouped[grouped.length - 1] += (lang === "zh" ? "" : " ") + s;
+        if (grouped.length && wordCount(grouped[grouped.length - 1]) < 3) {
+          grouped[grouped.length - 1] += " " + s;
         } else grouped.push(s);
       }
     }
@@ -421,7 +399,7 @@ function buildScript(text, lang, pron) {
     for (const shown of grouped) {
       let spoken = normalize(applyPronunciations(shown, pron), lang);
       if (!/[\p{L}\p{N}]/u.test(spoken)) continue;
-      if (!endRe.test(spoken)) spoken += lang === "zh" ? "。" : ".";
+      if (!END_LATIN.test(spoken)) spoken += ".";
       pairs.push([shown, spoken]);
     }
     if (pairs.length) paragraphs.push(pairs);
@@ -429,10 +407,10 @@ function buildScript(text, lang, pron) {
   return paragraphs;
 }
 
-function foreignWords(text, lang, limit = 3) {
+function foreignWords(text, limit = 3) {
   const found = [];
   for (const word of text.match(/[\p{L}\p{N}_]+/gu) || []) {
-    const bad = [...word].some((ch) => /\p{L}/u.test(ch) && !/\p{Script=Latin}/u.test(ch) && !(lang === "zh" && /\p{Script=Han}/u.test(ch)));
+    const bad = [...word].some((ch) => /\p{L}/u.test(ch) && !/\p{Script=Latin}/u.test(ch));
     if (bad && !found.includes(word)) found.push(word);
     if (found.length === limit) break;
   }
@@ -521,10 +499,8 @@ function splitEven(units, n, joiner, soft) {
   return parts.filter(Boolean);
 }
 
-function srtCues(sentence, start, end, lang) {
-  const parts = lang === "zh"
-    ? splitEven([...sentence], Math.max(1, Math.ceil(sentence.length / 24)), "", "，、：；,;:")
-    : splitEven(sentence.split(/\s+/), Math.max(1, Math.ceil(sentence.length / 84)), " ", ",;:—").map((p) => wrapTwoLines(p));
+function srtCues(sentence, start, end) {
+  const parts = splitEven(sentence.split(/\s+/), Math.max(1, Math.ceil(sentence.length / 84)), " ", ",;:—").map((p) => wrapTwoLines(p));
   const total = parts.reduce((s, p) => s + p.length, 0) || 1;
   let t = start;
   return parts.map((p) => { const dt = ((end - start) * p.length) / total; const cue = [t, t + dt, p]; t += dt; return cue; });
@@ -536,8 +512,8 @@ let cancelled = false;
 
 async function generate({ id, text, lang, spec, speed, sentencePause, paragraphPause, pron }) {
   cancelled = false;
-  const foreign = foreignWords(applyPronunciations(text, pron), lang);
-  const label = { en: "англійський", de: "німецький", es: "іспанський", zh: "китайський" }[lang];
+  const foreign = foreignWords(applyPronunciations(text, pron));
+  const label = { en: "англійський", de: "німецький", es: "іспанський" }[lang];
   if (foreign.length) throw new Error(`Цей голос читає ${label} текст. Замініть або видаліть: ${foreign.join(", ")}`);
   const model = VOICE_INFO[spec.voice][0];
   const engine = await getEngine(model, (s) => post({ type: "engine", model, ...s, id }));
@@ -556,9 +532,9 @@ async function generate({ id, text, lang, spec, speed, sentencePause, paragraphP
   for (const [shown, spoken, gap] of items) {
     if (cancelled) throw new Error("Скасовано");
     try {
-      const audio = await synthSentence(engine, lang, spoken, spec, style, speed);
+      const audio = await synthSentence(engine, spoken, spec, style, speed);
       const dur = audio.length / sr;
-      cues.push(...srtCues(shown, offset, offset + dur, lang));
+      cues.push(...srtCues(shown, offset, offset + dur));
       parts.push(audio, new Float32Array(Math.round(gap * sr)));
       offset += dur + gap;
     } catch (e) {
@@ -580,7 +556,7 @@ async function preview({ id, lang, spec, speed }) {
   const model = VOICE_INFO[spec.voice][0];
   const engine = await getEngine(model, (s) => post({ type: "engine", model, ...s, id }));
   const style = engine.kind === "kokoro" ? await mixedStyle(spec) : null;
-  const audio = await synthSentence(engine, lang, normalize(PREVIEW_TEXT[lang], lang), spec, style, speed);
+  const audio = await synthSentence(engine, normalize(PREVIEW_TEXT[lang], lang), spec, style, speed);
   return { wav: wavBytes(audio, engine.sr) };
 }
 

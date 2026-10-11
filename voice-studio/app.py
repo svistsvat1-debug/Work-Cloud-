@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
-"""Voice Studio: text -> natural male voiceover in English, German, Spanish and Chinese.
+"""Voice Studio: text -> natural male voiceover in English, German and Spanish.
 
 Runs fully on this computer; a phone on the same Wi-Fi can use it too (QR code in the app).
 Every model allows commercial use, so the audio can go into monetized videos:
 
   English, Spanish "Alex"   Kokoro-82M v1.0      Apache-2.0 weights
-  Chinese                   Kokoro-82M v1.1-zh   Apache-2.0 weights
   German "Thorsten"         Piper voice          Thorsten-Voice dataset, CC0
   Spanish "Dave", "Ald"     Piper voices         davefx (CC0) / ald (Unlicense) datasets
 
@@ -14,7 +13,6 @@ Then the browser opens http://127.0.0.1:8765
 """
 import ipaddress
 import json
-import logging
 import re
 import secrets
 import socket
@@ -30,7 +28,6 @@ import webbrowser
 from datetime import datetime
 from http.cookies import SimpleCookie
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
-from importlib.util import find_spec
 from io import BytesIO
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
@@ -62,13 +59,11 @@ LANGS = [
     {"id": "en", "name": "English", "label": "Англійська", "text": "англійський"},
     {"id": "de", "name": "Deutsch", "label": "Німецька", "text": "німецький"},
     {"id": "es", "name": "Español", "label": "Іспанська", "text": "іспанський"},
-    {"id": "zh", "name": "中文", "label": "Китайська", "text": "китайський"},
 ]
 PREVIEW_TEXT = {
     "en": "Hey there. This is how I sound. Paste your script, and I'll read it for you.",
     "de": "Hallo! So klinge ich. Füge deinen Text ein, und ich lese ihn dir vor.",
     "es": "¡Hola! Así suena mi voz. Pega tu texto y yo lo leeré por ti.",
-    "zh": "你好！这就是我的声音。把你的文案粘贴进来，我来为你朗读。",
 }
 
 
@@ -95,18 +90,13 @@ VOICES = [
     _voice("em_alex", "es", "kokoro", "Alex", "Іспанія", "вищий", False, "es"),
     _voice("es_ES-davefx-medium", "es", "piper:es_ES-davefx-medium", "Dave", "Іспанія", "середній"),
     _voice("es_MX-ald-medium", "es", "piper:es_MX-ald-medium", "Ald", "Мексика", "вищий"),
-] + [
-    _voice(f"zm_{n}", "zh", "kokoro_zh", f"№ {n}", "Мандарин", pitch)
-    for n, pitch in [("098", "низький"), ("029", "низький"), ("033", "низький"),
-                     ("011", "середній"), ("025", "середній"), ("009", "середній"), ("097", "середній"),
-                     ("012", "вищий"), ("010", "вищий"), ("050", "вищий")]
 ]
 VOICE_BY_ID = {v["id"]: v for v in VOICES}
 PIPER_SIZES_MB = {"de_DE-thorsten-high": 116, "es_ES-davefx-medium": 68, "es_MX-ald-medium": 68}
 DEFAULT_PRONUNCIATIONS = {"SaaS": "sass"}
 
 synth_lock = threading.Lock()  # one voiceover at a time keeps the CPU for it
-espeak_lock = threading.RLock()  # espeak-ng and the Chinese frontend are not thread-safe
+espeak_lock = threading.RLock()  # espeak-ng is not thread-safe
 jobs = {}
 preview_cache = {}
 settings = {}
@@ -270,27 +260,6 @@ class KokoroEngine(Engine):
         return np.asarray(audio, dtype=np.float32)
 
 
-class KokoroChineseEngine(KokoroEngine):
-    def unavailable(self):
-        if find_spec("misaki") is None:
-            return (f"Китайська потребує Python 3.10–3.12 (зараз {sys.version_info.major}.{sys.version_info.minor}). "
-                    "Встановіть Python 3.12, видаліть папку .venv і запустіть програму знову.")
-        return ""
-
-    def load(self):
-        super().load()
-        import jieba
-        from misaki import zh
-
-        jieba.setLogLevel(logging.WARNING)
-        # English words inside Chinese text are read with the English phonemizer
-        self.g2p = zh.ZHG2P(version="1.1", en_callable=lambda s: self.known(espeak_phonemes(s, "en-us")))
-
-    def phonemes(self, text, voice):
-        with espeak_lock:
-            return self.known(self.g2p(text)[0])
-
-
 class PiperEngine(Engine):
     def __init__(self, key, model):
         super().__init__(key)
@@ -346,8 +315,6 @@ class PiperEngine(Engine):
 ENGINES = {
     "kokoro": KokoroEngine("kokoro", "model-files-v1.0/", ("kokoro-v1.0.onnx", "voices-v1.0.bin"), 350,
                            (MODEL_DIR, SHARED_MODEL_DIR)),
-    "kokoro_zh": KokoroChineseEngine("kokoro_zh", "model-files-v1.1/", ("kokoro-v1.1-zh.onnx", "voices-v1.1-zh.bin"),
-                                     365, (MODEL_DIR,)),
 }
 for _v in VOICES:
     if _v["engine"].startswith("piper:"):
@@ -438,8 +405,7 @@ RULES = {
         (re.compile(r"\s&\s"), " y "),
     ],
 }
-END_PUNCT = {"latin": re.compile(r"[.!?…][\"”’»)\]]*$"), "zh": re.compile(r"[。！？!?…][”’」』）)\"]*$")}
-ZH_SPLIT = re.compile(r"[。！？!?；;…]+[”’」』）)\"]*")
+END_PUNCT = re.compile(r"[.!?…][\"”’»)\]]*$")
 
 
 def clean_markdown(text):
@@ -506,13 +472,6 @@ def normalize(text, lang):
 
 
 def split_sentences(par, lang):
-    if lang == "zh":
-        out, start = [], 0
-        for m in ZH_SPLIT.finditer(par):
-            out.append(par[start:m.end()].strip())
-            start = m.end()
-        out.append(par[start:].strip())
-        return [s for s in out if s]
     abbreviations = ABBREVIATIONS.get(lang, set())
     out, start = [], 0
     for m in re.finditer(r"[.!?…]+[\"”’»)\]]*(?=\s|$)", par):
@@ -529,17 +488,13 @@ def split_sentences(par, lang):
     return [s for s in out if s]
 
 
-def text_size(s, lang):
-    return len(re.sub(r"\W", "", s)) if lang == "zh" else len(s.split())
-
-
 def build_script(text, lang, pronunciations):
     """Text -> paragraphs of (shown, spoken) sentence pairs.
 
     "shown" is the sentence as written (for subtitles), "spoken" is what the
     voice reads after the pronunciation dictionary and normalization.
     """
-    end_punct = END_PUNCT["zh" if lang == "zh" else "latin"]
+    end_punct = END_PUNCT
     paragraphs = []
     for block in re.split(r"\n\s*\n", clean_markdown(text)):
         lines = [ln for ln in block.split("\n") if ln.strip()]
@@ -554,8 +509,8 @@ def build_script(text, lang, pronunciations):
         grouped = []
         for ln in merged:
             for s in split_sentences(ln, lang):
-                if grouped and text_size(grouped[-1], lang) < (6 if lang == "zh" else 3):
-                    grouped[-1] += ("" if lang == "zh" else " ") + s
+                if grouped and len(grouped[-1].split()) < 3:
+                    grouped[-1] += " " + s
                 else:
                     grouped.append(s)
         pairs = []
@@ -564,7 +519,7 @@ def build_script(text, lang, pronunciations):
             if not re.search(r"[^\W_]", spoken):
                 continue  # stray "..." has nothing to say
             if not end_punct.search(spoken):
-                spoken += "。" if lang == "zh" else "."  # otherwise it ends on a rising tone
+                spoken += "."  # otherwise it ends on a rising tone
             pairs.append((shown, spoken))
         if pairs:
             paragraphs.append(pairs)
@@ -577,7 +532,7 @@ def foreign_words(text, lang, limit=3):
     for word in re.findall(r"\w+", text):
         for ch in word:
             name = unicodedata.name(ch, "")
-            if ch.isalpha() and "LATIN" not in name and not (lang == "zh" and "CJK" in name):
+            if ch.isalpha() and "LATIN" not in name:
                 if word not in found:
                     found.append(word)
                 break
@@ -649,11 +604,7 @@ def split_even(units, n, joiner, soft):
 
 def srt_cues(sentence, start, end, lang):
     """Split a sentence into evenly sized subtitle cues, timed by their share of characters."""
-    if lang == "zh":
-        parts = split_even(list(sentence), max(1, -(-len(sentence) // 24)), "", "，、：；,;:")
-    else:
-        parts = [wrap_two_lines(p) for p in
-                 split_even(sentence.split(), max(1, -(-len(sentence) // 84)), " ", ",;:—")]
+    parts = [wrap_two_lines(p) for p in split_even(sentence.split(), max(1, -(-len(sentence) // 84)), " ", ",;:—")]
     total = sum(len(p) for p in parts) or 1
     cues, t = [], start
     for p in parts:

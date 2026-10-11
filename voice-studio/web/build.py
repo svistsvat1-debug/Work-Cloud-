@@ -4,9 +4,9 @@
 The page (index.html) and engine (engine/*.mjs) are sources in this folder. This script adds
 everything heavy they load, so dist/ can be published as a Claude artifact or a static site:
 
-  engine/   onnxruntime-web, espeak-ng phonemizer (en/de/es only), pinyin-pro, vocabularies
+  engine/   onnxruntime-web, espeak-ng phonemizer (en/de/es only), vocabulary
   voices/   voice style vectors as float16
-  models/   Kokoro v1.0 (EN/ES), Kokoro v1.1-zh (ZH), Piper Thorsten (DE), in 14 MiB parts
+  models/   Kokoro v1.0 (EN/ES), Piper Thorsten (DE), in 14 MiB parts
 
 Binary files get a .wasm name because Claude artifacts only serve web file types.
 
@@ -30,14 +30,10 @@ SHERPA = "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/"
 NPM = {
     "ort": "https://registry.npmjs.org/onnxruntime-web/-/onnxruntime-web-1.22.0.tgz",
     "piper": "https://registry.npmjs.org/@diffusionstudio/piper-wasm/-/piper-wasm-1.0.0.tgz",
-    "pinyin": "https://registry.npmjs.org/pinyin-pro/-/pinyin-pro-3.29.4.tgz",
 }
 EN_VOICES = ["am_michael", "am_fenrir", "am_puck", "am_onyx", "am_adam", "am_echo", "am_liam", "am_eric",
              "bm_george", "bm_fable", "bm_lewis", "bm_daniel", "em_alex"]
-ZH_VOICES = ["zm_098", "zm_029", "zm_033", "zm_011", "zm_025", "zm_009", "zm_097", "zm_012", "zm_010", "zm_050"]
 PART = 14 * 1024 * 1024
-# Quantizing these makes ONNX Runtime Web return NaN (STFT and output convs of the vocoder)
-ZH_KEEP_FLOAT = ["/decoder/generator/Conv", "/decoder/generator/Conv_1", "/decoder/generator/conv_post/Conv"]
 
 
 def fetch(url, name):
@@ -94,8 +90,6 @@ def espeak_module():
 
 
 def main():
-    import onnxruntime as ort
-
     if DIST.exists():
         shutil.rmtree(DIST)
     for d in ("engine", "voices", "models"):
@@ -111,13 +105,10 @@ def main():
     (DIST / "engine/piper_phonemize.mjs").write_text(module)
     (DIST / "engine/espeak-data.wasm").write_bytes(data)
     (DIST / "engine/piper_phonemize.wasm").write_bytes(npm_file("piper", "build/piper_phonemize.wasm"))
-    (DIST / "engine/pinyin-pro.js").write_bytes(npm_file("pinyin", "dist/index.js"))
 
     # Models
     en_onnx = fetch(KOKORO + "model-files-v1.0/kokoro-v1.0.int8.onnx", "kokoro-v1.0.int8.onnx")
     en_voices = np.load(fetch(KOKORO + "model-files-v1.0/voices-v1.0.bin", "voices-v1.0.bin"))
-    zh_onnx = fetch(KOKORO + "model-files-v1.1/kokoro-v1.1-zh.onnx", "kokoro-v1.1-zh.onnx")
-    zh_voices = np.load(fetch(KOKORO + "model-files-v1.1/voices-v1.1-zh.bin", "voices-v1.1-zh.bin"))
     with tarfile.open(fetch(SHERPA + "vits-piper-de_DE-thorsten-medium.tar.bz2", "thorsten.tar.bz2")) as tar:
         base = "vits-piper-de_DE-thorsten-medium/de_DE-thorsten-medium"
         (CACHE / "de.onnx").write_bytes(tar.extractfile(base + ".onnx").read())
@@ -125,7 +116,6 @@ def main():
 
     manifest = {}
     split("en", en_onnx.read_bytes(), manifest)
-    split("zh", quantize(zh_onnx, CACHE / "zh.uint8.onnx", ZH_KEEP_FLOAT), manifest)
     split("de", quantize(CACHE / "de.onnx", CACHE / "de.uint8.onnx"), manifest)
     (DIST / "models/manifest.json").write_text(json.dumps(manifest, indent=1))
     (DIST / "models/de.json").write_text(json.dumps({k: de_cfg[k] for k in ("audio", "espeak", "inference", "phoneme_id_map")},
@@ -133,15 +123,11 @@ def main():
 
     for name in EN_VOICES:
         en_voices[name].reshape(510, 256).astype(np.float16).tofile(DIST / f"voices/{name}.wasm")
-    for name in ZH_VOICES:
-        zh_voices[name].reshape(510, 256).astype(np.float16).tofile(DIST / f"voices/{name}.wasm")
 
-    zh_meta = ort.InferenceSession(str(zh_onnx)).get_modelmeta().custom_metadata_map
-    zh_vocab = json.loads(zh_meta["kokoro_config"])["vocab"]
     import kokoro_onnx  # its config.json holds the v1.0 vocabulary
 
     v10 = json.loads((Path(kokoro_onnx.__file__).parent / "config.json").read_text())["vocab"]
-    (DIST / "engine/vocab.json").write_text(json.dumps({"v10": v10, "zh": zh_vocab}, ensure_ascii=False, separators=(",", ":")))
+    (DIST / "engine/vocab.json").write_text(json.dumps({"v10": v10}, ensure_ascii=False, separators=(",", ":")))
 
     total = sum(f.stat().st_size for f in DIST.rglob("*") if f.is_file())
     print(f"done: {DIST} ({total / 1e6:.0f} MB, {sum(1 for f in DIST.rglob('*') if f.is_file())} files)")

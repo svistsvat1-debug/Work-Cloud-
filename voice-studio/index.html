@@ -121,7 +121,7 @@
     .actions .progress { margin-top: 10px; }
     .files a { padding: 10px 12px; font-size: 14px; }
     #phoneBtn { display: none; }
-    .langs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .langs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .langs button { padding: 8px 4px; }
     .langs button small { display: none; }
   }
@@ -230,9 +230,9 @@ const store = {
   get(k, d) { try { const v = localStorage.getItem("vs." + k); return v === null ? d : JSON.parse(v); } catch { return d; } },
   set(k, v) { try { localStorage.setItem("vs." + k, JSON.stringify(v)); } catch {} },
 };
-const DEFAULT_VOICE = { en: "am_michael", de: "de_DE-thorsten-high", es: "em_alex", zh: "zm_009" };
-const MIXABLE = new Set(["kokoro", "kokoro_zh"]);
-const RATE = { en: 155, de: 130, es: 150, zh: 260 }; // words (characters for Chinese) per minute
+const DEFAULT_VOICE = { en: "am_michael", de: "de_DE-thorsten-high", es: "em_alex" };
+const MIXABLE = new Set(["kokoro"]);
+const RATE = { en: 155, de: 130, es: 150 }; // words per minute
 const BUSY = new Set(["queued", "preparing", "running"]);
 let cfg = null, lang = "en", currentJob = null, engineTimer = null, phoneUrl = "";
 
@@ -331,11 +331,10 @@ function updateLabels() {
 function updateStats() {
   const text = $("text").value;
   const latin = (text.match(/[A-Za-zÀ-ÿ0-9'’]+/g) || []).length;
-  const han = (text.match(/[㐀-鿿]/g) || []).length;
-  const units = lang === "zh" ? han + latin : latin;
+  const units = latin;
   const minutes = units / RATE[lang] / +$("speed").value;
   const m = Math.floor(minutes), s = Math.round((minutes - m) * 60);
-  const noun = lang === "zh" ? "символів" : "слів";
+  const noun = "слів";
   $("stats").textContent = units ? `${units} ${noun} · ≈ ${m} хв ${s} с аудіо` : `0 ${noun}`;
   store.set("text." + lang, text);
 }

@@ -1,0 +1,12 @@
+{
+  "name": "voice-studio-cloud",
+  "private": true,
+  "description": "Voice Studio: phone page + Cloudflare Worker that relays text to Kokoro-82M on DeepInfra",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "4.141.0"
+  }
+}

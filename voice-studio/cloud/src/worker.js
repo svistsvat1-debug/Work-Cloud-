@@ -75,22 +75,43 @@ async function readJSON(req) {
 }
 
 /* ---------- voice ---------- */
-/* DeepInfra offers an OpenAI-style route and its own inference route. The first one that accepts
-   the request is remembered; a key, balance or rate problem is returned as is, without retrying. */
-let preferredRoute = null;
-async function speak(env, text, voice, speed) {
+/* DeepInfra's documented speech route is /v1/audio/speech: an OpenAI-style body, audio bytes back.
+   Two older routes are tried only if that one rejects the request itself; the first route that
+   works is remembered. Key, balance and rate problems come back as they are, without retrying.
+   service_tier "priority" skips DeepInfra's queue for 1.5x the price; DEEPINFRA_TIER="off" turns it off.
+   Not every model has the tier, so a route that rejects it is asked once more without it. */
+let preferredRoute = null, tierRejected = false;
+const configuredTier = env => {
+  const tier = String(env.DEEPINFRA_TIER ?? 'priority').trim().toLowerCase();
+  return ['', 'off', 'none', 'standard', 'default'].includes(tier) ? '' : tier;
+};
+async function speak(env, text, voice, speed, format = 'wav') {
   const base = env.DEEPINFRA_BASE || 'https://api.deepinfra.com';
+  const tier = tierRejected ? '' : configuredTier(env);
   const headers = { authorization: `Bearer ${env.DEEPINFRA_API_KEY}`, 'content-type': 'application/json' };
-  const routes = [
-    ['openai', `${base}/v1/openai/audio/speech`, { model: MODEL, input: text, voice, speed, response_format: 'wav' }],
-    ['native', `${base}/v1/inference/${MODEL}`, { text, preset_voice: [voice], speed, output_format: 'wav' }],
+  const plain = { model: MODEL, input: text, voice, speed, response_format: format };
+  const openai = tier ? [{ ...plain, service_tier: tier }, plain] : [plain];
+  let routes = [
+    ...openai.map(body => ['speech', `${base}/v1/audio/speech`, body]),
+    ...openai.map(body => ['openai', `${base}/v1/openai/audio/speech`, body]),
+    ['native', `${base}/v1/inference/${MODEL}`, { text, preset_voice: [voice], speed, output_format: format }],
   ];
-  if (preferredRoute === 'native') routes.reverse();
-  let last = null;
+  if (preferredRoute) routes = [...routes.filter(r => r[0] === preferredRoute), ...routes.filter(r => r[0] !== preferredRoute)];
+  let last = null, failedWithTier = null;
   for (const [name, url, body] of routes) {
-    const res = await fetch(url, { method: 'POST', headers, body: JSON.stringify(body) });
-    if (res.ok) { preferredRoute = name; return { res, route: name }; }
+    let res;
+    try {
+      res = await fetch(url, { method: 'POST', headers, body: JSON.stringify(body) });
+    } catch {
+      return { res: { ok: false, status: 504 }, route: name }; // DeepInfra unreachable: the page retries
+    }
+    if (res.ok) {
+      preferredRoute = name;
+      if (failedWithTier === name && !body.service_tier) tierRejected = true;
+      return { res, route: name, tier: body.service_tier || 'standard' };
+    }
     if ([401, 402, 403, 429].includes(res.status) || res.status >= 500) return { res, route: name };
+    if (body.service_tier) failedWithTier = name;
     last = { res, route: name, detail: (await res.text()).slice(0, 300) };
   }
   return last;
@@ -100,6 +121,7 @@ function providerError(status, detail = '') {
   if (status === 401 || status === 403) return fail(502, 'DeepInfra не приймає API-ключ. Перевір секрет DEEPINFRA_API_KEY у Cloudflare.', { provider: status });
   if (status === 402) return fail(402, 'На рахунку DeepInfra закінчились кошти. Поповни баланс на deepinfra.com.', { provider: status });
   if (status === 429) return fail(429, 'Забагато запитів одночасно. Сторінка повторить сама.', { provider: status, retry: true });
+  if (status === 504) return fail(503, 'Немає зв\'язку з сервісом озвучки. Сторінка повторить сама.', { provider: status, retry: true });
   if (status >= 500) return fail(503, 'Сервіс озвучки тимчасово недоступний. Сторінка повторить сама.', { provider: status, retry: true });
   return fail(502, `Сервіс озвучки відповів помилкою ${status}. ${detail}`.trim(), { provider: status });
 }
@@ -111,28 +133,66 @@ async function tts(req, env) {
   if (text.length > MAX_TEXT) return fail(413, `Задовгий фрагмент (більше ${MAX_TEXT} символів)`);
   const voice = VOICES.has(body.voice) ? body.voice : 'am_michael';
   const speed = Math.min(1.5, Math.max(0.6, Number(body.speed) || 1));
-  const out = await speak(env, text, voice, speed);
+  const format = body.format === 'mp3' ? 'mp3' : 'wav';
+  const out = await speak(env, text, voice, speed, format);
   if (!out.res.ok) return providerError(out.res.status, out.detail);
-  // Audio (or DeepInfra's JSON with base64 audio) goes to the page as it came
+  // Audio (or JSON with base64 audio, from the oldest route) goes to the page as it came
   return new Response(out.res.body, {
     headers: { 'content-type': out.res.headers.get('content-type') || 'application/octet-stream', 'cache-control': 'no-store', 'x-voice-route': out.route },
   });
 }
 
-/* Setup check: secrets present, key accepted, audio comes back. */
+/* The model's public input schema tells which voices, formats and options DeepInfra accepts. */
+function enumOf(schema, key) {
+  const prop = schema?.properties?.[key];
+  if (!prop) return null;
+  const type = prop.items || prop;
+  if (type.enum) return type.enum;
+  if (type.const) return [type.const];
+  for (const ref of [type.$ref, ...(type.anyOf || []).map(a => a.$ref)]) {
+    const values = ref && schema.definitions?.[ref.split('/').pop()]?.enum;
+    if (values) return values;
+  }
+  return null;
+}
+async function modelInfo(env) {
+  try {
+    const res = await fetch(`${env.DEEPINFRA_BASE || 'https://api.deepinfra.com'}/models/${MODEL}`);
+    if (!res.ok) return null;
+    const schema = (await res.json()).in_schema;
+    const voices = enumOf(schema, 'voice') || enumOf(schema, 'preset_voice');
+    const input = schema?.properties?.input || schema?.properties?.text;
+    return {
+      voices: voices ? voices.length : null,
+      missingVoices: voices ? [...VOICES].filter(v => !voices.includes(v)) : [],
+      formats: enumOf(schema, 'response_format') || enumOf(schema, 'output_format'),
+      speed: !!schema?.properties?.speed,
+      maxInput: input?.maxLength ?? null,
+    };
+  } catch {
+    return null;
+  }
+}
+
+/* Setup check: key accepted, balance available, audio comes back; plus what the model supports. */
 async function check(env) {
   const started = Date.now();
-  const out = await speak(env, 'This is a test.', 'am_michael', 1);
+  const [out, info] = await Promise.all([speak(env, 'This is a test.', 'am_michael', 1), modelInfo(env)]);
   if (!out.res.ok) return providerError(out.res.status, out.detail);
   const bytes = (await out.res.arrayBuffer()).byteLength;
-  return json({ ok: true, route: out.route, contentType: out.res.headers.get('content-type'), bytes, ms: Date.now() - started });
+  return json({ ok: true, route: out.route, tier: out.tier, contentType: out.res.headers.get('content-type'), bytes, ms: Date.now() - started, model: info });
 }
 
 /* ---------- routing ---------- */
 async function api(req, env, url) {
   const path = url.pathname, method = req.method;
   if (path === '/api/status' && method === 'GET') {
-    return json({ password: !!env.SITE_PASSWORD, apiKey: !!env.DEEPINFRA_API_KEY, signedIn: await sessionValid(env, readCookie(req, COOKIE)) });
+    return json({
+      password: !!env.SITE_PASSWORD, apiKey: !!env.DEEPINFRA_API_KEY,
+      weakPassword: !!env.SITE_PASSWORD && env.SITE_PASSWORD.length < 12,
+      tier: configuredTier(env) || 'standard', // for the page's cost estimate
+      signedIn: await sessionValid(env, readCookie(req, COOKIE)),
+    });
   }
   if (path === '/api/login' && method === 'POST') {
     if (!env.SITE_PASSWORD) return fail(409, 'Пароль ще не задано: додай секрет SITE_PASSWORD у Cloudflare.');

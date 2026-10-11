@@ -24,7 +24,7 @@
   header { margin-bottom: 14px; }
   h1 { font-size: 22px; margin: 0; letter-spacing: -.01em; text-wrap: balance; }
   header p { margin: 2px 0 0; color: var(--muted); font-size: 14px; }
-  .langs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin-bottom: 14px; max-width: 560px; }
+  .langs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-bottom: 14px; max-width: 420px; }
   .langs button { border-radius: 99px; padding: 9px 6px; }
   .langs button[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
   .grid { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 16px; align-items: start; }
@@ -180,7 +180,6 @@ const LANGS = [
   { id: "en", name: "English", text: "англійський" },
   { id: "de", name: "Deutsch", text: "німецький" },
   { id: "es", name: "Español", text: "іспанський" },
-  { id: "zh", name: "中文", text: "китайський" },
 ];
 // model: which downloadable voice file the voice lives in. pitch: measured median pitch.
 const VOICES = [
@@ -192,15 +191,10 @@ const VOICES = [
   ["bm_lewis", "en", "Lewis", "UK", "низький"], ["bm_daniel", "en", "Daniel", "UK", "середній"],
   ["de_thorsten", "de", "Thorsten", "Німеччина", "середній"],
   ["em_alex", "es", "Alex", "Іспанія", "вищий"],
-  ["zm_098", "zh", "№ 098", "Мандарин", "низький"], ["zm_029", "zh", "№ 029", "Мандарин", "низький"],
-  ["zm_033", "zh", "№ 033", "Мандарин", "низький"], ["zm_011", "zh", "№ 011", "Мандарин", "середній"],
-  ["zm_025", "zh", "№ 025", "Мандарин", "середній"], ["zm_009", "zh", "№ 009", "Мандарин", "середній"],
-  ["zm_097", "zh", "№ 097", "Мандарин", "середній"], ["zm_012", "zh", "№ 012", "Мандарин", "вищий"],
-  ["zm_010", "zh", "№ 010", "Мандарин", "вищий"], ["zm_050", "zh", "№ 050", "Мандарин", "вищий"],
 ].map(([id, lang, name, accent, pitch, top]) => ({ id, lang, name, accent, pitch, top: !!top,
   model: lang === "es" || lang === "en" ? "en" : lang }));
-const DEFAULT_VOICE = { en: "am_michael", de: "de_thorsten", es: "em_alex", zh: "zm_009" };
-const RATE = { en: 155, de: 130, es: 150, zh: 260 }; // words (Chinese: characters) per minute
+const DEFAULT_VOICE = { en: "am_michael", de: "de_thorsten", es: "em_alex" };
+const RATE = { en: 155, de: 130, es: 150 }; // words per minute
 const voiceById = (id) => VOICES.find((v) => v.id === id);
 const voicesOf = (l) => VOICES.filter((v) => v.lang === l);
 const selected = () => voiceById($("voice").value);
@@ -266,7 +260,7 @@ function onVoiceChange() {
   const v = selected();
   store.set("voice." + lang, v.id);
   $("voiceHint").textContent = lang === "en" ? "★ — найкраща якість за оцінкою авторів моделі." : `Акцент: ${v.accent}.`;
-  const partners = v.lang === "en" || v.lang === "zh" ? voicesOf(lang).filter((x) => x.id !== v.id) : [];
+  const partners = v.lang === "en" ? voicesOf(lang).filter((x) => x.id !== v.id) : [];
   $("mixRow").hidden = !partners.length;
   if (partners.length) { fillSelect($("mixVoice"), partners, store.get("mixVoice." + lang)); $("mixOn").checked = store.get("mixOn." + lang, false); }
   else $("mixOn").checked = false;
@@ -290,10 +284,9 @@ function updateLabels() {
 function updateStats() {
   const text = $("text").value;
   const latin = (text.match(/[\p{Script=Latin}\d'’]+/gu) || []).length;
-  const han = (text.match(/\p{Script=Han}/gu) || []).length;
-  const units = lang === "zh" ? han + latin : latin;
+  const units = latin;
   const min = units / RATE[lang] / +$("speed").value, m = Math.floor(min), s = Math.round((min - m) * 60);
-  const noun = lang === "zh" ? "символів" : "слів";
+  const noun = "слів";
   $("stats").textContent = units ? `${units} ${noun} · ≈ ${m} хв ${s} с аудіо` : `0 ${noun}`;
   store.set("text." + lang, text);
 }
