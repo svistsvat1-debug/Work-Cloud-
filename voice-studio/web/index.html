@@ -1,0 +1,541 @@
+<title>Voice Studio</title>
+<style>
+  /* Layout: one column on phones with a fixed action bar; text and settings side by side on wide screens */
+  :root {
+    --bg: #f4f5f7; --panel: #ffffff; --ink: #15171c; --muted: #636975; --line: #e1e4ea;
+    --accent: #2357d9; --accent-ink: #ffffff; --soft: #edf2fd; --ok: #1a7f37; --err: #c62828;
+    --radius: 14px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0e1013; --panel: #171a1f; --ink: #eceef2; --muted: #9aa1ad; --line: #2a2e36;
+      --accent: #6e9bff; --accent-ink: #0b0d10; --soft: #1a2232; --ok: #3fb950; --err: #ff6b6b;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0e1013; --panel: #171a1f; --ink: #eceef2; --muted: #9aa1ad; --line: #2a2e36;
+    --accent: #6e9bff; --accent-ink: #0b0d10; --soft: #1a2232; --ok: #3fb950; --err: #ff6b6b;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 20px 16px 48px; }
+  header { margin-bottom: 14px; }
+  h1 { font-size: 22px; margin: 0; letter-spacing: -.01em; text-wrap: balance; }
+  header p { margin: 2px 0 0; color: var(--muted); font-size: 14px; }
+  .langs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin-bottom: 14px; max-width: 560px; }
+  .langs button { border-radius: 99px; padding: 9px 6px; }
+  .langs button[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .grid { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 16px; align-items: start; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; min-width: 0; }
+  textarea { width: 100%; resize: vertical; border: 1px solid var(--line); border-radius: 10px; background: transparent;
+    color: var(--ink); padding: 12px; font: inherit; font-size: 16px; line-height: 1.6; }
+  #text { min-height: 360px; }
+  textarea:focus, select:focus, input:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .meta { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 8px; color: var(--muted); font-size: 13px; flex-wrap: wrap; }
+  label.field { display: block; font-size: 13px; color: var(--muted); margin: 0 0 6px; }
+  select { width: 100%; min-width: 0; padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); color: var(--ink); font: inherit; font-size: 16px; }
+  .row { display: flex; gap: 8px; align-items: center; }
+  .row > select { flex: 1; }
+  input[type=range] { width: 100%; accent-color: var(--accent); }
+  .range-head { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; color: var(--muted); margin: 14px 0 4px; }
+  .range-head b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; text-align: right; }
+  button { font: inherit; cursor: pointer; border-radius: 10px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); padding: 9px 12px; }
+  button:hover { border-color: var(--muted); }
+  button:disabled { opacity: .5; cursor: default; }
+  .primary { width: 100%; padding: 13px; background: var(--accent); color: var(--accent-ink); border: 0; font-weight: 600; font-size: 16px; }
+  .link { border: 0; background: none; color: var(--muted); padding: 0; text-decoration: underline; }
+  .check { display: flex; gap: 8px; align-items: center; margin-top: 14px; font-size: 14px; cursor: pointer; }
+  .check input { accent-color: var(--accent); width: 18px; height: 18px; }
+  .mix { margin-top: 10px; padding: 12px; border-radius: 10px; background: var(--soft); }
+  .mix .range-head { margin-top: 10px; }
+  .hint { font-size: 12px; color: var(--muted); margin-top: 6px; }
+  .model { margin-top: 10px; padding: 10px 12px; border-radius: 10px; background: var(--soft); font-size: 13px; display: grid; gap: 8px; }
+  details { margin-top: 14px; border-top: 1px solid var(--line); padding-top: 12px; }
+  summary { cursor: pointer; font-size: 14px; }
+  #pron { min-height: 110px; font: 13px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace; margin-top: 8px; }
+  .actions { margin-top: 16px; display: grid; gap: 10px; }
+  .bar { height: 8px; background: var(--line); border-radius: 99px; overflow: hidden; }
+  .bar > i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .3s; }
+  .msg { font-size: 13px; }
+  .msg:empty { display: none; }
+  .ok { color: var(--ok); } .err { color: var(--err); }
+  .result { margin-top: 16px; display: grid; gap: 8px; }
+  audio { width: 100%; }
+  .files { display: flex; gap: 8px; flex-wrap: wrap; }
+  h2 { font-size: 15px; margin: 26px 0 10px; }
+  .hist { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .item { display: grid; gap: 6px; }
+  .item .top { display: flex; justify-content: space-between; gap: 10px; font-size: 13px; color: var(--muted); }
+  .item .text { font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 600; padding: 1px 6px; border-radius: 6px; background: var(--soft); color: var(--accent); margin-right: 6px; }
+  footer { margin-top: 26px; font-size: 12px; color: var(--muted); display: grid; gap: 6px; max-width: 70ch; }
+  @media (max-width: 860px) {
+    .grid { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+    .wrap { padding-block: 14px 150px; }
+    .card { padding: 14px; }
+    #text { min-height: 32vh; }
+    button, select { min-height: 44px; }
+    .link { min-height: 0; }
+    .actions { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; margin: 0; background: var(--panel);
+      border-top: 1px solid var(--line); padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px)); }
+  }
+  @media (prefers-reduced-motion: reduce) { .bar > i { transition: none; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Voice Studio</h1>
+    <p>Текст → природний чоловічий голос. Озвучка робиться прямо на цьому пристрої, без лімітів.</p>
+  </header>
+
+  <nav class="langs" id="langs" role="tablist" aria-label="Мова тексту"></nav>
+
+  <div class="grid">
+    <section class="card">
+      <textarea id="text" placeholder="Вставте текст сценарію сюди.&#10;&#10;Порожній рядок між абзацами дає довшу паузу."></textarea>
+      <div class="meta">
+        <span id="stats">0 слів</span>
+        <button class="link" id="clear" type="button">Очистити</button>
+      </div>
+    </section>
+
+    <aside class="card">
+      <label class="field" for="voice">Голос</label>
+      <div class="row">
+        <select id="voice"></select>
+        <button id="preview" type="button" aria-label="Прослухати голос">▶</button>
+      </div>
+      <div class="hint" id="voiceHint"></div>
+      <div class="model" id="model">
+        <div id="modelText">Перевіряю голоси на пристрої...</div>
+        <div class="bar" id="modelBar" hidden><i id="modelFill"></i></div>
+        <button id="modelBtn" type="button" hidden>Завантажити голос</button>
+      </div>
+
+      <div id="mixRow">
+        <label class="check"><input type="checkbox" id="mixOn"> Свій унікальний голос (мікс двох)</label>
+        <div class="mix" id="mixBox" hidden>
+          <label class="field" for="mixVoice">Другий голос</label>
+          <select id="mixVoice"></select>
+          <div class="range-head"><span>Пропорція</span><b id="mixVal"></b></div>
+          <input type="range" id="mix" min="0.1" max="0.9" step="0.05" value="0.6">
+          <div class="hint">Збережіть цю пропорцію, і у каналу буде свій постійний голос.</div>
+        </div>
+      </div>
+
+      <div class="range-head"><span>Швидкість</span><b id="speedVal"></b></div>
+      <input type="range" id="speed" min="0.75" max="1.3" step="0.01" value="1">
+
+      <details>
+        <summary>Паузи</summary>
+        <div class="range-head"><span>Між реченнями</span><b id="spVal"></b></div>
+        <input type="range" id="sp" min="0.1" max="1" step="0.05" value="0.35">
+        <div class="range-head"><span>Між абзацами</span><b id="ppVal"></b></div>
+        <input type="range" id="pp" min="0.3" max="2" step="0.1" value="0.8">
+      </details>
+
+      <details>
+        <summary>Словник вимови</summary>
+        <div class="hint">Один рядок: <code>слово = як читати</code>, наприклад <code>SaaS = sass</code>. Діє для всіх мов.</div>
+        <textarea id="pron" spellcheck="false">SaaS = sass</textarea>
+      </details>
+
+      <div class="actions">
+        <button class="primary" id="go" type="button">Озвучити</button>
+        <div id="progress" hidden>
+          <div class="bar"><i id="barFill"></i></div>
+          <div class="meta"><span id="progText">Готую...</span><button class="link" id="cancel" type="button">Скасувати</button></div>
+        </div>
+        <div class="msg err" id="err"></div>
+      </div>
+
+      <div class="result" id="result" hidden>
+        <div class="msg ok" id="resultText"></div>
+        <audio id="player" controls></audio>
+        <div class="files" id="resultFiles"></div>
+        <div class="msg" id="saveMsg"></div>
+      </div>
+    </aside>
+  </div>
+
+  <h2>Останні озвучки на цьому пристрої</h2>
+  <div class="hist" id="hist"></div>
+
+  <footer>
+    <span>Не закривайте сторінку й не вимикайте екран під час озвучки: телефон призупиняє фонові сторінки.</span>
+    <span>Голоси дозволені для комерційного використання: Kokoro-82M (Apache 2.0), Thorsten (CC0). Фонеми: espeak-ng (GPL-3.0), рушій ONNX Runtime (MIT).</span>
+  </footer>
+</div>
+
+<script type="module">
+const $ = (id) => document.getElementById(id);
+const store = {
+  get(k, d) { try { const v = localStorage.getItem("vs." + k); return v === null ? d : JSON.parse(v); } catch { return d; } },
+  set(k, v) { try { localStorage.setItem("vs." + k, JSON.stringify(v)); } catch {} },
+};
+
+const LANGS = [
+  { id: "en", name: "English", text: "англійський" },
+  { id: "de", name: "Deutsch", text: "німецький" },
+  { id: "es", name: "Español", text: "іспанський" },
+  { id: "zh", name: "中文", text: "китайський" },
+];
+// model: which downloadable voice file the voice lives in. pitch: measured median pitch.
+const VOICES = [
+  ["am_michael", "en", "Michael", "US", "середній", true], ["am_fenrir", "en", "Fenrir", "US", "вищий", true],
+  ["am_puck", "en", "Puck", "US", "середній", true], ["am_onyx", "en", "Onyx", "US", "низький"],
+  ["am_adam", "en", "Adam", "US", "середній"], ["am_echo", "en", "Echo", "US", "середній"],
+  ["am_liam", "en", "Liam", "US", "вищий"], ["am_eric", "en", "Eric", "US", "вищий"],
+  ["bm_george", "en", "George", "UK", "вищий", true], ["bm_fable", "en", "Fable", "UK", "середній", true],
+  ["bm_lewis", "en", "Lewis", "UK", "низький"], ["bm_daniel", "en", "Daniel", "UK", "середній"],
+  ["de_thorsten", "de", "Thorsten", "Німеччина", "середній"],
+  ["em_alex", "es", "Alex", "Іспанія", "вищий"],
+  ["zm_098", "zh", "№ 098", "Мандарин", "низький"], ["zm_029", "zh", "№ 029", "Мандарин", "низький"],
+  ["zm_033", "zh", "№ 033", "Мандарин", "низький"], ["zm_011", "zh", "№ 011", "Мандарин", "середній"],
+  ["zm_025", "zh", "№ 025", "Мандарин", "середній"], ["zm_009", "zh", "№ 009", "Мандарин", "середній"],
+  ["zm_097", "zh", "№ 097", "Мандарин", "середній"], ["zm_012", "zh", "№ 012", "Мандарин", "вищий"],
+  ["zm_010", "zh", "№ 010", "Мандарин", "вищий"], ["zm_050", "zh", "№ 050", "Мандарин", "вищий"],
+].map(([id, lang, name, accent, pitch, top]) => ({ id, lang, name, accent, pitch, top: !!top,
+  model: lang === "es" || lang === "en" ? "en" : lang }));
+const DEFAULT_VOICE = { en: "am_michael", de: "de_thorsten", es: "em_alex", zh: "zm_009" };
+const RATE = { en: 155, de: 130, es: 150, zh: 260 }; // words (Chinese: characters) per minute
+const voiceById = (id) => VOICES.find((v) => v.id === id);
+const voicesOf = (l) => VOICES.filter((v) => v.lang === l);
+const selected = () => voiceById($("voice").value);
+
+let lang = "en", busy = false, models = {}, saver = null, saverChecked = false, current = null;
+
+// ---------- engine worker
+let worker, nextId = 1;
+const pending = new Map();
+function startWorker() {
+  worker = new Worker(new URL("engine/worker.mjs", location.href), { type: "module" });
+  worker.onmessage = ({ data }) => {
+    if (data.type === "engine") return onEngine(data);
+    if (data.type === "progress") return onProgress(data);
+    const p = pending.get(data.id);
+    if (!p) return;
+    if (data.type === "done") { pending.delete(data.id); p.resolve(data.result); }
+    if (data.type === "error") { pending.delete(data.id); p.reject(new Error(data.error)); }
+  };
+  worker.onerror = (e) => { $("modelText").textContent = "Не вдалося запустити рушій озвучки: " + (e.message || "помилка"); };
+}
+function call(type, payload = {}) {
+  const id = nextId++;
+  return new Promise((resolve, reject) => { pending.set(id, { resolve, reject }); worker.postMessage({ type, id, ...payload }); });
+}
+
+// ---------- language + voice
+function renderLangs() {
+  $("langs").innerHTML = "";
+  for (const l of LANGS) {
+    const b = document.createElement("button");
+    b.type = "button"; b.setAttribute("role", "tab"); b.setAttribute("aria-selected", String(l.id === lang));
+    b.textContent = l.name; b.onclick = () => setLang(l.id);
+    $("langs").appendChild(b);
+  }
+}
+function fillSelect(sel, list, value) {
+  sel.innerHTML = "";
+  const accents = [...new Set(list.map((v) => v.accent))];
+  for (const accent of accents) {
+    const parent = accents.length > 1 ? document.createElement("optgroup") : sel;
+    if (accents.length > 1) { parent.label = { US: "Американський акцент", UK: "Британський акцент" }[accent] || accent; sel.appendChild(parent); }
+    for (const v of list.filter((x) => x.accent === accent)) {
+      const o = document.createElement("option");
+      o.value = v.id; o.textContent = `${v.top ? "★ " : ""}${v.name} · тембр ${v.pitch}`;
+      parent.appendChild(o);
+    }
+  }
+  sel.value = list.some((v) => v.id === value) ? value : list[0].id;
+}
+function setLang(l) {
+  store.set("text." + lang, $("text").value);
+  lang = l; store.set("lang", l);
+  renderLangs();
+  fillSelect($("voice"), voicesOf(l), store.get("voice." + l, DEFAULT_VOICE[l]));
+  $("text").value = store.get("text." + l, "");
+  $("text").lang = l;
+  $("err").textContent = "";
+  onVoiceChange();
+  updateStats();
+}
+function onVoiceChange() {
+  const v = selected();
+  store.set("voice." + lang, v.id);
+  $("voiceHint").textContent = lang === "en" ? "★ — найкраща якість за оцінкою авторів моделі." : `Акцент: ${v.accent}.`;
+  const partners = v.lang === "en" || v.lang === "zh" ? voicesOf(lang).filter((x) => x.id !== v.id) : [];
+  $("mixRow").hidden = !partners.length;
+  if (partners.length) { fillSelect($("mixVoice"), partners, store.get("mixVoice." + lang)); $("mixOn").checked = store.get("mixOn." + lang, false); }
+  else $("mixOn").checked = false;
+  updateLabels(); showModel();
+}
+function spec() {
+  const s = { voice: $("voice").value };
+  if ($("mixOn").checked && !$("mixRow").hidden) { s.mix_voice = $("mixVoice").value; s.mix = +$("mix").value; }
+  return s;
+}
+function updateLabels() {
+  $("speedVal").textContent = (+$("speed").value).toFixed(2) + "×";
+  $("spVal").textContent = (+$("sp").value).toFixed(2) + " с";
+  $("ppVal").textContent = (+$("pp").value).toFixed(1) + " с";
+  const w = Math.round(+$("mix").value * 100), name = (id) => (voiceById(id) || {}).name || "";
+  $("mixVal").textContent = `${name($("voice").value)} ${w}% · ${name($("mixVoice").value)} ${100 - w}%`;
+  $("mixBox").hidden = !$("mixOn").checked;
+  for (const id of ["mix", "speed", "sp", "pp"]) store.set(id, $(id).value);
+  if (!$("mixRow").hidden) { store.set("mixOn." + lang, $("mixOn").checked); store.set("mixVoice." + lang, $("mixVoice").value); }
+}
+function updateStats() {
+  const text = $("text").value;
+  const latin = (text.match(/[\p{Script=Latin}\d'’]+/gu) || []).length;
+  const han = (text.match(/\p{Script=Han}/gu) || []).length;
+  const units = lang === "zh" ? han + latin : latin;
+  const min = units / RATE[lang] / +$("speed").value, m = Math.floor(min), s = Math.round((min - m) * 60);
+  const noun = lang === "zh" ? "символів" : "слів";
+  $("stats").textContent = units ? `${units} ${noun} · ≈ ${m} хв ${s} с аудіо` : `0 ${noun}`;
+  store.set("text." + lang, text);
+}
+
+// ---------- model status
+const mb = (b) => Math.round(b / 1e6);
+function showModel() {
+  const key = selected().model, m = models[key];
+  $("modelBar").hidden = true; $("modelBtn").hidden = true;
+  if (!m) { $("modelText").textContent = "Перевіряю голоси на пристрої..."; return; }
+  if (m.loaded) $("modelText").textContent = "Голос готовий.";
+  else if (m.cached) $("modelText").textContent = "Голос збережено на пристрої. Озвучка працює без інтернету.";
+  else {
+    $("modelText").textContent = `Перший раз голос для цієї мови завантажиться на пристрій: ${mb(m.size)} MB (краще через Wi-Fi). Далі без інтернету.`;
+    $("modelBtn").hidden = busy;
+  }
+}
+function onEngine(d) {
+  if (d.model !== selected().model) return;
+  if (d.state === "downloading") {
+    $("modelText").textContent = `Завантажую голос: ${d.pct}% із ${mb(models[d.model]?.size || 0)} MB. Це лише перший раз.`;
+    $("modelBar").hidden = false; $("modelFill").style.width = d.pct + "%"; $("modelBtn").hidden = true;
+  } else if (d.state === "loading") {
+    $("modelText").textContent = "Готую голос..."; $("modelBar").hidden = true;
+  } else if (d.state === "ready") {
+    models[d.model] = { ...(models[d.model] || {}), cached: true, loaded: true };
+    for (const k of Object.keys(models)) if (k !== d.model) models[k].loaded = false;
+    showModel();
+  }
+}
+async function refreshStatus() {
+  try { models = (await call("status")).models; } catch (e) { $("modelText").textContent = e.message; return; }
+  showModel();
+}
+
+// ---------- audio + saving
+function fmtTime(sec) { const m = Math.floor(sec / 60), s = Math.round(sec % 60); return `${m}:${String(s).padStart(2, "0")}`; }
+function stamp() { const d = new Date(), p = (n) => String(n).padStart(2, "0"); return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}_${p(d.getHours())}${p(d.getMinutes())}`; }
+function slug(text) { return (text.normalize("NFKD").match(/[A-Za-z0-9]+/g) || []).slice(0, 4).join("-").toLowerCase() || "voice"; }
+
+const crcTable = Array.from({ length: 256 }, (_, n) => { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1; return c >>> 0; });
+function crc32(bytes) { let c = 0xffffffff; for (const b of bytes) c = crcTable[(c ^ b) & 0xff] ^ (c >>> 8); return (c ^ 0xffffffff) >>> 0; }
+// Minimal ZIP (stored, no compression): the artifact viewer saves .zip but not .wav
+function zip(files) {
+  const enc = new TextEncoder(), parts = [], central = [];
+  let offset = 0;
+  for (const f of files) {
+    const name = enc.encode(f.name), data = f.data instanceof Uint8Array ? f.data : enc.encode(f.data), crc = crc32(data);
+    const head = new DataView(new ArrayBuffer(30));
+    head.setUint32(0, 0x04034b50, true); head.setUint16(4, 20, true); head.setUint16(6, 0x0800, true);
+    head.setUint32(14, crc, true); head.setUint32(18, data.length, true); head.setUint32(22, data.length, true); head.setUint16(26, name.length, true);
+    parts.push(head, name, data);
+    const cd = new DataView(new ArrayBuffer(46));
+    cd.setUint32(0, 0x02014b50, true); cd.setUint16(4, 20, true); cd.setUint16(6, 20, true); cd.setUint16(8, 0x0800, true);
+    cd.setUint32(16, crc, true); cd.setUint32(20, data.length, true); cd.setUint32(24, data.length, true); cd.setUint16(28, name.length, true); cd.setUint32(42, offset, true);
+    central.push(cd, name);
+    offset += 30 + name.length + data.length;
+  }
+  const size = central.reduce((s, p) => s + p.byteLength, 0), end = new DataView(new ArrayBuffer(22));
+  end.setUint32(0, 0x06054b50, true); end.setUint16(8, files.length, true); end.setUint16(10, files.length, true);
+  end.setUint32(12, size, true); end.setUint32(16, offset, true);
+  return new Blob([...parts, ...central, end], { type: "application/zip" });
+}
+
+function playable(audioEl, wav) {
+  if (audioEl.dataset.url) URL.revokeObjectURL(audioEl.dataset.url);
+  audioEl.dataset.url = URL.createObjectURL(new Blob([wav], { type: "audio/wav" }));
+  audioEl.src = audioEl.dataset.url;
+}
+
+function saveButtons(box, msg, item) {
+  box.innerHTML = "";
+  const base = `${item.date}_${item.lang}_${slug(item.text)}`;
+  const add = (label, fn) => { const b = document.createElement("button"); b.type = "button"; b.textContent = label; b.onclick = fn; box.appendChild(b); };
+  if (saver) {
+    add("Зберегти (.zip: WAV + субтитри)", async () => {
+      msg.textContent = "";
+      try {
+        await saver.save({ filename: base + ".zip", data: zip([
+          { name: base + ".wav", data: new Uint8Array(item.wav) },
+          { name: base + ".srt", data: item.srt },
+          { name: base + ".txt", data: item.text },
+        ]) });
+        msg.textContent = "Збережено. Розпакуйте .zip у «Файлах», щоб додати WAV у монтаж."; msg.className = "msg ok";
+      } catch (e) {
+        if (e?.code !== "declined") { msg.textContent = "Не вдалося зберегти: " + (e?.message || e); msg.className = "msg err"; }
+      }
+    });
+  } else if (window.claude) {
+    msg.textContent = saverChecked ? "Збереження файлів недоступне в цьому перегляді. Відкрийте сторінку в застосунку Claude або браузері." : "";
+  } else {
+    const link = (label, blob, name) => {
+      const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name; a.textContent = label;
+      a.className = "link"; a.style.padding = "10px 4px"; box.appendChild(a);
+    };
+    link("⬇ WAV", new Blob([item.wav], { type: "audio/wav" }), base + ".wav");
+    link("⬇ Субтитри SRT", new Blob([item.srt], { type: "text/plain" }), base + ".srt");
+  }
+}
+
+// ---------- history (IndexedDB on this device)
+const histDb = new Promise((resolve) => {
+  try {
+    const r = indexedDB.open("voice-studio-history", 1);
+    r.onupgradeneeded = () => r.result.createObjectStore("items", { keyPath: "id", autoIncrement: true });
+    r.onsuccess = () => resolve(r.result); r.onerror = () => resolve(null);
+  } catch { resolve(null); }
+});
+async function histAll() {
+  const db = await histDb; if (!db) return [];
+  return new Promise((res) => { try { const r = db.transaction("items").objectStore("items").getAll(); r.onsuccess = () => res(r.result || []); r.onerror = () => res([]); } catch { res([]); } });
+}
+async function histAdd(item) {
+  const db = await histDb; if (!db) return;
+  const all = await histAll();
+  await new Promise((res) => {
+    try {
+      const tx = db.transaction("items", "readwrite"), st = tx.objectStore("items");
+      st.add(item);
+      all.sort((a, b) => a.id - b.id).slice(0, Math.max(0, all.length - 7)).forEach((old) => st.delete(old.id));
+      tx.oncomplete = tx.onerror = tx.onabort = () => res();
+    } catch { res(); }
+  });
+}
+async function renderHistory() {
+  const items = (await histAll()).sort((a, b) => b.id - a.id);
+  const box = $("hist");
+  box.innerHTML = items.length ? "" : `<div class="hint">Тут з'являться ваші готові озвучки.</div>`;
+  for (const it of items) {
+    const div = document.createElement("div");
+    div.className = "card item";
+    div.innerHTML = `<div class="top"><span><span class="badge"></span><span class="when"></span></span><span>${fmtTime(it.duration)}</span></div>
+      <div class="text"></div><audio controls preload="none"></audio><div class="files"></div><div class="msg"></div>`;
+    div.querySelector(".badge").textContent = it.lang.toUpperCase();
+    div.querySelector(".when").textContent = `${it.date.replace("_", " ")} · ${(voiceById(it.voice) || {}).name || ""}`;
+    div.querySelector(".text").textContent = it.text;
+    playable(div.querySelector("audio"), it.wav);
+    saveButtons(div.querySelector(".files"), div.querySelector(".msg"), it);
+    box.appendChild(div);
+  }
+}
+
+// ---------- generate
+let wakeLock = null;
+async function keepAwake(on) {
+  try { if (on) wakeLock = await navigator.wakeLock?.request("screen"); else { await wakeLock?.release(); wakeLock = null; } } catch {}
+}
+function pronMap() {
+  const obj = {};
+  for (const line of $("pron").value.split("\n")) { const i = line.indexOf("="); if (i > 0) obj[line.slice(0, i).trim()] = line.slice(i + 1).trim(); }
+  store.set("pron", $("pron").value);
+  return obj;
+}
+function setBusy(on) {
+  busy = on;
+  $("go").disabled = on; $("preview").disabled = on;
+  $("progress").hidden = !on;
+  showModel();
+}
+function onProgress(d) {
+  if (!d.total) return;
+  $("barFill").style.width = Math.round((d.done / d.total) * 100) + "%";
+  let eta = "";
+  if (d.done > 0 && d.done < d.total) {
+    const left = (d.elapsed / d.done) * (d.total - d.done);
+    eta = left > 90 ? ` · залишилось ≈ ${Math.round(left / 60)} хв` : ` · залишилось ≈ ${Math.max(5, Math.round(left / 5) * 5)} с`;
+  }
+  $("progText").textContent = `Озвучую: ${d.done} з ${d.total}${eta}`;
+}
+
+async function generate() {
+  if (busy) return;
+  $("err").textContent = "";
+  const text = $("text").value.trim();
+  if (!text) { $("err").textContent = "Спочатку вставте текст."; return; }
+  setBusy(true); $("result").hidden = true;
+  $("barFill").style.width = "0"; $("progText").textContent = "Готую...";
+  keepAwake(true);
+  try {
+    const r = await call("generate", { text, lang, spec: spec(), speed: +$("speed").value,
+      sentencePause: +$("sp").value, paragraphPause: +$("pp").value, pron: pronMap() });
+    const item = { date: stamp(), lang, voice: $("voice").value, text: text.slice(0, 2000), wav: r.wav, srt: r.srt, duration: r.duration };
+    current = item;
+    const skipped = r.skipped ? ` · пропущено фрагментів: ${r.skipped}` : "";
+    $("resultText").textContent = `Готово: ${fmtTime(r.duration)} аудіо за ${fmtTime(r.seconds)}${skipped}`;
+    playable($("player"), r.wav);
+    $("saveMsg").textContent = "";
+    saveButtons($("resultFiles"), $("saveMsg"), item);
+    $("result").hidden = false;
+    if (matchMedia("(max-width: 860px)").matches) $("result").scrollIntoView({ behavior: "smooth", block: "center" });
+    await histAdd(item); renderHistory();
+  } catch (e) {
+    $("err").textContent = e.message;
+  } finally {
+    setBusy(false); keepAwake(false); refreshStatus();
+  }
+}
+
+async function preview() {
+  if (busy) return;
+  $("err").textContent = "";
+  setBusy(true); $("progress").hidden = true;
+  const btn = $("preview"); btn.textContent = "…";
+  try {
+    const r = await call("preview", { lang, spec: spec(), speed: +$("speed").value });
+    const a = new Audio(URL.createObjectURL(new Blob([r.wav], { type: "audio/wav" })));
+    await a.play();
+  } catch (e) { $("err").textContent = e.message; }
+  btn.textContent = "▶"; setBusy(false); refreshStatus();
+}
+
+async function prepare() {
+  if (busy) return;
+  setBusy(true); $("progress").hidden = true;
+  try { models = (await call("prepare", { model: selected().model })).models; }
+  catch (e) { $("err").textContent = e.message; }
+  setBusy(false);
+}
+
+// ---------- start
+for (const id of ["mix", "speed", "sp", "pp"]) $(id).value = store.get(id, $(id).value);
+$("pron").value = store.get("pron", $("pron").value);
+lang = LANGS.some((l) => l.id === store.get("lang")) ? store.get("lang") : "en";
+startWorker();
+setLang(lang);
+refreshStatus();
+renderHistory();
+$("voice").addEventListener("change", () => { onVoiceChange(); });
+for (const id of ["mixVoice", "mix", "speed", "sp", "pp", "mixOn"]) $(id).addEventListener("input", updateLabels);
+$("speed").addEventListener("input", updateStats);
+$("text").addEventListener("input", updateStats);
+$("pron").addEventListener("change", pronMap);
+$("clear").onclick = () => { $("text").value = ""; updateStats(); $("text").focus(); };
+$("preview").onclick = preview;
+$("go").onclick = generate;
+$("modelBtn").onclick = prepare;
+$("cancel").onclick = () => worker.postMessage({ type: "cancel" });
+$("text").addEventListener("keydown", (e) => { if ((e.ctrlKey || e.metaKey) && e.key === "Enter") generate(); });
+// Saving files inside the Claude viewer goes through its downloads capability
+if (window.claude?.use) window.claude.use("downloads").then((d) => {
+  saver = d; saverChecked = true;
+  if (current) saveButtons($("resultFiles"), $("saveMsg"), current);
+  renderHistory();
+});
+</script>
