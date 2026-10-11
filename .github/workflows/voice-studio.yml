@@ -25,6 +25,8 @@ jobs:
       DEEPINFRA_API_KEY: ${{ secrets.DEEPINFRA_API_KEY }}
       SITE_PASSWORD: ${{ secrets.SITE_PASSWORD }}
     steps:
+      - uses: actions/checkout@v4
+
       - name: Check secrets
         id: secrets
         run: |
@@ -38,9 +40,6 @@ jobs:
           else
             echo "ready=true" >> "$GITHUB_OUTPUT"
           fi
-
-      - uses: actions/checkout@v4
-        if: steps.secrets.outputs.ready == 'true'
 
       - uses: actions/setup-node@v4
         if: steps.secrets.outputs.ready == 'true'
