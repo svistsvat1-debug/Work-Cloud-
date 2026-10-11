@@ -5,7 +5,7 @@ title Voice Studio
 if exist ".venv\Scripts\python.exe" goto install
 
 set "PY="
-for %%V in (3.12 3.11 3.13 3.10) do (
+for %%V in (3.12 3.11 3.10 3.13) do (
   if not defined PY (
     py -%%V -c "import sys" >nul 2>&1 && set "PY=py -%%V"
   )

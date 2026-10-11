@@ -2,3 +2,6 @@ kokoro-onnx>=0.6.1,<0.7
 soundfile>=0.12
 numpy>=1.26
 lameenc>=1.7
+segno>=1.6
+# Chinese text frontend; misaki 0.9+ supports Python 3.10-3.12 only
+misaki[zh]==0.9.4; python_version < "3.13"
