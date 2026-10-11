@@ -57,8 +57,9 @@ jobs:
       - name: Set site secrets
         if: steps.secrets.outputs.ready == 'true'
         run: |
-          printf '%s' "$DEEPINFRA_API_KEY" | npx wrangler secret put DEEPINFRA_API_KEY
-          printf '%s' "$SITE_PASSWORD" | npx wrangler secret put SITE_PASSWORD
+          # A pasted secret often carries a trailing newline or spaces
+          printf '%s' "$DEEPINFRA_API_KEY" | tr -d '[:space:]' | npx wrangler secret put DEEPINFRA_API_KEY
+          printf '%s' "$SITE_PASSWORD" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' | tr -d '\n\r' | npx wrangler secret put SITE_PASSWORD
 
       - name: Check the site answers
         if: steps.secrets.outputs.ready == 'true'

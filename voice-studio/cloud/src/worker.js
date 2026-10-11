@@ -88,7 +88,7 @@ const configuredTier = env => {
 async function speak(env, text, voice, speed, format = 'wav') {
   const base = env.DEEPINFRA_BASE || 'https://api.deepinfra.com';
   const tier = tierRejected ? '' : configuredTier(env);
-  const headers = { authorization: `Bearer ${env.DEEPINFRA_API_KEY}`, 'content-type': 'application/json' };
+  const headers = { authorization: `Bearer ${env.DEEPINFRA_API_KEY.trim()}`, 'content-type': 'application/json' };
   const plain = { model: MODEL, input: text, voice, speed, response_format: format };
   const openai = tier ? [{ ...plain, service_tier: tier }, plain] : [plain];
   let routes = [
