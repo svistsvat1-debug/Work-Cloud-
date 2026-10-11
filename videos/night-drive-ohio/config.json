@@ -1,0 +1,50 @@
+{
+  "seed": 7,
+  "fps": 24,
+  "duration": 987.0,
+  "speed": 20,
+  "width": 1920,
+  "height": 1080,
+  "renderScale": 1,
+  "sceneScale": 1,
+  "trucks": [
+    24.0,
+    117.3,
+    184.1,
+    250.2,
+    338.6,
+    429.1,
+    500.6,
+    587.8,
+    670.3,
+    728.0,
+    826.6,
+    918.5
+  ],
+  "towns": [
+    {
+      "t": 150.0
+    },
+    {
+      "t": 395.0
+    },
+    {
+      "t": 640.0
+    },
+    {
+      "t": 885.0
+    }
+  ],
+  "fovV": 47,
+  "pitch": -0.03,
+  "exposure": 12,
+  "msaa": 4,
+  "volScale": 4,
+  "headlight": 650,
+  "truckLight": 420,
+  "fogSigma": 0.011,
+  "mist": 0.022,
+  "rainCount": 7000,
+  "wiperPeriod": 2.8,
+  "wiperStroke": 0.85
+}

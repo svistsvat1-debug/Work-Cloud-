@@ -1,0 +1,13 @@
+{
+  "name": "night-drive",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Procedural night truck-drive renderer (three.js + headless Chromium + FFmpeg)",
+  "type": "module",
+  "scripts": {
+    "render": "node render.mjs"
+  },
+  "dependencies": {
+    "three": "0.169.0"
+  }
+}

@@ -5,3 +5,8 @@ studio/node_modules/
 studio/out/
 studio/public/gen/
 videos/*/music.wav
+tools/night-drive/node_modules/
+videos/*/frames/
+videos/*/parts/
+videos/night-drive-ohio/render/
+__pycache__/
