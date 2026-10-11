@@ -1,0 +1,5 @@
+.venv/
+models/
+output/
+pronunciations.json
+__pycache__/

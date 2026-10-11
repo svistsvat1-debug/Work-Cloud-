@@ -1,0 +1,4 @@
+kokoro-onnx>=0.6.1,<0.7
+soundfile>=0.12
+numpy>=1.26
+lameenc>=1.7
