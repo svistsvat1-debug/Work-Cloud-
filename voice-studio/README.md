@@ -77,6 +77,23 @@
   - DE: `5 €`, `$5`, `z.B.`, `d.h.`, `bzw.`, `usw.`, `Nr.`;
   - ES: `1.500 €` → "mil quinientos euros", `$5`, `p. ej.`, `EE. UU.`, `Sr.`/`Sra.`.
 
+  Час, дати, діапазони й одиниці читаються так, як їх кажуть люди, а субтитри лишаються як у тексті:
+
+  | Мова | Написано | Звучить |
+  |---|---|---|
+  | EN | `7.00 AM`, `7:00am`, `19:00` | seven AM, seven PM |
+  | EN | `7:05 p.m.`, `7:30`, `00:00` | seven oh five PM, seven thirty, midnight |
+  | EN | `6-7 AM`, `9 AM-5 PM`, `Mon-Fri` | six to seven AM, nine AM to five PM, Monday to Friday |
+  | EN | `Oct. 11, 2026`, `11.10.2026`, `10/11/2026` | October eleventh, twenty twenty-six |
+  | EN | `5-10 minutes`, `1 1/2 cups`, `3x10` | five to ten minutes, one and a half cups, three by ten |
+  | EN | `10 min`, `2L`, `a 5 km run`, `8 hrs`, `25°C` | ten minutes, two liters, a five kilometer run, eight hours, degrees Celsius |
+  | DE | `7:00 Uhr`, `7.30 Uhr`, `am 11.10.2026` | sieben Uhr, sieben Uhr dreißig, am elften Oktober |
+  | DE | `5-10 min`, `1 l`, `Mo-Fr` | fünf bis zehn Minuten, ein Liter, Montag bis Freitag |
+  | ES | `a las 7:30 a. m.`, `19:00`, `11/10/2026` | a las siete y media de la mañana, siete de la tarde, once de octubre |
+  | ES | `5-10 min`, `1 km`, `lun-vie` | cinco a diez minutos, un kilómetro, lunes a viernes |
+
+  Тире з пробілами (`7:00 AM – wake up`) дає коротку паузу.
+
   Також прибирає markdown-розмітку (`**`, `#`, маркери списків), якщо текст скопійовано з ChatGPT.
 - Якщо в тексті трапляться літери іншої мови (наприклад, кирилиця в англійському тексті), програма попередить і не зіпсує озвучку.
 - Відома слабкість англійської: омографи на кшталт *read* (минулий час) іноді читаються як "reed".
@@ -118,6 +135,8 @@ voice-studio/
   start.bat          запуск на Windows
   start.command      запуск на macOS / Linux
   requirements.txt   залежності Python
+  tests/             приклади природного читання (час, дати, одиниці) для всіх трьох версій:
+                     node tests/check_natural.mjs && python tests/check_natural.py
   models/            моделі голосів (завантажуються самі, не в git)
   output/            готові озвучки (не в git)
   settings.json      секретний ключ для телефону (створюється сам, не в git)

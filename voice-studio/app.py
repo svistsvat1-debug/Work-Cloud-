@@ -338,8 +338,10 @@ def resolve(spec):
 
 ABBREVIATIONS = {
     "en": {"mr", "mrs", "ms", "dr", "st", "jr", "sr", "prof", "inc", "ltd", "co", "corp", "no", "vol",
-           "fig", "mt", "dept", "approx", "u.s", "u.k", "a.m", "p.m", "e.g", "i.e", "vs"},
-    "de": {"dr", "prof", "nr", "z.b", "bzw", "ca", "d.h", "u.a", "inkl", "ggf", "evtl", "st", "hr", "fr"},
+           "fig", "mt", "dept", "approx", "u.s", "u.k", "a.m", "p.m", "e.g", "i.e", "vs", "min", "hr", "hrs", "sec",
+           "jan", "feb", "mar", "apr", "jun", "jul", "aug", "sep", "sept", "oct", "nov", "dec"},
+    "de": {"dr", "prof", "nr", "z.b", "bzw", "ca", "d.h", "u.a", "inkl", "ggf", "evtl", "st", "hr", "fr", "std", "min", "sek",
+           "jan", "feb", "apr", "aug", "sep", "sept", "okt", "nov", "dez"},
     "es": {"sr", "sra", "srta", "dr", "dra", "ud", "uds", "p.ej", "ee.uu", "av", "núm", "prof"},
 }
 SCALES = {
@@ -461,8 +463,406 @@ def _year(m):
     return f"{m.group(1)} {words}"
 
 
+# ---- natural reading: clock times, dates, ranges, fractions, units -> words the voice reads naturally
+# (same rules as naturalEn / naturalDe / naturalEs in the web and cloud pages)
+
+ONES = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve",
+        "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"]
+TENS = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"]
+ORDINALS = {"one": "first", "two": "second", "three": "third", "five": "fifth", "eight": "eighth", "nine": "ninth",
+            "twelve": "twelfth"}
+MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
+          "November", "December"]
+MONTH = (r"(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|June?|July?|Aug(?:ust)?|Sep(?:t(?:ember)?)?"
+         r"|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)")
+DAYS = {"mon": "Monday", "tue": "Tuesday", "tues": "Tuesday", "wed": "Wednesday", "thu": "Thursday",
+        "thur": "Thursday", "thurs": "Thursday", "fri": "Friday", "sat": "Saturday", "sun": "Sunday"}
+MER = r"([AaPp])\.?\s?[Mm]\b\.?"  # AM, am, a.m., a. m.
+NOT_AFTER = r"(?<![\d:.,/$€£])"
+UNITS_EN = {
+    "min": ("minute", "minutes"), "mins": ("minute", "minutes"), "hr": ("hour", "hours"), "hrs": ("hour", "hours"),
+    "h": ("hour", "hours"), "sec": ("second", "seconds"), "secs": ("second", "seconds"),
+    "km": ("kilometer", "kilometers"), "kg": ("kilogram", "kilograms"), "g": ("gram", "grams"),
+    "mg": ("milligram", "milligrams"), "lb": ("pound", "pounds"), "lbs": ("pound", "pounds"),
+    "oz": ("ounce", "ounces"), "ml": ("milliliter", "milliliters"), "mL": ("milliliter", "milliliters"),
+    "l": ("liter", "liters"), "L": ("liter", "liters"), "cm": ("centimeter", "centimeters"),
+    "mm": ("millimeter", "millimeters"), "kcal": ("calorie", "calories"), "cal": ("calorie", "calories"),
+    "mph": ("mile per hour", "miles per hour"), "km/h": ("kilometer per hour", "kilometers per hour"),
+    "kph": ("kilometer per hour", "kilometers per hour"), "°C": ("degree Celsius", "degrees Celsius"),
+    "°F": ("degree Fahrenheit", "degrees Fahrenheit"), "°": ("degree", "degrees"),
+}
+# "5 min. of" loses the abbreviation dot; a dot that ends the sentence stays
+UNIT_RE_EN = re.compile(r"(?<![\w.,])(\d+(?:[.,]\d+)?)\s?(km/h|kph|mph|kcal|cal|mins?|hrs?|h|secs?|km|kg|mg|g|lbs?|oz"
+                        r"|ml|mL|l|L|cm|mm|°C|°F|°)(?:\.(?=\s+[a-z\d]))?(?![\w/])")
+FRACTIONS = {"1/2": "a half", "½": "a half", "1/3": "a third", "⅓": "a third", "2/3": "two thirds", "⅔": "two thirds",
+             "1/4": "a quarter", "¼": "a quarter", "3/4": "three quarters", "¾": "three quarters"}
+
+
+def words_en(n):  # 0..99
+    return ONES[n] if n < 20 else TENS[n // 10] + (f"-{ONES[n % 10]}" if n % 10 else "")
+
+
+def ordinal_en(n):  # 1..99: 21 -> "twenty-first"
+    *parts, last = words_en(n).split("-")
+    last = ORDINALS.get(last) or (last[:-1] + "ieth" if last.endswith("y") else last + "th")
+    return "-".join([*parts, last])
+
+
+def year_en(y):  # 2026 -> "twenty twenty-six", 2005 -> "two thousand five", 1905 -> "nineteen oh five"
+    hi, lo = divmod(y, 100)
+    if 2000 <= y <= 2009:
+        return "two thousand" + (f" {ONES[lo]}" if lo else "")
+    if lo == 0:
+        return words_en(hi) + " hundred"
+    return words_en(hi) + (f" oh {ONES[lo]}" if lo < 10 else f" {words_en(lo)}")
+
+
+def is_year(s):
+    return bool(s) and len(s) == 4 and s.isdigit() and 1100 <= int(s) <= 2099
+
+
+def month_of(name):
+    return next(i for i, m in enumerate(MONTHS) if m[:3].lower() == name[:3].lower())
+
+
+def date_en(month, day, year=None):  # "October eleventh, twenty twenty-six"
+    return f"{MONTHS[month]} {ordinal_en(day)}" + (f", {year_en(int(year))}" if year else "")
+
+
+def valid_date(m, d):
+    return 1 <= m <= 12 and 1 <= d <= 31
+
+
+def clock_parts(hs, ms=None, mer_letter=None):
+    """One clock time -> dict(h, m, mer, midnight); h on a 12-hour dial, mer "AM" | "PM" | "" (unknown)."""
+    h, m = int(hs), int(ms) if ms else 0
+    mer = ("AM" if mer_letter.lower() == "a" else "PM") if mer_letter else ""
+    if h > 24 or m > 59:
+        return None
+    if mer:
+        if h > 12:
+            h -= 12
+        if h == 0:
+            h = 12
+    elif h == 24 or (h == 0 and m == 0):
+        return {"h": 0, "m": 0, "mer": "", "midnight": True}
+    elif h > 12:
+        h, mer = h - 12, "PM"
+    elif h == 0:
+        h, mer = 12, "AM"
+    elif len(hs) == 2 and hs[0] == "0":
+        mer = "AM"  # 07:00 is a 24-hour morning time
+    return {"h": h, "m": m, "mer": mer, "midnight": False}
+
+
+def clock_core(t):  # "seven", "seven oh five", "seven thirty"
+    if t["midnight"]:
+        return "midnight"
+    m = t["m"]
+    return words_en(t["h"]) + ("" if m == 0 else f" oh {ONES[m]}" if m < 10 else f" {words_en(m)}")
+
+
+def clock_en(t):
+    if t["midnight"]:
+        return "midnight"
+    return clock_core(t) + (f" {t['mer']}" if t["mer"] else " o'clock" if t["m"] == 0 else "")
+
+
+def keep_stop(m):
+    """"7 a.m. Then" keeps its full stop when the abbreviation also ended the sentence."""
+    rest = m.string[m.end():]
+    return "." if m.group().endswith(".") and re.match(r"(\s*$|\s+[A-Z]|[\"”’)\]])", rest) else ""
+
+
+def _time_range_en(m):
+    h1, m1, p1, h2, m2, p2 = m.groups()
+    a, b = clock_parts(h1, m1, p1 or p2), clock_parts(h2, m2, p2)
+    if not a or not b:
+        return m.group()
+    first = clock_core(a) + (f" {a['mer']}" if p1 and a["mer"] != b["mer"] else "")
+    return f"{first} to {clock_core(b)} {b['mer']}{keep_stop(m)}"
+
+
+def _colon_range_en(m):
+    a, b = clock_parts(m.group(1), m.group(2)), clock_parts(m.group(3), m.group(4))
+    if not a or not b:
+        return m.group()
+    if a["mer"] == b["mer"]:
+        return f"{clock_core(a)} to {clock_core(b)}" + (f" {b['mer']}" if b["mer"] else "")
+    return f"{clock_en(a)} to {clock_en(b)}"
+
+
+def _time_en(m):
+    t = clock_parts(*m.groups())
+    return clock_en(t) + keep_stop(m) if t else m.group()
+
+
+def _hour_en(m):
+    t = clock_parts(m.group(1), None, m.group(2))
+    return clock_en(t) + keep_stop(m) if t and 1 <= int(m.group(1)) <= 12 else m.group()
+
+
+def _numeric_date_en(m):
+    a, b, y = m.groups()
+    mo, d = (int(b), int(a)) if int(a) > 12 else (int(a), int(b))
+    return date_en(mo - 1, d, y) if is_year(y) and valid_date(mo, d) else m.group()
+
+
+def _range_en(m):
+    a, b = m.groups()
+    if is_year(a) and (is_year(b) or re.fullmatch(r"\d\d", b)):
+        end = int(b) if is_year(b) else int(a) // 100 * 100 + int(b)
+        return f"{year_en(int(a))} to {year_en(end)}"
+    if len(a) >= 3 and len(b) >= 4:
+        return m.group()  # looks like a phone number
+    return f"{a} to {b}"
+
+
+def _unit_en(m):
+    n, u = m.groups()
+    singular = n == "1" or re.search(r"\b(?:a|an)\s+$", m.string[:m.start()], re.I)  # "a 5 km run"
+    return f"{n} {UNITS_EN[u][0 if singular else 1]}"
+
+
+EN_STEPS = [
+    # Dates: 2026-10-11, 11.10.2026 (day first), 10/11/2026 (month first unless the first number is over 12)
+    (re.compile(r"\b(\d{4})-(\d{2})-(\d{2})\b"),
+     lambda m: date_en(int(m[2]) - 1, int(m[3]), m[1]) if is_year(m[1]) and valid_date(int(m[2]), int(m[3])) else m[0]),
+    (re.compile(r"(?<![\d.])(\d{1,2})\.(\d{1,2})\.(\d{4})(?![\d.]\d)"),
+     lambda m: date_en(int(m[2]) - 1, int(m[1]), m[3]) if is_year(m[3]) and valid_date(int(m[2]), int(m[1])) else m[0]),
+    (re.compile(r"(?<![\d/])(\d{1,2})/(\d{1,2})/(\d{4})(?![\d/])"), _numeric_date_en),
+    # October 11, 2026 / Oct. 11th / 11 October 2026 / the 11th of October / October 2026
+    (re.compile(rf"\b{MONTH}\.?\s+(\d{{1,2}})(?:st|nd|rd|th)?(?![\d:])(?:,?\s+(\d{{4}})\b)?"),
+     lambda m: date_en(month_of(m[1]), int(m[2]), m[3]) if 1 <= int(m[2]) <= 31 and (not m[3] or is_year(m[3])) else m[0]),
+    (re.compile(rf"\b(?:(the)\s+)?(\d{{1,2}})(?:st|nd|rd|th)?\s+(?:of\s+)?{MONTH}\b\.?(?:,?\s+(\d{{4}})\b)?"),
+     lambda m: (f"{m[1] or 'the'} {ordinal_en(int(m[2]))} of {MONTHS[month_of(m[3])]}"
+                + (f", {year_en(int(m[4]))}" if m[4] else keep_stop(m)))
+     if 1 <= int(m[2]) <= 31 and (not m[4] or is_year(m[4])) else m[0]),
+    (re.compile(rf"\b{MONTH}\.?\s+(\d{{4}})\b"),
+     lambda m: f"{MONTHS[month_of(m[1])]} {year_en(int(m[2]))}" if is_year(m[2]) else m[0]),
+    # Mon-Fri -> Monday to Friday
+    (re.compile(r"\b(Mon|Tues?|Wed|Thu(?:rs?)?|Fri|Sat|Sun)\.?\s?[-–—]\s?(Mon|Tues?|Wed|Thu(?:rs?)?|Fri|Sat|Sun)\b\.?"),
+     lambda m: f"{DAYS[m[1].lower()]} to {DAYS[m[2].lower()]}{keep_stop(m)}"),
+    # Time ranges: 6-7 AM, 6:30-7:15 a.m., 9 AM-5 PM, 18:00-19:00
+    (re.compile(rf"{NOT_AFTER}(\d{{1,2}})(?:[:.](\d{{2}}))?(?:\s?{MER})?\s?(?:-|–|—|to)\s?(\d{{1,2}})(?:[:.](\d{{2}}))?\s?{MER}"),
+     _time_range_en),
+    (re.compile(rf"{NOT_AFTER}(\d{{1,2}}):(\d{{2}})\s?[-–—]\s?(\d{{1,2}}):(\d{{2}})(?![\d:])"), _colon_range_en),
+    # Single times: 7:00 AM, 19:00, 7.00 PM, at 7.30, 7am
+    (re.compile(rf"{NOT_AFTER}(\d{{1,2}}):(\d{{2}})(?![\d:])(?:\s?{MER})?"), _time_en),
+    (re.compile(rf"{NOT_AFTER}(\d{{1,2}})\.(\d{{2}})(?![\d.])\s?{MER}"), _time_en),
+    (re.compile(r"\b(at|around|until|till|from)\s+(\d{1,2})\.(00|15|30|45)(?![\d.,])"
+                r"(?!\s*(?:%|percent|dollars?|euros?|pounds?|cents?|times))", re.I),
+     lambda m: f"{m[1]} {clock_en(t)}" if (t := clock_parts(m[2], m[3])) else m[0]),
+    (re.compile(rf"{NOT_AFTER}(\d{{1,2}})\s?{MER}"), _hour_en),
+    # 3x10 -> 3 by 10; 1 1/2 -> 1 and a half; 1/2 -> a half
+    (re.compile(r"\b(\d+)\s?[x×]\s?(\d+)\b"), r"\1 by \2"),
+    (re.compile(r"(?<![\d/])(?:(\d+)\s+)?(1/2|1/3|2/3|1/4|3/4|[½⅓⅔¼¾])(?![\d/])"),
+     lambda m: f"{m[1]} and {FRACTIONS[m[2]]}" if m[1] else FRACTIONS[m[2]]),
+    (re.compile(r"(\d)([½⅓⅔¼¾])"), lambda m: f"{m[1]} and {FRACTIONS[m[2]]}"),
+    # Units: 10 min -> 10 minutes, 2L -> 2 liters, 1 km -> 1 kilometer
+    (UNIT_RE_EN, _unit_en),
+    # Number ranges: 5-10 -> 5 to 10, 2020-2026 -> twenty twenty to twenty twenty-six
+    (re.compile(r"(?<![\d.,:/\-–—])(\d+(?:[.,]\d+)?)\s?[-–—]\s?(\d+(?:[.,]\d+)?)(?![\d:/]|[.,]\d|\s?[-–—]\s?\d)"), _range_en),
+    # A spaced dash between words is a pause; espeak drops "–" and " - " without one
+    (re.compile(r"\s+[-–]\s+"), " — "),
+]
+
+MONATE = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November",
+          "Dezember"]
+MONAT = (r"(Jan(?:uar)?|Feb(?:ruar)?|März|Apr(?:il)?|Mai|Juni?|Juli?|Aug(?:ust)?|Sep(?:t(?:ember)?)?|Okt(?:ober)?"
+         r"|Nov(?:ember)?|Dez(?:ember)?)")
+DE_ONES = ["", "ein", "zwei", "drei", "vier", "fünf", "sechs", "sieben", "acht", "neun"]
+DE_ORD = ["", "erste", "zweite", "dritte", "vierte", "fünfte", "sechste", "siebte", "achte", "neunte", "zehnte", "elfte",
+          "zwölfte", "dreizehnte", "vierzehnte", "fünfzehnte", "sechzehnte", "siebzehnte", "achtzehnte", "neunzehnte",
+          "zwanzigste"]
+TAGE = {"mo": "Montag", "di": "Dienstag", "mi": "Mittwoch", "do": "Donnerstag", "fr": "Freitag", "sa": "Samstag",
+        "so": "Sonntag"}
+UNITS_DE = {
+    "min": ("eine Minute", "Minuten"), "Min": ("eine Minute", "Minuten"), "h": ("eine Stunde", "Stunden"),
+    "Std": ("eine Stunde", "Stunden"), "sek": ("eine Sekunde", "Sekunden"), "Sek": ("eine Sekunde", "Sekunden"),
+    "km": ("ein Kilometer", "Kilometer"), "kg": ("ein Kilogramm", "Kilogramm"), "g": ("ein Gramm", "Gramm"),
+    "mg": ("ein Milligramm", "Milligramm"), "l": ("ein Liter", "Liter"), "L": ("ein Liter", "Liter"),
+    "ml": ("ein Milliliter", "Milliliter"), "cm": ("ein Zentimeter", "Zentimeter"),
+    "mm": ("ein Millimeter", "Millimeter"), "kcal": ("eine Kalorie", "Kalorien"),
+    "km/h": ("ein Kilometer pro Stunde", "Kilometer pro Stunde"), "°C": ("ein Grad Celsius", "Grad Celsius"),
+    "°": ("ein Grad", "Grad"),
+}
+UNIT_RE_DE = re.compile(r"(?<![\w.,])(\d+(?:,\d+)?)\s?(km/h|kcal|Min|min|Std|Sek|sek|h|km|kg|mg|g|ml|l|L|cm|mm|°C|°)"
+                        r"(?:\.(?=\s+\w))?(?![\w/])")
+
+
+def ordinal_de(n):  # 1..31, stem without ending: 11 -> "elfte", 21 -> "einundzwanzigste"
+    if n <= 20:
+        return DE_ORD[n]
+    tens = "dreißig" if n >= 30 else "zwanzig"
+    return (DE_ONES[n % 10] + "und" if n % 10 else "") + tens + "ste"
+
+
+def date_de(m, day, month, year=None):
+    """"am 11. Oktober" -> "am elften Oktober"; after "der/die/das" or at the start -> "elfte"."""
+    before = m.string[:m.start()]
+    nominative = re.search(r"(?:^|[\s(])(?:der|die|das|Der|Die|Das)\s+$", before) or not before.strip()
+    return f"{ordinal_de(day)}{'' if nominative else 'n'} {MONATE[month]}" + (f" {year}" if year else "")
+
+
+def _clock_de(h, m):
+    return f"{int(h)} Uhr {int(m)}" if m and int(m) else f"{int(h)} Uhr"
+
+
+def _range_de(m):
+    h1, m1, h2, m2 = m.groups()
+    if int(h1) > 24 or int(h2) > 24 or int(m1 or 0) > 59 or int(m2 or 0) > 59:
+        return m.group()
+    if int(m1 or 0) or int(m2 or 0):
+        return f"{_clock_de(h1, m1)} bis {_clock_de(h2, m2)}"
+    return f"{int(h1)} bis {int(h2)} Uhr"
+
+
+def _numeric_date_de(m):
+    d, mo, y = int(m[1]), int(m[2]), m[3]
+    ends = re.match(r"(\s|$)", m.string[m.end():])
+    return date_de(m, d, mo - 1, y) if valid_date(mo, d) and (y or ends) else m[0]
+
+
+def _number_range(m, word):
+    a, b = m.groups()
+    if len(a) >= 3 and len(b) >= 4 and not (re.fullmatch(r"(1[1-9]|20)\d\d", a) and re.fullmatch(r"(1[1-9]|20)\d\d", b)):
+        return m.group()
+    return f"{a} {word} {b}"
+
+
+DE_STEPS = [
+    # Dates: 11.10.2026, 2026-10-11, 11. Oktober 2026
+    (re.compile(r"\b(\d{4})-(\d{2})-(\d{2})\b"),
+     lambda m: date_de(m, int(m[3]), int(m[2]) - 1, m[1]) if valid_date(int(m[2]), int(m[3])) else m[0]),
+    (re.compile(r"(?<![\d.])(\d{1,2})\.(\d{1,2})\.(\d{4})?(?![\d.]\d|\d)"), _numeric_date_de),
+    (re.compile(rf"(?<![\d.])(\d{{1,2}})\.\s?{MONAT}\b\.?(?:\s+(\d{{4}})\b)?"),
+     lambda m: date_de(m, int(m[1]), next(i for i, x in enumerate(MONATE) if x[:3] == m[2][:3]), m[3])
+     if 1 <= int(m[1]) <= 31 else m[0]),
+    # Mo-Fr -> Montag bis Freitag
+    (re.compile(r"\b(Mo|Di|Mi|Do|Fr|Sa|So)\.?\s?[-–—]\s?(Mo|Di|Mi|Do|Fr|Sa|So)\b\.?"),
+     lambda m: f"{TAGE[m[1].lower()]} bis {TAGE[m[2].lower()]}"),
+    # Times: 7:00 Uhr -> 7 Uhr, 7.30 Uhr -> 7 Uhr 30, 19:00 -> 19 Uhr, 7:00-8:00 Uhr -> 7 bis 8 Uhr
+    (re.compile(r"(?<![\d:.,])(\d{1,2})(?:[:.](\d{2}))?\s?(?:-|–|—|bis)\s?(\d{1,2})(?:[:.](\d{2}))?\s?Uhr\b"), _range_de),
+    (re.compile(r"(?<![\d:.,])(\d{1,2}):(\d{2})\s?[-–—]\s?(\d{1,2}):(\d{2})(?![\d:])"), _range_de),
+    (re.compile(r"(?<![\d:.,])(\d{1,2})([:.])(\d{2})(?![\d:]|[.,]\d)(\s?Uhr\b)?"),
+     lambda m: m[0] if int(m[1]) > 24 or int(m[3]) > 59 or (m[2] == "." and not m[4]) else _clock_de(m[1], m[3])),
+    # 3x10 -> 3 mal 10, 10x -> 10 mal
+    (re.compile(r"\b(\d+)\s?[x×]\s?(\d+)\b"), r"\1 mal \2"),
+    (re.compile(r"\b(\d+)x\b"), r"\1 mal"),
+    # Units: 10 min -> 10 Minuten, 1 l -> ein Liter
+    (UNIT_RE_DE, lambda m: UNITS_DE[m[2]][0] if m[1] == "1" else f"{m[1]} {UNITS_DE[m[2]][1]}"),
+    # Ranges: 5-10 -> 5 bis 10
+    (re.compile(r"(?<![\d.,:/\-–—])(\d+(?:,\d+)?)\s?[-–—]\s?(\d+(?:,\d+)?)(?![\d:/]|[.,]\d|\s?[-–—]\s?\d)"),
+     lambda m: _number_range(m, "bis")),
+    # A spaced dash between words is a pause; espeak drops "–" and " - " without one
+    (re.compile(r"\s+[-–]\s+"), " — "),
+]
+
+MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre",
+         "diciembre"]
+DIAS = {"lun": "lunes", "mar": "martes", "mie": "miércoles", "mié": "miércoles", "jue": "jueves", "vie": "viernes",
+        "sab": "sábado", "sáb": "sábado", "dom": "domingo"}
+UNITS_ES = {
+    "min": ("un minuto", "minutos"), "h": ("una hora", "horas"), "hs": ("una hora", "horas"),
+    "seg": ("un segundo", "segundos"), "km": ("un kilómetro", "kilómetros"), "kg": ("un kilo", "kilos"),
+    "g": ("un gramo", "gramos"), "mg": ("un miligramo", "miligramos"), "l": ("un litro", "litros"),
+    "L": ("un litro", "litros"), "ml": ("un mililitro", "mililitros"), "cm": ("un centímetro", "centímetros"),
+    "mm": ("un milímetro", "milímetros"), "kcal": ("una caloría", "calorías"),
+    "km/h": ("un kilómetro por hora", "kilómetros por hora"), "°C": ("un grado", "grados"), "°": ("un grado", "grados"),
+}
+UNIT_RE_ES = re.compile(r"(?<![\w.,])(\d+(?:,\d+)?)\s?(km/h|kcal|min|seg|hs|h|km|kg|mg|g|ml|l|L|cm|mm|°C|°)"
+                        r"(?:\.(?=\s+[a-záéíóúüñ\d]))?(?![\w/])")
+MER_ES = r"([AaPp])\.?\s?[Mm]\.?(?![^\W\d_])"
+
+
+def clock_es(art, h24, m, twelve, with_period=None):
+    """24-hour clock -> "7 y media de la tarde"; the article "las" becomes "la" for one o'clock."""
+    with_period = twelve if with_period is None else with_period
+    period = ("" if not with_period else " de la madrugada" if h24 < 6 else " de la mañana" if h24 < 12
+              else " del mediodía" if h24 == 12 else " de la tarde" if h24 < 20 else " de la noche")
+    h = (h24 % 12 or 12) if twelve else h24
+    mins = "" if m == 0 else " y cuarto" if m == 15 else " y media" if m == 30 else f" y {m}"
+    article = ""
+    if art:
+        article = (re.sub(r"as$", "a", art) if h == 1 else re.sub(r"a$", "as", art)) + " "
+    return f"{article}{'una' if h == 1 else h}{mins}{period}"
+
+
+def to24(h, mer):
+    if not mer:
+        return h
+    if mer.lower() == "p":
+        return h + 12 if h < 12 else 12
+    return 0 if h == 12 else h
+
+
+def _mer_range_es(m):
+    h1, m1, h2, m2, mer = m.groups()
+    if int(h1) > 12 or int(h2) > 12 or int(m1 or 0) > 59 or int(m2 or 0) > 59:
+        return m.group()
+    a, b = to24(int(h1), mer), to24(int(h2), mer)
+    return f"{clock_es('', a, int(m1 or 0), True, False)} a {clock_es('', b, int(m2 or 0), True)}"
+
+
+def _colon_range_es(m):
+    h1, m1, h2, m2 = (int(x) for x in m.groups())
+    if h1 > 24 or h2 > 24 or m1 > 59 or m2 > 59:
+        return m.group()
+    p = h1 >= 13 or h2 >= 13
+    return f"{clock_es('', h1, m1, p, False)} a {clock_es('', h2, m2, p)}"
+
+
+def _time_es(m):
+    art, h, mi, mer = m.groups()
+    if int(h) > 24 or int(mi) > 59 or (mer and int(h) > 12):
+        return m.group()
+    return clock_es(art, to24(int(h), mer) % 24, int(mi), bool(mer) or int(h) >= 13)
+
+
+ES_STEPS = [
+    # Dates: 11/10/2026, 11-10-2026, 11.10.2026 (day first), 2026-10-11
+    (re.compile(r"\b(\d{4})-(\d{2})-(\d{2})\b"),
+     lambda m: f"{int(m[3])} de {MESES[int(m[2]) - 1]} de {m[1]}" if valid_date(int(m[2]), int(m[3])) else m[0]),
+    (re.compile(r"(?<![\d/.-])(\d{1,2})([/.-])(\d{1,2})\2(\d{4})(?![\d/.-]\d|\d)"),
+     lambda m: f"{int(m[1])} de {MESES[int(m[3]) - 1]} de {m[4]}" if valid_date(int(m[3]), int(m[1])) else m[0]),
+    # lun-vie -> lunes a viernes
+    (re.compile(r"\b(lun|mar|mi[eé]|jue|vie|s[aá]b|dom)\.?\s?[-–—]\s?(lun|mar|mi[eé]|jue|vie|s[aá]b|dom)\b\.?", re.I),
+     lambda m: f"{DIAS[m[1].lower()]} a {DIAS[m[2].lower()]}"),
+    # Times: a las 7:00 -> a las 7, 7:30 a. m. -> 7 y media de la mañana, 19:00 -> 7 de la tarde
+    (re.compile(rf"(?<![\d:.,])(\d{{1,2}})(?::(\d{{2}}))?\s?(?:-|–|—|a)\s?(\d{{1,2}})(?::(\d{{2}}))?\s?{MER_ES}"),
+     _mer_range_es),
+    (re.compile(r"(?<![\d:.,])(\d{1,2}):(\d{2})\s?[-–—]\s?(\d{1,2}):(\d{2})(?![\d:])(?:\s?h(?:s|oras)?\b\.?)?"),
+     _colon_range_es),
+    (re.compile(rf"(?<![\d:.,])(?:\b([Ll]as?)\s+)?(\d{{1,2}}):(\d{{2}})(?![\d:])(?:\s?h(?:s|oras)?\b\.?)?(?:\s?{MER_ES})?"),
+     _time_es),
+    (re.compile(rf"(?<![\d:.,])(?:\b([Ll]as?)\s+)?(\d{{1,2}})\s?{MER_ES}"),
+     lambda m: clock_es(m[1], to24(int(m[2]), m[3]), 0, True) if 1 <= int(m[2]) <= 12 else m[0]),
+    # 3x10 -> 3 por 10, 10x -> 10 veces
+    (re.compile(r"\b(\d+)\s?[x×]\s?(\d+)\b"), r"\1 por \2"),
+    (re.compile(r"\b(\d+)x\b"), r"\1 veces"),
+    # Units: 10 min -> 10 minutos, 1 km -> un kilómetro
+    (UNIT_RE_ES, lambda m: UNITS_ES[m[2]][0] if m[1] == "1" else f"{m[1]} {UNITS_ES[m[2]][1]}"),
+    # Ranges: 5-10 -> 5 a 10
+    (re.compile(r"(?<![\d.,:/\-–—])(\d+(?:,\d+)?)\s?[-–—]\s?(\d+(?:,\d+)?)(?![\d:/]|[.,]\d|\s?[-–—]\s?\d)"),
+     lambda m: _number_range(m, "a")),
+    # A spaced dash between words is a pause; espeak drops "–" and " - " without one
+    (re.compile(r"\s+[-–]\s+"), " — "),
+]
+
+NATURAL_STEPS = {"en": EN_STEPS, "de": DE_STEPS, "es": ES_STEPS}
+
+
+def natural(text, lang):
+    for pattern, repl in NATURAL_STEPS.get(lang, []):
+        text = pattern.sub(repl, text)
+    return text
+# ---- end natural reading
+
+
 def normalize(text, lang):
-    """Rewrite what espeak reads badly: money, years, common abbreviations."""
+    """Rewrite what espeak reads badly: times, dates, units, money, years, common abbreviations."""
+    text = natural(text, lang)
     if lang == "en":
         text = MONEY_RE.sub(_money, text)
         text = YEAR_RE.sub(_year, text)
@@ -478,8 +878,9 @@ def split_sentences(par, lang):
         words = par[start:m.start()].split()
         last = words[-1].lower() if words else ""
         following = par[m.end():].lstrip()[:1]
+        ordinal = lang == "de" and re.fullmatch(r"\d{1,2}", last)  # "am 11. Oktober"
         if m.group().rstrip("\"”’»)]") == "." and (
-            last in abbreviations or (len(last) == 1 and last.isalpha()) or following.islower()
+            last in abbreviations or (len(last) == 1 and last.isalpha()) or following.islower() or ordinal
         ):
             continue  # "Dr. Smith", "z. B. heute", initials, "etc. and more"
         out.append(par[start:m.end()].strip())

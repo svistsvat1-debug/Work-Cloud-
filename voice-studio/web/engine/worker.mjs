@@ -271,8 +271,10 @@ async function synthSentence(engine, spoken, spec, style, speed) {
 
 const ABBREVIATIONS = {
   en: new Set(["mr", "mrs", "ms", "dr", "st", "jr", "sr", "prof", "inc", "ltd", "co", "corp", "no", "vol",
-    "fig", "mt", "dept", "approx", "u.s", "u.k", "a.m", "p.m", "e.g", "i.e", "vs"]),
-  de: new Set(["dr", "prof", "nr", "z.b", "bzw", "ca", "d.h", "u.a", "inkl", "ggf", "evtl", "st", "hr", "fr"]),
+    "fig", "mt", "dept", "approx", "u.s", "u.k", "a.m", "p.m", "e.g", "i.e", "vs", "min", "hr", "hrs", "sec",
+    "jan", "feb", "mar", "apr", "jun", "jul", "aug", "sep", "sept", "oct", "nov", "dec"]),
+  de: new Set(["dr", "prof", "nr", "z.b", "bzw", "ca", "d.h", "u.a", "inkl", "ggf", "evtl", "st", "hr", "fr", "std", "min", "sek",
+    "jan", "feb", "apr", "aug", "sep", "sept", "okt", "nov", "dez"]),
   es: new Set(["sr", "sra", "srta", "dr", "dra", "ud", "uds", "p.ej", "ee.uu", "av", "núm", "prof"]),
 };
 const SCALES = { k: "thousand", thousand: "thousand", m: "million", mn: "million", million: "million",
@@ -347,7 +349,263 @@ function year(_, word, y) {
   return `${word} ${words}`;
 }
 
+// ---- natural reading (English): clock times, dates, ranges, fractions, units -> words the voice reads naturally
+const ONES = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve",
+  "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+const TENS = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+const ORDINALS = { one: "first", two: "second", three: "third", five: "fifth", eight: "eighth", nine: "ninth", twelve: "twelfth" };
+const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const MONTH = "(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|June?|July?|Aug(?:ust)?|Sep(?:t(?:ember)?)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)";
+const DAYS = { mon: "Monday", tue: "Tuesday", tues: "Tuesday", wed: "Wednesday", thu: "Thursday", thur: "Thursday", thurs: "Thursday",
+  fri: "Friday", sat: "Saturday", sun: "Sunday" };
+const MER = "([AaPp])\\.?\\s?[Mm]\\b\\.?"; // AM, am, a.m., a. m.
+const NOT_AFTER = "(?<![\\d:.,/$€£])";
+const UNITS_EN = { min: ["minute", "minutes"], mins: ["minute", "minutes"], hr: ["hour", "hours"], hrs: ["hour", "hours"], h: ["hour", "hours"],
+  sec: ["second", "seconds"], secs: ["second", "seconds"], km: ["kilometer", "kilometers"], kg: ["kilogram", "kilograms"],
+  g: ["gram", "grams"], mg: ["milligram", "milligrams"], lb: ["pound", "pounds"], lbs: ["pound", "pounds"], oz: ["ounce", "ounces"],
+  ml: ["milliliter", "milliliters"], mL: ["milliliter", "milliliters"], l: ["liter", "liters"], L: ["liter", "liters"],
+  cm: ["centimeter", "centimeters"], mm: ["millimeter", "millimeters"], kcal: ["calorie", "calories"], cal: ["calorie", "calories"],
+  mph: ["mile per hour", "miles per hour"], "km/h": ["kilometer per hour", "kilometers per hour"], kph: ["kilometer per hour", "kilometers per hour"],
+  "°C": ["degree Celsius", "degrees Celsius"], "°F": ["degree Fahrenheit", "degrees Fahrenheit"], "°": ["degree", "degrees"] };
+// "5 min. of" loses the abbreviation dot; a dot that ends the sentence stays
+const UNIT_RE = new RegExp(`(?<![\\p{L}\\d.,])(\\d+(?:[.,]\\d+)?)\\s?(km/h|kph|mph|kcal|cal|mins?|hrs?|h|secs?|km|kg|mg|g|lbs?|oz|ml|mL|l|L|cm|mm|°C|°F|°)(?:\\.(?=\\s+[\\p{Ll}\\d]))?(?![\\p{L}\\d/])`, "gu");
+const FRACTIONS = { "1/2": "a half", "½": "a half", "1/3": "a third", "⅓": "a third", "2/3": "two thirds", "⅔": "two thirds",
+  "1/4": "a quarter", "¼": "a quarter", "3/4": "three quarters", "¾": "three quarters" };
+
+function wordsEn(n) { // 0..99
+  return n < 20 ? ONES[n] : TENS[Math.floor(n / 10)] + (n % 10 ? "-" + ONES[n % 10] : "");
+}
+function ordinalEn(n) { // 1..99: 21 -> "twenty-first"
+  const parts = wordsEn(n).split("-"), last = parts.pop();
+  return [...parts, ORDINALS[last] || (last.endsWith("y") ? last.slice(0, -1) + "ieth" : last + "th")].join("-");
+}
+function yearEn(y) { // 2026 -> "twenty twenty-six", 2005 -> "two thousand five", 1905 -> "nineteen oh five"
+  const hi = Math.floor(y / 100), lo = y % 100;
+  if (y >= 2000 && y <= 2009) return "two thousand" + (lo ? " " + ONES[lo] : "");
+  if (lo === 0) return wordsEn(hi) + " hundred";
+  return wordsEn(hi) + (lo < 10 ? " oh " + ONES[lo] : " " + wordsEn(lo));
+}
+const isYear = (s) => /^\d{4}$/.test(s) && +s >= 1100 && +s <= 2099;
+const monthOf = (name) => MONTHS.findIndex((m) => m.slice(0, 3).toLowerCase() === name.slice(0, 3).toLowerCase());
+function dateEn(month, day, year) { // "October eleventh, twenty twenty-six"
+  return `${MONTHS[month]} ${ordinalEn(day)}${year ? ", " + yearEn(+year) : ""}`;
+}
+function validDate(m, d) { return m >= 1 && m <= 12 && d >= 1 && d <= 31; }
+
+// One clock time -> {h, m, mer}; h on a 12-hour dial, mer "AM" | "PM" | "" (unknown)
+function clockParts(hs, ms, merLetter) {
+  let h = +hs, m = ms ? +ms : 0, mer = merLetter ? (merLetter.toLowerCase() === "a" ? "AM" : "PM") : "";
+  if (h > 24 || m > 59) return null;
+  if (mer) { if (h > 12) h -= 12; if (h === 0) h = 12; }
+  else if (h === 24 || (h === 0 && m === 0)) return { h: 0, m: 0, mer: "", midnight: true };
+  else if (h > 12) { h -= 12; mer = "PM"; }
+  else if (h === 0) { h = 12; mer = "AM"; }
+  else if (hs.length === 2 && hs[0] === "0") mer = "AM"; // 07:00 is a 24-hour morning time
+  return { h, m, mer };
+}
+function clockCore({ h, m, midnight }) { // "seven", "seven oh five", "seven thirty"
+  if (midnight) return "midnight";
+  return wordsEn(h) + (m === 0 ? "" : m < 10 ? " oh " + ONES[m] : " " + wordsEn(m));
+}
+function clockEn(t) {
+  if (t.midnight) return "midnight";
+  return clockCore(t) + (t.mer ? " " + t.mer : t.m === 0 ? " o'clock" : "");
+}
+// "7 a.m. Then" keeps its full stop when the abbreviation also ended the sentence
+const keepStop = (match, rest) => (/\.$/.test(match) && /^(\s*$|\s+[A-Z]|["”’)\]])/.test(rest) ? "." : "");
+
+function naturalEn(text) {
+  // Dates: 2026-10-11, 11.10.2026 (day first), 10/11/2026 (month first unless the first number is over 12)
+  text = text.replace(/\b(\d{4})-(\d{2})-(\d{2})\b/g, (s, y, m, d) => (isYear(y) && validDate(+m, +d) ? dateEn(+m - 1, +d, y) : s));
+  text = text.replace(/(?<![\d.])(\d{1,2})\.(\d{1,2})\.(\d{4})(?![\d.]\d)/g, (s, d, m, y) => (isYear(y) && validDate(+m, +d) ? dateEn(+m - 1, +d, y) : s));
+  text = text.replace(/(?<![\d/])(\d{1,2})\/(\d{1,2})\/(\d{4})(?![\d/])/g, (s, a, b, y) => {
+    const [m, d] = +a > 12 ? [+b, +a] : [+a, +b];
+    return isYear(y) && validDate(m, d) ? dateEn(m - 1, d, y) : s;
+  });
+  // October 11, 2026 / Oct. 11th / 11 October 2026 / the 11th of October / October 2026
+  text = text.replace(new RegExp(`\\b${MONTH}\\.?\\s+(\\d{1,2})(?:st|nd|rd|th)?(?![\\d:])(?:,?\\s+(\\d{4})\\b)?`, "g"),
+    (s, mon, d, y) => (+d >= 1 && +d <= 31 && (!y || isYear(y)) ? dateEn(monthOf(mon), +d, y) : s));
+  text = text.replace(new RegExp(`\\b(?:(the)\\s+)?(\\d{1,2})(?:st|nd|rd|th)?\\s+(?:of\\s+)?${MONTH}\\b\\.?(?:,?\\s+(\\d{4})\\b)?`, "g"),
+    (s, the, d, mon, y, off, all) => (+d >= 1 && +d <= 31 && (!y || isYear(y))
+      ? `${the || "the"} ${ordinalEn(+d)} of ${MONTHS[monthOf(mon)]}${y ? ", " + yearEn(+y) : keepStop(s, all.slice(off + s.length))}` : s));
+  text = text.replace(new RegExp(`\\b${MONTH}\\.?\\s+(\\d{4})\\b`, "g"), (s, mon, y) => (isYear(y) ? `${MONTHS[monthOf(mon)]} ${yearEn(+y)}` : s));
+  // Mon-Fri -> Monday to Friday
+  text = text.replace(/\b(Mon|Tues?|Wed|Thu(?:rs?)?|Fri|Sat|Sun)\.?\s?[-–—]\s?(Mon|Tues?|Wed|Thu(?:rs?)?|Fri|Sat|Sun)\b\.?/g,
+    (s, a, b, off, all) => `${DAYS[a.toLowerCase()]} to ${DAYS[b.toLowerCase()]}${keepStop(s, all.slice(off + s.length))}`);
+  // Time ranges: 6-7 AM, 6:30-7:15 a.m., 9 AM-5 PM, 18:00-19:00
+  text = text.replace(new RegExp(`${NOT_AFTER}(\\d{1,2})(?:[:.](\\d{2}))?(?:\\s?${MER})?\\s?(?:-|–|—|to)\\s?(\\d{1,2})(?:[:.](\\d{2}))?\\s?${MER}`, "g"),
+    (s, h1, m1, p1, h2, m2, p2, off, all) => {
+      const a = clockParts(h1, m1, p1 || p2), b = clockParts(h2, m2, p2);
+      if (!a || !b) return s;
+      return `${clockCore(a)}${p1 && a.mer !== b.mer ? " " + a.mer : ""} to ${clockCore(b)} ${b.mer}${keepStop(s, all.slice(off + s.length))}`;
+    });
+  text = text.replace(new RegExp(`${NOT_AFTER}(\\d{1,2}):(\\d{2})\\s?[-–—]\\s?(\\d{1,2}):(\\d{2})(?![\\d:])`, "g"), (s, h1, m1, h2, m2) => {
+    const a = clockParts(h1, m1), b = clockParts(h2, m2);
+    if (!a || !b) return s;
+    return a.mer === b.mer ? `${clockCore(a)} to ${clockCore(b)}${b.mer ? " " + b.mer : ""}` : `${clockEn(a)} to ${clockEn(b)}`;
+  });
+  // Single times: 7:00 AM, 19:00, 7.00 PM, at 7.30, 7am
+  text = text.replace(new RegExp(`${NOT_AFTER}(\\d{1,2}):(\\d{2})(?![\\d:])(?:\\s?${MER})?`, "g"), (s, h, m, p, off, all) => {
+    const t = clockParts(h, m, p);
+    return t ? clockEn(t) + keepStop(s, all.slice(off + s.length)) : s;
+  });
+  text = text.replace(new RegExp(`${NOT_AFTER}(\\d{1,2})\\.(\\d{2})(?![\\d.])\\s?${MER}`, "g"), (s, h, m, p, off, all) => {
+    const t = clockParts(h, m, p);
+    return t ? clockEn(t) + keepStop(s, all.slice(off + s.length)) : s;
+  });
+  text = text.replace(/\b(at|around|until|till|from)\s+(\d{1,2})\.(00|15|30|45)(?![\d.,])(?!\s*(?:%|percent|dollars?|euros?|pounds?|cents?|times))/gi, (s, w, h, m) => {
+    const t = clockParts(h, m);
+    return t ? `${w} ${clockEn(t)}` : s;
+  });
+  text = text.replace(new RegExp(`${NOT_AFTER}(\\d{1,2})\\s?${MER}`, "g"), (s, h, p, off, all) => {
+    const t = clockParts(h, null, p);
+    return t && +h >= 1 && +h <= 12 ? clockEn(t) + keepStop(s, all.slice(off + s.length)) : s;
+  });
+  // 3x10 -> 3 by 10; 1 1/2 -> 1 and a half; 1/2 -> a half
+  text = text.replace(/\b(\d+)\s?[x×]\s?(\d+)\b/g, "$1 by $2");
+  text = text.replace(/(?<![\d/])(?:(\d+)\s+)?(1\/2|1\/3|2\/3|1\/4|3\/4|[½⅓⅔¼¾])(?![\d/])/g,
+    (s, whole, f) => (whole ? `${whole} and ${FRACTIONS[f]}` : FRACTIONS[f]));
+  text = text.replace(/(\d)([½⅓⅔¼¾])/g, (s, d, f) => `${d} and ${FRACTIONS[f]}`);
+  // Units: 10 min -> 10 minutes, 2L -> 2 liters, 1 km -> 1 kilometer
+  // Before a noun the unit stays singular: "a 5 km run" -> "a 5 kilometer run"
+  text = text.replace(UNIT_RE, (s, n, u, off, all) => `${n} ${UNITS_EN[u][n === "1" || /\b(?:a|an)\s+$/i.test(all.slice(0, off)) ? 0 : 1]}`);
+  // Number ranges: 5-10 -> 5 to 10, 2020-2026 -> twenty twenty to twenty twenty-six
+  text = text.replace(/(?<![\d.,:/\-–—])(\d+(?:[.,]\d+)?)\s?[-–—]\s?(\d+(?:[.,]\d+)?)(?![\d:/]|[.,]\d|\s?[-–—]\s?\d)/g, (s, a, b) => {
+    if (isYear(a) && (isYear(b) || /^\d\d$/.test(b))) return `${yearEn(+a)} to ${yearEn(isYear(b) ? +b : Math.floor(+a / 100) * 100 + +b)}`;
+    if (a.length >= 3 && b.length >= 4) return s; // looks like a phone number
+    return `${a} to ${b}`;
+  });
+  // A spaced dash between words is a pause; espeak drops "–" and " - " without one
+  text = text.replace(/\s+[-–]\s+/g, " — ");
+  return text;
+}
+// ---- end natural reading (English)
+
+// ---- natural reading (German, Spanish): clock times, dates, ranges, units
+const MONATE = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
+const MONAT = "(Jan(?:uar)?|Feb(?:ruar)?|März|Apr(?:il)?|Mai|Juni?|Juli?|Aug(?:ust)?|Sep(?:t(?:ember)?)?|Okt(?:ober)?|Nov(?:ember)?|Dez(?:ember)?)";
+const DE_ONES = ["", "ein", "zwei", "drei", "vier", "fünf", "sechs", "sieben", "acht", "neun"];
+const DE_ORD = ["", "erste", "zweite", "dritte", "vierte", "fünfte", "sechste", "siebte", "achte", "neunte", "zehnte", "elfte", "zwölfte",
+  "dreizehnte", "vierzehnte", "fünfzehnte", "sechzehnte", "siebzehnte", "achtzehnte", "neunzehnte", "zwanzigste"];
+const TAGE = { mo: "Montag", di: "Dienstag", mi: "Mittwoch", do: "Donnerstag", fr: "Freitag", sa: "Samstag", so: "Sonntag" };
+const UNITS_DE = { min: ["eine Minute", "Minuten"], Min: ["eine Minute", "Minuten"], h: ["eine Stunde", "Stunden"], Std: ["eine Stunde", "Stunden"],
+  sek: ["eine Sekunde", "Sekunden"], Sek: ["eine Sekunde", "Sekunden"], km: ["ein Kilometer", "Kilometer"], kg: ["ein Kilogramm", "Kilogramm"],
+  g: ["ein Gramm", "Gramm"], mg: ["ein Milligramm", "Milligramm"], l: ["ein Liter", "Liter"], L: ["ein Liter", "Liter"],
+  ml: ["ein Milliliter", "Milliliter"], cm: ["ein Zentimeter", "Zentimeter"], mm: ["ein Millimeter", "Millimeter"],
+  kcal: ["eine Kalorie", "Kalorien"], "km/h": ["ein Kilometer pro Stunde", "Kilometer pro Stunde"], "°C": ["ein Grad Celsius", "Grad Celsius"], "°": ["ein Grad", "Grad"] };
+const UNIT_RE_DE = /(?<![\p{L}\d.,])(\d+(?:,\d+)?)\s?(km\/h|kcal|Min|min|Std|Sek|sek|h|km|kg|mg|g|ml|l|L|cm|mm|°C|°)(?:\.(?=\s+[\p{L}\d]))?(?![\p{L}\d/])/gu;
+
+function ordinalDe(n) { // 1..31, stem without ending: 11 -> "elfte", 21 -> "einundzwanzigste"
+  if (n <= 20) return DE_ORD[n];
+  const tens = n >= 30 ? "dreißig" : "zwanzig";
+  return (n % 10 ? DE_ONES[n % 10] + "und" : "") + tens + "ste";
+}
+// "am 11. Oktober" -> "am elften Oktober"; after "der/die/das" or at the start -> "elfte"
+function dateDe(before, d, month, y) {
+  const nominative = /(?:^|[\s(])(?:der|die|das|Der|Die|Das)\s+$/.test(before) || /^\s*$/.test(before);
+  return `${ordinalDe(d)}${nominative ? "" : "n"} ${MONATE[month]}${y ? " " + y : ""}`;
+}
+
+function naturalDe(text) {
+  // Dates: 11.10.2026, 2026-10-11, 11. Oktober 2026
+  text = text.replace(/\b(\d{4})-(\d{2})-(\d{2})\b/g, (s, y, m, d, off, all) => (+m >= 1 && +m <= 12 && +d >= 1 && +d <= 31 ? dateDe(all.slice(0, off), +d, +m - 1, y) : s));
+  text = text.replace(/(?<![\d.])(\d{1,2})\.(\d{1,2})\.(\d{4})?(?![\d.]\d|\d)/g, (s, d, m, y, off, all) =>
+    (+m >= 1 && +m <= 12 && +d >= 1 && +d <= 31 && (y || /^(\s|$)/.test(all.slice(off + s.length))) ? dateDe(all.slice(0, off), +d, +m - 1, y) : s));
+  text = text.replace(new RegExp(`(?<![\\d.])(\\d{1,2})\\.\\s?${MONAT}\\b\\.?(?:\\s+(\\d{4})\\b)?`, "g"), (s, d, mon, y, off, all) => {
+    const m = MONATE.findIndex((x) => x.slice(0, 3) === mon.slice(0, 3));
+    return +d >= 1 && +d <= 31 && m >= 0 ? dateDe(all.slice(0, off), +d, m, y) : s;
+  });
+  // Mo-Fr -> Montag bis Freitag
+  text = text.replace(/\b(Mo|Di|Mi|Do|Fr|Sa|So)\.?\s?[-–—]\s?(Mo|Di|Mi|Do|Fr|Sa|So)\b\.?/g, (s, a, b) => `${TAGE[a.toLowerCase()]} bis ${TAGE[b.toLowerCase()]}`);
+  // Times: 7:00 Uhr -> 7 Uhr, 7.30 Uhr -> 7 Uhr 30, 19:00 -> 19 Uhr, 7:00-8:00 Uhr -> 7 bis 8 Uhr
+  const clock = (h, m) => (+m ? `${+h} Uhr ${+m}` : `${+h} Uhr`);
+  text = text.replace(/(?<![\d:.,])(\d{1,2})(?:[:.](\d{2}))?\s?(?:-|–|—|bis)\s?(\d{1,2})(?:[:.](\d{2}))?\s?Uhr\b/g, (s, h1, m1, h2, m2) => {
+    if (+h1 > 24 || +h2 > 24 || +(m1 || 0) > 59 || +(m2 || 0) > 59) return s;
+    return +(m1 || 0) || +(m2 || 0) ? `${clock(h1, m1)} bis ${clock(h2, m2)}` : `${+h1} bis ${+h2} Uhr`;
+  });
+  text = text.replace(/(?<![\d:.,])(\d{1,2}):(\d{2})\s?[-–—]\s?(\d{1,2}):(\d{2})(?![\d:])/g, (s, h1, m1, h2, m2) =>
+    (+h1 > 24 || +h2 > 24 || +m1 > 59 || +m2 > 59 ? s : +m1 || +m2 ? `${clock(h1, m1)} bis ${clock(h2, m2)}` : `${+h1} bis ${+h2} Uhr`));
+  text = text.replace(/(?<![\d:.,])(\d{1,2})([:.])(\d{2})(?![\d:]|[.,]\d)(\s?Uhr\b)?/g, (s, h, sep, m, uhr) =>
+    (+h > 24 || +m > 59 || (sep === "." && !uhr) ? s : clock(h, m)));
+  // 3x10 -> 3 mal 10, 10x -> 10 mal
+  text = text.replace(/\b(\d+)\s?[x×]\s?(\d+)\b/g, "$1 mal $2").replace(/\b(\d+)x\b/g, "$1 mal");
+  // Units: 10 min -> 10 Minuten, 1 l -> ein Liter
+  text = text.replace(UNIT_RE_DE, (s, n, u) => (n === "1" ? UNITS_DE[u][0] : `${n} ${UNITS_DE[u][1]}`));
+  // Ranges: 5-10 -> 5 bis 10
+  text = text.replace(/(?<![\d.,:/\-–—])(\d+(?:,\d+)?)\s?[-–—]\s?(\d+(?:,\d+)?)(?![\d:/]|[.,]\d|\s?[-–—]\s?\d)/g,
+    (s, a, b) => (a.length >= 3 && b.length >= 4 && !(/^(1[1-9]|20)\d\d$/.test(a) && /^(1[1-9]|20)\d\d$/.test(b)) ? s : `${a} bis ${b}`));
+  // A spaced dash between words is a pause; espeak drops "–" and " - " without one
+  text = text.replace(/\s+[-–]\s+/g, " — ");
+  return text;
+}
+
+const MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+const DIAS = { lun: "lunes", mar: "martes", mie: "miércoles", "mié": "miércoles", jue: "jueves", vie: "viernes", sab: "sábado", "sáb": "sábado", dom: "domingo" };
+const UNITS_ES = { min: ["un minuto", "minutos"], h: ["una hora", "horas"], hs: ["una hora", "horas"], seg: ["un segundo", "segundos"],
+  km: ["un kilómetro", "kilómetros"], kg: ["un kilo", "kilos"], g: ["un gramo", "gramos"], mg: ["un miligramo", "miligramos"],
+  l: ["un litro", "litros"], L: ["un litro", "litros"], ml: ["un mililitro", "mililitros"], cm: ["un centímetro", "centímetros"],
+  mm: ["un milímetro", "milímetros"], kcal: ["una caloría", "calorías"], "km/h": ["un kilómetro por hora", "kilómetros por hora"],
+  "°C": ["un grado", "grados"], "°": ["un grado", "grados"] };
+const UNIT_RE_ES = /(?<![\p{L}\d.,])(\d+(?:,\d+)?)\s?(km\/h|kcal|min|seg|hs|h|km|kg|mg|g|ml|l|L|cm|mm|°C|°)(?:\.(?=\s+[\p{Ll}\d]))?(?![\p{L}\d/])/gu;
+const MER_ES = "([AaPp])\\.?\\s?[Mm]\\.?(?![\\p{L}])";
+
+// 24-hour clock -> "7 y media de la tarde"; article "las" becomes "la" for one o'clock
+function clockEs(art, h24, m, twelve, withPeriod = twelve) {
+  const period = !withPeriod ? "" : h24 < 6 ? " de la madrugada" : h24 < 12 ? " de la mañana" : h24 === 12 ? " del mediodía" : h24 < 20 ? " de la tarde" : " de la noche";
+  const h = twelve ? h24 % 12 || 12 : h24;
+  const mins = m === 0 ? "" : m === 15 ? " y cuarto" : m === 30 ? " y media" : ` y ${m}`;
+  const article = art ? (h === 1 ? art.replace(/as$/, "a") : art.replace(/a$/, "as")) + " " : "";
+  return `${article}${h === 1 ? "una" : h}${mins}${period}`;
+}
+function to24(h, mer) {
+  if (!mer) return h;
+  const pm = mer.toLowerCase() === "p";
+  return pm ? (h < 12 ? h + 12 : 12) : h === 12 ? 0 : h;
+}
+
+function naturalEs(text) {
+  // Dates: 11/10/2026, 11-10-2026, 11.10.2026 (day first), 2026-10-11
+  text = text.replace(/\b(\d{4})-(\d{2})-(\d{2})\b/g, (s, y, m, d) => (+m >= 1 && +m <= 12 && +d >= 1 && +d <= 31 ? `${+d} de ${MESES[+m - 1]} de ${y}` : s));
+  text = text.replace(/(?<![\d/.-])(\d{1,2})([/.-])(\d{1,2})\2(\d{4})(?![\d/.-]\d|\d)/g, (s, d, sep, m, y) =>
+    (+m >= 1 && +m <= 12 && +d >= 1 && +d <= 31 ? `${+d} de ${MESES[+m - 1]} de ${y}` : s));
+  // lun-vie -> lunes a viernes
+  text = text.replace(/\b(lun|mar|mi[eé]|jue|vie|s[aá]b|dom)\.?\s?[-–—]\s?(lun|mar|mi[eé]|jue|vie|s[aá]b|dom)\b\.?/gi,
+    (s, a, b) => `${DIAS[a.toLowerCase()]} a ${DIAS[b.toLowerCase()]}`);
+  // Times: a las 7:00 -> a las 7, 7:30 a. m. -> 7 y media de la mañana, 19:00 -> 7 de la tarde
+  text = text.replace(new RegExp(`(?<![\\d:.,])(\\d{1,2})(?::(\\d{2}))?\\s?(?:-|–|—|a)\\s?(\\d{1,2})(?::(\\d{2}))?\\s?${MER_ES}`, "gu"), (s, h1, m1, h2, m2, mer) => {
+    const a = to24(+h1, mer), b = to24(+h2, mer);
+    if (+h1 > 12 || +h2 > 12 || +(m1 || 0) > 59 || +(m2 || 0) > 59) return s;
+    return `${clockEs("", a, +(m1 || 0), true, false)} a ${clockEs("", b, +(m2 || 0), true)}`;
+  });
+  text = text.replace(/(?<![\d:.,])(\d{1,2}):(\d{2})\s?[-–—]\s?(\d{1,2}):(\d{2})(?![\d:])(?:\s?h(?:s|oras)?\b\.?)?/g, (s, h1, m1, h2, m2) => {
+    if (+h1 > 24 || +h2 > 24 || +m1 > 59 || +m2 > 59) return s;
+    const p = +h1 >= 13 || +h2 >= 13;
+    return `${clockEs("", +h1, +m1, p, false)} a ${clockEs("", +h2, +m2, p)}`;
+  });
+  text = text.replace(new RegExp(`(?<![\\d:.,])(?:\\b([Ll]as?)\\s+)?(\\d{1,2}):(\\d{2})(?![\\d:])(?:\\s?h(?:s|oras)?\\b\\.?)?(?:\\s?${MER_ES})?`, "gu"), (s, art, h, m, mer) => {
+    if (+h > 24 || +m > 59 || (mer && +h > 12)) return s;
+    const h24 = to24(+h, mer) % 24;
+    return clockEs(art, h24, +m, !!mer || +h >= 13);
+  });
+  text = text.replace(new RegExp(`(?<![\\d:.,])(?:\\b([Ll]as?)\\s+)?(\\d{1,2})\\s?${MER_ES}`, "gu"), (s, art, h, mer) =>
+    (+h >= 1 && +h <= 12 ? clockEs(art, to24(+h, mer), 0, true) : s));
+  // 3x10 -> 3 por 10, 10x -> 10 veces
+  text = text.replace(/\b(\d+)\s?[x×]\s?(\d+)\b/g, "$1 por $2").replace(/\b(\d+)x\b/g, "$1 veces");
+  // Units: 10 min -> 10 minutos, 1 km -> un kilómetro
+  text = text.replace(UNIT_RE_ES, (s, n, u) => (n === "1" ? UNITS_ES[u][0] : `${n} ${UNITS_ES[u][1]}`));
+  // Ranges: 5-10 -> 5 a 10
+  text = text.replace(/(?<![\d.,:/\-–—])(\d+(?:,\d+)?)\s?[-–—]\s?(\d+(?:,\d+)?)(?![\d:/]|[.,]\d|\s?[-–—]\s?\d)/g,
+    (s, a, b) => (a.length >= 3 && b.length >= 4 && !(/^(1[1-9]|20)\d\d$/.test(a) && /^(1[1-9]|20)\d\d$/.test(b)) ? s : `${a} a ${b}`));
+  // A spaced dash between words is a pause; espeak drops "–" and " - " without one
+  text = text.replace(/\s+[-–]\s+/g, " — ");
+  return text;
+}
+// ---- end natural reading (German, Spanish)
+
+const NATURAL = { en: naturalEn, de: naturalDe, es: naturalEs };
+
 function normalize(text, lang) {
+  text = NATURAL[lang](text);
   if (lang === "en") text = text.replace(MONEY_RE, money).replace(YEAR_RE, year);
   for (const [re, repl] of RULES[lang] || []) text = text.replace(re, repl);
   return text;
@@ -363,7 +621,8 @@ function splitSentences(par, lang) {
     const following = par.slice(m.index + m[0].length).trimStart().charAt(0);
     const isDot = m[0].replace(/["”’»)\]]+$/, "") === ".";
     const lower = following && following === following.toLowerCase() && following !== following.toUpperCase();
-    if (isDot && (abbr.has(last) || (last.length === 1 && /\p{L}/u.test(last)) || lower)) continue;
+    const ordinal = lang === "de" && /^\d{1,2}$/.test(last); // "am 11. Oktober"
+    if (isDot && (abbr.has(last) || (last.length === 1 && /\p{L}/u.test(last)) || lower || ordinal)) continue;
     out.push(par.slice(start, m.index + m[0].length).trim());
     start = m.index + m[0].length;
   }
