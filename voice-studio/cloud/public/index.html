@@ -183,7 +183,7 @@
       <div class="dock">
         <div class="dock-row">
           <select id="voice" aria-label="Голос"></select>
-          <button id="preview" type="button" aria-label="Прослухати голос">▶</button>
+          <button id="preview" type="button" aria-label="Прослухати голос"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg></button>
           <button class="primary" id="go" type="button">Озвучити</button>
         </div>
       </div>
@@ -207,9 +207,9 @@
         <div class="msg ok" id="resultText"></div>
         <audio id="player" controls preload="metadata"></audio>
         <div class="files">
-          <a class="btn" id="dlWav" download>⬇ WAV</a>
-          <a class="btn" id="dlSrt" download>⬇ Субтитри</a>
-          <button class="wide" type="button" id="share" hidden>Поділитися файлом…</button>
+          <a class="btn" id="dlWav" download>WAV</a>
+          <a class="btn" id="dlSrt" download>Субтитри</a>
+          <button class="wide" type="button" id="share" hidden>Поділитися</button>
         </div>
       </div>
     </aside>
@@ -823,7 +823,6 @@ function showResult({ wav, srt, duration, seconds, name }, restored = false) {
   $("player").src = wavUrl;
   $("dlWav").href = wavUrl; $("dlWav").download = name + ".wav";
   $("dlSrt").href = srtUrl; $("dlSrt").download = name + ".srt";
-  $("dlWav").textContent = `⬇ WAV · ${Math.max(1, Math.round(wav.size / 1e6))} MB`;
   const file = new File([wav], name + ".wav", { type: "audio/wav" });
   $("share").hidden = !(navigator.canShare && navigator.canShare({ files: [file] }));
   $("share").onclick = () => navigator.share({ files: [file], title: name }).catch(() => {});
@@ -838,6 +837,7 @@ async function preview() {
   if (job) return;
   $("err").textContent = "";
   const btn = $("preview");
+  const icon = btn.innerHTML;
   btn.disabled = true; btn.textContent = "…";
   try {
     const pcm = await speak(PREVIEW, $("voice").value, +$("speed").value, "wav", new AbortController().signal);
@@ -846,7 +846,7 @@ async function preview() {
   } catch (e) {
     if (e instanceof AuthError) await route(); else $("err").textContent = e.message;
   }
-  btn.disabled = false; btn.textContent = "▶";
+  btn.disabled = false; btn.innerHTML = icon;
 }
 
 async function check() {
