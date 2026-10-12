@@ -3,23 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#2357d9">
+<meta name="theme-color" content="#000000">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-title" content="Voice Studio">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232357d9'/%3E%3Cpath d='M9 13v6M13 10v12M17 7v18M21 11v10M25 14v4' stroke='white' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23000000'/%3E%3Cpath d='M9 13v6M13 10v12M17 7v18M21 11v10M25 14v4' stroke='white' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
 <title>Voice Studio</title>
 <style>
   /* Phone first: one column with a fixed action bar; text and settings side by side on wide screens */
+  /* One look on every phone: black page, gray panels and buttons, white main button. Red only for errors. */
   :root {
-    --bg: #f4f5f7; --panel: #ffffff; --ink: #15171c; --muted: #636975; --line: #e1e4ea;
-    --accent: #2357d9; --accent-ink: #ffffff; --soft: #edf2fd; --ok: #1a7f37; --err: #c62828;
-    --radius: 14px; color-scheme: light;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #0e1013; --panel: #171a1f; --ink: #eceef2; --muted: #9aa1ad; --line: #2a2e36;
-      --accent: #6e9bff; --accent-ink: #0b0d10; --soft: #1a2232; --ok: #3fb950; --err: #ff6b6b; color-scheme: dark;
-    }
+    --bg: #000000; --panel: #111111; --btn: #1e1e1e; --ink: #f2f2f2; --muted: #8c8c8c; --line: #2a2a2a;
+    --accent: #ffffff; --accent-ink: #000000; --soft: #1a1a1a; --ok: #e6e6e6; --err: #ff6b6b;
+    --radius: 14px; color-scheme: dark;
   }
   * { box-sizing: border-box; }
   [hidden] { display: none !important; }
@@ -37,18 +32,19 @@
     padding: 12px; font: inherit; font-size: 16px; }
   textarea { resize: vertical; line-height: 1.6; }
   #text { min-height: 360px; }
-  textarea:focus, select:focus, input:focus-visible, button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  textarea:focus, select:focus, input:focus-visible, button:focus-visible, a:focus-visible { outline: 2px solid var(--muted); outline-offset: 1px; }
   .meta { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 8px; color: var(--muted); font-size: 13px; flex-wrap: wrap; }
   label.field { display: block; font-size: 13px; color: var(--muted); margin: 0 0 6px; }
-  select { width: 100%; min-width: 0; padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); color: var(--ink); font: inherit; font-size: 16px; }
+  select { width: 100%; min-width: 0; padding: 9px 10px; border: 1px solid #333333; border-radius: 10px; background: var(--btn); color: var(--ink); font: inherit; font-size: 16px; }
   .row { display: flex; gap: 8px; align-items: center; }
   .row > select { flex: 1; }
   input[type=range] { width: 100%; accent-color: var(--accent); }
   .range-head { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; color: var(--muted); margin: 14px 0 4px; }
   .range-head b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
-  button, .btn { font: inherit; cursor: pointer; border-radius: 10px; border: 1px solid var(--line); background: var(--panel); color: var(--ink);
+  button, .btn { font: inherit; cursor: pointer; border-radius: 10px; border: 1px solid #333333; background: var(--btn); color: var(--ink);
     padding: 9px 12px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
   button:hover, .btn:hover { border-color: var(--muted); }
+  .primary:hover { background: #e0e0e0; }
   button:disabled { opacity: .5; cursor: default; }
   .primary { width: 100%; padding: 13px; background: var(--accent); color: var(--accent-ink); border: 0; font-weight: 600; font-size: 16px; }
   .link { border: 0; background: none; color: var(--muted); padding: 0; text-decoration: underline; }
