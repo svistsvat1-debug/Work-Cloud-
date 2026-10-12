@@ -9,155 +9,159 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23000000'/%3E%3Cpath d='M9 13v6M13 10v12M17 7v18M21 11v10M25 14v4' stroke='white' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
 <title>Voice Studio</title>
 <style>
-  /* Phone first: one column with a fixed action bar; text and settings side by side on wide screens */
-  /* One look on every phone: black page, gray panels and buttons, white main button. Red only for errors. */
+  /* One centered column: the script fills the screen, a dock at the bottom holds voice + play + voice it.
+     Everything else lives in the settings sheet (bottom sheet on phones, centered dialog on computers). */
   :root {
-    --bg: #000000; --panel: #111111; --btn: #1e1e1e; --ink: #f2f2f2; --muted: #8c8c8c; --line: #2a2a2a;
-    --accent: #ffffff; --accent-ink: #000000; --soft: #1a1a1a; --ok: #e6e6e6; --err: #ff6b6b;
-    --radius: 14px; color-scheme: dark;
+    --bg: #000000; --panel: #0f0f0f; --raise: #171717; --btn: #1c1c1c; --edge: #2c2c2c; --line: #222222;
+    --ink: #f2f2f2; --muted: #8a8a8a; --accent: #ffffff; --accent-ink: #000000; --ok: #e6e6e6; --err: #ff6b6b;
+    --safe-b: env(safe-area-inset-bottom, 0px); color-scheme: dark;
   }
   * { box-sizing: border-box; }
   [hidden] { display: none !important; }
   html { -webkit-text-size-adjust: 100%; }
-  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-  .wrap { max-width: 1100px; margin: 0 auto; padding: 20px 16px 48px; }
-  header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
-  header .title { flex: 1; min-width: 0; }
-  h1 { font-size: 22px; margin: 0; letter-spacing: -.01em; }
-  header p { margin: 2px 0 0; color: var(--muted); font-size: 14px; }
-  .grid { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 16px; align-items: start; }
-  .card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; min-width: 0; }
-  .narrow { max-width: 420px; margin: 40px auto; display: grid; gap: 12px; }
-  textarea, input[type=password] { width: 100%; border: 1px solid var(--line); border-radius: 10px; background: transparent; color: var(--ink);
-    padding: 12px; font: inherit; font-size: 16px; }
-  textarea { resize: vertical; line-height: 1.6; }
-  #text { min-height: 360px; }
-  textarea:focus, select:focus, input:focus-visible, button:focus-visible, a:focus-visible { outline: 2px solid var(--muted); outline-offset: 1px; }
-  .meta { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 8px; color: var(--muted); font-size: 13px; flex-wrap: wrap; }
-  label.field { display: block; font-size: 13px; color: var(--muted); margin: 0 0 6px; }
-  select { width: 100%; min-width: 0; padding: 9px 10px; border: 1px solid #333333; border-radius: 10px; background: var(--btn); color: var(--ink); font: inherit; font-size: 16px; }
-  .row { display: flex; gap: 8px; align-items: center; }
-  .row > select { flex: 1; }
-  input[type=range] { width: 100%; accent-color: var(--accent); }
-  .range-head { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; color: var(--muted); margin: 14px 0 4px; }
-  .range-head b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
-  button, .btn { font: inherit; cursor: pointer; border-radius: 10px; border: 1px solid #333333; background: var(--btn); color: var(--ink);
-    padding: 9px 12px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
-  button:hover, .btn:hover { border-color: var(--muted); }
-  .primary:hover { background: #e0e0e0; }
-  button:disabled { opacity: .5; cursor: default; }
-  .primary { width: 100%; padding: 13px; background: var(--accent); color: var(--accent-ink); border: 0; font-weight: 600; font-size: 16px; }
-  .link { border: 0; background: none; color: var(--muted); padding: 0; text-decoration: underline; }
-  .hint { font-size: 12px; color: var(--muted); margin-top: 6px; }
-  .check { display: flex; gap: 8px; align-items: center; margin-top: 14px; font-size: 14px; cursor: pointer; }
-  .check input { accent-color: var(--accent); width: 18px; height: 18px; }
-  details { margin-top: 14px; border-top: 1px solid var(--line); padding-top: 12px; }
-  summary { cursor: pointer; font-size: 14px; }
-  #pron { min-height: 110px; font: 13px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace; margin-top: 8px; }
-  .actions { margin-top: 16px; display: grid; gap: 10px; }
-  .bar { height: 8px; background: var(--line); border-radius: 99px; overflow: hidden; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased; }
+  .app { max-width: 760px; margin: 0 auto; padding: 8px 16px calc(96px + var(--safe-b)); min-height: 100vh; min-height: 100dvh;
+    display: flex; flex-direction: column; }
+  header { display: flex; align-items: center; justify-content: space-between; height: 52px; }
+  .brand { font-weight: 600; font-size: 17px; letter-spacing: -.01em; }
+
+  button, .btn { font: inherit; cursor: pointer; border-radius: 12px; border: 1px solid var(--edge); background: var(--btn); color: var(--ink);
+    min-height: 48px; padding: 0 16px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    -webkit-tap-highlight-color: transparent; transition: background .15s, border-color .15s; }
+  button:active, .btn:active { background: #262626; }
+  button:disabled { opacity: .45; cursor: default; }
+  button:focus-visible, .btn:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--muted); outline-offset: 2px; }
+  .primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
+  .primary:active { background: #cfcfcf; }
+  .icon { width: 44px; min-height: 44px; padding: 0; border: 0; background: transparent; color: var(--muted); }
+  .link { min-height: 0; padding: 0; border: 0; background: none; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
+
+  /* Studio */
+  #studio { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+  #text { flex: 1; width: 100%; min-height: 50vh; min-height: 50dvh; border: 0; outline: none; resize: none; border-radius: 18px;
+    background: var(--panel); color: var(--ink); padding: 20px; font: inherit; font-size: 17px; line-height: 1.7; }
+  #text:focus { outline: none; background: #121212; }
+  .meta { display: flex; justify-content: space-between; align-items: center; gap: 12px; color: var(--muted); font-size: 13px;
+    padding: 0 6px; font-variant-numeric: tabular-nums; }
+  .status { display: grid; gap: 12px; }
+  .status:empty { display: none; }
+  .bar { height: 4px; background: var(--line); border-radius: 99px; overflow: hidden; }
   .bar > i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .3s; }
-  .msg { font-size: 13px; }
+  .msg { font-size: 14px; }
   .msg:empty { display: none; }
   .ok { color: var(--ok); } .err { color: var(--err); }
-  .result { margin-top: 16px; display: grid; gap: 10px; }
-  audio { width: 100%; }
+  .result { display: grid; gap: 12px; background: var(--panel); border-radius: 18px; padding: 16px; }
+  audio { width: 100%; height: 44px; }
   .files { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
   .files .wide { grid-column: 1 / -1; }
-  .notice { background: var(--soft); border-radius: 10px; padding: 12px; font-size: 14px; }
+
+  .dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 10; background: rgba(0, 0, 0, .82);
+    -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); border-top: 1px solid var(--line);
+    padding: 12px 16px calc(12px + var(--safe-b)); }
+  .dock-row { max-width: 728px; margin: 0 auto; display: flex; gap: 8px; }
+  select { appearance: none; -webkit-appearance: none; flex: 1; min-width: 0; min-height: 48px; border-radius: 12px; border: 1px solid var(--edge);
+    background: var(--btn) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%238a8a8a' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 16px center;
+    color: var(--ink); font: inherit; font-size: 16px; padding: 0 40px 0 16px; cursor: pointer; }
+  #preview { width: 48px; padding: 0; flex: none; }
+  #go { flex: none; min-width: 148px; }
+
+  /* Sign-in and setup */
+  .narrow { width: 100%; max-width: 360px; margin: auto; display: grid; gap: 12px; padding-bottom: 12vh; }
+  .narrow h2 { margin: 0 0 4px; font-size: 22px; font-weight: 600; letter-spacing: -.01em; }
+  input[type=password] { width: 100%; min-height: 48px; border-radius: 12px; border: 1px solid var(--edge); background: var(--panel);
+    color: var(--ink); padding: 0 16px; font: inherit; font-size: 16px; outline: none; }
+  input[type=password]:focus { border-color: #555555; }
+  .hint { font-size: 13px; color: var(--muted); }
   .notice ol { margin: 6px 0 0; padding-left: 20px; }
-  footer { margin-top: 24px; font-size: 12px; color: var(--muted); display: grid; gap: 6px; max-width: 70ch; }
-  @media (max-width: 860px) {
-    .grid { grid-template-columns: minmax(0, 1fr); gap: 12px; }
-    .wrap { padding: 14px 16px 150px; }
-    .card { padding: 14px; }
-    #text { min-height: 34vh; }
-    button, select, .btn { min-height: 44px; }
-    .link { min-height: 0; }
-    .actions { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; margin: 0; background: var(--panel);
-      border-top: 1px solid var(--line); padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px)); }
+
+  /* Settings sheet */
+  dialog { border: 0; padding: 0; background: var(--panel); color: var(--ink); width: 100%; max-width: 100%; max-height: 88vh; max-height: 88dvh;
+    margin: auto 0 0; border-radius: 22px 22px 0 0; }
+  dialog::backdrop { background: rgba(0, 0, 0, .6); }
+  .sheet { padding: 8px 20px calc(24px + var(--safe-b)); display: grid; gap: 22px; }
+  .sheet-head { display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: var(--panel);
+    padding: 12px 0 4px; z-index: 1; }
+  .sheet-head b { font-size: 17px; font-weight: 600; }
+  .set { display: grid; gap: 8px; }
+  .set-head { display: flex; justify-content: space-between; gap: 12px; font-size: 15px; }
+  .set-head b { font-weight: 500; font-variant-numeric: tabular-nums; color: var(--muted); }
+  input[type=range] { width: 100%; accent-color: var(--accent); margin: 4px 0; }
+  .switch { display: flex; justify-content: space-between; align-items: center; gap: 16px; cursor: pointer; font-size: 15px; }
+  .switch input { appearance: none; -webkit-appearance: none; flex: none; width: 50px; height: 30px; border-radius: 99px; background: #333333;
+    position: relative; cursor: pointer; transition: background .2s; margin: 0; }
+  .switch input::after { content: ""; position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: 50%; background: #ffffff;
+    transition: transform .2s; }
+  .switch input:checked { background: #ffffff; }
+  .switch input:checked::after { transform: translateX(20px); background: #000000; }
+  #pron { width: 100%; min-height: 110px; border: 1px solid var(--edge); border-radius: 12px; background: var(--bg); color: var(--ink);
+    padding: 12px; outline: none; resize: vertical; font: 14px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace; }
+  #pron:focus { border-color: #555555; }
+  .sheet .row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .sheet-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; border-top: 1px solid var(--line); padding-top: 16px;
+    font-size: 12px; color: var(--muted); }
+  .sheet-foot span { max-width: 36ch; }
+
+  /* Hover only where there is a mouse: on phones a tapped button would stay highlighted */
+  @media (hover: hover) {
+    button:hover, .btn:hover { border-color: #444444; }
+    .primary:hover { background: #e4e4e4; border-color: #e4e4e4; }
+    .icon:hover { color: var(--ink); background: var(--btn); }
+    .link:hover { color: var(--ink); }
   }
-  @media (prefers-reduced-motion: reduce) { .bar > i { transition: none; } }
+  @media (min-width: 700px) {
+    .app { padding-top: 24px; }
+    #text { min-height: 60vh; padding: 28px; font-size: 18px; }
+    dialog { max-width: 480px; margin: auto; border-radius: 22px; }
+    .sheet { padding-bottom: 24px; }
+  }
+  @media (max-width: 380px) { #go { min-width: 120px; } }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="app">
   <header>
-    <div class="title">
-      <h1>Voice Studio</h1>
-      <p>Англійський текст → природний чоловічий голос (Kokoro). Будь-якої довжини.</p>
-    </div>
-    <button class="link" id="logout" type="button" hidden>Вийти</button>
+    <span class="brand">Voice Studio</span>
+    <button class="icon" id="openSettings" type="button" aria-label="Налаштування" hidden>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+        <path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>
+      </svg>
+    </button>
   </header>
 
   <!-- Setup and sign-in -->
-  <section class="card narrow" id="setupBox" hidden>
-    <b>Сайт ще не налаштовано</b>
-    <div class="notice">У Cloudflare (Worker <code>voice-studio</code> → Settings → Variables and Secrets) бракує:
+  <section class="narrow" id="setupBox" hidden>
+    <h2>Сайт ще не налаштовано</h2>
+    <div class="notice hint">Бракує секретів у GitHub (Settings → Secrets and variables → Actions), після додавання перезапусти розгортання:
       <ol id="missing"></ol>
     </div>
     <button type="button" id="recheck">Перевірити ще раз</button>
   </section>
 
-  <form class="card narrow" id="loginBox" hidden>
-    <b>Вхід</b>
-    <label class="field" for="password">Пароль сайту (секрет SITE_PASSWORD)</label>
-    <input type="password" id="password" autocomplete="current-password" required>
+  <form class="narrow" id="loginBox" hidden>
+    <h2>Вхід</h2>
+    <input type="password" id="password" placeholder="Пароль" aria-label="Пароль" autocomplete="current-password" required>
     <button class="primary" type="submit">Увійти</button>
     <div class="msg err" id="loginErr"></div>
-    <div class="hint" id="weak" hidden>Порада: пароль коротший за 12 символів. Його легше підібрати, а з ним і витратити ваш баланс DeepInfra. Замініть секрет SITE_PASSWORD на довший.</div>
+    <div class="hint" id="weak" hidden>Пароль коротший за 12 символів. Краще замінити його на довший.</div>
   </form>
 
   <!-- Studio -->
-  <div class="grid" id="studio" hidden>
-    <section class="card">
-      <textarea id="text" placeholder="Вставте англійський текст сценарію.&#10;&#10;Порожній рядок між абзацами дає довшу паузу."></textarea>
-      <div class="meta">
-        <span id="stats">0 слів</span>
-        <button class="link" id="clear" type="button">Очистити</button>
+  <main id="studio" hidden>
+    <textarea id="text" aria-label="Текст для озвучки" spellcheck="false"></textarea>
+    <div class="meta">
+      <span id="stats"></span>
+      <button class="link" id="clear" type="button">Очистити</button>
+    </div>
+
+    <div class="status">
+      <button type="button" id="resume" hidden>Продовжити озвучку</button>
+      <div id="progress" hidden>
+        <div class="bar"><i id="barFill"></i></div>
+        <div class="meta" style="margin-top:8px"><span id="progText">Готую...</span><button class="link" id="cancel" type="button">Скасувати</button></div>
       </div>
-    </section>
-
-    <aside class="card">
-      <label class="field" for="voice">Голос</label>
-      <div class="row">
-        <select id="voice"></select>
-        <button id="preview" type="button" aria-label="Прослухати голос">▶</button>
-      </div>
-      <div class="hint">★ — найкраща якість за оцінкою авторів моделі.</div>
-
-      <div class="range-head"><span>Швидкість</span><b id="speedVal"></b></div>
-      <input type="range" id="speed" min="0.75" max="1.3" step="0.01" value="1">
-
-      <div class="range-head"><span>Пауза між абзацами</span><b id="ppVal"></b></div>
-      <input type="range" id="pp" min="0.3" max="2" step="0.1" value="0.8">
-
-      <label class="check"><input type="checkbox" id="mp3"> Економити мобільний інтернет</label>
-      <div class="hint">Сервер надсилає звук у MP3: у 3 рази менше трафіку, якість трохи нижча. Готовий файл однаково буде WAV.</div>
-
-      <details>
-        <summary>Словник вимови</summary>
-        <div class="hint">Один рядок: <code>слово = як читати</code>, наприклад <code>SaaS = sass</code>.</div>
-        <textarea id="pron" spellcheck="false">SaaS = sass</textarea>
-      </details>
-
-      <details>
-        <summary>Перевірка з'єднання</summary>
-        <div class="hint">Перевіряє ключ DeepInfra і баланс: озвучує коротку тестову фразу.</div>
-        <button type="button" id="check" style="margin-top:8px">Перевірити</button>
-        <div class="msg" id="checkMsg"></div>
-      </details>
-
-      <div class="actions">
-        <button class="primary" id="go" type="button">Озвучити</button>
-        <button type="button" id="resume" hidden>Продовжити озвучку</button>
-        <div id="progress" hidden>
-          <div class="bar"><i id="barFill"></i></div>
-          <div class="meta"><span id="progText">Готую...</span><button class="link" id="cancel" type="button">Скасувати</button></div>
-        </div>
-        <div class="msg err" id="err"></div>
-      </div>
-
+      <div class="msg err" id="err"></div>
       <div class="result" id="result" hidden>
         <div class="msg ok" id="resultText"></div>
         <audio id="player" controls preload="metadata"></audio>
@@ -166,16 +170,55 @@
           <a class="btn" id="dlSrt" download>⬇ Субтитри</a>
           <button class="wide" type="button" id="share" hidden>Поділитися файлом…</button>
         </div>
-        <div class="hint">Файл зберігається лише до наступної озвучки, тож скачайте його одразу.</div>
       </div>
-    </aside>
-  </div>
+    </div>
 
-  <footer id="footer" hidden>
-    <span>Голос Kokoro-82M (Apache 2.0): комерційне використання й монетизація дозволені. Озвучка рахується на сервері DeepInfra, оплата за символи з вашого балансу там.</span>
-    <span>Під час озвучки довгого тексту не закривайте сторінку.</span>
-  </footer>
+    <div class="dock">
+      <div class="dock-row">
+        <select id="voice" aria-label="Голос"></select>
+        <button id="preview" type="button" aria-label="Прослухати голос">▶</button>
+        <button class="primary" id="go" type="button">Озвучити</button>
+      </div>
+    </div>
+  </main>
 </div>
+
+<dialog id="settings" aria-label="Налаштування">
+  <div class="sheet">
+    <div class="sheet-head"><b>Налаштування</b><button class="link" id="closeSettings" type="button">Готово</button></div>
+
+    <div class="set">
+      <div class="set-head"><span>Швидкість</span><b id="speedVal"></b></div>
+      <input type="range" id="speed" min="0.75" max="1.3" step="0.01" value="1" aria-label="Швидкість">
+    </div>
+
+    <div class="set">
+      <div class="set-head"><span>Пауза між абзацами</span><b id="ppVal"></b></div>
+      <input type="range" id="pp" min="0.3" max="2" step="0.1" value="0.8" aria-label="Пауза між абзацами">
+    </div>
+
+    <div class="set">
+      <label class="switch">Економити мобільний інтернет <input type="checkbox" id="mp3"></label>
+      <div class="hint">Звук іде у MP3, утричі менше трафіку. Готовий файл однаково WAV.</div>
+    </div>
+
+    <div class="set">
+      <div class="set-head"><span>Словник вимови</span></div>
+      <textarea id="pron" spellcheck="false" aria-label="Словник вимови">SaaS = sass</textarea>
+      <div class="hint">Один рядок: слово = як читати.</div>
+    </div>
+
+    <div class="set">
+      <div class="row"><button type="button" id="check">Перевірити з'єднання</button></div>
+      <div class="msg" id="checkMsg"></div>
+    </div>
+
+    <div class="sheet-foot">
+      <span>Голос Kokoro-82M (Apache 2.0): монетизація дозволена. Оплата за символи з балансу DeepInfra.</span>
+      <button class="link" id="logout" type="button" hidden>Вийти</button>
+    </div>
+  </div>
+</dialog>
 
 <script>
 const $ = (id) => document.getElementById(id);
@@ -596,12 +639,12 @@ async function speak(text, voice, speed, format, signal) {
 
 function fillVoices() {
   const sel = $("voice");
-  for (const [group, label] of [["US", "Американський акцент"], ["UK", "Британський акцент"]]) {
+  for (const [group, label] of [["US", "США"], ["UK", "Британія"]]) {
     const og = document.createElement("optgroup");
     og.label = label;
-    for (const [id, name, accent, pitch, top] of VOICES.filter((v) => v[2] === group)) {
+    for (const [id, name] of VOICES.filter((v) => v[2] === group)) {
       const o = document.createElement("option");
-      o.value = id; o.textContent = `${top ? "★ " : ""}${name} · тембр ${pitch}`;
+      o.value = id; o.textContent = name;
       og.appendChild(o);
     }
     sel.appendChild(og);
@@ -619,8 +662,8 @@ function updateStats() {
   const text = $("text").value, words = (text.match(/[\p{L}\d'’]+/gu) || []).length;
   const min = words / 155 / +$("speed").value, m = Math.floor(min), s = Math.round((min - m) * 60);
   const cost = (text.length * PRICE_PER_M * priceFactor) / 1e6;
-  const h = Math.floor(m / 60), dur = h ? `${h} год ${m % 60} хв` : `${m} хв ${s} с`;
-  $("stats").textContent = words ? `${words} слів · ≈ ${dur} аудіо · ≈ $${cost < 0.01 ? cost.toFixed(4) : cost.toFixed(2)}` : "0 слів";
+  const h = Math.floor(m / 60), dur = h ? `${h} год ${m % 60} хв` : m ? `${m} хв ${s} с` : `${s} с`;
+  $("stats").textContent = words ? `${words} слів · ≈ ${dur} · $${cost < 0.01 ? cost.toFixed(4) : cost.toFixed(2)}` : "";
   store.set("text", text);
 }
 function pronMap() {
@@ -804,7 +847,7 @@ async function route() {
   $("setupBox").hidden = !missing.length; $("missing").innerHTML = missing.join("");
   $("loginBox").hidden = !!missing.length || st.signedIn;
   $("studio").hidden = !!missing.length || !st.signedIn;
-  $("footer").hidden = $("studio").hidden;
+  $("openSettings").hidden = $("studio").hidden;
   $("logout").hidden = !st.signedIn;
   $("weak").hidden = !st.weakPassword;
   if (typeof st.tier === "string") { priceFactor = TIER_FACTOR[st.tier] ?? 1; updateStats(); }
@@ -817,7 +860,10 @@ $("loginBox").addEventListener("submit", async (e) => {
   try { await api("/api/login", { password: $("password").value }); $("password").value = ""; await route(); }
   catch (err) { $("loginErr").textContent = err.message; }
 });
-$("logout").onclick = async () => { await api("/api/logout", {}).catch(() => {}); route(); };
+$("logout").onclick = async () => { $("settings").close(); await api("/api/logout", {}).catch(() => {}); route(); };
+$("openSettings").onclick = () => $("settings").showModal();
+$("closeSettings").onclick = () => $("settings").close();
+$("settings").addEventListener("click", (e) => { if (e.target === $("settings")) $("settings").close(); }); // tap outside the sheet
 $("recheck").onclick = route;
 
 fillVoices();
