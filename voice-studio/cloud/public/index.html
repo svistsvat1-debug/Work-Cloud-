@@ -35,6 +35,7 @@
   .primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
   .primary:active { background: #cfcfcf; }
   .icon { width: 44px; min-height: 44px; padding: 0; border: 0; background: transparent; color: var(--muted); }
+  .link.plain { text-decoration: none; font-size: 15px; min-height: 44px; }
   .link { min-height: 0; padding: 0; border: 0; background: none; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
 
   /* Studio: phones and tablets get one column with the dock pinned to the bottom of the screen */
@@ -65,10 +66,9 @@
     padding: 12px 16px calc(12px + var(--safe-b)); }
   .dock-row { max-width: 728px; margin: 0 auto; display: flex; gap: 8px; }
   select { appearance: none; -webkit-appearance: none; flex: 1; min-width: 0; min-height: 48px; border-radius: 12px; border: 1px solid var(--edge);
-    background: var(--btn) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%238a8a8a' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 16px center;
-    color: var(--ink); font: inherit; font-size: 16px; padding: 0 40px 0 16px; cursor: pointer; }
-  #preview { width: 48px; padding: 0; flex: none; }
-  #go { flex: none; min-width: 148px; }
+    background: var(--btn);
+    color: var(--ink); font: inherit; font-size: 16px; padding: 0 16px; cursor: pointer; }
+  #preview, #go { flex: none; }
 
   /* Sign-in and setup */
   .narrow { width: 100%; max-width: 360px; margin: auto; display: grid; gap: 12px; padding-bottom: 12vh; }
@@ -132,6 +132,7 @@
       border-top: 1px solid var(--line); }
     .dock-row { max-width: none; }
     #go { min-width: 168px; }
+    #preview { min-width: 132px; }
     .side { background: var(--panel); border-radius: 22px; padding: 24px; gap: 16px; overflow-y: auto; align-content: start; }
     .side-head { display: block; font-size: 13px; color: var(--muted); letter-spacing: .04em; text-transform: uppercase; }
     .side-empty { display: grid; justify-items: center; gap: 12px; text-align: center; color: #5c5c5c; font-size: 14px;
@@ -140,7 +141,7 @@
     .result { background: none; padding: 0; gap: 14px; }
     .files { grid-template-columns: 1fr; }
   }
-  @media (max-width: 380px) { #go { min-width: 120px; } }
+  @media (max-width: 380px) { #preview, #go { padding: 0 12px; } }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 </head>
@@ -148,11 +149,7 @@
 <div class="app">
   <header>
     <span class="brand">Voice Studio</span>
-    <button class="icon" id="openSettings" type="button" aria-label="Налаштування" hidden>
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
-        <path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>
-      </svg>
-    </button>
+    <button class="link plain" id="openSettings" type="button" hidden>Налаштування</button>
   </header>
 
   <!-- Setup and sign-in -->
@@ -183,7 +180,7 @@
       <div class="dock">
         <div class="dock-row">
           <select id="voice" aria-label="Голос"></select>
-          <button id="preview" type="button" aria-label="Прослухати голос"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg></button>
+          <button id="preview" type="button">Прослухати</button>
           <button class="primary" id="go" type="button">Озвучити</button>
         </div>
       </div>
@@ -192,9 +189,6 @@
     <aside class="side" aria-label="Готова озвучка">
       <div class="side-head">Готова озвучка</div>
       <div class="side-empty">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
-          <path d="M4 10v4M8 7v10M12 4v16M16 8v8M20 11v2"/>
-        </svg>
         <span>Тут з'являться аудіо і субтитри для скачування.</span>
       </div>
       <button type="button" id="resume" hidden>Продовжити озвучку</button>
@@ -837,8 +831,7 @@ async function preview() {
   if (job) return;
   $("err").textContent = "";
   const btn = $("preview");
-  const icon = btn.innerHTML;
-  btn.disabled = true; btn.textContent = "…";
+  btn.disabled = true;
   try {
     const pcm = await speak(PREVIEW, $("voice").value, +$("speed").value, "wav", new AbortController().signal);
     const url = URL.createObjectURL(new Blob([wavHeader(pcm.length * 2), pcm], { type: "audio/wav" }));
@@ -846,7 +839,7 @@ async function preview() {
   } catch (e) {
     if (e instanceof AuthError) await route(); else $("err").textContent = e.message;
   }
-  btn.disabled = false; btn.innerHTML = icon;
+  btn.disabled = false;
 }
 
 async function check() {
@@ -863,9 +856,9 @@ async function check() {
     }
     const warn = notes.some((n) => !n.startsWith("усі"));
     msg.className = warn ? "msg err" : "msg ok";
-    msg.textContent = `${warn ? "⚠" : "✓"} Працює: DeepInfra повернув голос за ${(r.ms / 1000).toFixed(1)} с (маршрут ${r.route}${r.tier ? ", " + r.tier : ""}).` + (notes.length ? " " + notes.join("; ") + "." : "");
+    msg.textContent = `Працює: DeepInfra повернув голос за ${(r.ms / 1000).toFixed(1)} с (маршрут ${r.route}${r.tier ? ", " + r.tier : ""}).` + (notes.length ? " " + notes.join("; ") + "." : "");
   } catch (e) {
-    msg.className = "msg err"; msg.textContent = "✗ " + e.message;
+    msg.className = "msg err"; msg.textContent = e.message;
   }
 }
 
