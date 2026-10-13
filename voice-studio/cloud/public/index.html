@@ -199,7 +199,8 @@
         <div class="msg ok" id="resultText"></div>
         <audio id="player" controls preload="metadata"></audio>
         <div class="files">
-          <a class="btn" id="dlWav" download>Скачати</a>
+          <a class="btn" id="dlWav" download>Скачати аудіо</a>
+          <a class="btn" id="dlSrt" download>Скачати субтитри</a>
           <button type="button" id="share" hidden>Поділитися</button>
         </div>
       </div>
@@ -807,12 +808,13 @@ function assemble(st) {
   };
 }
 
-function showResult({ wav, duration, seconds, name }, restored = false) {
+function showResult({ wav, srt, duration, seconds, name }, restored = false) {
   urls.forEach((u) => URL.revokeObjectURL(u));
-  const wavUrl = URL.createObjectURL(wav);
-  urls = [wavUrl];
+  const wavUrl = URL.createObjectURL(wav), srtUrl = URL.createObjectURL(srt);
+  urls = [wavUrl, srtUrl];
   $("player").src = wavUrl;
   $("dlWav").href = wavUrl; $("dlWav").download = name + ".wav";
+  $("dlSrt").href = srtUrl; $("dlSrt").download = name + ".srt";
   const file = new File([wav], name + ".wav", { type: "audio/wav" });
   $("share").hidden = !(navigator.canShare && navigator.canShare({ files: [file] }));
   $("share").onclick = () => navigator.share({ files: [file], title: name }).catch(() => {});
