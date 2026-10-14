@@ -1,15 +1,25 @@
 EPISODE 6 · THE VOICE ON CHANNEL 19 · publish Thu 15.10.2026, 22:00 Warsaw
+Rules used: docs/hank/rules/TITLE_RULES.txt, docs/hank/rules/THUMBNAIL_RULES.txt
 
-=== TITLES (A/B "Test & Compare") ===
-A Voice on My CB Told Me Where to Stop. Nobody Else Heard It
-My Dispatcher Went Silent for a Full Minute. Then She Said His Name
-Ice Storm, 2 AM: A Voice on Channel 19 Told Me Where to Stop
+=== TITLE — main (A) ===
+Only My Radio Heard Him. 4 Minutes Later, the Bridge…
+
+=== TITLES for A/B (Test & Compare) ===
+A  Only My Radio Heard Him. 4 Minutes Later, the Bridge…      (53)
+B  A Voice on My CB Told Me Where to Stop. Nobody Else Heard It (60)
+C  Never Argue With the Voice on Channel 19                     (40)
+Other variants considered:
+40 Trucks on Channel 19. Only My Radio Heard Him
+He Knew My Trailer Was Light. Nobody Else Could Hear Him
+My Dispatcher Went Silent, Then Said His Name
+Why Did the Voice on My CB Tell Me to Stop on the Ice?
+I Stopped Where the Voice Said. 4 Minutes Later…
 
 === DESCRIPTION ===
-December 2001. An ice storm in the hills of Missouri. Forty trucks on channel 19, and only one radio heard him.
-He told me exactly where to stop. The next morning, my dispatcher said his name.
+Forty trucks on channel 19. One calm voice. And only my radio could hear it.
+December 2001, an ice storm in the Missouri hills, and a stranger telling me exactly where to stop.
 
-I was 24, hauling a light trailer home for Christmas, when freezing rain turned Interstate 44 into glass. A calm voice I first heard in 1998 came on the CB and told me to stop before a bridge, and none of the other drivers could hear it. One phone call the next day gave that voice a name.
+I was 24, hauling a light trailer and trying to get home to my boy for Christmas, when freezing rain turned Interstate 44 into glass. Then the CB went dead, and a voice I first heard in the fog back in 1998 told me to stop before the bridge at the bottom of the hill. Nobody else on the channel heard a word, and the next morning my dispatcher went quiet for a full minute before she said his name.
 
 0:00 The voice on channel 19
 [TC] Hey. It's Hank.
@@ -18,36 +28,73 @@ I was 24, hauling a light trailer home for Christmas, when freezing rain turned 
 [TC] The spray stops
 [TC] The channel goes dead
 [TC] Nobody else heard him
-[TC] Don't argue with me, son
+[TC] "Don't argue with me, son"
 [TC] The bridge
 [TC] Marlene
 [TC] One more thing
 [TC] Drive safe out there
 
-Have you ever stopped or turned around because of a feeling you couldn't explain? Tell me where you were. I read every one.
+Have you ever stopped, turned around or stayed put because of a voice or a feeling you couldn't explain? Tell me where you were. I read every one.
 — Hank
 
 #truckerstories #cbradio #icestorm
 
 This is a dramatized fictional story created with the help of AI, inspired by the lives of American truck drivers. Names and places are changed or invented.
 
-=== TAGS ===
-ice storm trucker story, cb radio story, channel 19, voice on the cb radio, black ice, trucker stories, truck driver story, interstate 44, missouri ice storm, rolling thunder, hank trucker, untold stories, stories for men, creepy trucker stories, night highway stories, trucker stories to fall asleep to, christmas trucker story, long haul trucker
+=== TAGS (19 tags, 384 characters) ===
+ice storm trucker story, voice on the cb radio, channel 19 story, cb radio story, black ice story, missouri ice storm, interstate 44, rolling thunder, hank trucker, trucker stories, truck driver stories, creepy trucker stories, scary trucker stories, night highway stories, trucker stories to fall asleep to, christmas trucker story, stories for men, untold stories, long haul trucker
 
 === PINNED COMMENT ===
 Marlene went quiet for a full minute before she said his name. What do you think she knew? — Hank
 
-=== THUMBNAIL 1 · WITH TEXT ===
-Night, inside the cab of a modern semi truck during a freezing rain storm. A 24-year-old trucker in a worn denim jacket and knit cap grips a CB radio microphone close to his mouth, eyes wide, face lit from below by the warm amber glow of the CB radio. The windshield is glazed with ice streaks; beyond it, blurred red taillights on a dark highway. Composition: man on the left third; the right third is dark iced windshield with room for text. Text "NOBODY ELSE HEARD IT" in bold condensed white sans-serif with a faint icy-blue glow, placed right-middle, not touching the frame edge and not covering his face. 35mm lens, eye level from the passenger seat, shallow depth of field, cinematic contrast, cold blue and amber palette, tense mood. 16:9. no logos, no watermarks.
+=== THUMBNAIL A · text "DON'T GET ON IT" (pair with title A) ===
+YouTube thumbnail, 16:9, 1280x720, photorealistic cinematic photo. Tight close-up of a terrified 24-year-old American trucker inside a semi truck cab at night: short brown hair, light stubble, gray knit beanie, worn denim jacket over a red flannel shirt. His face fills about 40% of the frame, placed right of center; eyes wide open, eyebrows raised high, mouth open in fear, looking straight into the camera. He grips a black CB radio microphone just below his chin. The face is clear and brightly lit: warm orange-amber light from below and a cool cyan rim light on one side; eyes fully visible, not in shadow. Background: an ice-glazed windshield, heavily blurred, in saturated deep teal and electric blue (not black), with a few soft out-of-focus yellow bridge lights far away; nothing else in the background. Huge bold sans-serif text in ALL CAPS in the upper-left area: "DON'T GET ON IT", bright yellow letters with a thick black outline and a drop shadow, not overlapping the face. The bottom-right corner is left completely empty. Vivid saturated colors, high contrast, sharp focus on the face. no logos, no watermarks.
 
-=== THUMBNAIL 2 · NO TEXT ===
-Wide night shot from the icy shoulder of a downhill interstate in wooded hills. A lone semi truck with a white trailer is stopped beside a white roadside post coated in ice, orange four-way flashers glowing. Far below at the bottom of the hill, a long river bridge strung with small yellow lights; on it, a trailer turned sideways across the lanes. Freezing rain streaks through the headlights; every tree branch is glazed like glass. Just ahead of the parked truck, two small round amber lights glow low in the dark. 24mm lens, low camera angle, slight telephoto compression toward the bridge, deep blue night with orange and amber accents, lonely and eerie mood. 16:9. no logos, no watermarks.
+=== THUMBNAIL B · no text (pair with title B) ===
+YouTube thumbnail, 16:9, 1280x720, photorealistic cinematic photo. Close-up of a shocked 24-year-old American trucker inside a semi truck cab at night: short brown hair, light stubble, gray knit beanie, worn denim jacket over a red flannel shirt. His face fills about 35% of the frame on the left; eyes wide, mouth open, eyebrows raised, staring at a CB radio mounted on the dashboard in the lower center of the frame. The CB radio glows bright warm amber and is large and clearly visible. Through the softly blurred, ice-glazed windshield behind him, two small round amber lights glow low in the dark, close together, like old truck marker lights. The face is brightly lit by the amber glow, eyes clearly visible. Background colors saturated deep blue and teal (not black), simple and uncluttered. No text anywhere. The bottom-right corner is left completely empty. Vivid saturated colors, high contrast. no logos, no watermarks.
 
-=== THUMBNAIL 3 · OBJECT CLOSE-UP (text lives in the scene) ===
-Extreme close-up of an old CB radio mounted under a truck dashboard at night. Its red LED channel display reads "19". Frost crystals along the edge of the dash, a coiled black microphone cord in the foreground, warm amber backlight on the dials. In the radio's chrome faceplate, a faint reflection of two small round amber lights in darkness. Macro lens, very shallow depth of field, fine film grain, cold blue shadows with warm amber highlights, quiet and uncanny mood. 16:9. no logos, no watermarks.
+=== THUMBNAIL C · text "WHO IS HE?" (pair with title C) ===
+YouTube thumbnail, 16:9, 1280x720, photorealistic cinematic photo. Extreme close-up of a frightened 24-year-old American trucker at night inside a semi truck cab: short brown hair, light stubble, gray knit beanie, worn denim jacket. His face fills about 45% of the frame on the right; eyes wide, eyebrows raised, lips parted, looking directly into the camera. He holds a black CB radio microphone pressed close to his ear, as if listening to something he can't believe. The face is brightly lit by warm amber dashboard light with a cool blue rim light; eyes not in shadow. Background: heavily blurred amber dashboard glow and icy blue windshield, saturated, simple, not black. Huge bold sans-serif text in ALL CAPS in the upper-left area: "WHO IS HE?", white letters with a thick black outline and a drop shadow, not overlapping the face. The bottom-right corner is left completely empty. Vivid saturated colors, high contrast. no logos, no watermarks.
 
-=== BACKGROUND LOOP (10–15 s) ===
-View from inside a truck cab at night looking through the windshield. Freezing rain hits the glass in slow streaks, a thin layer of ice slowly creeping in from the edges, the dark highway ahead faintly lit by headlights, wipers still. A soft amber glow from the dashboard along the bottom edge. Very slow, subtle camera drift. No text, no people, no logos. Seamless loop: first and last frame nearly identical. 16:9.
+Tip: if the image generator garbles the text, generate the same prompt without the text line, then add the text yourself (bold sans-serif, white or yellow, thick black outline).
+Check before upload: shrink to phone-feed size. If it isn't clear in 1 second, redo it.
+
+=== BACKGROUND LOOP · step 1: still image for the first and last frame ===
+Cinematic still, 16:9, 1920x1080. Point of view from the driver's seat of a semi truck at night during a freezing rain storm, looking through the windshield at an empty dark interstate in wooded hills. The center of the frame is calm and uncluttered: a soft, out-of-focus, even dark blue-gray area of wet glass and night, with no bright lights, no objects and no text, so large white subtitles can sit in the middle and stay easy to read. Detail lives only at the edges: a thin crust of ice creeping in along the corners and edges of the windshield, ice-glazed tree silhouettes at the far left and far right, and a low warm amber glow from the dashboard along the bottom edge. Cool desaturated blue palette, low contrast in the middle, gentle dark vignette, exposure slightly dark. No people, no hands, no vehicles, no headlights or taillights, no white or yellow light in the center.
+
+=== BACKGROUND LOOP · step 2: video prompt (image-to-video, 10 s) ===
+Seamless 10-second loop. Locked-off static camera: no camera movement, no zoom, no pan, no cuts. Freezing rain falls steadily and gently on the windshield; thin water streaks slide down slowly, mostly near the left and right sides; tiny ice crystals glint softly along the edges; the amber dashboard glow along the bottom breathes very slightly. Motion is slow, even and continuous from the first second to the last, with no events: no flashes, no lightning, no passing cars, no moving wipers. The center of the frame stays dark, soft and calm for large subtitles. The last frame matches the first frame so the clip loops without a visible jump. Mood: quiet, cold, lonely, 2 AM. 16:9, 1080p, 24 fps.
+
+=== BACKGROUND LOOP · negative prompt ===
+text, letters, subtitles, captions, watermark, logo, people, hands, faces, vehicles, headlights, taillights, bright light in the center, white or yellow light in the center, lightning, flashes, camera shake, camera movement, zoom, pan, cuts, fast motion, moving wipers, snow whiteout, overexposure, high contrast in the center, flicker
+
+Generator settings: duration 10 s, 16:9, 1080p, low motion strength. Use the step-1 image as the start frame AND the end frame (or turn on the Loop option if the generator has one).
+
+=== YOUTUBE STUDIO SETTINGS ===
+Details
+- Title: A. Description and tags: from this file.
+- Thumbnail: upload A. After publishing, add A, B and C in Test & Compare (desktop Studio only, after 22:00 when the video is public).
+- Playlist: Season 1 – In Order.
+- Audience: No, it's not made for kids. Age restriction: none.
+More options
+- Altered or synthetic content: Yes.
+- Paid promotion: no.
+- Automatic chapters: on (the timestamps in the description take priority).
+- Video language: English. Title and description language: English. Caption certification: none needed.
+- Recording date and location: leave empty.
+- License: Standard YouTube License. Allow embedding: yes. Publish to subscriptions feed and notify subscribers: yes.
+- Category: Entertainment.
+- Comments: On; hold potentially inappropriate comments for review; sort by Top.
+- Show how many viewers like this video: yes.
+Video elements
+- Subtitles: optional, upload the SRT as English (helps search; the burned-in subtitles stay).
+- End screen, last 20 s: element 1 "Best for viewer", element 2 Subscribe.
+- Cards: at "Last time I told you about a letter my father left me" → Episode 5; at "I had heard that voice before. March of 1998" → Episode 1.
+Visibility
+- Schedule: Thursday 15.10.2026, 22:00, time zone Warsaw (CEST, UTC+2).
+After publishing
+- Pinned comment: from this file.
+- Reply to the first comments during the first 30 minutes.
 
 === SHORT · publish Fri 16.10, 18:00 · related video = Episode 6 ===
 Hook text on top (3–5 words): ONLY MY RADIO HEARD HIM
