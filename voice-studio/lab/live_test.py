@@ -12,6 +12,7 @@ texts = json.load(open("texts.json"))
 CASES = [("en", "am_michael", "hard_en"), ("de", "de_josef", "hard_de"), ("es", "es_rafael", "hard_es"),
          ("fr", "fr_lucian", "hard_fr"), ("es", "es_diego", "short2_es"), ("fr", "fr_alain", "short2_fr"),
          ("de", "de_josef", "long_de"), ("fr", "fr_lucian", "long_fr")]
+ONLY = os.environ.get("LIVE_LANGS", "").split()  # e.g. "en": only those languages
 
 
 async def main():
@@ -35,6 +36,8 @@ async def main():
         await page.click("#closeSettings")
         results = []
         for lang, voice, key in CASES:
+            if ONLY and lang not in ONLY:
+                continue
             await page.select_option("#lang", lang)
             await page.select_option("#voice", voice)
             await page.fill("#text", texts[key])
@@ -52,6 +55,21 @@ async def main():
                    "file": path, "seconds": round(time.time() - t, 2), "takes": list(takes), "result": await page.text_content("#resultText")}
             print("LIVE:", json.dumps({k: rec[k] for k in ("id", "seconds", "takes", "result")}, ensure_ascii=False), "| spoken:", spoken, flush=True)
             results.append(rec)
+            if os.environ.get("LIVE_FRAGMENT") and len(results) == 1:  # fix one fragment on the live site
+                await page.click("#fragsToggle")
+                await page.click('.frag[data-i="0"] [data-edit]')
+                await page.fill('.frag[data-i="0"] textarea', "Quick update: we just hit fifteen hundred subscribers. Thank you!")
+                await page.click('.frag[data-i="0"] [data-redo]')
+                await page.wait_for_function("document.getElementById('resultText').textContent.startsWith('Фрагмент оновлено')", timeout=120000)
+                rows = await page.eval_on_selector_all(".frag p", "els => els.map(e => e.textContent)")
+                print("FRAGMENT:", await page.text_content("#resultText"), "| rows:", rows, flush=True)
+                await page.click("#openSettings")
+                await page.click('[data-subs-set="short"]')
+                await page.click("#closeSettings")
+                async with page.expect_download() as d:
+                    await page.click("#dlSrt")
+                await (await d.value).save_as("out/short.srt")
+                print("SHORT SRT:", open("out/short.srt").read()[:400].replace("\n", " / "), flush=True)
         print("page errors:", errors)
         json.dump(results, open("out/live.json", "w"), indent=1, ensure_ascii=False)
         await browser.close()
