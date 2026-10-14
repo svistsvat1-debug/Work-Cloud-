@@ -70,6 +70,15 @@ text, letters, subtitles, captions, watermark, logo, people, hands, faces, vehic
 
 Generator settings: duration 10 s, 16:9, 1080p, low motion strength. Use the step-1 image as the start frame AND the end frame (or turn on the Loop option if the generator has one).
 
+=== BACKGROUND LOOP · Gemini (Veo) version — the long prompt was refused ===
+Gemini makes ~8 s clips with no end-frame option; plain positive wording works better than technical specs and long "no ..." lists. Claude makes the 8 s clip seamless with a crossfade and loops it to the full length.
+
+Option 1 · attach the generated still (+ → photo), then:
+Animate this image. Freezing rain keeps falling gently on the truck windshield, small drops and thin water streaks slowly sliding down the glass. Fog drifts very slowly over the empty road ahead. The dashboard lights glow softly. The camera stays completely still. Calm, quiet, cold night atmosphere. Only the soft sound of rain tapping on glass.
+
+Option 2 · text only:
+A calm night view from inside a truck cab, looking through the windshield at an empty road in a dark winter forest. Freezing rain falls gently on the glass; small drops and thin streaks slowly slide down. Thin ice along the edges of the windshield. Light fog drifts slowly over the road. The dashboard glows a soft warm amber at the bottom of the frame. The camera stays completely still. Dark blue tones, soft focus in the middle of the frame. Quiet, cold, lonely atmosphere. Only the soft sound of rain on glass.
+
 === YOUTUBE STUDIO SETTINGS ===
 Details
 - Title: A. Description and tags: from this file.
