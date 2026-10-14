@@ -23,6 +23,7 @@ jobs:
         working-directory: voice-studio/lab
     env:
       DEEPINFRA_API_KEY: ${{ secrets.DEEPINFRA_API_KEY }}
+      SITE_PASSWORD: ${{ secrets.SITE_PASSWORD }}
     steps:
       - uses: actions/checkout@v4
       - name: Earlier run to reuse
