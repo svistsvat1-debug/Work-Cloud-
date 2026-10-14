@@ -3,142 +3,168 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#000000">
+<meta name="theme-color" content="#ffffff">
+<script>try { document.documentElement.dataset.theme = JSON.parse(localStorage.getItem("vs.theme")) || "light"; } catch (e) { document.documentElement.dataset.theme = "light"; }</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-title" content="Voice Studio">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23000000'/%3E%3Cpath d='M9 13v6M13 10v12M17 7v18M21 11v10M25 14v4' stroke='white' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
 <title>Voice Studio</title>
 <style>
-  /* One centered column: the script fills the screen, a dock at the bottom holds voice + play + voice it.
-     Everything else lives in the settings sheet (bottom sheet on phones, centered dialog on computers). */
-  :root {
-    --bg: #000000; --panel: #0f0f0f; --raise: #171717; --btn: #1c1c1c; --edge: #2c2c2c; --line: #222222;
-    --ink: #f2f2f2; --muted: #8a8a8a; --accent: #ffffff; --accent-ink: #000000; --ok: #e6e6e6; --err: #ff6b6b;
-    --safe-b: env(safe-area-inset-bottom, 0px); color-scheme: dark;
+  /* Monochrome studio, like professional voice platforms: white canvas, black type, hairlines instead of grey blocks.
+     The dark theme is the exact inverse. Phones: one column with a dock pinned to the bottom.
+     Computers: script card on the left (controls in its footer), results panel on the right. */
+  :root, [data-theme="light"] {
+    --bg: #ffffff; --ink: #0a0a0a; --muted: rgba(10, 10, 10, .56); --faint: rgba(10, 10, 10, .36);
+    --line: rgba(10, 10, 10, .10); --line-strong: rgba(10, 10, 10, .22); --hover: rgba(10, 10, 10, .04);
+    --primary: #0a0a0a; --on-primary: #ffffff; --primary-hover: #262626; --dock: rgba(255, 255, 255, .9); --scrim: rgba(10, 10, 10, .32);
+    color-scheme: light;
   }
+  [data-theme="dark"] {
+    --bg: #000000; --ink: #fafafa; --muted: rgba(250, 250, 250, .56); --faint: rgba(250, 250, 250, .36);
+    --line: rgba(250, 250, 250, .13); --line-strong: rgba(250, 250, 250, .26); --hover: rgba(250, 250, 250, .06);
+    --primary: #fafafa; --on-primary: #000000; --primary-hover: #dedede; --dock: rgba(0, 0, 0, .86); --scrim: rgba(0, 0, 0, .66);
+    color-scheme: dark;
+  }
+  :root { --safe-b: env(safe-area-inset-bottom, 0px); --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
   * { box-sizing: border-box; }
   [hidden] { display: none !important; }
   html { -webkit-text-size-adjust: 100%; }
-  body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    -webkit-font-smoothing: antialiased; }
-  .app { max-width: 760px; margin: 0 auto; padding: 8px 16px calc(96px + var(--safe-b)); min-height: 100vh; min-height: 100dvh;
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 var(--font); letter-spacing: -.006em;
+    -webkit-font-smoothing: antialiased; transition: background .2s, color .2s; }
+  .app { max-width: 760px; margin: 0 auto; padding: 4px 16px calc(100px + var(--safe-b)); min-height: 100vh; min-height: 100dvh;
     display: flex; flex-direction: column; }
-  header { display: flex; align-items: center; justify-content: space-between; height: 52px; }
-  .brand { font-weight: 600; font-size: 17px; letter-spacing: -.01em; }
+  header { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  .brand { font-weight: 700; font-size: 17px; letter-spacing: -.02em; }
 
-  button, .btn { font: inherit; cursor: pointer; border-radius: 12px; border: 1px solid var(--edge); background: var(--btn); color: var(--ink);
-    min-height: 48px; padding: 0 16px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-    -webkit-tap-highlight-color: transparent; transition: background .15s, border-color .15s; }
-  button:active, .btn:active { background: #262626; }
-  button:disabled { opacity: .45; cursor: default; }
-  button:focus-visible, .btn:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--muted); outline-offset: 2px; }
-  .primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
-  .primary:active { background: #cfcfcf; }
-  .icon { width: 44px; min-height: 44px; padding: 0; border: 0; background: transparent; color: var(--muted); }
-  .link.plain { text-decoration: none; font-size: 15px; min-height: 44px; }
-  .link { min-height: 0; padding: 0; border: 0; background: none; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
+  /* Controls */
+  button, .btn { font: inherit; font-size: 15px; font-weight: 500; cursor: pointer; border-radius: 10px; border: 1px solid var(--line-strong);
+    background: transparent; color: var(--ink); min-height: 46px; padding: 0 18px; text-decoration: none; display: inline-flex;
+    align-items: center; justify-content: center; gap: 6px; -webkit-tap-highlight-color: transparent; transition: background .15s, border-color .15s, opacity .15s; }
+  button:active, .btn:active { background: var(--hover); }
+  button:disabled { opacity: .4; cursor: default; }
+  button:focus-visible, .btn:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .primary { background: var(--primary); color: var(--on-primary); border-color: var(--primary); font-weight: 600; }
+  .primary:active { background: var(--primary-hover); }
+  .ghost { min-height: 36px; padding: 0 14px; border-radius: 999px; font-size: 14px; }
+  .link { min-height: 0; padding: 0; border: 0; background: none; color: var(--muted); font-size: 13px; font-weight: 500;
+    text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-strong); }
 
-  /* Studio: phones and tablets get one column with the dock pinned to the bottom of the screen */
-  #studio { flex: 1; display: flex; flex-direction: column; gap: 12px; min-height: 0; }
+  /* Studio */
+  #studio { flex: 1; display: flex; flex-direction: column; gap: 14px; min-height: 0; }
   .editor { flex: 1; display: flex; flex-direction: column; gap: 10px; min-height: 0; }
-  #text { flex: 1; width: 100%; min-height: 50vh; min-height: 50dvh; border: 0; outline: none; resize: none; border-radius: 18px;
-    background: var(--panel); color: var(--ink); padding: 20px; font: inherit; font-size: 17px; line-height: 1.7; }
-  #text:focus { outline: none; background: #121212; }
-  .meta { display: flex; justify-content: space-between; align-items: center; gap: 12px; color: var(--muted); font-size: 13px;
-    padding: 0 6px; font-variant-numeric: tabular-nums; min-height: 20px; }
+  #text { flex: 1; width: 100%; min-height: 50vh; min-height: 50dvh; border: 1px solid var(--line); outline: none; resize: none;
+    border-radius: 14px; background: var(--bg); color: var(--ink); padding: 20px; font: inherit; font-size: 17px; line-height: 1.7;
+    letter-spacing: -.01em; transition: border-color .15s; }
+  #text:focus { border-color: var(--line-strong); }
+  .meta { display: flex; justify-content: space-between; align-items: center; gap: 12px; color: var(--faint); font-size: 12.5px;
+    padding: 0 4px; font-variant-numeric: tabular-nums; min-height: 20px; }
   .side { display: grid; gap: 12px; align-content: start; }
   .side-head, .side-empty { display: none; }
   #progress { display: grid; gap: 8px; }
-  #progress .meta { padding: 0; }
-  .bar { height: 4px; background: var(--line); border-radius: 99px; overflow: hidden; }
-  .bar > i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .3s; }
+  #progress .meta { padding: 0; color: var(--muted); }
+  .bar { height: 2px; background: var(--line); border-radius: 99px; overflow: hidden; }
+  .bar > i { display: block; height: 100%; width: 0; background: var(--ink); transition: width .3s; }
   .msg { font-size: 14px; }
   .msg:empty { display: none; }
-  .ok { color: var(--ok); } .err { color: var(--err); }
-  .result { display: grid; gap: 12px; background: var(--panel); border-radius: 18px; padding: 16px;
-    scroll-margin-bottom: calc(88px + var(--safe-b)); } /* stops above the pinned dock */
-  audio { width: 100%; height: 44px; }
+  .ok { color: var(--ink); font-weight: 500; }
+  .err { color: var(--ink); border: 1px solid var(--ink); border-radius: 10px; padding: 10px 14px; }
+  .result { display: grid; gap: 14px; border: 1px solid var(--line); border-radius: 14px; padding: 16px;
+    scroll-margin-bottom: calc(92px + var(--safe-b)); } /* stops above the pinned dock */
+  .player { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 14px; }
+  .player .play { min-width: 112px; }
+  .time { font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  input[type=range] { width: 100%; accent-color: var(--ink); margin: 0; cursor: pointer; }
   .files { display: grid; gap: 8px; }
 
-  .dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 10; background: rgba(0, 0, 0, .82);
-    -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); border-top: 1px solid var(--line);
+  .dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 10; background: var(--dock);
+    -webkit-backdrop-filter: saturate(1.4) blur(18px); backdrop-filter: saturate(1.4) blur(18px); border-top: 1px solid var(--line);
     padding: 12px 16px calc(12px + var(--safe-b)); }
   .dock-row { max-width: 728px; margin: 0 auto; display: flex; gap: 8px; }
-  select { appearance: none; -webkit-appearance: none; flex: 1; min-width: 0; min-height: 48px; border-radius: 12px; border: 1px solid var(--edge);
-    background: var(--btn);
-    color: var(--ink); font: inherit; font-size: 16px; padding: 0 16px; cursor: pointer; }
+  .voice { flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px; min-height: 46px; padding-left: 14px;
+    border: 1px solid var(--line-strong); border-radius: 10px; cursor: pointer; }
+  .voice span { font-size: 13px; color: var(--muted); flex: none; }
+  select { appearance: none; -webkit-appearance: none; flex: 1; min-width: 0; height: 44px; border: 0; background: transparent;
+    color: var(--ink); font: inherit; font-size: 16px; font-weight: 500; padding: 0 14px 0 0; cursor: pointer; outline: none; }
+  .voice:focus-within { border-color: var(--ink); }
   #preview, #go { flex: none; }
 
   /* Sign-in and setup */
   .narrow { width: 100%; max-width: 360px; margin: auto; display: grid; gap: 12px; padding-bottom: 12vh; }
-  .narrow h2 { margin: 0 0 4px; font-size: 22px; font-weight: 600; letter-spacing: -.01em; }
-  input[type=password] { width: 100%; min-height: 48px; border-radius: 12px; border: 1px solid var(--edge); background: var(--panel);
+  .narrow h2 { margin: 0 0 6px; font-size: 26px; font-weight: 700; letter-spacing: -.03em; }
+  input[type=password] { width: 100%; min-height: 48px; border-radius: 10px; border: 1px solid var(--line-strong); background: var(--bg);
     color: var(--ink); padding: 0 16px; font: inherit; font-size: 16px; outline: none; }
-  input[type=password]:focus { border-color: #555555; }
+  input[type=password]:focus { border-color: var(--ink); }
   .hint { font-size: 13px; color: var(--muted); }
   .notice ol { margin: 6px 0 0; padding-left: 20px; }
 
   /* Settings sheet */
-  dialog { border: 0; padding: 0; background: var(--panel); color: var(--ink); width: 100%; max-width: 100%; max-height: 88vh; max-height: 88dvh;
-    margin: auto 0 0; border-radius: 22px 22px 0 0; }
-  dialog::backdrop { background: rgba(0, 0, 0, .6); }
-  .sheet { padding: 8px 20px calc(24px + var(--safe-b)); display: grid; gap: 22px; }
-  .sheet-head { display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: var(--panel);
-    padding: 12px 0 4px; z-index: 1; }
-  .sheet-head b { font-size: 17px; font-weight: 600; }
-  .set { display: grid; gap: 8px; }
-  .set-head { display: flex; justify-content: space-between; gap: 12px; font-size: 15px; }
+  dialog { border: 0; padding: 0; background: var(--bg); color: var(--ink); width: 100%; max-width: 100%; max-height: 88vh; max-height: 88dvh;
+    margin: auto 0 0; border-radius: 18px 18px 0 0; border-top: 1px solid var(--line); }
+  dialog::backdrop { background: var(--scrim); }
+  .sheet { padding: 4px 20px calc(24px + var(--safe-b)); display: grid; }
+  .sheet-head { display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: var(--bg);
+    padding: 16px 0 12px; z-index: 1; border-bottom: 1px solid var(--line); }
+  .sheet-head b { font-size: 17px; font-weight: 600; letter-spacing: -.02em; }
+  .sheet-head .link { color: var(--ink); font-size: 15px; text-decoration: none; }
+  .set { display: grid; gap: 10px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+  .set-head { display: flex; justify-content: space-between; gap: 12px; font-size: 15px; font-weight: 500; }
   .set-head b { font-weight: 500; font-variant-numeric: tabular-nums; color: var(--muted); }
-  input[type=range] { width: 100%; accent-color: var(--accent); margin: 4px 0; }
-  .switch { display: flex; justify-content: space-between; align-items: center; gap: 16px; cursor: pointer; font-size: 15px; }
-  .switch input { appearance: none; -webkit-appearance: none; flex: none; width: 50px; height: 30px; border-radius: 99px; background: #333333;
-    position: relative; cursor: pointer; transition: background .2s; margin: 0; }
-  .switch input::after { content: ""; position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: 50%; background: #ffffff;
-    transition: transform .2s; }
-  .switch input:checked { background: #ffffff; }
-  .switch input:checked::after { transform: translateX(20px); background: #000000; }
-  #pron { width: 100%; min-height: 110px; border: 1px solid var(--edge); border-radius: 12px; background: var(--bg); color: var(--ink);
-    padding: 12px; outline: none; resize: vertical; font: 14px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace; }
-  #pron:focus { border-color: #555555; }
+  .seg { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--line-strong); border-radius: 10px; padding: 3px; gap: 3px; }
+  .seg button { min-height: 38px; border: 0; border-radius: 7px; font-size: 14px; color: var(--muted); }
+  .seg button[aria-checked="true"] { background: var(--primary); color: var(--on-primary); }
+  .switch { display: flex; justify-content: space-between; align-items: center; gap: 16px; cursor: pointer; font-size: 15px; font-weight: 500; }
+  .switch input { appearance: none; -webkit-appearance: none; flex: none; width: 46px; height: 28px; border-radius: 99px; margin: 0;
+    border: 1px solid var(--line-strong); background: transparent; position: relative; cursor: pointer; transition: background .2s, border-color .2s; }
+  .switch input::after { content: ""; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: var(--ink);
+    transition: transform .2s, background .2s; }
+  .switch input:checked { background: var(--primary); border-color: var(--primary); }
+  .switch input:checked::after { transform: translateX(18px); background: var(--on-primary); }
+  #pron { width: 100%; min-height: 104px; border: 1px solid var(--line-strong); border-radius: 10px; background: var(--bg); color: var(--ink);
+    padding: 12px; outline: none; resize: vertical; font: 13.5px/1.55 ui-monospace, SFMono-Regular, Consolas, monospace; }
+  #pron:focus { border-color: var(--ink); }
   .sheet .row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-  .sheet-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; border-top: 1px solid var(--line); padding-top: 16px;
-    font-size: 12px; color: var(--muted); }
+  .sheet-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-top: 18px; font-size: 12px; color: var(--faint); }
   .sheet-foot span { max-width: 36ch; }
 
   /* Hover only where there is a mouse: on phones a tapped button would stay highlighted */
   @media (hover: hover) {
-    button:hover, .btn:hover { border-color: #444444; }
-    .primary:hover { background: #e4e4e4; border-color: #e4e4e4; }
-    .icon:hover { color: var(--ink); background: var(--btn); }
-    .link:hover { color: var(--ink); }
+    button:hover, .btn:hover { background: var(--hover); border-color: var(--ink); }
+    .primary:hover { background: var(--primary-hover); border-color: var(--primary-hover); }
+    .seg button:hover { background: var(--hover); color: var(--ink); }
+    .seg button[aria-checked="true"]:hover { background: var(--primary); color: var(--on-primary); }
+    .link:hover { background: none; color: var(--ink); }
+    .voice:hover { border-color: var(--ink); }
   }
+
   @media (min-width: 700px) {
-    .app { padding-top: 24px; }
+    .app { padding-top: 16px; }
     #text { padding: 28px; font-size: 18px; }
-    dialog { max-width: 480px; margin: auto; border-radius: 22px; }
+    dialog { max-width: 460px; margin: auto; border-radius: 16px; border: 1px solid var(--line); }
     .sheet { padding-bottom: 24px; }
   }
 
-  /* Computers and landscape tablets: the editor card holds the controls, results live in a panel on the right */
+  /* Computers and landscape tablets */
   @media (min-width: 1000px) {
-    .app { max-width: 1280px; height: 100vh; height: 100dvh; min-height: 0; padding: 20px 32px 32px; }
-    #studio { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 20px; }
-    .editor { background: var(--panel); border-radius: 22px; gap: 0; overflow: hidden; }
-    #text { min-height: 0; border-radius: 0; background: transparent; padding: 32px 36px; }
-    #text:focus { background: transparent; }
-    .editor .meta { padding: 10px 36px 14px; }
-    .dock { position: static; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; padding: 16px 20px;
-      border-top: 1px solid var(--line); }
+    .app { max-width: 1280px; height: 100vh; height: 100dvh; min-height: 0; padding: 12px 32px 32px; }
+    header { height: 64px; }
+    #studio { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 20px; }
+    .editor { border: 1px solid var(--line); border-radius: 16px; gap: 0; overflow: hidden; }
+    #text { min-height: 0; border: 0; border-radius: 0; padding: 36px 40px; font-size: 18px; }
+    .editor .meta { padding: 10px 40px 14px; }
+    .dock { position: static; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; padding: 16px 20px; }
     .dock-row { max-width: none; }
-    #go { min-width: 168px; }
+    #go { min-width: 176px; }
     #preview { min-width: 132px; }
-    .side { background: var(--panel); border-radius: 22px; padding: 24px; gap: 16px; overflow-y: auto; align-content: start; }
-    .side-head { display: block; font-size: 13px; color: var(--muted); letter-spacing: .04em; text-transform: uppercase; }
-    .side-empty { display: grid; justify-items: center; gap: 12px; text-align: center; color: #5c5c5c; font-size: 14px;
-      padding: 48px 12px; }
+    .side { border: 1px solid var(--line); border-radius: 16px; padding: 24px; gap: 16px; overflow-y: auto; align-content: start; }
+    .side-head { display: block; font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
+    .side-empty { display: block; color: var(--faint); font-size: 14px; padding: 40px 0; text-align: center; }
     .side:has(#result:not([hidden]), #progress:not([hidden]), #resume:not([hidden]), #err:not(:empty)) .side-empty { display: none; }
-    .result { background: none; padding: 0; gap: 14px; }
+    .result { border: 0; padding: 0; gap: 16px; }
   }
+  @media (max-width: 599px) { .voice span { display: none; } }
   @media (max-width: 380px) { #preview, #go { padding: 0 12px; } }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
@@ -147,7 +173,7 @@
 <div class="app">
   <header>
     <span class="brand">Voice Studio</span>
-    <button class="link plain" id="openSettings" type="button" hidden>Налаштування</button>
+    <button class="ghost" id="openSettings" type="button" hidden>Налаштування</button>
   </header>
 
   <!-- Setup and sign-in -->
@@ -177,7 +203,7 @@
       </div>
       <div class="dock">
         <div class="dock-row">
-          <select id="voice" aria-label="Голос"></select>
+          <label class="voice"><span>Голос</span><select id="voice"></select></label>
           <button id="preview" type="button">Прослухати</button>
           <button class="primary" id="go" type="button">Озвучити</button>
         </div>
@@ -197,7 +223,12 @@
       <div class="msg err" id="err"></div>
       <div class="result" id="result" hidden>
         <div class="msg ok" id="resultText"></div>
-        <audio id="player" controls preload="metadata"></audio>
+        <div class="player">
+          <button type="button" class="play" id="playBtn">Відтворити</button>
+          <input type="range" id="seek" min="0" max="1000" value="0" aria-label="Позиція відтворення">
+          <span class="time" id="time">0:00 / 0:00</span>
+        </div>
+        <audio id="player" preload="metadata"></audio>
         <div class="files">
           <a class="btn" id="dlWav" download>Скачати аудіо</a>
           <a class="btn" id="dlSrt" download>Скачати субтитри</a>
@@ -211,6 +242,14 @@
 <dialog id="settings" aria-label="Налаштування">
   <div class="sheet">
     <div class="sheet-head"><b>Налаштування</b><button class="link" id="closeSettings" type="button">Готово</button></div>
+
+    <div class="set">
+      <div class="set-head"><span>Тема</span></div>
+      <div class="seg" role="radiogroup" aria-label="Тема">
+        <button type="button" role="radio" data-theme-set="light">Світла</button>
+        <button type="button" role="radio" data-theme-set="dark">Темна</button>
+      </div>
+    </div>
 
     <div class="set">
       <div class="set-head"><span>Швидкість</span><b id="speedVal"></b></div>
@@ -888,6 +927,31 @@ $("logout").onclick = async () => { $("settings").close(); await api("/api/logou
 $("openSettings").onclick = () => $("settings").showModal();
 $("closeSettings").onclick = () => $("settings").close();
 $("settings").addEventListener("click", (e) => { if (e.target === $("settings")) $("settings").close(); }); // tap outside the sheet
+
+// Player: one button, a seek line and the time, in the page's own black and white
+const player = $("player");
+const clock = (t) => { t = Math.max(0, Math.floor(t || 0)); return `${Math.floor(t / 60)}:${String(t % 60).padStart(2, "0")}`; };
+function syncPlayer() {
+  const d = Number.isFinite(player.duration) ? player.duration : 0;
+  $("time").textContent = `${clock(player.currentTime)} / ${clock(d)}`;
+  $("seek").value = d ? Math.round((player.currentTime / d) * 1000) : 0;
+  $("playBtn").textContent = player.paused ? "Відтворити" : "Пауза";
+}
+for (const ev of ["timeupdate", "loadedmetadata", "durationchange", "play", "pause", "ended", "emptied"]) player.addEventListener(ev, syncPlayer);
+$("playBtn").onclick = () => { if (player.paused) player.play().catch(() => {}); else player.pause(); };
+$("seek").addEventListener("input", () => {
+  if (Number.isFinite(player.duration)) player.currentTime = ($("seek").value / 1000) * player.duration;
+});
+
+// Theme: light by default, the choice is kept on this device
+function applyTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  document.querySelector('meta[name="theme-color"]').content = theme === "dark" ? "#000000" : "#ffffff";
+  for (const b of document.querySelectorAll("[data-theme-set]")) b.setAttribute("aria-checked", String(b.dataset.themeSet === theme));
+  store.set("theme", theme);
+}
+for (const b of document.querySelectorAll("[data-theme-set]")) b.onclick = () => applyTheme(b.dataset.themeSet);
+applyTheme(store.get("theme", "light") === "dark" ? "dark" : "light");
 $("recheck").onclick = route;
 
 fillVoices();
