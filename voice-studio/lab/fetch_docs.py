@@ -2,9 +2,14 @@
 import html
 import json
 import re
+import sys
 import urllib.request
 
 PAGES = {
+    "inworld-best-practices": "https://docs.inworld.ai/tts/best-practices/generating-speech.md",
+    "inworld-generating-audio": "https://docs.inworld.ai/tts/capabilities/generating-audio.md",
+    "inworld-models": "https://docs.inworld.ai/tts/tts-models.md",
+    "inworld-multilingual": "https://docs.inworld.ai/tts/capabilities/multilingual.md",
     "inworld-llms": "https://docs.inworld.ai/llms.txt",
     "inworld-terms": "https://inworld.ai/terms",
     "deepinfra-terms": "https://deepinfra.com/terms",
@@ -28,6 +33,8 @@ def text_of(raw):
 
 
 for name, url in PAGES.items():
+    if sys.argv[1:] and name not in sys.argv[1:]:
+        continue
     try:
         req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 voice-lab"})
         raw = urllib.request.urlopen(req, timeout=60).read().decode("utf-8", "replace")
@@ -38,6 +45,9 @@ for name, url in PAGES.items():
     if name.startswith("hf-"):
         d = json.loads(raw)
         print("license:", [t for t in d.get("tags", []) if t.startswith("license")], "| cardData license:", (d.get("cardData") or {}).get("license"))
+        continue
+    if name.startswith("inworld-") and name not in ("inworld-llms", "inworld-terms"):
+        print(raw[:9000])
         continue
     if name == "inworld-llms":
         for line in raw.splitlines():

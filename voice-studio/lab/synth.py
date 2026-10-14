@@ -80,6 +80,10 @@ for c in cands:
     try:
         with urllib.request.urlopen(req, timeout=300) as r:
             body, ctype = r.read(), r.headers.get("content-type", "")
+        rec["content_type"] = ctype
+        if ctype.startswith("application/json"):
+            j = json.loads(body)
+            rec["json_keys"] = {k: (type(v).__name__ if not isinstance(v, (int, float, bool)) else v) for k, v in j.items()} if isinstance(j, dict) else type(j).__name__
         raw, _ = audio_from(body, ctype)
         ext = ext_of(raw, ctype)
         path = f"out/audio/{c['id'].replace('@', '__')}.{ext}"
@@ -90,7 +94,8 @@ for c in cands:
     except Exception as e:
         rec.update(ok=False, error=f"{type(e).__name__}: {str(e)[:400]}", seconds=round(time.time() - t, 2))
     rec["new"] = True
-    print(("OK  " if rec["ok"] else "ERR ") + f"{c['id']:<34} {rec['seconds']:>6}s " + (rec.get("file", "") if rec["ok"] else rec["error"]), flush=True)
+    print(("OK  " if rec["ok"] else "ERR ") + f"{c['id']:<34} {rec['seconds']:>6}s " + (rec.get("file", "") if rec["ok"] else rec["error"])
+          + f" | {rec.get('content_type', '')} {json.dumps(rec.get('json_keys', ''))[:300]}", flush=True)
     results = [r for r in results if r["id"] != c["id"]] + [rec]
 
 json.dump(results, open("out/synth.json", "w"), indent=1, ensure_ascii=False)

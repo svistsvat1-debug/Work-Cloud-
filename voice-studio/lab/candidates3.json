@@ -1,0 +1,579 @@
+[
+ {
+  "id": "de-inworld-max-Josef-tdef@r3chunk0x1",
+  "lang": "de",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Josef",
+   "output_format": "wav"
+  },
+  "text_key": "chunk0_de"
+ },
+ {
+  "id": "de-inworld-max-Josef-tdef@r3chunk0x2",
+  "lang": "de",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Josef",
+   "output_format": "wav"
+  },
+  "text_key": "chunk0_de"
+ },
+ {
+  "id": "de-inworld-max-Josef-t0.8@r3chunk0x1",
+  "lang": "de",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Josef",
+   "output_format": "wav",
+   "temperature": 0.8
+  },
+  "text_key": "chunk0_de"
+ },
+ {
+  "id": "de-inworld-max-Josef-t0.8@r3chunk0x2",
+  "lang": "de",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Josef",
+   "output_format": "wav",
+   "temperature": 0.8
+  },
+  "text_key": "chunk0_de"
+ },
+ {
+  "id": "de-inworld-max-Josef-tdef@r3chunk1x1",
+  "lang": "de",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Josef",
+   "output_format": "wav"
+  },
+  "text_key": "chunk1_de"
+ },
+ {
+  "id": "de-inworld-max-Josef-tdef@r3chunk1x2",
+  "lang": "de",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Josef",
+   "output_format": "wav"
+  },
+  "text_key": "chunk1_de"
+ },
+ {
+  "id": "de-inworld-max-Josef-t0.8@r3chunk1x1",
+  "lang": "de",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Josef",
+   "output_format": "wav",
+   "temperature": 0.8
+  },
+  "text_key": "chunk1_de"
+ },
+ {
+  "id": "de-inworld-max-Josef-t0.8@r3chunk1x2",
+  "lang": "de",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Josef",
+   "output_format": "wav",
+   "temperature": 0.8
+  },
+  "text_key": "chunk1_de"
+ },
+ {
+  "id": "de-inworld-max-Josef-tdef@r3chunk2x1",
+  "lang": "de",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Josef",
+   "output_format": "wav"
+  },
+  "text_key": "chunk2_de"
+ },
+ {
+  "id": "de-inworld-max-Josef-tdef@r3chunk2x2",
+  "lang": "de",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Josef",
+   "output_format": "wav"
+  },
+  "text_key": "chunk2_de"
+ },
+ {
+  "id": "de-inworld-max-Josef-t0.8@r3chunk2x1",
+  "lang": "de",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Josef",
+   "output_format": "wav",
+   "temperature": 0.8
+  },
+  "text_key": "chunk2_de"
+ },
+ {
+  "id": "de-inworld-max-Josef-t0.8@r3chunk2x2",
+  "lang": "de",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Josef",
+   "output_format": "wav",
+   "temperature": 0.8
+  },
+  "text_key": "chunk2_de"
+ },
+ {
+  "id": "de-inworld-max-Josef-tdef@r3chunk3x1",
+  "lang": "de",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Josef",
+   "output_format": "wav"
+  },
+  "text_key": "chunk3_de"
+ },
+ {
+  "id": "de-inworld-max-Josef-tdef@r3chunk3x2",
+  "lang": "de",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Josef",
+   "output_format": "wav"
+  },
+  "text_key": "chunk3_de"
+ },
+ {
+  "id": "de-inworld-max-Josef-t0.8@r3chunk3x1",
+  "lang": "de",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Josef",
+   "output_format": "wav",
+   "temperature": 0.8
+  },
+  "text_key": "chunk3_de"
+ },
+ {
+  "id": "de-inworld-max-Josef-t0.8@r3chunk3x2",
+  "lang": "de",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Josef",
+   "output_format": "wav",
+   "temperature": 0.8
+  },
+  "text_key": "chunk3_de"
+ },
+ {
+  "id": "de-inworld-max-Josef@r3hard",
+  "lang": "de",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Josef",
+   "output_format": "wav"
+  },
+  "text_key": "hard_de"
+ },
+ {
+  "id": "de-inworld-max-Josef@r3hardn",
+  "lang": "de",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Josef",
+   "output_format": "wav"
+  },
+  "text_key": "hardn_de"
+ },
+ {
+  "id": "es-inworld-max-Rafael-tdef@r3chunk0x1",
+  "lang": "es",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Rafael",
+   "output_format": "wav"
+  },
+  "text_key": "chunk0_es"
+ },
+ {
+  "id": "es-inworld-max-Rafael-tdef@r3chunk0x2",
+  "lang": "es",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Rafael",
+   "output_format": "wav"
+  },
+  "text_key": "chunk0_es"
+ },
+ {
+  "id": "es-inworld-max-Rafael-t0.8@r3chunk0x1",
+  "lang": "es",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Rafael",
+   "output_format": "wav",
+   "temperature": 0.8
+  },
+  "text_key": "chunk0_es"
+ },
+ {
+  "id": "es-inworld-max-Rafael-t0.8@r3chunk0x2",
+  "lang": "es",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Rafael",
+   "output_format": "wav",
+   "temperature": 0.8
+  },
+  "text_key": "chunk0_es"
+ },
+ {
+  "id": "es-inworld-max-Rafael-tdef@r3chunk1x1",
+  "lang": "es",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Rafael",
+   "output_format": "wav"
+  },
+  "text_key": "chunk1_es"
+ },
+ {
+  "id": "es-inworld-max-Rafael-tdef@r3chunk1x2",
+  "lang": "es",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Rafael",
+   "output_format": "wav"
+  },
+  "text_key": "chunk1_es"
+ },
+ {
+  "id": "es-inworld-max-Rafael-t0.8@r3chunk1x1",
+  "lang": "es",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Rafael",
+   "output_format": "wav",
+   "temperature": 0.8
+  },
+  "text_key": "chunk1_es"
+ },
+ {
+  "id": "es-inworld-max-Rafael-t0.8@r3chunk1x2",
+  "lang": "es",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Rafael",
+   "output_format": "wav",
+   "temperature": 0.8
+  },
+  "text_key": "chunk1_es"
+ },
+ {
+  "id": "es-inworld-max-Rafael-tdef@r3chunk2x1",
+  "lang": "es",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Rafael",
+   "output_format": "wav"
+  },
+  "text_key": "chunk2_es"
+ },
+ {
+  "id": "es-inworld-max-Rafael-tdef@r3chunk2x2",
+  "lang": "es",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Rafael",
+   "output_format": "wav"
+  },
+  "text_key": "chunk2_es"
+ },
+ {
+  "id": "es-inworld-max-Rafael-t0.8@r3chunk2x1",
+  "lang": "es",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Rafael",
+   "output_format": "wav",
+   "temperature": 0.8
+  },
+  "text_key": "chunk2_es"
+ },
+ {
+  "id": "es-inworld-max-Rafael-t0.8@r3chunk2x2",
+  "lang": "es",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Rafael",
+   "output_format": "wav",
+   "temperature": 0.8
+  },
+  "text_key": "chunk2_es"
+ },
+ {
+  "id": "es-inworld-max-Rafael@r3hard",
+  "lang": "es",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Rafael",
+   "output_format": "wav"
+  },
+  "text_key": "hard_es"
+ },
+ {
+  "id": "es-inworld-max-Rafael@r3hardn",
+  "lang": "es",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Rafael",
+   "output_format": "wav"
+  },
+  "text_key": "hardn_es"
+ },
+ {
+  "id": "fr-inworld-max-Lucian-tdef@r3chunk0x1",
+  "lang": "fr",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Lucian",
+   "output_format": "wav"
+  },
+  "text_key": "chunk0_fr"
+ },
+ {
+  "id": "fr-inworld-max-Lucian-tdef@r3chunk0x2",
+  "lang": "fr",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Lucian",
+   "output_format": "wav"
+  },
+  "text_key": "chunk0_fr"
+ },
+ {
+  "id": "fr-inworld-max-Lucian-t0.8@r3chunk0x1",
+  "lang": "fr",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Lucian",
+   "output_format": "wav",
+   "temperature": 0.8
+  },
+  "text_key": "chunk0_fr"
+ },
+ {
+  "id": "fr-inworld-max-Lucian-t0.8@r3chunk0x2",
+  "lang": "fr",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Lucian",
+   "output_format": "wav",
+   "temperature": 0.8
+  },
+  "text_key": "chunk0_fr"
+ },
+ {
+  "id": "fr-inworld-max-Lucian-tdef@r3chunk1x1",
+  "lang": "fr",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Lucian",
+   "output_format": "wav"
+  },
+  "text_key": "chunk1_fr"
+ },
+ {
+  "id": "fr-inworld-max-Lucian-tdef@r3chunk1x2",
+  "lang": "fr",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Lucian",
+   "output_format": "wav"
+  },
+  "text_key": "chunk1_fr"
+ },
+ {
+  "id": "fr-inworld-max-Lucian-t0.8@r3chunk1x1",
+  "lang": "fr",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Lucian",
+   "output_format": "wav",
+   "temperature": 0.8
+  },
+  "text_key": "chunk1_fr"
+ },
+ {
+  "id": "fr-inworld-max-Lucian-t0.8@r3chunk1x2",
+  "lang": "fr",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Lucian",
+   "output_format": "wav",
+   "temperature": 0.8
+  },
+  "text_key": "chunk1_fr"
+ },
+ {
+  "id": "fr-inworld-max-Lucian-tdef@r3chunk2x1",
+  "lang": "fr",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Lucian",
+   "output_format": "wav"
+  },
+  "text_key": "chunk2_fr"
+ },
+ {
+  "id": "fr-inworld-max-Lucian-tdef@r3chunk2x2",
+  "lang": "fr",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Lucian",
+   "output_format": "wav"
+  },
+  "text_key": "chunk2_fr"
+ },
+ {
+  "id": "fr-inworld-max-Lucian-t0.8@r3chunk2x1",
+  "lang": "fr",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Lucian",
+   "output_format": "wav",
+   "temperature": 0.8
+  },
+  "text_key": "chunk2_fr"
+ },
+ {
+  "id": "fr-inworld-max-Lucian-t0.8@r3chunk2x2",
+  "lang": "fr",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Lucian",
+   "output_format": "wav",
+   "temperature": 0.8
+  },
+  "text_key": "chunk2_fr"
+ },
+ {
+  "id": "fr-inworld-max-Lucian@r3hard",
+  "lang": "fr",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Lucian",
+   "output_format": "wav"
+  },
+  "text_key": "hard_fr"
+ },
+ {
+  "id": "fr-inworld-max-Lucian@r3hardn",
+  "lang": "fr",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Lucian",
+   "output_format": "wav"
+  },
+  "text_key": "hardn_fr"
+ },
+ {
+  "id": "en-kokoro-am_michael@r3hard",
+  "lang": "en",
+  "model": "hexgrad/Kokoro-82M",
+  "params": {
+   "text": "{text}",
+   "preset_voice": [
+    "am_michael"
+   ],
+   "output_format": "wav"
+  },
+  "text_key": "hard_en"
+ },
+ {
+  "id": "en-kokoro-am_michael@r3hardn",
+  "lang": "en",
+  "model": "hexgrad/Kokoro-82M",
+  "params": {
+   "text": "{text}",
+   "preset_voice": [
+    "am_michael"
+   ],
+   "output_format": "wav"
+  },
+  "text_key": "hardn_en"
+ },
+ {
+  "id": "de-inworld-max-Josef-rate1.1@r3main",
+  "lang": "de",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Josef",
+   "output_format": "wav",
+   "speaking_rate": 1.1
+  },
+  "text_key": "de"
+ },
+ {
+  "id": "de-inworld-max-Josef-openai@r3short2",
+  "lang": "de",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "route": "openai",
+  "params": {
+   "input": "{text}",
+   "voice": "Josef",
+   "response_format": "wav",
+   "speed": 1.1
+  },
+  "text_key": "short2_de"
+ }
+]
