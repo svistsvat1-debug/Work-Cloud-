@@ -1,0 +1,521 @@
+[
+ {
+  "id": "en-inworld-max-Alex",
+  "lang": "en",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Alex",
+   "output_format": "wav"
+  }
+ },
+ {
+  "id": "en-inworld-max-Brandon",
+  "lang": "en",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Brandon",
+   "output_format": "wav"
+  }
+ },
+ {
+  "id": "en-inworld-max-Carter",
+  "lang": "en",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Carter",
+   "output_format": "wav"
+  }
+ },
+ {
+  "id": "en-inworld-max-Dennis",
+  "lang": "en",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Dennis",
+   "output_format": "wav"
+  }
+ },
+ {
+  "id": "en-inworld-max-Mark",
+  "lang": "en",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Mark",
+   "output_format": "wav"
+  }
+ },
+ {
+  "id": "en-inworld-max-Theodore",
+  "lang": "en",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Theodore",
+   "output_format": "wav"
+  }
+ },
+ {
+  "id": "en-qwen3-Ryan",
+  "lang": "en",
+  "model": "Qwen/Qwen3-TTS",
+  "params": {
+   "input": "{text}",
+   "voice": "Ryan",
+   "language": "{lang_name}",
+   "response_format": "wav"
+  }
+ },
+ {
+  "id": "en-qwen3-Aiden",
+  "lang": "en",
+  "model": "Qwen/Qwen3-TTS",
+  "params": {
+   "input": "{text}",
+   "voice": "Aiden",
+   "language": "{lang_name}",
+   "response_format": "wav"
+  }
+ },
+ {
+  "id": "en-qwen3design",
+  "lang": "en",
+  "model": "Qwen/Qwen3-TTS-VoiceDesign",
+  "params": {
+   "input": "{text}",
+   "voice": "An American man in his thirties with a warm, natural, slightly deep voice. Native General American accent, relaxed and friendly, like a popular YouTube narrator talking to a friend.",
+   "language": "{lang_name}",
+   "response_format": "wav"
+  }
+ },
+ {
+  "id": "en-chatterbox-ml",
+  "lang": "en",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "en",
+   "response_format": "wav"
+  }
+ },
+ {
+  "id": "en-audio8",
+  "lang": "en",
+  "model": "Audio8/Audio8-TTS-Preview-0.6b",
+  "params": {
+   "text": "{text}",
+   "response_format": "wav"
+  }
+ },
+ {
+  "id": "en-mimo-Milo",
+  "lang": "en",
+  "model": "XiaomiMiMo/MiMo-V2.5-tts",
+  "params": {
+   "text": "{text}",
+   "voice": "Milo",
+   "output_format": "wav"
+  }
+ },
+ {
+  "id": "en-mimo-Dean",
+  "lang": "en",
+  "model": "XiaomiMiMo/MiMo-V2.5-tts",
+  "params": {
+   "text": "{text}",
+   "voice": "Dean",
+   "output_format": "wav"
+  }
+ },
+ {
+  "id": "de-inworld-max-Josef",
+  "lang": "de",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Josef",
+   "output_format": "wav"
+  }
+ },
+ {
+  "id": "de-inworld-max-Lennart",
+  "lang": "de",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Lennart",
+   "output_format": "wav"
+  }
+ },
+ {
+  "id": "de-inworld-max-Erik",
+  "lang": "de",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Erik",
+   "output_format": "wav"
+  }
+ },
+ {
+  "id": "de-qwen3-Ryan",
+  "lang": "de",
+  "model": "Qwen/Qwen3-TTS",
+  "params": {
+   "input": "{text}",
+   "voice": "Ryan",
+   "language": "{lang_name}",
+   "response_format": "wav"
+  }
+ },
+ {
+  "id": "de-qwen3-Aiden",
+  "lang": "de",
+  "model": "Qwen/Qwen3-TTS",
+  "params": {
+   "input": "{text}",
+   "voice": "Aiden",
+   "language": "{lang_name}",
+   "response_format": "wav"
+  }
+ },
+ {
+  "id": "de-qwen3design",
+  "lang": "de",
+  "model": "Qwen/Qwen3-TTS-VoiceDesign",
+  "params": {
+   "input": "{text}",
+   "voice": "A German man in his thirties with a warm, calm, slightly deep voice. Native speaker of standard High German with clear pronunciation, relaxed and friendly, like a popular German YouTube narrator.",
+   "language": "{lang_name}",
+   "response_format": "wav"
+  }
+ },
+ {
+  "id": "de-chatterbox-ml",
+  "lang": "de",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "de",
+   "response_format": "wav"
+  }
+ },
+ {
+  "id": "de-audio8",
+  "lang": "de",
+  "model": "Audio8/Audio8-TTS-Preview-0.6b",
+  "params": {
+   "text": "{text}",
+   "response_format": "wav"
+  }
+ },
+ {
+  "id": "de-mimo-Milo",
+  "lang": "de",
+  "model": "XiaomiMiMo/MiMo-V2.5-tts",
+  "params": {
+   "text": "{text}",
+   "voice": "Milo",
+   "output_format": "wav"
+  }
+ },
+ {
+  "id": "de-mimo-Dean",
+  "lang": "de",
+  "model": "XiaomiMiMo/MiMo-V2.5-tts",
+  "params": {
+   "text": "{text}",
+   "voice": "Dean",
+   "output_format": "wav"
+  }
+ },
+ {
+  "id": "es-inworld-max-Diego",
+  "lang": "es",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Diego",
+   "output_format": "wav"
+  }
+ },
+ {
+  "id": "es-inworld-max-Miguel",
+  "lang": "es",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Miguel",
+   "output_format": "wav"
+  }
+ },
+ {
+  "id": "es-inworld-max-Rafael",
+  "lang": "es",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Rafael",
+   "output_format": "wav"
+  }
+ },
+ {
+  "id": "es-qwen3-Ryan",
+  "lang": "es",
+  "model": "Qwen/Qwen3-TTS",
+  "params": {
+   "input": "{text}",
+   "voice": "Ryan",
+   "language": "{lang_name}",
+   "response_format": "wav"
+  }
+ },
+ {
+  "id": "es-qwen3-Aiden",
+  "lang": "es",
+  "model": "Qwen/Qwen3-TTS",
+  "params": {
+   "input": "{text}",
+   "voice": "Aiden",
+   "language": "{lang_name}",
+   "response_format": "wav"
+  }
+ },
+ {
+  "id": "es-qwen3design",
+  "lang": "es",
+  "model": "Qwen/Qwen3-TTS-VoiceDesign",
+  "params": {
+   "input": "{text}",
+   "voice": "A Spanish man from Madrid in his thirties with a warm, calm, slightly deep voice. Native speaker of Castilian Spanish, relaxed and friendly, like a popular Spanish YouTube narrator.",
+   "language": "{lang_name}",
+   "response_format": "wav"
+  }
+ },
+ {
+  "id": "es-chatterbox-ml",
+  "lang": "es",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "es",
+   "response_format": "wav"
+  }
+ },
+ {
+  "id": "es-audio8",
+  "lang": "es",
+  "model": "Audio8/Audio8-TTS-Preview-0.6b",
+  "params": {
+   "text": "{text}",
+   "response_format": "wav"
+  }
+ },
+ {
+  "id": "es-mimo-Milo",
+  "lang": "es",
+  "model": "XiaomiMiMo/MiMo-V2.5-tts",
+  "params": {
+   "text": "{text}",
+   "voice": "Milo",
+   "output_format": "wav"
+  }
+ },
+ {
+  "id": "es-mimo-Dean",
+  "lang": "es",
+  "model": "XiaomiMiMo/MiMo-V2.5-tts",
+  "params": {
+   "text": "{text}",
+   "voice": "Dean",
+   "output_format": "wav"
+  }
+ },
+ {
+  "id": "fr-inworld-max-Alain",
+  "lang": "fr",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Alain",
+   "output_format": "wav"
+  }
+ },
+ {
+  "id": "fr-inworld-max-Mathieu",
+  "lang": "fr",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Mathieu",
+   "output_format": "wav"
+  }
+ },
+ {
+  "id": "fr-inworld-max-Lucian",
+  "lang": "fr",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Lucian",
+   "output_format": "wav"
+  }
+ },
+ {
+  "id": "fr-qwen3-Ryan",
+  "lang": "fr",
+  "model": "Qwen/Qwen3-TTS",
+  "params": {
+   "input": "{text}",
+   "voice": "Ryan",
+   "language": "{lang_name}",
+   "response_format": "wav"
+  }
+ },
+ {
+  "id": "fr-qwen3-Aiden",
+  "lang": "fr",
+  "model": "Qwen/Qwen3-TTS",
+  "params": {
+   "input": "{text}",
+   "voice": "Aiden",
+   "language": "{lang_name}",
+   "response_format": "wav"
+  }
+ },
+ {
+  "id": "fr-qwen3design",
+  "lang": "fr",
+  "model": "Qwen/Qwen3-TTS-VoiceDesign",
+  "params": {
+   "input": "{text}",
+   "voice": "A French man from Paris in his thirties with a warm, calm, slightly deep voice. Native speaker of standard French, relaxed and friendly, like a popular French YouTube narrator.",
+   "language": "{lang_name}",
+   "response_format": "wav"
+  }
+ },
+ {
+  "id": "fr-chatterbox-ml",
+  "lang": "fr",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "fr",
+   "response_format": "wav"
+  }
+ },
+ {
+  "id": "fr-audio8",
+  "lang": "fr",
+  "model": "Audio8/Audio8-TTS-Preview-0.6b",
+  "params": {
+   "text": "{text}",
+   "response_format": "wav"
+  }
+ },
+ {
+  "id": "fr-mimo-Milo",
+  "lang": "fr",
+  "model": "XiaomiMiMo/MiMo-V2.5-tts",
+  "params": {
+   "text": "{text}",
+   "voice": "Milo",
+   "output_format": "wav"
+  }
+ },
+ {
+  "id": "fr-mimo-Dean",
+  "lang": "fr",
+  "model": "XiaomiMiMo/MiMo-V2.5-tts",
+  "params": {
+   "text": "{text}",
+   "voice": "Dean",
+   "output_format": "wav"
+  }
+ },
+ {
+  "id": "de-zonos-ammale",
+  "lang": "de",
+  "model": "Zyphra/Zonos-v0.1-hybrid",
+  "params": {
+   "text": "{text}",
+   "preset_voice": "american_male",
+   "language": "de",
+   "output_format": "wav"
+  }
+ },
+ {
+  "id": "fr-zonos-ammale",
+  "lang": "fr",
+  "model": "Zyphra/Zonos-v0.1-hybrid",
+  "params": {
+   "text": "{text}",
+   "preset_voice": "american_male",
+   "language": "fr-fr",
+   "output_format": "wav"
+  }
+ },
+ {
+  "id": "en-zonos-ammale",
+  "lang": "en",
+  "model": "Zyphra/Zonos-v0.1-hybrid",
+  "params": {
+   "text": "{text}",
+   "preset_voice": "american_male",
+   "language": "en-us",
+   "output_format": "wav"
+  }
+ },
+ {
+  "id": "en-kokoro-am_michael",
+  "lang": "en",
+  "model": "hexgrad/Kokoro-82M",
+  "params": {
+   "text": "{text}",
+   "preset_voice": [
+    "am_michael"
+   ],
+   "output_format": "wav"
+  }
+ },
+ {
+  "id": "en-kokoro-am_onyx",
+  "lang": "en",
+  "model": "hexgrad/Kokoro-82M",
+  "params": {
+   "text": "{text}",
+   "preset_voice": [
+    "am_onyx"
+   ],
+   "output_format": "wav"
+  }
+ },
+ {
+  "id": "es-kokoro-em_alex",
+  "lang": "es",
+  "model": "hexgrad/Kokoro-82M",
+  "params": {
+   "text": "{text}",
+   "preset_voice": [
+    "em_alex"
+   ],
+   "output_format": "wav"
+  }
+ },
+ {
+  "id": "es-kokoro-em_santa",
+  "lang": "es",
+  "model": "hexgrad/Kokoro-82M",
+  "params": {
+   "text": "{text}",
+   "preset_voice": [
+    "em_santa"
+   ],
+   "output_format": "wav"
+  }
+ }
+]
