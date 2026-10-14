@@ -50,6 +50,7 @@
   .chips { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; gap: 8px; }
   .chip { position: relative; display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 10px;
     background: var(--chip); color: var(--ink); font-size: 14.5px; font-weight: 500; white-space: nowrap; cursor: pointer; transition: background .15s; }
+  .chip.fixed { cursor: default; } .chip.fixed select { pointer-events: none; }
   .chip select { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; font-size: 16px; appearance: none; }
   #go { flex: none; width: 72px; min-height: 48px; padding: 0; border-radius: 12px; }
   .meta { display: flex; justify-content: space-between; align-items: center; gap: 12px; color: var(--faint); font-size: 12.5px;
@@ -175,7 +176,7 @@
       <textarea id="text" aria-label="Текст для озвучки" spellcheck="false"></textarea>
       <div class="controls">
         <div class="chips">
-          <label class="chip"><span>Англійська</span><select id="lang" aria-label="Мова"><option>Англійська</option></select></label>
+          <label class="chip"><span>Англійська</span><select id="lang" aria-label="Мова"><option value="en">Англійська</option><option value="de">Німецька</option><option value="es">Іспанська</option><option value="fr">Французька</option></select></label>
           <label class="chip"><span></span><select id="accent" aria-label="Акцент"><option value="US">США</option><option value="UK">Британія</option></select></label>
           <label class="chip"><span>Чоловіча</span><select id="gender" aria-label="Голос"><option>Чоловіча</option></select></label>
           <label class="chip"><span></span><select id="voice" aria-label="Диктор"></select></label>
@@ -259,7 +260,7 @@
     </div>
 
     <div class="sheet-foot">
-      <span>Голос Kokoro-82M (Apache 2.0): монетизація дозволена. Оплата за символи з балансу DeepInfra.</span>
+      <span>Англійська: Kokoro-82M (Apache 2.0). Німецька, іспанська, французька: Inworld TTS, права на аудіо передаються вам. Монетизація дозволена. Оплата за символи з балансу DeepInfra.</span>
       <button class="link" id="logout" type="button" hidden>Вийти</button>
     </div>
   </div>
@@ -272,27 +273,49 @@ const store = {
   set(k, v) { try { localStorage.setItem("vs." + k, JSON.stringify(v)); } catch {} },
 };
 
+// [id, name, language, accent, engine, characters per second at speed 1]; the server has the same ids (src/worker.js).
+// Picked and measured in voice-studio/lab.
 const VOICES = [
-  ["am_michael", "Michael", "US", "середній", true], ["am_fenrir", "Fenrir", "US", "вищий", true],
-  ["am_puck", "Puck", "US", "середній", true], ["am_onyx", "Onyx", "US", "низький"], ["am_adam", "Adam", "US", "середній"],
-  ["am_echo", "Echo", "US", "середній"], ["am_liam", "Liam", "US", "вищий"], ["am_eric", "Eric", "US", "вищий"],
-  ["bm_george", "George", "UK", "вищий", true], ["bm_fable", "Fable", "UK", "середній", true],
-  ["bm_lewis", "Lewis", "UK", "низький"], ["bm_daniel", "Daniel", "UK", "середній"],
+  ["am_michael", "Michael", "en", "US", "kokoro"], ["am_fenrir", "Fenrir", "en", "US", "kokoro"], ["am_puck", "Puck", "en", "US", "kokoro"],
+  ["am_onyx", "Onyx", "en", "US", "kokoro"], ["am_adam", "Adam", "en", "US", "kokoro"], ["am_echo", "Echo", "en", "US", "kokoro"],
+  ["am_liam", "Liam", "en", "US", "kokoro"], ["am_eric", "Eric", "en", "US", "kokoro"],
+  ["bm_george", "George", "en", "UK", "kokoro"], ["bm_fable", "Fable", "en", "UK", "kokoro"],
+  ["bm_lewis", "Lewis", "en", "UK", "kokoro"], ["bm_daniel", "Daniel", "en", "UK", "kokoro"],
+  ["de_josef", "Josef", "de", "DE", "inworld", 13],
+  ["es_rafael", "Rafael", "es", "ES", "inworld", 14], ["es_diego", "Diego", "es", "ES", "inworld", 12],
+  ["fr_lucian", "Lucian", "fr", "FR", "inworld", 13], ["fr_alain", "Alain", "fr", "FR", "inworld", 18],
 ];
-const PREVIEW = "Hey there. This is how I sound. Paste your script, and I'll read it for you.";
+const ACCENTS = { US: "США", UK: "Британія", DE: "Німеччина", ES: "Іспанія", FR: "Франція" };
+const LANG_NAMES = { en: "англійська", de: "німецька", es: "іспанська", fr: "французька" };
+const LANG_IN = { en: "англійською", de: "німецькою", es: "іспанською", fr: "французькою" };
+const LANG_ACC = { en: "англійську", de: "німецьку", es: "іспанську", fr: "французьку" };
+const PREVIEW = {
+  en: "Hey there. This is how I sound. Paste your script, and I'll read it for you.",
+  de: "Hallo! So klingt meine Stimme. Füg dein Skript ein, und ich lese es dir vor.",
+  es: "¡Hola! Así suena mi voz. Pega tu guion y yo te lo leo.",
+  fr: "Salut ! Voici ma voix. Colle ton script, et je te le lis.",
+};
 const SR = 24000;
 const PARALLEL = 4;          // requests at a time
-const CHUNK_CHARS = 800;     // characters per request: DeepInfra reads about a minute of speech per 1000
+const CHUNK_CHARS = { kokoro: 800, inworld: 280 }; // characters per request: Inworld can repeat or skip words in longer ones (voice-studio/lab)
 const CHUNK_GAP = 0.3;       // pause where one paragraph is split into several requests
-const PRICE_PER_M = 0.62;    // USD per million characters on DeepInfra, for the estimate only
+const PRICE_PER_M = { kokoro: 0.99, inworld: 50 }; // USD per million characters on DeepInfra, for the estimate only
+const CHARS_PER_SEC = { en: 14, de: 13, es: 14, fr: 13 }; // speech speed measured in voice-studio/lab, for the length estimate
 const TIER_FACTOR = { priority: 1.5, flex: 0.8 }; // DeepInfra's price multipliers per service tier
 const LEAD_IN = 0.25, TAIL = 0.5;
 
 // ---------------------------------------------------------------- text
 
-const ABBR = new Set(["mr", "mrs", "ms", "dr", "st", "jr", "sr", "prof", "inc", "ltd", "co", "corp", "no", "vol",
-  "fig", "mt", "dept", "approx", "u.s", "u.k", "a.m", "p.m", "e.g", "i.e", "vs", "min", "hr", "hrs", "sec",
-  "jan", "feb", "mar", "apr", "jun", "jul", "aug", "sep", "sept", "oct", "nov", "dec"]);
+const ABBREVIATIONS = { // a dot after these does not end the sentence
+  en: new Set(["mr", "mrs", "ms", "dr", "st", "jr", "sr", "prof", "inc", "ltd", "co", "corp", "no", "vol",
+    "fig", "mt", "dept", "approx", "u.s", "u.k", "a.m", "p.m", "e.g", "i.e", "vs", "min", "hr", "hrs", "sec",
+    "jan", "feb", "mar", "apr", "jun", "jul", "aug", "sep", "sept", "oct", "nov", "dec"]),
+  de: new Set(["dr", "prof", "nr", "z.b", "bzw", "ca", "d.h", "u.a", "inkl", "ggf", "evtl", "st", "hr", "fr", "std", "min", "sek",
+    "max", "mind", "mio", "mrd", "vs", "jan", "feb", "apr", "aug", "sep", "sept", "okt", "nov", "dez", "mo", "di", "mi", "do", "sa", "so"]),
+  es: new Set(["sr", "sra", "srta", "dr", "dra", "ud", "uds", "p.ej", "ej", "ee.uu", "av", "núm", "prof", "aprox", "vs", "pág"]),
+  fr: new Set(["m", "mme", "mlle", "dr", "pr", "env", "ex", "p", "cf", "n", "av", "bd", "st", "ste", "vs", "janv", "févr", "avr",
+    "juil", "sept", "oct", "nov", "déc", "lun", "mar", "mer", "jeu", "ven", "sam", "dim"]),
+};
 const SCALES = { k: "thousand", thousand: "thousand", m: "million", mn: "million", million: "million",
   b: "billion", bn: "billion", billion: "billion", t: "trillion", trillion: "trillion" };
 const CURRENCIES = { "$": ["dollar", "dollars", "cent", "cents"], "€": ["euro", "euros", "cent", "cents"], "£": ["pound", "pounds", "penny", "pence"] };
@@ -430,6 +453,7 @@ function naturalEn(text) {
   text = text.replace(new RegExp(`${NOT_AFTER}(\\d{1,2}):(\\d{2})\\s?[-–—]\\s?(\\d{1,2}):(\\d{2})(?![\\d:])`, "g"), (s, h1, m1, h2, m2) => {
     const a = clockParts(h1, m1), b = clockParts(h2, m2);
     if (!a || !b) return s;
+    if (!a.mer && !a.midnight && b.mer === "PM" && +h1 < 12) a.mer = "AM"; // 9:00-17:00 is a 24-hour range
     return a.mer === b.mer ? `${clockCore(a)} to ${clockCore(b)}${b.mer ? " " + b.mer : ""}` : `${clockEn(a)} to ${clockEn(b)}`;
   });
   // Single times: 7:00 AM, 19:00, 7.00 PM, at 7.30, 7am
@@ -468,13 +492,266 @@ function naturalEn(text) {
   return text;
 }
 // ---- end natural reading (English)
-function normalize(text) {
-  text = naturalEn(text);
+
+// ---- natural reading (German, Spanish, French): clock times, dates, ranges, units, money, abbreviations
+// The voices read digits well, so numbers mostly stay digits; what changes is what they misread or skip.
+const MONATE = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
+const MONAT = "(Jan(?:uar)?|Feb(?:ruar)?|März|Apr(?:il)?|Mai|Juni?|Juli?|Aug(?:ust)?|Sep(?:t(?:ember)?)?|Okt(?:ober)?|Nov(?:ember)?|Dez(?:ember)?)";
+const DE_ONES = ["", "ein", "zwei", "drei", "vier", "fünf", "sechs", "sieben", "acht", "neun"];
+const DE_ORD = ["", "erste", "zweite", "dritte", "vierte", "fünfte", "sechste", "siebte", "achte", "neunte", "zehnte", "elfte", "zwölfte",
+  "dreizehnte", "vierzehnte", "fünfzehnte", "sechzehnte", "siebzehnte", "achtzehnte", "neunzehnte", "zwanzigste"];
+const TAGE = { mo: "Montag", di: "Dienstag", mi: "Mittwoch", do: "Donnerstag", fr: "Freitag", sa: "Samstag", so: "Sonntag" };
+const UNITS_DE = { min: ["Minute", "Minuten"], Min: ["Minute", "Minuten"], h: ["Stunde", "Stunden"], Std: ["Stunde", "Stunden"],
+  sek: ["Sekunde", "Sekunden"], Sek: ["Sekunde", "Sekunden"], km: ["Kilometer", "Kilometer"], kg: ["Kilogramm", "Kilogramm"],
+  g: ["Gramm", "Gramm"], mg: ["Milligramm", "Milligramm"], l: ["Liter", "Liter"], L: ["Liter", "Liter"],
+  ml: ["Milliliter", "Milliliter"], cm: ["Zentimeter", "Zentimeter"], mm: ["Millimeter", "Millimeter"],
+  kcal: ["Kalorie", "Kalorien"], "km/h": ["Kilometer pro Stunde", "Kilometer pro Stunde"], "°C": ["Grad Celsius", "Grad Celsius"], "°": ["Grad", "Grad"] };
+const UNIT_RE_DE = /(?<![\p{L}\d.,])(\d+(?:,\d+)?)\s?(km\/h|kcal|Min|min|Std|Sek|sek|h|km|kg|mg|g|ml|l|L|cm|mm|°C|°)(?:\.(?=\s+[\p{L}\d]))?(?![\p{L}\d/])/gu;
+
+function ordinalDe(n) { // 1..31, stem without ending: 11 -> "elfte", 21 -> "einundzwanzigste"
+  if (n <= 20) return DE_ORD[n];
+  const tens = n >= 30 ? "dreißig" : "zwanzig";
+  return (n % 10 ? DE_ONES[n % 10] + "und" : "") + tens + "ste";
+}
+// "am 11. Oktober" -> "am elften Oktober"; after "der/die/das" or at the start -> "elfte"
+function dateDe(before, d, month, y) {
+  const nominative = /(?:^|[\s(])(?:der|die|das|Der|Die|Das)\s+$/.test(before) || /^\s*$/.test(before);
+  return `${ordinalDe(d)}${nominative ? "" : "n"} ${MONATE[month]}${y ? " " + y : ""}`;
+}
+
+function naturalDe(text) {
+  // 1.500 -> 1500 (thousands dots), before dates so "1.500" is never a day and month
+  text = text.replace(/(?<![\d.,])(\d{1,3})(?:\.\d{3})+(?![.,]?\d)/g, (s) => s.replace(/\./g, ""));
+  // Dates: 11.10.2026, 2026-10-11, 11. Oktober 2026
+  text = text.replace(/\b(\d{4})-(\d{2})-(\d{2})\b/g, (s, y, m, d, off, all) => (+m >= 1 && +m <= 12 && +d >= 1 && +d <= 31 ? dateDe(all.slice(0, off), +d, +m - 1, y) : s));
+  text = text.replace(/(?<![\d.])(\d{1,2})\.(\d{1,2})\.(\d{4})?(?![\d.]\d|\d)/g, (s, d, m, y, off, all) =>
+    (+m >= 1 && +m <= 12 && +d >= 1 && +d <= 31 && (y || /^(\s|$)/.test(all.slice(off + s.length))) ? dateDe(all.slice(0, off), +d, +m - 1, y) : s));
+  text = text.replace(new RegExp(`(?<![\\d.])(\\d{1,2})\\.\\s?${MONAT}\\b\\.?(?:\\s+(\\d{4})\\b)?`, "g"), (s, d, mon, y, off, all) => {
+    const m = MONATE.findIndex((x) => x.slice(0, 3) === mon.slice(0, 3));
+    return +d >= 1 && +d <= 31 && m >= 0 ? dateDe(all.slice(0, off), +d, m, y) : s;
+  });
+  // Mo-Fr -> Montag bis Freitag
+  text = text.replace(/\b(Mo|Di|Mi|Do|Fr|Sa|So)\.?\s?[-–—]\s?(Mo|Di|Mi|Do|Fr|Sa|So)\b\.?/g, (s, a, b) => `${TAGE[a.toLowerCase()]} bis ${TAGE[b.toLowerCase()]}`);
+  // Times: 7:00 Uhr -> 7 Uhr, 7.30 Uhr -> 7 Uhr 30, 19:00 -> 19 Uhr, 7:00-8:00 Uhr -> 7 bis 8 Uhr
+  const clock = (h, m) => (+m ? `${+h} Uhr ${+m}` : `${+h} Uhr`);
+  text = text.replace(/(?<![\d:.,])(\d{1,2})(?:[:.](\d{2}))?\s?(?:-|–|—|bis)\s?(\d{1,2})(?:[:.](\d{2}))?\s?Uhr\b/g, (s, h1, m1, h2, m2) => {
+    if (+h1 > 24 || +h2 > 24 || +(m1 || 0) > 59 || +(m2 || 0) > 59) return s;
+    return +(m1 || 0) || +(m2 || 0) ? `${clock(h1, m1)} bis ${clock(h2, m2)}` : `${+h1} bis ${+h2} Uhr`;
+  });
+  text = text.replace(/(?<![\d:.,])(\d{1,2}):(\d{2})\s?[-–—]\s?(\d{1,2}):(\d{2})(?![\d:])/g, (s, h1, m1, h2, m2) =>
+    (+h1 > 24 || +h2 > 24 || +m1 > 59 || +m2 > 59 ? s : +m1 || +m2 ? `${clock(h1, m1)} bis ${clock(h2, m2)}` : `${+h1} bis ${+h2} Uhr`));
+  text = text.replace(/(?<![\d:.,])(\d{1,2})([:.])(\d{2})(?![\d:]|[.,]\d)(\s?Uhr\b)?/g, (s, h, sep, m, uhr) =>
+    (+h > 24 || +m > 59 || (sep === "." && !uhr) ? s : clock(h, m)));
+  // 3x10 -> 3 mal 10, 10x -> 10 mal
+  text = text.replace(/\b(\d+)\s?[x×]\s?(\d+)\b/g, "$1 mal $2").replace(/\b(\d+)x\b/g, "$1 mal");
+  // Units: 10 min -> 10 Minuten, 1 l -> ein Liter
+  text = text.replace(UNIT_RE_DE, (s, n, u) => `${n} ${UNITS_DE[u][n === "1" ? 0 : 1]}`);
+  // Ranges: 5-10 -> 5 bis 10
+  text = text.replace(/(?<![\d.,:/\-–—])(\d+(?:,\d+)?)\s?[-–—]\s?(\d+(?:,\d+)?)(?![\d:/]|[.,]\d|\s?[-–—]\s?\d)/g,
+    (s, a, b) => (a.length >= 3 && b.length >= 4 && !(/^(1[1-9]|20)\d\d$/.test(a) && /^(1[1-9]|20)\d\d$/.test(b)) ? s : `${a} bis ${b}`));
+  // A spaced dash between words is a pause; espeak drops "–" and " - " without one
+  // Money and percent: 7,50 € -> 7 Euro 50, $5 -> 5 Dollar, 20 % -> 20 Prozent
+  text = text.replace(/(?<![\d,])(\d+)(?:,(\d{2}))?\s?(?:€|EUR\b)|€\s?(\d+)(?:,(\d{2}))?/g, (s, a, ac, b, bc) =>
+    `${a || b} Euro${(ac || bc) && +(ac || bc) ? " " + +(ac || bc) : ""}`);
+  text = text.replace(/\$\s?(\d+)(?:[.,](\d{2}))?|(?<![\d,])(\d+)(?:,(\d{2}))?\s?(?:\$|USD\b)/g, (s, a, ac, b, bc) =>
+    `${a || b} Dollar${(ac || bc) && +(ac || bc) ? " " + +(ac || bc) : ""}`);
+  text = text.replace(/(\d)\s?%/g, "$1 Prozent");
+  // Abbreviations the voice would spell out or skip
+  for (const [re, say] of DE_ABBR) text = text.replace(re, say);
+  text = text.replace(/\s+[-–]\s+/g, " — ");
+  return text;
+}
+const DE_ABBR = [[/\bz\.\s?B\./g, "zum Beispiel"], [/\bd\.\s?h\./g, "das heißt"], [/\bu\.\s?a\./g, "unter anderem"],
+  [/\bbzw\./g, "beziehungsweise"], [/\busw\.(?=\s+\p{Ll})/gu, "und so weiter"], [/\busw\./g, "und so weiter."], [/\betc\./g, "et cetera."],
+  [/\bca\.(?=\s)/g, "circa"], [/\bNr\.(?=\s?\d)/g, "Nummer"], [/\bggf\./g, "gegebenenfalls"], [/\binkl\./g, "inklusive"],
+  [/\bevtl\./g, "eventuell"], [/\bDr\.(?=\s)/g, "Doktor"], [/\bProf\.(?=\s)/g, "Professor"], [/\bvs\.?(?=\s)/g, "gegen"],
+  [/\bmax\.(?=\s)/g, "maximal"], [/\bmind\.(?=\s)/g, "mindestens"], [/\bMio\.(?=\s)/g, "Millionen"], [/\bMrd\.(?=\s)/g, "Milliarden"],
+  [/#(\d+)/g, "Nummer $1"], [/\s&\s/g, " und "]];
+
+const MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+const DIAS = { lun: "lunes", mar: "martes", mie: "miércoles", "mié": "miércoles", jue: "jueves", vie: "viernes", sab: "sábado", "sáb": "sábado", dom: "domingo" };
+const UNITS_ES = { min: ["un minuto", "minutos"], h: ["una hora", "horas"], hs: ["una hora", "horas"], seg: ["un segundo", "segundos"],
+  km: ["un kilómetro", "kilómetros"], kg: ["un kilo", "kilos"], g: ["un gramo", "gramos"], mg: ["un miligramo", "miligramos"],
+  l: ["un litro", "litros"], L: ["un litro", "litros"], ml: ["un mililitro", "mililitros"], cm: ["un centímetro", "centímetros"],
+  mm: ["un milímetro", "milímetros"], kcal: ["una caloría", "calorías"], "km/h": ["un kilómetro por hora", "kilómetros por hora"],
+  "°C": ["un grado", "grados"], "°": ["un grado", "grados"] };
+const UNIT_RE_ES = /(?<![\p{L}\d.,])(\d+(?:,\d+)?)\s?(km\/h|kcal|min|seg|hs|h|km|kg|mg|g|ml|l|L|cm|mm|°C|°)(?:\.(?=\s+[\p{Ll}\d]))?(?![\p{L}\d/])/gu;
+const MER_ES = "([AaPp])\\.?\\s?[Mm]\\.?(?![\\p{L}])";
+
+// 24-hour clock -> "7 y media de la tarde"; article "las" becomes "la" for one o'clock
+function clockEs(art, h24, m, twelve, withPeriod = twelve) {
+  const period = !withPeriod ? "" : h24 < 6 ? " de la madrugada" : h24 < 12 ? " de la mañana" : h24 === 12 ? " del mediodía" : h24 < 20 ? " de la tarde" : " de la noche";
+  const h = twelve ? h24 % 12 || 12 : h24;
+  const mins = m === 0 ? "" : m === 15 ? " y cuarto" : m === 30 ? " y media" : ` y ${m}`;
+  const article = art ? (h === 1 ? art.replace(/as$/, "a") : art.replace(/a$/, "as")) + " " : "";
+  return `${article}${h === 1 ? "una" : h}${mins}${period}`;
+}
+function to24(h, mer) {
+  if (!mer) return h;
+  const pm = mer.toLowerCase() === "p";
+  return pm ? (h < 12 ? h + 12 : 12) : h === 12 ? 0 : h;
+}
+
+const ES_ORD = ["", "primer", "segund", "tercer", "cuart", "quint", "sext", "séptim", "octav", "noven", "décim"];
+const ES_ABBR = [[/\bp\.\s?ej\./gi, "por ejemplo"], [/\bEE\.\s?UU\./g, "Estados Unidos"], [/\betc\.(?=\s+\p{Ll})/gu, "etcétera"],
+  [/\betc\./g, "etcétera."], [/\bSrta\.(?=\s)/g, "señorita"], [/\bSra\.(?=\s)/g, "señora"], [/\bSr\.(?=\s)/g, "señor"],
+  [/\bDra\.(?=\s)/g, "doctora"], [/\bDr\.(?=\s)/g, "doctor"], [/\bUds\.(?=\s)/g, "ustedes"], [/\bUd\.(?=\s)/g, "usted"],
+  [/\baprox\.(?=\s)/g, "aproximadamente"], [/\b(?:núm\.|n\.?\s?º)\s?(?=\d)/g, "número "], [/\bvs\.?(?=\s)/g, "contra"],
+  [/#(\d+)/g, "número $1"], [/\s&\s/g, " y "]];
+
+function naturalEs(text) {
+  // 1.500 -> 1500 (thousands dots)
+  text = text.replace(/(?<![\d.,])(\d{1,3})(?:\.\d{3})+(?![.,]?\d)/g, (s) => s.replace(/\./g, ""));
+  // 1.º / 1º -> primero, 3.ª -> tercera, 1.er -> primer
+  // (before a noun 1.º and 3.º shorten: "1.º lugar" -> primer lugar)
+  text = text.replace(/\b(10|[1-9])\.?(º|ª|er)(?![\p{L}\d])/gu, (s, n, suf, off, all) => {
+    const short = (n === "1" || n === "3") && (suf === "er" || /^\s+\p{Ll}/u.test(all.slice(off + s.length)));
+    return suf === "ª" ? ES_ORD[n] + "a" : short ? ES_ORD[n] : suf === "º" ? ES_ORD[n] + "o" : s;
+  });
+  // Dates: 11/10/2026, 11-10-2026, 11.10.2026 (day first), 2026-10-11
+  text = text.replace(/\b(\d{4})-(\d{2})-(\d{2})\b/g, (s, y, m, d) => (+m >= 1 && +m <= 12 && +d >= 1 && +d <= 31 ? `${+d} de ${MESES[+m - 1]} de ${y}` : s));
+  text = text.replace(/(?<![\d/.-])(\d{1,2})([/.-])(\d{1,2})\2(\d{4})(?![\d/.-]\d|\d)/g, (s, d, sep, m, y) =>
+    (+m >= 1 && +m <= 12 && +d >= 1 && +d <= 31 ? `${+d} de ${MESES[+m - 1]} de ${y}` : s));
+  // lun-vie -> lunes a viernes
+  text = text.replace(/\b(lun|mar|mi[eé]|jue|vie|s[aá]b|dom)\.?\s?[-–—]\s?(lun|mar|mi[eé]|jue|vie|s[aá]b|dom)\b\.?/gi,
+    (s, a, b) => `${DIAS[a.toLowerCase()]} a ${DIAS[b.toLowerCase()]}`);
+  // Times: a las 7:00 -> a las 7, 7:30 a. m. -> 7 y media de la mañana, 19:00 -> 7 de la tarde
+  text = text.replace(new RegExp(`(?<![\\d:.,])(\\d{1,2})(?::(\\d{2}))?\\s?(?:-|–|—|a)\\s?(\\d{1,2})(?::(\\d{2}))?\\s?${MER_ES}`, "gu"), (s, h1, m1, h2, m2, mer) => {
+    const a = to24(+h1, mer), b = to24(+h2, mer);
+    if (+h1 > 12 || +h2 > 12 || +(m1 || 0) > 59 || +(m2 || 0) > 59) return s;
+    return `${clockEs("", a, +(m1 || 0), true, false)} a ${clockEs("", b, +(m2 || 0), true)}`;
+  });
+  text = text.replace(/(?<![\d:.,])(\d{1,2}):(\d{2})\s?[-–—]\s?(\d{1,2}):(\d{2})(?![\d:])(?:\s?h(?:s|oras)?\b\.?)?/g, (s, h1, m1, h2, m2) => {
+    if (+h1 > 24 || +h2 > 24 || +m1 > 59 || +m2 > 59) return s;
+    const p = +h1 >= 13 || +h2 >= 13, part = (h) => (h < 6 ? 0 : h < 12 ? 1 : h === 12 ? 2 : h < 20 ? 3 : 4);
+    return `${clockEs("", +h1, +m1, p, p && part(+h1) !== part(+h2))} a ${clockEs("", +h2, +m2, p)}`;
+  });
+  text = text.replace(new RegExp(`(?<![\\d:.,])(?:\\b([Ll]as?)\\s+)?(\\d{1,2}):(\\d{2})(?![\\d:])(?:\\s?h(?:s|oras)?\\b\\.?)?(?:\\s?${MER_ES})?`, "gu"), (s, art, h, m, mer) => {
+    if (+h > 24 || +m > 59 || (mer && +h > 12)) return s;
+    const h24 = to24(+h, mer) % 24;
+    return clockEs(art, h24, +m, !!mer || +h >= 13);
+  });
+  text = text.replace(new RegExp(`(?<![\\d:.,])(?:\\b([Ll]as?)\\s+)?(\\d{1,2})\\s?${MER_ES}`, "gu"), (s, art, h, mer) =>
+    (+h >= 1 && +h <= 12 ? clockEs(art, to24(+h, mer), 0, true) : s));
+  // 3x10 -> 3 por 10, 10x -> 10 veces
+  text = text.replace(/\b(\d+)\s?[x×]\s?(\d+)\b/g, "$1 por $2").replace(/\b(\d+)x\b/g, "$1 veces");
+  // Units: 10 min -> 10 minutos, 1 km -> un kilómetro
+  text = text.replace(UNIT_RE_ES, (s, n, u) => (n === "1" ? UNITS_ES[u][0] : `${n} ${UNITS_ES[u][1]}`));
+  // Ranges: 5-10 -> 5 a 10
+  text = text.replace(/(?<![\d.,:/\-–—])(\d+(?:,\d+)?)\s?[-–—]\s?(\d+(?:,\d+)?)(?![\d:/]|[.,]\d|\s?[-–—]\s?\d)/g,
+    (s, a, b) => (a.length >= 3 && b.length >= 4 && !(/^(1[1-9]|20)\d\d$/.test(a) && /^(1[1-9]|20)\d\d$/.test(b)) ? s : `${a} a ${b}`));
+  // A spaced dash between words is a pause; espeak drops "–" and " - " without one
+  // Money and percent: 7,50 € -> 7 euros con 50, $15 -> 15 dólares, 20 % -> 20 por ciento
+  text = text.replace(/(?<![\d,])(\d+)(?:,(\d{2}))?\s?(?:€|EUR\b)|€\s?(\d+)(?:,(\d{2}))?/g, (s, a, ac, b, bc) => {
+    const n = a || b, c = ac || bc;
+    return `${n === "1" ? "un euro" : n + " euros"}${c && +c ? " con " + +c : ""}`;
+  });
+  text = text.replace(/US\$\s?(\d+)|\$\s?(\d+)(?:[.,](\d{2}))?|(?<![\d,])(\d+)(?:,(\d{2}))?\s?(?:\$|USD\b)/g, (s, u, a, ac, b, bc) => {
+    const n = u || a || b, c = ac || bc;
+    return `${n === "1" ? "un dólar" : n + " dólares"}${c && +c ? " con " + +c : ""}`;
+  });
+  text = text.replace(/(\d)\s?%/g, "$1 por ciento");
+  for (const [re, say] of ES_ABBR) text = text.replace(re, say);
+  text = text.replace(/\s+[-–]\s+/g, " — ");
+  return text;
+}
+
+// French: heures, dates, ordinaux, unités, monnaie, abréviations
+const MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
+const MOIS_RE = "(janv(?:ier)?|févr(?:ier)?|mars|avr(?:il)?|mai|juin|juil(?:let)?|août|sept(?:embre)?|oct(?:obre)?|nov(?:embre)?|déc(?:embre)?)";
+const JOURS = { lun: "lundi", mar: "mardi", mer: "mercredi", jeu: "jeudi", ven: "vendredi", sam: "samedi", dim: "dimanche" };
+const FR_UNITS = { min: ["une minute", "minutes"], mn: ["une minute", "minutes"], s: ["une seconde", "secondes"], sec: ["une seconde", "secondes"],
+  km: ["un kilomètre", "kilomètres"], m: ["un mètre", "mètres"], cm: ["un centimètre", "centimètres"], mm: ["un millimètre", "millimètres"],
+  kg: ["un kilo", "kilos"], g: ["un gramme", "grammes"], mg: ["un milligramme", "milligrammes"], l: ["un litre", "litres"], L: ["un litre", "litres"],
+  cl: ["un centilitre", "centilitres"], ml: ["un millilitre", "millilitres"], mL: ["un millilitre", "millilitres"], kcal: ["une calorie", "calories"],
+  "km/h": ["un kilomètre heure", "kilomètres heure"], "°C": ["un degré", "degrés"], "°": ["un degré", "degrés"] };
+const FR_UNIT_RE = /(?<![\p{L}\d.,])(\d+(?:,\d+)?)\s?(km\/h|kcal|min|mn|sec|km|kg|mg|cm|mm|cl|ml|mL|°C|°|g|l|L|s|m)(?:\.(?=\s+[\p{Ll}\d]))?(?![\p{L}\d/'’])/gu;
+const FR_ONES = ["zéro", "un", "deux", "trois", "quatre", "cinq", "six", "sept", "huit", "neuf", "dix", "onze", "douze", "treize", "quatorze",
+  "quinze", "seize", "dix-sept", "dix-huit", "dix-neuf"];
+const FR_TENS = ["", "", "vingt", "trente", "quarante", "cinquante", "soixante", "soixante", "quatre-vingt", "quatre-vingt"];
+
+function wordsFr(n) { // 0..99
+  if (n < 20) return FR_ONES[n];
+  const t = Math.floor(n / 10), u = n % 10;
+  if (t === 7 || t === 9) return FR_TENS[t] + (t === 7 && u === 1 ? "-et-" : "-") + FR_ONES[10 + u];
+  if (u === 0) return FR_TENS[t] + (t === 8 ? "s" : "");
+  return FR_TENS[t] + (u === 1 && t !== 8 ? "-et-un" : "-" + FR_ONES[u]);
+}
+function ordinalFr(n, feminine) { // 1..99: 1 -> premier/première, 21 -> vingt-et-unième
+  if (n === 1) return feminine ? "première" : "premier";
+  const w = wordsFr(n);
+  if (w.endsWith("cinq")) return w + "uième";
+  if (w.endsWith("neuf")) return w.slice(0, -1) + "vième";
+  if (w.endsWith("quatre-vingts")) return w.slice(0, -1) + "ième";
+  return (w.endsWith("e") ? w.slice(0, -1) : w) + "ième";
+}
+// "7 heures 30", "midi", "minuit"; minutes 15/30 stay as numbers, which French speakers read naturally
+function clockFr(h, m) {
+  h = +h; m = +(m || 0);
+  if (h > 24 || m > 59) return null;
+  if ((h === 0 || h === 24) && m === 0) return "minuit";
+  if (h === 12 && m === 0) return "midi";
+  return `${h} heure${h > 1 ? "s" : ""}${m ? " " + m : ""}`;
+}
+
+function naturalFr(text) {
+  // Thousands with spaces: 1 500 -> 1500 (otherwise read as "un, cinq cents")
+  text = text.replace(/(?<![\d,])(\d{1,3})(?:[ \u00a0\u202f](\d{3}))+(?![\d,]|\s?h\b)/g, (s) => s.replace(/[ \u00a0\u202f]/g, ""));
+  // Dates: 11/10/2026, 11.10.2026, 2026-10-11 (day first); 1er mai
+  text = text.replace(/\b(\d{4})-(\d{2})-(\d{2})\b/g, (s, y, m, d) => (+m >= 1 && +m <= 12 && +d >= 1 && +d <= 31 ? `${+d === 1 ? "premier" : +d} ${MOIS[+m - 1]} ${y}` : s));
+  text = text.replace(/(?<![\d/.])(\d{1,2})([/.])(\d{1,2})\2(\d{4})(?![\d/.]\d|\d)/g, (s, d, sep, m, y) =>
+    (+m >= 1 && +m <= 12 && +d >= 1 && +d <= 31 ? `${+d === 1 ? "premier" : +d} ${MOIS[+m - 1]} ${y}` : s));
+  text = text.replace(new RegExp(`\\b(\\d{1,2})(?:er)?\\s+${MOIS_RE}\\.?(?=[\\s,.;:!?]|$)`, "giu"), (s, d, mon) => {
+    const m = MOIS.findIndex((x) => x.slice(0, 3) === mon.toLowerCase().slice(0, 3));
+    return +d >= 1 && +d <= 31 && m >= 0 ? `${+d === 1 ? "premier" : +d} ${MOIS[m]}` : s;
+  });
+  // Ordinals: 1er, 1re, 2e, 3ème, 21e -> words
+  text = text.replace(/\b(\d{1,2})(er|re|ère|e|ème|eme|nd|nde)\b/g, (s, n, suf) =>
+    (+n >= 1 ? ordinalFr(+n, suf === "re" || suf === "ère" || suf === "nde") : s));
+  // lun-ven -> du lundi au vendredi
+  text = text.replace(/(\b[Dd]u\s+)?\b(lun|mar|mer|jeu|ven|sam|dim)\.?\s?[-–—]\s?(lun|mar|mer|jeu|ven|sam|dim)\b(?:\.(?=\s+\p{Ll}))?/gu,
+    (s, du, a, b) => `${du || "du "}${JOURS[a]} au ${JOURS[b]}`);
+  // Time ranges: 7h-8h, 7h30-8h15, 7:00-8:00 -> de 7 heures à 8 heures
+  text = text.replace(/(\b[Dd]e\s+)?(?<![\d:.,])(\d{1,2})\s?[hH:](\d{2})?\s?(?:-|–|—|à)\s?(\d{1,2})\s?[hH:](\d{2})?(?![\d\p{L}])/gu, (s, de, h1, m1, h2, m2) => {
+    const a = clockFr(h1, m1), b = clockFr(h2, m2);
+    return a && b ? `${de || "de "}${a} à ${b}` : s;
+  });
+  // Single times: 7h, 7 h, 7h30, 19h45, 7:30
+  text = text.replace(/(?<![\d:.,])(\d{1,2})\s?[hH](\d{2})?(?![\d\p{L}])/gu, (s, h, m) => clockFr(h, m) || s);
+  text = text.replace(/(?<![\d:.,])(\d{1,2}):(\d{2})(?![\d:])/g, (s, h, m) => clockFr(h, m) || s);
+  // Money: 7,50 € -> 7 euros 50; 15 € -> 15 euros; $5 -> 5 dollars
+  text = text.replace(/(?<![\d,])(\d+)(?:,(\d{2}))?\s?€/g, (s, e, c) => `${e === "1" ? "un euro" : e + " euros"}${c && +c ? " " + +c : ""}`);
+  text = text.replace(/\$\s?(\d+)(?:[.,](\d{2}))?|(?<![\d,])(\d+)(?:,(\d{2}))?\s?\$/g, (s, a, ac, b, bc) => {
+    const d = a || b, c = ac || bc;
+    return `${d === "1" ? "un dollar" : d + " dollars"}${c && +c ? " " + +c : ""}`;
+  });
+  text = text.replace(/(\d)\s?%/g, "$1 pour cent");
+  // 3x10 -> 3 fois 10, 10x -> 10 fois
+  text = text.replace(/\b(\d+)\s?[x×]\s?(\d+)\b/g, "$1 fois $2").replace(/\b(\d+)x\b/g, "$1 fois");
+  // Units: 10 min -> 10 minutes, 1 km -> un kilomètre
+  text = text.replace(FR_UNIT_RE, (s, n, u) => (n === "1" ? FR_UNITS[u][0] : `${n} ${FR_UNITS[u][1]}`));
+  // Ranges: 5-10 -> 5 à 10
+  text = text.replace(/(?<![\d.,:/\-–—])(\d+(?:,\d+)?)\s?[-–—]\s?(\d+(?:,\d+)?)(?![\d:/]|[.,]\d|\s?[-–—]\s?\d)/g,
+    (s, a, b) => (a.length >= 3 && b.length >= 4 && !(/^(1[1-9]|20)\d\d$/.test(a) && /^(1[1-9]|20)\d\d$/.test(b)) ? s : `${a} à ${b}`));
+  // Abbreviations
+  text = text.replace(/\bM\.\s(?=\p{Lu})/gu, "Monsieur ").replace(/\bMme\b\.?/g, "Madame").replace(/\bMlle\b\.?/g, "Mademoiselle")
+    .replace(/\bDr\b\.?(?=\s)/g, "docteur").replace(/\betc\.(?=\s*\p{Ll})/gu, "et cetera,").replace(/\betc\./g, "et cetera.")
+    .replace(/\b(?:p\.\s?ex\.|par ex\.)/g, "par exemple").replace(/\benv\.(?=\s)/g, "environ").replace(/\bc\.-à-d\./g, "c'est-à-dire")
+    .replace(/\bn[°º]\s?(?=\d)/gi, "numéro ").replace(/\bvs\.?(?=\s)/g, "contre");
+  // A spaced dash between words is a pause
+  text = text.replace(/\s+[-–]\s+/g, " — ");
+  return text;
+}
+// ---- end natural reading (German, Spanish, French)
+const NATURAL = { en: naturalEn, de: naturalDe, es: naturalEs, fr: naturalFr };
+function normalize(text, lang) {
+  text = NATURAL[lang](text);
+  if (lang !== "en") return text;
   text = text.replace(MONEY_RE, money).replace(YEAR_RE, year);
   for (const [re, repl] of RULES) text = text.replace(re, repl);
   return text;
 }
-function splitSentences(par) {
+function splitSentences(par, lang) {
   const out = [];
   let start = 0;
   for (const m of par.matchAll(/[.!?…]+["”’»)\]]*(?=\s|$)/g)) {
@@ -483,7 +760,8 @@ function splitSentences(par) {
     const next = par.slice(m.index + m[0].length).trimStart().charAt(0);
     const isDot = m[0].replace(/["”’»)\]]+$/, "") === ".";
     const lower = next && next === next.toLowerCase() && next !== next.toUpperCase();
-    if (isDot && (ABBR.has(last) || (last.length === 1 && /\p{L}/u.test(last)) || lower)) continue;
+    const ordinal = lang === "de" && /^\d{1,2}$/.test(last); // "am 11. Oktober"
+    if (isDot && (ABBREVIATIONS[lang].has(last) || (last.length === 1 && /\p{L}/u.test(last)) || lower || ordinal)) continue;
     out.push(par.slice(start, m.index + m[0].length).trim());
     start = m.index + m[0].length;
   }
@@ -491,8 +769,8 @@ function splitSentences(par) {
   return out.filter(Boolean);
 }
 // Text -> requests [{spoken, sentences: [{shown, spoken}], gap}]. Sentences of one paragraph share a request
-// up to CHUNK_CHARS, so Kokoro keeps its natural intonation; "shown" goes to subtitles, "spoken" to the voice.
-function buildScript(text, pron, paragraphPause) {
+// up to maxChars (CHUNK_CHARS of the voice's engine), so the voice keeps its natural intonation; "shown" goes to subtitles, "spoken" to the voice.
+function buildScript(text, pron, paragraphPause, lang, maxChars) {
   const requests = [];
   for (const block of cleanMarkdown(text).split(/\n\s*\n/)) {
     const merged = [];
@@ -502,16 +780,16 @@ function buildScript(text, pron, paragraphPause) {
       else merged.push(ln);
     }
     const sentences = [];
-    for (const ln of merged) for (const shown of splitSentences(ln)) {
-      let spoken = normalize(applyPronunciations(shown, pron));
+    for (const ln of merged) for (const shown of splitSentences(ln, lang)) {
+      let spoken = normalize(applyPronunciations(shown, pron), lang);
       if (!/[\p{L}\p{N}]/u.test(spoken)) continue;
       if (!END.test(spoken)) spoken += ".";
       // A run-on "sentence" without punctuation is cut at commas or spaces
-      for (const piece of chunk(spoken, CHUNK_CHARS)) sentences.push({ shown: piece === spoken ? shown : piece, spoken: piece });
+      for (const piece of chunk(spoken, maxChars)) sentences.push({ shown: piece === spoken ? shown : piece, spoken: piece });
     }
     let cur = null;
     for (const sen of sentences) {
-      if (cur && cur.spoken.length + 1 + sen.spoken.length <= CHUNK_CHARS) { cur.spoken += " " + sen.spoken; cur.sentences.push(sen); }
+      if (cur && cur.spoken.length + 1 + sen.spoken.length <= maxChars) { cur.spoken += " " + sen.spoken; cur.sentences.push(sen); }
       else { if (cur) requests.push(cur); cur = { spoken: sen.spoken, sentences: [sen], gap: CHUNK_GAP }; }
     }
     if (cur) { cur.gap = paragraphPause; requests.push(cur); }
@@ -655,12 +933,12 @@ function onScreen() {
 }
 
 // One request -> Int16 samples, retrying what the server marks as temporary
-async function speak(text, voice, speed, format, signal) {
+async function speak(text, voice, lang, speed, format, signal) {
   for (let attempt = 0; ; attempt++) {
     let res;
     try {
       res = await fetch("/api/tts", { method: "POST", headers: { "content-type": "application/json" }, credentials: "same-origin",
-        body: JSON.stringify({ text, voice, speed, format }), signal });
+        body: JSON.stringify({ text, voice, lang, speed, format }), signal });
     } catch (e) {
       if (signal.aborted) throw e;
       if (document.hidden) { await onScreen(); attempt--; continue; }
@@ -680,33 +958,78 @@ async function speak(text, voice, speed, format, signal) {
   }
 }
 
+// Inworld now and then repeats the end of a request or drops a phrase. Such a take is far longer or shorter than
+// the text needs, so it is asked again (two more times at most) and the take closest to the expected length is kept.
+async function speakChecked(text, voice, lang, speed, format, signal) {
+  const cps = (voiceOf(voice) || [])[5];
+  if (!cps) return speak(text, voice, lang, speed, format, signal);
+  const expected = text.length / cps / speed;
+  let best = null;
+  for (let take = 0; take < 3; take++) {
+    const pcm = await speak(text, voice, lang, speed, format, signal), sec = pcm.length / SR;
+    const off = Math.abs(Math.log(sec / expected));
+    if (!best || off < best.off) best = { pcm, off };
+    if (sec <= expected * 1.5 + 1.5 && sec >= expected * 0.6) break;
+  }
+  return best.pcm;
+}
+
 // ---------------------------------------------------------------- UI
 
-// Voice chips: the accent chip narrows the voice chip to that accent; each chip shows its select's choice
+// Voice chips: language -> accent -> voice; each chip shows its select's choice. The last voice per language is remembered.
+const voiceOf = (id) => VOICES.find((v) => v[0] === id);
 function fillVoices() {
-  const saved = VOICES.find((v) => v[0] === store.get("voice", "am_michael")) || VOICES[0];
-  $("accent").value = saved[2];
+  const saved = voiceOf(store.get("voice", "am_michael")) || VOICES[0];
+  $("lang").value = saved[2];
+  listAccents(saved[3]);
   listVoices(saved[0]);
 }
+function listAccents(keep) {
+  const lang = $("lang").value, accents = [...new Set(VOICES.filter((v) => v[2] === lang).map((v) => v[3]))];
+  $("accent").replaceChildren(...accents.map((a) => new Option(ACCENTS[a], a)));
+  $("accent").value = accents.includes(keep) ? keep : accents[0];
+  $("accent").closest(".chip").classList.toggle("fixed", accents.length < 2);
+}
 function listVoices(keep) {
-  const sel = $("voice"), accent = $("accent").value;
-  sel.replaceChildren(...VOICES.filter((v) => v[2] === accent).map(([id, name]) => new Option(name, id)));
-  sel.value = VOICES.some((v) => v[0] === keep && v[2] === accent) ? keep : sel.options[0].value;
+  const sel = $("voice"), lang = $("lang").value, accent = $("accent").value;
+  sel.replaceChildren(...VOICES.filter((v) => v[2] === lang && v[3] === accent).map(([id, name]) => new Option(name, id)));
+  sel.value = VOICES.some((v) => v[0] === keep && v[2] === lang && v[3] === accent) ? keep : sel.options[0].value;
   syncChips();
+}
+function switchLang(lang) {
+  $("lang").value = lang;
+  const last = voiceOf(store.get("voice_" + lang, "")) || VOICES.find((v) => v[2] === lang);
+  listAccents(last[3]);
+  listVoices(last[0]);
+  updateLabels(); updateStats();
 }
 function syncChips() {
   for (const sel of document.querySelectorAll(".chip select")) sel.previousElementSibling.textContent = sel.selectedOptions[0]?.text || "";
+}
+// Which language a text is in, from its most common short words; null when unsure
+const STOPWORDS = {
+  en: "the and you that is it to of for this with what was have are but your just they", de: "der die und das ist nicht ich du sie mit auf für den dem ein eine auch wir aber sich zu",
+  es: "el los las y es por una para con pero muy del al más como está lo", fr: "le les et est des une pas je tu vous il pour dans ce qui avec sur au du ne mais",
+};
+const STOPSETS = Object.fromEntries(Object.entries(STOPWORDS).map(([l, w]) => [l, new Set(w.split(" "))]));
+function guessLang(text) {
+  const words = text.toLowerCase().match(/\p{L}+/gu) || [];
+  if (words.length < 12) return null;
+  const ranked = Object.keys(STOPSETS).map((l) => [l, words.filter((w) => STOPSETS[l].has(w)).length]).sort((a, b) => b[1] - a[1]);
+  return ranked[0][1] >= 5 && ranked[0][1] >= 2 * ranked[1][1] ? ranked[0][0] : null;
 }
 function updateLabels() {
   $("speedVal").textContent = (+$("speed").value).toFixed(2) + "×";
   $("ppVal").textContent = (+$("pp").value).toFixed(1) + " с";
   for (const id of ["voice", "speed", "pp"]) store.set(id, $(id).value);
+  store.set("voice_" + $("lang").value, $("voice").value);
   store.set("mp3", $("mp3").checked);
 }
 function updateStats() {
   const text = $("text").value, words = (text.match(/[\p{L}\d'’]+/gu) || []).length;
-  const min = words / 155 / +$("speed").value, m = Math.floor(min), s = Math.round((min - m) * 60);
-  const cost = (text.length * PRICE_PER_M * priceFactor) / 1e6;
+  const lang = $("lang").value, engine = (voiceOf($("voice").value) || VOICES[0])[4];
+  const min = text.length / CHARS_PER_SEC[lang] / 60 / +$("speed").value, m = Math.floor(min), s = Math.round((min - m) * 60);
+  const cost = (text.length * PRICE_PER_M[engine] * (engine === "kokoro" ? priceFactor : 1)) / 1e6;
   const h = Math.floor(m / 60), dur = h ? `${h} год ${m % 60} хв` : m ? `${m} хв ${s} с` : `${s} с`;
   $("stats").textContent = words ? `${words} слів · ≈ ${dur} · $${cost < 0.01 ? cost.toFixed(4) : cost.toFixed(2)}` : "";
   store.set("text", text);
@@ -720,7 +1043,7 @@ function pronMap() {
 const fmtTime = (sec) => { const h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60), s = Math.round(sec % 60);
   return h ? `${h}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}` : `${m}:${String(s).padStart(2, "0")}`; };
 function stamp() { const d = new Date(), p = (n) => String(n).padStart(2, "0"); return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}_${p(d.getHours())}${p(d.getMinutes())}`; }
-const slug = (t) => (t.match(/[A-Za-z0-9]+/g) || []).slice(0, 4).join("-").toLowerCase() || "voice";
+const slug = (t) => (t.normalize("NFD").replace(/\p{M}/gu, "").replace(/ß/g, "ss").match(/[A-Za-z0-9]+/g) || []).slice(0, 4).join("-").toLowerCase() || "voice";
 
 // The last result is kept on the phone, so a reload or a closed tab doesn't lose a long voiceover
 const lastDb = new Promise((resolve) => {
@@ -754,11 +1077,17 @@ function generate() {
   $("err").textContent = "";
   const text = $("text").value.trim();
   if (!text) { $("err").textContent = "Спочатку вставте текст."; return; }
-  const foreign = foreignWords(text);
-  if (foreign.length) { $("err").textContent = `Голос читає англійський текст. Замініть або видаліть: ${foreign.join(", ")}`; return; }
-  const items = buildScript(text, pronMap(), +$("pp").value);
+  const lang = $("lang").value, foreign = foreignWords(text), guess = guessLang(text);
+  if (foreign.length) { $("err").textContent = `Голос читає латиницю (${Object.values(LANG_NAMES).join(", ")}). Замініть або видаліть: ${foreign.join(", ")}`; return; }
+  if (guess && guess !== lang) {
+    $("err").textContent = `Схоже, текст ${LANG_IN[guess]}, а вибрано ${LANG_ACC[lang]} мову. Змініть мову на першому чипі або натисніть ▶ ще раз.`;
+    if (store.get("langWarned", "") !== text.slice(0, 200) + lang) { store.set("langWarned", text.slice(0, 200) + lang); return; }
+    $("err").textContent = "";
+  }
+  const engine = voiceOf($("voice").value)[4];
+  const items = buildScript(text, pronMap(), +$("pp").value, lang, CHUNK_CHARS[engine]);
   if (!items.length) { $("err").textContent = "Немає тексту для озвучки."; return; }
-  pending = { text, items, parts: new Array(items.length), voice: $("voice").value, speed: +$("speed").value,
+  pending = { text, items, parts: new Array(items.length), voice: $("voice").value, lang, speed: +$("speed").value,
     format: $("mp3").checked ? "mp3" : "wav", seconds: 0 };
   run();
 }
@@ -783,7 +1112,7 @@ async function run() {
   const worker = async () => {
     while (todo.length && !ctrl.signal.aborted) {
       const i = todo.shift();
-      const pcm = await speak(st.items[i].spoken, st.voice, st.speed, st.format, ctrl.signal);
+      const pcm = await speakChecked(st.items[i].spoken, st.voice, st.lang, st.speed, st.format, ctrl.signal);
       st.parts[i] = { blob: new Blob([pcm]), samples: pcm.length };
       done++; show();
     }
@@ -890,7 +1219,8 @@ async function preview() {
   const btn = $("preview");
   btn.disabled = true;
   try {
-    const pcm = await speak(PREVIEW, $("voice").value, +$("speed").value, "wav", new AbortController().signal);
+    const lang = $("lang").value;
+    const pcm = await speak(PREVIEW[lang], $("voice").value, lang, +$("speed").value, "wav", new AbortController().signal);
     const url = URL.createObjectURL(new Blob([wavHeader(pcm.length * 2), pcm], { type: "audio/wav" }));
     await new Audio(url).play();
   } catch (e) {
@@ -904,16 +1234,18 @@ async function check() {
   msg.className = "msg"; msg.textContent = "Перевіряю...";
   try {
     const r = await api("/api/check", {});
-    const m = r.model, notes = [];
-    if (m) {
-      if (m.missingVoices && m.missingVoices.length) notes.push(`Голоси, яких немає в DeepInfra: ${m.missingVoices.join(", ")}`);
-      else if (m.voices) notes.push(`усі 12 голосів доступні (у моделі ${m.voices})`);
-      if (m.formats && !m.formats.includes("wav")) notes.push("WAV не підтримується, увімкніть «Економити мобільний інтернет»");
-      if (m.maxInput && m.maxInput < CHUNK_CHARS) notes.push(`модель приймає лише ${m.maxInput} символів за раз`);
+    const names = { kokoro: "англійська (Kokoro)", inworld: "німецька, іспанська, французька (Inworld)" }, parts = [], notes = [];
+    for (const [engine, e] of Object.entries(r.engines || {})) {
+      if (!e.ok) { notes.push(`${names[engine] || engine}: помилка ${e.status}${e.detail ? " " + e.detail : ""}`); continue; }
+      parts.push(`${names[engine] || engine} за ${(e.ms / 1000).toFixed(1)} с${engine === "kokoro" ? ` (маршрут ${e.route}, ${e.tier})` : ""}`);
+      if (engine !== "kokoro") e.heard ? parts.push(`перевірка розпізнаванням чує: «${e.heard.trim()}»`) : notes.push("перевірка розпізнаванням не відповідає, озвучка йде без неї");
+      const m = e.model;
+      if (m && m.missingVoices && m.missingVoices.length) notes.push(`${names[engine]}: голосів немає в DeepInfra: ${m.missingVoices.join(", ")}`);
+      if (m && m.formats && !m.formats.includes("wav")) notes.push(`${names[engine]}: WAV не підтримується`);
+      if (m && m.maxInput && m.maxInput < CHUNK_CHARS[engine]) notes.push(`${names[engine]}: модель приймає лише ${m.maxInput} символів за раз`);
     }
-    const warn = notes.some((n) => !n.startsWith("усі"));
-    msg.className = warn ? "msg err" : "msg ok";
-    msg.textContent = `Працює: DeepInfra повернув голос за ${(r.ms / 1000).toFixed(1)} с (маршрут ${r.route}${r.tier ? ", " + r.tier : ""}).` + (notes.length ? " " + notes.join("; ") + "." : "");
+    msg.className = notes.length ? "msg err" : "msg ok";
+    msg.textContent = (parts.length ? `Працює: ${parts.join("; ")}.` : "") + (notes.length ? " ⚠ " + notes.join("; ") + "." : "");
   } catch (e) {
     msg.className = "msg err"; msg.textContent = e.message;
   }
@@ -986,8 +1318,14 @@ $("text").value = store.get("text", "");
 $("pron").value = store.get("pron", $("pron").value);
 updateLabels(); updateStats();
 for (const id of ["voice", "speed", "pp", "mp3"]) $(id).addEventListener("input", updateLabels);
-$("voice").addEventListener("change", () => { syncChips(); updateLabels(); });
-$("accent").addEventListener("change", () => { listVoices(); updateLabels(); });
+$("voice").addEventListener("change", () => { syncChips(); updateLabels(); updateStats(); });
+$("accent").addEventListener("change", () => { listVoices(); updateLabels(); updateStats(); });
+$("lang").addEventListener("change", () => switchLang($("lang").value));
+// A pasted script in another language switches the chips to it
+$("text").addEventListener("paste", () => setTimeout(() => {
+  const guess = guessLang($("text").value);
+  if (guess && guess !== $("lang").value) switchLang(guess);
+}));
 $("mp3").addEventListener("change", updateLabels);
 $("speed").addEventListener("input", updateStats);
 $("text").addEventListener("input", updateStats);

@@ -587,6 +587,8 @@ def _colon_range_en(m):
     a, b = clock_parts(m.group(1), m.group(2)), clock_parts(m.group(3), m.group(4))
     if not a or not b:
         return m.group()
+    if not a["mer"] and not a.get("midnight") and b["mer"] == "PM" and int(m.group(1)) < 12:
+        a["mer"] = "AM"  # 9:00-17:00 is a 24-hour range
     if a["mer"] == b["mer"]:
         return f"{clock_core(a)} to {clock_core(b)}" + (f" {b['mer']}" if b["mer"] else "")
     return f"{clock_en(a)} to {clock_en(b)}"

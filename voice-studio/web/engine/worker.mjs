@@ -442,6 +442,7 @@ function naturalEn(text) {
   text = text.replace(new RegExp(`${NOT_AFTER}(\\d{1,2}):(\\d{2})\\s?[-–—]\\s?(\\d{1,2}):(\\d{2})(?![\\d:])`, "g"), (s, h1, m1, h2, m2) => {
     const a = clockParts(h1, m1), b = clockParts(h2, m2);
     if (!a || !b) return s;
+    if (!a.mer && !a.midnight && b.mer === "PM" && +h1 < 12) a.mer = "AM"; // 9:00-17:00 is a 24-hour range
     return a.mer === b.mer ? `${clockCore(a)} to ${clockCore(b)}${b.mer ? " " + b.mer : ""}` : `${clockEn(a)} to ${clockEn(b)}`;
   });
   // Single times: 7:00 AM, 19:00, 7.00 PM, at 7.30, 7am
