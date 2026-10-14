@@ -22,17 +22,18 @@ December 2001, an ice storm in the Missouri hills, and a stranger telling me exa
 I was 24, hauling a light trailer and trying to get home to my boy for Christmas, when freezing rain turned Interstate 44 into glass. Then the CB went dead, and a voice I first heard in the fog back in 1998 told me to stop before the bridge at the bottom of the hill. Nobody else on the channel heard a word, and the next morning my dispatcher went quiet for a full minute before she said his name.
 
 0:00 The voice on channel 19
-[TC] Hey. It's Hank.
-[TC] December 13, 2001
-[TC] How an ice storm works
-[TC] The spray stops
-[TC] The channel goes dead
-[TC] Nobody else heard him
-[TC] "Don't argue with me, son"
-[TC] The bridge
-[TC] Marlene
-[TC] One more thing
-[TC] Drive safe out there
+0:53 Hey. It's Hank.
+1:41 December 13, 2001
+3:04 How an ice storm works
+4:26 The spray stops
+5:42 The channel goes dead
+7:54 Nobody else heard him
+8:59 "Don't argue with me, son"
+10:09 What would you do?
+11:58 The bridge
+14:03 Marlene
+15:34 One more thing
+16:44 Drive safe out there
 
 Have you ever stopped, turned around or stayed put because of a voice or a feeling you couldn't explain? Tell me where you were. I read every one.
 — Hank
@@ -118,7 +119,7 @@ More options
 Video elements
 - Subtitles: optional, upload the SRT as English (helps search; the burned-in subtitles stay).
 - End screen, last 20 s: element 1 "Best for viewer", element 2 Subscribe.
-- Cards: at "Last time I told you about a letter my father left me" → Episode 5; at "I had heard that voice before. March of 1998" → Episode 1.
+- Cards: 1:18 ("Last time I told you about a letter…") → Episode 5; 6:11 ("I had heard that voice before") → Episode 1.
 Visibility
 - Schedule: Thursday 15.10.2026, 22:00, time zone Warsaw (CEST, UTC+2).
 After publishing
