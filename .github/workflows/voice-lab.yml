@@ -10,6 +10,10 @@ on:
 
 concurrency: voice-lab
 
+permissions:
+  contents: read
+  actions: read
+
 jobs:
   lab:
     runs-on: ubuntu-latest
@@ -21,6 +25,16 @@ jobs:
       DEEPINFRA_API_KEY: ${{ secrets.DEEPINFRA_API_KEY }}
     steps:
       - uses: actions/checkout@v4
+      - name: Earlier run to reuse
+        id: reuse
+        run: echo "run=$(cat reuse_run.txt 2>/dev/null || true)" >> "$GITHUB_OUTPUT"
+      - uses: actions/download-artifact@v4
+        if: steps.reuse.outputs.run != ''
+        with:
+          name: voice-lab
+          path: voice-studio/lab/out
+          run-id: ${{ steps.reuse.outputs.run }}
+          github-token: ${{ github.token }}
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"

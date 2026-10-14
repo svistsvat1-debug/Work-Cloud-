@@ -8,9 +8,9 @@
 Writes out/report.json and out/report.md (also shown on the GitHub run page).
 """
 import json
+import math
 import os
 import re
-import subprocess
 import sys
 import unicodedata
 
@@ -18,6 +18,7 @@ import numpy as np
 import parselmouth
 import soundfile as sf
 import torch
+from scipy.signal import resample_poly
 from faster_whisper import WhisperModel
 from jiwer import wer
 from num2words import num2words
@@ -52,11 +53,16 @@ for r in synth:
     if not r.get("ok"):
         rows.append({**r})
         continue
-    wav = f"out/wav16/{r['id']}.wav"
     src = r["file"]
-    fmt = ["-f", "s16le", "-ar", "24000", "-ac", "1"] if src.endswith(".pcm") else []
-    subprocess.run(["ffmpeg", "-loglevel", "error", "-y", *fmt, "-i", src, "-ac", "1", "-ar", "16000", wav], check=True)
-    x, sr = sf.read(wav, dtype="float32")
+    if src.endswith(".pcm"):
+        y, ysr = np.frombuffer(open(src, "rb").read(), dtype="<i2").astype("float32") / 32768, 24000
+    else:
+        y, ysr = sf.read(src, dtype="float32", always_2d=True)
+        y = y.mean(axis=1)
+    r["sample_rate"] = ysr
+    g = math.gcd(16000, ysr)
+    x, sr = resample_poly(y, 16000 // g, ysr // g).astype("float32"), 16000
+    sf.write(f"out/wav16/{r['id']}.wav", x, sr)
     lead, tail, speech = speech_span(x, sr)
     lang = r["lang"]
     _, info = asr.transcribe(x, language=None, beam_size=1)
