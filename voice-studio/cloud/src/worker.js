@@ -160,17 +160,21 @@ async function speakOther(env, engine, text, voice, speed, format) {
 }
 
 /* Inworld now and then repeats the end of a request or skips a phrase. Each take is heard back by Whisper and
-   compared with its text by words of three letters or more (numbers aside, which Whisper may write either way):
-   too few of them heard, or far more words than written, and the text is voiced again. The closest take wins. */
-const wordsOf = s => (s.toLowerCase().normalize('NFC').match(/\p{L}{3,}/gu) || []);
+   compared with its text by words of three letters or more: too few of them heard, or far more words than written,
+   and the text is voiced again. Whisper writes numbers its own way ("6 heures 30" -> "6h30", "20 Prozent" -> "20%",
+   "docteur" -> "Dr"), so words next to a number and such titles are not counted. The closest take wins. */
+const TITLES = new Set(['doctor', 'doktor', 'docteur', 'doctora', 'mister', 'monsieur', 'madame', 'señor', 'señora', 'professor', 'nummer', 'número', 'numéro', 'number']);
+const tokensOf = s => s.toLowerCase().normalize('NFC').match(/\p{L}+|\p{N}+/gu) || [];
+const wordsOf = s => tokensOf(s).filter(w => w.length >= 3 && !/\p{N}/u.test(w));
 function match(text, heard) {
-  const want = wordsOf(text), got = wordsOf(heard);
+  const tokens = tokensOf(text), digit = t => /\p{N}/u.test(t || '');
+  const want = tokens.filter((w, i) => w.length >= 3 && !digit(w) && !digit(tokens[i - 1]) && !digit(tokens[i + 1]) && !TITLES.has(w));
   if (want.length < 5) return 1;
-  const left = new Map();
+  const got = wordsOf(heard), left = new Map();
   for (const w of got) left.set(w, (left.get(w) || 0) + 1);
   let found = 0;
   for (const w of want) if (left.get(w)) { found++; left.set(w, left.get(w) - 1); }
-  const recall = found / want.length, extra = Math.max(0, got.length / want.length - 1);
+  const recall = found / want.length, extra = Math.max(0, got.length / Math.max(1, wordsOf(text).length) - 1);
   return recall - extra;
 }
 async function hear(env, bytes, type, lang) {
@@ -198,7 +202,7 @@ async function speakVerified(env, engine, text, voice, lang, speed, format) {
     const heard = await hear(env, bytes, type, lang);
     const score = heard === null ? 1 : match(text, heard);
     if (!best || score > best.score) best = { score, out: { ...out, res: new Response(bytes, { headers: { 'content-type': type } }), takes: take } };
-    if (score >= 0.8) break;
+    if (score >= 0.85) break;
   }
   return best.out;
 }

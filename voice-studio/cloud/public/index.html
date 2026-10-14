@@ -958,18 +958,19 @@ async function speak(text, voice, lang, speed, format, signal) {
   }
 }
 
-// Inworld now and then repeats the end of a request or drops a phrase. Such a take is far longer or shorter than
-// the text needs, so it is asked again (two more times at most) and the take closest to the expected length is kept.
+// Inworld now and then repeats the end of a request or drops a phrase. The server already checks every take by
+// speech recognition; as a last guard, a take far longer or shorter than the text needs is asked again (twice more
+// at most) and the one closest to the expected length is kept. Digits count more: "2026" takes longer to say than to write.
 async function speakChecked(text, voice, lang, speed, format, signal) {
   const cps = (voiceOf(voice) || [])[5];
   if (!cps) return speak(text, voice, lang, speed, format, signal);
-  const expected = text.length / cps / speed;
+  const expected = (text.length + 3 * (text.match(/\d/g) || []).length) / cps / speed;
   let best = null;
   for (let take = 0; take < 3; take++) {
     const pcm = await speak(text, voice, lang, speed, format, signal), sec = pcm.length / SR;
     const off = Math.abs(Math.log(sec / expected));
     if (!best || off < best.off) best = { pcm, off };
-    if (sec <= expected * 1.5 + 1.5 && sec >= expected * 0.6) break;
+    if (sec <= expected * 1.8 + 2 && sec >= expected * 0.5) break;
   }
   return best.pcm;
 }
@@ -1238,7 +1239,7 @@ async function check() {
     for (const [engine, e] of Object.entries(r.engines || {})) {
       if (!e.ok) { notes.push(`${names[engine] || engine}: помилка ${e.status}${e.detail ? " " + e.detail : ""}`); continue; }
       parts.push(`${names[engine] || engine} за ${(e.ms / 1000).toFixed(1)} с${engine === "kokoro" ? ` (маршрут ${e.route}, ${e.tier})` : ""}`);
-      if (engine !== "kokoro") e.heard ? parts.push(`перевірка розпізнаванням чує: «${e.heard.trim()}»`) : notes.push("перевірка розпізнаванням не відповідає, озвучка йде без неї");
+      if (engine !== "kokoro") e.heard ? parts.push(`перевірка розпізнаванням чує: «${e.heard.replace(/\s+/g, " ").trim()}»`) : notes.push("перевірка розпізнаванням не відповідає, озвучка йде без неї");
       const m = e.model;
       if (m && m.missingVoices && m.missingVoices.length) notes.push(`${names[engine]}: голосів немає в DeepInfra: ${m.missingVoices.join(", ")}`);
       if (m && m.formats && !m.formats.includes("wav")) notes.push(`${names[engine]}: WAV не підтримується`);
