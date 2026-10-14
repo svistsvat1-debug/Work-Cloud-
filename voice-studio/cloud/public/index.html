@@ -76,6 +76,20 @@
   .files { display: flex; flex-wrap: wrap; gap: 8px; }
   .files > * { flex: 1 1 auto; padding: 0 14px; white-space: nowrap; }
   .btn[aria-disabled="true"] { pointer-events: none; opacity: .5; font-variant-numeric: tabular-nums; }
+  #fragsToggle { justify-self: start; font-size: 14px; color: var(--muted); }
+  .frags { display: grid; gap: 2px; max-height: 50vh; max-height: 50dvh; overflow-y: auto; border-top: 1px solid var(--edge); padding-top: 8px;
+    overscroll-behavior: contain; }
+  .frags-hint { font-size: 13px; color: var(--faint); padding: 0 2px 8px; }
+  .frag { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 6px 2px; border-radius: 10px; }
+  .frag.now { background: var(--chip); }
+  .frag button { min-height: 36px; padding: 0 12px; font-size: 13.5px; border-radius: 10px; }
+  .frag .at { font-variant-numeric: tabular-nums; color: var(--muted); min-width: 58px; padding: 0 8px; }
+  .frag p { margin: 0; font-size: 14px; line-height: 1.4; color: var(--ink); overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+  .frag .tag { color: var(--muted); font-weight: 600; }
+  .frag-edit { grid-column: 1 / -1; display: grid; gap: 8px; }
+  .frag-edit textarea { width: 100%; min-height: 96px; border: 0; border-radius: 12px; background: var(--chip); color: var(--ink); padding: 10px 12px;
+    font: inherit; font-size: 15px; line-height: 1.5; resize: vertical; outline: none; }
+  .frag-edit .row { display: flex; gap: 8px; flex-wrap: wrap; }
 
   /* Sign-in and setup */
   .narrow { width: 100%; max-width: 380px; margin: auto; display: grid; gap: 12px; background: var(--card); border: 1px solid var(--edge);
@@ -210,6 +224,8 @@
           <a class="btn" id="dlSrt" download>Скачати субтитри</a>
           <button type="button" id="share" hidden>Поділитися</button>
         </div>
+        <button type="button" class="link" id="fragsToggle" hidden>Виправити фрагмент</button>
+        <div class="frags" id="frags" hidden></div>
       </div>
     </section>
   </main>
@@ -222,11 +238,31 @@
     <div class="set">
       <div class="set-head"><span>Голос</span></div>
       <div class="row"><button type="button" id="preview">Прослухати голос</button></div>
+      <div class="hint">Читає початок вашого тексту, а якщо поле порожнє — зразок.</div>
     </div>
 
     <div class="set">
-      <div class="set-head"><span>Формат файлу</span></div>
-      <div class="seg" role="radiogroup" aria-label="Формат файлу">
+      <div class="set-head"><span>Швидкість цього голосу</span><b id="speedVal"></b></div>
+      <input type="range" id="speed" min="0.75" max="1.3" step="0.01" value="1" aria-label="Швидкість">
+      <div class="hint">Запам'ятовується для кожного голосу окремо.</div>
+    </div>
+
+    <div class="set">
+      <div class="set-head"><span>Пауза між абзацами</span><b id="ppVal"></b></div>
+      <input type="range" id="pp" min="0.3" max="2" step="0.1" value="0.8" aria-label="Пауза між абзацами">
+      <div class="hint">У тексті: <b>[пауза 2]</b> — пауза 2 секунди в цьому місці. Усе інше в [квадратних дужках],
+        підписи на кшталт «Narrator:» та емодзі не озвучуються й не потрапляють у субтитри.</div>
+    </div>
+
+    <div class="set">
+      <div class="set-head"><span>Словник вимови</span></div>
+      <textarea id="pron" spellcheck="false" aria-label="Словник вимови">SaaS = sass</textarea>
+      <div class="hint">Один рядок: слово = як читати.</div>
+    </div>
+
+    <div class="set">
+      <div class="set-head"><span>Формат аудіо</span></div>
+      <div class="seg" role="radiogroup" aria-label="Формат аудіо">
         <button type="button" role="radio" data-format-set="mp3">MP3</button>
         <button type="button" role="radio" data-format-set="wav">WAV</button>
       </div>
@@ -234,24 +270,22 @@
     </div>
 
     <div class="set">
-      <div class="set-head"><span>Швидкість</span><b id="speedVal"></b></div>
-      <input type="range" id="speed" min="0.75" max="1.3" step="0.01" value="1" aria-label="Швидкість">
+      <div class="set-head"><span>Субтитри</span></div>
+      <div class="seg" role="radiogroup" aria-label="Субтитри">
+        <button type="button" role="radio" data-subs-set="normal">Звичайні</button>
+        <button type="button" role="radio" data-subs-set="short">Короткі</button>
+      </div>
+      <div class="hint">Короткі — кілька слів в один рядок, для Shorts, Reels і TikTok. Можна змінити й після озвучки.</div>
     </div>
 
     <div class="set">
-      <div class="set-head"><span>Пауза між абзацами</span><b id="ppVal"></b></div>
-      <input type="range" id="pp" min="0.3" max="2" step="0.1" value="0.8" aria-label="Пауза між абзацами">
+      <label class="switch">Вирівнювати гучність <input type="checkbox" id="level"></label>
+      <div class="hint">Однакова гучність усіх шматків і голосів, близько до стандарту YouTube.</div>
     </div>
 
     <div class="set">
       <label class="switch">Економити мобільний інтернет <input type="checkbox" id="mp3"></label>
       <div class="hint">Сервер шле звук у MP3: утричі менше трафіку, якість трохи нижча.</div>
-    </div>
-
-    <div class="set">
-      <div class="set-head"><span>Словник вимови</span></div>
-      <textarea id="pron" spellcheck="false" aria-label="Словник вимови">SaaS = sass</textarea>
-      <div class="hint">Один рядок: слово = як читати.</div>
     </div>
 
     <div class="set">
@@ -770,31 +804,54 @@ function splitSentences(par, lang) {
 }
 // Text -> requests [{spoken, sentences: [{shown, spoken}], gap}]. Sentences of one paragraph share a request
 // up to maxChars (CHUNK_CHARS of the voice's engine), so the voice keeps its natural intonation; "shown" goes to subtitles, "spoken" to the voice.
+// Script markup: [пауза 2] or [2 с] is a pause of that many seconds; anything else in square brackets is a stage
+// direction ([Music], [B-roll: city]) and is neither voiced nor subtitled; so are "Narrator:" labels and emoji.
+const PAUSE_UNIT = "(?:с|сек|секунд[аи]?|s|sec|secs|seconds?|seg|segundos?|sek|sekunden?|secondes?)\\.?";
+const PAUSE_MARK = new RegExp(`\\[\\s*(?:(?:пауза|pause|pausa)\\s*(\\d+(?:[.,]\\d+)?)?\\s*(?:${PAUSE_UNIT})?|(\\d+(?:[.,]\\d+)?)\\s*${PAUSE_UNIT})\\s*\\]`, "giu");
+const PAUSE_TOKEN = /\u0001(\d+(?:\.\d+)?)\u0001/;
+const SPEAKER = /^\s*(?:narrator|voice[- ]?over|vo|host|speaker|диктор|ведучий|оповідач|sprecher|erzähler|narrador|narrateur|voix off)\s*:\s*/i;
+function markup(line) {
+  return line.replace(PAUSE_MARK, (m, a, b) => {
+    const sec = Math.min(10, Math.max(0.1, parseFloat((a || b || "1").replace(",", "."))));
+    return ` \u0001${sec}\u0001 `;
+  }).replace(/\[[^\]\u0001]*\]/g, " ").replace(SPEAKER, "")
+    .replace(/[\p{Extended_Pictographic}\u{1F1E6}-\u{1F1FF}\u{1F3FB}-\u{1F3FF}\u200d\ufe0f]/gu, "").replace(/[ \t]{2,}/g, " ").trim();
+}
 function buildScript(text, pron, paragraphPause, lang, maxChars) {
   const requests = [];
   for (const block of cleanMarkdown(text).split(/\n\s*\n/)) {
     const merged = [];
-    for (const ln of block.split("\n").filter((l) => l.trim())) {
+    for (const ln of block.split("\n").map(markup).filter((l) => l.trim())) {
       const first = ln.charAt(0), wrapped = first && first === first.toLowerCase() && first !== first.toUpperCase();
       if (merged.length && !END.test(merged[merged.length - 1]) && wrapped) merged[merged.length - 1] += " " + ln;
       else merged.push(ln);
     }
     const sentences = [];
-    for (const ln of merged) for (const shown of splitSentences(ln, lang)) {
-      let spoken = normalize(applyPronunciations(shown, pron), lang);
-      if (!/[\p{L}\p{N}]/u.test(spoken)) continue;
-      if (!END.test(spoken)) spoken += ".";
-      // A run-on "sentence" without punctuation is cut at commas or spaces
-      for (const piece of chunk(spoken, maxChars)) sentences.push({ shown: piece === spoken ? shown : piece, spoken: piece });
+    for (const ln of merged) for (const piece of ln.split(PAUSE_TOKEN).map((p, k) => (k % 2 ? +p : p))) {
+      if (typeof piece === "number") { sentences.push({ pause: piece }); continue; }
+      for (const shown of splitSentences(piece.trim(), lang)) {
+        let spoken = normalize(applyPronunciations(shown, pron), lang);
+        if (!/[\p{L}\p{N}]/u.test(spoken)) continue;
+        if (!END.test(spoken)) spoken += ".";
+        // A run-on "sentence" without punctuation is cut at commas or spaces
+        for (const part of chunk(spoken, maxChars)) sentences.push({ shown: part === spoken ? shown : part, spoken: part });
+      }
     }
     let cur = null;
     for (const sen of sentences) {
+      if (sen.pause) { // a marked pause ends the request; with nothing voiced yet it becomes a silent item
+        if (cur) { cur.gap = sen.pause; cur.marked = true; requests.push(cur); cur = null; }
+        else if (requests.length) { requests[requests.length - 1].gap += sen.pause; requests[requests.length - 1].marked = true; }
+        else requests.push({ spoken: "", sentences: [], gap: sen.pause, marked: true, pause: true });
+        continue;
+      }
       if (cur && cur.spoken.length + 1 + sen.spoken.length <= maxChars) { cur.spoken += " " + sen.spoken; cur.sentences.push(sen); }
       else { if (cur) requests.push(cur); cur = { spoken: sen.spoken, sentences: [sen], gap: CHUNK_GAP }; }
     }
     if (cur) { cur.gap = paragraphPause; requests.push(cur); }
   }
-  if (requests.length) requests[requests.length - 1].gap = 0;
+  const last = requests[requests.length - 1];
+  if (last && !last.marked) last.gap = 0;
   return requests;
 }
 function chunk(s, max) {
@@ -837,6 +894,28 @@ function trimSilence(audio, thresholdDb = -45) {
   if (first >= n) return audio;
   return audio.subarray(Math.max(0, first - 2) * frame, Math.min(n, last + 3) * frame);
 }
+// Every take to the same speech loudness (about -16 LUFS, near YouTube's -14 target) with a soft limit on peaks:
+// chunks, voices and languages then match, and the file needs no volume fixing in the editor
+function level(audio) {
+  const frame = SR / 50, n = Math.floor(audio.length / frame);
+  if (n < 3) return audio;
+  const energy = new Float32Array(n);
+  let loudest = 0;
+  for (let i = 0; i < n; i++) {
+    let sum = 0;
+    for (let j = i * frame; j < (i + 1) * frame; j++) sum += audio[j] * audio[j];
+    energy[i] = sum / frame; if (energy[i] > loudest) loudest = energy[i];
+  }
+  let sum = 0, count = 0;
+  for (const e of energy) if (e > loudest / 100) { sum += e; count++; } // frames within 20 dB of the loudest are speech
+  const gain = Math.min(4, Math.max(0.25, 10 ** (-18 / 20) / Math.sqrt(sum / count || 1e-9)));
+  const out = new Float32Array(audio.length), knee = 0.85;
+  for (let i = 0; i < audio.length; i++) {
+    const x = audio[i] * gain, a = Math.abs(x);
+    out[i] = a <= knee ? x : Math.sign(x) * (knee + (1 - knee) * Math.tanh((a - knee) / (1 - knee)));
+  }
+  return out;
+}
 function toInt16(f) {
   const out = new Int16Array(f.length);
   for (let i = 0; i < f.length; i++) out[i] = Math.max(-1, Math.min(1, f[i])) * 32767;
@@ -870,8 +949,8 @@ function wrapTwoLines(text, width = 42) {
   for (let i = 0; i < text.length; i++) if (text[i] === " " && (cut < 0 || Math.abs(i - mid) < Math.abs(cut - mid))) cut = i;
   return text.slice(0, cut) + "\n" + text.slice(cut + 1);
 }
-function srtCues(sentence, start, end) {
-  const words = sentence.split(/\s+/), n = Math.max(1, Math.ceil(sentence.length / 84));
+function srtCues(sentence, start, end, short = false) {
+  const words = sentence.split(/\s+/), n = Math.max(1, Math.ceil(sentence.length / (short ? 24 : 84)));
   const ends = [];
   let pos = 0;
   for (const w of words) { pos += w.length + 1; ends.push(pos); }
@@ -889,7 +968,7 @@ function srtCues(sentence, start, end) {
   parts.push(words.slice(first).join(" "));
   const total = parts.reduce((s, p) => s + p.length, 0) || 1;
   let t = start;
-  return parts.filter(Boolean).map((p) => { const dt = ((end - start) * p.length) / total; const c = [t, t + dt, wrapTwoLines(p)]; t += dt; return c; });
+  return parts.filter(Boolean).map((p) => { const dt = ((end - start) * p.length) / total; const c = [t, t + dt, short ? p : wrapTwoLines(p)]; t += dt; return c; });
 }
 
 // DeepInfra may answer with audio bytes or with JSON carrying base64 audio; both are decoded to 24 kHz samples
@@ -946,7 +1025,7 @@ async function speak(text, voice, lang, speed, format, signal) {
       throw new Error("Немає з'єднання з сервером. Перевірте інтернет і натисніть «Продовжити озвучку».");
     }
     if (res.ok) {
-      try { return toInt16(trimSilence(await samplesFrom(res))); }
+      try { const audio = trimSilence(await samplesFrom(res)); return toInt16(store.get("level", true) ? level(audio) : audio); }
       catch (e) { if (signal.aborted) throw e; if (attempt < 2) continue; throw e; }
     }
     const data = await res.json().catch(() => ({}));
@@ -995,7 +1074,7 @@ function listVoices(keep) {
   const sel = $("voice"), lang = $("lang").value, accent = $("accent").value;
   sel.replaceChildren(...VOICES.filter((v) => v[2] === lang && v[3] === accent).map(([id, name]) => new Option(name, id)));
   sel.value = VOICES.some((v) => v[0] === keep && v[2] === lang && v[3] === accent) ? keep : sel.options[0].value;
-  syncChips();
+  syncChips(); voiceSpeed();
 }
 function switchLang(lang) {
   $("lang").value = lang;
@@ -1003,6 +1082,10 @@ function switchLang(lang) {
   listAccents(last[3]);
   listVoices(last[0]);
   updateLabels(); updateStats();
+}
+function voiceSpeed() { // each voice keeps its own speed (Josef is calmer than Alain)
+  $("speed").value = store.get("speed_" + $("voice").value, store.get("speed", 1));
+  $("speedVal").textContent = (+$("speed").value).toFixed(2) + "×";
 }
 function syncChips() {
   for (const sel of document.querySelectorAll(".chip select")) sel.previousElementSibling.textContent = sel.selectedOptions[0]?.text || "";
@@ -1022,17 +1105,23 @@ function guessLang(text) {
 function updateLabels() {
   $("speedVal").textContent = (+$("speed").value).toFixed(2) + "×";
   $("ppVal").textContent = (+$("pp").value).toFixed(1) + " с";
-  for (const id of ["voice", "speed", "pp"]) store.set(id, $(id).value);
+  for (const id of ["voice", "pp"]) store.set(id, $(id).value);
+  store.set("speed_" + $("voice").value, $("speed").value);
   store.set("voice_" + $("lang").value, $("voice").value);
   store.set("mp3", $("mp3").checked);
+  store.set("level", $("level").checked);
 }
+const costOf = (text) => {
+  const engine = (voiceOf($("voice").value) || VOICES[0])[4];
+  return (text.length * PRICE_PER_M[engine] * (engine === "kokoro" ? priceFactor : 1)) / 1e6;
+};
+const usd = (cost) => "$" + (cost < 0.01 ? cost.toFixed(4) : cost.toFixed(2));
 function updateStats() {
   const text = $("text").value, words = (text.match(/[\p{L}\d'’]+/gu) || []).length;
-  const lang = $("lang").value, engine = (voiceOf($("voice").value) || VOICES[0])[4];
+  const lang = $("lang").value, cost = costOf(text);
   const min = text.length / CHARS_PER_SEC[lang] / 60 / +$("speed").value, m = Math.floor(min), s = Math.round((min - m) * 60);
-  const cost = (text.length * PRICE_PER_M[engine] * (engine === "kokoro" ? priceFactor : 1)) / 1e6;
   const h = Math.floor(m / 60), dur = h ? `${h} год ${m % 60} хв` : m ? `${m} хв ${s} с` : `${s} с`;
-  $("stats").textContent = words ? `${words} слів · ≈ ${dur} · $${cost < 0.01 ? cost.toFixed(4) : cost.toFixed(2)}` : "";
+  $("stats").textContent = words ? `${words} слів · ≈ ${dur} · ${usd(cost)}` : "";
   store.set("text", text);
 }
 function pronMap() {
@@ -1056,14 +1145,19 @@ const lastDb = new Promise((resolve) => {
 });
 async function saveLast(item) {
   const db = await lastDb; if (!db) return;
-  await new Promise((res) => { try { const tx = db.transaction("last", "readwrite"); tx.objectStore("last").put(item, "result"); tx.oncomplete = tx.onerror = tx.onabort = res; } catch { res(); } });
+  const { name, seconds, duration, mp3, job: st } = item;
+  const record = st ? { name, seconds, duration, mp3, job: st } : item;
+  await new Promise((res) => { try { const tx = db.transaction("last", "readwrite"); tx.objectStore("last").put(record, "result"); tx.oncomplete = tx.onerror = tx.onabort = res; } catch { res(); } });
 }
 async function loadLast() {
   const db = await lastDb; if (!db) return null;
-  return new Promise((res) => { try { const r = db.transaction("last").objectStore("last").get("result"); r.onsuccess = () => res(r.result || null); r.onerror = () => res(null); } catch { res(null); } });
+  const record = await new Promise((res) => { try { const r = db.transaction("last").objectStore("last").get("result"); r.onsuccess = () => res(r.result || null); r.onerror = () => res(null); } catch { res(null); } });
+  if (!record || !record.job) return record; // saved before fragments were kept: WAV and SRT as they were
+  const out = assemble(record.job);
+  return { ...record, ...out, srt: makeSrt(out.timeline) };
 }
 
-let job = null, pending = null, wakeLock = null, urls = [], priceFactor = 1.5;
+let job = null, pending = null, wakeLock = null, urls = [], priceFactor = 1.5, confirmed = "";
 async function keepAwake(on) {
   try { if (on) wakeLock = await navigator.wakeLock?.request("screen"); else { await wakeLock?.release(); wakeLock = null; } } catch {}
 }
@@ -1087,9 +1181,16 @@ function generate() {
   }
   const engine = voiceOf($("voice").value)[4];
   const items = buildScript(text, pronMap(), +$("pp").value, lang, CHUNK_CHARS[engine]);
-  if (!items.length) { $("err").textContent = "Немає тексту для озвучки."; return; }
-  pending = { text, items, parts: new Array(items.length), voice: $("voice").value, lang, speed: +$("speed").value,
-    format: $("mp3").checked ? "mp3" : "wav", seconds: 0 };
+  if (!items.some((it) => !it.pause)) { $("err").textContent = "Немає тексту для озвучки."; return; }
+  // A voiceover of a dollar or more is started by a second tap, so a long script is never paid for by accident
+  const cost = costOf(text), key = text.length + $("voice").value + text.slice(0, 100);
+  if (cost >= 1 && confirmed !== key) {
+    confirmed = key;
+    $("err").textContent = `Ця озвучка коштуватиме ≈ ${usd(cost)} з балансу DeepInfra. Натисніть ▶ ще раз, щоб почати.`;
+    return;
+  }
+  pending = { text, items, parts: items.map((it) => (it.pause ? { blob: new Blob([]), samples: 0 } : null)), voice: $("voice").value, lang,
+    speed: +$("speed").value, format: $("mp3").checked ? "mp3" : "wav", seconds: 0 };
   run();
 }
 
@@ -1125,7 +1226,8 @@ async function run() {
     const out = assemble(st);
     pending = null;
     const base = `voice_${stamp()}_${slug(st.text)}`;
-    const item = { ...out, name: base, seconds: st.seconds, saved: true };
+    const item = { ...out, srt: makeSrt(out.timeline), name: base, seconds: st.seconds, saved: true, job: st };
+    fixed = new Set();
     showResult(item);
     saveLast(item);
   } catch (e) {
@@ -1142,21 +1244,23 @@ async function run() {
 
 // Join in order with exact paragraph pauses; subtitles share each request's time between its sentences
 function assemble(st) {
-  const blobs = [silence(LEAD_IN)], cues = [];
+  const blobs = [silence(LEAD_IN)], timeline = [], starts = [];
   let offset = LEAD_IN, samples = Math.round(LEAD_IN * SR);
   st.items.forEach((it, i) => {
+    starts.push(offset);
     const dur = st.parts[i].samples / SR, chars = it.sentences.reduce((n, s) => n + s.spoken.length, 0) || 1;
     let t = offset;
-    for (const sen of it.sentences) { const d = (dur * sen.spoken.length) / chars; cues.push(...srtCues(sen.shown, t, t + d)); t += d; }
-    blobs.push(st.parts[i].blob); samples += st.parts[i].samples; offset += dur;
+    for (const sen of it.sentences) { const d = (dur * sen.spoken.length) / chars; timeline.push([sen.shown, t, t + d]); t += d; }
+    if (st.parts[i].samples) { blobs.push(st.parts[i].blob); samples += st.parts[i].samples; offset += dur; }
     if (it.gap) { blobs.push(silence(it.gap)); samples += Math.round(it.gap * SR); offset += it.gap; }
   });
   blobs.push(silence(TAIL)); samples += Math.round(TAIL * SR);
-  return {
-    wav: new Blob([wavHeader(samples * 2), ...blobs], { type: "audio/wav" }),
-    srt: new Blob([cues.map(([a, b, line], i) => `${i + 1}\n${srtTime(a)} --> ${srtTime(b)}\n${line}\n`).join("\n")], { type: "text/plain" }),
-    duration: samples / SR,
-  };
+  return { wav: new Blob([wavHeader(samples * 2), ...blobs], { type: "audio/wav" }), timeline, starts, duration: samples / SR };
+}
+function makeSrt(timeline) {
+  const short = store.get("subs", "normal") === "short";
+  const cues = timeline.flatMap(([text, a, b]) => srtCues(text, a, b, short));
+  return new Blob([cues.map(([a, b, line], i) => `${i + 1}\n${srtTime(a)} --> ${srtTime(b)}\n${line}\n`).join("\n")], { type: "text/plain" });
 }
 
 // The download is an MP3 by default (128 kbps, about a third of the WAV), made in a background worker;
@@ -1198,21 +1302,96 @@ async function prepareDownload(item) {
     if (token === shownToken) offerFile(item.wav, item.name + ".wav"); // the voiceover is never lost over the MP3 step
   }
 }
-function showResult(item, restored = false) {
-  const { wav, srt, duration, seconds, name } = item;
+// how: "new" right after voicing, "restored" from the device after a reload, "updated" after a fragment was fixed
+function showResult(item, how = "new") {
+  const { wav, srt, duration, seconds, name } = item, restored = how === "restored";
   urls.forEach((u) => URL.revokeObjectURL(u));
   const wavUrl = URL.createObjectURL(wav), srtUrl = URL.createObjectURL(srt);
   urls = [wavUrl, srtUrl];
   $("player").src = wavUrl;
   $("dlSrt").href = srtUrl; $("dlSrt").download = name + ".srt";
-  $("resultText").textContent = restored
-    ? `Остання озвучка (${fmtTime(duration)}), збережена на цьому пристрої`
-    : `Готово: ${fmtTime(duration)} аудіо за ${fmtTime(seconds)}`;
+  $("resultText").textContent = restored ? `Остання озвучка (${fmtTime(duration)}), збережена на цьому пристрої`
+    : how === "updated" ? `Фрагмент оновлено: ${fmtTime(duration)} аудіо` : `Готово: ${fmtTime(duration)} аудіо за ${fmtTime(seconds)}`;
   $("result").hidden = false;
   shown = item;
+  $("fragsToggle").hidden = !item.job;
+  if (!item.job) $("frags").hidden = true; else if (!$("frags").hidden) renderFrags();
   prepareDownload(item);
-  if (!restored) $("result").scrollIntoView({ behavior: "smooth", block: "nearest" });
+  if (how === "new") $("result").scrollIntoView({ behavior: "smooth", block: "nearest" });
 }
+
+// Fixing one fragment: listen to any request, edit its text or keep it, and voice only that request again.
+// The rest of the audio stays as it is, so a slip in a long video costs cents, not the whole voiceover.
+let fixed = new Set(), stopAt = 0;
+const esc = (t) => t.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+function renderFrags() {
+  const item = shown;
+  if (!item || !item.job) return;
+  $("frags").innerHTML = '<div class="frags-hint">Послухайте шматок. Якщо щось не так, натисніть «Змінити»: можна виправити текст або просто озвучити його ще раз. Решта аудіо не зміниться.</div>'
+    + item.job.items.map((it, i) => (it.pause ? "" : `<div class="frag" data-i="${i}">
+      <button type="button" class="at" data-play="${i}" aria-label="Слухати з ${clock(item.starts[i])}">${clock(item.starts[i])}</button>
+      <p>${fixed.has(i) ? '<span class="tag">Оновлено · </span>' : ""}${esc(it.sentences.map((x) => x.shown).join(" "))}</p>
+      <button type="button" data-edit="${i}">Змінити</button></div>`)).join("");
+}
+function playFrom(i) {
+  const item = shown;
+  if (!item || !item.starts) return;
+  const go = () => { player.currentTime = item.starts[i]; stopAt = item.starts[i + 1] ?? item.duration; player.play().catch(() => {}); };
+  if (player.readyState < 1) player.addEventListener("loadedmetadata", go, { once: true }); else go();
+  for (const el of document.querySelectorAll(".frag.now")) el.classList.remove("now");
+  document.querySelector(`.frag[data-i="${i}"]`)?.classList.add("now");
+}
+async function revoice(i, text, row) {
+  const item = shown, st = item && item.job, msg = row.querySelector(".msg"), btn = row.querySelector("[data-redo]");
+  if (job || !st) return;
+  const fresh = buildScript(text, pronMap(), 0, st.lang, CHUNK_CHARS[voiceOf(st.voice)[4]]).filter((it) => !it.pause);
+  if (!fresh.length) { msg.textContent = "Немає тексту для озвучки."; return; }
+  const ctrl = job = new AbortController();
+  setBusy(true); keepAwake(true); msg.textContent = ""; btn.disabled = true; btn.textContent = "Озвучую…";
+  try {
+    const blobs = [];
+    let samples = 0;
+    for (const [k, it] of fresh.entries()) {
+      const pcm = await speakChecked(it.spoken, st.voice, st.lang, st.speed, st.format, ctrl.signal);
+      if (k) { blobs.push(silence(CHUNK_GAP)); samples += Math.round(CHUNK_GAP * SR); }
+      blobs.push(new Blob([pcm])); samples += pcm.length;
+    }
+    st.items[i] = { ...st.items[i], spoken: fresh.map((it) => it.spoken).join(" "), sentences: fresh.flatMap((it) => it.sentences) };
+    st.parts[i] = { blob: new Blob(blobs), samples };
+    fixed.add(i);
+    const out = assemble(st), next = { ...out, srt: makeSrt(out.timeline), name: item.name, seconds: item.seconds, saved: true, job: st };
+    job = null;
+    showResult(next, "updated");
+    saveLast(next);
+    playFrom(i);
+  } catch (e) {
+    if (e instanceof AuthError) await route(); else msg.textContent = e.name === "AbortError" ? "Зупинено." : e.message;
+    btn.disabled = false; btn.textContent = "Озвучити";
+  } finally {
+    job = null; setBusy(false); keepAwake(false);
+  }
+}
+$("fragsToggle").onclick = () => {
+  const open = $("frags").hidden;
+  $("frags").hidden = !open;
+  $("fragsToggle").textContent = open ? "Сховати фрагменти" : "Виправити фрагмент";
+  if (open) renderFrags();
+};
+$("frags").onclick = (e) => {
+  const b = e.target.closest("button");
+  if (!b) return;
+  const row = b.closest(".frag"), i = +row?.dataset.i;
+  if (b.dataset.play !== undefined) return playFrom(i);
+  if (b.dataset.edit !== undefined && !job) {
+    const text = shown.job.items[i].sentences.map((x) => x.shown).join(" ");
+    row.innerHTML = `<div class="frag-edit"><textarea aria-label="Текст фрагмента">${esc(text)}</textarea>
+      <div class="row"><button type="button" class="white" data-redo>Озвучити</button><button type="button" data-cancel>Скасувати</button></div>
+      <div class="msg err"></div></div>`;
+    return row.querySelector("textarea").focus();
+  }
+  if (b.dataset.redo !== undefined) return revoice(i, row.querySelector("textarea").value, row);
+  if (b.dataset.cancel !== undefined && !job) renderFrags();
+};
 
 async function preview() {
   if (job) return;
@@ -1220,8 +1399,11 @@ async function preview() {
   const btn = $("preview");
   btn.disabled = true;
   try {
-    const lang = $("lang").value;
-    const pcm = await speak(PREVIEW[lang], $("voice").value, lang, +$("speed").value, "wav", new AbortController().signal);
+    const lang = $("lang").value, voice = $("voice").value;
+    const text = $("text").value, guess = guessLang(text); // a text in another language gets the sample phrase instead
+    const own = guess && guess !== lang ? null : buildScript(text, pronMap(), 0, lang, 200).find((it) => !it.pause);
+    const say = own ? own.spoken : PREVIEW[lang];
+    const pcm = await speakChecked(say, voice, lang, +$("speed").value, "wav", new AbortController().signal);
     const url = URL.createObjectURL(new Blob([wavHeader(pcm.length * 2), pcm], { type: "audio/wav" }));
     await new Audio(url).play();
   } catch (e) {
@@ -1298,8 +1480,10 @@ function syncPlayer() {
   }
 }
 for (const ev of ["timeupdate", "loadedmetadata", "durationchange", "play", "pause", "ended", "emptied"]) player.addEventListener(ev, syncPlayer);
-$("playBtn").onclick = () => { if (player.paused) player.play().catch(() => {}); else player.pause(); };
+player.addEventListener("timeupdate", () => { if (stopAt && player.currentTime >= stopAt) { stopAt = 0; player.pause(); } });
+$("playBtn").onclick = () => { stopAt = 0; if (player.paused) player.play().catch(() => {}); else player.pause(); };
 $("seek").addEventListener("input", () => {
+  stopAt = 0;
   if (Number.isFinite(player.duration)) player.currentTime = ($("seek").value / 1000) * player.duration;
 });
 
@@ -1310,16 +1494,28 @@ function applyFormat(format) {
 }
 for (const b of document.querySelectorAll("[data-format-set]")) b.onclick = () => { applyFormat(b.dataset.formatSet); if (shown) prepareDownload(shown); };
 applyFormat(store.get("fileFormat", "mp3") === "wav" ? "wav" : "mp3");
+function applySubs(style) {
+  for (const b of document.querySelectorAll("[data-subs-set]")) b.setAttribute("aria-checked", String(b.dataset.subsSet === style));
+  store.set("subs", style);
+  if (shown && shown.timeline) {
+    shown.srt = makeSrt(shown.timeline);
+    const url = URL.createObjectURL(shown.srt);
+    urls.push(url); $("dlSrt").href = url;
+  }
+}
+for (const b of document.querySelectorAll("[data-subs-set]")) b.onclick = () => applySubs(b.dataset.subsSet);
+applySubs(store.get("subs", "normal") === "short" ? "short" : "normal");
 $("recheck").onclick = route;
 
+for (const id of ["pp"]) $(id).value = store.get(id, $(id).value);
 fillVoices();
-for (const id of ["speed", "pp"]) $(id).value = store.get(id, $(id).value);
 $("mp3").checked = store.get("mp3", false);
+$("level").checked = store.get("level", true);
 $("text").value = store.get("text", "");
 $("pron").value = store.get("pron", $("pron").value);
 updateLabels(); updateStats();
-for (const id of ["voice", "speed", "pp", "mp3"]) $(id).addEventListener("input", updateLabels);
-$("voice").addEventListener("change", () => { syncChips(); updateLabels(); updateStats(); });
+for (const id of ["voice", "speed", "pp", "mp3", "level"]) $(id).addEventListener("input", updateLabels);
+$("voice").addEventListener("change", () => { syncChips(); voiceSpeed(); updateLabels(); updateStats(); });
 $("accent").addEventListener("change", () => { listVoices(); updateLabels(); updateStats(); });
 $("lang").addEventListener("change", () => switchLang($("lang").value));
 // A pasted script in another language switches the chips to it
@@ -1339,7 +1535,7 @@ $("check").onclick = check;
 $("cancel").onclick = () => job?.abort();
 $("text").addEventListener("keydown", (e) => { if ((e.ctrlKey || e.metaKey) && e.key === "Enter") generate(); });
 route();
-loadLast().then((item) => { if (item && $("result").hidden && !job) showResult({ ...item, saved: true }, true); });
+loadLast().then((item) => { if (item && $("result").hidden && !job) showResult({ ...item, saved: true }, "restored"); });
 </script>
 </body>
 </html>
