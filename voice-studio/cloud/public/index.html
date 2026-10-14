@@ -78,6 +78,7 @@
   .time { font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
   input[type=range] { width: 100%; accent-color: var(--ink); margin: 0; cursor: pointer; }
   .files { display: grid; gap: 8px; }
+  .btn[aria-disabled="true"] { pointer-events: none; opacity: .5; font-variant-numeric: tabular-nums; }
 
   .dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 10; background: var(--dock);
     -webkit-backdrop-filter: saturate(1.4) blur(18px); backdrop-filter: saturate(1.4) blur(18px); border-top: 1px solid var(--line);
@@ -249,6 +250,15 @@
         <button type="button" role="radio" data-theme-set="light">Світла</button>
         <button type="button" role="radio" data-theme-set="dark">Темна</button>
       </div>
+    </div>
+
+    <div class="set">
+      <div class="set-head"><span>Формат файлу</span></div>
+      <div class="seg" role="radiogroup" aria-label="Формат файлу">
+        <button type="button" role="radio" data-format-set="mp3">MP3</button>
+        <button type="button" role="radio" data-format-set="wav">WAV</button>
+      </div>
+      <div class="hint">MP3 утричі легший, для голосу якість на слух та сама. WAV — без стиснення.</div>
     </div>
 
     <div class="set">
@@ -814,8 +824,9 @@ async function run() {
     const out = assemble(st);
     pending = null;
     const base = `voice_${stamp()}_${slug(st.text)}`;
-    showResult({ ...out, name: base, seconds: st.seconds });
-    saveLast({ ...out, name: base, seconds: st.seconds });
+    const item = { ...out, name: base, seconds: st.seconds, saved: true };
+    showResult(item);
+    saveLast(item);
   } catch (e) {
     st.seconds += (performance.now() - started) / 1000;
     ctrl.abort();
@@ -847,20 +858,58 @@ function assemble(st) {
   };
 }
 
-function showResult({ wav, srt, duration, seconds, name }, restored = false) {
+// The download is an MP3 by default (128 kbps, about a third of the WAV), made in a background worker;
+// the player uses the WAV, which is ready at once. WAV stays one tap away in the settings.
+const MP3_KBPS = 128;
+let shown = null, shownToken = 0;
+function toMp3(wav, onProgress) {
+  return new Promise((resolve, reject) => {
+    const w = new Worker("/mp3-worker.js");
+    w.onmessage = ({ data }) => {
+      if (data.progress !== undefined) return onProgress(data.progress);
+      w.terminate();
+      data.mp3 ? resolve(data.mp3) : reject(new Error(data.error));
+    };
+    w.onerror = (e) => { w.terminate(); reject(new Error(e.message || "MP3")); };
+    w.postMessage({ wav, kbps: MP3_KBPS });
+  });
+}
+function offerFile(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  urls.push(url);
+  const a = $("dlWav");
+  a.href = url; a.download = filename; a.textContent = "Скачати аудіо"; a.removeAttribute("aria-disabled");
+  const file = new File([blob], filename, { type: blob.type });
+  $("share").hidden = !(navigator.canShare && navigator.canShare({ files: [file] }));
+  $("share").onclick = () => navigator.share({ files: [file], title: filename }).catch(() => {});
+}
+async function prepareDownload(item) {
+  const token = ++shownToken, a = $("dlWav");
+  if (store.get("fileFormat", "mp3") === "wav") return offerFile(item.wav, item.name + ".wav");
+  if (item.mp3) return offerFile(item.mp3, item.name + ".mp3");
+  a.removeAttribute("href"); a.setAttribute("aria-disabled", "true"); a.textContent = "Готую MP3…"; $("share").hidden = true;
+  try {
+    const mp3 = await toMp3(item.wav, (p) => { if (token === shownToken) a.textContent = `Готую MP3… ${Math.round(p * 100)}%`; });
+    item.mp3 = mp3;
+    if (item.saved && shown === item) saveLast(item); // never overwrite a newer voiceover
+    if (token === shownToken) offerFile(mp3, item.name + ".mp3");
+  } catch {
+    if (token === shownToken) offerFile(item.wav, item.name + ".wav"); // the voiceover is never lost over the MP3 step
+  }
+}
+function showResult(item, restored = false) {
+  const { wav, srt, duration, seconds, name } = item;
   urls.forEach((u) => URL.revokeObjectURL(u));
   const wavUrl = URL.createObjectURL(wav), srtUrl = URL.createObjectURL(srt);
   urls = [wavUrl, srtUrl];
   $("player").src = wavUrl;
-  $("dlWav").href = wavUrl; $("dlWav").download = name + ".wav";
   $("dlSrt").href = srtUrl; $("dlSrt").download = name + ".srt";
-  const file = new File([wav], name + ".wav", { type: "audio/wav" });
-  $("share").hidden = !(navigator.canShare && navigator.canShare({ files: [file] }));
-  $("share").onclick = () => navigator.share({ files: [file], title: name }).catch(() => {});
   $("resultText").textContent = restored
     ? `Остання озвучка (${fmtTime(duration)}), збережена на цьому пристрої`
     : `Готово: ${fmtTime(duration)} аудіо за ${fmtTime(seconds)}`;
   $("result").hidden = false;
+  shown = item;
+  prepareDownload(item);
   if (!restored && matchMedia("(max-width: 999px)").matches) $("result").scrollIntoView({ behavior: "smooth", block: "end" });
 }
 
@@ -951,6 +1000,14 @@ function applyTheme(theme) {
   store.set("theme", theme);
 }
 for (const b of document.querySelectorAll("[data-theme-set]")) b.onclick = () => applyTheme(b.dataset.themeSet);
+
+// File format for «Скачати аудіо»
+function applyFormat(format) {
+  for (const b of document.querySelectorAll("[data-format-set]")) b.setAttribute("aria-checked", String(b.dataset.formatSet === format));
+  store.set("fileFormat", format);
+}
+for (const b of document.querySelectorAll("[data-format-set]")) b.onclick = () => { applyFormat(b.dataset.formatSet); if (shown) prepareDownload(shown); };
+applyFormat(store.get("fileFormat", "mp3") === "wav" ? "wav" : "mp3");
 applyTheme(store.get("theme", "light") === "dark" ? "dark" : "light");
 $("recheck").onclick = route;
 
@@ -973,7 +1030,7 @@ $("check").onclick = check;
 $("cancel").onclick = () => job?.abort();
 $("text").addEventListener("keydown", (e) => { if ((e.ctrlKey || e.metaKey) && e.key === "Enter") generate(); });
 route();
-loadLast().then((item) => { if (item && $("result").hidden && !job) showResult(item, true); });
+loadLast().then((item) => { if (item && $("result").hidden && !job) showResult({ ...item, saved: true }, true); });
 </script>
 </body>
 </html>
