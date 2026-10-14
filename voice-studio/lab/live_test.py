@@ -10,7 +10,8 @@ from playwright.async_api import async_playwright
 SITE = "https://voice-studio-app.svistsvat1.workers.dev/"
 texts = json.load(open("texts.json"))
 CASES = [("en", "am_michael", "hard_en"), ("de", "de_josef", "hard_de"), ("es", "es_rafael", "hard_es"),
-         ("fr", "fr_lucian", "hard_fr"), ("es", "es_diego", "short2_es"), ("fr", "fr_alain", "short2_fr")]
+         ("fr", "fr_lucian", "hard_fr"), ("es", "es_diego", "short2_es"), ("fr", "fr_alain", "short2_fr"),
+         ("de", "de_josef", "long_de"), ("fr", "fr_lucian", "long_fr")]
 
 
 async def main():
@@ -45,9 +46,9 @@ async def main():
             await page.wait_for_function("document.getElementById('dlWav').textContent === 'Скачати аудіо'", timeout=300000)
             async with page.expect_download() as d:
                 await page.click("#dlWav")
-            path = f"out/audio/live-{lang}-{voice}.mp3"
+            path = f"out/audio/live-{lang}-{voice}-{key}.mp3"
             await (await d.value).save_as(path)
-            rec = {"id": f"live-{lang}-{voice}", "lang": lang, "model": "site", "chars": len(spoken), "text": spoken, "ok": True,
+            rec = {"id": f"live-{lang}-{voice}-{key}", "lang": lang, "model": "site", "chars": len(spoken), "text": spoken, "ok": True,
                    "file": path, "seconds": round(time.time() - t, 2), "takes": list(takes), "result": await page.text_content("#resultText")}
             print("LIVE:", json.dumps({k: rec[k] for k in ("id", "seconds", "takes", "result")}, ensure_ascii=False), "| spoken:", spoken, flush=True)
             results.append(rec)
