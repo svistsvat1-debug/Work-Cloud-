@@ -1,0 +1,615 @@
+[
+ {
+  "id": "en-inworld-max-Dennis@long",
+  "lang": "en",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Dennis",
+   "output_format": "wav"
+  },
+  "text_key": "long_en"
+ },
+ {
+  "id": "en-inworld-max-Dennis@short2",
+  "lang": "en",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Dennis",
+   "output_format": "wav"
+  },
+  "text_key": "short2_en"
+ },
+ {
+  "id": "en-inworld-max-Brandon@long",
+  "lang": "en",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Brandon",
+   "output_format": "wav"
+  },
+  "text_key": "long_en"
+ },
+ {
+  "id": "en-inworld-max-Brandon@short2",
+  "lang": "en",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Brandon",
+   "output_format": "wav"
+  },
+  "text_key": "short2_en"
+ },
+ {
+  "id": "en-inworld-max-Theodore@long",
+  "lang": "en",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Theodore",
+   "output_format": "wav"
+  },
+  "text_key": "long_en"
+ },
+ {
+  "id": "en-inworld-max-Theodore@short2",
+  "lang": "en",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Theodore",
+   "output_format": "wav"
+  },
+  "text_key": "short2_en"
+ },
+ {
+  "id": "en-kokoro-am_michael@long",
+  "lang": "en",
+  "model": "hexgrad/Kokoro-82M",
+  "params": {
+   "text": "{text}",
+   "preset_voice": [
+    "am_michael"
+   ],
+   "output_format": "wav"
+  },
+  "text_key": "long_en"
+ },
+ {
+  "id": "en-kokoro-am_michael@short2",
+  "lang": "en",
+  "model": "hexgrad/Kokoro-82M",
+  "params": {
+   "text": "{text}",
+   "preset_voice": [
+    "am_michael"
+   ],
+   "output_format": "wav"
+  },
+  "text_key": "short2_en"
+ },
+ {
+  "id": "en-qwen3-Aiden@long",
+  "lang": "en",
+  "model": "Qwen/Qwen3-TTS",
+  "params": {
+   "input": "{text}",
+   "voice": "Aiden",
+   "language": "English",
+   "response_format": "wav"
+  },
+  "text_key": "long_en"
+ },
+ {
+  "id": "en-qwen3-Aiden@short2",
+  "lang": "en",
+  "model": "Qwen/Qwen3-TTS",
+  "params": {
+   "input": "{text}",
+   "voice": "Aiden",
+   "language": "English",
+   "response_format": "wav"
+  },
+  "text_key": "short2_en"
+ },
+ {
+  "id": "en-chatterbox-ml@long",
+  "lang": "en",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "en",
+   "response_format": "wav"
+  },
+  "text_key": "long_en"
+ },
+ {
+  "id": "en-chatterbox-ml@short2",
+  "lang": "en",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "en",
+   "response_format": "wav"
+  },
+  "text_key": "short2_en"
+ },
+ {
+  "id": "de-inworld-max-Josef@long",
+  "lang": "de",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Josef",
+   "output_format": "wav"
+  },
+  "text_key": "long_de"
+ },
+ {
+  "id": "de-inworld-max-Josef@short2",
+  "lang": "de",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Josef",
+   "output_format": "wav"
+  },
+  "text_key": "short2_de"
+ },
+ {
+  "id": "de-inworld-mini-Josef@long",
+  "lang": "de",
+  "model": "inworld-ai/inworld-tts-1.5-mini",
+  "params": {
+   "text": "{text}",
+   "voice": "Josef",
+   "output_format": "wav"
+  },
+  "text_key": "long_de"
+ },
+ {
+  "id": "de-inworld-mini-Josef@short2",
+  "lang": "de",
+  "model": "inworld-ai/inworld-tts-1.5-mini",
+  "params": {
+   "text": "{text}",
+   "voice": "Josef",
+   "output_format": "wav"
+  },
+  "text_key": "short2_de"
+ },
+ {
+  "id": "de-inworld-mini-Josef",
+  "lang": "de",
+  "model": "inworld-ai/inworld-tts-1.5-mini",
+  "params": {
+   "text": "{text}",
+   "voice": "Josef",
+   "output_format": "wav"
+  },
+  "text_key": "de"
+ },
+ {
+  "id": "de-inworld-tts2-Josef@long",
+  "lang": "de",
+  "model": "inworld-ai/realtime-tts-2",
+  "params": {
+   "text": "{text}",
+   "voice": "Josef",
+   "language": "DE_DE",
+   "output_format": "wav"
+  },
+  "text_key": "long_de"
+ },
+ {
+  "id": "de-inworld-tts2-Josef@short2",
+  "lang": "de",
+  "model": "inworld-ai/realtime-tts-2",
+  "params": {
+   "text": "{text}",
+   "voice": "Josef",
+   "language": "DE_DE",
+   "output_format": "wav"
+  },
+  "text_key": "short2_de"
+ },
+ {
+  "id": "de-inworld-tts2-Josef",
+  "lang": "de",
+  "model": "inworld-ai/realtime-tts-2",
+  "params": {
+   "text": "{text}",
+   "voice": "Josef",
+   "language": "DE_DE",
+   "output_format": "wav"
+  },
+  "text_key": "de"
+ },
+ {
+  "id": "de-qwen3-Aiden@long",
+  "lang": "de",
+  "model": "Qwen/Qwen3-TTS",
+  "params": {
+   "input": "{text}",
+   "voice": "Aiden",
+   "language": "German",
+   "response_format": "wav"
+  },
+  "text_key": "long_de"
+ },
+ {
+  "id": "de-qwen3-Aiden@short2",
+  "lang": "de",
+  "model": "Qwen/Qwen3-TTS",
+  "params": {
+   "input": "{text}",
+   "voice": "Aiden",
+   "language": "German",
+   "response_format": "wav"
+  },
+  "text_key": "short2_de"
+ },
+ {
+  "id": "de-chatterbox-ml@long",
+  "lang": "de",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "de",
+   "response_format": "wav"
+  },
+  "text_key": "long_de"
+ },
+ {
+  "id": "de-chatterbox-ml@short2",
+  "lang": "de",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "de",
+   "response_format": "wav"
+  },
+  "text_key": "short2_de"
+ },
+ {
+  "id": "de-audio8@long",
+  "lang": "de",
+  "model": "Audio8/Audio8-TTS-Preview-0.6b",
+  "params": {
+   "text": "{text}",
+   "response_format": "wav"
+  },
+  "text_key": "long_de"
+ },
+ {
+  "id": "de-audio8@short2",
+  "lang": "de",
+  "model": "Audio8/Audio8-TTS-Preview-0.6b",
+  "params": {
+   "text": "{text}",
+   "response_format": "wav"
+  },
+  "text_key": "short2_de"
+ },
+ {
+  "id": "es-inworld-max-Rafael@long",
+  "lang": "es",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Rafael",
+   "output_format": "wav"
+  },
+  "text_key": "long_es"
+ },
+ {
+  "id": "es-inworld-max-Rafael@short2",
+  "lang": "es",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Rafael",
+   "output_format": "wav"
+  },
+  "text_key": "short2_es"
+ },
+ {
+  "id": "es-inworld-max-Diego@long",
+  "lang": "es",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Diego",
+   "output_format": "wav"
+  },
+  "text_key": "long_es"
+ },
+ {
+  "id": "es-inworld-max-Diego@short2",
+  "lang": "es",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Diego",
+   "output_format": "wav"
+  },
+  "text_key": "short2_es"
+ },
+ {
+  "id": "es-inworld-mini-Rafael@long",
+  "lang": "es",
+  "model": "inworld-ai/inworld-tts-1.5-mini",
+  "params": {
+   "text": "{text}",
+   "voice": "Rafael",
+   "output_format": "wav"
+  },
+  "text_key": "long_es"
+ },
+ {
+  "id": "es-inworld-mini-Rafael@short2",
+  "lang": "es",
+  "model": "inworld-ai/inworld-tts-1.5-mini",
+  "params": {
+   "text": "{text}",
+   "voice": "Rafael",
+   "output_format": "wav"
+  },
+  "text_key": "short2_es"
+ },
+ {
+  "id": "es-inworld-mini-Rafael",
+  "lang": "es",
+  "model": "inworld-ai/inworld-tts-1.5-mini",
+  "params": {
+   "text": "{text}",
+   "voice": "Rafael",
+   "output_format": "wav"
+  },
+  "text_key": "es"
+ },
+ {
+  "id": "es-inworld-tts2-Rafael@long",
+  "lang": "es",
+  "model": "inworld-ai/realtime-tts-2",
+  "params": {
+   "text": "{text}",
+   "voice": "Rafael",
+   "language": "ES_ES",
+   "output_format": "wav"
+  },
+  "text_key": "long_es"
+ },
+ {
+  "id": "es-inworld-tts2-Rafael@short2",
+  "lang": "es",
+  "model": "inworld-ai/realtime-tts-2",
+  "params": {
+   "text": "{text}",
+   "voice": "Rafael",
+   "language": "ES_ES",
+   "output_format": "wav"
+  },
+  "text_key": "short2_es"
+ },
+ {
+  "id": "es-inworld-tts2-Rafael",
+  "lang": "es",
+  "model": "inworld-ai/realtime-tts-2",
+  "params": {
+   "text": "{text}",
+   "voice": "Rafael",
+   "language": "ES_ES",
+   "output_format": "wav"
+  },
+  "text_key": "es"
+ },
+ {
+  "id": "es-qwen3-Ryan@long",
+  "lang": "es",
+  "model": "Qwen/Qwen3-TTS",
+  "params": {
+   "input": "{text}",
+   "voice": "Ryan",
+   "language": "Spanish",
+   "response_format": "wav"
+  },
+  "text_key": "long_es"
+ },
+ {
+  "id": "es-qwen3-Ryan@short2",
+  "lang": "es",
+  "model": "Qwen/Qwen3-TTS",
+  "params": {
+   "input": "{text}",
+   "voice": "Ryan",
+   "language": "Spanish",
+   "response_format": "wav"
+  },
+  "text_key": "short2_es"
+ },
+ {
+  "id": "es-chatterbox-ml@long",
+  "lang": "es",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "es",
+   "response_format": "wav"
+  },
+  "text_key": "long_es"
+ },
+ {
+  "id": "es-chatterbox-ml@short2",
+  "lang": "es",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "es",
+   "response_format": "wav"
+  },
+  "text_key": "short2_es"
+ },
+ {
+  "id": "fr-inworld-max-Lucian@long",
+  "lang": "fr",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Lucian",
+   "output_format": "wav"
+  },
+  "text_key": "long_fr"
+ },
+ {
+  "id": "fr-inworld-max-Lucian@short2",
+  "lang": "fr",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Lucian",
+   "output_format": "wav"
+  },
+  "text_key": "short2_fr"
+ },
+ {
+  "id": "fr-inworld-max-Alain@long",
+  "lang": "fr",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Alain",
+   "output_format": "wav"
+  },
+  "text_key": "long_fr"
+ },
+ {
+  "id": "fr-inworld-max-Alain@short2",
+  "lang": "fr",
+  "model": "inworld-ai/inworld-tts-1.5-max",
+  "params": {
+   "text": "{text}",
+   "voice": "Alain",
+   "output_format": "wav"
+  },
+  "text_key": "short2_fr"
+ },
+ {
+  "id": "fr-inworld-mini-Lucian@long",
+  "lang": "fr",
+  "model": "inworld-ai/inworld-tts-1.5-mini",
+  "params": {
+   "text": "{text}",
+   "voice": "Lucian",
+   "output_format": "wav"
+  },
+  "text_key": "long_fr"
+ },
+ {
+  "id": "fr-inworld-mini-Lucian@short2",
+  "lang": "fr",
+  "model": "inworld-ai/inworld-tts-1.5-mini",
+  "params": {
+   "text": "{text}",
+   "voice": "Lucian",
+   "output_format": "wav"
+  },
+  "text_key": "short2_fr"
+ },
+ {
+  "id": "fr-inworld-mini-Lucian",
+  "lang": "fr",
+  "model": "inworld-ai/inworld-tts-1.5-mini",
+  "params": {
+   "text": "{text}",
+   "voice": "Lucian",
+   "output_format": "wav"
+  },
+  "text_key": "fr"
+ },
+ {
+  "id": "fr-inworld-tts2-Lucian@long",
+  "lang": "fr",
+  "model": "inworld-ai/realtime-tts-2",
+  "params": {
+   "text": "{text}",
+   "voice": "Lucian",
+   "language": "FR_FR",
+   "output_format": "wav"
+  },
+  "text_key": "long_fr"
+ },
+ {
+  "id": "fr-inworld-tts2-Lucian@short2",
+  "lang": "fr",
+  "model": "inworld-ai/realtime-tts-2",
+  "params": {
+   "text": "{text}",
+   "voice": "Lucian",
+   "language": "FR_FR",
+   "output_format": "wav"
+  },
+  "text_key": "short2_fr"
+ },
+ {
+  "id": "fr-inworld-tts2-Lucian",
+  "lang": "fr",
+  "model": "inworld-ai/realtime-tts-2",
+  "params": {
+   "text": "{text}",
+   "voice": "Lucian",
+   "language": "FR_FR",
+   "output_format": "wav"
+  },
+  "text_key": "fr"
+ },
+ {
+  "id": "fr-qwen3-Ryan@long",
+  "lang": "fr",
+  "model": "Qwen/Qwen3-TTS",
+  "params": {
+   "input": "{text}",
+   "voice": "Ryan",
+   "language": "French",
+   "response_format": "wav"
+  },
+  "text_key": "long_fr"
+ },
+ {
+  "id": "fr-qwen3-Ryan@short2",
+  "lang": "fr",
+  "model": "Qwen/Qwen3-TTS",
+  "params": {
+   "input": "{text}",
+   "voice": "Ryan",
+   "language": "French",
+   "response_format": "wav"
+  },
+  "text_key": "short2_fr"
+ },
+ {
+  "id": "fr-chatterbox-ml@long",
+  "lang": "fr",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "fr",
+   "response_format": "wav"
+  },
+  "text_key": "long_fr"
+ },
+ {
+  "id": "fr-chatterbox-ml@short2",
+  "lang": "fr",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "fr",
+   "response_format": "wav"
+  },
+  "text_key": "short2_fr"
+ }
+]

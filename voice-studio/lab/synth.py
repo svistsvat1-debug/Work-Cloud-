@@ -60,8 +60,12 @@ def ext_of(raw, ctype):
     return "pcm"
 
 
-results = []
+# Earlier results (reused from a previous run) are kept; a candidate with the same id replaces its old result
+results = json.load(open("out/synth.json")) if os.path.exists("out/synth.json") else []
+done = {r["id"] for r in results if r.get("ok")}
 for c in cands:
+    if c["id"] in done:
+        continue
     lang = c["lang"]
     text = c.get("text") or texts[c.get("text_key", lang)]
     params = fill(c["params"], text, lang)
@@ -78,14 +82,15 @@ for c in cands:
             body, ctype = r.read(), r.headers.get("content-type", "")
         raw, _ = audio_from(body, ctype)
         ext = ext_of(raw, ctype)
-        path = f"out/audio/{c['id']}.{ext}"
+        path = f"out/audio/{c['id'].replace('@', '__')}.{ext}"
         open(path, "wb").write(raw)
         rec.update(ok=True, file=path, bytes=len(raw), seconds=round(time.time() - t, 2))
     except urllib.error.HTTPError as e:
         rec.update(ok=False, error=f"HTTP {e.code}: {e.read()[:400].decode('utf-8', 'replace')}", seconds=round(time.time() - t, 2))
     except Exception as e:
         rec.update(ok=False, error=f"{type(e).__name__}: {str(e)[:400]}", seconds=round(time.time() - t, 2))
+    rec["new"] = True
     print(("OK  " if rec["ok"] else "ERR ") + f"{c['id']:<34} {rec['seconds']:>6}s " + (rec.get("file", "") if rec["ok"] else rec["error"]), flush=True)
-    results.append(rec)
+    results = [r for r in results if r["id"] != c["id"]] + [rec]
 
 json.dump(results, open("out/synth.json", "w"), indent=1, ensure_ascii=False)
