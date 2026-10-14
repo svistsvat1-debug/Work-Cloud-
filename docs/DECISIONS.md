@@ -38,6 +38,7 @@
 
 ## Записи
 
+- 2026-10-14 · Зроблено YouTube Short #06 «My father hid a letter» з 7 фото + озвучки власника (`videos/06-father-letter/`) · новий формат «фото-сторітелінг»: рендерер `tools/photo_story.py` (Ken Burns, субтитри по словах по центру, синтезована музика), сценарій кадрів — `story.json`; канал публікації — [MISSING].
 - 2026-10-10 · Власник створив Worker `edge-journal` у Cloudflare (Workers Builds з GitHub); production branch змінено з `main` на `workproces` (у `main` немає журналу) · далі сайт оновлюється пушами в `workproces`.
 - 2026-10-09 · Edge Journal: прибрано всі секрети з запуску (власник: «зроби все сам») — котирування з **Dukascopy** без ключа (Twelve Data лише запасний), пароль створюється на сайті при першому відкритті (PBKDF2 у D1), є зміна пароля; підказка TradingView для телефона · єдиний крок, який може зробити лише власник: підключити репо в Cloudflare (Import a repository, name `edge-journal`, root `trading-journal`) і одразу створити пароль на сайті.
 - 2026-10-09 · Edge Journal переїжджає на **Cloudflare** (рішення власника): Worker + D1 (угоди) + R2 (скріни), вхід за паролем, котирування **Twelve Data** (хвилинні свічки) для графіка угоди й авто-пунктів; кнопка «Відкрити в TradingView»; стиль — чорний/зелений/червоний · деплой через Cloudflare Git-інтеграцію (кроки в `trading-journal/README.md`); з цієї сесії деплой неможливий — мережа середовища блокує api.cloudflare.com і api.twelvedata.com. Чекає від власника: підключити репо в Cloudflare, секрети JOURNAL_PASSWORD і TWELVE_DATA_KEY.

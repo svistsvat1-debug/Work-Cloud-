@@ -1,0 +1,49 @@
+{
+  "title": "My father hid a letter",
+  "voice": "voice.wav",
+  "size": [1080, 1920],
+  "fps": 30,
+  "subtitle_y": 1000,
+  "lines": [
+    {"span": [0.27, 3.58], "chunks": ["My father", "hid a letter", "under his truck seat", "for *fifteen *years."]},
+    {"span": [4.47, 5.73], "chunks": ["*Stamped.", "Addressed to me."]},
+    {"span": [6.16, 7.76], "chunks": ["Dated the morning", "I left home."]},
+    {"span": [8.02, 9.13], "chunks": ["We *never", "spoke again."]},
+    {"span": [10.16, 11.84], "chunks": ["When he died,", "I finally found it."]},
+    {"span": [12.41, 17.0], "chunks": ["And at the bottom,", "in *different *ink,", "written years later,", "he'd added", "two more lines."]},
+    {"span": [17.9, 19.35], "chunks": ["\"Saw the weather", "in *Nevada."]},
+    {"span": [19.69, 20.91], "chunks": ["Glad you took", "the *exit.\""]},
+    {"span": [21.37, 22.94], "chunks": ["I never told him", "about that night."]},
+    {"span": [23.99, 25.21], "chunks": ["I never told", "*anyone."]},
+    {"span": [25.55, 27.0], "chunks": ["So how did", "my father *know?"]}
+  ],
+  "shots": [
+    {"image": "shots/01.jpg", "start": 0.0, "end": 4.38, "in": "cut",
+     "cam": [[0.0, 1.08, 0.50, 0.55], [4.38, 1.42, 0.46, 0.64]], "punch": [[2.82, 0.07]]},
+    {"image": "shots/02.jpg", "start": 4.38, "end": 6.05, "in": "whip",
+     "cam": [[4.38, 1.75, 0.70, 0.44], [4.85, 1.65, 0.68, 0.45], [5.15, 1.32, 0.42, 0.56], [6.05, 1.26, 0.42, 0.56]]},
+    {"image": "shots/03.jpg", "start": 6.05, "end": 7.98, "in": "fade",
+     "cam": [[6.05, 1.02, 0.55, 0.52], [7.98, 1.22, 0.64, 0.60]]},
+    {"image": "shots/04.jpg", "start": 7.98, "end": 9.95, "in": "dip",
+     "cam": [[7.98, 1.38, 0.60, 0.42], [9.95, 1.06, 0.55, 0.48]]},
+    {"image": "shots/05.jpg", "start": 9.95, "end": 12.25, "in": "fade",
+     "cam": [[9.95, 1.06, 0.58, 0.48], [12.25, 1.38, 0.70, 0.40]], "punch": [[11.30, 0.05]]},
+    {"image": "shots/06.jpg", "start": 12.25, "end": 17.75, "in": "whip",
+     "cam": [[12.25, 1.45, 0.48, 0.30], [12.70, 1.42, 0.48, 0.33], [13.70, 1.50, 0.46, 0.66], [17.75, 1.95, 0.42, 0.70]],
+     "punch": [[14.18, 0.06]]},
+    {"image": "shots/07.jpg", "start": 17.75, "end": 23.96, "in": "flash",
+     "cam": [[17.75, 1.02, 0.50, 0.55], [21.30, 1.30, 0.66, 0.42], [23.96, 1.40, 0.70, 0.40]],
+     "punch": [[20.50, 0.08], [22.55, 0.05]]},
+    {"image": "shots/07.jpg", "start": 23.96, "end": 25.45, "in": "cut",
+     "cam": [[23.96, 1.85, 0.76, 0.33], [25.45, 2.00, 0.76, 0.33]]},
+    {"image": "shots/04.jpg", "start": 25.45, "end": 27.53, "in": "dip", "grade": "dark",
+     "cam": [[25.45, 1.20, 0.58, 0.40], [27.53, 1.55, 0.60, 0.33]], "punch": [[26.75, 0.07]]}
+  ],
+  "music": {
+    "booms": [0.05, 7.98, 17.75, 25.47],
+    "whooshes": [4.38, 12.25, 17.75, 23.96],
+    "riser": [24.0, 25.45],
+    "drops": [[7.98, 10.0], [25.45, 27.6]],
+    "chords": [[0.0, "A"], [7.98, "F"], [12.25, "C"], [17.75, "G"], [21.4, "E"], [25.45, "A"]]
+  }
+}
