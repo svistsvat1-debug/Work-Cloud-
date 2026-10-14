@@ -88,6 +88,17 @@ Animate this image as a seamless looping video. The camera is completely still f
 Option 2 · text only:
 A seamless looping video of a calm night view from inside a truck cab, looking through the windshield at an empty road in a dark winter forest. The camera is completely still for the whole clip. Light freezing rain falls steadily on the glass at the same even pace from start to finish; small drops land and thin streaks slide down. Thin ice sits along the edges of the windshield and does not change. The fog over the road and the soft amber dashboard glow stay the same, with only a very gentle shimmer. Dark blue tones, soft focus in the middle of the frame. Nothing in the scene grows, moves away or changes over time, so the last frame looks the same as the first frame and the video can repeat endlessly without a visible jump. Only the soft sound of rain on glass.
 
+=== BACKGROUND LOOP · v3 (CHOSEN) — parked truck, only snow/sleet moves ===
+Owner's decision: the truck stands still, the only animation is falling snow / freezing rain. Steady falling precipitation looks the same at any moment, so the clip repeats without a visible jump.
+
+Option 1 · attach the still image, then:
+Animate this image. The truck is parked and does not move. The camera does not move. The road, the trees, the fog, the dashboard and the windshield stay completely still. The only movement in the whole video is light snow mixed with freezing rain falling steadily outside the windshield, at the same calm, even pace from the first second to the last, so the video can repeat endlessly without a visible jump. Quiet, cold night. Only the soft sound of falling sleet.
+
+Option 2 · text only:
+A truck parked on the side of an empty road at night in a winter forest, seen from inside the cab through the windshield. The truck is not moving and the camera does not move. Everything stays completely still: the road, the trees, the dashboard, the glass. The only movement in the whole video is light snow mixed with freezing rain falling steadily outside, at the same calm, even pace from the first second to the last, so the video can repeat endlessly without a visible jump. Dark blue night, soft fog in the distance, a faint warm glow from the dashboard at the bottom. Calm, quiet, cold atmosphere. Only the soft sound of falling sleet.
+
+Most reliable alternative: send Claude the still image only; Claude adds falling snow/sleet with code (perfectly periodic, zero seam) and darkens the center under the subtitles.
+
 === YOUTUBE STUDIO SETTINGS ===
 Details
 - Title: A. Description and tags: from this file.
