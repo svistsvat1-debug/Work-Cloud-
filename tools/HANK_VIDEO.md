@@ -46,5 +46,5 @@
   ```
   LOOP_FPS=24 LOOP_DENSITY=0.6 LOOP_FAR=0.25 python3 -I tools/hank_snowloop.py bg.jpg loop_light.mp4
   ```
-- **Рендер:** 1080p, два проходи, `-preset slower -b:v 160k -g 480 -bf 8 -refs 6 -r 24`, звук `-c:a aac -b:a 48k -ac 1`.
-- **Результат:** ~27 МБ на 18 хв, текст і сніг чіткі (фон майже статичний).
+- **Рендер:** 1080p, два проходи, `-preset slower -b:v 160k -g 480 -bf 8 -refs 6 -r 24`, звук окремо: `-af "alimiter=limit=0.79:attack=1:release=50:level=false" -ar 48000 -ac 1 -c:a aac -b:a 64k`, потім `-c copy` у відео. На 48k AAC дає перевищення піку до +3,7 дБ; на 64k пік 0 дБ.
+- **Результат:** ~28,6 МБ на 18 хв, текст і сніг чіткі (фон майже статичний).
