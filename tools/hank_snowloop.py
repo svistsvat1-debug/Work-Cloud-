@@ -3,7 +3,10 @@ import sys, subprocess, numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 src, out = sys.argv[1], sys.argv[2]
 prev = sys.argv[3] if len(sys.argv) > 3 else None
-W, H, FPS, F = 1920, 1080, 30, 300           # 10 s loop
+import os
+W, H = 1920, 1080
+FPS = int(os.environ.get('LOOP_FPS', 30)); F = FPS * 10   # 10 s loop
+DENS = float(os.environ.get('LOOP_DENSITY', 1.0))
 rng = np.random.default_rng(6)
 
 # background: scale to 1080 high, crop centre to 1920
@@ -38,19 +41,19 @@ def streak(length, ang):
 
 # layers: (count, size range, k = falls per loop, opacity range, slant, sway amp)
 layers = [
-    dict(n=650, r=(0.9, 1.5), k=1, op=(0.30, 0.55), slant=0.10, sway=6),
+    dict(n=int(650 * float(os.environ.get('LOOP_FAR', 1.0))), r=(0.9, 1.5), k=1, op=(0.30, 0.55), slant=0.10, sway=6),
     dict(n=320, r=(1.8, 2.8), k=2, op=(0.50, 0.80), slant=0.14, sway=10),
     dict(n=60,  r=(4.0, 6.5), k=3, op=(0.22, 0.40), slant=0.18, sway=16),
 ]
 parts = []
 for L in layers:
-    for _ in range(L['n']):
+    for _ in range(int(L['n'] * DENS)):
         r = rng.uniform(*L['r']); spr = disc(r)
         parts.append(dict(spr=spr, x0=rng.uniform(-80, W + 80), y0=rng.uniform(0, 1), k=L['k'],
                           op=rng.uniform(*L['op']), slant=L['slant'], amp=rng.uniform(0.3, 1) * L['sway'],
                           j=int(rng.integers(1, 4)), ph=rng.uniform(0, 2 * np.pi)))
 ang = np.deg2rad(13)
-for _ in range(130):   # freezing-rain streaks
+for _ in range(int(130 * DENS)):   # freezing-rain streaks
     parts.append(dict(spr=streak(rng.uniform(16, 30), ang), x0=rng.uniform(-200, W + 80), y0=rng.uniform(0, 1),
                       k=int(rng.choice([7, 8, 9])), op=rng.uniform(0.16, 0.30), slant=np.tan(ang), amp=0, j=1, ph=0))
 col = np.array([0.88, 0.91, 0.95], np.float32)
