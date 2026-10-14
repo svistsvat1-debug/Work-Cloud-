@@ -79,6 +79,15 @@ Animate this image. Freezing rain keeps falling gently on the truck windshield, 
 Option 2 · text only:
 A calm night view from inside a truck cab, looking through the windshield at an empty road in a dark winter forest. Freezing rain falls gently on the glass; small drops and thin streaks slowly slide down. Thin ice along the edges of the windshield. Light fog drifts slowly over the road. The dashboard glows a soft warm amber at the bottom of the frame. The camera stays completely still. Dark blue tones, soft focus in the middle of the frame. Quiet, cold, lonely atmosphere. Only the soft sound of rain on glass.
 
+=== BACKGROUND LOOP · Gemini v2 — explicit loop (start = end) ===
+Key idea: nothing in the scene may change over time (no ice growing, no fog moving across, no light change), so the end looks like the start. Gemini has no end-frame setting, so a small difference is still possible; Claude then crossfades the last second into the first.
+
+Option 1 · attach the still image, then:
+Animate this image as a seamless looping video. The camera is completely still for the whole clip. Light freezing rain falls steadily on the windshield at the same even pace from start to finish; small drops land and thin streaks slide down the glass. The fog over the road and the dashboard lights stay exactly as they are, with only a very gentle shimmer. Nothing in the scene grows, moves away or changes over time, so the last frame looks the same as the first frame and the video can repeat endlessly without a visible jump. Quiet, cold night atmosphere. Only the soft sound of rain on glass.
+
+Option 2 · text only:
+A seamless looping video of a calm night view from inside a truck cab, looking through the windshield at an empty road in a dark winter forest. The camera is completely still for the whole clip. Light freezing rain falls steadily on the glass at the same even pace from start to finish; small drops land and thin streaks slide down. Thin ice sits along the edges of the windshield and does not change. The fog over the road and the soft amber dashboard glow stay the same, with only a very gentle shimmer. Dark blue tones, soft focus in the middle of the frame. Nothing in the scene grows, moves away or changes over time, so the last frame looks the same as the first frame and the video can repeat endlessly without a visible jump. Only the soft sound of rain on glass.
+
 === YOUTUBE STUDIO SETTINGS ===
 Details
 - Title: A. Description and tags: from this file.
