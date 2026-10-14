@@ -1,0 +1,713 @@
+[
+ {
+  "id": "de-cb-v0@r5chunk0x1",
+  "lang": "de",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "de",
+   "response_format": "wav"
+  },
+  "text_key": "chunk0_de"
+ },
+ {
+  "id": "de-cb-v0@r5chunk0x2",
+  "lang": "de",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "de",
+   "response_format": "wav"
+  },
+  "text_key": "chunk0_de"
+ },
+ {
+  "id": "de-cb-v0@r5chunk1x1",
+  "lang": "de",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "de",
+   "response_format": "wav"
+  },
+  "text_key": "chunk1_de"
+ },
+ {
+  "id": "de-cb-v0@r5chunk1x2",
+  "lang": "de",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "de",
+   "response_format": "wav"
+  },
+  "text_key": "chunk1_de"
+ },
+ {
+  "id": "de-cb-v0@r5chunk2x1",
+  "lang": "de",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "de",
+   "response_format": "wav"
+  },
+  "text_key": "chunk2_de"
+ },
+ {
+  "id": "de-cb-v0@r5chunk2x2",
+  "lang": "de",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "de",
+   "response_format": "wav"
+  },
+  "text_key": "chunk2_de"
+ },
+ {
+  "id": "de-cb-v0@r5chunk3x1",
+  "lang": "de",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "de",
+   "response_format": "wav"
+  },
+  "text_key": "chunk3_de"
+ },
+ {
+  "id": "de-cb-v0@r5chunk3x2",
+  "lang": "de",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "de",
+   "response_format": "wav"
+  },
+  "text_key": "chunk3_de"
+ },
+ {
+  "id": "de-cb-v0@r5hardn",
+  "lang": "de",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "de",
+   "response_format": "wav"
+  },
+  "text_key": "hardn_de"
+ },
+ {
+  "id": "de-cb-v1@r5chunk0x1",
+  "lang": "de",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "de",
+   "response_format": "wav",
+   "exaggeration": 0.5,
+   "cfg": 0.5
+  },
+  "text_key": "chunk0_de"
+ },
+ {
+  "id": "de-cb-v1@r5chunk0x2",
+  "lang": "de",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "de",
+   "response_format": "wav",
+   "exaggeration": 0.5,
+   "cfg": 0.5
+  },
+  "text_key": "chunk0_de"
+ },
+ {
+  "id": "de-cb-v1@r5chunk1x1",
+  "lang": "de",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "de",
+   "response_format": "wav",
+   "exaggeration": 0.5,
+   "cfg": 0.5
+  },
+  "text_key": "chunk1_de"
+ },
+ {
+  "id": "de-cb-v1@r5chunk1x2",
+  "lang": "de",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "de",
+   "response_format": "wav",
+   "exaggeration": 0.5,
+   "cfg": 0.5
+  },
+  "text_key": "chunk1_de"
+ },
+ {
+  "id": "de-cb-v1@r5chunk2x1",
+  "lang": "de",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "de",
+   "response_format": "wav",
+   "exaggeration": 0.5,
+   "cfg": 0.5
+  },
+  "text_key": "chunk2_de"
+ },
+ {
+  "id": "de-cb-v1@r5chunk2x2",
+  "lang": "de",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "de",
+   "response_format": "wav",
+   "exaggeration": 0.5,
+   "cfg": 0.5
+  },
+  "text_key": "chunk2_de"
+ },
+ {
+  "id": "de-cb-v1@r5chunk3x1",
+  "lang": "de",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "de",
+   "response_format": "wav",
+   "exaggeration": 0.5,
+   "cfg": 0.5
+  },
+  "text_key": "chunk3_de"
+ },
+ {
+  "id": "de-cb-v1@r5chunk3x2",
+  "lang": "de",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "de",
+   "response_format": "wav",
+   "exaggeration": 0.5,
+   "cfg": 0.5
+  },
+  "text_key": "chunk3_de"
+ },
+ {
+  "id": "de-cb-v1@r5hardn",
+  "lang": "de",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "de",
+   "response_format": "wav",
+   "exaggeration": 0.5,
+   "cfg": 0.5
+  },
+  "text_key": "hardn_de"
+ },
+ {
+  "id": "de-cb-openai@r5chunk0",
+  "lang": "de",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "route": "openai",
+  "params": {
+   "input": "{text}",
+   "response_format": "wav",
+   "language_id": "de"
+  },
+  "text_key": "chunk0_de"
+ },
+ {
+  "id": "es-cb-v0@r5chunk0x1",
+  "lang": "es",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "es",
+   "response_format": "wav"
+  },
+  "text_key": "chunk0_es"
+ },
+ {
+  "id": "es-cb-v0@r5chunk0x2",
+  "lang": "es",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "es",
+   "response_format": "wav"
+  },
+  "text_key": "chunk0_es"
+ },
+ {
+  "id": "es-cb-v0@r5chunk1x1",
+  "lang": "es",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "es",
+   "response_format": "wav"
+  },
+  "text_key": "chunk1_es"
+ },
+ {
+  "id": "es-cb-v0@r5chunk1x2",
+  "lang": "es",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "es",
+   "response_format": "wav"
+  },
+  "text_key": "chunk1_es"
+ },
+ {
+  "id": "es-cb-v0@r5chunk2x1",
+  "lang": "es",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "es",
+   "response_format": "wav"
+  },
+  "text_key": "chunk2_es"
+ },
+ {
+  "id": "es-cb-v0@r5chunk2x2",
+  "lang": "es",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "es",
+   "response_format": "wav"
+  },
+  "text_key": "chunk2_es"
+ },
+ {
+  "id": "es-cb-v0@r5hardn",
+  "lang": "es",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "es",
+   "response_format": "wav"
+  },
+  "text_key": "hardn_es"
+ },
+ {
+  "id": "es-cb-v1@r5chunk0x1",
+  "lang": "es",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "es",
+   "response_format": "wav",
+   "exaggeration": 0.5,
+   "cfg": 0.5
+  },
+  "text_key": "chunk0_es"
+ },
+ {
+  "id": "es-cb-v1@r5chunk0x2",
+  "lang": "es",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "es",
+   "response_format": "wav",
+   "exaggeration": 0.5,
+   "cfg": 0.5
+  },
+  "text_key": "chunk0_es"
+ },
+ {
+  "id": "es-cb-v1@r5chunk1x1",
+  "lang": "es",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "es",
+   "response_format": "wav",
+   "exaggeration": 0.5,
+   "cfg": 0.5
+  },
+  "text_key": "chunk1_es"
+ },
+ {
+  "id": "es-cb-v1@r5chunk1x2",
+  "lang": "es",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "es",
+   "response_format": "wav",
+   "exaggeration": 0.5,
+   "cfg": 0.5
+  },
+  "text_key": "chunk1_es"
+ },
+ {
+  "id": "es-cb-v1@r5chunk2x1",
+  "lang": "es",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "es",
+   "response_format": "wav",
+   "exaggeration": 0.5,
+   "cfg": 0.5
+  },
+  "text_key": "chunk2_es"
+ },
+ {
+  "id": "es-cb-v1@r5chunk2x2",
+  "lang": "es",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "es",
+   "response_format": "wav",
+   "exaggeration": 0.5,
+   "cfg": 0.5
+  },
+  "text_key": "chunk2_es"
+ },
+ {
+  "id": "es-cb-v1@r5hardn",
+  "lang": "es",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "es",
+   "response_format": "wav",
+   "exaggeration": 0.5,
+   "cfg": 0.5
+  },
+  "text_key": "hardn_es"
+ },
+ {
+  "id": "es-cb-openai@r5chunk0",
+  "lang": "es",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "route": "openai",
+  "params": {
+   "input": "{text}",
+   "response_format": "wav",
+   "language_id": "es"
+  },
+  "text_key": "chunk0_es"
+ },
+ {
+  "id": "fr-cb-v0@r5chunk0x1",
+  "lang": "fr",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "fr",
+   "response_format": "wav"
+  },
+  "text_key": "chunk0_fr"
+ },
+ {
+  "id": "fr-cb-v0@r5chunk0x2",
+  "lang": "fr",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "fr",
+   "response_format": "wav"
+  },
+  "text_key": "chunk0_fr"
+ },
+ {
+  "id": "fr-cb-v0@r5chunk1x1",
+  "lang": "fr",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "fr",
+   "response_format": "wav"
+  },
+  "text_key": "chunk1_fr"
+ },
+ {
+  "id": "fr-cb-v0@r5chunk1x2",
+  "lang": "fr",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "fr",
+   "response_format": "wav"
+  },
+  "text_key": "chunk1_fr"
+ },
+ {
+  "id": "fr-cb-v0@r5chunk2x1",
+  "lang": "fr",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "fr",
+   "response_format": "wav"
+  },
+  "text_key": "chunk2_fr"
+ },
+ {
+  "id": "fr-cb-v0@r5chunk2x2",
+  "lang": "fr",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "fr",
+   "response_format": "wav"
+  },
+  "text_key": "chunk2_fr"
+ },
+ {
+  "id": "fr-cb-v0@r5hardn",
+  "lang": "fr",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "fr",
+   "response_format": "wav"
+  },
+  "text_key": "hardn_fr"
+ },
+ {
+  "id": "fr-cb-v1@r5chunk0x1",
+  "lang": "fr",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "fr",
+   "response_format": "wav",
+   "exaggeration": 0.5,
+   "cfg": 0.5
+  },
+  "text_key": "chunk0_fr"
+ },
+ {
+  "id": "fr-cb-v1@r5chunk0x2",
+  "lang": "fr",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "fr",
+   "response_format": "wav",
+   "exaggeration": 0.5,
+   "cfg": 0.5
+  },
+  "text_key": "chunk0_fr"
+ },
+ {
+  "id": "fr-cb-v1@r5chunk1x1",
+  "lang": "fr",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "fr",
+   "response_format": "wav",
+   "exaggeration": 0.5,
+   "cfg": 0.5
+  },
+  "text_key": "chunk1_fr"
+ },
+ {
+  "id": "fr-cb-v1@r5chunk1x2",
+  "lang": "fr",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "fr",
+   "response_format": "wav",
+   "exaggeration": 0.5,
+   "cfg": 0.5
+  },
+  "text_key": "chunk1_fr"
+ },
+ {
+  "id": "fr-cb-v1@r5chunk2x1",
+  "lang": "fr",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "fr",
+   "response_format": "wav",
+   "exaggeration": 0.5,
+   "cfg": 0.5
+  },
+  "text_key": "chunk2_fr"
+ },
+ {
+  "id": "fr-cb-v1@r5chunk2x2",
+  "lang": "fr",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "fr",
+   "response_format": "wav",
+   "exaggeration": 0.5,
+   "cfg": 0.5
+  },
+  "text_key": "chunk2_fr"
+ },
+ {
+  "id": "fr-cb-v1@r5hardn",
+  "lang": "fr",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "params": {
+   "text": "{text}",
+   "language_id": "fr",
+   "response_format": "wav",
+   "exaggeration": 0.5,
+   "cfg": 0.5
+  },
+  "text_key": "hardn_fr"
+ },
+ {
+  "id": "fr-cb-openai@r5chunk0",
+  "lang": "fr",
+  "model": "ResembleAI/chatterbox-multilingual",
+  "route": "openai",
+  "params": {
+   "input": "{text}",
+   "response_format": "wav",
+   "language_id": "fr"
+  },
+  "text_key": "chunk0_fr"
+ },
+ {
+  "id": "de-qwen3-Aiden@r5chunk0",
+  "lang": "de",
+  "model": "Qwen/Qwen3-TTS",
+  "params": {
+   "input": "{text}",
+   "voice": "Aiden",
+   "language": "{lang_name}",
+   "response_format": "wav"
+  },
+  "text_key": "chunk0_de"
+ },
+ {
+  "id": "de-qwen3-Aiden@r5chunk1",
+  "lang": "de",
+  "model": "Qwen/Qwen3-TTS",
+  "params": {
+   "input": "{text}",
+   "voice": "Aiden",
+   "language": "{lang_name}",
+   "response_format": "wav"
+  },
+  "text_key": "chunk1_de"
+ },
+ {
+  "id": "de-qwen3-Aiden@r5chunk2",
+  "lang": "de",
+  "model": "Qwen/Qwen3-TTS",
+  "params": {
+   "input": "{text}",
+   "voice": "Aiden",
+   "language": "{lang_name}",
+   "response_format": "wav"
+  },
+  "text_key": "chunk2_de"
+ },
+ {
+  "id": "de-qwen3-Aiden@r5chunk3",
+  "lang": "de",
+  "model": "Qwen/Qwen3-TTS",
+  "params": {
+   "input": "{text}",
+   "voice": "Aiden",
+   "language": "{lang_name}",
+   "response_format": "wav"
+  },
+  "text_key": "chunk3_de"
+ },
+ {
+  "id": "fr-qwen3-Ryan@r5chunk0",
+  "lang": "fr",
+  "model": "Qwen/Qwen3-TTS",
+  "params": {
+   "input": "{text}",
+   "voice": "Ryan",
+   "language": "{lang_name}",
+   "response_format": "wav"
+  },
+  "text_key": "chunk0_fr"
+ },
+ {
+  "id": "fr-qwen3-Ryan@r5chunk1",
+  "lang": "fr",
+  "model": "Qwen/Qwen3-TTS",
+  "params": {
+   "input": "{text}",
+   "voice": "Ryan",
+   "language": "{lang_name}",
+   "response_format": "wav"
+  },
+  "text_key": "chunk1_fr"
+ },
+ {
+  "id": "fr-qwen3-Ryan@r5chunk2",
+  "lang": "fr",
+  "model": "Qwen/Qwen3-TTS",
+  "params": {
+   "input": "{text}",
+   "voice": "Ryan",
+   "language": "{lang_name}",
+   "response_format": "wav"
+  },
+  "text_key": "chunk2_fr"
+ },
+ {
+  "id": "es-kokoro-em_alex@r5chunk0",
+  "lang": "es",
+  "model": "hexgrad/Kokoro-82M",
+  "params": {
+   "text": "{text}",
+   "preset_voice": [
+    "em_alex"
+   ],
+   "output_format": "wav"
+  },
+  "text_key": "chunk0_es"
+ },
+ {
+  "id": "es-kokoro-em_alex@r5chunk1",
+  "lang": "es",
+  "model": "hexgrad/Kokoro-82M",
+  "params": {
+   "text": "{text}",
+   "preset_voice": [
+    "em_alex"
+   ],
+   "output_format": "wav"
+  },
+  "text_key": "chunk1_es"
+ },
+ {
+  "id": "es-kokoro-em_alex@r5chunk2",
+  "lang": "es",
+  "model": "hexgrad/Kokoro-82M",
+  "params": {
+   "text": "{text}",
+   "preset_voice": [
+    "em_alex"
+   ],
+   "output_format": "wav"
+  },
+  "text_key": "chunk2_es"
+ }
+]
