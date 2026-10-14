@@ -1,11 +1,11 @@
 # Voice lab: tries DeepInfra voices for each language and checks them with speech recognition.
-# Runs on pushes to voice-studio/lab/** (what it does is in voice-studio/lab/run.sh). Costs cents of DeepInfra balance.
+# Runs on pushes to voice-studio/lab/** except its README (what it does is in voice-studio/lab/run.sh). Costs cents of DeepInfra balance.
 name: Voice lab
 
 on:
   push:
     branches: [voice-studio]
-    paths: ["voice-studio/lab/**", ".github/workflows/voice-lab.yml"]
+    paths: ["voice-studio/lab/**", "!voice-studio/lab/README.md", ".github/workflows/voice-lab.yml"]
   workflow_dispatch:
 
 concurrency: voice-lab
