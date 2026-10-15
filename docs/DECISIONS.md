@@ -38,6 +38,7 @@
 
 ## Записи
 
+- 2026-10-15 · Сценарій епізоду 7 (на каналі) «Two coffees» → `videos/08-two-coffees/script.md` · текст озвучки, 8 промптів зображень, монтажний план і пакет публікації; утримання: хук-протиріччя, відкрита петля кожні 3–5 с, фінал без відповіді + луп «I order… → Two coffees».
 - 2026-10-15 · Зроблено Short #07 «Channel 19» (`videos/07-channel-19/`) · старт з обличчя героя (висновок з аналізу конкурентів), луп «out of… → Forty trucks», назва `40 Trucks. Only I Heard Him 😨`, текст обкладинки `WHO WAS HE?`.
 - 2026-10-15 · Аналіз конкурентів сторі-Shorts → `docs/YOUTUBE_SHORTS_COMPETITORS.md` (лідер ніші — His Story/Her Story, 1–8M на ролик) · назви Shorts: 3–6 слів + 1 емодзі; обкладинка: обличчя ~½ кадру, текст ≤3 слів; для #06 назва `My Dad Hid This For 15 Years 👀`, текст обкладинки `HE KNEW.`
 - 2026-10-15 · Власник дав правила назви й обкладинки YouTube → `docs/YOUTUBE_TITLE_RULES.md`, `docs/YOUTUBE_THUMBNAIL_RULES.md` · застосовувати до всіх YouTube-відео; для #06 пакет публікації в `videos/06-father-letter/publish.md` (обкладинка Shorts 9:16).
