@@ -21,17 +21,23 @@ const ENGINES = {
       ['native', { text, voice, speaking_rate: speed, output_format: format }],
     ],
   },
-  /* Only the native route takes language_id (the OpenAI-style one reads every language as English). No speed.
-     exaggeration and cfg 0.5 read with fewer mistakes than the defaults (0); MP3 keeps the base64 the Worker unpacks small. */
+  /* Only the native route takes language_id (the OpenAI-style one reads every language as English). No speed: the page
+     slows or speeds the audio itself. Each voice has its own exaggeration / cfg / temperature (picked in voice-studio/lab,
+     rounds 7-8; the model's defaults of 0 make more mistakes). Always MP3, WAV only if MP3 is refused: the audio comes as
+     base64 in JSON, and unpacking 14 s of WAV takes ~3.7 ms of the free plan's 10 ms CPU, MP3 ~1.1 ms (retakes add up). */
   chatterbox: {
     model: 'ResembleAI/chatterbox-multilingual', verify: true,
-    routes: (text, voice, lang, speed, format) => [format, 'wav'].filter((f, i, all) => all.indexOf(f) === i).map(f =>
-      ['native', { text, language_id: lang, response_format: f, exaggeration: 0.5, cfg: 0.5, ...(voice ? { voice_id: voice } : {}) }]),
+    routes: (text, voice, lang, speed, format, opts) => ['mp3', 'wav'].map(f =>
+      ['native', { text, language_id: lang, response_format: f, ...opts, ...(voice ? { voice_id: voice } : {}) }]),
   },
 };
 const ASR_MODEL = 'openai/whisper-large-v3-turbo'; // checks Inworld and Chatterbox takes: $0.0002 per minute of audio
 const TAKES = 3; // a take that does not match its text is voiced again, at most this many times in all
-// Voice id the page sends -> engine, the provider's voice name, language
+// Chatterbox settings: LIVELY reads with more expression, CALM is steadier and slips less (voice-studio/lab, rounds 7-8)
+const LIVELY = { exaggeration: 0.5, cfg: 0.3 }, CALM = { exaggeration: 0.35, cfg: 0.3, temperature: 0.7 };
+// Voice id the page sends -> engine, the provider's voice name, language, engine options.
+// Chatterbox voices: '' is the model's own voice; the others are synthetic voices made for this site with
+// voice-studio/lab/design_voices.py and kept in this DeepInfra account (voice ids only work with its key).
 const VOICES = {
   am_michael: ['kokoro', 'am_michael', 'en'], am_fenrir: ['kokoro', 'am_fenrir', 'en'], am_puck: ['kokoro', 'am_puck', 'en'],
   am_onyx: ['kokoro', 'am_onyx', 'en'], am_adam: ['kokoro', 'am_adam', 'en'], am_echo: ['kokoro', 'am_echo', 'en'],
@@ -40,11 +46,18 @@ const VOICES = {
   af_heart: ['kokoro', 'af_heart', 'en'], af_bella: ['kokoro', 'af_bella', 'en'], af_nicole: ['kokoro', 'af_nicole', 'en'],
   af_sarah: ['kokoro', 'af_sarah', 'en'], af_kore: ['kokoro', 'af_kore', 'en'], af_aoede: ['kokoro', 'af_aoede', 'en'],
   bf_emma: ['kokoro', 'bf_emma', 'en'], bf_isabella: ['kokoro', 'bf_isabella', 'en'],
+  de_lukas: ['chatterbox', 'menjhi06hqcmfjwzu4dz', 'de', CALM], de_max: ['chatterbox', '', 'de', CALM],
+  de_anna: ['chatterbox', 'ufzc7yn3vq0tbpyyoygc', 'de', LIVELY], de_lena: ['chatterbox', 'lfwoiakcdb8ktvbutdar', 'de', CALM],
+  es_alex: ['kokoro', 'em_alex', 'es'], es_mateo: ['chatterbox', '', 'es', LIVELY],
+  es_lucia: ['chatterbox', '8qs07p4ftjdfzn00sxsc', 'es', LIVELY], es_dora: ['kokoro', 'ef_dora', 'es'],
+  es_valentina: ['chatterbox', 'a8fxvnzbjx574rduzhj2', 'es', CALM],
+  fr_louis: ['chatterbox', '', 'fr', LIVELY], fr_hugo: ['chatterbox', 'y1lfq42wi3gxr1qsql98', 'fr', LIVELY],
+  fr_camille: ['chatterbox', 'j5rtpur21lwjzmgeqimr', 'fr', CALM], fr_siwis: ['kokoro', 'ff_siwis', 'fr'],
   de_josef: ['inworld', 'Josef', 'de'],
   es_rafael: ['inworld', 'Rafael', 'es'], es_diego: ['inworld', 'Diego', 'es'],
   fr_lucian: ['inworld', 'Lucian', 'fr'], fr_alain: ['inworld', 'Alain', 'fr'],
 };
-const DEFAULT_VOICE = { en: 'am_michael', de: 'de_josef', es: 'es_rafael', fr: 'fr_lucian' };
+const DEFAULT_VOICE = { en: 'am_michael', de: 'de_max', es: 'es_alex', fr: 'fr_louis' };
 const LOGIN_WINDOW = 15 * 60 * 1000;
 const LOGIN_MAX_FAILS = 10;
 
@@ -157,8 +170,8 @@ async function speakKokoro(env, text, voice, speed, format) {
 
 /* Other engines: the same OpenAI-style route (plain audio back, speed works), standard queue without the priority
    surcharge; the native route with JSON and base64 audio is the fallback if that route ever rejects the request. */
-async function speakOther(env, engine, text, voice, lang, speed, format) {
-  const routes = engine.routes(text, voice, lang, speed, format).map(([name, body]) =>
+async function speakOther(env, engine, text, voice, lang, speed, format, opts) {
+  const routes = engine.routes(text, voice, lang, speed, format, opts).map(([name, body]) =>
     [name, name === 'native' ? `${baseUrl(env)}/v1/inference/${engine.model}` : `${baseUrl(env)}/v1/audio/speech`, body]);
   let last = null;
   for (const [name, url, body] of routes) {
@@ -175,16 +188,21 @@ async function speakOther(env, engine, text, voice, lang, speed, format) {
   return last;
 }
 
-/* Inworld now and then repeats the end of a request or skips a phrase. Each take is heard back by Whisper and
+/* Inworld and Chatterbox now and then repeat the end of a request or skip a phrase. Each take is heard back by Whisper and
    compared with its text by words of three letters or more: too few of them heard, or far more words than written,
    and the text is voiced again. Whisper writes numbers its own way ("6 heures 30" -> "6h30", "20 Prozent" -> "20%",
-   "docteur" -> "Dr"), so words next to a number and such titles are not counted. The closest take wins. */
+   "docteur" -> "Dr"), so words next to a number, such titles and numbers the page wrote as words for Chatterbox
+   ("fünfzehnhundert", "mil quinientos") are not counted. The closest take wins. */
 const TITLES = new Set(['doctor', 'doktor', 'docteur', 'doctora', 'mister', 'monsieur', 'madame', 'señor', 'señora', 'professor', 'nummer', 'número', 'numéro', 'number']);
+const NUMBER_WORDS = new Set(('eins zwei drei vier fünf sechs sieben acht neun zehn zwölf komma uno una dos tres cuatro cinco seis siete '
+  + 'ocho nueve diez once doce trece catorce quince cien coma une deux trois quatre cinq sept huit neuf onze douze treize quatorze '
+  + 'quinze seize virgule').split(' '));
+const NUMBER_WORD = { test: w => NUMBER_WORDS.has(w) || /hundert|tausend|zehn$|zig$|ßig$|million|ient[oa]s$|^mil$|^veinti|^dieci|^(?:treinta|cuarenta|cincuenta|sesenta|setenta|ochenta|noventa)$|^cents?$|^mille$|^(?:vingts?|trente|quarante|cinquante|soixante)$/u.test(w) };
 const tokensOf = s => s.toLowerCase().normalize('NFC').match(/\p{L}+|\p{N}+/gu) || [];
 const wordsOf = s => tokensOf(s).filter(w => w.length >= 3 && !/\p{N}/u.test(w));
 function match(text, heard) {
   const tokens = tokensOf(text), digit = t => /\p{N}/u.test(t || '');
-  const want = tokens.filter((w, i) => w.length >= 3 && !digit(w) && !digit(tokens[i - 1]) && !digit(tokens[i + 1]) && !TITLES.has(w));
+  const want = tokens.filter((w, i) => w.length >= 3 && !digit(w) && !digit(tokens[i - 1]) && !digit(tokens[i + 1]) && !TITLES.has(w) && !NUMBER_WORD.test(w));
   if (want.length < 5) return 1;
   const got = wordsOf(heard), left = new Map();
   for (const w of got) left.set(w, (left.get(w) || 0) + 1);
@@ -208,10 +226,10 @@ async function hear(env, bytes, type, lang) {
     return null; // no check is better than no audio
   }
 }
-async function speakVerified(env, engine, text, voice, lang, speed, format) {
+async function speakVerified(env, engine, text, voice, lang, speed, format, opts) {
   let best = null;
   for (let take = 1; take <= TAKES; take++) {
-    const out = await speakOther(env, engine, text, voice, lang, speed, format);
+    const out = await speakOther(env, engine, text, voice, lang, speed, format, opts);
     if (!out.res.ok) return best ? best.out : out;
     const type = out.res.headers.get('content-type') || 'audio/wav';
     const bytes = await out.res.arrayBuffer();
@@ -247,10 +265,10 @@ async function plainAudio(res) {
 }
 
 function speak(env, voiceId, text, speed, format = 'wav', verify = true) {
-  const [engine, voice, lang] = VOICES[voiceId];
+  const [engine, voice, lang, opts = {}] = VOICES[voiceId];
   if (engine === 'kokoro') return speakKokoro(env, text, voice, speed, format);
-  if (verify && ENGINES[engine].verify && env.VERIFY !== 'off') return speakVerified(env, ENGINES[engine], text, voice, lang, speed, format);
-  return speakOther(env, ENGINES[engine], text, voice, lang, speed, format);
+  if (verify && ENGINES[engine].verify && env.VERIFY !== 'off') return speakVerified(env, ENGINES[engine], text, voice, lang, speed, format, opts);
+  return speakOther(env, ENGINES[engine], text, voice, lang, speed, format, opts);
 }
 
 function providerError(status, detail = '') {
@@ -297,7 +315,7 @@ async function modelInfo(env, engine) {
     if (!res.ok) return null;
     const schema = (await res.json()).in_schema;
     const voices = enumOf(schema, 'voice') || enumOf(schema, 'preset_voice');
-    const ours = Object.values(VOICES).filter(v => v[0] === engine).map(v => v[1]);
+    const ours = Object.values(VOICES).filter(v => v[0] === engine && v[1]).map(v => v[1]);
     const input = schema?.properties?.input || schema?.properties?.text;
     return {
       voices: voices ? voices.length : null,
@@ -311,7 +329,7 @@ async function modelInfo(env, engine) {
 }
 
 /* Setup check: key accepted, balance available, audio comes back from every engine; plus what each model supports. */
-const CHECK = { kokoro: ['am_michael', 'This is a test.'], chatterbox: [DEFAULT_VOICE.de, 'Das ist ein kurzer Test.'], inworld: ['de_josef', 'Das ist ein Test.'] };
+const CHECK = { kokoro: ['am_michael', 'This is a test.'], chatterbox: ['de_lukas', 'Das ist ein kurzer Test.'], inworld: ['de_josef', 'Das ist ein Test.'] };
 async function check(env) {
   const engines = {};
   const tests = Object.entries(CHECK).filter(([engine, [voice]]) => VOICES[voice]?.[0] === engine); // engines with voices in use

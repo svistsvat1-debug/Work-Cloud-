@@ -312,25 +312,33 @@ const store = {
 // speed, set so it reads at a voice-over pace (about 150-170 words a minute). Premium voices cost ~50 times more.
 const V = (id, name, lang, accent, sex, engine, cps, pace = 1) => ({ id, name, lang, accent, sex, engine, cps, pace });
 const VOICES = [
-  V("am_michael", "Michael", "en", "US", "m", "kokoro"), V("am_fenrir", "Fenrir", "en", "US", "m", "kokoro"),
-  V("am_puck", "Puck", "en", "US", "m", "kokoro"), V("am_onyx", "Onyx", "en", "US", "m", "kokoro"),
-  V("am_adam", "Adam", "en", "US", "m", "kokoro"), V("am_echo", "Echo", "en", "US", "m", "kokoro"),
-  V("am_liam", "Liam", "en", "US", "m", "kokoro"), V("am_eric", "Eric", "en", "US", "m", "kokoro"),
-  V("bm_george", "George", "en", "UK", "m", "kokoro"), V("bm_fable", "Fable", "en", "UK", "m", "kokoro"),
-  V("bm_lewis", "Lewis", "en", "UK", "m", "kokoro"), V("bm_daniel", "Daniel", "en", "UK", "m", "kokoro"),
-  V("af_heart", "Heart", "en", "US", "f", "kokoro"), V("af_bella", "Bella", "en", "US", "f", "kokoro"),
-  V("af_nicole", "Nicole", "en", "US", "f", "kokoro"), V("af_sarah", "Sarah", "en", "US", "f", "kokoro"),
-  V("af_kore", "Kore", "en", "US", "f", "kokoro"), V("af_aoede", "Aoede", "en", "US", "f", "kokoro"),
-  V("bf_emma", "Emma", "en", "UK", "f", "kokoro"), V("bf_isabella", "Isabella", "en", "UK", "f", "kokoro"),
+  // English, Kokoro: male voices read at 160-175 words a minute at 0.95, female ones (faster) at 0.9 (voice-studio/lab, round 8)
+  ...["am_michael Michael", "am_fenrir Fenrir", "am_puck Puck", "am_onyx Onyx", "am_adam Adam", "am_echo Echo", "am_liam Liam", "am_eric Eric"]
+    .map((x) => x.split(" ")).map(([id, name]) => V(id, name, "en", "US", "m", "kokoro", undefined, 0.95)),
+  ...["bm_george George", "bm_fable Fable", "bm_lewis Lewis", "bm_daniel Daniel"].map((x) => x.split(" ")).map(([id, name]) => V(id, name, "en", "UK", "m", "kokoro", undefined, 0.95)),
+  ...["af_heart Heart", "af_bella Bella", "af_nicole Nicole", "af_sarah Sarah", "af_kore Kore", "af_aoede Aoede"]
+    .map((x) => x.split(" ")).map(([id, name]) => V(id, name, "en", "US", "f", "kokoro", undefined, 0.9)),
+  ...["bf_emma Emma", "bf_isabella Isabella"].map((x) => x.split(" ")).map(([id, name]) => V(id, name, "en", "UK", "f", "kokoro", undefined, 0.9)),
+  // German, Spanish, French: the first voice of each sex is the default; Chatterbox ~$1 per million characters like Kokoro.
+  // Max and Louis speak fast, so they start slowed to a narrator's pace (the page stretches them; naturalness held, round 9)
+  V("de_max", "Max", "de", "DE", "m", "chatterbox", 17.8, 0.9), V("de_lukas", "Lukas", "de", "DE", "m", "chatterbox", 14.6),
+  V("de_anna", "Anna", "de", "DE", "f", "chatterbox", 14.5), V("de_lena", "Lena", "de", "DE", "f", "chatterbox", 16),
+  V("es_alex", "Alex", "es", "ES", "m", "kokoro"), V("es_mateo", "Mateo", "es", "ES", "m", "chatterbox", 17.3, 0.9),
+  V("es_lucia", "Lucía", "es", "ES", "f", "chatterbox", 14.3), V("es_dora", "Dora", "es", "ES", "f", "kokoro", undefined, 0.95),
+  V("es_valentina", "Valentina", "es", "MX", "f", "chatterbox", 13.5),
+  V("fr_louis", "Louis", "fr", "FR", "m", "chatterbox", 19.5, 0.85), V("fr_hugo", "Hugo", "fr", "FR", "m", "chatterbox", 14.6),
+  V("fr_camille", "Camille", "fr", "FR", "f", "chatterbox", 15.8), V("fr_siwis", "Siwis", "fr", "FR", "f", "kokoro", undefined, 0.95),
+  // Premium: Inworld, ~$50 per million characters
   V("de_josef", "Josef", "de", "DE", "m", "inworld", 13),
   V("es_rafael", "Rafael", "es", "ES", "m", "inworld", 14), V("es_diego", "Diego", "es", "ES", "m", "inworld", 12),
   V("fr_lucian", "Lucian", "fr", "FR", "m", "inworld", 13), V("fr_alain", "Alain", "fr", "FR", "m", "inworld", 18),
 ];
 const PREMIUM = { inworld: true }; // shown as "· преміум" in the voice list
 const SPELL_NUMBERS = { chatterbox: true }; // Chatterbox misreads long numbers ("1500" as "100-500"), so they go as words
-const SPEED = { kokoro: true, inworld: true }; // engines that take a speed
+const SPEED = { kokoro: true, inworld: true, chatterbox: true }; // engines with a speed setting
+const NATIVE_SPEED = { kokoro: true, inworld: true }; // the rest are slowed or sped up on the page (stretch below)
 const SEXES = { m: "Чоловіча", f: "Жіноча" };
-const ACCENTS = { US: "США", UK: "Британія", DE: "Німеччина", ES: "Іспанія", FR: "Франція" };
+const ACCENTS = { US: "США", UK: "Британія", DE: "Німеччина", ES: "Іспанія", MX: "Латинська Америка", FR: "Франція" };
 const LANG_NAMES = { en: "англійська", de: "німецька", es: "іспанська", fr: "французька" };
 const LANG_IN = { en: "англійською", de: "німецькою", es: "іспанською", fr: "французькою" };
 const LANG_ACC = { en: "англійську", de: "німецьку", es: "іспанську", fr: "французьку" };
@@ -1152,7 +1160,11 @@ async function speak(text, voice, lang, speed, format, signal) {
       throw new Error("Немає з'єднання з сервером. Перевірте інтернет і натисніть «Продовжити озвучку».");
     }
     if (res.ok) {
-      try { const audio = trimSilence(await samplesFrom(res)); return toInt16(store.get("level", true) ? level(audio) : audio); }
+      try {
+        let audio = trimSilence(await samplesFrom(res));
+        if (!NATIVE_SPEED[voiceOf(voice)?.engine]) audio = stretch(audio, speed);
+        return toInt16(store.get("level", true) ? level(audio) : audio);
+      }
       catch (e) { if (signal.aborted) throw e; if (attempt < 2) continue; throw e; }
     }
     const data = await res.json().catch(() => ({}));
