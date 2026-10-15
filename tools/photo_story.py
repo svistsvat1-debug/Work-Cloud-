@@ -112,12 +112,15 @@ def time_words(line, islands):
     words = [(c_i, w) for c_i, c in enumerate(line["chunks"]) for w in c.split()]
     weights = [syllables(w) + 0.35 for _, w in words]
     times = spread(weights, islands, a, b)
-    starts = [s for s, e in islands if a - 0.05 <= s < b]
+    # only islands after a pause (>= 0.05 s) can start a phrase
+    starts = [s for (s, e), (_, pe) in zip(islands, [(0, -1)] + islands[:-1])
+              if a - 0.05 <= s < b and s - pe >= 0.05]
     anchors = [0]
     for k in range(1, len(words)):
         if re.search(r"[,.?!…]$", words[k - 1][1]):
-            near = min(starts, key=lambda s: abs(s - times[k]), default=None)
-            if near is not None and abs(near - times[k]) < 0.45 and near > times[anchors[-1]]:
+            later = [s for s in starts if s > times[anchors[-1]] + 0.1]
+            near = min(later, key=lambda s: abs(s - times[k]), default=None)
+            if near is not None and abs(near - times[k]) < 1.2:
                 times[k] = near
                 anchors.append(k)
     bounds = anchors + [len(words)]
