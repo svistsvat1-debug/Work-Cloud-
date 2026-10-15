@@ -71,6 +71,9 @@ def voiced_islands(voice, sr):
 
 
 def syllables(word):
+    digits = re.sub(r"[^0-9]", "", word)
+    if digits:
+        return len(digits)
     w = re.sub(r"[^a-z]", "", word.lower())
     n = len(re.findall(r"[aeiouy]+", w))
     if w.endswith("e") and n > 1 and not w.endswith("le"):
@@ -78,10 +81,9 @@ def syllables(word):
     return max(1, n)
 
 
-def time_words(line, islands):
-    """Spread the line's words over its *voiced* time, weighted by syllables."""
-    a, b = line["span"]
-    parts = [[max(a, s), min(b, e)] for s, e in islands if e > a and s < b] or [[a, b]]
+def spread(weights, parts, a, b):
+    """Start times for words with these weights over the voiced time inside [a, b]."""
+    parts = [[max(a, s), min(b, e)] for s, e in parts if e > a and s < b] or [[a, b]]
     total = sum(e - s for s, e in parts)
 
     def at(frac):
@@ -92,13 +94,37 @@ def time_words(line, islands):
             left -= e - s
         return parts[-1][1]
 
+    out, acc = [], 0.0
+    for wt in weights:
+        out.append(at(acc / sum(weights)))
+        acc += wt
+    return out
+
+
+def time_words(line, islands):
+    """Spread the line's words over its *voiced* time, weighted by syllables.
+
+    A word after punctuation usually starts right after a pause, so it is
+    snapped to the nearest speech island and the words between anchors are
+    re-spread.
+    """
+    a, b = line["span"]
     words = [(c_i, w) for c_i, c in enumerate(line["chunks"]) for w in c.split()]
     weights = [syllables(w) + 0.35 for _, w in words]
-    cum, acc = [], 0.0
-    for wt in weights:
-        cum.append(acc / sum(weights))
-        acc += wt
-    return [(c_i, w, at(f)) for (c_i, w), f in zip(words, cum)]
+    times = spread(weights, islands, a, b)
+    starts = [s for s, e in islands if a - 0.05 <= s < b]
+    anchors = [0]
+    for k in range(1, len(words)):
+        if re.search(r"[,.?!…]$", words[k - 1][1]):
+            near = min(starts, key=lambda s: abs(s - times[k]), default=None)
+            if near is not None and abs(near - times[k]) < 0.45 and near > times[anchors[-1]]:
+                times[k] = near
+                anchors.append(k)
+    bounds = anchors + [len(words)]
+    for x, y in zip(bounds, bounds[1:]):
+        end = times[y] - 0.02 if y < len(words) else b
+        times[x:y] = spread(weights[x:y], islands, times[x], end)
+    return [(c_i, w, t) for (c_i, w), t in zip(words, times)]
 
 
 def build_chunks(story, islands):
