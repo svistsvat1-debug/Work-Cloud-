@@ -2,9 +2,11 @@
 // The page in ./public is served by Workers Assets; only /api/* reaches this code.
 // Voices run on DeepInfra (paid per character), called with the DEEPINFRA_API_KEY secret,
 // so the key never reaches the browser. Access: one password, the SITE_PASSWORD secret.
-// English: Kokoro-82M (Apache 2.0). German, Spanish, French: Inworld TTS 1.5 voices made for those languages
-// (Inworld assigns the rights in generated audio to the customer). Picked in voice-studio/lab by speech recognition,
-// accent, naturalness and pitch checks; see voice-studio/lab/README.md.
+// Kokoro-82M (Apache 2.0, $0.99 per million characters): English, and Spanish and French voices it has.
+// Chatterbox Multilingual (MIT, $1 per million): German, Spanish, French in its own male voice and in synthetic native
+// voices made for this site (voice-studio/lab/design_voices.py). Inworld TTS 1.5 ($50 per million): premium voices
+// made for those languages (Inworld assigns the rights in generated audio to the customer). Picked in voice-studio/lab
+// by speech recognition, accent, naturalness and pitch checks; see voice-studio/lab/README.md.
 // The page sends a few sentences per request; this code only checks the session and relays audio.
 
 const COOKIE = 'vs_session';
@@ -12,9 +14,22 @@ const SESSION_DAYS = 180;
 const MAX_TEXT = 1500; // characters per request
 const ENGINES = {
   kokoro: { model: 'hexgrad/Kokoro-82M' },
-  inworld: { model: 'inworld-ai/inworld-tts-1.5-max', verify: true },
+  inworld: {
+    model: 'inworld-ai/inworld-tts-1.5-max', verify: true,
+    routes: (text, voice, lang, speed, format) => [
+      ['speech', { model: 'inworld-ai/inworld-tts-1.5-max', input: text, voice, speed, response_format: format }],
+      ['native', { text, voice, speaking_rate: speed, output_format: format }],
+    ],
+  },
+  /* Only the native route takes language_id (the OpenAI-style one reads every language as English). No speed.
+     exaggeration and cfg 0.5 read with fewer mistakes than the defaults (0); MP3 keeps the base64 the Worker unpacks small. */
+  chatterbox: {
+    model: 'ResembleAI/chatterbox-multilingual', verify: true,
+    routes: (text, voice, lang, speed, format) => [format, 'wav'].filter((f, i, all) => all.indexOf(f) === i).map(f =>
+      ['native', { text, language_id: lang, response_format: f, exaggeration: 0.5, cfg: 0.5, ...(voice ? { voice_id: voice } : {}) }]),
+  },
 };
-const ASR_MODEL = 'openai/whisper-large-v3-turbo'; // checks Inworld takes: $0.0002 per minute of audio
+const ASR_MODEL = 'openai/whisper-large-v3-turbo'; // checks Inworld and Chatterbox takes: $0.0002 per minute of audio
 const TAKES = 3; // a take that does not match its text is voiced again, at most this many times in all
 // Voice id the page sends -> engine, the provider's voice name, language
 const VOICES = {
@@ -22,6 +37,9 @@ const VOICES = {
   am_onyx: ['kokoro', 'am_onyx', 'en'], am_adam: ['kokoro', 'am_adam', 'en'], am_echo: ['kokoro', 'am_echo', 'en'],
   am_liam: ['kokoro', 'am_liam', 'en'], am_eric: ['kokoro', 'am_eric', 'en'], bm_george: ['kokoro', 'bm_george', 'en'],
   bm_fable: ['kokoro', 'bm_fable', 'en'], bm_lewis: ['kokoro', 'bm_lewis', 'en'], bm_daniel: ['kokoro', 'bm_daniel', 'en'],
+  af_heart: ['kokoro', 'af_heart', 'en'], af_bella: ['kokoro', 'af_bella', 'en'], af_nicole: ['kokoro', 'af_nicole', 'en'],
+  af_sarah: ['kokoro', 'af_sarah', 'en'], af_kore: ['kokoro', 'af_kore', 'en'], af_aoede: ['kokoro', 'af_aoede', 'en'],
+  bf_emma: ['kokoro', 'bf_emma', 'en'], bf_isabella: ['kokoro', 'bf_isabella', 'en'],
   de_josef: ['inworld', 'Josef', 'de'],
   es_rafael: ['inworld', 'Rafael', 'es'], es_diego: ['inworld', 'Diego', 'es'],
   fr_lucian: ['inworld', 'Lucian', 'fr'], fr_alain: ['inworld', 'Alain', 'fr'],
@@ -139,11 +157,9 @@ async function speakKokoro(env, text, voice, speed, format) {
 
 /* Other engines: the same OpenAI-style route (plain audio back, speed works), standard queue without the priority
    surcharge; the native route with JSON and base64 audio is the fallback if that route ever rejects the request. */
-async function speakOther(env, engine, text, voice, speed, format) {
-  const routes = [
-    ['speech', `${baseUrl(env)}/v1/audio/speech`, { model: engine.model, input: text, voice, speed, response_format: format }],
-    ['native', `${baseUrl(env)}/v1/inference/${engine.model}`, { text, voice, speaking_rate: speed, output_format: format }],
-  ];
+async function speakOther(env, engine, text, voice, lang, speed, format) {
+  const routes = engine.routes(text, voice, lang, speed, format).map(([name, body]) =>
+    [name, name === 'native' ? `${baseUrl(env)}/v1/inference/${engine.model}` : `${baseUrl(env)}/v1/audio/speech`, body]);
   let last = null;
   for (const [name, url, body] of routes) {
     let res;
@@ -195,7 +211,7 @@ async function hear(env, bytes, type, lang) {
 async function speakVerified(env, engine, text, voice, lang, speed, format) {
   let best = null;
   for (let take = 1; take <= TAKES; take++) {
-    const out = await speakOther(env, engine, text, voice, speed, format);
+    const out = await speakOther(env, engine, text, voice, lang, speed, format);
     if (!out.res.ok) return best ? best.out : out;
     const type = out.res.headers.get('content-type') || 'audio/wav';
     const bytes = await out.res.arrayBuffer();
@@ -218,18 +234,23 @@ async function plainAudio(res) {
   if (!type.includes('json')) return res;
   const found = audioString(await res.json());
   if (!found) return { ok: false, status: 502 };
-  const head = /^data:([^;,]*)[^,]*,/.exec(found);
-  const bin = atob(head ? found.slice(head[0].length) : found);
-  const bytes = new Uint8Array(bin.length);
-  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-  return new Response(bytes, { headers: { 'content-type': (head && head[1]) || 'audio/wav' } });
+  const head = /^data:([^;,]*)[^,]*,/.exec(found), b64 = head ? found.slice(head[0].length) : found;
+  let bytes;
+  if (Uint8Array.fromBase64) bytes = Uint8Array.fromBase64(b64); // native, far less CPU than the loop
+  else {
+    const bin = atob(b64);
+    bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  }
+  const sniffed = bytes[0] === 0x52 && bytes[1] === 0x49 ? 'audio/wav' : bytes[0] === 0x49 || bytes[0] === 0xff ? 'audio/mpeg' : '';
+  return new Response(bytes, { headers: { 'content-type': (head && head[1]) || sniffed || 'audio/wav' } });
 }
 
 function speak(env, voiceId, text, speed, format = 'wav', verify = true) {
   const [engine, voice, lang] = VOICES[voiceId];
   if (engine === 'kokoro') return speakKokoro(env, text, voice, speed, format);
   if (verify && ENGINES[engine].verify && env.VERIFY !== 'off') return speakVerified(env, ENGINES[engine], text, voice, lang, speed, format);
-  return speakOther(env, ENGINES[engine], text, voice, speed, format);
+  return speakOther(env, ENGINES[engine], text, voice, lang, speed, format);
 }
 
 function providerError(status, detail = '') {
@@ -290,10 +311,11 @@ async function modelInfo(env, engine) {
 }
 
 /* Setup check: key accepted, balance available, audio comes back from every engine; plus what each model supports. */
-const CHECK = { kokoro: ['am_michael', 'This is a test.'], inworld: ['de_josef', 'Das ist ein Test.'] };
+const CHECK = { kokoro: ['am_michael', 'This is a test.'], chatterbox: [DEFAULT_VOICE.de, 'Das ist ein kurzer Test.'], inworld: ['de_josef', 'Das ist ein Test.'] };
 async function check(env) {
   const engines = {};
-  await Promise.all(Object.entries(CHECK).map(async ([engine, [voice, text]]) => {
+  const tests = Object.entries(CHECK).filter(([engine, [voice]]) => VOICES[voice]?.[0] === engine); // engines with voices in use
+  await Promise.all(tests.map(async ([engine, [voice, text]]) => {
     const started = Date.now();
     const [out, info] = await Promise.all([speak(env, voice, text, 1, 'wav', false), modelInfo(env, engine)]);
     if (!out.res.ok) { engines[engine] = { ok: false, status: out.res.status, detail: out.detail || '' }; return; }

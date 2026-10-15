@@ -13,6 +13,8 @@ CASES = [("en", "am_michael", "hard_en"), ("de", "de_josef", "hard_de"), ("es", 
          ("fr", "fr_lucian", "hard_fr"), ("es", "es_diego", "short2_es"), ("fr", "fr_alain", "short2_fr"),
          ("de", "de_josef", "long_de"), ("fr", "fr_lucian", "long_fr")]
 ONLY = os.environ.get("LIVE_LANGS", "").split()  # e.g. "en": only those languages
+if os.environ.get("LIVE_CASES"):  # "lang:voice:text_key ..." instead of the list above
+    CASES = [tuple(c.split(":")) for c in os.environ["LIVE_CASES"].split()]
 
 
 async def main():
@@ -39,9 +41,11 @@ async def main():
             if ONLY and lang not in ONLY:
                 continue
             await page.select_option("#lang", lang)
-            await page.select_option("#voice", voice)
+            await page.evaluate("(id) => { pickVoice(voiceOf(id)); updateLabels(); }", voice)  # sets the accent and sex chips too
+            assert await page.input_value("#voice") == voice, voice
             await page.fill("#text", texts[key])
-            spoken = await page.evaluate("([t, l]) => buildScript(t, {}, 0.8, l, CHUNK_CHARS[voiceOf(document.getElementById('voice').value)[4]]).map((i) => i.spoken).join(' ')", [texts[key], lang])
+            spoken = await page.evaluate("""([t, l]) => { const e = voiceOf(document.getElementById('voice').value).engine;
+                return buildScript(t, {}, 0.8, l, CHUNK_CHARS[e], e).map((i) => i.spoken).join(' '); }""", [texts[key], lang])
             takes.clear()
             t = time.time()
             await page.click("#go")

@@ -1,5 +1,6 @@
 // Checks the natural-reading rules in the browser engine and the cloud page against tests/natural_cases.json
-// (and the cloud page's German, Spanish and French against tests/natural_cases_cloud.json: its voices read digits themselves).
+// (and the cloud page's German, Spanish and French against tests/natural_cases_cloud.json: its voices read digits themselves,
+// except Chatterbox, which gets numbers as words: tests/number_words_cases.json).
 // Run from voice-studio/: node tests/check_natural.mjs
 import fs from "fs";
 
@@ -23,6 +24,17 @@ for (const [file, name, fn, lang, set] of blocks) {
     const got = run(input);
     total++;
     if (got !== want) { failed++; console.log(`${file} ${fn}: ${JSON.stringify(input)}\n  got  ${JSON.stringify(got)}\n  want ${JSON.stringify(want)}`); }
+  }
+}
+// Numbers as words, for the cloud voices that misread digits (Chatterbox): tests/number_words_cases.json
+{
+  const src = fs.readFileSync("cloud/public/index.html", "utf8"), set = JSON.parse(fs.readFileSync("tests/number_words_cases.json", "utf8"));
+  const start = src.indexOf("// ---- numbers as words"), end = src.indexOf("// ---- end numbers as words");
+  const run = new Function(src.slice(start, end) + "\nreturn numbersToWords;")();
+  for (const [lang, list] of Object.entries(set)) for (const [input, want] of list) {
+    const got = run(input, lang);
+    total++;
+    if (got !== want) { failed++; console.log(`numbersToWords ${lang}: ${JSON.stringify(input)}\n  got  ${JSON.stringify(got)}\n  want ${JSON.stringify(want)}`); }
   }
 }
 console.log(failed ? `${failed} of ${total} failed` : `all ${total} passed`);

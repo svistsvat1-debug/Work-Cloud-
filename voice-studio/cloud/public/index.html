@@ -192,7 +192,7 @@
         <div class="chips">
           <label class="chip"><span>Англійська</span><select id="lang" aria-label="Мова"><option value="en">Англійська</option><option value="de">Німецька</option><option value="es">Іспанська</option><option value="fr">Французька</option></select></label>
           <label class="chip"><span></span><select id="accent" aria-label="Акцент"><option value="US">США</option><option value="UK">Британія</option></select></label>
-          <label class="chip"><span>Чоловіча</span><select id="gender" aria-label="Голос"><option>Чоловіча</option></select></label>
+          <label class="chip"><span>Чоловіча</span><select id="gender" aria-label="Стать голосу"><option value="m">Чоловіча</option></select></label>
           <label class="chip"><span></span><select id="voice" aria-label="Диктор"></select></label>
         </div>
         <button class="white" id="go" type="button" aria-label="Озвучити"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M5 3.2v11.6L14.5 9z" fill="currentColor"/></svg></button>
@@ -294,7 +294,7 @@
     </div>
 
     <div class="sheet-foot">
-      <span>Англійська: Kokoro-82M (Apache 2.0). Німецька, іспанська, французька: Inworld TTS, права на аудіо передаються вам. Монетизація дозволена. Оплата за символи з балансу DeepInfra.</span>
+      <span>Голоси: Kokoro-82M (Apache 2.0) і Chatterbox (MIT); преміум — Inworld TTS, права на аудіо передаються вам. Монетизація дозволена. Оплата за символи з балансу DeepInfra.</span>
       <button class="link" id="logout" type="button" hidden>Вийти</button>
     </div>
   </div>
@@ -307,18 +307,28 @@ const store = {
   set(k, v) { try { localStorage.setItem("vs." + k, JSON.stringify(v)); } catch {} },
 };
 
-// [id, name, language, accent, engine, characters per second at speed 1]; the server has the same ids (src/worker.js).
-// Picked and measured in voice-studio/lab.
+// Voices: the server has the same ids (src/worker.js). Picked and measured in voice-studio/lab.
+// cps: characters per second at speed 1, for the length check of Inworld takes. Premium voices cost ~50 times more.
+const V = (id, name, lang, accent, sex, engine, cps) => ({ id, name, lang, accent, sex, engine, cps });
 const VOICES = [
-  ["am_michael", "Michael", "en", "US", "kokoro"], ["am_fenrir", "Fenrir", "en", "US", "kokoro"], ["am_puck", "Puck", "en", "US", "kokoro"],
-  ["am_onyx", "Onyx", "en", "US", "kokoro"], ["am_adam", "Adam", "en", "US", "kokoro"], ["am_echo", "Echo", "en", "US", "kokoro"],
-  ["am_liam", "Liam", "en", "US", "kokoro"], ["am_eric", "Eric", "en", "US", "kokoro"],
-  ["bm_george", "George", "en", "UK", "kokoro"], ["bm_fable", "Fable", "en", "UK", "kokoro"],
-  ["bm_lewis", "Lewis", "en", "UK", "kokoro"], ["bm_daniel", "Daniel", "en", "UK", "kokoro"],
-  ["de_josef", "Josef", "de", "DE", "inworld", 13],
-  ["es_rafael", "Rafael", "es", "ES", "inworld", 14], ["es_diego", "Diego", "es", "ES", "inworld", 12],
-  ["fr_lucian", "Lucian", "fr", "FR", "inworld", 13], ["fr_alain", "Alain", "fr", "FR", "inworld", 18],
+  V("am_michael", "Michael", "en", "US", "m", "kokoro"), V("am_fenrir", "Fenrir", "en", "US", "m", "kokoro"),
+  V("am_puck", "Puck", "en", "US", "m", "kokoro"), V("am_onyx", "Onyx", "en", "US", "m", "kokoro"),
+  V("am_adam", "Adam", "en", "US", "m", "kokoro"), V("am_echo", "Echo", "en", "US", "m", "kokoro"),
+  V("am_liam", "Liam", "en", "US", "m", "kokoro"), V("am_eric", "Eric", "en", "US", "m", "kokoro"),
+  V("bm_george", "George", "en", "UK", "m", "kokoro"), V("bm_fable", "Fable", "en", "UK", "m", "kokoro"),
+  V("bm_lewis", "Lewis", "en", "UK", "m", "kokoro"), V("bm_daniel", "Daniel", "en", "UK", "m", "kokoro"),
+  V("af_heart", "Heart", "en", "US", "f", "kokoro"), V("af_bella", "Bella", "en", "US", "f", "kokoro"),
+  V("af_nicole", "Nicole", "en", "US", "f", "kokoro"), V("af_sarah", "Sarah", "en", "US", "f", "kokoro"),
+  V("af_kore", "Kore", "en", "US", "f", "kokoro"), V("af_aoede", "Aoede", "en", "US", "f", "kokoro"),
+  V("bf_emma", "Emma", "en", "UK", "f", "kokoro"), V("bf_isabella", "Isabella", "en", "UK", "f", "kokoro"),
+  V("de_josef", "Josef", "de", "DE", "m", "inworld", 13),
+  V("es_rafael", "Rafael", "es", "ES", "m", "inworld", 14), V("es_diego", "Diego", "es", "ES", "m", "inworld", 12),
+  V("fr_lucian", "Lucian", "fr", "FR", "m", "inworld", 13), V("fr_alain", "Alain", "fr", "FR", "m", "inworld", 18),
 ];
+const PREMIUM = { inworld: true }; // shown as "· преміум" in the voice list
+const SPELL_NUMBERS = { chatterbox: true }; // Chatterbox misreads long numbers ("1500" as "100-500"), so they go as words
+const SPEED = { kokoro: true, inworld: true }; // engines that take a speed
+const SEXES = { m: "Чоловіча", f: "Жіноча" };
 const ACCENTS = { US: "США", UK: "Британія", DE: "Німеччина", ES: "Іспанія", FR: "Франція" };
 const LANG_NAMES = { en: "англійська", de: "німецька", es: "іспанська", fr: "французька" };
 const LANG_IN = { en: "англійською", de: "німецькою", es: "іспанською", fr: "французькою" };
@@ -331,9 +341,10 @@ const PREVIEW = {
 };
 const SR = 24000;
 const PARALLEL = 4;          // requests at a time
-const CHUNK_CHARS = { kokoro: 800, inworld: 280 }; // characters per request: Inworld can repeat or skip words in longer ones (voice-studio/lab)
+const CHUNK_CHARS = { kokoro: 800, inworld: 280, chatterbox: 220 }; // characters per request: Inworld can repeat or skip words in longer ones (voice-studio/lab)
 const CHUNK_GAP = 0.3;       // pause where one paragraph is split into several requests
-const PRICE_PER_M = { kokoro: 0.99, inworld: 50 }; // USD per million characters on DeepInfra, for the estimate only
+const PRICE_PER_M = { kokoro: 0.99, inworld: 50, chatterbox: 1 }; // USD per million characters on DeepInfra, for the estimate only
+const VERIFIED = { inworld: true, chatterbox: true }, ASR_PER_MIN = 0.0002; // the server hears these takes back with Whisper
 const CHARS_PER_SEC = { en: 14, de: 13, es: 14, fr: 13 }; // speech speed measured in voice-studio/lab, for the length estimate
 const TIER_FACTOR = { priority: 1.5, flex: 0.8 }; // DeepInfra's price multipliers per service tier
 const LEAD_IN = 0.25, TAIL = 0.5;
@@ -777,6 +788,81 @@ function naturalFr(text) {
   return text;
 }
 // ---- end natural reading (German, Spanish, French)
+
+// ---- numbers as words (German, Spanish, French): for voices that misread digits ("1500" heard as "100-500")
+const NUM_DE = ["null", "eins", "zwei", "drei", "vier", "fünf", "sechs", "sieben", "acht", "neun", "zehn", "elf", "zwölf",
+  "dreizehn", "vierzehn", "fünfzehn", "sechzehn", "siebzehn", "achtzehn", "neunzehn"];
+const TENS_DE = ["", "", "zwanzig", "dreißig", "vierzig", "fünfzig", "sechzig", "siebzig", "achtzig", "neunzig"];
+function wordsDe(n) {
+  if (n < 20) return NUM_DE[n];
+  if (n < 100) return (n % 10 ? (n % 10 === 1 ? "ein" : NUM_DE[n % 10]) + "und" : "") + TENS_DE[Math.floor(n / 10)];
+  if (n < 1000) return (Math.floor(n / 100) === 1 ? "ein" : NUM_DE[Math.floor(n / 100)]) + "hundert" + (n % 100 ? wordsDe(n % 100) : "");
+  if (n < 1e6) { const k = Math.floor(n / 1000); return (k === 1 ? "ein" : wordsDe(k)) + "tausend" + (n % 1000 ? wordsDe(n % 1000) : ""); }
+  const m = Math.floor(n / 1e6); return (m === 1 ? "eine Million" : wordsDe(m) + " Millionen") + (n % 1e6 ? " " + wordsDe(n % 1e6) : "");
+}
+const yearDe = (y) => (y >= 1100 && y < 2000 ? wordsDe(Math.floor(y / 100)) + "hundert" + (y % 100 ? wordsDe(y % 100) : "") : wordsDe(y));
+
+const NUM_ES = ["cero", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve", "diez", "once", "doce", "trece",
+  "catorce", "quince", "dieciséis", "diecisiete", "dieciocho", "diecinueve", "veinte", "veintiuno", "veintidós", "veintitrés",
+  "veinticuatro", "veinticinco", "veintiséis", "veintisiete", "veintiocho", "veintinueve"];
+const TENS_ES = ["", "", "", "treinta", "cuarenta", "cincuenta", "sesenta", "setenta", "ochenta", "noventa"];
+const HUND_ES = ["", "ciento", "doscientos", "trescientos", "cuatrocientos", "quinientos", "seiscientos", "setecientos", "ochocientos", "novecientos"];
+function wordsEs(n) {
+  if (n < 30) return NUM_ES[n];
+  if (n < 100) return TENS_ES[Math.floor(n / 10)] + (n % 10 ? " y " + NUM_ES[n % 10] : "");
+  if (n === 100) return "cien";
+  if (n < 1000) return HUND_ES[Math.floor(n / 100)] + (n % 100 ? " " + wordsEs(n % 100) : "");
+  if (n < 1e6) { const k = Math.floor(n / 1000); return (k === 1 ? "mil" : wordsEs(k).replace(/uno$/, "ún") + " mil") + (n % 1000 ? " " + wordsEs(n % 1000) : ""); }
+  const m = Math.floor(n / 1e6); return (m === 1 ? "un millón" : wordsEs(m).replace(/uno$/, "ún") + " millones") + (n % 1e6 ? " " + wordsEs(n % 1e6) : "");
+}
+
+const NUM_FR = ["zéro", "un", "deux", "trois", "quatre", "cinq", "six", "sept", "huit", "neuf", "dix", "onze", "douze", "treize",
+  "quatorze", "quinze", "seize", "dix-sept", "dix-huit", "dix-neuf"];
+const TENS_FR = ["", "", "vingt", "trente", "quarante", "cinquante", "soixante", "soixante", "quatre-vingt", "quatre-vingt"];
+function wordsFrN(n) {
+  if (n < 20) return NUM_FR[n];
+  if (n < 100) {
+    const t = Math.floor(n / 10), u = n % 10;
+    if (t === 7 || t === 9) return TENS_FR[t] + (t === 7 && u === 1 ? " et " : "-") + NUM_FR[10 + u];
+    if (u === 0) return TENS_FR[t] + (t === 8 ? "s" : "");
+    return TENS_FR[t] + (u === 1 && t !== 8 ? " et un" : "-" + NUM_FR[u]);
+  }
+  if (n < 1000) { const h = Math.floor(n / 100), r = n % 100; return (h === 1 ? "cent" : NUM_FR[h] + " cent" + (r ? "" : "s")) + (r ? " " + wordsFrN(r) : ""); }
+  if (n < 1e6) { const k = Math.floor(n / 1000), r = n % 1000; return (k === 1 ? "mille" : wordsFrN(k).replace(/(cent|vingt)s$/, "$1") + " mille") + (r ? " " + wordsFrN(r) : ""); }
+  const m = Math.floor(n / 1e6); return (m === 1 ? "un million" : wordsFrN(m) + " millions") + (n % 1e6 ? " " + wordsFrN(n % 1e6) : "");
+}
+
+const NUM_WORDS = { de: wordsDe, es: wordsEs, fr: wordsFrN };
+const COMMA = { de: "Komma", es: "coma", fr: "virgule" };
+// Spanish hundreds agree with the noun ("doscientas personas"); feminine by ending, plus common ones that do not show it
+const FEM_ES = new Set(["veces", "noches", "clases", "mujeres", "imágenes", "calles", "leyes", "redes", "partes", "fuentes", "llaves", "madres"]);
+const feminineEs = (w) => FEM_ES.has(w) || /(?:iones|dades|tudes)$/u.test(w) || (/as$/u.test(w) && !/^(?:días|\p{L}*mas|mapas|planetas)$/u.test(w));
+// Numbers from 100 up and decimals become words (small ones the voice reads well, and as digits they keep their gender:
+// "1 semana" stays "una"). German years read as "neunzehnhundertneunzig". Spanish before a noun: "ciento un días",
+// "doscientas mil visitas", "dos millones de visitas"; French "deux millions d'abonnés". Decimals: German digit by digit
+// ("drei Komma zwei fünf"), Spanish and French as a number ("tres coma veinticinco"), unless they start with a zero.
+function numbersToWords(text, lang) {
+  const words = NUM_WORDS[lang];
+  return text.replace(/(?<![\p{L}\d.,])(\d{1,7})(?:,(\d{1,3}))?(?![\d\p{L}]|[.,]\d)/gu, (s, a, b, off, all) => {
+    const n = +a;
+    if (!b && n < 100) return s;
+    let whole = lang === "de" && !b && n >= 1100 && n <= 1999 ? yearDe(n) : words(n);
+    const rest = all.slice(off + s.length), next = !b && (/^\s+(\p{L}+)/u.exec(rest) || [])[1];
+    if (next && lang === "es") {
+      const cut = Math.max(whole.lastIndexOf("millón"), whole.lastIndexOf("millones")); // what comes after agrees with the noun
+      let tail = cut >= 0 ? whole.slice(cut) : whole;
+      tail = feminineEs(next.toLowerCase()) ? tail.replace(/ientos\b/gu, "ientas").replace(/uno$/u, "una")
+        : tail.replace(/veintiuno$/u, "veintiún").replace(/uno$/u, "un");
+      whole = (cut >= 0 ? whole.slice(0, cut) : "") + tail;
+    }
+    if (next && /(?:millón|millones|millions?)$/u.test(whole) && lang !== "de")
+      whole += /^\s+(?:de(?!\p{L})|d['’])/iu.test(rest) ? "" : lang === "fr" && /^[aeiouyéèêàâîôûœ]/iu.test(next) ? " d'\u2060" : " de"; // \u2060: d' joins its word below
+    if (!b) return whole;
+    const frac = lang === "de" || b.startsWith("0") ? b.split("").map((d) => words(+d)).join(" ") : words(+b);
+    return `${whole} ${COMMA[lang]} ${frac}`;
+  }).replace(/'\u2060\s+/gu, "'");
+}
+// ---- end numbers as words
 const NATURAL = { en: naturalEn, de: naturalDe, es: naturalEs, fr: naturalFr };
 function normalize(text, lang) {
   text = NATURAL[lang](text);
@@ -817,7 +903,7 @@ function markup(line) {
   }).replace(/\[[^\]\u0001]*\]/g, " ").replace(SPEAKER, "")
     .replace(/[\p{Extended_Pictographic}\u{1F1E6}-\u{1F1FF}\u{1F3FB}-\u{1F3FF}\u200d\ufe0f]/gu, "").replace(/[ \t]{2,}/g, " ").trim();
 }
-function buildScript(text, pron, paragraphPause, lang, maxChars) {
+function buildScript(text, pron, paragraphPause, lang, maxChars, engine) {
   const requests = [];
   for (const block of cleanMarkdown(text).split(/\n\s*\n/)) {
     const merged = [];
@@ -831,6 +917,7 @@ function buildScript(text, pron, paragraphPause, lang, maxChars) {
       if (typeof piece === "number") { sentences.push({ pause: piece }); continue; }
       for (const shown of splitSentences(piece.trim(), lang)) {
         let spoken = normalize(applyPronunciations(shown, pron), lang);
+        if (SPELL_NUMBERS[engine]) spoken = numbersToWords(spoken, lang);
         if (!/[\p{L}\p{N}]/u.test(spoken)) continue;
         if (!END.test(spoken)) spoken += ".";
         // A run-on "sentence" without punctuation is cut at commas or spaces
@@ -1037,11 +1124,11 @@ async function speak(text, voice, lang, speed, format, signal) {
   }
 }
 
-// Inworld now and then repeats the end of a request or drops a phrase. The server already checks every take by
+// Inworld and Chatterbox now and then repeat the end of a request or drop a phrase. The server already checks every take by
 // speech recognition; as a last guard, a take far longer or shorter than the text needs is asked again (twice more
 // at most) and the one closest to the expected length is kept. Digits count more: "2026" takes longer to say than to write.
 async function speakChecked(text, voice, lang, speed, format, signal) {
-  const cps = (voiceOf(voice) || [])[5];
+  const cps = voiceOf(voice)?.cps;
   if (!cps) return speak(text, voice, lang, speed, format, signal);
   const expected = (text.length + 3 * (text.match(/\d/g) || []).length) / cps / speed;
   let best = null;
@@ -1056,36 +1143,40 @@ async function speakChecked(text, voice, lang, speed, format, signal) {
 
 // ---------------------------------------------------------------- UI
 
-// Voice chips: language -> accent -> voice; each chip shows its select's choice. The last voice per language is remembered.
-const voiceOf = (id) => VOICES.find((v) => v[0] === id);
+// Voice chips: language -> accent -> voice sex -> voice; each chip shows its select's choice.
+// The last voice per language is remembered.
+const voiceOf = (id) => VOICES.find((v) => v.id === id);
+const voiceLabel = (v) => v.name + (PREMIUM[v.engine] ? " · преміум" : "");
 function fillVoices() {
   const saved = voiceOf(store.get("voice", "am_michael")) || VOICES[0];
-  $("lang").value = saved[2];
-  listAccents(saved[3]);
-  listVoices(saved[0]);
+  $("lang").value = saved.lang;
+  pickVoice(saved);
 }
-function listAccents(keep) {
-  const lang = $("lang").value, accents = [...new Set(VOICES.filter((v) => v[2] === lang).map((v) => v[3]))];
-  $("accent").replaceChildren(...accents.map((a) => new Option(ACCENTS[a], a)));
-  $("accent").value = accents.includes(keep) ? keep : accents[0];
-  $("accent").closest(".chip").classList.toggle("fixed", accents.length < 2);
-}
-function listVoices(keep) {
-  const sel = $("voice"), lang = $("lang").value, accent = $("accent").value;
-  sel.replaceChildren(...VOICES.filter((v) => v[2] === lang && v[3] === accent).map(([id, name]) => new Option(name, id)));
-  sel.value = VOICES.some((v) => v[0] === keep && v[2] === lang && v[3] === accent) ? keep : sel.options[0].value;
+function pickVoice(v) { // fills the accent, sex and voice chips for the language chosen, keeping v where it fits
+  const lang = $("lang").value, inLang = VOICES.filter((x) => x.lang === lang);
+  const fill = (sel, values, names, keep) => {
+    sel.replaceChildren(...values.map((x) => new Option(names[x], x)));
+    sel.value = values.includes(keep) ? keep : values[0];
+    sel.closest(".chip").classList.toggle("fixed", values.length < 2);
+  };
+  fill($("accent"), [...new Set(inLang.map((x) => x.accent))], ACCENTS, v?.accent);
+  const inAccent = inLang.filter((x) => x.accent === $("accent").value);
+  fill($("gender"), [...new Set(inAccent.map((x) => x.sex))], SEXES, v?.sex);
+  const list = inAccent.filter((x) => x.sex === $("gender").value);
+  $("voice").replaceChildren(...list.map((x) => new Option(voiceLabel(x), x.id)));
+  $("voice").value = list.some((x) => x.id === v?.id) ? v.id : list[0].id;
   syncChips(); voiceSpeed();
 }
 function switchLang(lang) {
   $("lang").value = lang;
-  const last = voiceOf(store.get("voice_" + lang, "")) || VOICES.find((v) => v[2] === lang);
-  listAccents(last[3]);
-  listVoices(last[0]);
+  pickVoice(voiceOf(store.get("voice_" + lang, "")) || VOICES.find((v) => v.lang === lang));
   updateLabels(); updateStats();
 }
-function voiceSpeed() { // each voice keeps its own speed (Josef is calmer than Alain)
-  $("speed").value = store.get("speed_" + $("voice").value, store.get("speed", 1));
-  $("speedVal").textContent = (+$("speed").value).toFixed(2) + "×";
+function voiceSpeed() { // each voice keeps its own speed (Josef is calmer than Alain); some engines have none
+  const can = SPEED[voiceOf($("voice").value).engine];
+  $("speed").value = can ? store.get("speed_" + $("voice").value, store.get("speed", 1)) : 1;
+  $("speed").disabled = !can;
+  $("speedVal").textContent = can ? (+$("speed").value).toFixed(2) + "×" : "недоступна для цього голосу";
 }
 function syncChips() {
   for (const sel of document.querySelectorAll(".chip select")) sel.previousElementSibling.textContent = sel.selectedOptions[0]?.text || "";
@@ -1111,9 +1202,9 @@ function updateLabels() {
   store.set("mp3", $("mp3").checked);
   store.set("level", $("level").checked);
 }
-const costOf = (text) => {
-  const engine = (voiceOf($("voice").value) || VOICES[0])[4];
-  return (text.length * PRICE_PER_M[engine] * (engine === "kokoro" ? priceFactor : 1)) / 1e6;
+const costOf = (text) => { // voices checked by speech recognition also pay for it, per minute of audio
+  const engine = (voiceOf($("voice").value) || VOICES[0]).engine, minutes = text.length / CHARS_PER_SEC[$("lang").value] / 60;
+  return (text.length * PRICE_PER_M[engine] * (engine === "kokoro" ? priceFactor : 1)) / 1e6 + (VERIFIED[engine] ? minutes * ASR_PER_MIN : 0);
 };
 const usd = (cost) => "$" + (cost < 0.01 ? cost.toFixed(4) : cost.toFixed(2));
 function updateStats() {
@@ -1179,8 +1270,8 @@ function generate() {
     if (store.get("langWarned", "") !== text.slice(0, 200) + lang) { store.set("langWarned", text.slice(0, 200) + lang); return; }
     $("err").textContent = "";
   }
-  const engine = voiceOf($("voice").value)[4];
-  const items = buildScript(text, pronMap(), +$("pp").value, lang, CHUNK_CHARS[engine]);
+  const engine = voiceOf($("voice").value).engine;
+  const items = buildScript(text, pronMap(), +$("pp").value, lang, CHUNK_CHARS[engine], engine);
   if (!items.some((it) => !it.pause)) { $("err").textContent = "Немає тексту для озвучки."; return; }
   // A voiceover of a dollar or more is started by a second tap, so a long script is never paid for by accident
   const cost = costOf(text), key = text.length + $("voice").value + text.slice(0, 100);
@@ -1344,7 +1435,8 @@ function playFrom(i) {
 async function revoice(i, text, row) {
   const item = shown, st = item && item.job, msg = row.querySelector(".msg"), btn = row.querySelector("[data-redo]");
   if (job || !st) return;
-  const fresh = buildScript(text, pronMap(), 0, st.lang, CHUNK_CHARS[voiceOf(st.voice)[4]]).filter((it) => !it.pause);
+  const engine = voiceOf(st.voice).engine;
+  const fresh = buildScript(text, pronMap(), 0, st.lang, CHUNK_CHARS[engine], engine).filter((it) => !it.pause);
   if (!fresh.length) { msg.textContent = "Немає тексту для озвучки."; return; }
   const ctrl = job = new AbortController();
   setBusy(true); keepAwake(true); msg.textContent = ""; btn.disabled = true; btn.textContent = "Озвучую…";
@@ -1401,7 +1493,7 @@ async function preview() {
   try {
     const lang = $("lang").value, voice = $("voice").value;
     const text = $("text").value, guess = guessLang(text); // a text in another language gets the sample phrase instead
-    const own = guess && guess !== lang ? null : buildScript(text, pronMap(), 0, lang, 200).find((it) => !it.pause);
+    const own = guess && guess !== lang ? null : buildScript(text, pronMap(), 0, lang, 200, voiceOf(voice).engine).find((it) => !it.pause);
     const say = own ? own.spoken : PREVIEW[lang];
     const pcm = await speakChecked(say, voice, lang, +$("speed").value, "wav", new AbortController().signal);
     const url = URL.createObjectURL(new Blob([wavHeader(pcm.length * 2), pcm], { type: "audio/wav" }));
@@ -1417,7 +1509,7 @@ async function check() {
   msg.className = "msg"; msg.textContent = "Перевіряю...";
   try {
     const r = await api("/api/check", {});
-    const names = { kokoro: "англійська (Kokoro)", inworld: "німецька, іспанська, французька (Inworld)" }, parts = [], notes = [];
+    const names = { kokoro: "Kokoro", chatterbox: "Chatterbox", inworld: "Inworld (преміум)" }, parts = [], notes = [];
     for (const [engine, e] of Object.entries(r.engines || {})) {
       if (!e.ok) { notes.push(`${names[engine] || engine}: помилка ${e.status}${e.detail ? " " + e.detail : ""}`); continue; }
       parts.push(`${names[engine] || engine} за ${(e.ms / 1000).toFixed(1)} с${engine === "kokoro" ? ` (маршрут ${e.route}, ${e.tier})` : ""}`);
@@ -1516,7 +1608,8 @@ $("pron").value = store.get("pron", $("pron").value);
 updateLabels(); updateStats();
 for (const id of ["voice", "speed", "pp", "mp3", "level"]) $(id).addEventListener("input", updateLabels);
 $("voice").addEventListener("change", () => { syncChips(); voiceSpeed(); updateLabels(); updateStats(); });
-$("accent").addEventListener("change", () => { listVoices(); updateLabels(); updateStats(); });
+$("accent").addEventListener("change", () => { pickVoice({ accent: $("accent").value, sex: $("gender").value }); updateLabels(); updateStats(); });
+$("gender").addEventListener("change", () => { pickVoice({ accent: $("accent").value, sex: $("gender").value }); updateLabels(); updateStats(); });
 $("lang").addEventListener("change", () => switchLang($("lang").value));
 // A pasted script in another language switches the chips to it
 $("text").addEventListener("paste", () => setTimeout(() => {
