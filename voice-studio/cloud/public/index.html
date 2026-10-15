@@ -308,8 +308,9 @@ const store = {
 };
 
 // Voices: the server has the same ids (src/worker.js). Picked and measured in voice-studio/lab.
-// cps: characters per second at speed 1, for the length check of Inworld takes. Premium voices cost ~50 times more.
-const V = (id, name, lang, accent, sex, engine, cps) => ({ id, name, lang, accent, sex, engine, cps });
+// cps: characters per second at speed 1, for the length check of Inworld and Chatterbox takes. pace: the voice's default
+// speed, set so it reads at a voice-over pace (about 150-170 words a minute). Premium voices cost ~50 times more.
+const V = (id, name, lang, accent, sex, engine, cps, pace = 1) => ({ id, name, lang, accent, sex, engine, cps, pace });
 const VOICES = [
   V("am_michael", "Michael", "en", "US", "m", "kokoro"), V("am_fenrir", "Fenrir", "en", "US", "m", "kokoro"),
   V("am_puck", "Puck", "en", "US", "m", "kokoro"), V("am_onyx", "Onyx", "en", "US", "m", "kokoro"),
@@ -342,7 +343,9 @@ const PREVIEW = {
 const SR = 24000;
 const PARALLEL = 4;          // requests at a time
 const CHUNK_CHARS = { kokoro: 800, inworld: 280, chatterbox: 220 }; // characters per request: Inworld can repeat or skip words in longer ones (voice-studio/lab)
-const CHUNK_GAP = 0.3;       // pause where one paragraph is split into several requests
+// Pause where one paragraph is split into several requests, as a narrator breathes: longer after a sentence, short at a comma
+const SENTENCE_GAP = 0.42, COMMA_GAP = 0.2;
+const joinGap = (spoken) => (END.test(spoken) ? SENTENCE_GAP : COMMA_GAP);
 const PRICE_PER_M = { kokoro: 0.99, inworld: 50, chatterbox: 1 }; // USD per million characters on DeepInfra, for the estimate only
 const VERIFIED = { inworld: true, chatterbox: true }, ASR_PER_MIN = 0.0002; // the server hears these takes back with Whisper
 const CHARS_PER_SEC = { en: 14, de: 13, es: 14, fr: 13 }; // speech speed measured in voice-studio/lab, for the length estimate
@@ -933,7 +936,7 @@ function buildScript(text, pron, paragraphPause, lang, maxChars, engine) {
         continue;
       }
       if (cur && cur.spoken.length + 1 + sen.spoken.length <= maxChars) { cur.spoken += " " + sen.spoken; cur.sentences.push(sen); }
-      else { if (cur) requests.push(cur); cur = { spoken: sen.spoken, sentences: [sen], gap: CHUNK_GAP }; }
+      else { if (cur) { cur.gap = joinGap(cur.spoken); requests.push(cur); } cur = { spoken: sen.spoken, sentences: [sen], gap: 0 }; }
     }
     if (cur) { cur.gap = paragraphPause; requests.push(cur); }
   }
@@ -1173,8 +1176,8 @@ function switchLang(lang) {
   updateLabels(); updateStats();
 }
 function voiceSpeed() { // each voice keeps its own speed (Josef is calmer than Alain); some engines have none
-  const can = SPEED[voiceOf($("voice").value).engine];
-  $("speed").value = can ? store.get("speed_" + $("voice").value, store.get("speed", 1)) : 1;
+  const v = voiceOf($("voice").value), can = SPEED[v.engine];
+  $("speed").value = can ? store.get("pace_" + v.id, v.pace) : 1;
   $("speed").disabled = !can;
   $("speedVal").textContent = can ? (+$("speed").value).toFixed(2) + "×" : "недоступна для цього голосу";
 }
@@ -1194,10 +1197,9 @@ function guessLang(text) {
   return ranked[0][1] >= 5 && ranked[0][1] >= 2 * ranked[1][1] ? ranked[0][0] : null;
 }
 function updateLabels() {
-  $("speedVal").textContent = (+$("speed").value).toFixed(2) + "×";
+  if (!$("speed").disabled) $("speedVal").textContent = (+$("speed").value).toFixed(2) + "×";
   $("ppVal").textContent = (+$("pp").value).toFixed(1) + " с";
   for (const id of ["voice", "pp"]) store.set(id, $(id).value);
-  store.set("speed_" + $("voice").value, $("speed").value);
   store.set("voice_" + $("lang").value, $("voice").value);
   store.set("mp3", $("mp3").checked);
   store.set("level", $("level").checked);
@@ -1445,7 +1447,7 @@ async function revoice(i, text, row) {
     let samples = 0;
     for (const [k, it] of fresh.entries()) {
       const pcm = await speakChecked(it.spoken, st.voice, st.lang, st.speed, st.format, ctrl.signal);
-      if (k) { blobs.push(silence(CHUNK_GAP)); samples += Math.round(CHUNK_GAP * SR); }
+      if (k) { const gap = joinGap(fresh[k - 1].spoken); blobs.push(silence(gap)); samples += Math.round(gap * SR); }
       blobs.push(new Blob([pcm])); samples += pcm.length;
     }
     st.items[i] = { ...st.items[i], spoken: fresh.map((it) => it.spoken).join(" "), sentences: fresh.flatMap((it) => it.sentences) };
@@ -1617,7 +1619,7 @@ $("text").addEventListener("paste", () => setTimeout(() => {
   if (guess && guess !== $("lang").value) switchLang(guess);
 }));
 $("mp3").addEventListener("change", updateLabels);
-$("speed").addEventListener("input", updateStats);
+$("speed").addEventListener("input", () => { store.set("pace_" + $("voice").value, $("speed").value); updateStats(); }); // only a speed you set is kept; "pace_" replaces older "speed_" values
 $("text").addEventListener("input", updateStats);
 $("pron").addEventListener("change", pronMap);
 $("clear").onclick = () => { $("text").value = ""; updateStats(); $("text").focus(); };
