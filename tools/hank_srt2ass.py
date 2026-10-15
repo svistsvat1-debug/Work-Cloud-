@@ -1,7 +1,9 @@
 # SRT + silence log -> ASS with centred subtitles and current-word highlight
-# python3 -I srt2ass.py voice.srt silences.txt out.ass
+# python3 -I srt2ass.py voice.srt silences.txt out.ass [fade]
+# mode 'fade': no word highlight; each phrase drifts up, sharpens and fades in, then dissolves out
 import sys, re
 srt_p, sil_p, out_p = sys.argv[1:4]
+MODE = sys.argv[4] if len(sys.argv) > 4 else 'karaoke'
 def ts(t):
     h, m, s = t.replace(',', '.').split(':'); return int(h) * 3600 + int(m) * 60 + float(s)
 cues = []
@@ -76,6 +78,18 @@ for i, c in enumerate(cues):
             if k + 1 in breaks[:-1]: parts.append(r'\N')
             elif k + 1 < len(words): parts.append(' ')
         return ''.join(parts).replace(' \\N', '\\N')
+    if MODE == 'fade':
+        nxt_s = cues[i + 1]['s'] if i + 1 < len(cues) else c['e'] + 1.0
+        e2 = min(c['e'] + 0.15, nxt_s)
+        dur = int((e2 - c['s']) * 1000)
+        fin, fout = min(260, dur // 3), min(200, dur // 3)
+        mv = f'\\an5\\move(960,554,960,540,0,{fin + 60})\\fad({fin},{fout})'
+        txt = text(-1)
+        out.append(f'Dialogue: 0,{fmt(c["s"])},{fmt(e2)},Halo,,0,0,0,,'
+                   f'{{{mv}\\fsp6\\blur18\\t(0,{fin + 60},\\fsp1)}}{txt}')
+        out.append(f'Dialogue: 1,{fmt(c["s"])},{fmt(e2)},Main,,0,0,0,,'
+                   f'{{{mv}\\fsp6\\blur5\\t(0,{fin + 60},\\fsp1\\blur0.6)\\t({max(dur - fout, 0)},{dur},\\blur4)}}{txt}')
+        continue
     pop = r'{\fad(150,0)\fscx93\fscy93\t(0,170,\fscx100\fscy100)}'
     halo_txt = text(-1)
     out.append(f'Dialogue: 0,{fmt(c["s"])},{fmt(end)},Halo,,0,0,0,,{{\\fad(150,{fade_out})\\blur18}}{halo_txt}')
