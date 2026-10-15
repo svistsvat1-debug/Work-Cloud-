@@ -1006,6 +1006,43 @@ function level(audio) {
   }
   return out;
 }
+// ---- time stretch
+// Speed for voices whose model has none (Chatterbox): WSOLA changes the pace and keeps the pitch and the voice.
+// 40 ms frames with a Hann window are written every 20 ms; each one is read from where it best continues the frame before
+// (searched ±10 ms on every 4th sample, then refined to the sample), so syllables join without clicks or a doubled sound.
+function stretch(x, speed) {
+  if (Math.abs(speed - 1) < 0.01 || x.length < 4800) return x;
+  const N = 960, H = 480, TOL = 240, D = 4, step = H * speed;
+  const frames = Math.floor((x.length - N - TOL) / step);
+  if (frames < 2) return x;
+  const win = new Float32Array(N);
+  for (let i = 0; i < N; i++) win[i] = 0.5 - 0.5 * Math.cos((2 * Math.PI * i) / N);
+  const y = new Float32Array(frames * H + x.length - Math.round((frames - 1) * step) + N);
+  const score = (c, want, d) => { // normalized correlation of a candidate with the continuation
+    let s = 0, e = 1e-9;
+    for (let j = 0; j < H; j += d) { s += x[c + j] * x[want + j]; e += x[c + j] * x[c + j]; }
+    return s / Math.sqrt(e);
+  };
+  let src = 0;
+  for (let k = 0; k < frames; k++) {
+    let at = Math.round(k * step);
+    if (k > 0) {
+      const want = src + H, lo = Math.max(0, at - TOL), hi = Math.min(x.length - N, at + TOL);
+      let best = at, top = -Infinity;
+      for (let c = lo; c <= hi; c += D) { const v = score(c, want, D); if (v > top) { top = v; best = c; } }
+      const from = Math.max(lo, best - D + 1), to = Math.min(hi, best + D - 1);
+      top = -Infinity;
+      for (let c = from; c <= to; c++) { const v = score(c, want, 1); if (v > top) { top = v; at = c; } }
+    }
+    const o = k * H;
+    for (let i = 0; i < N; i++) y[o + i] += x[at + i] * (k === 0 && i < H ? 1 : win[i]);
+    src = at;
+  }
+  const o = frames * H, rest = x.length - (src + H); // the end of the take, faded in under the last frame
+  for (let i = 0; i < rest; i++) y[o + i] += x[src + H + i] * (i < H ? win[i] : 1);
+  return y.subarray(0, o + rest);
+}
+// ---- end time stretch
 function toInt16(f) {
   const out = new Int16Array(f.length);
   for (let i = 0; i < f.length; i++) out[i] = Math.max(-1, Math.min(1, f[i])) * 32767;
