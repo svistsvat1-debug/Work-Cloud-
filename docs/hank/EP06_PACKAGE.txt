@@ -1,25 +1,21 @@
 EPISODE 6 · THE VOICE ON CHANNEL 19 · publish Thu 15.10.2026, 22:00 Warsaw
 Rules used: docs/hank/rules/TITLE_RULES.txt, docs/hank/rules/THUMBNAIL_RULES.txt
 
-=== TITLE — main (A) ===
-Only My Radio Heard Him. 4 Minutes Later, the Bridge…
+=== TITLE — main (A) · v2, built on competitor patterns ===
+Only My CB Heard Him. Then the Bridge… | Trucker Horror Story
 
-=== TITLES for A/B (Test & Compare) ===
-A  Only My Radio Heard Him. 4 Minutes Later, the Bridge…      (53)
-B  A Voice on My CB Told Me Where to Stop. Nobody Else Heard It (60)
-C  Never Argue With the Voice on Channel 19                     (40)
-Other variants considered:
-40 Trucks on Channel 19. Only My Radio Heard Him
-He Knew My Trailer Was Light. Nobody Else Could Hear Him
-My Dispatcher Went Silent, Then Said His Name
-Why Did the Voice on My CB Tell Me to Stop on the Ice?
-I Stopped Where the Voice Said. 4 Minutes Later…
+=== TITLE + THUMBNAIL PAIRS for A/B (Test & Compare) ===
+A  Only My CB Heard Him. Then the Bridge… | Trucker Horror Story      ↔ thumbnail A "STOP RIGHT HERE" (night truck scene)
+B  Who Was the Voice on My CB Radio? | Trucker Horror Story            ↔ thumbnail B "HE KNEW MY LOAD" (face)
+C  Never Argue With the Voice on Channel 19 | Trucker Horror Story    ↔ thumbnail C no text (CB radio close-up)
+No thumbnail text repeats any of the three titles, so any combination works.
+Why: every top video in the niche has the genre keyword in the title (Trucker / Horror Stories / Highway); the hook goes first, the keyword at the end (it may be cut on phones but still counts for search).
 
-=== DESCRIPTION ===
-Forty trucks on channel 19. One calm voice. And only my radio could hear it.
-December 2001, an ice storm in the Missouri hills, and a stranger telling me exactly where to stop.
+=== DESCRIPTION · v2 ===
+A trucker horror story from an ice storm in December 2001. Forty trucks on channel 19, one calm voice, and only my CB radio could hear it.
+He told me exactly where to stop. The next morning, my dispatcher said his name.
 
-I was 24, hauling a light trailer and trying to get home to my boy for Christmas, when freezing rain turned Interstate 44 into glass. Then the CB went dead, and a voice I first heard in the fog back in 1998 told me to stop before the bridge at the bottom of the hill. Nobody else on the channel heard a word, and the next morning my dispatcher went quiet for a full minute before she said his name.
+I was 24, hauling a light trailer and trying to get home to my boy for Christmas, when freezing rain turned Interstate 44 into glass. Then the CB went dead, and a voice I first heard in the fog back in 1998 told me to stop before the bridge at the bottom of the hill. Nobody else on the channel heard a word, and my dispatcher went quiet for a full minute before she said who he was.
 
 0:00 The voice on channel 19
 0:53 Hey. It's Hank.
@@ -36,26 +32,27 @@ I was 24, hauling a light trailer and trying to get home to my boy for Christmas
 16:44 Drive safe out there
 
 Have you ever stopped, turned around or stayed put because of a voice or a feeling you couldn't explain? Tell me where you were. I read every one.
+Got your own story from the road? Leave it in the comments. With your permission, I'll read the best ones in a special episode.
 — Hank
 
-#truckerstories #cbradio #icestorm
+#truckerstories #horrorstories #cbradio
 
 This is a dramatized fictional story created with the help of AI, inspired by the lives of American truck drivers. Names and places are changed or invented.
 
-=== TAGS (19 tags, 384 characters) ===
-ice storm trucker story, voice on the cb radio, channel 19 story, cb radio story, black ice story, missouri ice storm, interstate 44, rolling thunder, hank trucker, trucker stories, truck driver stories, creepy trucker stories, scary trucker stories, night highway stories, trucker stories to fall asleep to, christmas trucker story, stories for men, untold stories, long haul trucker
+=== TAGS · v2 (19 tags, 378 characters) ===
+trucker horror story, trucker horror stories, cb radio horror story, scary trucker stories, highway horror stories, night drive horror stories, ice storm horror story, black ice, channel 19, voice on the cb radio, scary stories, horror stories, creepy stories, trucker stories, truck driver stories, scary stories to fall asleep to, rolling thunder, hank trucker, untold stories
 
 === PINNED COMMENT ===
 Marlene went quiet for a full minute before she said his name. What do you think she knew? — Hank
 
-=== THUMBNAIL A · text "DON'T GET ON IT" (pair with title A) ===
-YouTube thumbnail, 16:9, 1280x720, photorealistic cinematic photo. Tight close-up of a terrified 24-year-old American trucker inside a semi truck cab at night: short brown hair, light stubble, gray knit beanie, worn denim jacket over a red flannel shirt. His face fills about 40% of the frame, placed right of center; eyes wide open, eyebrows raised high, mouth open in fear, looking straight into the camera. He grips a black CB radio microphone just below his chin. The face is clear and brightly lit: warm orange-amber light from below and a cool cyan rim light on one side; eyes fully visible, not in shadow. Background: an ice-glazed windshield, heavily blurred, in saturated deep teal and electric blue (not black), with a few soft out-of-focus yellow bridge lights far away; nothing else in the background. Huge bold sans-serif text in ALL CAPS in the upper-left area: "DON'T GET ON IT", bright yellow letters with a thick black outline and a drop shadow, not overlapping the face. The bottom-right corner is left completely empty. Vivid saturated colors, high contrast, sharp focus on the face. no logos, no watermarks.
+=== THUMBNAIL A · night truck scene, text "STOP RIGHT HERE" (main) ===
+YouTube thumbnail, 16:9, 1280x720, photorealistic cinematic night photo. A bright red semi truck with a white trailer is stopped on the icy shoulder of a downhill interstate in wooded hills during a freezing rain storm, headlights blazing, orange four-way flashers on. Right in front of its bumper stands a white roadside post coated in ice. Freezing rain streaks glow in the headlight beams, and the trees are glazed with ice like glass. Far below at the bottom of the hill, a long river bridge strung with small yellow lights. On the dark shoulder just ahead of the truck, two small round amber lights glow low and close together, like the marker lights of an old truck. Composition: the truck is large and fills the lower-left two thirds, its headlights are the brightest point; the dark sky across the top is empty for text. Huge bold condensed sans-serif text across the top: "STOP RIGHT HERE", with "STOP RIGHT" in white and "HERE" in bright red, all with a thick black outline and a drop shadow. Saturated deep blue and teal night palette with hot red and amber accents, not black. The bottom-right corner is left completely empty. High contrast, sharp focus. no logos, no watermarks.
 
-=== THUMBNAIL B · no text (pair with title B) ===
-YouTube thumbnail, 16:9, 1280x720, photorealistic cinematic photo. Close-up of a shocked 24-year-old American trucker inside a semi truck cab at night: short brown hair, light stubble, gray knit beanie, worn denim jacket over a red flannel shirt. His face fills about 35% of the frame on the left; eyes wide, mouth open, eyebrows raised, staring at a CB radio mounted on the dashboard in the lower center of the frame. The CB radio glows bright warm amber and is large and clearly visible. Through the softly blurred, ice-glazed windshield behind him, two small round amber lights glow low in the dark, close together, like old truck marker lights. The face is brightly lit by the amber glow, eyes clearly visible. Background colors saturated deep blue and teal (not black), simple and uncluttered. No text anywhere. The bottom-right corner is left completely empty. Vivid saturated colors, high contrast. no logos, no watermarks.
+=== THUMBNAIL B · face, text "HE KNEW MY LOAD" ===
+YouTube thumbnail, 16:9, 1280x720, photorealistic cinematic photo. Tight close-up of a terrified 24-year-old American trucker inside a semi truck cab at night: short brown hair, light stubble, gray knit beanie, worn denim jacket over a red flannel shirt. His face fills about 40% of the frame, right of center; eyes wide open, eyebrows raised high, mouth open in fear, looking straight into the camera. He grips a black CB radio microphone just below his chin. The face is clear and brightly lit: warm orange-amber light from the CB radio below and a cool cyan rim light; eyes fully visible. Background: an ice-glazed windshield, heavily blurred, saturated deep teal and electric blue (not black), with soft out-of-focus headlights far away. Huge bold sans-serif text in ALL CAPS in the upper-left area: "HE KNEW MY LOAD", bright yellow letters with a thick black outline and a drop shadow, not overlapping the face. The bottom-right corner is left completely empty. Vivid saturated colors, high contrast. no logos, no watermarks.
 
-=== THUMBNAIL C · text "WHO IS HE?" (pair with title C) ===
-YouTube thumbnail, 16:9, 1280x720, photorealistic cinematic photo. Extreme close-up of a frightened 24-year-old American trucker at night inside a semi truck cab: short brown hair, light stubble, gray knit beanie, worn denim jacket. His face fills about 45% of the frame on the right; eyes wide, eyebrows raised, lips parted, looking directly into the camera. He holds a black CB radio microphone pressed close to his ear, as if listening to something he can't believe. The face is brightly lit by warm amber dashboard light with a cool blue rim light; eyes not in shadow. Background: heavily blurred amber dashboard glow and icy blue windshield, saturated, simple, not black. Huge bold sans-serif text in ALL CAPS in the upper-left area: "WHO IS HE?", white letters with a thick black outline and a drop shadow, not overlapping the face. The bottom-right corner is left completely empty. Vivid saturated colors, high contrast. no logos, no watermarks.
+=== THUMBNAIL C · CB radio close-up, no text ===
+YouTube thumbnail, 16:9, 1280x720, photorealistic cinematic photo. Extreme close-up of an old CB radio mounted under a truck dashboard at night, covered with a thin layer of frost. Its large red LED channel display reads "19" and glows brightly; a coiled black microphone cord hangs in the foreground. Behind it, through the ice-covered windshield and out of focus, two small round amber lights glow low in the dark, close together. Saturated deep blue and teal tones with hot red and warm amber accents, not black. Simple, uncluttered, one clear focal point: the glowing "19". No other text. The bottom-right corner is left completely empty. Macro lens, shallow depth of field, high contrast. no logos, no watermarks.
 
 Tip: if the image generator garbles the text, generate the same prompt without the text line, then add the text yourself (bold sans-serif, white or yellow, thick black outline).
 Check before upload: shrink to phone-feed size. If it isn't clear in 1 second, redo it.
