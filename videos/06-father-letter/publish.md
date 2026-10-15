@@ -1,62 +1,58 @@
 # #06 — пакет для публікації на YouTube Shorts
 
-Зроблено за `docs/YOUTUBE_TITLE_RULES.md` і `docs/YOUTUBE_THUMBNAIL_RULES.md`. Мова — англійська, як у відео.
+Зроблено за `docs/YOUTUBE_TITLE_RULES.md`, `docs/YOUTUBE_THUMBNAIL_RULES.md` і аналізом конкурентів `docs/YOUTUBE_SHORTS_COMPETITORS.md`. Мова — англійська, як у відео.
 
-## Назва
+## Назва (v2: правила власника + аналіз конкурентів, див. `docs/YOUTUBE_SHORTS_COMPETITORS.md`)
 
-**Обрана:** `My Dad Hid a Letter for 15 Years. The Last 2 Lines…` (51 символ)
+**Обрана:** `My Dad Hid This For 15 Years 👀` (30 символів)
 
-Чому ця: формула «подія + обрив», конкретика (15 років, 2 рядки), перші 4 слова чіпляють самі по собі, розв'язку не видає. Обіцянка чесна: відео справді побудоване навколо двох дописаних рядків.
+Чому ця:
+- Скелет ролика конкурента на 5.2M: *He Waited 40 Years For This 👀*. Займенник-загадка *This* + конкретна цифра + одне емодзі.
+- Формула власника «хто + дивна дія», перші 4 слова чіпляють, розв'язки немає.
+- Коротка, тож у стрічці Shorts не обріжеться.
+- Пара з обкладинкою: назва питає «що він ховав?», обкладинка показує лист, шок і `HE KNEW.`, тобто «що саме він знав?». Одна одну не повторюють.
+- Чесно: у відео справді лист, схований на 15 років.
 
-Інші варіанти:
-1. My Dad Hid a Letter for 15 Years. The Last 2 Lines…
-2. Dad's Hidden Letter Knew Something I Never Told ANYONE
-3. I Found Dad's Letter After 15 Years. He Added 2 Lines
-4. Why Did My Father Hide This Letter for 15 Years?
-5. Dad Wrote About a Night He Couldn't Have Known
-6. 15 Years Under His Truck Seat. Addressed to Me
-7. My Father Knew a Secret I Never Told Anyone
+Запасні (для перезаливу або наступних частин):
+1. `Dad Knew Something I Never Told ANYONE 😳`: скелет *I Left A Note Saying I KNOW* (7.9M) + *He Suddenly Knew Everything* (2.5M)
+2. `How Did My Dad Know? 😨`: питання; з нею текст обкладинки міняй на `15 YEARS.`
+3. `I Never Told Dad About That Night 😨`: зізнання
+4. `Dad's Letter Knew My Secret 👀`
+5. `He Hid It Under His Seat For 15 Years 👀`
 
-Назва + обкладинка в парі: обкладинка дає емоцію і питання («HOW DID HE KNOW?»), назва дає контекст (лист, 15 років, 2 рядки). Вони не повторюють одна одну.
+## Обкладинка 9:16 (1080×1920), v2
 
-## Обкладинка 9:16 (1080×1920)
+**Що змінено після аналізу конкурентів:** обличчя тепер займає ~половину кадру (у лідерів воно навіть більше, ніж третина з наших правил). Фон — та сама зелена кабіна вантажівки, що й у кадрі 05 відео, щоб обкладинка не обманювала. Текст скорочено до 2 слів.
 
-**Схема (3 елементи):** шокований син (обличчя) + старий лист із синім чорнилом + текст `HOW DID HE KNOW?`.
+**Схема (3 елементи):** обличчя сина (шок + сльоза) + старий лист із синім чорнилом + `HE KNEW.`
 
-### Промпт (без тексту — текст краще накласти окремо, нейромережі псують літери)
+### Промпт
 
 ```
-Vertical 9:16 YouTube Shorts cover, photorealistic cinematic photograph, 1080x1920.
-Tight close-up of a rugged man in his late 30s with short messy brown hair and light stubble, wearing a worn olive-brown work jacket, the same man as a long-haul truck driver. His face is large, filling about a third of the frame, placed in the center of the image. Extreme shocked expression: eyes wide open, eyebrows raised high, mouth slightly open in disbelief, looking straight into the camera. Face brightly and evenly lit by warm amber light, eyes sharp, clear and not in shadow, a tear on one cheek.
-In the lower-left foreground he holds up an old yellowed, creased handwritten letter toward the camera; the paper is large and in sharp focus, faded brown handwriting at the top and two fresh lines of bright blue ink at the bottom, handwriting illegible.
-Background: night highway in thick glowing fog with a bright green highway exit sign, heavily blurred bokeh, saturated teal-green and warm orange color contrast, background is not black.
-Shallow depth of field, high contrast, vivid saturated colors, clean simple composition with only three elements: face, letter, blurred sign. Empty calm area in the top 20% of the frame for a headline. Bottom 20% of the frame calm and simple, nothing important there.
+Vertical 9:16 YouTube Shorts cover, photorealistic cinematic photograph, 1080x1920, shot on 50mm, shallow depth of field.
+Extreme close-up of a rugged man in his late 30s with short messy brown hair and a short brown beard, wearing a worn olive-brown canvas work jacket. His face is huge and fills about half of the frame, centered slightly above the middle of the image. Overwhelming shock and disbelief: eyes wide open and glistening with tears, eyebrows raised high, mouth open, one tear running down his cheek, looking straight into the camera lens. Face lit by a warm amber dome light from above, eyes bright, sharp and fully visible, skin texture detailed.
+In the lower left of the frame he holds up an old yellowed, creased handwritten letter close to the camera, large and in sharp focus: faded brown handwriting on top and two fresh lines of bright blue ink at the bottom, handwriting illegible.
+Setting: inside the cab of an old green semi truck at night, rain drops on the windshield behind him, the background is a soft blurred mix of saturated emerald green and warm orange bokeh lights, not black.
+Vivid saturated colors, high contrast, clean simple composition with only the face and the letter as subjects. Calm empty area in the top 18% of the frame for a headline. Bottom 20% of the frame simple and calm.
 No text, no letters, no words, no logos, no watermark, no frame, no borders.
 ```
 
-**Negative prompt** (якщо генератор підтримує): `text, words, letters, captions, logo, watermark, signature, extra fingers, deformed hands, multiple faces, cartoon, illustration, dull colors, black background, cluttered background, small face, closed eyes, face in shadow`
+**Negative prompt:** `text, words, letters, captions, logo, watermark, signature, extra fingers, deformed hands, two faces, cartoon, 3d render, illustration, dull colors, black background, cluttered background, small face, closed eyes, face in shadow, smiling`
 
-**Для Midjourney** додай у кінець: `--ar 9:16 --style raw`
-
-### Варіант із текстом одразу в картинці (якщо генератор добре пише літери: Ideogram, GPT-image, Nano Banana)
-
-Додай до промпту замість рядка «No text…»:
-
-```
-At the top of the frame, a huge bold sans-serif headline in two lines: "HOW DID" in white and "HE KNOW?" in bright yellow, thick black outline and drop shadow, perfectly legible, not covering the face. No other text, no logos, no watermark.
-```
+**Midjourney:** додай у кінець `--ar 9:16 --style raw`
 
 ### Текст на обкладинці
 
-- `HOW DID / HE KNOW?`, 2 рядки, жирний шрифт без засічок, великими літерами.
-- `HOW DID` білим, `HE KNOW?` жовтим (#FFD400), товста чорна обводка + тінь.
-- Розташування: верхні ~20% кадру, не перекриває обличчя.
-- Низ і правий край лишаються чистими: у стрічці Shorts там назва й кнопки.
+- `HE KNEW.`: 2 слова, один рядок, жирний шрифт без засічок, великими літерами, жовтий (#FFD400) з товстою чорною обводкою й тінню.
+- Розташування: верхні ~18% кадру, над головою, не перекриває обличчя.
+- Низ і правий край чисті: у стрічці там назва й кнопки.
+- Якщо генератор добре пише текст (Ideogram, GPT-image, Nano Banana), заміни рядок «No text…» на:
+  `At the very top of the frame, a huge bold sans-serif headline "HE KNEW." in bright yellow with a thick black outline and drop shadow, perfectly legible, not covering the face. No other text, no logos, no watermark.`
 
 ### Перевірка перед публікацією
 
-- Зменш обкладинку до розміру стрічки на телефоні. За секунду має бути зрозуміло: шокований чоловік + лист. Текст має читатися.
-- Обличчя має бути тим самим типажем, що в кадрі 05 відео (бородатий водій), тоді клікбейт чесний.
+- Зменш до розміру стрічки на телефоні: за секунду має читатися «шокований чоловік + лист + HE KNEW.».
+- Поклади поруч з обкладинками His Story / PrimePath (див. `docs/YOUTUBE_SHORTS_COMPETITORS.md`): обличчя має бути не дрібнішим.
 
 ## Опис
 
