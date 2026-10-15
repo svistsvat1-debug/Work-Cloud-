@@ -9,9 +9,12 @@ from playwright.async_api import async_playwright
 
 SITE = "https://voice-studio-app.svistsvat1.workers.dev/"
 texts = json.load(open("texts.json"))
-CASES = [("en", "am_michael", "hard_en"), ("de", "de_josef", "hard_de"), ("es", "es_rafael", "hard_es"),
-         ("fr", "fr_lucian", "hard_fr"), ("es", "es_diego", "short2_es"), ("fr", "fr_alain", "short2_fr"),
-         ("de", "de_josef", "long_de"), ("fr", "fr_lucian", "long_fr")]
+CASES = [  # every cheap voice: the defaults on the "hard" text (dates, prices, abbreviations) or a long story, the rest short
+    ("en", "am_michael", "hard_en"), ("en", "af_heart", "long_en"),
+    ("de", "de_lukas", "hard_de"), ("de", "de_anna", "long_de"), ("de", "de_max", "short2_de"), ("de", "de_lena", "short2_de"),
+    ("es", "es_alex", "hard_es"), ("es", "es_lucia", "long_es"), ("es", "es_mateo", "short2_es"), ("es", "es_dora", "short2_es"),
+    ("es", "es_valentina", "short2_es"),
+    ("fr", "fr_louis", "hard_fr"), ("fr", "fr_camille", "long_fr"), ("fr", "fr_hugo", "short2_fr"), ("fr", "fr_siwis", "short2_fr")]
 ONLY = os.environ.get("LIVE_LANGS", "").split()  # e.g. "en": only those languages
 if os.environ.get("LIVE_CASES"):  # "lang:voice:text_key ..." instead of the list above
     CASES = [tuple(c.split(":")) for c in os.environ["LIVE_CASES"].split()]
