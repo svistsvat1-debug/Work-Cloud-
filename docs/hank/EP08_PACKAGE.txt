@@ -1,0 +1,18 @@
+EPISODE 8 · THE TRUCK THAT FOLLOWED ME FOR 300 MILES · publish Sat 17.10.2026, 22:00 Warsaw
+(Title, description, tags, thumbnails: to be added.)
+
+=== BACKGROUND LOOP · Gemini, same method as ep 7 (everything still, only one natural thing moves) ===
+Scene: Hank's truck parked on the shoulder of I-80 in Wyoming at night, during a ground blizzard. Stars are clear overhead and the snow blows only low across the road, which matches the script line "look straight up and see stars… not see your own hood". The left side mirror shows two distant headlights, one yellow and one white: the episode's key image. The center of the frame stays dark and calm for the subtitles.
+
+Step 1 · image in Gemini:
+A wide cinematic photo from the driver's seat of a parked semi truck at night on an empty interstate in Wyoming, early 2000s, late October. Through the windshield: a wide, flat, empty high plain under a clear deep blue night sky with faint stars. A ground blizzard: a low layer of white snow blowing sideways across the road and the frozen grass, only knee to waist high, softly lit by the truck's headlights, while the sky above is clear. A long wooden snow fence runs along the right side in the distance. On the far left edge of the frame, the truck's big side mirror shows two small distant headlights far behind, the left one warm yellow and the right one white. At the bottom edge, a dark dashboard with a faint green glow. The middle of the frame is calm and dark: deep blue sky with faint stars, nothing bright in the center. Cold, lonely, eerie mood, soft focus, 16:9. No people, no hands, no text, no signs with words.
+
+Step 2 · attach that image, then:
+Animate this image as a seamless looping video. The truck is parked and the camera is completely still. The road, the snow fence, the sky, the stars, the mirror and the two headlights in the mirror do not move at all. The only movement: a thin layer of snow blows sideways low across the road from left to right, close to the ground, at the same steady pace from start to finish, and a few small snowflakes drift past the windshield. Nothing in the scene grows, moves away or changes over time, so the last frame looks the same as the first frame and the video can repeat endlessly without a visible jump. Cold, quiet night, only the soft sound of wind and snow hissing across the road.
+
+Fallback · text only:
+A seamless looping video from the driver's seat of a parked semi truck at night on an empty interstate in Wyoming, late October. Through the windshield, a flat empty high plain under a clear deep blue night sky with faint stars. A ground blizzard: a thin layer of snow blows sideways low across the road from left to right, close to the ground, softly lit by the headlights, at the same steady pace from the first second to the last. A wooden snow fence in the distance on the right. On the far left edge, the side mirror shows two small distant headlights, one warm yellow and one white, and they stay perfectly still. A faint green dashboard glow at the bottom. The truck and the camera do not move, and nothing else in the scene changes, so the last frame looks the same as the first frame and the video can repeat endlessly. The center of the frame stays dark and calm. 16:9, no people, no words, only the soft sound of wind.
+
+If Gemini makes the mirror headlights move, grow or flash: remove the mirror sentence from steps 1 and 2 and generate again.
+Most reliable alternative: send Claude only the step-1 image; Claude adds the sideways ground snow with code (perfectly periodic, zero seam) and darkens the center under the subtitles.
+Claude assembles the clip the same way as ep 7: trims it to the steady part, crossfades the end into the start, loops it to the full voiceover length.
