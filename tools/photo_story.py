@@ -230,6 +230,130 @@ def draw_subs(frame, chunks, layouts, t):
         return
 
 
+# ---------------------------------------------------------------- "Hank's Logbook" style
+# Plan format: subtitles on a logbook sheet in the lower half with a yellow marker on
+# the spoken word, a 3-5 word hook on top and a red "FULL STORY ON THE CHANNEL" button.
+SHEET_FONT = "/usr/share/fonts/opentype/inter/InterDisplay-ExtraBold.otf"
+SHEET_W, SHEET_H, SHEET_PT, SHEET_ANGLE = 860, 310, 76, -1.2
+SHEET_CX, SHEET_CY = 520, 1330
+_logbook_cache = {}
+
+
+def sheet_sprite(words, current):
+    key = (tuple(words), current)
+    if key in _logbook_cache:
+        return _logbook_cache[key]
+    font = ImageFont.truetype(SHEET_FONT, SHEET_PT)
+    w, h, pad = SHEET_W, SHEET_H, 40
+    paper = Image.new("RGBA", (w, h), (246, 238, 218, 255))
+    d = ImageDraw.Draw(paper)
+    for y in range(64, h, 58):
+        d.line((0, y, w, y), fill=(176, 196, 222, 255), width=2)
+    d.line((64, 0, 64, h), fill=(214, 96, 92, 255), width=3)
+    # wrap words into at most a few centred lines
+    space = font.getlength(" ")
+    lines, cur, cur_w = [], [], 0.0
+    for i, word in enumerate(words):
+        wl = font.getlength(word)
+        if cur and cur_w + space + wl > w - 150:
+            lines.append(cur)
+            cur, cur_w = [], 0.0
+        cur.append((i, word, wl))
+        cur_w += wl + (space if len(cur) > 1 else 0)
+    lines.append(cur)
+    asc, desc = font.getmetrics()
+    line_h = asc + desc + 6
+    y = (h - line_h * len(lines)) / 2 + 4
+    for ln in lines:
+        lw = sum(wl for _, _, wl in ln) + space * (len(ln) - 1)
+        x = 64 + (w - 64 - lw) / 2
+        for i, word, wl in ln:
+            if i == current:
+                d.rounded_rectangle((x - 10, y + asc * 0.18, x + wl + 10, y + asc + desc * 0.6), 8,
+                                    fill=(255, 212, 0, 255))
+            ink = (22, 22, 28, 255) if i <= current or current < 0 else (120, 114, 104, 255)
+            d.text((x, y + asc), word, font=font, fill=ink, anchor="ls")
+            x += wl + space
+        y += line_h
+    mask = Image.new("L", (w, h), 0)
+    ImageDraw.Draw(mask).rounded_rectangle((0, 0, w - 1, h - 1), 22, fill=255)
+    out = Image.new("RGBA", (w + 2 * pad, h + 2 * pad), (0, 0, 0, 0))
+    shadow = Image.new("L", out.size, 0)
+    ImageDraw.Draw(shadow).rounded_rectangle((pad, pad + 10, pad + w, pad + h + 10), 22, fill=170)
+    out.putalpha(shadow.filter(ImageFilter.GaussianBlur(16)))
+    out.paste(paper, (pad, pad), mask)
+    out = out.rotate(SHEET_ANGLE, resample=Image.BICUBIC, expand=True)
+    _logbook_cache[key] = out
+    return out
+
+
+def header_sprite(hook, color):
+    key = ("header", hook, color)
+    if key in _logbook_cache:
+        return _logbook_cache[key]
+    font = ImageFont.truetype(FONT, 88)
+    words, lines, cur = hook.upper().split(), [], ""
+    for word in words:
+        test = (cur + " " + word).strip()
+        if cur and font.getlength(test) > 900:
+            lines.append(cur)
+            cur = word
+        else:
+            cur = test
+    lines.append(cur)
+    asc, desc = font.getmetrics()
+    lh = asc + desc
+    bfont = ImageFont.truetype(SHEET_FONT, 38)
+    label = "FULL STORY ON THE CHANNEL"
+    bw = int(bfont.getlength(label)) + 120
+    bh = 78
+    W = 1080
+    H = lh * len(lines) + 40 + bh + 60
+    img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    shadow = Image.new("L", (W, H), 0)
+    ds = ImageDraw.Draw(shadow)
+    for k, ln in enumerate(lines):
+        ds.text((W / 2, 20 + k * lh + asc + 6), ln, font=font, anchor="ms", fill=255,
+                stroke_width=14, stroke_fill=255)
+    bx, by = (W - bw) / 2, 20 + lh * len(lines) + 24
+    ds.rounded_rectangle((bx, by + 6, bx + bw, by + bh + 6), bh / 2, fill=255)
+    img.putalpha(shadow.filter(ImageFilter.GaussianBlur(10)).point(lambda v: int(v * 0.55)))
+    d = ImageDraw.Draw(img)
+    for k, ln in enumerate(lines):
+        d.text((W / 2, 20 + k * lh + asc), ln, font=font, anchor="ms", fill=color,
+               stroke_width=9, stroke_fill=(0, 0, 0, 255))
+    d.rounded_rectangle((bx, by, bx + bw, by + bh), bh / 2, fill=(230, 33, 23, 255))
+    tx = bx + 46
+    d.polygon([(tx, by + 24), (tx, by + bh - 24), (tx + 26, by + bh / 2)], fill=(255, 255, 255, 255))
+    d.text((tx + 46, by + bh / 2), label, font=bfont, anchor="lm", fill=(255, 255, 255, 255))
+    _logbook_cache[key] = img
+    return img
+
+
+def draw_logbook(frame, chunks, t, story):
+    # header: hook text + button, on screen from the very first frame
+    hdr = header_sprite(story.get("hook_text", ""), story.get("hook_color", "#FFFFFF"))
+    s = 0.86 + 0.14 * out_back(t / 0.3)
+    s *= 1 + 0.025 * max(0.0, math.sin(t * 2 * math.pi / 1.6)) ** 8  # soft pulse
+    img = hdr.resize((int(hdr.width * s), int(hdr.height * s)), Image.BILINEAR) if abs(s - 1) > 1e-3 else hdr
+    frame.alpha_composite(img, dest=(int(540 - img.width / 2), int(story.get("hook_y", 210))))
+    # sheet: the latest chunk that has started stays until the next one
+    live = [c for c in chunks if c["start"] <= t + 0.04]
+    if not live:
+        return
+    c = live[-1]
+    words = [w.lstrip("*") for w, _ in c["words"]]
+    current = -1
+    if t < c["words"][-1][1] + 0.6:
+        current = max(i for i, (_, wt) in enumerate(c["words"]) if wt <= t + 0.04 or i == 0)
+    sp = sheet_sprite(words, current)
+    p = clamp01((t - c["start"]) / 0.16)
+    s = 0.96 + 0.04 * out_cubic(p)
+    if s < 0.999:
+        sp = sp.resize((int(sp.width * s), int(sp.height * s)), Image.BILINEAR)
+    frame.alpha_composite(sp, dest=(int(SHEET_CX - sp.width / 2), int(SHEET_CY - sp.height / 2)))
+
+
 # ---------------------------------------------------------------- camera
 _img_cache = {}
 
@@ -456,7 +580,10 @@ def main(cfg_path):
     for f in range(frames):
         t = f / fps
         frame = Image.fromarray(render_frame(root, story["shots"], t, W, H, fx)).convert("RGBA")
-        draw_subs(frame, chunks, layouts, t)
+        if story.get("style") == "logbook":
+            draw_logbook(frame, chunks, t, story)
+        else:
+            draw_subs(frame, chunks, layouts, t)
         enc.stdin.write(frame.convert("RGB").tobytes())
         if f % 60 == 0:
             print(f"frame {f}/{frames}", flush=True)
