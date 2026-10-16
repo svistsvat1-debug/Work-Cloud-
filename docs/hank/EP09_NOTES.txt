@@ -1,0 +1,66 @@
+EP 9 · THE NIGHT I ALMOST QUIT · publish Sun 18.10.2026, 22:00 Warsaw · genre: warm life story (Sunday)
+Voiceover file: docs/hank/EP09_VOICEOVER.txt (2,806 words, ~18 min)
+
+What is trending and was used (checked 16.10.2026):
+- "Dad shows up" is the hottest emotional trigger right now:
+  - "The Moment a Lawyer Dad Shows Up for His Arrested Daughter" (Body Cam USA): 4.0M in 2 weeks;
+  - the same story (Sergeant Steve): 1.6M in 6 days;
+  - many "…Then Dad Showed Up" story titles.
+  Ep 9's peak is exactly this: Ray drives 400 miles through the night and is parked next to Hank's truck at sunrise.
+- Emotional trucker stories about sacrificing for family (AI story channels):
+  - "When the truck driver met these 3 girls…": 2.5M;
+  - "A 34-Year-Old Refrigerated Truck Driver Who Drives 600km Every Night to Support His Family": 355K.
+  These drive the family stakes: the missed 5th birthday, "Mommy, it's the truck".
+- Night-road danger from the horror hits (Clyde Barrett "Bridges That SCARED Me", 251K) is used as the trigger: the Monteagle descent and the missed gear.
+
+Competitor techniques used:
+- Question cold open with a cut ("Before you do anything, I want you to—"). Hook types so far: ep 6 scene in motion, ep 7 odd detail, ep 8 bold statement, ep 9 question.
+- Exact context: Tue 22.04.2003, ~11 PM, Hank 26, 43,000 lb of roofing shingles, Nashville → Atlanta on I-24, 36 days away from home.
+- Family stakes: son's 5th birthday missed (Sat 19.04.2003); "Mommy, it's the truck."
+- Outsider explanation:
+  - why brakes fade;
+  - the Jake brake;
+  - "pick your gear at the top", and missing a gear means neutral;
+  - runaway ramps;
+  - the old saying "too slow a thousand times / too fast only once";
+  - the Monteagle sign "Truckers, you are not down yet".
+- Escalation with physical detail: the smell of hot brakes ("burnt toast and hot pennies"), the missed shift, the speedometer past 60, the occupied runaway ramp, the driver with the shaking hand.
+- Turn: "I didn't think about dying. I thought, my boy is going to remember me as the truck."
+- Rhetorical question to the viewer: "Who would you actually call, knowing they'd pick up on the first ring?" This drives comments.
+- Quotable lines:
+  - "Two in the morning lies."
+  - "Nobody ever made a good decision at two in the morning."
+  - "I came down here so you wouldn't have to decide by yourself."
+  - "There's no shame in gravel."
+- Peak: the green Kenworth parked next to his truck at sunrise, with two cold coffees on the dash.
+- Retroactive reveal: Ray's own 1979 story, the photo of 2-year-old Hank in Ray's visor (the same place Hank keeps his son's photo), the napkin with Ray's note.
+- Time jump + one unexplained detail (warm): in 2010 Hank's mother says Ray was already sitting at the kitchen table dressed, with keys in hand, at 1:30 AM, before the phone rang: "Our boy's on a mountain."
+- Full circle: last spring Hank's son called at 2 AM and Hank said the same words and drove all night.
+- Practical advice: mountain driving (gear at the top, slower down than up, hot-brake smell, use the ramp).
+- Ending type: warm (ep 8 was sad, ep 7 warm/explained). Season: spring (ep 8 late autumn). State: Tennessee (ep 8 Wyoming). Rolling Thunder: not mentioned.
+
+CONTINUITY NOTE (add to CANON):
+- Ep 9: Tuesday, April 22, 2003, ~11 PM, Monteagle Mountain on I-24 eastbound, Tennessee.
+  - Hank 26, long haul for 5 years, 36 days away from home.
+  - Load: 43,000 lb of roofing shingles, Nashville → Atlanta, due 8 AM.
+  - Nearly lost the truck: went over the top in too high a gear and missed the downshift. A red flatbed tractor was already in the runaway ramp.
+- Hank's son: 5th birthday on Saturday, April 19, 2003, so born April 19, 1998. Hank missed it (a load in Texas went bad; he called from Texarkana).
+  - "Mommy, it's the truck."
+  - After the week home, Hank put his old cap on the boy's head. This is the cap he wore for Halloween 2004 (ep 8).
+  - Hank didn't miss his next birthday.
+  - In 2026 the son is 28. Last spring he called Hank at 2 AM ("Dad, I think I'm done"), and Hank drove all night from 800 miles away. What it was about is not told.
+- ~2 AM Wed April 23, 2003: Hank wrote "Marlene. I quit. Hank." on a napkin at a truck stop at the bottom of the mountain. He called Ray from the pay phone (his cell was dead, charger left in Texas).
+  - Ray picked up on the first ring: "Hank."
+  - Ray's line: "Two in the morning lies… If you still want to quit when the sun's up, I'll come get you myself."
+- Ray drove ~400 miles overnight from southern Ohio in the green Kenworth. At 9:15 AM he was parked next to Hank's truck, asleep, with two coffees on the dash.
+  - Ray's 1979 story: the year he bought the Kenworth, he almost quit, writing it on the back of a fuel receipt at a truck stop in Arkansas. "I quit about once a month for three years. Always at two in the morning. Never once at noon."
+  - Photo in Ray's visor since 1979: Hank, 2, in a diaper and a cowboy hat, crying on the front bumper of the new green Kenworth.
+  - Line: "I came down here so you wouldn't have to decide by yourself."
+  - On the back of the napkin Ray wrote "Not on a mountain. Not at two in the morning. Dad." Hank keeps it taped inside his sun visor next to his son's picture; it has been through four trucks.
+  - Ray taught Hank to shift at 16, in a hay field, in the green Kenworth.
+- Marlene (dispatcher, calls everyone "hon"): "Hon, I've been waiting two years for you to ask me that." Hank took a week at home, then went back out on his own decision.
+- March 2010, after Ray's funeral: Hank's mother had never heard about Monteagle. She remembered that night: at ~1:30 AM Ray was sitting at the kitchen table, dressed, boots on, keys in hand, looking at the phone, and said "Our boy's on a mountain." The phone rang ~30 minutes later.
+  - [CHECK] This adds to the "Ray knew things he couldn't know" thread (ep 5 letter, finale ep 34). Unexplained on purpose; it must not contradict the finale.
+- Present 2026: Hank parked outside Laramie, Wyoming; he flashed his lights at the dip by Elk Mountain and nothing blinked back (callback to ep 8).
+- [CHECK] Hank's birthday must fall between Jan 1 and mid-March (ep 1: 21 in March 1998; ep 7: 19 in Aug 1996), so he is 26 in April 2003. Exact date not set.
+- Teaser ep 10 (as spoken): Montana; an old man at a truck stop asked for a ride to the house he grew up in, then handed Hank an envelope with $10,000 and a check dated 1956. [CHECK] The year of the ep 10 story is not set.
