@@ -112,9 +112,9 @@ def time_words(line, islands):
     words = [(c_i, w) for c_i, c in enumerate(line["chunks"]) for w in c.split()]
     weights = [syllables(w) + 0.35 for _, w in words]
     times = spread(weights, islands, a, b)
-    # only islands after a pause (>= 0.05 s) can start a phrase
+    # a phrase can start only at an island of real speech (>= 0.15 s) after a pause
     gaps = {s: s - pe for (s, e), (_, pe) in zip(islands, [(0, -1)] + islands[:-1])
-            if a - 0.05 <= s < b and s - pe >= 0.05}
+            if a - 0.05 <= s < b and s - pe >= 0.05 and e - s >= 0.15}
     starts = list(gaps)
     anchors = [0]
     for k in range(1, len(words)):

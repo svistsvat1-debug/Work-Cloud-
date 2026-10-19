@@ -1,0 +1,545 @@
+{
+ "title": "Hank's Logbook · Ep. 7 hook",
+ "voice": "voice.wav",
+ "size": [
+  1080,
+  1920
+ ],
+ "fps": 30,
+ "subtitle_y": 1000,
+ "style": "logbook",
+ "hook_text": "The rule I never broke",
+ "hook_color": "#FFD400",
+ "hook_y": 200,
+ "lines": [
+  {
+   "span": [
+    0.33,
+    2.0
+   ],
+   "chunks": [
+    "He fixed my engine",
+    "for free."
+   ]
+  },
+  {
+   "span": [
+    3.02,
+    5.14
+   ],
+   "chunks": [
+    "Then he tore a page",
+    "out of my logbook."
+   ]
+  },
+  {
+   "span": [
+    5.94,
+    7.65
+   ],
+   "chunks": [
+    "Ohio, 1996."
+   ]
+  },
+  {
+   "span": [
+    8.63,
+    10.01
+   ],
+   "chunks": [
+    "One year behind the wheel."
+   ]
+  },
+  {
+   "span": [
+    10.35,
+    11.14
+   ],
+   "chunks": [
+    "Running late."
+   ]
+  },
+  {
+   "span": [
+    11.81,
+    13.93
+   ],
+   "chunks": [
+    "He worked under that hood",
+    "for two hours."
+   ]
+  },
+  {
+   "span": [
+    14.9,
+    15.9
+   ],
+   "chunks": [
+    "Not one word."
+   ]
+  },
+  {
+   "span": [
+    16.57,
+    17.94
+   ],
+   "chunks": [
+    "Then he picked up my log."
+   ]
+  },
+  {
+   "span": [
+    18.92,
+    19.99
+   ],
+   "chunks": [
+    "Read one page."
+   ]
+  },
+  {
+   "span": [
+    20.16,
+    20.79
+   ],
+   "chunks": [
+    "And ripped it out."
+   ]
+  },
+  {
+   "span": [
+    21.51,
+    23.91
+   ],
+   "chunks": [
+    "\"Write it true,\" he said,",
+    "\"or don't write it.\""
+   ]
+  },
+  {
+   "span": [
+    24.64,
+    25.97
+   ],
+   "chunks": [
+    "He wouldn't take a dime."
+   ]
+  },
+  {
+   "span": [
+    26.67,
+    30.15
+   ],
+   "chunks": [
+    "Thirty years later,",
+    "there's not one false line",
+    "in my log."
+   ]
+  },
+  {
+   "span": [
+    30.96,
+    32.47
+   ],
+   "chunks": [
+    "Full story's on the channel."
+   ]
+  },
+  {
+   "span": [
+    33.14,
+    35.36
+   ],
+   "chunks": [
+    "And I still don't know",
+    "why that old man…"
+   ]
+  }
+ ],
+ "shots": [
+  {
+   "image": "shots/01.jpg",
+   "start": 0.0,
+   "end": 1.6,
+   "in": "cut",
+   "cam": [
+    [
+     0.0,
+     1.45,
+     0.55,
+     0.44
+    ],
+    [
+     1.6,
+     1.55,
+     0.55,
+     0.44
+    ]
+   ]
+  },
+  {
+   "image": "shots/03.jpg",
+   "start": 1.6,
+   "end": 2.9,
+   "in": "cut",
+   "cam": [
+    [
+     1.6,
+     1.4,
+     0.52,
+     0.45
+    ],
+    [
+     2.9,
+     1.5,
+     0.52,
+     0.45
+    ]
+   ]
+  },
+  {
+   "image": "shots/01.jpg",
+   "start": 2.9,
+   "end": 5.6,
+   "in": "whip",
+   "cam": [
+    [
+     2.9,
+     1.7,
+     0.58,
+     0.44
+    ],
+    [
+     5.6,
+     1.95,
+     0.6,
+     0.44
+    ]
+   ],
+   "punch": [
+    [
+     4.55,
+     0.07
+    ]
+   ]
+  },
+  {
+   "image": "shots/02.jpg",
+   "start": 5.6,
+   "end": 8.3,
+   "in": "fade",
+   "cam": [
+    [
+     5.6,
+     1.05,
+     0.55,
+     0.33
+    ],
+    [
+     8.3,
+     1.3,
+     0.6,
+     0.32
+    ]
+   ]
+  },
+  {
+   "image": "shots/02.jpg",
+   "start": 8.3,
+   "end": 11.5,
+   "in": "cut",
+   "cam": [
+    [
+     8.3,
+     1.9,
+     0.66,
+     0.28
+    ],
+    [
+     11.5,
+     2.15,
+     0.66,
+     0.28
+    ]
+   ],
+   "punch": [
+    [
+     10.4,
+     0.05
+    ]
+   ]
+  },
+  {
+   "image": "shots/03.jpg",
+   "start": 11.5,
+   "end": 14.5,
+   "in": "whip",
+   "cam": [
+    [
+     11.5,
+     1.15,
+     0.55,
+     0.46
+    ],
+    [
+     14.5,
+     1.45,
+     0.55,
+     0.44
+    ]
+   ]
+  },
+  {
+   "image": "shots/04.jpg",
+   "start": 14.5,
+   "end": 16.3,
+   "in": "cut",
+   "cam": [
+    [
+     14.5,
+     1.55,
+     0.66,
+     0.37
+    ],
+    [
+     16.3,
+     1.75,
+     0.67,
+     0.36
+    ]
+   ]
+  },
+  {
+   "image": "shots/05.jpg",
+   "start": 16.3,
+   "end": 18.6,
+   "in": "whip",
+   "cam": [
+    [
+     16.3,
+     1.05,
+     0.58,
+     0.47
+    ],
+    [
+     18.6,
+     1.25,
+     0.6,
+     0.46
+    ]
+   ]
+  },
+  {
+   "image": "shots/05.jpg",
+   "start": 18.6,
+   "end": 20.1,
+   "in": "cut",
+   "cam": [
+    [
+     18.6,
+     2.0,
+     0.72,
+     0.68
+    ],
+    [
+     20.1,
+     2.2,
+     0.72,
+     0.68
+    ]
+   ]
+  },
+  {
+   "image": "shots/01.jpg",
+   "start": 20.1,
+   "end": 21.3,
+   "in": "flash",
+   "cam": [
+    [
+     20.1,
+     2.1,
+     0.62,
+     0.44
+    ],
+    [
+     21.3,
+     2.3,
+     0.62,
+     0.44
+    ]
+   ],
+   "punch": [
+    [
+     20.45,
+     0.08
+    ]
+   ]
+  },
+  {
+   "image": "shots/04.jpg",
+   "start": 21.3,
+   "end": 24.3,
+   "in": "fade",
+   "cam": [
+    [
+     21.3,
+     2.0,
+     0.68,
+     0.36
+    ],
+    [
+     24.3,
+     2.35,
+     0.69,
+     0.35
+    ]
+   ]
+  },
+  {
+   "image": "shots/06.jpg",
+   "start": 24.3,
+   "end": 26.4,
+   "in": "whip",
+   "cam": [
+    [
+     24.3,
+     1.25,
+     0.48,
+     0.47
+    ],
+    [
+     26.4,
+     1.5,
+     0.48,
+     0.45
+    ]
+   ],
+   "punch": [
+    [
+     25.45,
+     0.05
+    ]
+   ]
+  },
+  {
+   "image": "shots/07.jpg",
+   "start": 26.4,
+   "end": 30.6,
+   "in": "dip",
+   "cam": [
+    [
+     26.4,
+     1.1,
+     0.52,
+     0.52
+    ],
+    [
+     30.6,
+     1.45,
+     0.55,
+     0.45
+    ]
+   ]
+  },
+  {
+   "image": "shots/07.jpg",
+   "start": 30.6,
+   "end": 32.8,
+   "in": "cut",
+   "cam": [
+    [
+     30.6,
+     2.0,
+     0.48,
+     0.335
+    ],
+    [
+     32.8,
+     2.2,
+     0.48,
+     0.33
+    ]
+   ]
+  },
+  {
+   "image": "shots/04.jpg",
+   "start": 32.8,
+   "end": 35.55,
+   "in": "dip",
+   "grade": "dark",
+   "cam": [
+    [
+     32.8,
+     2.3,
+     0.68,
+     0.365
+    ],
+    [
+     35.55,
+     2.7,
+     0.69,
+     0.36
+    ]
+   ]
+  }
+ ],
+ "music": {
+  "booms": [
+   0.05,
+   20.1
+  ],
+  "whooshes": [
+   5.6,
+   11.5,
+   16.3,
+   24.3
+  ],
+  "riser": [
+   18.7,
+   20.1
+  ],
+  "drops": [
+   [
+    32.8,
+    35.6
+   ]
+  ],
+  "chords": [
+   [
+    0.0,
+    "A"
+   ],
+   [
+    5.6,
+    "F"
+   ],
+   [
+    11.5,
+    "C"
+   ],
+   [
+    16.3,
+    "G"
+   ],
+   [
+    20.1,
+    "A"
+   ],
+   [
+    24.3,
+    "F"
+   ],
+   [
+    26.4,
+    "C"
+   ],
+   [
+    30.6,
+    "G"
+   ],
+   [
+    32.8,
+    "E"
+   ]
+  ]
+ }
+}
