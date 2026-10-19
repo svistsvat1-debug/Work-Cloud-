@@ -131,7 +131,7 @@ Send Claude three files: the Gemini clip (or the step-1 image), the mp3, the SRT
 - Subtitles (optional): upload the SRT as English.
 - Cards (exact times after assembly):
   - ~0:55 ("Last time I told you about the night I almost quit…") → Episode 9;
-  - ~1:43 ("If you've been here a while, you know how he got there.") → Episode 8, where Buddy appears.
+  - ~1:45 ("If you've been here a while, you know how he got there.") → Episode 8, where Buddy appears.
 - End screen: last 20 seconds, "Best for viewer" + Subscribe.
 - Schedule: 22:00, time zone Warsaw.
 - After publishing: pin the comment above; reply to the first comments in the first 30 minutes.
