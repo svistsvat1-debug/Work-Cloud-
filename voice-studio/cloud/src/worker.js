@@ -287,7 +287,9 @@ async function tts(req, env) {
   if (text.length > MAX_TEXT) return fail(413, `Задовгий фрагмент (більше ${MAX_TEXT} символів)`);
   const voice = Object.hasOwn(VOICES, body.voice) ? body.voice : DEFAULT_VOICE[body.lang] || DEFAULT_VOICE.en;
   const speed = Math.min(1.5, Math.max(0.6, Number(body.speed) || 1));
-  const format = body.format === 'mp3' ? 'mp3' : 'wav';
+  // Always WAV from Kokoro and Inworld: their MP3 of a longer request can carry the length of only its first part, and
+  // a browser then plays (and keeps) only that part. A page still open from before sends 'mp3'; it gets WAV too.
+  const format = 'wav';
   const out = await speak(env, voice, text, speed, format);
   if (!out.res.ok) return providerError(out.res.status, out.detail);
   return new Response(out.res.body, {

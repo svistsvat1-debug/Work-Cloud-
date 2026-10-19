@@ -58,7 +58,7 @@
 
   /* Results card */
   .side { display: grid; gap: 14px; align-content: start; background: var(--card); border: 1px solid var(--edge); border-radius: 18px; padding: 16px; }
-  .side:not(:has(#result:not([hidden]), #progress:not([hidden]), #resume:not([hidden]), #err:not(:empty))) { display: none; }
+  .side:not(:has(#result:not([hidden]), #progress:not([hidden]), #resume:not([hidden]), #err:not(:empty), #history:not([hidden]))) { display: none; }
   .side-empty { display: none; color: var(--faint); font-size: 14px; }
   #progress { display: grid; gap: 8px; }
   #progress .meta { padding: 0; color: var(--muted); }
@@ -90,6 +90,38 @@
   .frag-edit textarea { width: 100%; min-height: 96px; border: 0; border-radius: 12px; background: var(--chip); color: var(--ink); padding: 10px 12px;
     font: inherit; font-size: 15px; line-height: 1.5; resize: vertical; outline: none; }
   .frag-edit .row { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  /* Voice sheet: every voice of the language, grouped by accent and sex, each with its own play button */
+  .chip#voiceChip { border: 0; min-height: 40px; }
+  .vlist { display: grid; gap: 2px; padding-bottom: 8px; }
+  .vgroup { font-size: 13px; font-weight: 600; color: var(--muted); padding: 14px 2px 6px; border-top: 1px solid var(--edge); }
+  .vgroup:first-child { border-top: 0; padding-top: 2px; }
+  .vrow { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 10px; padding: 4px; border-radius: 12px; }
+  .vrow.now { background: var(--chip); }
+  .vplay { width: 44px; min-height: 44px; padding: 0; border-radius: 50%; flex: none; }
+  .vrow.now .vplay { background: var(--chip-active); }
+  .vplay.on, .vrow.now .vplay.on { background: var(--white); color: var(--black); }
+  .vplay.wait svg { display: none; }
+  .vplay.wait::after { content: ""; width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--muted); border-top-color: transparent;
+    animation: spin .8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .vpick { justify-content: space-between; min-height: 44px; padding: 0 12px; background: transparent; text-align: left; font-size: 15.5px; }
+  .vpick:active { background: transparent; }
+  .vpick small { font-size: 12.5px; font-weight: 500; color: var(--muted); }
+  .vrow.now .vpick { font-weight: 600; }
+  .vrow.now .vpick::after { content: "✓"; color: var(--ink); font-weight: 600; }
+  .vrow.now .vpick small { margin-left: auto; margin-right: 10px; }
+  .vhint { padding-top: 6px; }
+
+  /* Recent voiceovers: the last 5 stay on the device */
+  .history { display: grid; gap: 6px; }
+  .result:not([hidden]) + .history, #err:not(:empty) ~ .history { border-top: 1px solid var(--edge); padding-top: 14px; }
+  .history-head { font-size: 13px; font-weight: 600; color: var(--muted); padding: 0 2px 4px; }
+  .hist { display: grid; justify-items: start; gap: 2px; width: 100%; min-height: 0; padding: 10px 12px; text-align: left; border-radius: 12px;
+    background: transparent; }
+  .hist.now { background: var(--chip); }
+  .hist-title { font-size: 14px; font-weight: 500; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+  .hist-meta { font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
 
   /* Sign-in and setup */
   .narrow { width: 100%; max-width: 380px; margin: auto; display: grid; gap: 12px; background: var(--card); border: 1px solid var(--edge);
@@ -134,6 +166,8 @@
     .white:hover { background: #e9e9e9; }
     .seg button[aria-checked="true"]:hover { background: var(--white); }
     .link:hover, .icon-btn:hover { background: none; color: var(--ink); }
+    .vpick:hover { background: transparent; text-decoration: underline; text-underline-offset: 3px; }
+    .vplay.on:hover { background: #e9e9e9; }
   }
   /* Tablets and computers: more air, larger type, the card takes most of the window */
   @media (min-width: 700px) {
@@ -153,7 +187,7 @@
     #studio > .meta { grid-column: 1; grid-row: 2; }
     .side, .side:not(:has(#result:not([hidden]), #progress:not([hidden]), #resume:not([hidden]), #err:not(:empty))) { display: grid; }
     .side { grid-column: 2; grid-row: 1; max-height: calc(100vh - 86px); max-height: calc(100dvh - 86px); overflow-y: auto; }
-    .side:not(:has(#result:not([hidden]), #progress:not([hidden]), #resume:not([hidden]), #err:not(:empty))) .side-empty { display: block; }
+    .side:not(:has(#result:not([hidden]), #progress:not([hidden]), #resume:not([hidden]), #err:not(:empty), #history:not([hidden]))) .side-empty { display: block; }
     .files > * { flex-basis: 100%; }
   }
   @media (min-width: 1400px) { .app { padding: 40px 48px; } .composer { height: calc(100dvh - 110px); } .side { max-height: calc(100dvh - 110px); } #text { font-size: 20px; } }
@@ -161,7 +195,7 @@
   @media (max-height: 520px) { .app { padding-top: 8px; } .composer { height: 82vh; height: 82dvh; min-height: 220px; } }
   /* The smallest phones */
   @media (max-width: 360px) { .chip { padding: 0 11px; font-size: 14px; } #go { width: 60px; } #text { font-size: 16px; } }
-  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } .vplay.wait::after { animation-duration: 2s; } }
 </style>
 </head>
 <body>
@@ -193,7 +227,8 @@
           <label class="chip"><span>Англійська</span><select id="lang" aria-label="Мова"><option value="en">Англійська</option><option value="de">Німецька</option><option value="es">Іспанська</option><option value="fr">Французька</option></select></label>
           <label class="chip"><span></span><select id="accent" aria-label="Акцент"><option value="US">США</option><option value="UK">Британія</option></select></label>
           <label class="chip"><span>Чоловіча</span><select id="gender" aria-label="Стать голосу"><option value="m">Чоловіча</option></select></label>
-          <label class="chip"><span></span><select id="voice" aria-label="Диктор"></select></label>
+          <button type="button" class="chip" id="voiceChip" aria-haspopup="dialog" aria-label="Диктор: вибрати й прослухати"><span></span></button>
+          <select id="voice" hidden aria-hidden="true" tabindex="-1"></select>
         </div>
         <button class="white" id="go" type="button" aria-label="Озвучити"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M5 3.2v11.6L14.5 9z" fill="currentColor"/></svg></button>
       </div>
@@ -227,9 +262,22 @@
         <button type="button" class="link" id="fragsToggle" hidden>Виправити фрагмент</button>
         <div class="frags" id="frags" hidden></div>
       </div>
+      <div class="history" id="history" hidden>
+        <div class="history-head">Останні озвучки</div>
+        <div id="historyList"></div>
+      </div>
     </section>
   </main>
 </div>
+
+<dialog id="voices" aria-label="Голос">
+  <div class="sheet">
+    <div class="sheet-head"><b id="voicesTitle">Голос</b><button class="link" id="closeVoices" type="button">Готово</button></div>
+    <div class="vlist" id="vlist"></div>
+    <div class="msg err" id="vErr"></div>
+    <div class="hint vhint">▶ — зразок голосу (перший раз озвучується, далі грає одразу). Натисніть ім'я, щоб вибрати голос.</div>
+  </div>
+</dialog>
 
 <dialog id="settings" aria-label="Налаштування">
   <div class="sheet">
@@ -281,11 +329,6 @@
     <div class="set">
       <label class="switch">Вирівнювати гучність <input type="checkbox" id="level"></label>
       <div class="hint">Однакова гучність усіх шматків і голосів, близько до стандарту YouTube.</div>
-    </div>
-
-    <div class="set">
-      <label class="switch">Економити мобільний інтернет <input type="checkbox" id="mp3"></label>
-      <div class="hint">Сервер шле звук у MP3: утричі менше трафіку, якість трохи нижча.</div>
     </div>
 
     <div class="set">
@@ -1176,12 +1219,13 @@ async function speak(text, voice, lang, speed, format, signal) {
   }
 }
 
-// Inworld and Chatterbox now and then repeat the end of a request or drop a phrase. The server already checks every take by
-// speech recognition; as a last guard, a take far longer or shorter than the text needs is asked again (twice more
-// at most) and the one closest to the expected length is kept. Digits count more: "2026" takes longer to say than to write.
+// Every take is checked against the length its text needs: Inworld and Chatterbox now and then repeat the end of a request
+// or drop a phrase (the server also hears them back with speech recognition), and audio cut short anywhere on the way
+// must never pass silently (MP3 from the server once lost two thirds of a 17-minute script). A take far longer or
+// shorter than expected is asked again (twice more at most) and the one closest to the expected length is kept.
+// Digits count more: "2026" takes longer to say than to write.
 async function speakChecked(text, voice, lang, speed, format, signal) {
-  const cps = voiceOf(voice)?.cps;
-  if (!cps) return speak(text, voice, lang, speed, format, signal);
+  const cps = voiceOf(voice)?.cps || CHARS_PER_SEC[lang];
   const expected = (text.length + 3 * (text.match(/\d/g) || []).length) / cps / speed;
   let best = null;
   for (let take = 0; take < 3; take++) {
@@ -1232,7 +1276,60 @@ function voiceSpeed() { // each voice keeps its own speed (Josef is calmer than 
 }
 function syncChips() {
   for (const sel of document.querySelectorAll(".chip select")) sel.previousElementSibling.textContent = sel.selectedOptions[0]?.text || "";
+  $("voiceChip").firstElementChild.textContent = $("voice").selectedOptions[0]?.text || "";
 }
+
+// Voice sheet: the voice chip opens every voice of the language with a play button each. A sample is voiced once
+// (the language's sample line, at the voice's own speed) and kept on the device, so later taps play at once.
+const samples = new Map(), sampleAudio = new Audio();
+let sampleOf = null, sampleCtrl = null;
+function openVoices() {
+  const lang = $("lang").value, cur = $("voice").value, groups = new Map();
+  for (const v of VOICES.filter((x) => x.lang === lang)) {
+    const g = `${ACCENTS[v.accent]} · ${v.sex === "m" ? "чоловічі" : "жіночі"}`;
+    groups.set(g, [...(groups.get(g) || []), v]);
+  }
+  $("voicesTitle").textContent = "Голос · " + LANG_NAMES[lang];
+  $("vErr").textContent = "";
+  $("vlist").innerHTML = [...groups].map(([g, list]) => `<div class="vgroup">${g}</div>` + list.map((v) => `<div class="vrow${v.id === cur ? " now" : ""}">
+    <button type="button" class="vplay" data-sample="${v.id}" aria-label="Прослухати ${v.name}">${PLAY_ICON}</button>
+    <button type="button" class="vpick" data-pick="${v.id}">${v.name}${PREMIUM[v.engine] ? " <small>преміум</small>" : ""}</button></div>`).join("")).join("");
+  $("voices").showModal();
+  $("vlist").querySelector(".vrow.now")?.scrollIntoView({ block: "nearest" });
+}
+function stopSample() {
+  sampleCtrl?.abort(); sampleCtrl = null;
+  sampleAudio.pause();
+  for (const b of document.querySelectorAll(".vplay.on, .vplay.wait")) { b.classList.remove("on", "wait"); b.innerHTML = PLAY_ICON; }
+  sampleOf = null;
+}
+async function playSample(id, btn) {
+  if (sampleOf === id) { stopSample(); return; } // the same button again: stop
+  stopSample();
+  const v = voiceOf(id), speed = SPEED[v.engine] ? +store.get("pace_" + id, v.pace) : 1, key = `${id}|${speed}|${PREVIEW[v.lang]}`;
+  sampleOf = id;
+  let blob = samples.get(key) || (await idb("samples", "readonly", (o) => o.get(key)));
+  if (!blob) {
+    btn.classList.add("wait");
+    const ctrl = sampleCtrl = new AbortController();
+    try {
+      const pcm = await speakChecked(PREVIEW[v.lang], id, v.lang, speed, "wav", ctrl.signal);
+      blob = new Blob([wavHeader(pcm.length * 2), pcm], { type: "audio/wav" });
+      idb("samples", "readwrite", (o) => o.put(blob, key));
+    } catch (e) {
+      if (sampleOf === id) stopSample();
+      if (e instanceof AuthError) { $("voices").close(); await route(); } else if (e.name !== "AbortError") $("vErr").textContent = e.message;
+      return;
+    }
+    if (sampleOf !== id) return; // another voice was tapped meanwhile
+  }
+  samples.set(key, blob);
+  btn.classList.remove("wait"); btn.classList.add("on"); btn.innerHTML = PAUSE_ICON;
+  if (sampleAudio.src) URL.revokeObjectURL(sampleAudio.src);
+  sampleAudio.src = URL.createObjectURL(blob);
+  sampleAudio.play().catch(() => stopSample());
+}
+sampleAudio.addEventListener("ended", () => stopSample());
 // Which language a text is in, from its most common short words; null when unsure
 const STOPWORDS = {
   en: "the and you that is it to of for this with what was have are but your just they", de: "der die und das ist nicht ich du sie mit auf für den dem ein eine auch wir aber sich zu",
@@ -1250,7 +1347,6 @@ function updateLabels() {
   $("ppVal").textContent = (+$("pp").value).toFixed(1) + " с";
   for (const id of ["voice", "pp"]) store.set(id, $(id).value);
   store.set("voice_" + $("lang").value, $("voice").value);
-  store.set("mp3", $("mp3").checked);
   store.set("level", $("level").checked);
 }
 const costOf = (text) => { // voices checked by speech recognition also pay for it, per minute of audio
@@ -1277,26 +1373,62 @@ const fmtTime = (sec) => { const h = Math.floor(sec / 3600), m = Math.floor((sec
 function stamp() { const d = new Date(), p = (n) => String(n).padStart(2, "0"); return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}_${p(d.getHours())}${p(d.getMinutes())}`; }
 const slug = (t) => (t.normalize("NFD").replace(/\p{M}/gu, "").replace(/ß/g, "ss").match(/[A-Za-z0-9]+/g) || []).slice(0, 4).join("-").toLowerCase() || "voice";
 
-// The last result is kept on the phone, so a reload or a closed tab doesn't lose a long voiceover
-const lastDb = new Promise((resolve) => {
+// The last 5 voiceovers are kept on the device (IndexedDB), with what fixing a fragment needs: a reload or a closed
+// tab loses nothing, and any of them can be opened and downloaded again. Short of space, the oldest go first.
+const HISTORY = 5;
+const db = new Promise((resolve) => {
   try {
-    const r = indexedDB.open("voice-studio", 1);
-    r.onupgradeneeded = () => r.result.createObjectStore("last");
+    const r = indexedDB.open("voice-studio", 3);
+    r.onupgradeneeded = () => {
+      if (!r.result.objectStoreNames.contains("last")) r.result.createObjectStore("last");
+      if (!r.result.objectStoreNames.contains("history")) r.result.createObjectStore("history", { keyPath: "id" });
+      if (!r.result.objectStoreNames.contains("samples")) r.result.createObjectStore("samples"); // voice samples for the voice sheet
+    };
     r.onsuccess = () => resolve(r.result); r.onerror = () => resolve(null);
   } catch { resolve(null); }
 });
-async function saveLast(item) {
-  const db = await lastDb; if (!db) return;
-  const { name, seconds, duration, mp3, job: st } = item;
-  const record = st ? { name, seconds, duration, mp3, job: st } : item;
-  await new Promise((res) => { try { const tx = db.transaction("last", "readwrite"); tx.objectStore("last").put(record, "result"); tx.oncomplete = tx.onerror = tx.onabort = res; } catch { res(); } });
+const idb = (store, mode, act) => db.then((d) => d && new Promise((res) => {
+  try {
+    const tx = d.transaction(store, mode), req = act(tx.objectStore(store));
+    tx.oncomplete = () => res(req ? req.result : true); tx.onerror = tx.onabort = () => res(null);
+  } catch { res(null); }
+}));
+const titleOf = (text) => { const w = (text || "").replace(/\s+/g, " ").trim().split(" "); return w.slice(0, 8).join(" ") + (w.length > 8 ? "…" : ""); };
+async function saveItem(item) {
+  const { id = Date.now(), name, seconds, duration, mp3, job: st } = item;
+  item.id = id;
+  const record = { id, name, seconds, duration, mp3, job: st, title: titleOf(st?.text), voice: st?.voice };
+  for (;;) { // a full device: drop the oldest other voiceover and try again
+    if (await idb("history", "readwrite", (o) => o.put(record))) break;
+    const keys = ((await idb("history", "readonly", (o) => o.getAllKeys())) || []).filter((k) => k !== id).sort((a, b) => a - b);
+    if (!keys.length) return;
+    await idb("history", "readwrite", (o) => o.delete(keys[0]));
+  }
+  const keys = ((await idb("history", "readonly", (o) => o.getAllKeys())) || []).sort((a, b) => b - a);
+  for (const k of keys.slice(HISTORY)) await idb("history", "readwrite", (o) => o.delete(k));
+  renderHistory();
 }
-async function loadLast() {
-  const db = await lastDb; if (!db) return null;
-  const record = await new Promise((res) => { try { const r = db.transaction("last").objectStore("last").get("result"); r.onsuccess = () => res(r.result || null); r.onerror = () => res(null); } catch { res(null); } });
-  if (!record || !record.job) return record; // saved before fragments were kept: WAV and SRT as they were
+async function openItem(id) {
+  const record = await idb("history", "readonly", (o) => o.get(id));
+  if (!record) return null;
+  if (!record.job) return record;
   const out = assemble(record.job);
   return { ...record, ...out, srt: makeSrt(out.timeline) };
+}
+async function renderHistory() {
+  const list = ((await idb("history", "readonly", (o) => o.getAll())) || []).sort((a, b) => b.id - a.id);
+  $("history").hidden = !list.length;
+  const when = (t) => { const d = new Date(t), p = (n) => String(n).padStart(2, "0"); return `${p(d.getDate())}.${p(d.getMonth() + 1)}, ${p(d.getHours())}:${p(d.getMinutes())}`; };
+  $("historyList").innerHTML = list.map((r) => `<button type="button" class="hist${shown && shown.id === r.id ? " now" : ""}" data-open="${r.id}">
+    <span class="hist-title">${esc(r.title || r.name)}</span>
+    <span class="hist-meta">${when(r.id)} · ${fmtTime(r.duration)}${voiceOf(r.voice) ? " · " + esc(voiceOf(r.voice).name) : ""}</span></button>`).join("");
+}
+// Before the history there was one saved voiceover; it becomes the first entry
+async function migrateLast() {
+  const old = await idb("last", "readonly", (o) => o.get("result"));
+  if (!old) return;
+  if (old.job) await saveItem({ ...old, id: Date.now() - 1 });
+  await idb("last", "readwrite", (o) => o.delete("result"));
 }
 
 let job = null, pending = null, wakeLock = null, urls = [], priceFactor = 1.5, confirmed = "";
@@ -1332,7 +1464,7 @@ function generate() {
     return;
   }
   pending = { text, items, parts: items.map((it) => (it.pause ? { blob: new Blob([]), samples: 0 } : null)), voice: $("voice").value, lang,
-    speed: +$("speed").value, format: $("mp3").checked ? "mp3" : "wav", seconds: 0 };
+    speed: +$("speed").value, seconds: 0 };
   run();
 }
 
@@ -1356,7 +1488,7 @@ async function run() {
   const worker = async () => {
     while (todo.length && !ctrl.signal.aborted) {
       const i = todo.shift();
-      const pcm = await speakChecked(st.items[i].spoken, st.voice, st.lang, st.speed, st.format, ctrl.signal);
+      const pcm = await speakChecked(st.items[i].spoken, st.voice, st.lang, st.speed, "wav", ctrl.signal);
       st.parts[i] = { blob: new Blob([pcm]), samples: pcm.length };
       done++; show();
     }
@@ -1371,7 +1503,7 @@ async function run() {
     const item = { ...out, srt: makeSrt(out.timeline), name: base, seconds: st.seconds, saved: true, job: st };
     fixed = new Set();
     showResult(item);
-    saveLast(item);
+    saveItem(item);
   } catch (e) {
     st.seconds += (performance.now() - started) / 1000;
     ctrl.abort();
@@ -1438,13 +1570,14 @@ async function prepareDownload(item) {
   try {
     const mp3 = await toMp3(item.wav, (p) => { if (token === shownToken) a.textContent = `Готую MP3… ${Math.round(p * 100)}%`; });
     item.mp3 = mp3;
-    if (item.saved && shown === item) saveLast(item); // never overwrite a newer voiceover
+    if (item.saved && item.id) saveItem(item); // keeps the MP3 with its own entry
     if (token === shownToken) offerFile(mp3, item.name + ".mp3");
   } catch {
     if (token === shownToken) offerFile(item.wav, item.name + ".wav"); // the voiceover is never lost over the MP3 step
   }
 }
-// how: "new" right after voicing, "restored" from the device after a reload, "updated" after a fragment was fixed
+// how: "new" right after voicing, "restored" from the device after a reload, "opened" from the list of recent ones,
+// "updated" after a fragment was fixed
 function showResult(item, how = "new") {
   const { wav, srt, duration, seconds, name } = item, restored = how === "restored";
   urls.forEach((u) => URL.revokeObjectURL(u));
@@ -1453,13 +1586,15 @@ function showResult(item, how = "new") {
   $("player").src = wavUrl;
   $("dlSrt").href = srtUrl; $("dlSrt").download = name + ".srt";
   $("resultText").textContent = restored ? `Остання озвучка (${fmtTime(duration)}), збережена на цьому пристрої`
+    : how === "opened" ? `Збережена озвучка: ${fmtTime(duration)} аудіо`
     : how === "updated" ? `Фрагмент оновлено: ${fmtTime(duration)} аудіо` : `Готово: ${fmtTime(duration)} аудіо за ${fmtTime(seconds)}`;
   $("result").hidden = false;
   shown = item;
   $("fragsToggle").hidden = !item.job;
   if (!item.job) $("frags").hidden = true; else if (!$("frags").hidden) renderFrags();
   prepareDownload(item);
-  if (how === "new") $("result").scrollIntoView({ behavior: "smooth", block: "nearest" });
+  renderHistory();
+  if (how === "new" || how === "opened") $("result").scrollIntoView({ behavior: "smooth", block: "nearest" });
 }
 
 // Fixing one fragment: listen to any request, edit its text or keep it, and voice only that request again.
@@ -1495,17 +1630,17 @@ async function revoice(i, text, row) {
     const blobs = [];
     let samples = 0;
     for (const [k, it] of fresh.entries()) {
-      const pcm = await speakChecked(it.spoken, st.voice, st.lang, st.speed, st.format, ctrl.signal);
+      const pcm = await speakChecked(it.spoken, st.voice, st.lang, st.speed, "wav", ctrl.signal);
       if (k) { const gap = joinGap(fresh[k - 1].spoken); blobs.push(silence(gap)); samples += Math.round(gap * SR); }
       blobs.push(new Blob([pcm])); samples += pcm.length;
     }
     st.items[i] = { ...st.items[i], spoken: fresh.map((it) => it.spoken).join(" "), sentences: fresh.flatMap((it) => it.sentences) };
     st.parts[i] = { blob: new Blob(blobs), samples };
     fixed.add(i);
-    const out = assemble(st), next = { ...out, srt: makeSrt(out.timeline), name: item.name, seconds: item.seconds, saved: true, job: st };
+    const out = assemble(st), next = { ...out, srt: makeSrt(out.timeline), name: item.name, seconds: item.seconds, saved: true, job: st, id: item.id };
     job = null;
     showResult(next, "updated");
-    saveLast(next);
+    saveItem(next);
     playFrom(i);
   } catch (e) {
     if (e instanceof AuthError) await route(); else msg.textContent = e.name === "AbortError" ? "Зупинено." : e.message;
@@ -1652,13 +1787,21 @@ $("recheck").onclick = route;
 
 for (const id of ["pp"]) $(id).value = store.get(id, $(id).value);
 fillVoices();
-$("mp3").checked = store.get("mp3", false);
 $("level").checked = store.get("level", true);
 $("text").value = store.get("text", "");
 $("pron").value = store.get("pron", $("pron").value);
 updateLabels(); updateStats();
-for (const id of ["voice", "speed", "pp", "mp3", "level"]) $(id).addEventListener("input", updateLabels);
+for (const id of ["voice", "speed", "pp", "level"]) $(id).addEventListener("input", updateLabels);
 $("voice").addEventListener("change", () => { syncChips(); voiceSpeed(); updateLabels(); updateStats(); });
+$("voiceChip").onclick = openVoices;
+$("closeVoices").onclick = () => $("voices").close();
+$("voices").addEventListener("close", stopSample);
+$("voices").addEventListener("click", (e) => {
+  if (e.target === $("voices")) return $("voices").close(); // tap outside the sheet
+  const play = e.target.closest("[data-sample]"), pick = e.target.closest("[data-pick]");
+  if (play) playSample(play.dataset.sample, play);
+  if (pick) { pickVoice(voiceOf(pick.dataset.pick)); updateLabels(); updateStats(); $("voices").close(); }
+});
 $("accent").addEventListener("change", () => { pickVoice({ accent: $("accent").value, sex: $("gender").value }); updateLabels(); updateStats(); });
 $("gender").addEventListener("change", () => { pickVoice({ accent: $("accent").value, sex: $("gender").value }); updateLabels(); updateStats(); });
 $("lang").addEventListener("change", () => switchLang($("lang").value));
@@ -1667,7 +1810,6 @@ $("text").addEventListener("paste", () => setTimeout(() => {
   const guess = guessLang($("text").value);
   if (guess && guess !== $("lang").value) switchLang(guess);
 }));
-$("mp3").addEventListener("change", updateLabels);
 $("speed").addEventListener("input", () => { store.set("pace_" + $("voice").value, $("speed").value); updateStats(); }); // only a speed you set is kept; "pace_" replaces older "speed_" values
 $("text").addEventListener("input", updateStats);
 $("pron").addEventListener("change", pronMap);
@@ -1679,7 +1821,17 @@ $("check").onclick = check;
 $("cancel").onclick = () => job?.abort();
 $("text").addEventListener("keydown", (e) => { if ((e.ctrlKey || e.metaKey) && e.key === "Enter") generate(); });
 route();
-loadLast().then((item) => { if (item && $("result").hidden && !job) showResult({ ...item, saved: true }, "restored"); });
+migrateLast().then(renderHistory).then(async () => { // the newest voiceover is back after a reload
+  const newest = ((await idb("history", "readonly", (o) => o.getAllKeys())) || []).sort((a, b) => b - a)[0];
+  const item = newest && (await openItem(newest));
+  if (item && $("result").hidden && !job) showResult({ ...item, saved: true }, "restored");
+});
+$("historyList").addEventListener("click", async (e) => {
+  const b = e.target.closest("[data-open]");
+  if (!b || job) return;
+  const item = await openItem(+b.dataset.open);
+  if (item) { fixed = new Set(); showResult({ ...item, saved: true }, "opened"); }
+});
 </script>
 </body>
 </html>
