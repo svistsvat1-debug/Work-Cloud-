@@ -354,6 +354,96 @@ def draw_logbook(frame, chunks, t, story):
     frame.alpha_composite(sp, dest=(int(SHEET_CX - sp.width / 2), int(SHEET_CY - sp.height / 2)))
 
 
+# ---------------------------------------------------------------- minimal style (default for shorts)
+# Clean subtitles in the middle of the frame: Bebas Neue, white, soft shadow, words
+# fade in one by one. No hook text, no button, no boxes.
+MIN_FONT = str(Path(__file__).resolve().parent / "fonts" / "BebasNeue-Regular.woff")
+MIN_PT, MIN_LINE_W, MIN_Y = 168, 900, 960
+_min_cache = {}
+
+
+def min_sprite(word):
+    if word in _min_cache:
+        return _min_cache[word]
+    font = ImageFont.truetype(MIN_FONT, MIN_PT)
+    asc, desc = font.getmetrics()
+    w, pad = int(font.getlength(word)), 40
+    size = (w + 2 * pad, asc + desc + 2 * pad)
+    shadow = Image.new("L", size, 0)
+    ImageDraw.Draw(shadow).text((pad, pad + asc + 4), word, font=font, fill=255, anchor="ls")
+    shadow = shadow.filter(ImageFilter.GaussianBlur(16)).point(lambda v: int(v * 0.8))
+    img = Image.new("RGBA", size, (0, 0, 0, 0))
+    img.putalpha(shadow)
+    ImageDraw.Draw(img).text((pad, pad + asc), word, font=font, fill=(255, 255, 255, 255), anchor="ls")
+    sp = {"img": img, "w": w, "asc": asc, "pad": pad}
+    _min_cache[word] = sp
+    return sp
+
+
+def draw_minimal(frame, chunks, t):
+    for c in chunks:
+        if not (c["start"] <= t < c["end"]):
+            continue
+        items = [(min_sprite(w.lstrip("*").upper()), wt) for w, wt in c["words"]]
+        space = MIN_PT * 0.22
+        lines, cur, cur_w = [], [], 0.0
+        for sp, wt in items:
+            add = sp["w"] + (space if cur else 0)
+            if cur and cur_w + add > MIN_LINE_W:
+                lines.append(cur)
+                cur, cur_w = [], 0.0
+                add = sp["w"]
+            cur.append((sp, wt))
+            cur_w += add
+        lines.append(cur)
+        line_h = MIN_PT * 0.98
+        base0 = MIN_Y - line_h * len(lines) / 2 + line_h * 0.82
+        fade_out = clamp01((c["end"] - t) / 0.1) if c["end"] - c["words"][-1][1] > 0.6 else 1.0
+        for k, ln in enumerate(lines):
+            width = sum(sp["w"] for sp, _ in ln) + space * (len(ln) - 1)
+            x = 540 - width / 2
+            base = base0 + k * line_h
+            for sp, wt in ln:
+                p = clamp01((t - (wt - 0.03)) / 0.18)
+                if p > 0:
+                    img = sp["img"]
+                    alpha = out_cubic(p) * fade_out
+                    s = 0.94 + 0.06 * out_cubic(p)
+                    if s < 0.999:
+                        img = img.resize((int(img.width * s), int(img.height * s)), Image.BILINEAR)
+                    if alpha < 0.999:
+                        img = img.copy()
+                        img.putalpha(img.getchannel("A").point(lambda v, a=alpha: int(v * a)))
+                    cx = x + sp["w"] / 2
+                    cy = base - sp["asc"] / 2 + (1 - out_cubic(p)) * 14
+                    frame.alpha_composite(img, dest=(int(cx - img.width / 2), int(cy - img.height / 2)))
+                x += sp["w"] + space
+        return
+
+
+def crop_bars(img):
+    """Drop flat letterbox bars (black or near-black, any tint) that image
+    generators sometimes add above/below or beside the picture."""
+    g = np.asarray(img.convert("L"), np.float32)
+
+    def edge(profile_mean, profile_std, n):
+        ref = float(np.median(profile_mean[:12]))
+        k = 0
+        while k < n // 3 and (k < 4 or (profile_std[k] < 1.2 and profile_mean[k] < 40
+                                        and abs(profile_mean[k] - ref) < 4)):
+            k += 1
+        return k if k > 8 else 0
+
+    rm, rs, cm, cs = g.mean(1), g.std(1), g.mean(0), g.std(0)
+    top = edge(rm, rs, len(rm))
+    bottom = len(rm) - edge(rm[::-1], rs[::-1], len(rm))
+    left = edge(cm, cs, len(cm))
+    right = len(cm) - edge(cm[::-1], cs[::-1], len(cm))
+    if top + (len(rm) - bottom) < 0.03 * len(rm) and left + (len(cm) - right) < 0.03 * len(cm):
+        return img
+    return img.crop((left + 2, top + 2, right - 2, bottom - 2))
+
+
 # ---------------------------------------------------------------- camera
 _img_cache = {}
 
@@ -363,7 +453,7 @@ def shot_image(root, shot, W, H):
     max_zoom = max(k[1] for k in shot["cam"]) * (1 + sum(p[1] for p in shot.get("punch", []))) * 1.18
     if key in _img_cache and _img_cache[key]["zoom"] >= max_zoom:
         return _img_cache[key]
-    src = Image.open(root / shot["image"]).convert("RGB")
+    src = crop_bars(Image.open(root / shot["image"]).convert("RGB"))
     src = ImageEnhance.Contrast(src).enhance(1.08)
     if shot.get("grade") == "dark":
         src = ImageEnhance.Color(src).enhance(0.65)
@@ -582,6 +672,8 @@ def main(cfg_path):
         frame = Image.fromarray(render_frame(root, story["shots"], t, W, H, fx)).convert("RGBA")
         if story.get("style") == "logbook":
             draw_logbook(frame, chunks, t, story)
+        elif story.get("style") == "minimal":
+            draw_minimal(frame, chunks, t)
         else:
             draw_subs(frame, chunks, layouts, t)
         enc.stdin.write(frame.convert("RGB").tobytes())
