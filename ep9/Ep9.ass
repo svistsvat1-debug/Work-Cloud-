@@ -1,0 +1,729 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1080
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Big,Inter,150,&H00FFFFFF,&H00FFFFFF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,6,3,5,60,60,0,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.25,0:00:01.25,Big,,0,0,0,,{\fad(200,200)}Have you ever been
+Dialogue: 0,0:00:01.25,0:00:02.30,Big,,0,0,0,,{\fad(200,200)}one phone call away
+Dialogue: 0,0:00:02.30,0:00:03.19,Big,,0,0,0,,{\fad(200,200)}from walking out
+Dialogue: 0,0:00:03.19,0:00:04.24,Big,,0,0,0,,{\fad(200,200)}on your whole life?
+Dialogue: 0,0:00:04.94,0:00:05.39,Big,,0,0,0,,{\fad(111,111)}I was.
+Dialogue: 0,0:00:05.39,0:00:06.86,Big,,0,0,0,,{\fad(200,200)}Two in the morning,
+Dialogue: 0,0:00:06.86,0:00:08.02,Big,,0,0,0,,{\fad(200,200)}at a truck stop
+Dialogue: 0,0:00:08.02,0:00:09.42,Big,,0,0,0,,{\fad(200,200)}at the bottom of a
+Dialogue: 0,0:00:09.42,0:00:11.13,Big,,0,0,0,,{\fad(200,200)}mountain in Tennessee.
+Dialogue: 0,0:00:11.13,0:00:13.11,Big,,0,0,0,,{\fad(200,200)}I'd written my resignation
+Dialogue: 0,0:00:13.11,0:00:14.48,Big,,0,0,0,,{\fad(200,200)}on a paper napkin.
+Dialogue: 0,0:00:14.48,0:00:15.30,Big,,0,0,0,,{\fad(200,200)}Four words.
+Dialogue: 0,0:00:15.30,0:00:15.90,Big,,0,0,0,,{\fad(149,149)}Marlene.
+Dialogue: 0,0:00:15.90,0:00:16.42,Big,,0,0,0,,{\fad(130,130)}I quit.
+Dialogue: 0,0:00:16.42,0:00:16.79,Big,,0,0,0,,{\fad(93,93)}Hank.
+Dialogue: 0,0:00:17.49,0:00:18.62,Big,,0,0,0,,{\fad(200,200)}I had a pocket full
+Dialogue: 0,0:00:18.62,0:00:20.11,Big,,0,0,0,,{\fad(200,200)}of quarters, and I called
+Dialogue: 0,0:00:20.11,0:00:21.41,Big,,0,0,0,,{\fad(200,200)}the one man I was sure
+Dialogue: 0,0:00:21.41,0:00:22.78,Big,,0,0,0,,{\fad(200,200)}would be ashamed of me.
+Dialogue: 0,0:00:23.48,0:00:24.44,Big,,0,0,0,,{\fad(200,200)}My father listened
+Dialogue: 0,0:00:24.44,0:00:25.39,Big,,0,0,0,,{\fad(200,200)}to the whole thing
+Dialogue: 0,0:00:25.39,0:00:26.56,Big,,0,0,0,,{\fad(200,200)}without saying a word.
+Dialogue: 0,0:00:27.26,0:00:28.57,Big,,0,0,0,,{\fad(200,200)}Then he said, "Son.
+Dialogue: 0,0:00:28.57,0:00:30.24,Big,,0,0,0,,{\fad(200,200)}Before you do anything,
+Dialogue: 0,0:00:30.24,0:00:31.33,Big,,0,0,0,,{\fad(200,200)}I want you to—"
+Dialogue: 0,0:00:32.03,0:00:32.61,Big,,0,0,0,,{\fad(144,144)}Hey.
+Dialogue: 0,0:00:32.61,0:00:34.05,Big,,0,0,0,,{\fad(200,200)}It's Hank.
+Dialogue: 0,0:00:34.75,0:00:36.05,Big,,0,0,0,,{\fad(200,200)}Tonight I'm parked
+Dialogue: 0,0:00:36.05,0:00:37.85,Big,,0,0,0,,{\fad(200,200)}outside Laramie, Wyoming.
+Dialogue: 0,0:00:37.85,0:00:39.05,Big,,0,0,0,,{\fad(200,200)}I made it across.
+Dialogue: 0,0:00:39.05,0:00:40.36,Big,,0,0,0,,{\fad(200,200)}And yes, I flashed
+Dialogue: 0,0:00:40.36,0:00:42.12,Big,,0,0,0,,{\fad(200,200)}my lights at that dip by
+Dialogue: 0,0:00:42.12,0:00:43.65,Big,,0,0,0,,{\fad(200,200)}Elk Mountain, the way
+Dialogue: 0,0:00:43.65,0:00:45.04,Big,,0,0,0,,{\fad(200,200)}I told you I would.
+Dialogue: 0,0:00:45.04,0:00:46.52,Big,,0,0,0,,{\fad(200,200)}Nothing blinked back.
+Dialogue: 0,0:00:46.52,0:00:47.25,Big,,0,0,0,,{\fad(181,181)}I'll admit
+Dialogue: 0,0:00:47.25,0:00:48.99,Big,,0,0,0,,{\fad(200,200)}I was a little relieved.
+Dialogue: 0,0:00:49.69,0:00:51.54,Big,,0,0,0,,{\fad(200,200)}Last time was a hard one.
+Dialogue: 0,0:00:51.54,0:00:53.17,Big,,0,0,0,,{\fad(200,200)}Tonight's a quiet one.
+Dialogue: 0,0:00:53.17,0:00:54.08,Big,,0,0,0,,{\fad(200,200)}No blizzard,
+Dialogue: 0,0:00:54.08,0:00:55.76,Big,,0,0,0,,{\fad(200,200)}no strange headlights.
+Dialogue: 0,0:00:55.76,0:00:57.04,Big,,0,0,0,,{\fad(200,200)}Just a pay phone,
+Dialogue: 0,0:00:57.04,0:00:59.01,Big,,0,0,0,,{\fad(200,200)}a mountain, and my father.
+Dialogue: 0,0:00:59.71,0:01:00.65,Big,,0,0,0,,{\fad(200,200)}Pull up a chair.
+Dialogue: 0,0:01:01.35,0:01:02.43,Big,,0,0,0,,{\fad(200,200)}It was Tuesday,
+Dialogue: 0,0:01:02.43,0:01:03.86,Big,,0,0,0,,{\fad(200,200)}April twenty-second,
+Dialogue: 0,0:01:03.86,0:01:05.23,Big,,0,0,0,,{\fad(200,200)}two thousand three.
+Dialogue: 0,0:01:05.23,0:01:06.39,Big,,0,0,0,,{\fad(200,200)}I was twenty-six
+Dialogue: 0,0:01:06.39,0:01:07.11,Big,,0,0,0,,{\fad(181,181)}years old,
+Dialogue: 0,0:01:07.11,0:01:09.00,Big,,0,0,0,,{\fad(200,200)}five years into long haul,
+Dialogue: 0,0:01:09.00,0:01:10.58,Big,,0,0,0,,{\fad(200,200)}and I hadn't been home
+Dialogue: 0,0:01:10.58,0:01:11.94,Big,,0,0,0,,{\fad(200,200)}in thirty-six days.
+Dialogue: 0,0:01:12.64,0:01:13.83,Big,,0,0,0,,{\fad(200,200)}I had forty-three
+Dialogue: 0,0:01:13.83,0:01:15.64,Big,,0,0,0,,{\fad(200,200)}thousand pounds of roofing
+Dialogue: 0,0:01:15.64,0:01:16.97,Big,,0,0,0,,{\fad(200,200)}shingles behind me,
+Dialogue: 0,0:01:16.97,0:01:18.42,Big,,0,0,0,,{\fad(200,200)}Nashville to Atlanta,
+Dialogue: 0,0:01:18.42,0:01:20.21,Big,,0,0,0,,{\fad(200,200)}on Interstate twenty-four.
+Dialogue: 0,0:01:20.21,0:01:21.05,Big,,0,0,0,,{\fad(200,200)}Due at eight
+Dialogue: 0,0:01:21.05,0:01:22.09,Big,,0,0,0,,{\fad(200,200)}in the morning.
+Dialogue: 0,0:01:22.79,0:01:24.08,Big,,0,0,0,,{\fad(200,200)}Three days before,
+Dialogue: 0,0:01:24.08,0:01:24.95,Big,,0,0,0,,{\fad(200,200)}on Saturday,
+Dialogue: 0,0:01:24.95,0:01:26.32,Big,,0,0,0,,{\fad(200,200)}my boy turned five.
+Dialogue: 0,0:01:26.32,0:01:27.14,Big,,0,0,0,,{\fad(200,200)}I missed it.
+Dialogue: 0,0:01:27.14,0:01:28.95,Big,,0,0,0,,{\fad(200,200)}A load in Texas went bad,
+Dialogue: 0,0:01:28.95,0:01:29.82,Big,,0,0,0,,{\fad(200,200)}the receiver
+Dialogue: 0,0:01:29.82,0:01:31.19,Big,,0,0,0,,{\fad(200,200)}wouldn't unload me,
+Dialogue: 0,0:01:31.19,0:01:32.98,Big,,0,0,0,,{\fad(200,200)}and by the time they did,
+Dialogue: 0,0:01:32.98,0:01:34.33,Big,,0,0,0,,{\fad(200,200)}the party was over.
+Dialogue: 0,0:01:34.33,0:01:35.62,Big,,0,0,0,,{\fad(200,200)}I called the house
+Dialogue: 0,0:01:35.62,0:01:36.97,Big,,0,0,0,,{\fad(200,200)}that afternoon from
+Dialogue: 0,0:01:36.97,0:01:38.82,Big,,0,0,0,,{\fad(200,200)}a truck stop in Texarkana.
+Dialogue: 0,0:01:38.82,0:01:40.67,Big,,0,0,0,,{\fad(200,200)}My wife held the phone out
+Dialogue: 0,0:01:40.67,0:01:42.52,Big,,0,0,0,,{\fad(200,200)}to him, and I heard him in
+Dialogue: 0,0:01:42.52,0:01:43.61,Big,,0,0,0,,{\fad(200,200)}the background,
+Dialogue: 0,0:01:43.61,0:01:44.99,Big,,0,0,0,,{\fad(200,200)}with all his little
+Dialogue: 0,0:01:44.99,0:01:46.15,Big,,0,0,0,,{\fad(200,200)}friends yelling.
+Dialogue: 0,0:01:46.85,0:01:47.76,Big,,0,0,0,,{\fad(200,200)}He said, "Mommy,
+Dialogue: 0,0:01:47.76,0:01:48.68,Big,,0,0,0,,{\fad(200,200)}it's the truck."
+Dialogue: 0,0:01:49.38,0:01:50.57,Big,,0,0,0,,{\fad(200,200)}Not Daddy.
+Dialogue: 0,0:01:50.57,0:01:51.76,Big,,0,0,0,,{\fad(200,200)}The truck.
+Dialogue: 0,0:01:52.46,0:01:53.43,Big,,0,0,0,,{\fad(200,200)}He didn't mean
+Dialogue: 0,0:01:53.43,0:01:54.46,Big,,0,0,0,,{\fad(200,200)}anything by it.
+Dialogue: 0,0:01:54.46,0:01:55.27,Big,,0,0,0,,{\fad(200,200)}He was five.
+Dialogue: 0,0:01:55.27,0:01:57.06,Big,,0,0,0,,{\fad(200,200)}To him, I was a voice that
+Dialogue: 0,0:01:57.06,0:01:58.71,Big,,0,0,0,,{\fad(200,200)}came out of the phone on
+Dialogue: 0,0:01:58.71,0:01:59.90,Big,,0,0,0,,{\fad(200,200)}Sundays and a big
+Dialogue: 0,0:01:59.90,0:02:01.37,Big,,0,0,0,,{\fad(200,200)}noise in the driveway
+Dialogue: 0,0:02:01.37,0:02:02.48,Big,,0,0,0,,{\fad(200,200)}every few weeks.
+Dialogue: 0,0:02:02.48,0:02:03.53,Big,,0,0,0,,{\fad(200,200)}But I sat there
+Dialogue: 0,0:02:03.53,0:02:04.79,Big,,0,0,0,,{\fad(200,200)}in that truck stop
+Dialogue: 0,0:02:04.79,0:02:06.60,Big,,0,0,0,,{\fad(200,200)}with the phone in my hand,
+Dialogue: 0,0:02:06.60,0:02:07.51,Big,,0,0,0,,{\fad(200,200)}and something
+Dialogue: 0,0:02:07.51,0:02:08.85,Big,,0,0,0,,{\fad(200,200)}in me cracked right
+Dialogue: 0,0:02:08.85,0:02:09.97,Big,,0,0,0,,{\fad(200,200)}down the middle.
+Dialogue: 0,0:02:10.67,0:02:11.73,Big,,0,0,0,,{\fad(200,200)}My father drove
+Dialogue: 0,0:02:11.73,0:02:13.29,Big,,0,0,0,,{\fad(200,200)}a truck my whole life.
+Dialogue: 0,0:02:13.29,0:02:14.46,Big,,0,0,0,,{\fad(200,200)}A green Kenworth.
+Dialogue: 0,0:02:14.46,0:02:15.47,Big,,0,0,0,,{\fad(200,200)}And I couldn't
+Dialogue: 0,0:02:15.47,0:02:16.69,Big,,0,0,0,,{\fad(200,200)}remember him ever
+Dialogue: 0,0:02:16.69,0:02:18.12,Big,,0,0,0,,{\fad(200,200)}missing my birthday.
+Dialogue: 0,0:02:18.12,0:02:18.74,Big,,0,0,0,,{\fad(155,155)}Not once.
+Dialogue: 0,0:02:18.74,0:02:19.95,Big,,0,0,0,,{\fad(200,200)}I couldn't figure
+Dialogue: 0,0:02:19.95,0:02:21.24,Big,,0,0,0,,{\fad(200,200)}out how he did it,
+Dialogue: 0,0:02:21.24,0:02:22.74,Big,,0,0,0,,{\fad(200,200)}and I couldn't do it.
+Dialogue: 0,0:02:23.44,0:02:24.71,Big,,0,0,0,,{\fad(200,200)}Now, to understand what
+Dialogue: 0,0:02:24.71,0:02:25.81,Big,,0,0,0,,{\fad(200,200)}happened that night,
+Dialogue: 0,0:02:25.81,0:02:26.69,Big,,0,0,0,,{\fad(200,200)}you need to know
+Dialogue: 0,0:02:26.69,0:02:27.63,Big,,0,0,0,,{\fad(200,200)}about a mountain.
+Dialogue: 0,0:02:28.33,0:02:29.51,Big,,0,0,0,,{\fad(200,200)}Between Nashville
+Dialogue: 0,0:02:29.51,0:02:30.62,Big,,0,0,0,,{\fad(200,200)}and Chattanooga,
+Dialogue: 0,0:02:30.62,0:02:31.32,Big,,0,0,0,,{\fad(175,175)}Interstate
+Dialogue: 0,0:02:31.32,0:02:32.79,Big,,0,0,0,,{\fad(200,200)}twenty-four goes over
+Dialogue: 0,0:02:32.79,0:02:34.12,Big,,0,0,0,,{\fad(200,200)}Monteagle Mountain.
+Dialogue: 0,0:02:34.12,0:02:35.89,Big,,0,0,0,,{\fad(200,200)}If you drive a car, you've
+Dialogue: 0,0:02:35.89,0:02:37.65,Big,,0,0,0,,{\fad(200,200)}probably never noticed it.
+Dialogue: 0,0:02:37.65,0:02:39.08,Big,,0,0,0,,{\fad(200,200)}If you drive a truck,
+Dialogue: 0,0:02:39.08,0:02:40.45,Big,,0,0,0,,{\fad(200,200)}you know it by name.
+Dialogue: 0,0:02:40.45,0:02:41.84,Big,,0,0,0,,{\fad(200,200)}It's one of the most
+Dialogue: 0,0:02:41.84,0:02:42.74,Big,,0,0,0,,{\fad(200,200)}famous grades
+Dialogue: 0,0:02:42.74,0:02:43.78,Big,,0,0,0,,{\fad(200,200)}in the country,
+Dialogue: 0,0:02:43.78,0:02:45.31,Big,,0,0,0,,{\fad(200,200)}and not in a good way.
+Dialogue: 0,0:02:46.01,0:02:47.49,Big,,0,0,0,,{\fad(200,200)}Here's the thing about
+Dialogue: 0,0:02:47.49,0:02:48.84,Big,,0,0,0,,{\fad(200,200)}a loaded truck going
+Dialogue: 0,0:02:48.84,0:02:49.92,Big,,0,0,0,,{\fad(200,200)}down a mountain.
+Dialogue: 0,0:02:49.92,0:02:50.67,Big,,0,0,0,,{\fad(186,186)}Your brakes
+Dialogue: 0,0:02:50.67,0:02:51.68,Big,,0,0,0,,{\fad(200,200)}are not enough.
+Dialogue: 0,0:02:51.68,0:02:53.30,Big,,0,0,0,,{\fad(200,200)}They're drums and shoes,
+Dialogue: 0,0:02:53.30,0:02:54.77,Big,,0,0,0,,{\fad(200,200)}and every time you use
+Dialogue: 0,0:02:54.77,0:02:56.25,Big,,0,0,0,,{\fad(200,200)}them, they get hotter.
+Dialogue: 0,0:02:56.25,0:02:57.59,Big,,0,0,0,,{\fad(200,200)}Get them hot enough,
+Dialogue: 0,0:02:57.59,0:02:58.53,Big,,0,0,0,,{\fad(200,200)}and they fade.
+Dialogue: 0,0:02:58.53,0:02:59.89,Big,,0,0,0,,{\fad(200,200)}The pedal goes soft,
+Dialogue: 0,0:02:59.89,0:03:01.12,Big,,0,0,0,,{\fad(200,200)}the smell comes up
+Dialogue: 0,0:03:01.12,0:03:02.35,Big,,0,0,0,,{\fad(200,200)}through the floor,
+Dialogue: 0,0:03:02.35,0:03:03.97,Big,,0,0,0,,{\fad(200,200)}like burnt toast and hot
+Dialogue: 0,0:03:03.97,0:03:05.47,Big,,0,0,0,,{\fad(200,200)}pennies, and the truck
+Dialogue: 0,0:03:05.47,0:03:06.62,Big,,0,0,0,,{\fad(200,200)}just keeps going.
+Dialogue: 0,0:03:07.32,0:03:08.43,Big,,0,0,0,,{\fad(200,200)}So you don't use
+Dialogue: 0,0:03:08.43,0:03:09.60,Big,,0,0,0,,{\fad(200,200)}your brakes to go
+Dialogue: 0,0:03:09.60,0:03:10.71,Big,,0,0,0,,{\fad(200,200)}down a mountain.
+Dialogue: 0,0:03:10.71,0:03:12.04,Big,,0,0,0,,{\fad(200,200)}You use your engine.
+Dialogue: 0,0:03:12.04,0:03:13.34,Big,,0,0,0,,{\fad(200,200)}You pick a low gear
+Dialogue: 0,0:03:13.34,0:03:14.98,Big,,0,0,0,,{\fad(200,200)}at the top, and you turn
+Dialogue: 0,0:03:14.98,0:03:16.42,Big,,0,0,0,,{\fad(200,200)}on your engine brake.
+Dialogue: 0,0:03:16.42,0:03:18.02,Big,,0,0,0,,{\fad(200,200)}Truckers call it a Jake.
+Dialogue: 0,0:03:18.02,0:03:19.47,Big,,0,0,0,,{\fad(200,200)}It's that loud rattle
+Dialogue: 0,0:03:19.47,0:03:20.64,Big,,0,0,0,,{\fad(200,200)}you hear from big
+Dialogue: 0,0:03:20.64,0:03:22.43,Big,,0,0,0,,{\fad(200,200)}trucks coming down a hill,
+Dialogue: 0,0:03:22.43,0:03:23.73,Big,,0,0,0,,{\fad(200,200)}like a machine gun.
+Dialogue: 0,0:03:23.73,0:03:25.52,Big,,0,0,0,,{\fad(200,200)}The engine holds you back,
+Dialogue: 0,0:03:25.52,0:03:26.48,Big,,0,0,0,,{\fad(200,200)}and the brakes
+Dialogue: 0,0:03:26.48,0:03:27.72,Big,,0,0,0,,{\fad(200,200)}are just for help.
+Dialogue: 0,0:03:28.42,0:03:29.85,Big,,0,0,0,,{\fad(200,200)}And there's one rule
+Dialogue: 0,0:03:29.85,0:03:31.20,Big,,0,0,0,,{\fad(200,200)}every driver learns
+Dialogue: 0,0:03:31.20,0:03:32.27,Big,,0,0,0,,{\fad(200,200)}his first year.
+Dialogue: 0,0:03:32.27,0:03:33.55,Big,,0,0,0,,{\fad(200,200)}You pick your gear
+Dialogue: 0,0:03:33.55,0:03:34.34,Big,,0,0,0,,{\fad(195,195)}at the top.
+Dialogue: 0,0:03:34.34,0:03:35.63,Big,,0,0,0,,{\fad(200,200)}Because if you try
+Dialogue: 0,0:03:35.63,0:03:37.00,Big,,0,0,0,,{\fad(200,200)}to shift on the way
+Dialogue: 0,0:03:37.00,0:03:38.51,Big,,0,0,0,,{\fad(200,200)}down and you miss it,
+Dialogue: 0,0:03:38.50,0:03:39.79,Big,,0,0,0,,{\fad(200,200)}even for a second,
+Dialogue: 0,0:03:39.79,0:03:41.08,Big,,0,0,0,,{\fad(200,200)}you're in neutral.
+Dialogue: 0,0:03:41.08,0:03:41.76,Big,,0,0,0,,{\fad(171,171)}No engine.
+Dialogue: 0,0:03:41.76,0:03:43.12,Big,,0,0,0,,{\fad(200,200)}Forty tons, rolling
+Dialogue: 0,0:03:43.12,0:03:44.69,Big,,0,0,0,,{\fad(200,200)}downhill, with nothing
+Dialogue: 0,0:03:44.69,0:03:46.18,Big,,0,0,0,,{\fad(200,200)}holding it but brakes
+Dialogue: 0,0:03:46.18,0:03:47.68,Big,,0,0,0,,{\fad(200,200)}that are already hot.
+Dialogue: 0,0:03:48.38,0:03:49.83,Big,,0,0,0,,{\fad(200,200)}That's why mountains
+Dialogue: 0,0:03:49.83,0:03:51.21,Big,,0,0,0,,{\fad(200,200)}have runaway ramps.
+Dialogue: 0,0:03:51.21,0:03:52.61,Big,,0,0,0,,{\fad(200,200)}Long lanes of deep,
+Dialogue: 0,0:03:52.61,0:03:53.56,Big,,0,0,0,,{\fad(200,200)}loose gravel,
+Dialogue: 0,0:03:53.56,0:03:55.03,Big,,0,0,0,,{\fad(200,200)}running off the side
+Dialogue: 0,0:03:55.03,0:03:56.73,Big,,0,0,0,,{\fad(200,200)}of the road and uphill.
+Dialogue: 0,0:03:56.72,0:03:58.47,Big,,0,0,0,,{\fad(200,200)}If your brakes are gone,
+Dialogue: 0,0:03:58.47,0:04:00.37,Big,,0,0,0,,{\fad(200,200)}you steer into the gravel,
+Dialogue: 0,0:04:00.37,0:04:01.26,Big,,0,0,0,,{\fad(200,200)}and it grabs
+Dialogue: 0,0:04:01.26,0:04:02.89,Big,,0,0,0,,{\fad(200,200)}your wheels and buries
+Dialogue: 0,0:04:02.89,0:04:04.15,Big,,0,0,0,,{\fad(200,200)}you to the axles.
+Dialogue: 0,0:04:04.15,0:04:06.04,Big,,0,0,0,,{\fad(200,200)}It's ugly, it's expensive,
+Dialogue: 0,0:04:06.04,0:04:06.98,Big,,0,0,0,,{\fad(200,200)}and you live.
+Dialogue: 0,0:04:07.68,0:04:09.35,Big,,0,0,0,,{\fad(200,200)}There's an old saying.
+Dialogue: 0,0:04:09.35,0:04:11.36,Big,,0,0,0,,{\fad(200,200)}You can go down a mountain
+Dialogue: 0,0:04:11.36,0:04:13.37,Big,,0,0,0,,{\fad(200,200)}too slow a thousand times.
+Dialogue: 0,0:04:13.37,0:04:14.54,Big,,0,0,0,,{\fad(200,200)}You can only go
+Dialogue: 0,0:04:14.54,0:04:16.02,Big,,0,0,0,,{\fad(200,200)}down too fast once.
+Dialogue: 0,0:04:16.72,0:04:18.52,Big,,0,0,0,,{\fad(200,200)}On the way down Monteagle,
+Dialogue: 0,0:04:18.52,0:04:19.56,Big,,0,0,0,,{\fad(200,200)}there's a sign.
+Dialogue: 0,0:04:19.56,0:04:20.18,Big,,0,0,0,,{\fad(157,157)}Truckers,
+Dialogue: 0,0:04:20.18,0:04:21.65,Big,,0,0,0,,{\fad(200,200)}you are not down yet.
+Dialogue: 0,0:04:22.35,0:04:23.94,Big,,0,0,0,,{\fad(200,200)}I passed it that night
+Dialogue: 0,0:04:23.94,0:04:25.68,Big,,0,0,0,,{\fad(200,200)}at about eleven o'clock.
+Dialogue: 0,0:04:25.68,0:04:27.45,Big,,0,0,0,,{\fad(200,200)}And I was going too fast.
+Dialogue: 0,0:04:28.15,0:04:28.95,Big,,0,0,0,,{\fad(199,199)}I was late.
+Dialogue: 0,0:04:28.95,0:04:30.61,Big,,0,0,0,,{\fad(200,200)}I'd been late all week.
+Dialogue: 0,0:04:30.61,0:04:32.10,Big,,0,0,0,,{\fad(200,200)}I was tired in a way
+Dialogue: 0,0:04:32.10,0:04:33.80,Big,,0,0,0,,{\fad(200,200)}that sleep doesn't fix.
+Dialogue: 0,0:04:33.80,0:04:35.65,Big,,0,0,0,,{\fad(200,200)}And I did the thing every
+Dialogue: 0,0:04:35.65,0:04:37.57,Big,,0,0,0,,{\fad(200,200)}old-timer warns you about.
+Dialogue: 0,0:04:37.57,0:04:39.00,Big,,0,0,0,,{\fad(200,200)}I went over the top
+Dialogue: 0,0:04:39.00,0:04:40.43,Big,,0,0,0,,{\fad(200,200)}in too high a gear,
+Dialogue: 0,0:04:40.43,0:04:42.23,Big,,0,0,0,,{\fad(200,200)}telling myself I'd catch
+Dialogue: 0,0:04:42.23,0:04:43.66,Big,,0,0,0,,{\fad(200,200)}it on the way down.
+Dialogue: 0,0:04:44.36,0:04:45.19,Big,,0,0,0,,{\fad(200,200)}Halfway down,
+Dialogue: 0,0:04:45.19,0:04:46.73,Big,,0,0,0,,{\fad(200,200)}I knew I was in trouble.
+Dialogue: 0,0:04:47.43,0:04:48.97,Big,,0,0,0,,{\fad(200,200)}The truck was gaining.
+Dialogue: 0,0:04:48.97,0:04:49.39,Big,,0,0,0,,{\fad(104,104)}Fifty.
+Dialogue: 0,0:04:49.39,0:04:50.16,Big,,0,0,0,,{\fad(192,192)}Fifty-five.
+Dialogue: 0,0:04:50.16,0:04:51.47,Big,,0,0,0,,{\fad(200,200)}I had the Jake on,
+Dialogue: 0,0:04:51.47,0:04:52.85,Big,,0,0,0,,{\fad(200,200)}and it was roaring,
+Dialogue: 0,0:04:52.85,0:04:54.37,Big,,0,0,0,,{\fad(200,200)}and it wasn't enough.
+Dialogue: 0,0:04:54.37,0:04:56.16,Big,,0,0,0,,{\fad(200,200)}I touched the brakes, and
+Dialogue: 0,0:04:56.16,0:04:58.02,Big,,0,0,0,,{\fad(200,200)}I smelled them right away.
+Dialogue: 0,0:04:58.02,0:04:58.86,Big,,0,0,0,,{\fad(200,200)}Burnt toast.
+Dialogue: 0,0:04:58.86,0:04:59.70,Big,,0,0,0,,{\fad(200,200)}Hot pennies.
+Dialogue: 0,0:05:00.40,0:05:02.07,Big,,0,0,0,,{\fad(200,200)}I had to get a lower gear.
+Dialogue: 0,0:05:02.07,0:05:03.66,Big,,0,0,0,,{\fad(200,200)}And there's no way to do
+Dialogue: 0,0:05:03.66,0:05:05.11,Big,,0,0,0,,{\fad(200,200)}that on a hill without
+Dialogue: 0,0:05:05.11,0:05:06.57,Big,,0,0,0,,{\fad(200,200)}going through neutral.
+Dialogue: 0,0:05:07.27,0:05:08.80,Big,,0,0,0,,{\fad(200,200)}So I pushed in the clutch,
+Dialogue: 0,0:05:08.80,0:05:09.51,Big,,0,0,0,,{\fad(176,176)}and I pulled
+Dialogue: 0,0:05:09.51,0:05:10.80,Big,,0,0,0,,{\fad(200,200)}the stick out of gear,
+Dialogue: 0,0:05:10.80,0:05:11.91,Big,,0,0,0,,{\fad(200,200)}and for one second,
+Dialogue: 0,0:05:11.91,0:05:13.02,Big,,0,0,0,,{\fad(200,200)}the truck was free.
+Dialogue: 0,0:05:13.72,0:05:14.83,Big,,0,0,0,,{\fad(200,200)}You can feel it.
+Dialogue: 0,0:05:14.83,0:05:16.27,Big,,0,0,0,,{\fad(200,200)}Forty-three thousand
+Dialogue: 0,0:05:16.27,0:05:17.63,Big,,0,0,0,,{\fad(200,200)}pounds of shingles,
+Dialogue: 0,0:05:17.63,0:05:19.42,Big,,0,0,0,,{\fad(200,200)}and nothing holding them.
+Dialogue: 0,0:05:19.42,0:05:20.43,Big,,0,0,0,,{\fad(200,200)}Just the hill,
+Dialogue: 0,0:05:20.43,0:05:21.94,Big,,0,0,0,,{\fad(200,200)}and the dark, and the
+Dialogue: 0,0:05:21.94,0:05:23.31,Big,,0,0,0,,{\fad(200,200)}sound of the tires.
+Dialogue: 0,0:05:24.01,0:05:25.36,Big,,0,0,0,,{\fad(200,200)}I went for the lower gear,
+Dialogue: 0,0:05:25.36,0:05:26.19,Big,,0,0,0,,{\fad(200,200)}and I missed it.
+Dialogue: 0,0:05:26.89,0:05:27.99,Big,,0,0,0,,{\fad(200,200)}The stick ground
+Dialogue: 0,0:05:27.99,0:05:29.15,Big,,0,0,0,,{\fad(200,200)}against the gears
+Dialogue: 0,0:05:29.15,0:05:30.73,Big,,0,0,0,,{\fad(200,200)}and bounced back at me.
+Dialogue: 0,0:05:30.73,0:05:31.75,Big,,0,0,0,,{\fad(200,200)}The speedometer
+Dialogue: 0,0:05:31.75,0:05:33.05,Big,,0,0,0,,{\fad(200,200)}climbed past sixty.
+Dialogue: 0,0:05:33.05,0:05:34.75,Big,,0,0,0,,{\fad(200,200)}And I'll tell you exactly
+Dialogue: 0,0:05:34.75,0:05:36.18,Big,,0,0,0,,{\fad(200,200)}what I thought about,
+Dialogue: 0,0:05:36.18,0:05:37.81,Big,,0,0,0,,{\fad(200,200)}because it surprised me.
+Dialogue: 0,0:05:37.81,0:05:38.36,Big,,0,0,0,,{\fad(137,137)}I didn't
+Dialogue: 0,0:05:38.36,0:05:39.60,Big,,0,0,0,,{\fad(200,200)}think about dying.
+Dialogue: 0,0:05:39.60,0:05:40.77,Big,,0,0,0,,{\fad(200,200)}I thought, my boy
+Dialogue: 0,0:05:40.77,0:05:42.14,Big,,0,0,0,,{\fad(200,200)}is going to remember
+Dialogue: 0,0:05:42.14,0:05:43.24,Big,,0,0,0,,{\fad(200,200)}me as the truck.
+Dialogue: 0,0:05:43.94,0:05:44.91,Big,,0,0,0,,{\fad(200,200)}I tried again.
+Dialogue: 0,0:05:44.91,0:05:46.36,Big,,0,0,0,,{\fad(200,200)}I matched the engine
+Dialogue: 0,0:05:46.36,0:05:47.74,Big,,0,0,0,,{\fad(200,200)}to the road the way
+Dialogue: 0,0:05:47.74,0:05:49.12,Big,,0,0,0,,{\fad(200,200)}my father taught me
+Dialogue: 0,0:05:49.12,0:05:50.49,Big,,0,0,0,,{\fad(200,200)}when I was sixteen,
+Dialogue: 0,0:05:50.49,0:05:51.58,Big,,0,0,0,,{\fad(200,200)}in a hay field,
+Dialogue: 0,0:05:51.58,0:05:53.18,Big,,0,0,0,,{\fad(200,200)}in his green Kenworth.
+Dialogue: 0,0:05:53.18,0:05:54.64,Big,,0,0,0,,{\fad(200,200)}And the gear went in.
+Dialogue: 0,0:05:54.64,0:05:55.87,Big,,0,0,0,,{\fad(200,200)}The engine caught
+Dialogue: 0,0:05:55.87,0:05:57.40,Big,,0,0,0,,{\fad(200,200)}the truck like a hand
+Dialogue: 0,0:05:57.40,0:05:58.56,Big,,0,0,0,,{\fad(200,200)}catching a ball,
+Dialogue: 0,0:05:58.56,0:06:00.00,Big,,0,0,0,,{\fad(200,200)}and the Jake started
+Dialogue: 0,0:06:00.00,0:06:01.81,Big,,0,0,0,,{\fad(200,200)}hammering, and the needle
+Dialogue: 0,0:06:01.81,0:06:03.25,Big,,0,0,0,,{\fad(200,200)}started coming down.
+Dialogue: 0,0:06:03.95,0:06:05.18,Big,,0,0,0,,{\fad(200,200)}Fifty-five.
+Dialogue: 0,0:06:05.18,0:06:05.86,Big,,0,0,0,,{\fad(167,167)}Fifty.
+Dialogue: 0,0:06:05.86,0:06:07.09,Big,,0,0,0,,{\fad(200,200)}Forty-five.
+Dialogue: 0,0:06:07.79,0:06:08.98,Big,,0,0,0,,{\fad(200,200)}And then my headlights
+Dialogue: 0,0:06:08.98,0:06:10.28,Big,,0,0,0,,{\fad(200,200)}swept across the runaway
+Dialogue: 0,0:06:10.28,0:06:11.25,Big,,0,0,0,,{\fad(200,200)}ramp on the right.
+Dialogue: 0,0:06:11.95,0:06:12.78,Big,,0,0,0,,{\fad(200,200)}There was already
+Dialogue: 0,0:06:12.78,0:06:13.46,Big,,0,0,0,,{\fad(170,170)}a truck in it.
+Dialogue: 0,0:06:14.16,0:06:15.73,Big,,0,0,0,,{\fad(200,200)}A big red tractor with
+Dialogue: 0,0:06:15.73,0:06:17.38,Big,,0,0,0,,{\fad(200,200)}a flatbed, buried up to
+Dialogue: 0,0:06:17.38,0:06:19.16,Big,,0,0,0,,{\fad(200,200)}its fuel tanks in gravel,
+Dialogue: 0,0:06:19.16,0:06:20.81,Big,,0,0,0,,{\fad(200,200)}its four-ways blinking.
+Dialogue: 0,0:06:20.81,0:06:22.46,Big,,0,0,0,,{\fad(200,200)}The driver was standing
+Dialogue: 0,0:06:22.46,0:06:24.12,Big,,0,0,0,,{\fad(200,200)}next to it in the cold,
+Dialogue: 0,0:06:24.12,0:06:25.55,Big,,0,0,0,,{\fad(200,200)}smoking a cigarette,
+Dialogue: 0,0:06:25.55,0:06:27.28,Big,,0,0,0,,{\fad(200,200)}and his hand was shaking
+Dialogue: 0,0:06:27.28,0:06:28.58,Big,,0,0,0,,{\fad(200,200)}so bad I could see
+Dialogue: 0,0:06:28.58,0:06:29.81,Big,,0,0,0,,{\fad(200,200)}it from the road.
+Dialogue: 0,0:06:30.51,0:06:32.25,Big,,0,0,0,,{\fad(200,200)}That was going to be me.
+Dialogue: 0,0:06:32.25,0:06:33.82,Big,,0,0,0,,{\fad(200,200)}One more missed gear,
+Dialogue: 0,0:06:33.82,0:06:35.01,Big,,0,0,0,,{\fad(200,200)}and that was me.
+Dialogue: 0,0:06:35.71,0:06:37.16,Big,,0,0,0,,{\fad(200,200)}I made it to the bottom
+Dialogue: 0,0:06:37.16,0:06:38.67,Big,,0,0,0,,{\fad(200,200)}at thirty miles an hour,
+Dialogue: 0,0:06:38.67,0:06:40.11,Big,,0,0,0,,{\fad(200,200)}with my brakes smoking,
+Dialogue: 0,0:06:40.11,0:06:41.20,Big,,0,0,0,,{\fad(200,200)}and I pulled into
+Dialogue: 0,0:06:41.20,0:06:42.47,Big,,0,0,0,,{\fad(200,200)}the first truck stop
+Dialogue: 0,0:06:42.47,0:06:43.68,Big,,0,0,0,,{\fad(200,200)}I saw, and I parked
+Dialogue: 0,0:06:43.68,0:06:44.70,Big,,0,0,0,,{\fad(200,200)}in the back row,
+Dialogue: 0,0:06:44.70,0:06:46.28,Big,,0,0,0,,{\fad(200,200)}and I sat there with both
+Dialogue: 0,0:06:46.28,0:06:47.42,Big,,0,0,0,,{\fad(200,200)}hands on the wheel
+Dialogue: 0,0:06:47.42,0:06:48.43,Big,,0,0,0,,{\fad(200,200)}for a long time.
+Dialogue: 0,0:06:49.13,0:06:50.39,Big,,0,0,0,,{\fad(200,200)}Then I went inside.
+Dialogue: 0,0:06:51.09,0:06:51.97,Big,,0,0,0,,{\fad(200,200)}It was almost
+Dialogue: 0,0:06:51.97,0:06:53.26,Big,,0,0,0,,{\fad(200,200)}two in the morning.
+Dialogue: 0,0:06:53.26,0:06:55.00,Big,,0,0,0,,{\fad(200,200)}A waitress was mopping the
+Dialogue: 0,0:06:55.00,0:06:56.54,Big,,0,0,0,,{\fad(200,200)}floor under the stools.
+Dialogue: 0,0:06:56.54,0:06:57.71,Big,,0,0,0,,{\fad(200,200)}I sat in a booth,
+Dialogue: 0,0:06:57.71,0:06:59.09,Big,,0,0,0,,{\fad(200,200)}and I ordered coffee
+Dialogue: 0,0:06:59.09,0:07:00.12,Big,,0,0,0,,{\fad(200,200)}I didn't drink,
+Dialogue: 0,0:07:00.12,0:07:01.56,Big,,0,0,0,,{\fad(200,200)}and I pulled a napkin
+Dialogue: 0,0:07:01.56,0:07:02.73,Big,,0,0,0,,{\fad(200,200)}out of the holder
+Dialogue: 0,0:07:02.73,0:07:03.96,Big,,0,0,0,,{\fad(200,200)}and I wrote on it.
+Dialogue: 0,0:07:04.66,0:07:05.62,Big,,0,0,0,,{\fad(200,200)}Marlene.
+Dialogue: 0,0:07:05.62,0:07:06.45,Big,,0,0,0,,{\fad(200,200)}I quit.
+Dialogue: 0,0:07:06.45,0:07:07.05,Big,,0,0,0,,{\fad(149,149)}Hank.
+Dialogue: 0,0:07:07.75,0:07:09.55,Big,,0,0,0,,{\fad(200,200)}Marlene was my dispatcher
+Dialogue: 0,0:07:09.55,0:07:10.27,Big,,0,0,0,,{\fad(180,180)}back then.
+Dialogue: 0,0:07:10.27,0:07:11.89,Big,,0,0,0,,{\fad(200,200)}She'd been dispatching
+Dialogue: 0,0:07:11.89,0:07:12.78,Big,,0,0,0,,{\fad(200,200)}trucks since
+Dialogue: 0,0:07:12.78,0:07:14.10,Big,,0,0,0,,{\fad(200,200)}before I was born,
+Dialogue: 0,0:07:14.10,0:07:15.13,Big,,0,0,0,,{\fad(200,200)}and she called
+Dialogue: 0,0:07:15.13,0:07:16.37,Big,,0,0,0,,{\fad(200,200)}every driver hon.
+Dialogue: 0,0:07:16.37,0:07:16.95,Big,,0,0,0,,{\fad(145,145)}I'd tell
+Dialogue: 0,0:07:16.95,0:07:18.34,Big,,0,0,0,,{\fad(200,200)}her in the morning.
+Dialogue: 0,0:07:18.34,0:07:20.16,Big,,0,0,0,,{\fad(200,200)}I'd deliver the shingles,
+Dialogue: 0,0:07:20.16,0:07:21.11,Big,,0,0,0,,{\fad(200,200)}and I'd quit,
+Dialogue: 0,0:07:21.11,0:07:22.65,Big,,0,0,0,,{\fad(200,200)}and I'd find a job in
+Dialogue: 0,0:07:22.65,0:07:24.25,Big,,0,0,0,,{\fad(200,200)}Ohio where I came home
+Dialogue: 0,0:07:24.25,0:07:25.85,Big,,0,0,0,,{\fad(200,200)}every night and nobody
+Dialogue: 0,0:07:25.85,0:07:27.31,Big,,0,0,0,,{\fad(200,200)}called me the truck.
+Dialogue: 0,0:07:28.01,0:07:29.51,Big,,0,0,0,,{\fad(200,200)}I had it all figured out.
+Dialogue: 0,0:07:30.21,0:07:31.78,Big,,0,0,0,,{\fad(200,200)}My cell phone was dead.
+Dialogue: 0,0:07:31.78,0:07:33.17,Big,,0,0,0,,{\fad(200,200)}I'd left the charger
+Dialogue: 0,0:07:33.17,0:07:34.57,Big,,0,0,0,,{\fad(200,200)}in a motel in Texas.
+Dialogue: 0,0:07:34.57,0:07:36.39,Big,,0,0,0,,{\fad(200,200)}So I went to the pay phone
+Dialogue: 0,0:07:36.39,0:07:37.86,Big,,0,0,0,,{\fad(200,200)}by the restrooms with
+Dialogue: 0,0:07:37.86,0:07:39.68,Big,,0,0,0,,{\fad(200,200)}a pocket full of quarters.
+Dialogue: 0,0:07:40.38,0:07:41.93,Big,,0,0,0,,{\fad(200,200)}I didn't call my wife.
+Dialogue: 0,0:07:41.93,0:07:43.30,Big,,0,0,0,,{\fad(200,200)}I want to be honest
+Dialogue: 0,0:07:43.30,0:07:44.67,Big,,0,0,0,,{\fad(200,200)}with you about why.
+Dialogue: 0,0:07:44.67,0:07:45.83,Big,,0,0,0,,{\fad(200,200)}If I called her,
+Dialogue: 0,0:07:45.83,0:07:47.27,Big,,0,0,0,,{\fad(200,200)}she'd say come home.
+Dialogue: 0,0:07:47.27,0:07:48.79,Big,,0,0,0,,{\fad(200,200)}And I wanted somebody
+Dialogue: 0,0:07:48.79,0:07:50.44,Big,,0,0,0,,{\fad(200,200)}to tell me I was wrong.
+Dialogue: 0,0:07:50.44,0:07:51.07,Big,,0,0,0,,{\fad(158,158)}Or right.
+Dialogue: 0,0:07:51.07,0:07:52.48,Big,,0,0,0,,{\fad(200,200)}I didn't know which.
+Dialogue: 0,0:07:53.18,0:07:54.50,Big,,0,0,0,,{\fad(200,200)}So I called my father.
+Dialogue: 0,0:07:55.20,0:07:56.01,Big,,0,0,0,,{\fad(200,200)}He picked up
+Dialogue: 0,0:07:56.01,0:07:57.23,Big,,0,0,0,,{\fad(200,200)}on the first ring.
+Dialogue: 0,0:07:57.23,0:07:58.66,Big,,0,0,0,,{\fad(200,200)}At two in the morning.
+Dialogue: 0,0:07:58.66,0:07:59.71,Big,,0,0,0,,{\fad(200,200)}He said, "Hank."
+Dialogue: 0,0:08:00.41,0:08:01.26,Big,,0,0,0,,{\fad(200,200)}Not hello.
+Dialogue: 0,0:08:01.26,0:08:02.36,Big,,0,0,0,,{\fad(200,200)}Just my name.
+Dialogue: 0,0:08:02.36,0:08:03.16,Big,,0,0,0,,{\fad(198,198)}Like he'd
+Dialogue: 0,0:08:03.16,0:08:04.74,Big,,0,0,0,,{\fad(200,200)}been expecting me.
+Dialogue: 0,0:08:05.44,0:08:07.24,Big,,0,0,0,,{\fad(200,200)}And I told him everything.
+Dialogue: 0,0:08:07.24,0:08:08.14,Big,,0,0,0,,{\fad(200,200)}The birthday.
+Dialogue: 0,0:08:08.14,0:08:08.83,Big,,0,0,0,,{\fad(173,173)}The truck.
+Dialogue: 0,0:08:08.83,0:08:09.73,Big,,0,0,0,,{\fad(200,200)}The mountain.
+Dialogue: 0,0:08:09.73,0:08:10.84,Big,,0,0,0,,{\fad(200,200)}The missed gear.
+Dialogue: 0,0:08:10.84,0:08:12.32,Big,,0,0,0,,{\fad(200,200)}The ramp, and the man
+Dialogue: 0,0:08:12.32,0:08:13.88,Big,,0,0,0,,{\fad(200,200)}with the shaking hand.
+Dialogue: 0,0:08:13.88,0:08:14.92,Big,,0,0,0,,{\fad(200,200)}And the napkin.
+Dialogue: 0,0:08:15.62,0:08:16.86,Big,,0,0,0,,{\fad(200,200)}He didn't say a word
+Dialogue: 0,0:08:16.86,0:08:17.79,Big,,0,0,0,,{\fad(200,200)}the whole time.
+Dialogue: 0,0:08:17.79,0:08:19.16,Big,,0,0,0,,{\fad(200,200)}I could hear the clock
+Dialogue: 0,0:08:19.16,0:08:20.53,Big,,0,0,0,,{\fad(200,200)}in my mother's kitchen
+Dialogue: 0,0:08:20.53,0:08:21.71,Big,,0,0,0,,{\fad(200,200)}ticking behind him.
+Dialogue: 0,0:08:22.41,0:08:23.63,Big,,0,0,0,,{\fad(200,200)}When I was done,
+Dialogue: 0,0:08:23.63,0:08:24.84,Big,,0,0,0,,{\fad(200,200)}I waited for it.
+Dialogue: 0,0:08:24.84,0:08:26.65,Big,,0,0,0,,{\fad(200,200)}My father had never been
+Dialogue: 0,0:08:26.65,0:08:28.38,Big,,0,0,0,,{\fad(200,200)}late a day in his life.
+Dialogue: 0,0:08:28.38,0:08:29.60,Big,,0,0,0,,{\fad(200,200)}I waited for him
+Dialogue: 0,0:08:29.60,0:08:31.28,Big,,0,0,0,,{\fad(200,200)}to tell me I was soft,
+Dialogue: 0,0:08:31.28,0:08:33.10,Big,,0,0,0,,{\fad(200,200)}or that I'd made my bed.
+Dialogue: 0,0:08:33.10,0:08:34.43,Big,,0,0,0,,{\fad(200,200)}I'd have taken it.
+Dialogue: 0,0:08:35.13,0:08:36.72,Big,,0,0,0,,{\fad(200,200)}Instead, he said, "Okay."
+Dialogue: 0,0:08:37.42,0:08:39.83,Big,,0,0,0,,{\fad(200,200)}That was all, for a while.
+Dialogue: 0,0:08:39.83,0:08:40.29,Big,,0,0,0,,{\fad(115,115)}Okay.
+Dialogue: 0,0:08:40.99,0:08:42.27,Big,,0,0,0,,{\fad(200,200)}Then he said, "Son.
+Dialogue: 0,0:08:42.27,0:08:44.00,Big,,0,0,0,,{\fad(200,200)}Before you do anything, I
+Dialogue: 0,0:08:44.00,0:08:45.72,Big,,0,0,0,,{\fad(200,200)}want you to listen to me.
+Dialogue: 0,0:08:45.72,0:08:47.34,Big,,0,0,0,,{\fad(200,200)}Two in the morning lies.
+Dialogue: 0,0:08:47.34,0:08:48.15,Big,,0,0,0,,{\fad(200,200)}You hear me?
+Dialogue: 0,0:08:48.15,0:08:49.83,Big,,0,0,0,,{\fad(200,200)}Two in the morning lies,
+Dialogue: 0,0:08:49.83,0:08:51.36,Big,,0,0,0,,{\fad(200,200)}and so does the bottom
+Dialogue: 0,0:08:51.36,0:08:52.34,Big,,0,0,0,,{\fad(200,200)}of a mountain.
+Dialogue: 0,0:08:52.34,0:08:53.46,Big,,0,0,0,,{\fad(200,200)}Nobody ever made
+Dialogue: 0,0:08:53.46,0:08:54.51,Big,,0,0,0,,{\fad(200,200)}a good decision
+Dialogue: 0,0:08:54.51,0:08:56.05,Big,,0,0,0,,{\fad(200,200)}at two in the morning.
+Dialogue: 0,0:08:56.05,0:08:57.44,Big,,0,0,0,,{\fad(200,200)}Go out to your truck
+Dialogue: 0,0:08:57.44,0:08:58.55,Big,,0,0,0,,{\fad(200,200)}and go to sleep.
+Dialogue: 0,0:08:58.55,0:09:00.29,Big,,0,0,0,,{\fad(200,200)}If you still want to quit
+Dialogue: 0,0:09:00.29,0:09:01.54,Big,,0,0,0,,{\fad(200,200)}when the sun's up,
+Dialogue: 0,0:09:01.54,0:09:03.35,Big,,0,0,0,,{\fad(200,200)}I'll come get you myself."
+Dialogue: 0,0:09:04.05,0:09:04.80,Big,,0,0,0,,{\fad(186,186)}I laughed.
+Dialogue: 0,0:09:04.80,0:09:06.21,Big,,0,0,0,,{\fad(200,200)}I couldn't help it.
+Dialogue: 0,0:09:06.21,0:09:07.67,Big,,0,0,0,,{\fad(200,200)}He was four hundred
+Dialogue: 0,0:09:07.67,0:09:09.20,Big,,0,0,0,,{\fad(200,200)}miles away, in Ohio.
+Dialogue: 0,0:09:09.90,0:09:10.66,Big,,0,0,0,,{\fad(189,189)}I said, "Dad,
+Dialogue: 0,0:09:10.66,0:09:12.00,Big,,0,0,0,,{\fad(200,200)}you can't come get me."
+Dialogue: 0,0:09:12.70,0:09:13.38,Big,,0,0,0,,{\fad(169,169)}And he said,
+Dialogue: 0,0:09:13.38,0:09:14.51,Big,,0,0,0,,{\fad(200,200)}"Go to sleep, Hank."
+Dialogue: 0,0:09:15.21,0:09:16.16,Big,,0,0,0,,{\fad(200,200)}And he hung up.
+Dialogue: 0,0:09:16.86,0:09:17.43,Big,,0,0,0,,{\fad(142,142)}So let me
+Dialogue: 0,0:09:17.43,0:09:18.57,Big,,0,0,0,,{\fad(200,200)}ask you something.
+Dialogue: 0,0:09:18.57,0:09:20.09,Big,,0,0,0,,{\fad(200,200)}And I want you to really
+Dialogue: 0,0:09:20.09,0:09:20.98,Big,,0,0,0,,{\fad(200,200)}think about it
+Dialogue: 0,0:09:20.98,0:09:22.12,Big,,0,0,0,,{\fad(200,200)}before you answer.
+Dialogue: 0,0:09:22.82,0:09:23.61,Big,,0,0,0,,{\fad(197,197)}If it was two
+Dialogue: 0,0:09:23.61,0:09:24.52,Big,,0,0,0,,{\fad(200,200)}in the morning,
+Dialogue: 0,0:09:24.52,0:09:25.68,Big,,0,0,0,,{\fad(200,200)}and you were at the
+Dialogue: 0,0:09:25.68,0:09:26.78,Big,,0,0,0,,{\fad(200,200)}bottom of your own
+Dialogue: 0,0:09:26.78,0:09:27.32,Big,,0,0,0,,{\fad(137,137)}mountain,
+Dialogue: 0,0:09:27.32,0:09:28.48,Big,,0,0,0,,{\fad(200,200)}who would you call?
+Dialogue: 0,0:09:28.48,0:09:29.58,Big,,0,0,0,,{\fad(200,200)}Not who you'd text.
+Dialogue: 0,0:09:29.58,0:09:30.89,Big,,0,0,0,,{\fad(200,200)}Who would you actually
+Dialogue: 0,0:09:30.89,0:09:32.07,Big,,0,0,0,,{\fad(200,200)}call, knowing they'd
+Dialogue: 0,0:09:32.07,0:09:33.62,Big,,0,0,0,,{\fad(200,200)}pick up on the first ring?
+Dialogue: 0,0:09:34.32,0:09:35.38,Big,,0,0,0,,{\fad(200,200)}Some of you have
+Dialogue: 0,0:09:35.38,0:09:36.77,Big,,0,0,0,,{\fad(200,200)}an answer right away.
+Dialogue: 0,0:09:36.77,0:09:37.92,Big,,0,0,0,,{\fad(200,200)}Some of you don't.
+Dialogue: 0,0:09:37.92,0:09:38.89,Big,,0,0,0,,{\fad(200,200)}I've been both.
+Dialogue: 0,0:09:39.59,0:09:41.25,Big,,0,0,0,,{\fad(200,200)}I went out to my truck.
+Dialogue: 0,0:09:41.25,0:09:42.88,Big,,0,0,0,,{\fad(200,200)}I lay down in the bunk
+Dialogue: 0,0:09:42.88,0:09:44.14,Big,,0,0,0,,{\fad(200,200)}with my boots on.
+Dialogue: 0,0:09:44.14,0:09:46.02,Big,,0,0,0,,{\fad(200,200)}I thought I'd never sleep.
+Dialogue: 0,0:09:46.02,0:09:46.77,Big,,0,0,0,,{\fad(187,187)}I was gone
+Dialogue: 0,0:09:46.77,0:09:48.12,Big,,0,0,0,,{\fad(200,200)}in about a minute.
+Dialogue: 0,0:09:48.82,0:09:49.67,Big,,0,0,0,,{\fad(200,200)}When I woke up,
+Dialogue: 0,0:09:49.67,0:09:50.70,Big,,0,0,0,,{\fad(200,200)}the sun was coming
+Dialogue: 0,0:09:50.70,0:09:51.84,Big,,0,0,0,,{\fad(200,200)}through the curtain,
+Dialogue: 0,0:09:51.84,0:09:52.97,Big,,0,0,0,,{\fad(200,200)}and it was a quarter
+Dialogue: 0,0:09:52.97,0:09:53.59,Big,,0,0,0,,{\fad(155,155)}after nine.
+Dialogue: 0,0:09:54.29,0:09:55.69,Big,,0,0,0,,{\fad(200,200)}And there was a sound
+Dialogue: 0,0:09:55.69,0:09:56.83,Big,,0,0,0,,{\fad(200,200)}outside I'd known
+Dialogue: 0,0:09:56.83,0:09:57.76,Big,,0,0,0,,{\fad(200,200)}my whole life.
+Dialogue: 0,0:09:57.76,0:09:59.47,Big,,0,0,0,,{\fad(200,200)}A big diesel, idling, with
+Dialogue: 0,0:09:59.47,0:10:01.12,Big,,0,0,0,,{\fad(200,200)}a little lope in it, like
+Dialogue: 0,0:10:01.12,0:10:02.77,Big,,0,0,0,,{\fad(200,200)}it was humming to itself.
+Dialogue: 0,0:10:03.47,0:10:04.91,Big,,0,0,0,,{\fad(200,200)}I pulled back the curtain.
+Dialogue: 0,0:10:05.61,0:10:06.35,Big,,0,0,0,,{\fad(184,184)}Parked right
+Dialogue: 0,0:10:06.35,0:10:07.39,Big,,0,0,0,,{\fad(200,200)}next to my truck,
+Dialogue: 0,0:10:07.39,0:10:08.74,Big,,0,0,0,,{\fad(200,200)}close enough to touch,
+Dialogue: 0,0:10:08.74,0:10:10.03,Big,,0,0,0,,{\fad(200,200)}was a green Kenworth.
+Dialogue: 0,0:10:10.73,0:10:12.30,Big,,0,0,0,,{\fad(200,200)}My father was sitting
+Dialogue: 0,0:10:12.30,0:10:13.41,Big,,0,0,0,,{\fad(200,200)}in the driver's
+Dialogue: 0,0:10:13.41,0:10:14.68,Big,,0,0,0,,{\fad(200,200)}seat with his cap
+Dialogue: 0,0:10:14.68,0:10:16.54,Big,,0,0,0,,{\fad(200,200)}pulled down over his eyes
+Dialogue: 0,0:10:16.54,0:10:18.04,Big,,0,0,0,,{\fad(200,200)}and his arms folded,
+Dialogue: 0,0:10:18.04,0:10:18.56,Big,,0,0,0,,{\fad(130,130)}asleep.
+Dialogue: 0,0:10:18.56,0:10:19.74,Big,,0,0,0,,{\fad(200,200)}On his dash were
+Dialogue: 0,0:10:19.74,0:10:21.07,Big,,0,0,0,,{\fad(200,200)}two cups of coffee
+Dialogue: 0,0:10:21.07,0:10:22.54,Big,,0,0,0,,{\fad(200,200)}from the truck stop.
+Dialogue: 0,0:10:22.54,0:10:23.40,Big,,0,0,0,,{\fad(200,200)}One for him.
+Dialogue: 0,0:10:23.40,0:10:24.18,Big,,0,0,0,,{\fad(195,195)}One for me.
+Dialogue: 0,0:10:24.18,0:10:25.46,Big,,0,0,0,,{\fad(200,200)}Both of them cold.
+Dialogue: 0,0:10:26.16,0:10:27.62,Big,,0,0,0,,{\fad(200,200)}He'd hung up the phone
+Dialogue: 0,0:10:27.62,0:10:29.07,Big,,0,0,0,,{\fad(200,200)}at two in the morning,
+Dialogue: 0,0:10:29.07,0:10:30.20,Big,,0,0,0,,{\fad(200,200)}put on his boots,
+Dialogue: 0,0:10:30.20,0:10:31.70,Big,,0,0,0,,{\fad(200,200)}and driven four hundred
+Dialogue: 0,0:10:31.70,0:10:33.21,Big,,0,0,0,,{\fad(200,200)}miles through the dark.
+Dialogue: 0,0:10:33.21,0:10:34.19,Big,,0,0,0,,{\fad(200,200)}To a truck stop
+Dialogue: 0,0:10:34.19,0:10:35.24,Big,,0,0,0,,{\fad(200,200)}he'd never seen.
+Dialogue: 0,0:10:35.24,0:10:36.03,Big,,0,0,0,,{\fad(197,197)}Because he'd
+Dialogue: 0,0:10:36.03,0:10:37.15,Big,,0,0,0,,{\fad(200,200)}told me he would.
+Dialogue: 0,0:10:37.85,0:10:39.27,Big,,0,0,0,,{\fad(200,200)}I knocked on his door.
+Dialogue: 0,0:10:39.27,0:10:40.48,Big,,0,0,0,,{\fad(200,200)}He opened one eye,
+Dialogue: 0,0:10:40.48,0:10:41.35,Big,,0,0,0,,{\fad(200,200)}looked at me,
+Dialogue: 0,0:10:41.35,0:10:42.70,Big,,0,0,0,,{\fad(200,200)}and said, "Sun's up.
+Dialogue: 0,0:10:42.70,0:10:44.25,Big,,0,0,0,,{\fad(200,200)}You still want to quit?"
+Dialogue: 0,0:10:44.95,0:10:46.39,Big,,0,0,0,,{\fad(200,200)}I couldn't answer him.
+Dialogue: 0,0:10:46.39,0:10:47.46,Big,,0,0,0,,{\fad(200,200)}I'd like to tell
+Dialogue: 0,0:10:47.46,0:10:49.20,Big,,0,0,0,,{\fad(200,200)}you I said something wise.
+Dialogue: 0,0:10:49.20,0:10:50.02,Big,,0,0,0,,{\fad(200,200)}I didn't say
+Dialogue: 0,0:10:50.02,0:10:51.10,Big,,0,0,0,,{\fad(200,200)}anything at all.
+Dialogue: 0,0:10:51.80,0:10:52.90,Big,,0,0,0,,{\fad(200,200)}We had breakfast
+Dialogue: 0,0:10:52.90,0:10:54.21,Big,,0,0,0,,{\fad(200,200)}in that same booth.
+Dialogue: 0,0:10:54.21,0:10:55.82,Big,,0,0,0,,{\fad(200,200)}Eggs, sausage, biscuits.
+Dialogue: 0,0:10:55.82,0:10:57.41,Big,,0,0,0,,{\fad(200,200)}He ate like a man who'd
+Dialogue: 0,0:10:57.41,0:10:59.00,Big,,0,0,0,,{\fad(200,200)}been driving all night,
+Dialogue: 0,0:10:59.00,0:10:59.90,Big,,0,0,0,,{\fad(200,200)}which he had.
+Dialogue: 0,0:10:59.90,0:11:01.35,Big,,0,0,0,,{\fad(200,200)}And when he was done,
+Dialogue: 0,0:11:01.35,0:11:02.67,Big,,0,0,0,,{\fad(200,200)}he wiped his mouth,
+Dialogue: 0,0:11:02.67,0:11:04.34,Big,,0,0,0,,{\fad(200,200)}and he told me something
+Dialogue: 0,0:11:04.34,0:11:05.39,Big,,0,0,0,,{\fad(200,200)}I'd never heard
+Dialogue: 0,0:11:05.39,0:11:06.79,Big,,0,0,0,,{\fad(200,200)}in twenty-six years.
+Dialogue: 0,0:11:07.49,0:11:09.04,Big,,0,0,0,,{\fad(200,200)}In nineteen seventy-nine,
+Dialogue: 0,0:11:09.04,0:11:10.15,Big,,0,0,0,,{\fad(200,200)}the year he bought
+Dialogue: 0,0:11:10.15,0:11:11.39,Big,,0,0,0,,{\fad(200,200)}that green Kenworth,
+Dialogue: 0,0:11:11.39,0:11:12.57,Big,,0,0,0,,{\fad(200,200)}he almost quit too.
+Dialogue: 0,0:11:13.27,0:11:13.96,Big,,0,0,0,,{\fad(173,173)}I was two.
+Dialogue: 0,0:11:13.96,0:11:15.24,Big,,0,0,0,,{\fad(200,200)}The truck payments
+Dialogue: 0,0:11:15.24,0:11:16.81,Big,,0,0,0,,{\fad(200,200)}were eating him alive.
+Dialogue: 0,0:11:16.81,0:11:18.02,Big,,0,0,0,,{\fad(200,200)}He was gone three
+Dialogue: 0,0:11:18.02,0:11:19.17,Big,,0,0,0,,{\fad(200,200)}weeks at a time.
+Dialogue: 0,0:11:19.17,0:11:21.02,Big,,0,0,0,,{\fad(200,200)}And one night, he said, at
+Dialogue: 0,0:11:21.02,0:11:22.80,Big,,0,0,0,,{\fad(200,200)}a truck stop in Arkansas,
+Dialogue: 0,0:11:22.80,0:11:24.39,Big,,0,0,0,,{\fad(200,200)}he wrote it out on the
+Dialogue: 0,0:11:24.39,0:11:25.97,Big,,0,0,0,,{\fad(200,200)}back of a fuel receipt
+Dialogue: 0,0:11:25.97,0:11:27.70,Big,,0,0,0,,{\fad(200,200)}and decided he was done.
+Dialogue: 0,0:11:28.40,0:11:30.18,Big,,0,0,0,,{\fad(200,200)}"I quit about once a month
+Dialogue: 0,0:11:30.18,0:11:31.96,Big,,0,0,0,,{\fad(200,200)}for three years," he said.
+Dialogue: 0,0:11:31.96,0:11:32.93,Big,,0,0,0,,{\fad(200,200)}"Always at two
+Dialogue: 0,0:11:32.93,0:11:33.98,Big,,0,0,0,,{\fad(200,200)}in the morning.
+Dialogue: 0,0:11:33.98,0:11:35.32,Big,,0,0,0,,{\fad(200,200)}Never once at noon."
+Dialogue: 0,0:11:36.02,0:11:36.92,Big,,0,0,0,,{\fad(200,200)}Then he reached
+Dialogue: 0,0:11:36.92,0:11:38.06,Big,,0,0,0,,{\fad(200,200)}up to his sun visor
+Dialogue: 0,0:11:38.06,0:11:39.56,Big,,0,0,0,,{\fad(200,200)}and pulled down a picture
+Dialogue: 0,0:11:39.56,0:11:40.58,Big,,0,0,0,,{\fad(200,200)}I had never seen.
+Dialogue: 0,0:11:41.28,0:11:42.09,Big,,0,0,0,,{\fad(200,200)}It was me.
+Dialogue: 0,0:11:42.09,0:11:43.21,Big,,0,0,0,,{\fad(200,200)}Two years old.
+Dialogue: 0,0:11:43.21,0:11:45.22,Big,,0,0,0,,{\fad(200,200)}In a diaper and a cowboy
+Dialogue: 0,0:11:45.22,0:11:47.31,Big,,0,0,0,,{\fad(200,200)}hat, sitting on the front
+Dialogue: 0,0:11:47.31,0:11:49.06,Big,,0,0,0,,{\fad(200,200)}bumper of a brand new
+Dialogue: 0,0:11:49.06,0:11:50.31,Big,,0,0,0,,{\fad(200,200)}green Kenworth,
+Dialogue: 0,0:11:50.31,0:11:52.49,Big,,0,0,0,,{\fad(200,200)}crying my eyes out because
+Dialogue: 0,0:11:52.49,0:11:54.66,Big,,0,0,0,,{\fad(200,200)}I didn't want to get down.
+Dialogue: 0,0:11:55.36,0:11:56.16,Big,,0,0,0,,{\fad(200,200)}"That's been up
+Dialogue: 0,0:11:56.16,0:11:57.07,Big,,0,0,0,,{\fad(200,200)}there twenty-four
+Dialogue: 0,0:11:57.07,0:11:57.93,Big,,0,0,0,,{\fad(200,200)}years," he said.
+Dialogue: 0,0:11:58.63,0:12:00.45,Big,,0,0,0,,{\fad(200,200)}I didn't know what to say.
+Dialogue: 0,0:12:00.45,0:12:01.55,Big,,0,0,0,,{\fad(200,200)}I had a picture
+Dialogue: 0,0:12:01.55,0:12:03.01,Big,,0,0,0,,{\fad(200,200)}of my own boy tucked
+Dialogue: 0,0:12:03.01,0:12:04.17,Big,,0,0,0,,{\fad(200,200)}in my own visor,
+Dialogue: 0,0:12:04.17,0:12:05.85,Big,,0,0,0,,{\fad(200,200)}in the exact same spot.
+Dialogue: 0,0:12:05.85,0:12:06.88,Big,,0,0,0,,{\fad(200,200)}I'd never once
+Dialogue: 0,0:12:06.88,0:12:08.26,Big,,0,0,0,,{\fad(200,200)}thought about where
+Dialogue: 0,0:12:08.26,0:12:09.36,Big,,0,0,0,,{\fad(200,200)}I got the idea.
+Dialogue: 0,0:12:10.06,0:12:10.82,Big,,0,0,0,,{\fad(191,191)}Then my father
+Dialogue: 0,0:12:10.82,0:12:11.86,Big,,0,0,0,,{\fad(200,200)}said the thing I've
+Dialogue: 0,0:12:11.86,0:12:12.90,Big,,0,0,0,,{\fad(200,200)}carried ever since.
+Dialogue: 0,0:12:13.60,0:12:14.93,Big,,0,0,0,,{\fad(200,200)}"I didn't drive down
+Dialogue: 0,0:12:14.93,0:12:16.25,Big,,0,0,0,,{\fad(200,200)}here to talk you out
+Dialogue: 0,0:12:16.25,0:12:17.38,Big,,0,0,0,,{\fad(200,200)}of anything, son.
+Dialogue: 0,0:12:17.38,0:12:18.85,Big,,0,0,0,,{\fad(200,200)}You want to quit, quit.
+Dialogue: 0,0:12:18.85,0:12:19.90,Big,,0,0,0,,{\fad(200,200)}You'll be a good
+Dialogue: 0,0:12:19.90,0:12:21.02,Big,,0,0,0,,{\fad(200,200)}daddy either way.
+Dialogue: 0,0:12:21.02,0:12:22.28,Big,,0,0,0,,{\fad(200,200)}I came down here so
+Dialogue: 0,0:12:22.28,0:12:23.41,Big,,0,0,0,,{\fad(200,200)}you wouldn't have
+Dialogue: 0,0:12:23.41,0:12:24.93,Big,,0,0,0,,{\fad(200,200)}to decide by yourself."
+Dialogue: 0,0:12:25.63,0:12:27.33,Big,,0,0,0,,{\fad(200,200)}I picked up the napkin.
+Dialogue: 0,0:12:27.33,0:12:29.25,Big,,0,0,0,,{\fad(200,200)}It was still on the table.
+Dialogue: 0,0:12:29.25,0:12:29.84,Big,,0,0,0,,{\fad(147,147)}Marlene.
+Dialogue: 0,0:12:29.84,0:12:30.36,Big,,0,0,0,,{\fad(129,129)}I quit.
+Dialogue: 0,0:12:30.36,0:12:30.73,Big,,0,0,0,,{\fad(92,92)}Hank.
+Dialogue: 0,0:12:31.43,0:12:33.07,Big,,0,0,0,,{\fad(200,200)}He took it out of my hand,
+Dialogue: 0,0:12:33.07,0:12:34.02,Big,,0,0,0,,{\fad(200,200)}turned it over,
+Dialogue: 0,0:12:34.02,0:12:35.37,Big,,0,0,0,,{\fad(200,200)}and wrote on the back
+Dialogue: 0,0:12:35.37,0:12:36.13,Big,,0,0,0,,{\fad(191,191)}with the pen
+Dialogue: 0,0:12:36.13,0:12:37.54,Big,,0,0,0,,{\fad(200,200)}from the check holder.
+Dialogue: 0,0:12:37.54,0:12:38.30,Big,,0,0,0,,{\fad(190,190)}Then he slid
+Dialogue: 0,0:12:38.30,0:12:39.19,Big,,0,0,0,,{\fad(200,200)}it back to me.
+Dialogue: 0,0:12:39.89,0:12:40.50,Big,,0,0,0,,{\fad(152,152)}It said,
+Dialogue: 0,0:12:40.50,0:12:41.87,Big,,0,0,0,,{\fad(200,200)}Not on a mountain.
+Dialogue: 0,0:12:41.87,0:12:43.78,Big,,0,0,0,,{\fad(200,200)}Not at two in the morning.
+Dialogue: 0,0:12:43.78,0:12:44.07,Big,,0,0,0,,{\fad(73,73)}Dad.
+Dialogue: 0,0:12:44.77,0:12:45.85,Big,,0,0,0,,{\fad(200,200)}Then he finished
+Dialogue: 0,0:12:45.85,0:12:47.55,Big,,0,0,0,,{\fad(200,200)}his coffee, paid for both
+Dialogue: 0,0:12:47.55,0:12:48.97,Big,,0,0,0,,{\fad(200,200)}of us, and drove four
+Dialogue: 0,0:12:48.97,0:12:50.25,Big,,0,0,0,,{\fad(200,200)}hundred miles home.
+Dialogue: 0,0:12:50.25,0:12:51.39,Big,,0,0,0,,{\fad(200,200)}He had a load out
+Dialogue: 0,0:12:51.39,0:12:52.93,Big,,0,0,0,,{\fad(200,200)}of Columbus that night.
+Dialogue: 0,0:12:53.63,0:12:54.40,Big,,0,0,0,,{\fad(193,193)}I delivered
+Dialogue: 0,0:12:54.40,0:12:56.02,Big,,0,0,0,,{\fad(200,200)}my shingles in Atlanta.
+Dialogue: 0,0:12:56.02,0:12:57.50,Big,,0,0,0,,{\fad(200,200)}Then I called Marlene
+Dialogue: 0,0:12:57.50,0:12:58.98,Big,,0,0,0,,{\fad(200,200)}and told her I needed
+Dialogue: 0,0:12:58.98,0:13:00.04,Big,,0,0,0,,{\fad(200,200)}a week at home.
+Dialogue: 0,0:13:00.74,0:13:01.60,Big,,0,0,0,,{\fad(200,200)}She was quiet
+Dialogue: 0,0:13:01.60,0:13:02.46,Big,,0,0,0,,{\fad(200,200)}for a second.
+Dialogue: 0,0:13:02.46,0:13:04.10,Big,,0,0,0,,{\fad(200,200)}Then she said, "Hon, I've
+Dialogue: 0,0:13:04.10,0:13:05.54,Big,,0,0,0,,{\fad(200,200)}been waiting two years
+Dialogue: 0,0:13:05.54,0:13:07.11,Big,,0,0,0,,{\fad(200,200)}for you to ask me that."
+Dialogue: 0,0:13:07.81,0:13:08.74,Big,,0,0,0,,{\fad(200,200)}When I pulled
+Dialogue: 0,0:13:08.74,0:13:09.96,Big,,0,0,0,,{\fad(200,200)}into my driveway,
+Dialogue: 0,0:13:09.96,0:13:11.47,Big,,0,0,0,,{\fad(200,200)}my boy hid behind his
+Dialogue: 0,0:13:11.47,0:13:12.40,Big,,0,0,0,,{\fad(200,200)}mother's legs
+Dialogue: 0,0:13:12.40,0:13:13.76,Big,,0,0,0,,{\fad(200,200)}for about a minute,
+Dialogue: 0,0:13:13.76,0:13:15.48,Big,,0,0,0,,{\fad(200,200)}like I was somebody new.
+Dialogue: 0,0:13:15.48,0:13:17.30,Big,,0,0,0,,{\fad(200,200)}Then I took off my old cap
+Dialogue: 0,0:13:17.30,0:13:18.90,Big,,0,0,0,,{\fad(200,200)}and put it on his head.
+Dialogue: 0,0:13:18.90,0:13:19.40,Big,,0,0,0,,{\fad(124,124)}It came
+Dialogue: 0,0:13:19.40,0:13:20.75,Big,,0,0,0,,{\fad(200,200)}down over his eyes.
+Dialogue: 0,0:13:20.75,0:13:22.37,Big,,0,0,0,,{\fad(200,200)}He wore it for the rest
+Dialogue: 0,0:13:22.37,0:13:23.22,Big,,0,0,0,,{\fad(200,200)}of the week.
+Dialogue: 0,0:13:23.22,0:13:24.45,Big,,0,0,0,,{\fad(200,200)}He wore it to bed.
+Dialogue: 0,0:13:24.45,0:13:25.43,Big,,0,0,0,,{\fad(200,200)}The next year,
+Dialogue: 0,0:13:25.43,0:13:27.19,Big,,0,0,0,,{\fad(200,200)}he wore it for Halloween.
+Dialogue: 0,0:13:27.89,0:13:29.07,Big,,0,0,0,,{\fad(200,200)}After that week,
+Dialogue: 0,0:13:29.07,0:13:30.25,Big,,0,0,0,,{\fad(200,200)}I went back out.
+Dialogue: 0,0:13:30.25,0:13:32.04,Big,,0,0,0,,{\fad(200,200)}Nobody talked me into it.
+Dialogue: 0,0:13:32.04,0:13:33.59,Big,,0,0,0,,{\fad(200,200)}I decided it at noon,
+Dialogue: 0,0:13:33.59,0:13:35.22,Big,,0,0,0,,{\fad(200,200)}on my own front porch,
+Dialogue: 0,0:13:35.22,0:13:36.40,Big,,0,0,0,,{\fad(200,200)}with the sun up.
+Dialogue: 0,0:13:36.40,0:13:37.66,Big,,0,0,0,,{\fad(200,200)}And I didn't miss
+Dialogue: 0,0:13:37.66,0:13:38.98,Big,,0,0,0,,{\fad(200,200)}his next birthday.
+Dialogue: 0,0:13:39.68,0:13:41.05,Big,,0,0,0,,{\fad(200,200)}That napkin is still
+Dialogue: 0,0:13:41.05,0:13:42.34,Big,,0,0,0,,{\fad(200,200)}taped to the inside
+Dialogue: 0,0:13:42.34,0:13:43.44,Big,,0,0,0,,{\fad(200,200)}of my sun visor,
+Dialogue: 0,0:13:43.44,0:13:45.21,Big,,0,0,0,,{\fad(200,200)}right next to his picture.
+Dialogue: 0,0:13:45.21,0:13:46.37,Big,,0,0,0,,{\fad(200,200)}It's been through
+Dialogue: 0,0:13:46.37,0:13:47.19,Big,,0,0,0,,{\fad(200,200)}four trucks.
+Dialogue: 0,0:13:47.89,0:13:48.16,Big,,0,0,0,,{\fad(67,67)}Now,
+Dialogue: 0,0:13:48.16,0:13:49.72,Big,,0,0,0,,{\fad(200,200)}there's one more thing.
+Dialogue: 0,0:13:49.72,0:13:51.33,Big,,0,0,0,,{\fad(200,200)}And I didn't find it out
+Dialogue: 0,0:13:51.33,0:13:52.93,Big,,0,0,0,,{\fad(200,200)}until a long time later.
+Dialogue: 0,0:13:53.63,0:13:55.49,Big,,0,0,0,,{\fad(200,200)}My father passed in March
+Dialogue: 0,0:13:55.49,0:13:56.98,Big,,0,0,0,,{\fad(200,200)}of two thousand ten.
+Dialogue: 0,0:13:56.98,0:13:58.28,Big,,0,0,0,,{\fad(200,200)}He was fifty-nine.
+Dialogue: 0,0:13:58.28,0:14:00.08,Big,,0,0,0,,{\fad(200,200)}After the funeral, I sat
+Dialogue: 0,0:14:00.08,0:14:01.80,Big,,0,0,0,,{\fad(200,200)}in my mother's kitchen,
+Dialogue: 0,0:14:01.80,0:14:03.24,Big,,0,0,0,,{\fad(200,200)}at that same table,
+Dialogue: 0,0:14:03.24,0:14:04.76,Big,,0,0,0,,{\fad(200,200)}and I told her about
+Dialogue: 0,0:14:04.76,0:14:06.50,Big,,0,0,0,,{\fad(200,200)}the night on Monteagle.
+Dialogue: 0,0:14:06.50,0:14:07.88,Big,,0,0,0,,{\fad(200,200)}I figured she knew.
+Dialogue: 0,0:14:07.88,0:14:08.68,Big,,0,0,0,,{\fad(200,200)}She didn't.
+Dialogue: 0,0:14:08.68,0:14:09.81,Big,,0,0,0,,{\fad(200,200)}He'd never told
+Dialogue: 0,0:14:09.81,0:14:11.08,Big,,0,0,0,,{\fad(200,200)}her a word of it.
+Dialogue: 0,0:14:11.78,0:14:12.74,Big,,0,0,0,,{\fad(200,200)}But she remembered
+Dialogue: 0,0:14:12.74,0:14:13.33,Big,,0,0,0,,{\fad(146,146)}that night.
+Dialogue: 0,0:14:14.03,0:14:15.16,Big,,0,0,0,,{\fad(200,200)}She said she woke
+Dialogue: 0,0:14:15.16,0:14:16.49,Big,,0,0,0,,{\fad(200,200)}up around one-thirty
+Dialogue: 0,0:14:16.49,0:14:17.48,Big,,0,0,0,,{\fad(200,200)}in the morning,
+Dialogue: 0,0:14:17.48,0:14:18.28,Big,,0,0,0,,{\fad(197,197)}and his side
+Dialogue: 0,0:14:18.28,0:14:19.66,Big,,0,0,0,,{\fad(200,200)}of the bed was empty.
+Dialogue: 0,0:14:19.66,0:14:21.03,Big,,0,0,0,,{\fad(200,200)}She found him sitting
+Dialogue: 0,0:14:21.03,0:14:22.41,Big,,0,0,0,,{\fad(200,200)}at the kitchen table,
+Dialogue: 0,0:14:22.41,0:14:24.10,Big,,0,0,0,,{\fad(200,200)}dressed, with his boots on
+Dialogue: 0,0:14:24.10,0:14:25.73,Big,,0,0,0,,{\fad(200,200)}and his keys in his hand.
+Dialogue: 0,0:14:25.73,0:14:26.98,Big,,0,0,0,,{\fad(200,200)}Just sitting there,
+Dialogue: 0,0:14:26.98,0:14:27.77,Big,,0,0,0,,{\fad(197,197)}in the dark,
+Dialogue: 0,0:14:27.77,0:14:29.15,Big,,0,0,0,,{\fad(200,200)}looking at the phone.
+Dialogue: 0,0:14:29.85,0:14:30.91,Big,,0,0,0,,{\fad(200,200)}She asked him what
+Dialogue: 0,0:14:30.91,0:14:32.43,Big,,0,0,0,,{\fad(200,200)}in the world he was doing.
+Dialogue: 0,0:14:33.13,0:14:33.83,Big,,0,0,0,,{\fad(174,174)}And he said,
+Dialogue: 0,0:14:33.83,0:14:35.34,Big,,0,0,0,,{\fad(200,200)}"Our boy's on a mountain."
+Dialogue: 0,0:14:36.04,0:14:37.30,Big,,0,0,0,,{\fad(200,200)}She said the phone rang
+Dialogue: 0,0:14:37.30,0:14:38.66,Big,,0,0,0,,{\fad(200,200)}about half an hour later.
+Dialogue: 0,0:14:39.36,0:14:40.18,Big,,0,0,0,,{\fad(200,200)}I've thought
+Dialogue: 0,0:14:40.18,0:14:41.34,Big,,0,0,0,,{\fad(200,200)}about that a lot.
+Dialogue: 0,0:14:41.34,0:14:42.85,Big,,0,0,0,,{\fad(200,200)}I never told him which
+Dialogue: 0,0:14:42.85,0:14:44.21,Big,,0,0,0,,{\fad(200,200)}mountain I was going
+Dialogue: 0,0:14:44.21,0:14:45.58,Big,,0,0,0,,{\fad(200,200)}to cross that night.
+Dialogue: 0,0:14:45.58,0:14:46.60,Big,,0,0,0,,{\fad(200,200)}I hadn't talked
+Dialogue: 0,0:14:46.60,0:14:47.96,Big,,0,0,0,,{\fad(200,200)}to him in two weeks.
+Dialogue: 0,0:14:47.96,0:14:49.67,Big,,0,0,0,,{\fad(200,200)}I don't know how he knew,
+Dialogue: 0,0:14:49.67,0:14:50.56,Big,,0,0,0,,{\fad(200,200)}and my mother
+Dialogue: 0,0:14:50.56,0:14:51.59,Big,,0,0,0,,{\fad(200,200)}doesn't either.
+Dialogue: 0,0:14:51.59,0:14:53.31,Big,,0,0,0,,{\fad(200,200)}Maybe a father just knows.
+Dialogue: 0,0:14:53.31,0:14:54.70,Big,,0,0,0,,{\fad(200,200)}I'd like to think so.
+Dialogue: 0,0:14:55.40,0:14:56.15,Big,,0,0,0,,{\fad(188,188)}Here's what
+Dialogue: 0,0:14:56.15,0:14:57.25,Big,,0,0,0,,{\fad(200,200)}I know for sure.
+Dialogue: 0,0:14:57.25,0:14:58.67,Big,,0,0,0,,{\fad(200,200)}My father didn't save
+Dialogue: 0,0:14:58.67,0:14:59.88,Big,,0,0,0,,{\fad(200,200)}my job that night.
+Dialogue: 0,0:14:59.88,0:15:01.20,Big,,0,0,0,,{\fad(200,200)}He never even tried.
+Dialogue: 0,0:15:01.20,0:15:02.83,Big,,0,0,0,,{\fad(200,200)}He showed me what you do
+Dialogue: 0,0:15:02.83,0:15:04.53,Big,,0,0,0,,{\fad(200,200)}when somebody you love is
+Dialogue: 0,0:15:04.53,0:15:05.43,Big,,0,0,0,,{\fad(200,200)}at the bottom
+Dialogue: 0,0:15:05.43,0:15:06.82,Big,,0,0,0,,{\fad(200,200)}of a mountain at two
+Dialogue: 0,0:15:06.82,0:15:07.86,Big,,0,0,0,,{\fad(200,200)}in the morning.
+Dialogue: 0,0:15:08.56,0:15:09.26,Big,,0,0,0,,{\fad(175,175)}You go.
+Dialogue: 0,0:15:09.96,0:15:11.74,Big,,0,0,0,,{\fad(200,200)}Last spring, my phone rang
+Dialogue: 0,0:15:11.74,0:15:13.25,Big,,0,0,0,,{\fad(200,200)}at two in the morning.
+Dialogue: 0,0:15:13.25,0:15:14.19,Big,,0,0,0,,{\fad(200,200)}It was my boy.
+Dialogue: 0,0:15:14.19,0:15:15.98,Big,,0,0,0,,{\fad(200,200)}He's twenty-eight now, and
+Dialogue: 0,0:15:15.98,0:15:17.71,Big,,0,0,0,,{\fad(200,200)}what he was going through
+Dialogue: 0,0:15:17.71,0:15:19.29,Big,,0,0,0,,{\fad(200,200)}is his story, not mine.
+Dialogue: 0,0:15:19.29,0:15:20.26,Big,,0,0,0,,{\fad(200,200)}He said, "Dad,
+Dialogue: 0,0:15:20.26,0:15:21.51,Big,,0,0,0,,{\fad(200,200)}I think I'm done."
+Dialogue: 0,0:15:22.21,0:15:23.10,Big,,0,0,0,,{\fad(200,200)}I said, "Son.
+Dialogue: 0,0:15:23.10,0:15:24.76,Big,,0,0,0,,{\fad(200,200)}Two in the morning lies.
+Dialogue: 0,0:15:24.76,0:15:25.58,Big,,0,0,0,,{\fad(200,200)}Go to sleep.
+Dialogue: 0,0:15:25.58,0:15:27.14,Big,,0,0,0,,{\fad(200,200)}If you still feel this
+Dialogue: 0,0:15:27.14,0:15:28.70,Big,,0,0,0,,{\fad(200,200)}way when the sun's up,
+Dialogue: 0,0:15:28.70,0:15:30.54,Big,,0,0,0,,{\fad(200,200)}I'll come get you myself."
+Dialogue: 0,0:15:31.24,0:15:32.01,Big,,0,0,0,,{\fad(192,192)}I was eight
+Dialogue: 0,0:15:32.01,0:15:33.34,Big,,0,0,0,,{\fad(200,200)}hundred miles away.
+Dialogue: 0,0:15:33.34,0:15:34.72,Big,,0,0,0,,{\fad(200,200)}I dropped my trailer
+Dialogue: 0,0:15:34.72,0:15:36.24,Big,,0,0,0,,{\fad(200,200)}and I drove all night.
+Dialogue: 0,0:15:36.94,0:15:38.51,Big,,0,0,0,,{\fad(200,200)}By the time I got there,
+Dialogue: 0,0:15:38.51,0:15:39.81,Big,,0,0,0,,{\fad(200,200)}he'd already figured
+Dialogue: 0,0:15:39.81,0:15:40.99,Big,,0,0,0,,{\fad(200,200)}it out on his own.
+Dialogue: 0,0:15:40.99,0:15:42.07,Big,,0,0,0,,{\fad(200,200)}That's all right.
+Dialogue: 0,0:15:42.07,0:15:43.65,Big,,0,0,0,,{\fad(200,200)}That was never the point.
+Dialogue: 0,0:15:44.35,0:15:45.83,Big,,0,0,0,,{\fad(200,200)}If you take one thing
+Dialogue: 0,0:15:45.83,0:15:47.53,Big,,0,0,0,,{\fad(200,200)}from tonight, take this.
+Dialogue: 0,0:15:47.53,0:15:48.33,Big,,0,0,0,,{\fad(199,199)}If you ever
+Dialogue: 0,0:15:48.33,0:15:49.49,Big,,0,0,0,,{\fad(200,200)}drive a mountain
+Dialogue: 0,0:15:49.49,0:15:50.80,Big,,0,0,0,,{\fad(200,200)}in anything heavy,
+Dialogue: 0,0:15:50.80,0:15:52.40,Big,,0,0,0,,{\fad(200,200)}a truck, a motor home,
+Dialogue: 0,0:15:52.40,0:15:54.12,Big,,0,0,0,,{\fad(200,200)}a pickup with a trailer,
+Dialogue: 0,0:15:54.12,0:15:55.92,Big,,0,0,0,,{\fad(200,200)}pick your gear at the top
+Dialogue: 0,0:15:55.92,0:15:57.22,Big,,0,0,0,,{\fad(200,200)}and go down slower
+Dialogue: 0,0:15:57.22,0:15:58.44,Big,,0,0,0,,{\fad(200,200)}than you came up.
+Dialogue: 0,0:15:58.44,0:16:00.21,Big,,0,0,0,,{\fad(200,200)}If you smell your brakes,
+Dialogue: 0,0:16:00.21,0:16:01.48,Big,,0,0,0,,{\fad(200,200)}it's already late.
+Dialogue: 0,0:16:01.48,0:16:02.90,Big,,0,0,0,,{\fad(200,200)}Pull over where it's
+Dialogue: 0,0:16:02.90,0:16:04.52,Big,,0,0,0,,{\fad(200,200)}safe and let them cool.
+Dialogue: 0,0:16:04.52,0:16:06.25,Big,,0,0,0,,{\fad(200,200)}And if you see a runaway
+Dialogue: 0,0:16:06.25,0:16:07.75,Big,,0,0,0,,{\fad(200,200)}ramp and you need it,
+Dialogue: 0,0:16:07.75,0:16:08.26,Big,,0,0,0,,{\fad(125,125)}use it.
+Dialogue: 0,0:16:08.26,0:16:08.76,Big,,0,0,0,,{\fad(125,125)}There's
+Dialogue: 0,0:16:08.76,0:16:10.12,Big,,0,0,0,,{\fad(200,200)}no shame in gravel.
+Dialogue: 0,0:16:10.82,0:16:11.51,Big,,0,0,0,,{\fad(171,171)}And whatever
+Dialogue: 0,0:16:11.51,0:16:12.59,Big,,0,0,0,,{\fad(200,200)}mountain you're on,
+Dialogue: 0,0:16:12.59,0:16:13.79,Big,,0,0,0,,{\fad(200,200)}don't decide anything
+Dialogue: 0,0:16:13.79,0:16:15.05,Big,,0,0,0,,{\fad(200,200)}at two in the morning.
+Dialogue: 0,0:16:15.75,0:16:16.50,Big,,0,0,0,,{\fad(188,188)}Next time,
+Dialogue: 0,0:16:16.50,0:16:18.23,Big,,0,0,0,,{\fad(200,200)}we're going to Montana.
+Dialogue: 0,0:16:18.23,0:16:20.18,Big,,0,0,0,,{\fad(200,200)}An old man at a truck stop
+Dialogue: 0,0:16:20.18,0:16:21.83,Big,,0,0,0,,{\fad(200,200)}asked me for a ride to
+Dialogue: 0,0:16:21.83,0:16:23.63,Big,,0,0,0,,{\fad(200,200)}the house he grew up in.
+Dialogue: 0,0:16:23.63,0:16:25.00,Big,,0,0,0,,{\fad(200,200)}When we got there,
+Dialogue: 0,0:16:25.00,0:16:25.91,Big,,0,0,0,,{\fad(200,200)}he handed me
+Dialogue: 0,0:16:25.91,0:16:27.43,Big,,0,0,0,,{\fad(200,200)}an envelope with ten
+Dialogue: 0,0:16:27.43,0:16:29.18,Big,,0,0,0,,{\fad(200,200)}thousand dollars in it.
+Dialogue: 0,0:16:29.18,0:16:30.46,Big,,0,0,0,,{\fad(200,200)}And a check dated
+Dialogue: 0,0:16:30.46,0:16:31.88,Big,,0,0,0,,{\fad(200,200)}nineteen fifty-six.
+Dialogue: 0,0:16:32.58,0:16:33.59,Big,,0,0,0,,{\fad(200,200)}Before you go,
+Dialogue: 0,0:16:33.59,0:16:35.40,Big,,0,0,0,,{\fad(200,200)}let me ask you something.
+Dialogue: 0,0:16:35.40,0:16:37.27,Big,,0,0,0,,{\fad(200,200)}Who showed up for you when
+Dialogue: 0,0:16:37.27,0:16:38.92,Big,,0,0,0,,{\fad(200,200)}you were ready to quit?
+Dialogue: 0,0:16:38.92,0:16:40.26,Big,,0,0,0,,{\fad(200,200)}Tell me about them.
+Dialogue: 0,0:16:40.26,0:16:41.46,Big,,0,0,0,,{\fad(200,200)}I read every one.
+Dialogue: 0,0:16:42.16,0:16:43.54,Big,,0,0,0,,{\fad(200,200)}Drive safe out there.
+Dialogue: 0,0:16:43.54,0:16:44.96,Big,,0,0,0,,{\fad(200,200)}And don't quit at two
+Dialogue: 0,0:16:44.96,0:16:45.97,Big,,0,0,0,,{\fad(200,200)}in the morning.
