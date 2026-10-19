@@ -21,38 +21,33 @@ C  An Old Man Asked Me for a Ride Home. The House Had No Roof       (58)
 Formula: person + strange payment or number, then an impossible detail. The question is "how?". The hook is in the first ~37 characters.
 All three thumbnails below work with all three titles; their texts do not repeat the titles.
 
-=== DESCRIPTION (chapters are approximate; Claude replaces them with exact times from the SRT at assembly) ===
+=== DESCRIPTION (chapters = actual times from the owner's voiced video) ===
 A trucker horror story about an old man with a cardboard suitcase who asked me for a ride home, and the $10,000 he paid me at the end of a gravel road in Montana.
 Every driver in that truck stop told him no. My dog wouldn't stop wagging his tail at him.
 
 September 2008. I was 31, empty in Billings with a weekend to kill, and I'd never once broken the no-riders rule. Then an old man in a wool overcoat and a felt hat went from booth to booth asking for a ride up to the Hi-Line. He said he was trying to get home. The farther north we drove, the colder my cab got. At the end of an eleven-mile gravel road, there was a ranch house with half its roof gone, and a light in the kitchen window. He handed me an envelope, told me not to open it until he was inside, and walked up to the house.
 
-0:00 The check in my glove box
-0:39 Hey. It's Hank.
-1:20 September 13, 2008
-2:04 No riders
-2:54 Personal conveyance
-3:36 The old man with the suitcase
-4:21 "I'm trying to get home"
-5:03 What Buddy did
-5:39 Would you break your rule?
-6:46 North on the Hi-Line
-7:27 The cab got colder
-8:00 The fight
-9:06 The gravel road
-9:50 A light in the window
-10:07 "Don't open it till I'm inside"
-11:25 The envelope
-12:15 Only my footprints
-13:05 The suitcase
-13:40 The deputy
-14:20 Ellis Varner, 1956
-15:22 "Eighteen years old, forever"
-15:52 "I'd say you're the driver"
-16:09 Home
-17:30 Don't pick up strangers
-18:19 Every year about this time
-18:41 Next time
+00:00 The check in my glove box
+00:39 Hey, it's Hank
+01:17 Buddy and a weekend in Billings
+01:58 The rule: no riders
+03:26 The old man with the cardboard suitcase
+04:47 Buddy did something I'd never seen
+05:23 Do you break your rule?
+05:57 Ellis
+06:23 The road north — and the cold cab
+07:30 Ellis's story
+08:31 The gravel road and the light in the window
+10:45 What was in the envelope
+11:37 Inside the house
+12:59 The deputy
+13:35 Ellis Varner, 1956
+15:08 "I'd say you're the driver"
+15:24 Home
+16:20 Everybody is trying to get home
+16:42 Don't pick up strangers
+17:25 Every year on the Hi-Line
+17:46 Next time & your stories
 
 Have you ever met somebody who was just trying to get home? Tell me about it. I read every one.
 Got your own story from the road? Leave it in the comments. With your permission, I'll read the best ones in a special episode.
@@ -130,8 +125,8 @@ Send Claude three files: the Gemini clip (or the step-1 image), the mp3, the SRT
 - Comments: on, hold potentially inappropriate for review, sort by Top. Show likes: yes.
 - Subtitles (optional): upload the SRT as English.
 - Cards (exact times after assembly):
-  - ~0:55 ("Last time I told you about the night I almost quit…") → Episode 9;
-  - ~1:45 ("If you've been here a while, you know how he got there.") → Episode 8, where Buddy appears.
+  - ~0:53 ("Last time I told you about the night I almost quit…") → Episode 9;
+  - ~1:41 ("If you've been here a while, you know how he got there.") → Episode 8, where Buddy appears.
 - End screen: last 20 seconds, "Best for viewer" + Subscribe.
 - Schedule: 22:00, time zone Warsaw.
 - After publishing: pin the comment above; reply to the first comments in the first 30 minutes.
