@@ -38,6 +38,7 @@
 
 ## Записи
 
+- 2026-10-19 · Сценарій шортса-гачка еп. 8 «The Truck That Followed Me for 300 Miles» → `videos/11-hank-ep08-short/script.md` · формат Hank's Logbook, 8 промптів картинок, обкладинка `NOBODY WAS DRIVING.`; Бадді в шортсі не показуємо.
 - 2026-10-19 · Змонтовано шортс-гачок еп. 7 у форматі Hank's Logbook (`videos/10-hank-ep07-short/final.mp4`, 35.6 с, петля) · перший шортс за планом «Hank Stories»; пов'язане відео — еп. 7.
 - 2026-10-16 · Шортси каналу йдуть за планом власника «Hank Stories — план контенту на 30 днів» ([Claude Docs](https://claude.ai/code/artifact/a8596fc5-2504-4545-bdb9-854fecbae003)): шортс дня N = гачок еп. N−1, формат Hank's Logbook (аркуш-субтитри з жовтим маркером, гачок угорі, кнопка FULL STORY) — додано в `tools/photo_story.py` (`"style": "logbook"`); наступний — гачок еп. 7 (`videos/10-hank-ep07-short/`). «Dad's GPS» суперечить канону (син Генка ~1998 р.н., Рей помер 2010) — як шортс Генка не публікувати.
 - 2026-10-16 · Змонтовано епізод 8 «Dad's GPS» (`videos/09-dads-gps/final.mp4`, 44.2 с) · замість відсутньої медсестри — обличчя сина; назва `Why Does Dad's GPS Still Move? 🤨`, обкладинка `2 YEARS DEAD.`
