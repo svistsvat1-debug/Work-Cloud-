@@ -113,15 +113,17 @@
   .vrow.now .vpick small { margin-left: auto; margin-right: 10px; }
   .vhint { padding-top: 6px; }
 
-  /* Recent voiceovers: the last 5 stay on the device */
-  .history { display: grid; gap: 6px; }
+  /* Earlier voiceovers (the last 5 stay on the device): each one like the result above, with its own player and downloads */
+  .history { display: grid; gap: 14px; }
   .result:not([hidden]) + .history, #err:not(:empty) ~ .history { border-top: 1px solid var(--edge); padding-top: 14px; }
-  .history-head { font-size: 13px; font-weight: 600; color: var(--muted); padding: 0 2px 4px; }
-  .hist { display: grid; justify-items: start; gap: 2px; width: 100%; min-height: 0; padding: 10px 12px; text-align: left; border-radius: 12px;
-    background: transparent; }
-  .hist.now { background: var(--chip); }
-  .hist-title { font-size: 14px; font-weight: 500; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
-  .hist-meta { font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .history-head { font-size: 13px; font-weight: 600; color: var(--muted); }
+  #historyList { display: grid; gap: 22px; }
+  .hcard { display: grid; gap: 12px; }
+  .hcard + .hcard { border-top: 1px solid var(--edge); padding-top: 18px; }
+  .hcard-head { display: grid; gap: 2px; min-width: 0; }
+  .hcard-head b { font-size: 15px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .hcard-head span { font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .hcard .link { justify-self: start; font-size: 14px; color: var(--muted); }
 
   /* Sign-in and setup */
   .narrow { width: 100%; max-width: 380px; margin: auto; display: grid; gap: 12px; background: var(--card); border: 1px solid var(--edge);
@@ -263,7 +265,7 @@
         <div class="frags" id="frags" hidden></div>
       </div>
       <div class="history" id="history" hidden>
-        <div class="history-head">Останні озвучки</div>
+        <div class="history-head">Попередні озвучки</div>
         <div id="historyList"></div>
       </div>
     </section>
@@ -1327,6 +1329,7 @@ async function playSample(id, btn) {
   btn.classList.remove("wait"); btn.classList.add("on"); btn.innerHTML = PAUSE_ICON;
   if (sampleAudio.src) URL.revokeObjectURL(sampleAudio.src);
   sampleAudio.src = URL.createObjectURL(blob);
+  for (const a of document.querySelectorAll("audio")) a.pause(); // one sound at a time
   sampleAudio.play().catch(() => stopSample());
 }
 sampleAudio.addEventListener("ended", () => stopSample());
@@ -1415,14 +1418,79 @@ async function openItem(id) {
   const out = assemble(record.job);
   return { ...record, ...out, srt: makeSrt(out.timeline) };
 }
+// Each earlier voiceover gets the same player and buttons as the result above. Its audio and subtitles are rebuilt from
+// what is stored; one still without an MP3 is encoded in the background, one at a time.
+let histUrls = [], histSig = "", mp3Queue = Promise.resolve();
+const when = (t) => { const d = new Date(t), p = (n) => String(n).padStart(2, "0"); return `${p(d.getDate())}.${p(d.getMonth() + 1)}, ${p(d.getHours())}:${p(d.getMinutes())}`; };
 async function renderHistory() {
-  const list = ((await idb("history", "readonly", (o) => o.getAll())) || []).sort((a, b) => b.id - a.id);
+  const list = ((await idb("history", "readonly", (o) => o.getAll())) || []).filter((r) => r.job && (!shown || r.id !== shown.id)).sort((a, b) => b.id - a.id);
+  const sig = list.map((r) => `${r.id}:${r.duration}`).join(",") + "|" + store.get("fileFormat", "mp3") + store.get("subs", "normal");
+  if (sig === histSig) return; // nothing changed: a card that is playing keeps playing
+  histSig = sig;
+  for (const a of $("historyList").querySelectorAll("audio")) a.pause();
+  histUrls.forEach((u) => URL.revokeObjectURL(u)); histUrls = [];
   $("history").hidden = !list.length;
-  const when = (t) => { const d = new Date(t), p = (n) => String(n).padStart(2, "0"); return `${p(d.getDate())}.${p(d.getMonth() + 1)}, ${p(d.getHours())}:${p(d.getMinutes())}`; };
-  $("historyList").innerHTML = list.map((r) => `<button type="button" class="hist${shown && shown.id === r.id ? " now" : ""}" data-open="${r.id}">
-    <span class="hist-title">${esc(r.title || r.name)}</span>
-    <span class="hist-meta">${when(r.id)} · ${fmtTime(r.duration)}${voiceOf(r.voice) ? " · " + esc(voiceOf(r.voice).name) : ""}</span></button>`).join("");
+  $("historyList").innerHTML = list.map((r) => `<div class="hcard" data-id="${r.id}">
+    <div class="hcard-head"><b>${esc(r.title || r.name)}</b><span>${when(r.id)} · ${clock(r.duration)}${voiceOf(r.voice) ? " · " + esc(voiceOf(r.voice).name) : ""}</span></div>
+    <div class="player"><button type="button" class="play white" data-act="play" aria-label="Відтворити">${PLAY_ICON}</button>
+      <input type="range" min="0" max="1000" value="0" data-act="seek" aria-label="Позиція відтворення"><span class="time">0:00 / ${clock(r.duration)}</span></div>
+    <audio preload="none"></audio>
+    <div class="files"><a class="btn" data-act="audio">Скачати аудіо</a><a class="btn" data-act="srt">Скачати субтитри</a>
+      <button type="button" data-act="share" hidden>Поділитися</button></div>
+    <button type="button" class="link" data-act="fix">Виправити фрагмент</button></div>`).join("");
+  for (const r of list) {
+    const card = $("historyList").querySelector(`.hcard[data-id="${r.id}"]`), out = assemble(r.job);
+    const wavUrl = URL.createObjectURL(out.wav), srtUrl = URL.createObjectURL(makeSrt(out.timeline));
+    histUrls.push(wavUrl, srtUrl);
+    const audio = card.querySelector("audio"), btn = card.querySelector("[data-act=play]"), seek = card.querySelector("[data-act=seek]");
+    audio.src = wavUrl;
+    const sync = () => {
+      const d = Number.isFinite(audio.duration) ? audio.duration : r.duration, playing = !audio.paused;
+      card.querySelector(".time").textContent = `${clock(audio.currentTime)} / ${clock(d)}`;
+      seek.value = d ? Math.round((audio.currentTime / d) * 1000) : 0;
+      if (btn.dataset.playing !== String(playing)) { btn.dataset.playing = String(playing); btn.innerHTML = playing ? PAUSE_ICON : PLAY_ICON; btn.setAttribute("aria-label", playing ? "Пауза" : "Відтворити"); }
+    };
+    for (const ev of ["timeupdate", "loadedmetadata", "play", "pause", "ended"]) audio.addEventListener(ev, sync);
+    btn.onclick = () => (audio.paused ? audio.play().catch(() => {}) : audio.pause());
+    seek.oninput = () => { const d = Number.isFinite(audio.duration) ? audio.duration : r.duration; audio.currentTime = (seek.value / 1000) * d; };
+    const srt = card.querySelector("[data-act=srt]");
+    srt.href = srtUrl; srt.download = r.name + ".srt";
+    card.querySelector("[data-act=fix]").onclick = async () => {
+      if (job) return;
+      const item = await openItem(r.id);
+      if (!item) return;
+      fixed = new Set(); showResult({ ...item, saved: true }, "opened");
+      if ($("frags").hidden) $("fragsToggle").click();
+    };
+    const offer = (blob, filename) => {
+      const a = card.querySelector("[data-act=audio]"), url = URL.createObjectURL(blob);
+      histUrls.push(url);
+      a.href = url; a.download = filename; a.textContent = "Скачати аудіо"; a.removeAttribute("aria-disabled");
+      const file = new File([blob], filename, { type: blob.type }), share = card.querySelector("[data-act=share]");
+      share.hidden = !(navigator.canShare && navigator.canShare({ files: [file] }));
+      share.onclick = () => navigator.share({ files: [file], title: filename }).catch(() => {});
+    };
+    if (store.get("fileFormat", "mp3") === "wav") offer(out.wav, r.name + ".wav");
+    else if (r.mp3) offer(r.mp3, r.name + ".mp3");
+    else {
+      const a = card.querySelector("[data-act=audio]"), mine = histSig;
+      a.setAttribute("aria-disabled", "true"); a.textContent = "Готую MP3…";
+      mp3Queue = mp3Queue.then(async () => {
+        if (mine !== histSig) return; // the list was redrawn meanwhile
+        try {
+          const mp3 = await toMp3(out.wav, (p) => { a.textContent = `Готую MP3… ${Math.round(p * 100)}%`; });
+          await idb("history", "readwrite", (o) => o.put({ ...r, mp3 }));
+          if (mine === histSig) offer(mp3, r.name + ".mp3");
+        } catch { if (mine === histSig) offer(out.wav, r.name + ".wav"); }
+      });
+    }
+  }
 }
+// One sound at a time: starting any player pauses the others and a voice sample
+document.addEventListener("play", (e) => {
+  for (const a of document.querySelectorAll("audio")) if (a !== e.target && !a.paused) a.pause();
+  if (sampleOf) stopSample();
+}, true);
 // Before the history there was one saved voiceover; it becomes the first entry
 async function migrateLast() {
   const old = await idb("last", "readonly", (o) => o.get("result"));
@@ -1770,7 +1838,7 @@ function applyFormat(format) {
   for (const b of document.querySelectorAll("[data-format-set]")) b.setAttribute("aria-checked", String(b.dataset.formatSet === format));
   store.set("fileFormat", format);
 }
-for (const b of document.querySelectorAll("[data-format-set]")) b.onclick = () => { applyFormat(b.dataset.formatSet); if (shown) prepareDownload(shown); };
+for (const b of document.querySelectorAll("[data-format-set]")) b.onclick = () => { applyFormat(b.dataset.formatSet); if (shown) prepareDownload(shown); renderHistory(); };
 applyFormat(store.get("fileFormat", "mp3") === "wav" ? "wav" : "mp3");
 function applySubs(style) {
   for (const b of document.querySelectorAll("[data-subs-set]")) b.setAttribute("aria-checked", String(b.dataset.subsSet === style));
@@ -1781,7 +1849,7 @@ function applySubs(style) {
     urls.push(url); $("dlSrt").href = url;
   }
 }
-for (const b of document.querySelectorAll("[data-subs-set]")) b.onclick = () => applySubs(b.dataset.subsSet);
+for (const b of document.querySelectorAll("[data-subs-set]")) b.onclick = () => { applySubs(b.dataset.subsSet); renderHistory(); };
 applySubs(store.get("subs", "normal") === "short" ? "short" : "normal");
 $("recheck").onclick = route;
 
@@ -1825,12 +1893,6 @@ migrateLast().then(renderHistory).then(async () => { // the newest voiceover is 
   const newest = ((await idb("history", "readonly", (o) => o.getAllKeys())) || []).sort((a, b) => b - a)[0];
   const item = newest && (await openItem(newest));
   if (item && $("result").hidden && !job) showResult({ ...item, saved: true }, "restored");
-});
-$("historyList").addEventListener("click", async (e) => {
-  const b = e.target.closest("[data-open]");
-  if (!b || job) return;
-  const item = await openItem(+b.dataset.open);
-  if (item) { fixed = new Set(); showResult({ ...item, saved: true }, "opened"); }
 });
 </script>
 </body>
