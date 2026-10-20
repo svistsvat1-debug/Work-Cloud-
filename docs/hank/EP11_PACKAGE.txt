@@ -1,4 +1,4 @@
-EPISODE 11 · THE WEIGH STATION INSPECTOR WHO PICKED THE WRONG DRIVER · justice on the road · video ~18:05
+EPISODE 11 · THE WEIGH STATION INSPECTOR WHO PICKED THE WRONG DRIVER · justice on the road · video 18:00
 Publish: 22:00 Warsaw, the day after episode 10 goes out.
 Voiceover text: docs/hank/EP11_VOICEOVER.txt (2,817 words). Notes and canon: docs/hank/EP11_NOTES.txt.
 
@@ -25,39 +25,39 @@ C  The Weigh Station Inspector Who Picked the Wrong Truckers      (57)
 Formula: the wrongdoing, then the answer with a number. B teases the twist as a question without explaining it.
 All three thumbnails below work with all three titles; their texts do not repeat the titles.
 
-=== DESCRIPTION (chapters are approximate. If you voice it and send real times, as for ep 10, Claude puts them in) ===
+=== DESCRIPTION (chapters = actual times from the owner's voiced video) ===
 A trucker story about a weigh station inspector who took cash from truck drivers for months, and the Friday night forty of us lined up at his scale with the same piece of paper.
 He thought we were just trucks.
 
 July 2005, eastern New Mexico. I was 28, hauling a full load of bottled water, and I'd weighed legal forty miles back. At a little port of entry I'd never noticed before, a man in a pressed uniform told me my drives were 2,400 pounds over. He didn't want to see my scale ticket. He wanted $280, cash, or my truck sat until Monday. I paid him. Then I found out I wasn't the only one. Then I found out who he really was.
 
 00:00 Forty trucks in the dark
-00:53 Hey, it's Hank
-01:32 July 12, 2005
-02:06 How truck weight works
-02:42 Certified scales and paper
-03:32 A port of entry I'd never seen
-04:13 The man in the booth
-05:17 "Pay the fine right here"
-05:59 What would you do?
-06:22 Receipt number 341
-06:56 His scale was wrong
-07:18 "The toll booth"
-07:37 I wasn't the only one
-08:26 Loretta's question
-08:50 41 receipts
-09:53 I called the state
-10:29 A strange phone call
-11:13 What I didn't see
-11:50 Who he really was
-12:58 The plan
-13:50 Friday night
-14:37 My turn
-15:24 "Evening, Carl."
-15:55 The scale test
-16:44 He can't push forty
-17:08 Keep your paper
-17:37 Next time & your stories
+00:46 Hey, it's Hank
+01:26 July 12, 2005
+02:01 How truck weight works
+02:38 Certified scales and paper
+03:48 A port of entry I'd never seen
+04:06 The man in the booth
+05:08 "Pay the fine right here"
+05:48 What would you do?
+06:09 Receipt number 341
+06:43 His scale was wrong
+07:07 "The toll booth"
+07:22 I wasn't the only one
+08:15 Loretta's question
+08:39 41 receipts
+09:46 I called the state
+10:20 A strange phone call
+11:05 What I didn't see
+11:38 Who he really was
+12:26 The plan
+13:30 Friday night
+14:27 My turn
+15:16 "Evening, Carl."
+15:46 The scale test
+16:33 He can't push forty
+16:57 Keep your paper
+17:27 Next time & your stories
 
 Have you ever seen people come together to make something right? Tell me about it. I read every one.
 Got your own story from the road? Leave it in the comments. With your permission, I'll read the best ones in a special episode.
@@ -134,9 +134,9 @@ Send Claude three files: the Gemini clip (or the step-1 image), the mp3, the SRT
 - License: Standard. Allow embedding: yes. Notify subscribers: yes.
 - Comments: on, hold potentially inappropriate for review, sort by Top. Show likes: yes.
 - Subtitles (optional): upload the SRT as English.
-- Cards (approximate, check the exact second in your video):
-  - ~0:58 ("This morning I drove out to that little cemetery…") → Episode 10;
-  - ~3:26 ("An old mechanic in Ohio taught me to keep my paper…") → Episode 7.
+- Cards (times from the voiced video):
+  - 0:54 ("This morning I drove out to that little cemetery…") → Episode 10;
+  - 3:20 ("An old mechanic in Ohio taught me to keep my paper…") → Episode 7.
 - End screen: last 20 seconds, "Best for viewer" + Subscribe.
 - Schedule: 22:00, time zone Warsaw.
 - After publishing: pin the comment above; reply to the first comments in the first 30 minutes.
