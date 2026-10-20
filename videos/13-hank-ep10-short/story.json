@@ -1,0 +1,396 @@
+{
+ "title": "Hank Stories · Ep. 10 hook",
+ "voice": "voice.wav",
+ "size": [
+  1080,
+  1920
+ ],
+ "fps": 30,
+ "subtitle_y": 960,
+ "style": "minimal",
+ "lines": [
+  {
+   "span": [
+    0.32,
+    2.41
+   ],
+   "chunks": [
+    "This check",
+    "is for",
+    "$10,000."
+   ]
+  },
+  {
+   "span": [
+    3.38,
+    5.3
+   ],
+   "chunks": [
+    "And it's dated",
+    "1956."
+   ]
+  },
+  {
+   "span": [
+    6.06,
+    9.55
+   ],
+   "chunks": [
+    "An old man",
+    "in Montana",
+    "handed it to me",
+    "in an envelope."
+   ]
+  },
+  {
+   "span": [
+    10.44,
+    12.06
+   ],
+   "chunks": [
+    "All he asked for",
+    "was a ride."
+   ]
+  },
+  {
+   "span": [
+    12.82,
+    14.32
+   ],
+   "chunks": [
+    "To the house",
+    "he grew up in."
+   ]
+  },
+  {
+   "span": [
+    15.09,
+    16.46
+   ],
+   "chunks": [
+    "Hours of",
+    "empty road."
+   ]
+  },
+  {
+   "span": [
+    17.41,
+    18.66
+   ],
+   "chunks": [
+    "He barely",
+    "said a word."
+   ]
+  },
+  {
+   "span": [
+    19.47,
+    22.65
+   ],
+   "chunks": [
+    "He just watched",
+    "the fields go by,",
+    "like he was",
+    "counting them."
+   ]
+  },
+  {
+   "span": [
+    23.44,
+    26.41
+   ],
+   "chunks": [
+    "When we",
+    "got there,",
+    "he pressed",
+    "the envelope",
+    "into my hand."
+   ]
+  },
+  {
+   "span": [
+    27.28,
+    28.67
+   ],
+   "chunks": [
+    "Full story's",
+    "on the channel."
+   ]
+  },
+  {
+   "span": [
+    29.45,
+    30.69
+   ],
+   "chunks": [
+    "But the date",
+    "on that check…"
+   ]
+  }
+ ],
+ "shots": [
+  {
+   "image": "shots/01.jpg",
+   "start": 0.0,
+   "end": 3.3,
+   "in": "cut",
+   "cam": [
+    [
+     0.0,
+     1.4,
+     0.5,
+     0.62
+    ],
+    [
+     3.3,
+     1.55,
+     0.52,
+     0.6
+    ]
+   ]
+  },
+  {
+   "image": "shots/01.jpg",
+   "start": 3.3,
+   "end": 6.0,
+   "in": "cut",
+   "cam": [
+    [
+     3.3,
+     2.4,
+     0.66,
+     0.52
+    ],
+    [
+     6.0,
+     2.7,
+     0.67,
+     0.51
+    ]
+   ],
+   "punch": [
+    [
+     4.5,
+     0.07
+    ]
+   ]
+  },
+  {
+   "image": "shots/02.jpg",
+   "start": 6.0,
+   "end": 10.3,
+   "in": "fade",
+   "cam": [
+    [
+     6.0,
+     1.3,
+     0.45,
+     0.48
+    ],
+    [
+     10.3,
+     1.5,
+     0.42,
+     0.47
+    ]
+   ]
+  },
+  {
+   "image": "shots/02.jpg",
+   "start": 10.3,
+   "end": 12.7,
+   "in": "cut",
+   "cam": [
+    [
+     10.3,
+     1.9,
+     0.38,
+     0.43
+    ],
+    [
+     12.7,
+     2.1,
+     0.38,
+     0.42
+    ]
+   ]
+  },
+  {
+   "image": "shots/05.jpg",
+   "start": 12.7,
+   "end": 15.0,
+   "in": "dip",
+   "cam": [
+    [
+     12.7,
+     1.15,
+     0.5,
+     0.56
+    ],
+    [
+     15.0,
+     1.35,
+     0.47,
+     0.52
+    ]
+   ]
+  },
+  {
+   "image": "shots/03.jpg",
+   "start": 15.0,
+   "end": 17.3,
+   "in": "whip",
+   "cam": [
+    [
+     15.0,
+     1.05,
+     0.5,
+     0.55
+    ],
+    [
+     17.3,
+     1.25,
+     0.5,
+     0.53
+    ]
+   ]
+  },
+  {
+   "image": "shots/04.jpg",
+   "start": 17.3,
+   "end": 23.3,
+   "in": "fade",
+   "cam": [
+    [
+     17.3,
+     1.25,
+     0.42,
+     0.46
+    ],
+    [
+     23.3,
+     1.6,
+     0.38,
+     0.43
+    ]
+   ]
+  },
+  {
+   "image": "shots/06.jpg",
+   "start": 23.3,
+   "end": 27.2,
+   "in": "dip",
+   "cam": [
+    [
+     23.3,
+     1.2,
+     0.55,
+     0.56
+    ],
+    [
+     27.2,
+     1.6,
+     0.57,
+     0.52
+    ]
+   ],
+   "punch": [
+    [
+     25.2,
+     0.05
+    ]
+   ]
+  },
+  {
+   "image": "shots/07.jpg",
+   "start": 27.2,
+   "end": 29.35,
+   "in": "flash",
+   "cam": [
+    [
+     27.2,
+     1.2,
+     0.58,
+     0.55
+    ],
+    [
+     29.35,
+     1.45,
+     0.6,
+     0.5
+    ]
+   ]
+  },
+  {
+   "image": "shots/01.jpg",
+   "start": 29.35,
+   "end": 30.85,
+   "in": "dip",
+   "cam": [
+    [
+     29.35,
+     2.6,
+     0.68,
+     0.52
+    ],
+    [
+     30.85,
+     2.85,
+     0.68,
+     0.51
+    ]
+   ]
+  }
+ ],
+ "music": {
+  "booms": [
+   0.05,
+   27.2
+  ],
+  "whooshes": [
+   6.0,
+   12.7,
+   15.0
+  ],
+  "riser": [
+   25.8,
+   27.2
+  ],
+  "drops": [
+   [
+    17.3,
+    23.3
+   ]
+  ],
+  "chords": [
+   [
+    0.0,
+    "A"
+   ],
+   [
+    6.0,
+    "F"
+   ],
+   [
+    12.7,
+    "C"
+   ],
+   [
+    17.3,
+    "A"
+   ],
+   [
+    23.3,
+    "F"
+   ],
+   [
+    27.2,
+    "G"
+   ],
+   [
+    29.35,
+    "E"
+   ]
+  ]
+ }
+}
