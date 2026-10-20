@@ -34,11 +34,13 @@ def at(segs, frac):
         x -= b - a
     return segs[-1][1]
 
-# optional bigger text (env): HANK_FS font size, HANK_Y centre y, HANK_WRAP max line width px.
+# optional bigger text (env): HANK_FS font size, HANK_Y centre y, HANK_WRAP max line width px,
+# HANK_FONT_NAME font family (+ HANK_FONTFILE, its bold .ttf, for measuring line width).
 # With HANK_WRAP the lines are re-broken (max 2 per screen); longer cues are split in time.
 FS = float(os.environ.get('HANK_FS', 78))
 CY = int(os.environ.get('HANK_Y', 540))
 WRAP = int(os.environ.get('HANK_WRAP', 0))
+FONT_NAME = os.environ.get('HANK_FONT_NAME', 'Instrument Sans')  # family name; put its .ttf files in fontsdir
 if WRAP:
     from PIL import ImageFont
     fp = os.environ.get('HANK_FONTFILE', '.claude/skills/ui-styling/canvas-fonts/InstrumentSans-Bold.ttf')
@@ -85,8 +87,8 @@ WHITE, AMBER = '&H00FFFFFF&', '&H0057C8FF&'
 out = ['[Script Info]', 'ScriptType: v4.00+', 'PlayResX: 1920', 'PlayResY: 1080', 'WrapStyle: 0',
        'ScaledBorderAndShadow: yes', '', '[V4+ Styles]',
        'Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding',
-       f'Style: Main,Instrument Sans,{FS:g},&H00FFFFFF,&H00FFFFFF,&H00141414,&H00000000,-1,0,0,0,100,100,1,0,1,{3.5 * FS / 78:.1f},0,5,100,100,0,1',
-       f'Style: Halo,Instrument Sans,{FS:g},&HFF000000,&HFF000000,&H50000000,&HFF000000,-1,0,0,0,100,100,1,0,1,{20 * FS / 78:.0f},0,5,100,100,0,1',
+       f'Style: Main,{FONT_NAME},{FS:g},&H00FFFFFF,&H00FFFFFF,&H00141414,&H00000000,-1,0,0,0,100,100,1,0,1,{3.5 * FS / 78:.1f},0,5,100,100,0,1',
+       f'Style: Halo,{FONT_NAME},{FS:g},&HFF000000,&HFF000000,&H50000000,&HFF000000,-1,0,0,0,100,100,1,0,1,{20 * FS / 78:.0f},0,5,100,100,0,1',
        '', '[Events]', 'Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text']
 in_q = False
 for i, c in enumerate(cues):
