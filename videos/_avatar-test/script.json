@@ -1,0 +1,12 @@
+{
+  "id": "_avatar-test",
+  "voice": "am_michael",
+  "speed": 1.15,
+  "leadIn": 0.25,
+  "tail": 0.6,
+  "segments": [
+    { "text": "\"I don't need a website.", "pause": 0.08 },
+    { "text": "I have [Instagram.]\"", "pause": 0.3 },
+    { "text": "Okay. Here's the {problem.}", "pause": 0 }
+  ]
+}

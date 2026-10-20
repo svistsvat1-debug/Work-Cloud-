@@ -1,0 +1,64 @@
+EP 10 · THE OLD MAN WHO PAID ME $10,000 · genre: spooky (Monday, hook type "object")
+Voiceover file: docs/hank/EP10_VOICEOVER.txt (2,985 words, ~19 min)
+
+What is trending and was used (checked 19.10.2026):
+- Hitchhiker / passenger stories:
+  - "The Hitchhiker" (SR PAY STORIES): 767K in 12 days;
+  - Mr. Nightmare "4 Disturbing TRUE Hitchhiking Horror Stories": 2.6M.
+  The core of ep 10 is a stranger who asks for a ride home.
+- "Old house + what he found inside" from the reward / inheritance story channels ("He Inherited a Crumbling House… What He Found Inside", "A Secret in the Old Well"): the abandoned ranch house, the suitcase on the chair.
+- Montana horror is active now (Darkness Prevails "Watcher of the Woods" 222K; fire lookout and "rules" stories): empty Hi-Line country at night.
+- Dog-senses-something trope (high comment engagement): Buddy wags his tail at the stranger, gives up his seat, shivers, then lies calm when it's over.
+- Strong phrases and devices used as structure (no sentences copied):
+  - the rule you've kept for ten years;
+  - "the part I've thought about every day since";
+  - "the only footprints in the dust were mine";
+  - "Do you break your rule?";
+  - "eighteen years old, forever";
+  - "Everybody out here is trying to get home. Some of us just take the long way."
+
+Competitor techniques used:
+- Object cold open (plan: Mondays use an "object" hook). It's the 1956 check "Pay to the order of the driver who brings my boy home", cut at "since—". Hook types so far: ep 6 scene, ep 7 odd detail, ep 8 bold statement, ep 9 question, ep 10 object.
+- Exact context: Sat 13.09.2008, ~4 PM, Billings truck stop, Hank 31, empty after a steel-pipe delivery, off until Monday.
+- Outsider explanation: the "No riders" rule and why it exists; bobtailing; personal conveyance.
+- Rationalize-then-break: "the heater core is going out"; "he has people coming"; then no car, no footprints.
+- Planted details that pay off:
+  - the cardboard suitcase tied with twine (later on the kitchen chair under 50 years of dust; "his suitcase was never found");
+  - the wool coat in September;
+  - he never drinks the coffee (last line: "Ellis never did drink his");
+  - "I've been trying to get home ever since".
+- Silence + one sound: the windmill's creak.
+- Rhetorical question at the turn: "Do you break your rule?"
+- Retroactive horror: the deputy's story (Feb 1956, cattle truck in a coulee, found after the thaw).
+- One unexplained detail, plus an original twist: Ellis was 70, the age he'd have been, so "wherever he'd been all those years, he got old."
+- Emotional payoff: the father's check finally delivered; the headstone "Home"; the money goes to search and rescue.
+- Practical advice: don't pick up strangers, and how to help without opening your cab; don't wait 50 years after a fight.
+- Full circle: every year Hank drives up the Hi-Line and leaves a cup of coffee by the stone.
+- Ending type: left open / bittersweet (ep 9 was warm). Season: September (ep 9 spring). State: Montana (ep 9 Tennessee). Rolling Thunder: not mentioned.
+
+CONTINUITY NOTE (add to CANON):
+- Ep 10: Saturday, September 13, 2008. Hank 31, long haul 10 years. Buddy has ridden with him almost 4 years.
+  - Delivered steel pipe in Billings, Montana; no load until Monday; bobtailed (personal conveyance) about 500 miles round trip with a rider.
+  - This is the only time in 31 years Hank broke the no-riders rule.
+- Ellis Varner: born ~1937, a rancher's son on the Hi-Line (north of Billings, off Highway 2, gravel road 11 miles north past a grain elevator).
+  - Feb 1956, age 18: fought with his father and walked out in a snowstorm with a brown cardboard suitcase tied with twine.
+  - A westbound cattle truck picked him up and went off the road into a coulee. Ellis and the driver were found after the snowmelt. The suitcase was never found.
+  - In 2008 he appeared as a man of ~70: wool overcoat, gray felt hat, cardboard suitcase. He knew the country, held the coffee but never drank it, and the cab got colder going north.
+  - His line: "I've been trying to get home ever since."
+- Tom (Thomas) Varner: Ellis's father. Withdrew $10,000 (everything he had) in Feb 1956 for search pilots and a reward; the money was never found. He kept the porch light on every night and died alone in 1971.
+  - His check: "Pay to the order of the driver who brings my boy home. Ten thousand dollars. Thomas Varner. February 20, 1956. Memo: For Ellis." The bank closed in 1961.
+- The ranch: abandoned since 1971, half the roof fallen in, a windmill with half its blades that creaks.
+  - A kerosene-lamp light was in the kitchen window when they arrived, and went out after Ellis went in. The lamp was cold and full of dust.
+  - Only Hank's and Buddy's footprints were in the dust. The cardboard suitcase was on a kitchen chair, covered in decades of dust.
+- The envelope: $10,000 in old $100 bills with a paper bank band dated February 1956, plus Tom's check.
+  - A young local deputy (his grandmother knew Ellis: "Eighteen years old, forever") told Hank: "I'd say you're the driver."
+- What Hank did:
+  - kept nothing for himself;
+  - bought a granite headstone for Ellis (next to his father, in a small cemetery north of town; name, two years, "Home");
+  - gave the rest to the county volunteer search and rescue;
+  - keeps the check in his glove box, in every truck since.
+- Present 2026: truck stop in Billings. Hank drives up the Hi-Line every year about this time and leaves a cup of coffee by the stone.
+  - "Buddy's not with me anymore. That's a story for another night." This fits ep 29. Do not reveal how before ep 29.
+- Hank has never told this story to his wife or dispatcher.
+- [CHECK] The check's date (February 20, 1956) deliberately avoids March 14, 1956, so there is no link to Rolling Thunder. Change only if the owner wants a link.
+- Teaser ep 11 (as spoken): a weigh station inspector writing tickets to truckers and pocketing the money; "he picked about forty of the wrong drivers, all on the same night". [CHECK] Year and state for ep 11 not set.

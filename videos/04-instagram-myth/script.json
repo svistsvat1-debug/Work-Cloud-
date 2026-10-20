@@ -1,0 +1,23 @@
+{
+  "id": "04-instagram-myth",
+  "voice": "am_michael",
+  "speed": 1.14,
+  "leadIn": 0.15,
+  "tail": 1.0,
+  "say": {
+    "24/7,": "twenty-four seven,"
+  },
+  "music": {"bpm": 104, "breakFromSeg": 2, "dropSeg": 5, "energy": 0.6},
+  "segments": [
+    { "text": "\"I don't need a website. | I have [Instagram.]\"", "pause": 0.3 },
+    { "text": "Sound familiar?", "pause": 0.2 },
+    { "text": "Here's the {catch.}", "pause": 0.3 },
+    { "text": "On Instagram, | you [rent] your audience.", "pause": 0.16 },
+    { "text": "The [algorithm] decides | who sees your posts.", "pause": 0.3 },
+    { "text": "Your website | is the place you [own.]", "pause": 0.16 },
+    { "text": "It works 24/7, | even when you [don't post.]", "pause": 0.3 },
+    { "text": "So use Instagram | to get [attention.]", "pause": 0.1 },
+    { "text": "And your website | to turn it into [clients.]", "pause": 0.3 },
+    { "text": "[Follow] for more.", "pause": 0 }
+  ]
+}

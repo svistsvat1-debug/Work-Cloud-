@@ -1,0 +1,134 @@
+EPISODE 9 · THE NIGHT I ALMOST QUIT · warm story · video ~18:00
+Publish: 22:00 Warsaw on the next free day. The plan date (Sun 18.10) has passed, so the intro line is now day-neutral ("Tonight's a quiet one").
+Voiceover text: docs/hank/EP09_VOICEOVER.txt (2,806 words). Notes and canon: docs/hank/EP09_NOTES.txt.
+
+Based on what is taking off now (checked 16–19.10.2026):
+- "Dad shows up" is the hottest emotional trigger. "The Moment a Lawyer Dad Shows Up for His Arrested Daughter" got 4.0M in 2 weeks (Body Cam USA) and 1.6M in 6 days (Sergeant Steve). Thumbnail: the father stands with his arms folded, plus one short quote.
+- AI family and kindness stories (Dad Prevails, Revenge Dad, TrueToHer, TrueTaleTime: 67K–509K):
+  - a bright photoreal emotional scene with 2 characters;
+  - a big yellow/white quote with one red word;
+  - a big red arrow on the key person or object.
+  - Trucker version (TrueToHer, 207K): the driver in the cab door looks at someone outside, with a red arrow.
+- Horror and danger hits (Clyde Barrett "Bridges That SCARED Me", 251K in 13 days): a truck in danger plus a first-person quote ("I HELD MY BREATH").
+- Takeaway for ep 9:
+  - main thumbnail = the "dad shows up" moment (green truck at sunrise, father inside, red arrow, short quote);
+  - test thumbnails = the danger on the mountain, and the 2 AM pay phone with the tear-stained napkin.
+
+=== TITLE — main (A) ===
+I Called My Dad at 2 AM to Quit. At Sunrise, He Was Outside
+
+=== TITLES for A/B ===
+A  I Called My Dad at 2 AM to Quit. At Sunrise, He Was Outside   (59)
+B  My Dad Drove 400 Miles in the Dark After One Phone Call       (55)
+C  I Almost Lost My Truck on Monteagle. Then I Called My Dad      (57)
+Formula: a person and a phone call, then a time jump and a "how?" question. The hook is in the first ~30 characters.
+All three thumbnails below work with title A; their texts do not repeat it.
+
+=== DESCRIPTION (chapters are approximate; Claude replaces them with exact times from the SRT at assembly) ===
+A trucker story about the night I almost quit trucking, a 2 AM phone call to my father, and what I found parked next to my truck at sunrise.
+I wrote "I quit" on a napkin at the bottom of a mountain in Tennessee. Then I called the one man I was sure would be ashamed of me.
+
+April 2003. I was 26, five years into long haul, and I hadn't been home in 36 days. I'd just missed my son's fifth birthday, and on the phone I heard him call me "the truck." That night, coming down Monteagle Mountain with 43,000 pounds of shingles, I missed a gear and watched my speedometer climb past sixty. At 2 AM, at a truck stop at the bottom, I called my father from a pay phone to tell him I was done. He listened to every word. Then he told me something, and hung up.
+
+0:00 Two in the morning
+0:35 Hey. It's Hank.
+1:02 April 22, 2003
+1:20 "Mommy, it's the truck"
+2:25 Monteagle Mountain
+2:48 Why your brakes aren't enough
+3:56 Runaway ramps
+4:29 Going too fast
+5:35 The missed gear
+6:23 Somebody else's ramp
+7:08 The napkin
+8:15 The pay phone
+9:03 "Two in the morning lies"
+9:43 Who would you call?
+10:21 Sun's up
+11:32 1979
+12:19 The picture in his visor
+13:13 The back of the napkin
+13:44 A week at home
+14:45 What my mother remembered
+16:15 My boy called
+16:53 How to drive a mountain
+17:28 Next time: Montana
+
+Who showed up for you when you were ready to quit? Tell me about them. I read every one.
+Got your own story from the road? Leave it in the comments. With your permission, I'll read the best ones in a special episode.
+— Hank
+
+#truckerstories #emotionalstory #fatherandson #truckerstory #truckdriver #trucking #truckdriverlife #longhaul #dadstory #inspiringstories #lifelessons #storytime #monteagle #tennessee #cdl
+
+This is a dramatized fictional story created with the help of AI, inspired by the lives of American truck drivers. Names and places are changed or invented.
+
+=== HASHTAGS NOTE ===
+15 is the maximum: with more than 15, YouTube ignores all of them. The first 3 are shown above the title.
+
+=== TAGS (20 tags, under 500 characters) ===
+trucker story, emotional trucker story, father and son story, dad showed up, almost quit my job, truck driver story, trucker stories, long haul trucker, monteagle mountain, runaway truck ramp, missed a gear, inspirational story, emotional story, life lesson story, storytime, 2000s trucking, tennessee trucker, stories for men, hank trucker, untold stories
+
+=== PINNED COMMENT ===
+At 2 in the morning, at the bottom of your own mountain, who would you call? — Hank
+
+=== THUMBNAIL A · main · trend: "dad shows up" + red arrow + quote ===
+YouTube thumbnail, 16:9, 1280x720, hyper-realistic cinematic photo, early morning golden sunrise light, vivid saturated colors, high contrast, sharp detail. At a truck stop in the green Tennessee hills, a classic long-nose American semi truck from the late 1970s, painted deep green with lots of chrome, is parked right next to a white semi truck. In the foreground on the left, a young American trucker, 26 years old, with messy dark blond hair, a worn tan trucker cap and a red plaid flannel shirt, stands in the open door of the white truck in shock: eyes wide and wet, eyebrows raised, mouth open. His face fills about a third of the frame, and he stares at the green truck. Inside the green truck's cab, clearly visible behind the windshield, a weathered man in his early fifties with a salt-and-pepper mustache and an old ball cap sits with his arms folded, and two paper coffee cups stand on the dashboard. A big bright red arrow points at the man in the green truck. Huge bold sans-serif text in ALL CAPS at the top right: "HE DROVE ALL NIGHT", bright yellow letters with the words "ALL NIGHT" in red, thick black outline and drop shadow, not covering the faces. The bottom-right corner is left empty. No logos, no watermarks.
+
+=== THUMBNAIL B · trend: truck in danger + first-person quote (Clyde Barrett) ===
+YouTube thumbnail, 16:9, 1280x720, hyper-realistic cinematic photo, night, vivid saturated colors, high contrast. A loaded semi truck with a flatbed stacked with roofing shingles speeds down a steep mountain interstate at night in the Tennessee hills, seen from the front at a low angle. Its brakes glow orange-red and white smoke pours from the wheels; its headlights blaze. On the right side of the road stands a yellow road sign that reads "RUNAWAY TRUCK RAMP", next to a steep lane of deep gravel climbing uphill into dark trees. Deep blue night with a hot red-orange glow at the wheels. Huge bold sans-serif text in ALL CAPS at the top left: "I MISSED THE GEAR", white letters with the word "GEAR" in red, thick black outline and drop shadow. The bottom-right corner is left empty. No people visible, no logos, no watermarks.
+
+=== THUMBNAIL C · trend: emotional face + prop + red arrow (family-story channels) ===
+YouTube thumbnail, 16:9, 1280x720, hyper-realistic cinematic photo, night, vivid saturated colors, high contrast. Two in the morning outside a small truck stop at the foot of a dark mountain. A young American trucker, 26 years old, with messy dark blond hair, a worn tan trucker cap and a red plaid flannel shirt, holds the receiver of an old wall-mounted pay phone to his ear under a single warm light. His face fills about 40% of the frame on the left: eyes red and full of tears, eyebrows raised, breaking down. In his other hand, held up toward the camera, is a paper napkin with the big handwritten words "I QUIT". A big bright red arrow points at the napkin. Background: blurred parked trucks with amber marker lights and a dark mountain under a deep blue night sky. Huge bold sans-serif text in ALL CAPS at the top right: "HE HUNG UP", bright yellow letters with a thick black outline and drop shadow, not covering the face. The bottom-right corner is left empty. No logos, no watermarks.
+
+Tips:
+- If the generator garbles the text, generate without text and add it yourself: bold sans-serif, yellow/white, one red word, thick black outline.
+- Check each thumbnail at phone size: the face, the arrow and the text must read in one second.
+- Keep the father's look the same in future thumbnails: early fifties, salt-and-pepper mustache, old ball cap. Canon has no description of Ray yet.
+
+=== BACKGROUND LOOP · Gemini · main: 2 AM truck stop in spring rain ===
+Same method as eps 7–8: the truck stands still, and only one natural thing moves (rain), so the clip loops cleanly. The middle of the frame is a dark sky over the mountain, so the big subtitles have a calm place to sit.
+
+Step 1 · image in Gemini:
+A wide cinematic photo from the driver's seat of a parked semi truck at night, early 2000s, at a small truck stop at the foot of a dark mountain in Tennessee, in April. Through the windshield: on the right side of the frame, the corner of a small brick truck stop building with one old wall-mounted pay phone under a single warm yellow lamp, and a wet parking lot shining with reflections. On the left side, the dark silhouette of a parked semi truck with a few small amber marker lights. In the background, the big black silhouette of a wooded mountain against a deep blue night sky with soft clouds. Light spring rain falls through the lamp light. The middle of the frame is calm and dark: the mountain and the night sky, with nothing bright in the center. At the bottom edge, a dark dashboard with a faint green glow. Quiet, lonely, gentle mood, soft focus, 16:9. No people, no hands, no text, no signs with words.
+
+Step 2 · attach that image, then:
+Animate this image as a seamless looping video. The truck is parked and the camera is completely still. The building, the pay phone, the lamp, the parked truck, the mountain and the sky do not move at all. The only movement: light spring rain falls steadily through the warm lamp light and over the parking lot, at the same calm pace from start to finish, with tiny ripples in the puddles. Nothing in the scene grows, moves away or changes over time, so the last frame looks the same as the first frame and the video can repeat endlessly without a visible jump. Quiet night, only the soft sound of rain.
+
+Fallback · text only:
+A seamless looping video from the driver's seat of a parked semi truck at night at a small truck stop at the foot of a dark mountain in Tennessee, in April. On the right, the corner of a small brick building with one old wall-mounted pay phone under a single warm yellow lamp; on the left, a parked truck with a few amber marker lights; behind them, the black silhouette of a wooded mountain under a deep blue night sky. Light spring rain falls steadily through the lamp light at the same calm pace from the first second to the last, with tiny ripples in the puddles on the wet lot. The truck and the camera do not move, and nothing else in the scene changes, so the last frame looks the same as the first frame and the video can repeat endlessly. The center of the frame stays dark and calm. 16:9, no people, no words, only the soft sound of rain.
+
+Reserve variant (sunrise, the emotional peak) · step 1 image:
+A wide cinematic photo at sunrise at a truck stop in the green Tennessee hills, early 2000s. On the left, a classic long-nose American semi truck from the late 1970s, painted deep green with lots of chrome, is parked; on its dashboard, two paper coffee cups with a thin line of steam. On the right, the edge of a white semi truck. Between and above them, soft golden morning sky over the hills, with a thin layer of mist lying still in the valley. The middle of the frame is calm: soft sky with nothing bright in the center. Warm, quiet, hopeful mood, soft focus, 16:9. No people, no text, no logos.
+Reserve variant · step 2: Animate this image as a seamless looping video. The camera and both trucks are completely still. The only movement: thin wisps of steam rise slowly from the two coffee cups at the same calm pace from start to finish. The mist, the light and the sky do not change, so the last frame looks the same as the first frame and the video can repeat endlessly. Quiet morning, only soft birdsong.
+
+If Gemini does something wrong: send Claude only the step-1 image. Claude adds the rain with code (perfectly periodic, zero seam).
+
+=== VOICEOVER (bot) ===
+- Copy the whole text of docs/hank/EP09_VOICEOVER.txt into the voice tool. Use the same voice and settings as eps 7–8.
+- All numbers are written as words. The only abbreviations a bot reads letter by letter are "A M" and "P M", and they are not in the text.
+- Export: mp3 + SRT. If the tool limits characters per run, split by paragraphs (empty lines).
+- Check by ear: "Monteagle" (MON-tee-gul), "Texarkana", "Jake", "hon".
+
+=== ASSEMBLY (Claude) ===
+Send Claude three files: the Gemini clip (or the step-1 image), the mp3, the SRT. Claude does (see tools/HANK_VIDEO.md):
+1. Seamless loop from the clip: tools/hank_gemloop.py, with loop points picked by frame analysis; the seam must be no bigger than the clip's own largest natural step.
+2. Big subtitles (as in ep 8): white, size 104, max 2 lines, each phrase fades in and dissolves, quotes in italics, no word highlight.
+   - They sit where the frame is darkest: the sky over the mountain, around y=310–420. A darkening band goes under them.
+   - Command: HANK_FS=104 HANK_Y=<y> HANK_WRAP=1560 tools/hank_srt2ass.py ... fade.
+3. Sound: compressor + loudnorm to about −14 LUFS, then highpass 70 Hz + limiter 0.75, AAC 64k mono. Peak ≤ −0.4 dBTP.
+4. Render for chat: 1080p24, two-pass x264 140k, under 30 MB.
+5. Exact chapter times from the SRT go into this description; card and end-screen times are checked.
+
+=== YOUTUBE STUDIO SETTINGS ===
+- Title A, description, tags from this file. Thumbnail A.
+- After publishing, add thumbnails A/B/C in Test & Compare, and titles A/B/C (if available).
+- Playlist: Season 1 – In Order. Audience: not made for kids. Age restriction: none.
+- Altered or synthetic content: Yes. Paid promotion: no. Automatic chapters: on.
+- Video language / title & description language: English. Category: Entertainment.
+- License: Standard. Allow embedding: yes. Notify subscribers: yes.
+- Comments: on, hold potentially inappropriate for review, sort by Top. Show likes: yes.
+- Subtitles (optional): upload the SRT as English.
+- Card: ~0:51 ("Last time was a hard one…") → Episode 8 (exact time after assembly).
+- End screen: last 20 seconds, "Best for viewer" + Subscribe.
+- Schedule: 22:00, time zone Warsaw, on the next free day.
+- After publishing: pin the comment above; reply to the first comments in the first 30 minutes.

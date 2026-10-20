@@ -1,0 +1,62 @@
+EP 11 · THE WEIGH STATION INSPECTOR WHO PICKED THE WRONG DRIVER · genre: justice on the road (no supernatural)
+Voiceover file: docs/hank/EP11_VOICEOVER.txt (2,817 words, ~18 min)
+
+What is trending and was used (checked 20.10.2026):
+- "Corrupt official gets caught" is one of the biggest formats right now:
+  - "Cop Plants Cocaine to Frame Innocent Woman — But It's All on Camera": 4.3M;
+  - "Cowboy Cop Picks a Fight With Teen & IMMEDIATELY Regrets It!": 2.0M in 3 weeks;
+  - "Female Cop Plants Evidence on WRONG Man & IMMEDIATELY Regrets It": 848K in 8 days.
+  Formula: a cocky abuser, a calm and polite victim, undeniable proof, then the moment he realizes. In 2005 the proof is paper instead of camera: certified scale tickets plus numbered carbon receipts.
+- "Police Impersonator Gets Caught Pulling Over Real Drivers" (1.1M in 3 weeks) gives the twist: the port of entry was closed in 2003, and the "inspector" was its old inspector, still using his keys and uniform.
+- Trucker niche: "12 U.S. Weigh Station Rules Truckers Don't Know (Until It's Too Late)" (158K) shows real interest in how weigh stations work, so there is a long outsider explanation of axle limits and certified scales.
+
+Competitor techniques used:
+- Scene-in-motion cold open (forty trucks in line, the man in the booth, "waiting to hear him—"). Hook types: ep 6 scene, 7 odd detail, 8 bold statement, 9 question, 10 object, 11 scene.
+- Exact context: Tue 12.07.2005, ~12:30 AM, Hank 28, a full load of bottled water out of Texas into New Mexico on a two-lane US highway.
+- Outsider explanation: 80,000 lb total, 34,000 per tandem, "the drives"; certified truck-stop scales and scale tickets; western "ports of entry"; red/green light.
+- Callbacks:
+  - ep 7 (Virgil: "keep your paper"; "Paper doesn't get tired");
+  - ep 8 (Buddy, 9 months on board);
+  - ep 10 (the cemetery coffee and the check, in the intro).
+- Animal reaction: Buddy, who likes everybody, growls at the man in the booth. This is the opposite of ep 10, where he wagged at Ellis.
+- Rhetorical question at the turn: "What do you do?" Hank paid, and admits it.
+- Planted number: receipt No. 341 ("I want you to remember that number"). It pays off at the climax.
+- Escalation through the CB: "the toll booth"; the victims (Cotton, the Oklahoma brothers, Tyler, 22, who paid three times and ate crackers).
+- Turning idea: Loretta asks "What number is on your receipt?" There are 41 receipts, numbered 298–344.
+- Rolling Thunder: one small detail only. Cotton: "an old story about thirty trucks and a crooked scale out in Nevada, back in fifty-five… Maybe it's just a recipe."
+- Quotable lines:
+  - "One of us was a victim. All of us together were witnesses."
+  - "A crooked man can push one driver around. He can't push forty."
+  - "Keep your paper."
+- Twist (impostor trend): the supervisor says "that port of entry has been closed since 2003".
+- Retroactive clues that pay off: weeds in the lot, a dark dusty computer, the scale sticker dated 2003.
+- Victory by the rules: no yelling, no blocking, the same polite sentence from every driver ("I'd like a citation, please. With your name and badge number."). He stops red-lighting by truck 15. Truck 40 (Hank) gets red-lighted, and the supervisor says "Evening, Carl."
+- Proof: the state's test-weight truck shows the scale reads 2,800 lb heavy.
+- Human nuance: "Carl told the troopers he'd lost his pension… I don't know if that's true."
+- Payoffs: refunds took almost a year; Loretta made sure Tyler got his first; Hank's boy got his glove.
+- Practical takeaway (framed as Hank's own practice, not legal advice): keep your paper; politely ask for anything in writing with a name.
+- Ending type: explained / victory (ep 10 was spooky and bittersweet). Season: July (ep 10 September). State: New Mexico (ep 10 Montana).
+
+CONTINUITY NOTE (add to CANON):
+- Ep 11: Tuesday, July 12, 2005, ~12:30 AM.
+  - Hank 28, long haul 7 years; Buddy aboard ~9 months.
+  - Load: a full trailer of bottled water out of Texas, westbound into New Mexico on a two-lane US highway; due in Albuquerque in the morning.
+- Hank weighed at a certified truck-stop scale near the Texas line: drives 33,560 lb (440 under).
+  - At a small port of entry ~40 miles past the line, "inspector" Carl Haskins claimed 36,400 lb on the drives and demanded $280 cash, or out-of-service until Monday.
+  - Hank paid. Carbon receipt No. 341. The $280 was his son's summer baseball league and first real glove.
+  - The next certified scale read 33,540.
+- Carl Haskins: ~60, big, gray crew cut, pressed uniform, coffee thermos, carbon receipt pad.
+  - He worked that port of entry for 22 years until the state closed it in 2003 (budget cuts). The building, power and scale were left, and nobody took his keys.
+  - For ~5 months in 2005 he reopened it 2–3 nights a week with an "open" sign, the scale set ~2,800 lb heavy on the drive platform, and took cash.
+  - Caught Friday, July 29, 2005; said he'd lost his pension. His fate is left to the courts.
+- Drivers:
+  - Loretta: owner-operator out of Amarillo, hauls cattle feed, "ran the CB like a switchboard". She collected 41 receipts (Nos. 298–344) in ~10 days, via CB and a waitress at a truck stop near the Texas line who kept copies behind the pie case.
+  - Cotton: old-timer "driving since Eisenhower", paid twice.
+  - Tyler: 22, from Arkansas, first year, paid three times.
+  - Two brothers running team out of Oklahoma.
+- Sandra Ortiz: district supervisor for the ports of entry. She came with two state troopers on July 29: "Evening, Carl."
+- July 29, 2005, 11 PM–midnight: about 40 trucks, all weighed at the same certified scale, all asking for a citation with name and badge number.
+  - Order: Loretta first, Hank 40th, Tyler 41st.
+- The state refunded every driver who had a receipt; it took almost a year.
+- Present 2026: Hank parked next to a grain elevator on the Hi-Line. He visited Ellis's grave this morning and left coffee (callback to ep 10). The check stays in his glove box.
+- Teaser ep 12 (as spoken): Nevada, a mining town empty for sixty years, every house boarded up, nobody for forty miles, and on every clothesline fresh laundry, still wet. [CHECK] The year of the ep 12 story is not set. Avoid the word "ghost" in the script.

@@ -1,0 +1,12 @@
+{
+  "name": "edge-journal",
+  "private": true,
+  "description": "Edge Journal: binary options trading journal on Cloudflare Workers (D1 + R2).",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "4.139.0"
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "id": "01-ask-chatgpt",
+  "voice": "am_michael",
+  "speed": 1.22,
+  "leadIn": 0.08,
+  "tail": 0.9,
+  "say": {
+    "ChatGPT": "Chat G P T",
+    "AI": "A I"
+  },
+  "segments": [
+    {
+      "text": "Ask [ChatGPT] who to hire.",
+      "pause": 0.04
+    },
+    {
+      "text": "Are {you} there?",
+      "pause": 0.22
+    },
+    {
+      "text": "People search | like this now.",
+      "pause": 0.06
+    },
+    {
+      "text": "[Best roofer near me.]",
+      "pause": 0.1
+    },
+    {
+      "text": "AI gives them [three names.]",
+      "pause": 0.04
+    },
+    {
+      "text": "{Not yours.}",
+      "pause": 0.26
+    },
+    {
+      "text": "{Why?}",
+      "pause": 0.16
+    },
+    {
+      "text": "AI doesn't guess.",
+      "pause": 0.04
+    },
+    {
+      "text": "It [reads] the web.",
+      "pause": 0.04
+    },
+    {
+      "text": "Including [your site.]",
+      "pause": 0.2
+    },
+    {
+      "text": "If your site doesn't clearly say | [what you do,]",
+      "pause": 0.02
+    },
+    {
+      "text": "[where] you work,",
+      "pause": 0.02
+    },
+    {
+      "text": "and [who] it's for,",
+      "pause": 0.1
+    },
+    {
+      "text": "AI {can't} | recommend you.",
+      "pause": 0.28
+    },
+    {
+      "text": "{Fix it.}",
+      "pause": 0.12
+    },
+    {
+      "text": "[Clear services.]",
+      "pause": 0.06
+    },
+    {
+      "text": "[Your city.]",
+      "pause": 0.06
+    },
+    {
+      "text": "[Real answers] to real questions.",
+      "pause": 0.16
+    },
+    {
+      "text": "Give AI a reason | to [pick you.]",
+      "pause": 0.2
+    },
+    {
+      "text": "[Follow] for more.",
+      "pause": 0
+    }
+  ],
+  "music": {
+    "bpm": 124,
+    "breakFromSeg": 6,
+    "dropSeg": 14
+  }
+}

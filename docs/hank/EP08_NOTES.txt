@@ -1,0 +1,70 @@
+EP 8 · THE TRUCK THAT FOLLOWED ME FOR 300 MILES · publish Sat 17.10.2026, 22:00 Warsaw · genre: spooky
+Voiceover file: docs/hank/EP08_VOICEOVER.txt (2,994 words, ~18 min)
+
+What is trending and was used (night-drive horror hits: Mr. Nightmare "Night Drive / Rest Area / Stranded / Followed", "Don't Stop on a Dark Deserted Highway"; dog-sense stories in AI hits):
+- Being followed at night on an empty highway: the most-repeated trope in the niche's top videos.
+- Dog in the story: dog + something unexplained is a strong engagement driver in comments.
+- Seasonal: late October, first snow, Halloween promise, published the weekend before Halloween.
+
+Competitor techniques used:
+- Bold-statement cold open with a cut ("followed exactly once… And in the driver's seat, there was—"). This is a different hook type from ep 6 (scene in motion) and ep 7 (odd detail).
+- Exact context: Thu 28.10.2004, ~8:30 PM, Hank 27, 42,000 lb of Washington apples in a reefer, I-84 → I-80 at Echo Canyon, Utah, eastbound across Wyoming.
+- Family stakes: his six-year-old son's trucker costume (old cap, flannel, pizza-box wheel) and the promise to be home for Halloween.
+- Outsider explanations:
+  - ground blizzard: "see stars, can't see your hood";
+  - I-80 Wyoming nickname and wind;
+  - truckers talk with lights: a headlight flash means "you're clear", a marker-light blink means "thank you". This is planted and pays off at the peak.
+- Era constraints (2004): one bar of cell signal, the text-only satellite box (Marlene), CB 19, emergency channel 9, pay phone.
+- Escalation with an open question every 4–5 min:
+  - won't answer the CB;
+  - pump eight in the dark, then empty;
+  - waiting on the shoulder;
+  - the empty cab;
+  - the dog in the lane;
+  - the matching headlight;
+  - the receipt.
+- Rationalize-then-break:
+  - "scared new driver hanging on my taillights";
+  - after the empty cab: lying down / reflection / cruise control, each ruled out ("cruise control doesn't steer").
+- Silence + one sound: the wind drops and he hears the empty truck's engine "with a little tick in it, like a clock".
+- Rhetorical question at the turn: "Do you open that door?"
+- Planted detail that pays off:
+  - father's rule "Always leave room to stop" lets him stop 10 ft short of the dog;
+  - the yellow/white headlights reappear on the wreck;
+  - the folded army blanket.
+- Retroactive horror: the trooper says the truck went off at ~7 PM, before the follower ever appeared at Echo Canyon.
+- One unexplained detail: Wendell's fuel receipt, Rock Springs pump 8, 11:04 PM, three minutes after Hank's own receipt and four hours after the crash. Callback to ep 7 ("paper doesn't lie").
+- Quotable line: "Not everything behind you is chasing you."
+- Lasting effect: "I don't speed up. I slow down. And I look for a dog."
+- Full circle: tomorrow (2026) he passes the same dip near Elk Mountain and flashes his headlights once; "Nothing's ever blinked back."
+- Practical advice: in a whiteout don't follow taillights; flashers, slow down, first exit, leave room to stop.
+- Teaser ep 9 + comments question + "I read every one." + "Drive safe out there. And leave room to stop."
+- Ending type: sad, with one unexplained detail. Ep 7 was warm/explained and ep 6 was left open.
+- Season: late autumn (ep 7 was summer). State: Wyoming (ep 7 was Ohio).
+- Rolling Thunder: one small detail only ("a calm voice on channel nineteen, three years before…").
+
+CONTINUITY NOTE (add to CANON):
+- Ep 8: Thursday, October 28, 2004 → Friday morning. Hank 27, long haul for 6 years.
+  - Load: 42,000 lb of Washington apples in a reefer to a grocery warehouse in Ohio. Route: I-84 → I-80 at Echo Canyon, Utah → eastbound across Wyoming.
+  - Fueled at a truck stop in Rock Springs, pump 3, 11:01 PM.
+- Son is 6, dressed as a trucker for Halloween (Hank's old cap, flannel shirt, pizza-box steering wheel). Halloween 2004 was Sunday; Hank got home Sunday at 4 PM. Wife is still unnamed.
+- Dispatcher in 2004: still Marlene (from ep 6), reached by the text-only satellite box: "Get his number hon. Don't you stop for him."
+- Father Ray alive in 2004; his rule "Always leave room to stop" is used here.
+- The following truck: one old yellow sealed-beam headlight (left), one white (right); an engine with a tick. Picked Hank up at Echo Canyon at ~8:30 PM and stayed a quarter mile behind for ~300 miles.
+  - At Rock Springs it sat at pump 8 in the dark, then waited on the shoulder past the on-ramp.
+  - At ~3 AM, in a ground blizzard past Elk Mountain, it pulled alongside: empty cab, wheel moving, bunk made, an army blanket folded on the passenger seat.
+  - It pulled ahead and blinked its markers "thank you" after Hank flashed his headlights.
+- New: Wendell Rusk, 68, ran alone with his dog. His truck went off I-80 eastbound into a dip below a snow fence near Elk Mountain at ~7 PM on Oct 28, 2004.
+  - Found dead in his seat, belt on, no visible injuries; the trooper thought his heart.
+  - The receipt on his visor: Rock Springs, pump 8, Oct 28, 2004, 11:04 PM.
+  - The trooper's report says Hank "saw the dog from the road".
+- New: BUDDY. Big rough brown dog, white chest, one ear up and one down. One tag: "Buddy" on the front.
+  - He waited by Wendell's truck for hours (packed circle in the snow), then stood in Hank's lane and led him to the wreck.
+  - He chose Hank's passenger seat; rides on a blanket folded in a square. Rode with Hank 11 years (2004 → ~2015).
+  - First words of Hank's son: "Is he ours?" / "I think we're his."
+- Hank's habit since 2004: flashes his headlights once at that dip near Elk Mountain every time he passes; nothing has ever blinked back.
+- Present 2026: truck stop in western Nebraska, crossing into Wyoming tomorrow.
+- [CHECK] What is written on the BACK of Buddy's tag: promised for ep 29, not decided yet.
+- [CHECK] Wendell's family and history: deliberately left open for ep 29.
+- [CHECK] Hank's company in 2001–2004 is still unnamed (only dispatcher Marlene).
+- Teaser ep 9 (as spoken): Sunday story, Tennessee 2003, the night Hank was ready to quit; at 2 AM he called his father from a pay phone to say he was done; "what he said is the reason I'm still out here".

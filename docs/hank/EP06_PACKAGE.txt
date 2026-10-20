@@ -1,0 +1,146 @@
+EPISODE 6 · THE VOICE ON CHANNEL 19 · publish Thu 15.10.2026, 22:00 Warsaw
+Rules used: docs/hank/rules/TITLE_RULES.txt, docs/hank/rules/THUMBNAIL_RULES.txt
+
+=== TITLE — main (A) · v3 (owner's rules + channel style + competitor keyword) ===
+Only I Heard Him. Then the Bridge… | Trucker Horror Story
+
+=== TITLE + THUMBNAIL PAIRS for A/B (Test & Compare) ===
+A  Only I Heard Him. Then the Bridge… | Trucker Horror Story        (57) ↔ thumbnail A "STOP RIGHT HERE"
+B  The Voice Only My CB Could Hear | Trucker Horror Story           (54) ↔ thumbnail B "HE KNEW MY LOAD"
+C  Never Argue With the Voice on the CB | Trucker Horror Story      (59) ↔ thumbnail C no text (mirror)
+All titles ≤60 characters, first-person hook first, genre keyword at the end. No thumbnail text repeats any title.
+
+=== DESCRIPTION · v2 ===
+A trucker horror story from an ice storm in December 2001. Forty trucks on channel 19, one calm voice, and only my CB radio could hear it.
+He told me exactly where to stop. The next morning, my dispatcher said his name.
+
+I was 24, hauling a light trailer and trying to get home to my boy for Christmas, when freezing rain turned Interstate 44 into glass. Then the CB went dead, and a voice I first heard in the fog back in 1998 told me to stop before the bridge at the bottom of the hill. Nobody else on the channel heard a word, and my dispatcher went quiet for a full minute before she said who he was.
+
+0:00 The voice on channel 19
+0:53 Hey. It's Hank.
+1:41 December 13, 2001
+3:04 How an ice storm works
+4:26 The spray stops
+5:42 The channel goes dead
+7:54 Nobody else heard him
+8:59 "Don't argue with me, son"
+10:09 What would you do?
+11:58 The bridge
+14:03 Marlene
+15:34 One more thing
+16:44 Drive safe out there
+
+Have you ever stopped, turned around or stayed put because of a voice or a feeling you couldn't explain? Tell me where you were. I read every one.
+Got your own story from the road? Leave it in the comments. With your permission, I'll read the best ones in a special episode.
+— Hank
+
+#truckerstories #horrorstories #cbradio
+
+This is a dramatized fictional story created with the help of AI, inspired by the lives of American truck drivers. Names and places are changed or invented.
+
+=== TAGS · v2 (19 tags, 378 characters) ===
+trucker horror story, trucker horror stories, cb radio horror story, scary trucker stories, highway horror stories, night drive horror stories, ice storm horror story, black ice, channel 19, voice on the cb radio, scary stories, horror stories, creepy stories, trucker stories, truck driver stories, scary stories to fall asleep to, rolling thunder, hank trucker, untold stories
+
+=== PINNED COMMENT ===
+Marlene went quiet for a full minute before she said his name. What do you think she knew? — Hank
+
+=== CHANNEL THUMBNAIL STYLE (from Episodes 1–2) ===
+Young Hank: messy dark brown hair, worn tan trucker cap, red plaid flannel shirt (dark work jacket in winter). Shocked face 35–45% of the frame, looking at the object of the mystery. One storytelling object. Optional bold yellow ALL-CAPS text with a black outline, top right. Vivid saturated night colors. Max 3 elements, bottom-right corner empty, 16:9.
+
+=== THUMBNAIL A · face + amber lights + "STOP RIGHT HERE" (main) ===
+YouTube thumbnail, 16:9, 1280x720, hyper-realistic cinematic photo, vivid saturated colors, high contrast. Inside a truck cab at night during an ice storm. On the left, a close-up of a terrified young American trucker in his early twenties: messy dark brown hair, a worn tan trucker cap, a red plaid flannel shirt under an open dark canvas work jacket. His face fills about 40% of the frame; eyes wide open, eyebrows raised high, mouth open in fear; he stares to the right through the ice-glazed windshield. His face is sharp and well lit by warm amber dashboard light with a cool blue rim light; eyes fully visible, not in shadow. On the right, through the windshield: a dark icy highway shoulder in freezing rain, and on it two round amber lights glowing low and close together in the dark, like the marker lights of an old truck; the two lights are large, bright and clearly visible. The background is simple and blurred: deep saturated blue night with glittering freezing rain, no other objects. Huge bold sans-serif text in ALL CAPS at the top right: "STOP RIGHT HERE", bright yellow letters with a thick black outline and a drop shadow, not covering the face or the lights. The bottom-right corner is left empty. No logos, no watermarks.
+
+=== THUMBNAIL B · face + CB radio + "HE KNEW MY LOAD" ===
+YouTube thumbnail, 16:9, 1280x720, hyper-realistic cinematic photo, vivid saturated colors, high contrast. Inside a truck cab at night. On the left, a close-up of a shocked young American trucker in his early twenties: messy dark brown hair, a worn tan trucker cap, a red plaid flannel shirt under an open dark canvas work jacket. His face fills about 40% of the frame; eyes wide, eyebrows raised, mouth open; he holds a black CB microphone near his mouth and stares down at an old CB radio on the dashboard. The CB radio is large and sharp in the lower center of the frame, its front panel glowing warm amber and its red LED channel display showing a big, clearly readable "19". His face is well lit by the amber glow with a cool blue rim light; eyes fully visible. Background: a blurred, ice-covered windshield in saturated deep blue with soft amber bokeh, nothing else. Huge bold sans-serif text in ALL CAPS at the top right: "HE KNEW MY LOAD", bright yellow letters with a thick black outline and a drop shadow, not covering the face. The bottom-right corner is left empty. No logos, no watermarks.
+
+=== THUMBNAIL C · face + side mirror, no text ===
+YouTube thumbnail, 16:9, 1280x720, hyper-realistic cinematic photo, vivid saturated colors, high contrast. At night in an ice storm, a terrified young American trucker in his early twenties leans toward his open driver's side window: messy dark brown hair, a worn tan trucker cap, a red plaid flannel shirt under an open dark canvas work jacket. His face is on the left and fills about 40% of the frame; eyes wide open, eyebrows raised, mouth open in fear; he stares into the large truck side mirror on the right. In the mirror, sharp and clearly visible: his own long white trailer sliding sideways on a sheet of ice, orange hazard lights glowing, freezing rain streaking through the light. His face is well lit by warm orange light with a cool blue rim light; eyes fully visible. Outside the mirror, the background is a blurred, saturated deep blue icy night forest with no other objects. No text anywhere. The bottom-right corner is left empty. No logos, no watermarks.
+
+Tip: if the image generator garbles the text, generate the same prompt without the text line, then add the text yourself (bold sans-serif, white or yellow, thick black outline).
+Check before upload: shrink to phone-feed size. If it isn't clear in 1 second, redo it.
+
+=== BACKGROUND LOOP · step 1: still image for the first and last frame ===
+Cinematic still, 16:9, 1920x1080. Point of view from the driver's seat of a semi truck at night during a freezing rain storm, looking through the windshield at an empty dark interstate in wooded hills. The center of the frame is calm and uncluttered: a soft, out-of-focus, even dark blue-gray area of wet glass and night, with no bright lights, no objects and no text, so large white subtitles can sit in the middle and stay easy to read. Detail lives only at the edges: a thin crust of ice creeping in along the corners and edges of the windshield, ice-glazed tree silhouettes at the far left and far right, and a low warm amber glow from the dashboard along the bottom edge. Cool desaturated blue palette, low contrast in the middle, gentle dark vignette, exposure slightly dark. No people, no hands, no vehicles, no headlights or taillights, no white or yellow light in the center.
+
+=== BACKGROUND LOOP · step 2: video prompt (image-to-video, 10 s) ===
+Seamless 10-second loop. Locked-off static camera: no camera movement, no zoom, no pan, no cuts. Freezing rain falls steadily and gently on the windshield; thin water streaks slide down slowly, mostly near the left and right sides; tiny ice crystals glint softly along the edges; the amber dashboard glow along the bottom breathes very slightly. Motion is slow, even and continuous from the first second to the last, with no events: no flashes, no lightning, no passing cars, no moving wipers. The center of the frame stays dark, soft and calm for large subtitles. The last frame matches the first frame so the clip loops without a visible jump. Mood: quiet, cold, lonely, 2 AM. 16:9, 1080p, 24 fps.
+
+=== BACKGROUND LOOP · negative prompt ===
+text, letters, subtitles, captions, watermark, logo, people, hands, faces, vehicles, headlights, taillights, bright light in the center, white or yellow light in the center, lightning, flashes, camera shake, camera movement, zoom, pan, cuts, fast motion, moving wipers, snow whiteout, overexposure, high contrast in the center, flicker
+
+Generator settings: duration 10 s, 16:9, 1080p, low motion strength. Use the step-1 image as the start frame AND the end frame (or turn on the Loop option if the generator has one).
+
+=== BACKGROUND LOOP · Gemini (Veo) version — the long prompt was refused ===
+Gemini makes ~8 s clips with no end-frame option; plain positive wording works better than technical specs and long "no ..." lists. Claude makes the 8 s clip seamless with a crossfade and loops it to the full length.
+
+Option 1 · attach the generated still (+ → photo), then:
+Animate this image. Freezing rain keeps falling gently on the truck windshield, small drops and thin water streaks slowly sliding down the glass. Fog drifts very slowly over the empty road ahead. The dashboard lights glow softly. The camera stays completely still. Calm, quiet, cold night atmosphere. Only the soft sound of rain tapping on glass.
+
+Option 2 · text only:
+A calm night view from inside a truck cab, looking through the windshield at an empty road in a dark winter forest. Freezing rain falls gently on the glass; small drops and thin streaks slowly slide down. Thin ice along the edges of the windshield. Light fog drifts slowly over the road. The dashboard glows a soft warm amber at the bottom of the frame. The camera stays completely still. Dark blue tones, soft focus in the middle of the frame. Quiet, cold, lonely atmosphere. Only the soft sound of rain on glass.
+
+=== BACKGROUND LOOP · Gemini v2 — explicit loop (start = end) ===
+Key idea: nothing in the scene may change over time (no ice growing, no fog moving across, no light change), so the end looks like the start. Gemini has no end-frame setting, so a small difference is still possible; Claude then crossfades the last second into the first.
+
+Option 1 · attach the still image, then:
+Animate this image as a seamless looping video. The camera is completely still for the whole clip. Light freezing rain falls steadily on the windshield at the same even pace from start to finish; small drops land and thin streaks slide down the glass. The fog over the road and the dashboard lights stay exactly as they are, with only a very gentle shimmer. Nothing in the scene grows, moves away or changes over time, so the last frame looks the same as the first frame and the video can repeat endlessly without a visible jump. Quiet, cold night atmosphere. Only the soft sound of rain on glass.
+
+Option 2 · text only:
+A seamless looping video of a calm night view from inside a truck cab, looking through the windshield at an empty road in a dark winter forest. The camera is completely still for the whole clip. Light freezing rain falls steadily on the glass at the same even pace from start to finish; small drops land and thin streaks slide down. Thin ice sits along the edges of the windshield and does not change. The fog over the road and the soft amber dashboard glow stay the same, with only a very gentle shimmer. Dark blue tones, soft focus in the middle of the frame. Nothing in the scene grows, moves away or changes over time, so the last frame looks the same as the first frame and the video can repeat endlessly without a visible jump. Only the soft sound of rain on glass.
+
+=== BACKGROUND LOOP · v3 (CHOSEN) — parked truck, only snow/sleet moves ===
+Owner's decision: the truck stands still, the only animation is falling snow / freezing rain. Steady falling precipitation looks the same at any moment, so the clip repeats without a visible jump.
+
+Option 1 · attach the still image, then:
+Animate this image. The truck is parked and does not move. The camera does not move. The road, the trees, the fog, the dashboard and the windshield stay completely still. The only movement in the whole video is light snow mixed with freezing rain falling steadily outside the windshield, at the same calm, even pace from the first second to the last, so the video can repeat endlessly without a visible jump. Quiet, cold night. Only the soft sound of falling sleet.
+
+Option 2 · text only:
+A truck parked on the side of an empty road at night in a winter forest, seen from inside the cab through the windshield. The truck is not moving and the camera does not move. Everything stays completely still: the road, the trees, the dashboard, the glass. The only movement in the whole video is light snow mixed with freezing rain falling steadily outside, at the same calm, even pace from the first second to the last, so the video can repeat endlessly without a visible jump. Dark blue night, soft fog in the distance, a faint warm glow from the dashboard at the bottom. Calm, quiet, cold atmosphere. Only the soft sound of falling sleet.
+
+Most reliable alternative: send Claude the still image only; Claude adds falling snow/sleet with code (perfectly periodic, zero seam) and darkens the center under the subtitles.
+
+=== YOUTUBE STUDIO SETTINGS ===
+Details
+- Title: A. Description and tags: from this file.
+- Thumbnail: upload A. After publishing, add A, B and C in Test & Compare (desktop Studio only, after 22:00 when the video is public).
+- Playlist: Season 1 – In Order.
+- Audience: No, it's not made for kids. Age restriction: none.
+More options
+- Altered or synthetic content: Yes.
+- Paid promotion: no.
+- Automatic chapters: on (the timestamps in the description take priority).
+- Video language: English. Title and description language: English. Caption certification: none needed.
+- Recording date and location: leave empty.
+- License: Standard YouTube License. Allow embedding: yes. Publish to subscriptions feed and notify subscribers: yes.
+- Category: Entertainment.
+- Comments: On; hold potentially inappropriate comments for review; sort by Top.
+- Show how many viewers like this video: yes.
+Video elements
+- Subtitles: optional, upload the SRT as English (helps search; the burned-in subtitles stay).
+- End screen, last 20 s: element 1 "Best for viewer", element 2 Subscribe.
+- Cards: 1:18 ("Last time I told you about a letter…") → Episode 5; 6:11 ("I had heard that voice before") → Episode 1.
+Visibility
+- Schedule: Thursday 15.10.2026, 22:00, time zone Warsaw (CEST, UTC+2).
+After publishing
+- Pinned comment: from this file.
+- Reply to the first comments during the first 30 minutes.
+
+=== SHORT · publish Fri 16.10, 18:00 · related video = Episode 6 ===
+Hook text on top (3–5 words): ONLY MY RADIO HEARD HIM
+Title: Only My Radio Heard Him #shorts
+
+Forty trucks on channel nineteen. Only my radio heard him.
+December 2001. Ice storm. Missouri hills. My trailer was light, the road was glass, and a calm voice told me to stop at a white post before the bridge.
+I said I couldn't. Not on a hill.
+He said, "Don't argue with me, son."
+Four minutes later, three trucks folded across that bridge.
+Next morning my dispatcher went quiet for a full minute.
+Then she said his name. And she wasn't surprised. Out of
+
+=== CONTINUITY NOTE (add to CANON) ===
+- Ep 6: Thursday, December 13, 2001, about 2:10 AM, I-44 eastbound, Missouri hills. Hank 24, ~3 years long haul, 18,000 lb of paper towels and toilet paper to a warehouse outside St. Louis. Promised home by Dec 22, got home Dec 23. Son is 3 (photo in a red coat on the sun visor).
+- New: dispatcher Marlene (2001): dispatching since before Hank was born, menthols, calls drivers "hon". After a full minute of silence she said "Rolling Thunder" and refused to explain: "Not on this phone. Not on any phone." [CHECK: does Marlene return? what does she know?]
+- New: Short Stack, older driver with a gravel laugh, did not stop, broke his wrist in the bridge pileup (3 trucks + a pickup, nobody died).
+- Voice in ep 6 was heard only on Hank's radio; it knew his trailer was light. Two round amber lights on the shoulder past the white post; in the morning a dry rectangle of pavement about the length of a tractor, no tracks. Hank never told Marlene or his wife.
+- Hank still had the Silver Spur receipt in his wallet in 2001.
+- [CHECK] The master prompt CANON says that in Ep 1 the voice "calls himself Rolling Thunder", but the plan says viewers first hear the name in Ep 6. The script does not say whether the voice gave a name in 1998. Fix the master prompt line.

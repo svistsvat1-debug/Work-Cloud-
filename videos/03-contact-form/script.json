@@ -1,0 +1,69 @@
+{
+  "id": "03-contact-form",
+  "voice": "am_michael",
+  "speed": 1.22,
+  "leadIn": 0.08,
+  "tail": 1.0,
+  "say": {
+    "CRM.": "C R M."
+  },
+  "music": {
+    "bpm": 124,
+    "breakFromSeg": 3,
+    "dropSeg": 6
+  },
+  "segments": [
+    {
+      "text": "Your contact form | is where leads {die.}",
+      "pause": 0.22
+    },
+    {
+      "text": "A lead fills it out.",
+      "pause": 0.04
+    },
+    {
+      "text": "It lands in your inbox, | under a pile of [newsletters.]",
+      "pause": 0.12
+    },
+    {
+      "text": "Nobody sees it.",
+      "pause": 0.06
+    },
+    {
+      "text": "{No reply.}",
+      "pause": 0.16
+    },
+    {
+      "text": "So they book | [someone else.]",
+      "pause": 0.3
+    },
+    {
+      "text": "Fix it | in [three steps.]",
+      "pause": 0.14
+    },
+    {
+      "text": "One. [Instant alert] to your phone.",
+      "pause": 0.08
+    },
+    {
+      "text": "Two. [Auto-reply] in seconds.",
+      "pause": 0.08
+    },
+    {
+      "text": "Three. Every lead goes | into a [CRM.]",
+      "pause": 0.14
+    },
+    {
+      "text": "Now nothing gets {lost.}",
+      "pause": 0.3
+    },
+    {
+      "text": "We build this | [for you.]",
+      "pause": 0.08
+    },
+    {
+      "text": "[Link in bio.]",
+      "pause": 0
+    }
+  ]
+}
