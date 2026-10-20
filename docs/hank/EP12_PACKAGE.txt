@@ -1,4 +1,4 @@
-EPISODE 12 · THE GHOST TOWN WITH FRESH LAUNDRY · spooky / strange place · video ~18:00
+EPISODE 12 · THE GHOST TOWN WITH FRESH LAUNDRY · spooky / strange place · video 17:37
 Publish: 22:00 Warsaw, the day after episode 11 goes out.
 Voiceover text: docs/hank/EP12_VOICEOVER.txt (2,808 words). Notes and canon: docs/hank/EP12_NOTES.txt.
 
@@ -25,7 +25,7 @@ C  I Found Fresh Laundry in a Town Abandoned for 60 Years          (54)
 Formula: an "abandoned, yet…" contradiction with a date or number. B adds the "ghost town" search keyword and the GPS angle.
 All three thumbnails below work with all three titles; their texts do not repeat the titles.
 
-=== DESCRIPTION (chapters are approximate. Send real times after voicing, as for ep 10, and Claude updates them) ===
+=== DESCRIPTION (chapters = actual times from the owner's voiced video) ===
 A trucker horror story about an abandoned Nevada mining town where nobody has lived since 1951, and the laundry I found hanging on every clothesline, still wet.
 It was nineteen degrees that night. My coffee had ice on it. The laundry was dripping.
 
@@ -33,27 +33,27 @@ November 2011. A wreck closed Highway 50, the Loneliest Road in America, and my 
 
 00:00 The laundry was still wet
 00:44 Hey, it's Hank
-01:33 November 19, 2011
-01:59 The detour
-02:37 Why truckers don't trust a car GPS
-03:48 I listened to the box
-04:22 Lodestar. Population: none
-05:16 The first clothesline
-06:02 Nineteen degrees
-06:55 There has to be an explanation
-07:46 No footprints
-08:39 The last house
-09:08 The yellow dress
-09:49 "Ruthie! Supper!"
-11:03 The photograph in the café
-12:10 Ruth
-12:26 Wash day, 1951
-13:26 "Let them wait for him"
-14:13 The button
-15:12 What day it was
-15:56 A promise
-16:18 Call home before dark
-17:24 Next time & your stories
+01:32 November 19, 2011
+01:57 The detour
+02:34 Why truckers don't trust a car GPS
+03:47 I listened to the box
+04:31 Lodestar. Population: none
+05:15 The first clothesline
+06:03 Nineteen degrees
+06:46 There has to be an explanation
+08:06 No footprints
+08:38 The last house
+09:05 The yellow dress
+09:44 "Ruthie! Supper!"
+11:14 The photograph in the café
+12:08 Ruth
+12:36 Wash day, 1951
+13:16 "Let them wait for him"
+14:01 The button
+14:57 What day it was
+15:39 A promise
+15:58 Call home before dark
+17:02 Next time & your stories
 
 Who called you in for supper when you were a kid? Tell me about them. I read every one.
 Got your own story from the road? Leave it in the comments. With your permission, I'll read the best ones in a special episode.
@@ -115,7 +115,7 @@ If Gemini does something wrong: send Claude only the step-1 image. Claude adds a
 Send Claude three files: the Gemini clip (or the step-1 image), the mp3, the SRT. Claude does:
 1. Seamless loop: tools/hank_gemloop.py gem.mp4 loop.mp4 A B X 540. Loop points come from frame analysis; the darkening band is centered.
 2. Subtitles: centered Lora as above.
-3. Sound: compressor + loudnorm to about −14 LUFS, then highpass 70 Hz + limiter 0.75, AAC 64k mono. Peak ≤ −0.4 dBTP.
+3. Sound: compressor + loudnorm to about −14 LUFS, then highpass 70 Hz + limiter 0.66, AAC 64k mono (as ep 11).
 4. Render for chat: 1080p24, two-pass x264 140k, under 30 MB.
 5. Exact chapter times from the SRT go into this description.
 
@@ -128,9 +128,9 @@ Send Claude three files: the Gemini clip (or the step-1 image), the mp3, the SRT
 - License: Standard. Allow embedding: yes. Notify subscribers: yes.
 - Comments: on, hold potentially inappropriate for review, sort by Top. Show likes: yes.
 - Subtitles (optional): upload the SRT as English.
-- Cards (approximate, check the exact second in your video):
-  - ~1:03 ("Last time I told you about forty trucks…") → Episode 11;
-  - ~1:48 ("My father had been gone a year and a half.") → Episode 9.
+- Cards (times from the voiced video):
+  - 1:03 ("Last time I told you about forty trucks…") → Episode 11;
+  - 1:47 ("My father had been gone a year and a half.") → Episode 9.
 - End screen: last 20 seconds, "Best for viewer" + Subscribe.
 - Schedule: 22:00, time zone Warsaw.
 - After publishing: pin the comment above; reply to the first comments in the first 30 minutes.
