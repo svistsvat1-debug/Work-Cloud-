@@ -1,0 +1,61 @@
+EP 12 · THE GHOST TOWN WITH FRESH LAUNDRY · genre: spooky / strange place (no "ghost" in the script)
+Voiceover file: docs/hank/EP12_VOICEOVER.txt (2,808 words, ~18 min)
+
+What is trending and was used (checked 20.10.2026):
+- Abandoned places in the American West are hot:
+  - Ghost Town Living "I Hiked 18 Hours to Find a Gold Mine With $2 Billion Still Inside": 2.2M in 9 days;
+  - RangerRickTV "America's Strangest Ghost Town — Abandoned Yet Still Open": 386K;
+  - Johnny Roads "…a Town Where Nobody Lives": 289K;
+  - Dave Explores "Nobody Comes Out To This Nevada Ghost Town… I Found Out Why" (8 days) and "I Was Exploring The Nevada Desert... Then I Found THIS!": 169K;
+  - the Clown Motel (Nevada): 199K.
+  Formula: the contradiction "abandoned, yet…". Here it is "empty since 1951, yet the laundry is still wet".
+- Hook formats from earlier research: "the strangest place", "I found out why", the place itself as the hero of the thumbnail (Mr. Nightmare).
+
+Competitor techniques used:
+- Odd-detail cold open ("The laundry was still wet."), cut at "a woman started calling—". Hook types so far: 6 scene, 7 odd detail, 8 bold statement, 9 question, 10 object, 11 scene, 12 odd detail.
+- Exact context: Sat 19.11.2011, ~11 PM, Hank 34, a flatbed of mining equipment westbound on US 50 ("the Loneliest Road in America"); a wreck closes the road and sends him onto a county-road detour.
+- Outsider explanation:
+  - a car GPS in a 70-ft, 40-ton truck;
+  - the paper road atlas;
+  - you can't turn a tractor-trailer around just anywhere, so on a narrow road you're committed.
+- Era detail: 2011 car GPS units in trucks.
+- Rationalize-then-break: "a caretaker, a hermit, artists"; then plywood with rusted nails, clean frost with no footprints, wicker baskets rotted to splinters.
+- Physical impossibility: 19°F, coffee with a skin of ice, yet the laundry is soft and dripping and has made holes in the frost.
+- Animal reaction: Buddy, who jumped out at every stop for 7 years, backs into the sleeper and shakes.
+- Silence + one sound: the wind stops, a screen door slaps, then a mother's call "Ruthie! Supper!"
+- Planted detail that pays off: the yellow dress missing its top button, and Ruth's yellow button kept in her coin purse for 60 years.
+- Retroactive reveal: the café photo "Lodestar, Nevada. Wash day. November 19, 1951. The morning of the flood."; 23 miners; "Leave it. Those are his shirts. Let them wait for him."
+- One unexplained detail: the night was the 60th anniversary to the day.
+- Emotional theme: wash day as a promise that everyone comes home for supper.
+- Small personal note: Hank's father has been gone a year and a half.
+- Quotable lines:
+  - "The baskets were sixty years old. The laundry was still wet."
+  - "That's all wash day is… a promise that life is going to go on the way it's supposed to."
+  - "Call home before dark."
+- Lasting effect: since that night Hank calls home every evening before dark.
+- Practical advice: don't trust a car GPS in anything big; carry an atlas; stop on a dirt road at night and wait for daylight.
+- Full circle: Ruth's Christmas card every year, "Call home before dark."
+- Ending type: open, sad and warm (ep 11 was a victory). Season: November (ep 11 July). State: Nevada (ep 11 New Mexico). Rolling Thunder: not mentioned.
+
+CONTINUITY NOTE (add to CANON):
+- Ep 12: Saturday, November 19, 2011, ~11 PM.
+  - Hank 34, long haul 13 years; Buddy aboard 7 years ("a little gray around the muzzle"). His son was 13. Ray had died a year and a half before.
+  - Load: mining equipment on a flatbed, westbound on US 50 across Nevada.
+  - A cattle truck wreck closed the highway; the detour was a county road north through the mountains. Hank followed a car GPS onto a dirt road (9 miles) to the abandoned town of Lodestar.
+- Lodestar, Nevada (fictional): an old silver-mining town in a bowl in the hills, ~30 houses, a church with no steeple, a wooden mine headframe on the hillside.
+  - The faded sign: "Lodestar. Population:" with the number painted over by "None".
+  - ~120 people in 1951. Monday was wash day.
+  - On Monday, November 19, 1951, ~2 PM, miners on the lower levels broke into an old flooded working; 23 men died. The women and children waited at the mine head for days. The mine closed 4 days later, and the town was empty within a month.
+  - The families left the laundry on the lines for the men.
+- What Hank saw: every clothesline full and dripping at 19°F; no footprints in the frost; boarded doors; rotted wicker baskets.
+  - At the last house: three men's work shirts, an apron, little socks, and a girl's yellow dress with a white collar, missing its top button.
+  - He heard a screen door and a woman calling "Ruthie! Supper!" twice.
+- Ruth (Ruthie): born 1945 in Lodestar, 6 in 1951, 66 in 2011, 81 in 2026.
+  - Her father Joe was a shift boss with big hands who whistled through his teeth; he died in the flood.
+  - Her mother said "Leave it. Those are his shirts. Let them wait for him."
+  - Ruth keeps the yellow button from that morning in a coin purse: "Mama said she'd sew it back on after supper."
+  - Hank met her the next morning (Nov 20, 2011) in a café 40 miles on, with old mining photos on the walls, including "Lodestar, Nevada. Wash day. November 19, 1951. The morning of the flood."
+  - She sends Hank a Christmas card every year: "Call home before dark."
+- Since that night Hank calls home every evening before dark. Only Ruth had heard this story before tonight.
+- Present 2026: Hank parked at a truck stop on US 50 in Nevada. Tomorrow he passes the county road and won't take it.
+- Teaser ep 13 (as spoken): summer 2012, son 14 hadn't said ten words to Hank in a year; his mother put him in the truck for a week; six days of silence across the country; then one night "somewhere out west" changed both of them.
