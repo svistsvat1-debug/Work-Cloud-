@@ -422,6 +422,43 @@ text, subtitles, letters, watermark, logo, people, cars passing, morphing, warpi
 
 **Як збирається:** `python3 tools/story_thumb.py videos/19-long-dads-truck-gps/thumbs/thumb_a.json out.jpg` — фото праворуч, текст ліворуч, шрифт підбирається сам. Мокапи: `thumbs/thumb_a_mock.jpg`, `thumbs/thumb_b_mock.jpg` (на кадрі з кліпу «Dad's Fuel Tank»). Для фіналу потрібне нове фото Генка за промптом нижче.
 
+### Повні промпти 16:9 з текстом (генератор малює все одразу)
+
+**A — тренд «стіна тексту» + правила власника (обличчя, кольори, вільний правий нижній кут):**
+```
+YouTube thumbnail, 16:9, 1280x720, hyper-realistic cinematic photograph combined with bold graphic text, in the style of popular American "family story" YouTube thumbnails.
+
+LAYOUT: the left 55% of the image is a dark navy-blue panel (not pure black) filled with large text; the right 45% is a photograph of a man; a red label bar in the bottom left corner. The bottom right corner of the image stays simple, no text and no important details there.
+
+RIGHT SIDE, THE MAN: a truck driver about 49 years old, short graying hair, short gray-brown beard, worn denim jacket, chest-up close-up, his face large and filling at least a third of the whole image, intense shock and fear: eyes wide open with visible whites, eyebrows raised high, mouth slightly open, looking straight into the camera. His face is brightly lit by the cold blue glow of a smartphone in his hand and a warm amber side light, eyes razor sharp and clearly visible. Behind him, softly blurred, the inside of an old barn at night and the green grille and round headlights of an old 1979 Kenworth W900 semi truck. Vivid saturated teal and amber colors, high contrast.
+
+LEFT SIDE, THE TEXT: bold heavy sans-serif font, ALL CAPS, every word with a thick black outline, left-aligned, 9 to 10 lines filling the panel from top to bottom, no text over the man's face. The exact text, spelled exactly like this:
+"MY DAD DIED 16 YEARS AGO. HIS TRUCK NEVER LEFT MY BARN. AT 2:47 A.M. MY PHONE BUZZED: "VEHICLE IN MOTION." THE TRUCK WAS RIGHT IN FRONT OF ME. BUT ON THE SCREEN, IT WAS DRIVING…"
+Colors: "16 YEARS AGO." and "2:47 A.M." in bright yellow (#FFD400); "VEHICLE IN MOTION." in bright cyan blue; "BUT ON THE SCREEN, IT WAS DRIVING…" in bright yellow; all other words in white.
+
+BOTTOM LEFT: a solid red (#E0141E) rectangular label bar with white bold ALL CAPS text "TRUCKER STORY".
+
+Only three elements: the text panel, the man's face, the label bar. Clean, sharp, readable at small phone size. No other text, no logos, no watermark, no borders.
+```
+
+**B — гібрид: правила власника (1–4 слова) + тренд «великі слова на темній сцені»:**
+```
+YouTube thumbnail, 16:9, 1280x720, hyper-realistic cinematic photograph with bold text, night.
+
+On the right side, a truck driver about 49 years old with short graying hair, a short gray-brown beard and a worn denim jacket, chest-up close-up, his face large, about 40% of the image, extreme shock: eyes wide open with visible whites, eyebrows raised high, mouth open, looking straight into the camera, face brightly lit by the cold blue glow of a smartphone and a warm amber rim light, eyes razor sharp. In the center-left he holds the smartphone up toward the camera, large and in sharp focus; the screen shows a dark map with one glowing green truck icon on a road. Behind him, softly blurred, an old barn at night and the green grille of an old 1979 Kenworth W900 semi truck. Vivid saturated teal and amber colors, high contrast, background not black.
+
+Text in the upper left, huge bold heavy sans-serif font, ALL CAPS, thick black outline, two lines, spelled exactly: first line "PARKED." in white, second line "54 MPH." in bright yellow (#FFD400). The text does not cover the face or the phone. One large red circle (#FF1E1E) around the green truck icon on the phone screen.
+
+The bottom right corner of the image stays simple and dark, nothing important there. Only three elements: the face, the phone, the text. No other text, no logos, no watermark, no borders.
+```
+
+**Negative prompt для обох:**
+```
+misspelled text, extra words, gibberish letters, small text, thin font, text over the face, multiple people, small face, face in shadow, closed eyes, calm expression, smiling, extra fingers, deformed hands, cluttered background, pure black background, dull colors, desaturated, cartoon, 3d render, illustration, watermark, logo, vertical format, borders
+```
+
+**Перевірка:** звірити кожне слово на мініатюрі. Якщо генератор помилився в тексті, згенерувати без тексту (прибрати блок TEXT) і зібрати текст через `tools/story_thumb.py`.
+
 **Промпт фото Генка для A і B (9:16, портрет):**
 ```
 Vertical 9:16 hyper-realistic cinematic portrait photograph, night, inside an old barn. A man about 49 with short graying hair and a short gray-brown beard in a worn denim jacket, chest-up, his face large and sharp, looking straight into the camera with intense shock and fear: eyes wide, eyebrows raised, mouth slightly open. He holds a smartphone near his chest, its cold blue glow lighting his face from below, a warm amber barn light from the side. Behind him, softly blurred, the green grille and round headlights of an old 1979 Kenworth W900 semi truck. Vivid saturated teal and amber colors, high contrast, eyes razor sharp. No text, no letters, no logos, no watermark.
