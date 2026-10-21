@@ -5,3 +5,4 @@ studio/node_modules/
 studio/out/
 studio/public/gen/
 videos/*/music.wav
+__pycache__/
