@@ -390,35 +390,57 @@ Static camera, extremely slow push-in. The amber hazard lights blink slowly and 
 text, subtitles, letters, watermark, logo, people, cars passing, morphing, warping, fast camera movement, camera shake, cuts, flicker, cartoon, low quality
 ```
 
-## 3 назви для A/B-тесту
+## Назви й мініатюри (за `docs/YOUTUBE_TITLE_RULES.md` і `docs/YOUTUBE_THUMBNAIL_RULES.md`)
 
+**10 варіантів назви** (до 60 символів, числа цифрами, без розв'язки, лікарню й наліпку не розкриваємо):
+
+| # | Назва | Символів | Формула |
+|---|---|---|---|
+| 1 | My Dead Dad's Truck Drives Every Night at 2:47 AM | 49 | Хто + дивна дія |
+| 2 | I Put a GPS on My Dead Dad's Truck. Then It Started Moving | 58 | Подія + обрив |
+| 3 | I Locked Dad's Truck in the Barn. The GPS Says It Left | 55 | Протиріччя |
+| 4 | Dad's Truck Hasn't Moved in 16 Years. The GPS Says Otherwise | 60 | Протиріччя |
+| 5 | Why Does My Dead Father's Truck Leave the Barn Every Night? | 59 | Питання «чому» |
+| 6 | Dad Died 16 Years Ago. His Truck Still Drives at Night | 55 | Протиріччя |
+| 7 | Every Night at 2:47, My Dead Dad's Truck Goes Somewhere | 56 | Подія + обрив |
+| 8 | My Dad's Truck Hasn't Moved Since 2010. Where Does It Go? | 57 | Питання |
+| 9 | I Followed My Dead Dad's Truck on GPS. It Led Me to a Curve | 59 | Подія + обрив |
+| 10 | The Old Trucker Never Told Me Why He Parked on That Curve | 57 | Таємниця |
+
+**Для A/B-тесту беремо три пари «мініатюра + назва»**. Текст на мініатюрі й назва не повторюють одне одного:
+
+| Пара | Мініатюра | Назва |
+|---|---|---|
+| A | З текстом `2:47 AM`: Генк у шоці + телефон з GPS | I Put a GPS on My Dead Dad's Truck. Then It Started Moving |
+| B | Без тексту: Генк у тумані, позаду силует зеленої вантажівки з фарами | My Dead Dad's Truck Drives Every Night at 2:47 AM |
+| C | Нестандартна: текст живе в кадрі — наліпка `VISITOR` з підписом `Ray` у руці Генка | I Locked Dad's Truck in the Barn. The GPS Says It Left |
+
+Правила для всіх трьох: 16:9 (1280×720), обличчя ≥ третини кадру, очі чіткі й освітлені, до 3 головних об'єктів (текст теж рахується), фон простий і кольоровий (не чорний), **правий нижній кут вільний** (там тривалість відео), не більше одного червоного акценту.
+
+### A — з текстом
 ```
-My Dead Dad's Truck Drives Every Night at 2:47 AM
+16:9 YouTube thumbnail, 1280x720, hyper-realistic cinematic photograph, night. A man about 49 with short graying hair and a short gray-brown beard in a worn denim jacket, his face large and filling the left half of the frame, about 40% of the image, extreme shock: eyes wide open with visible whites, eyebrows raised high, mouth open, looking straight into the camera, face brightly lit by the cold blue glow of a smartphone and a warm orange rim light, eyes razor sharp. In the center-right he holds the smartphone up toward the camera, the screen shows a dark map with one glowing green truck icon on a road, large and in sharp focus. Simple blurred background of a barn at night in deep blue and amber tones, not black. Vivid saturated colors, high contrast. Only two subjects: the face and the phone. Empty calm area in the upper right for a headline. The bottom right corner of the frame is empty and dark-blue, nothing important there. No text, no letters, no logos, no watermark.
 ```
+**Текст на мініатюрі:** `2:47 AM` — жовтим (#FFD400), жирний шрифт без засічок, чорна обводка, угорі праворуч, не на обличчі. Червоне коло (#FF1E1E) навколо іконки вантажівки на екрані.
+
+### B — без тексту
 ```
-Dad's Truck Hasn't Moved in 16 Years. The GPS Says Otherwise
+16:9 YouTube thumbnail, 1280x720, hyper-realistic cinematic photograph, night, thick fog in a hospital parking lot. A man about 49 with short graying hair and a short gray-brown beard in a worn denim jacket on the left side of the frame, his face large, about 35% of the image, terrified disbelief: eyes wide, eyebrows raised, mouth open, looking straight into the camera, face lit by a warm parking lot light, eyes sharp. Behind him on the right, emerging from the fog, the big glowing headlights and green long nose of an old 1979 Kenworth W900 semi truck, the cab dark and empty, eerie. Fog in saturated teal and amber tones, not black. Vivid colors, high contrast. Only two subjects: the man's face and the truck. The bottom right corner of the frame is plain fog, nothing important there. No text, no letters, no logos, no watermark.
 ```
+Тексту немає: страх на обличчі + вантажівка в тумані + назва з «2:47 AM» разом дають питання.
+
+### C — нестандартна (текст у кадрі)
 ```
-The GPS Put My Dead Father's Truck at the Hospital
+16:9 YouTube thumbnail, 1280x720, hyper-realistic cinematic photograph, inside a dark barn lit by a flashlight. A man about 49 with short graying hair and a short gray-brown beard in a worn denim jacket on the right side of the frame, his face large, about 35% of the image, shocked and moved: eyes wide and wet, eyebrows raised, mouth slightly open, looking down at his hand, face lit warmly, eyes sharp. On the left he holds up toward the camera a small white paper hospital visitor sticker, large and in sharp focus, printed word "VISITOR" at the top and the handwritten name "Ray" in blue pen on the name line. Behind them, blurred, the dusty green hood of an old semi truck. Warm amber and teal colors, not black. Only two subjects: the face and the sticker. The bottom right corner is a plain blurred background. No other text, no logos, no watermark.
+```
+Якщо генератор зіпсує напис на наліпці, згенеруйте наліпку чистою і допишіть у редакторі: `VISITOR` друкованими і `Ray` синім від руки.
+
+**Negative prompt для всіх трьох:**
+```
+small face, face in shadow, closed eyes, calm expression, smiling, multiple people, extra fingers, deformed hands, cluttered background, black background, dull colors, desaturated, cartoon, 3d render, illustration, watermark, logo, small text, captions, subtitles, vertical format, borders
 ```
 
-## 3 мініатюри 16:9
-
-**A — з текстом** (текст на мініатюрі: `2:47 AM`, білим з жовтим, ліворуч угорі)
-```
-16:9 YouTube thumbnail, hyper-realistic cinematic photograph, night. Close-up of a man about 49 with short graying hair and a short gray-brown beard in a worn denim jacket on the right side of the frame, face large, eyes wide with shock, looking straight at the camera, lit by the blue glow of a smartphone he holds up toward the camera; the phone screen shows a dark map with a glowing green truck icon on a road, in sharp focus. On the left, an old green long-nose semi truck in a dark barn, dusty, blurred. Vivid saturated blue and amber colors, high contrast, eyes sharp. Empty calm area in the upper left for a headline. No text, no letters, no logos, no watermark.
-```
-
-**B — без тексту**
-```
-16:9 YouTube thumbnail, hyper-realistic cinematic photograph, night, thick fog. An old green 1979 Kenworth W900 semi truck with a long nose parked on a gravel turnout at the top of a dark bending road above a river, amber hazard lights glowing, headlights cutting through the fog, and in the driver's window the faint silhouette of a big man in an old trucker cap, face not visible. Eerie and tender, vivid blue and amber colors, high contrast, the truck large in the frame. No text, no letters, no logos, no watermark.
-```
-
-**C — нестандартна (предмет крупно)**
-```
-16:9 YouTube thumbnail, hyper-realistic cinematic close-up. A small white paper hospital visitor sticker stuck to the dusty dashboard of an old green truck, next to a faded trucker cap hanging from the mirror, warm flashlight beam on the sticker, the sticker has a blank name line with blue handwriting that is illegible, dust floating in the light, a dark barn in the background. Vivid warm and blue colors, sharp focus on the sticker. No readable text, no logos, no watermark.
-```
-Для C текст краще додати самому в редакторі: на наліпці `VISITOR` і від руки `Ray` синім.
+**Перевірка перед публікацією:** зменшіть кожну мініатюру до розміру в стрічці на телефоні. Якщо за секунду не зрозуміло, що відбувається, або `2:47 AM` не читається — переробляємо.
 
 ## Опис
 
