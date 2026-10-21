@@ -102,6 +102,50 @@ Vertical 9:16 photorealistic cinematic photograph, night. Seen through the open 
 
 **Порядок у монтажі:** 01 → 02 → 03 → 04 («So I waited…») → 02 крупно («The charge showed up anyway») → 05 («Then my son called») → 06 → 07 («Tell your dad… leave room to stop», тиша) → петля в 01.
 
+## Анімація картинок (image-to-video)
+
+Власник анімує кожну картинку одразу після генерації. Кліпи робимо **9:16, 5 с, без звуку**, рух повільний, камера майже нерухома, щоб обличчя лишалося у верхній третині під субтитрами. Надсилати як `01.mp4`…`07.mp4`.
+
+**Negative prompt для всіх кліпів:**
+```
+text, subtitles, letters, watermark, logo, morphing, warping, face distortion, extra fingers, extra limbs, new people appearing, fast camera movement, camera shake, zoom out, cuts, flicker, cartoon, low quality
+```
+
+**01**
+```
+Slow cinematic push-in toward his face. He stares at the phone, his eyes widen slowly, he stops breathing for a moment and slightly lowers the phone. The blue screen glow flickers softly on his face, thin steam rises from the coffee cup. His face stays in the upper third of the frame. Realistic, subtle motion, 5 seconds.
+```
+
+**02**
+```
+Very slow push-in on the phone screen. His thumb scrolls the list slowly upward and stops; the red highlighted row settles in the middle of the screen and pulses faintly. Slight natural hand tremor. Numbers stay blurred. Realistic, subtle motion, 5 seconds.
+```
+
+**03**
+```
+Static camera with a very slow push-in. Fog drifts slowly across the empty toll lanes, the orange sodium lights flicker faintly, light reflections shimmer on the wet asphalt. No cars, no people. Eerie, quiet, realistic, 5 seconds.
+```
+
+**04**
+```
+Slow push-in toward his face. He slowly lifts the coffee cup, takes a small sip without taking his eyes off the empty lanes, fog drifts past outside the windshield, orange light moves softly across his face. His face stays in the upper third of the frame. Realistic, subtle motion, 5 seconds.
+```
+
+**05**
+```
+Slow push-in. The hazard lights blink rhythmically, flashing orange on his face. He slowly lowers the phone from his ear and turns his head toward a bright light growing from behind the camera, his expression shifting from fear to amazement. Mist drifts in the air. His face stays in the upper third of the frame. Realistic, 5 seconds.
+```
+
+**06**
+```
+Very slow push-in toward the cab of the old green truck. The truck sits idling: faint exhaust trembles above the chrome stacks, mist drifts through the headlight beams, the small car's hazard lights blink in front of it. The cab stays dark, nobody gets out. Tender and eerie, realistic, 5 seconds.
+```
+
+**07**
+```
+Very slow push-in. The big man in the cab sits still, his face stays completely hidden in shadow under the cap brim the whole time. His weathered hand slowly taps the door once, the dim dome light flickers softly, mist drifts outside. Do not reveal his face. Mysterious and gentle, realistic, 5 seconds.
+```
+
 ## Обкладинка шортса 9:16
 
 ```
