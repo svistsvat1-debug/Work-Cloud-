@@ -390,7 +390,44 @@ Static camera, extremely slow push-in. The amber hazard lights blink slowly and 
 text, subtitles, letters, watermark, logo, people, cars passing, morphing, warping, fast camera movement, camera shake, cuts, flicker, cartoon, low quality
 ```
 
-## Назви й мініатюри (за `docs/YOUTUBE_TITLE_RULES.md` і `docs/YOUTUBE_THUMBNAIL_RULES.md`)
+## Тренд-версія назв і мініатюр (жовтень 2026) — основна
+
+Власник: «роби так, як зараз залітає в тренді». Пошук YouTube 21.10.2026 (довгі відео > 20 хв, за переглядами, цей місяць / цей рік; запити trucker story, truck driver story, dad's truck тощо).
+
+**Що зараз залітає в довгих історіях для дорослої англомовної аудиторії:**
+- **Мініатюра «стіна тексту»** (сімейні й далекобійні AI-історії): ліворуч зав'язка великими кольоровими літерами на 40–60 слів, ключові слова жовтим, зеленим, блакитним, в кінці «…»; праворуч крупне обличчя сивуватого чоловіка; унизу плашка `FAMILY STORY`. Приклади:
+  - «A Police Car Followed Me For 15 Miles Flashing Its Lights… Then The Officer Told Me To Look Under…» — 124K за 3 тижні;
+  - «I Helped an Old Man Load a Heavy Oak Cabinet Into His Pickup Truck—Then He Exposed My Son's Secret»;
+  - «My Son Said, "Grandpa, Get In The Car, We Don't Have Much Time" — Then He Left Me».
+- **Мініатюра «2–5 великих слів на темній сцені»** (Mr. Nightmare, «DON'T LOOK AT THE TRAIN», «I HELD MY BREATH» — 588K).
+- **Назви:** довге речення від першої особи на 70–100 символів зі структурою «зав'язка — Then / Days Later…», з обривом. Головне вміщається в перші ~60 символів (вимога правил назви).
+
+**Відхилення від правил власника (свідомо, бо так у тренді):**
+- **Мініатюра A:** текст довший за 1–4 слова. Це формат «стіна тексту», правило про 1–4 слова тут не діє.
+- **Назви:** довші за 60 символів, але ключова частина стоїть у перших 60.
+- **A/B-тест:** третя пара лишається за класичними правилами, тест покаже, що краще.
+
+### Пари для A/B-тесту
+
+| Пара | Мініатюра | Назва |
+|---|---|---|
+| A | Стіна тексту (тренд №1) | My Dead Dad's Truck Never Leaves the Barn — Then a Stranger Asked: "Where's the Green Truck Tonight?" |
+| B | 5 великих слів: `THE TRUCK WAS IN MY BARN. THE GPS SAID 54 MPH.` | Every Night My Dead Dad's Truck Drove 38 Miles—Then It Stopped at the Hospital |
+| C | Класична: обличчя + вантажівка в тумані, без тексту (див. нижче, «B — без тексту») | My Dad Died 16 Years Ago. At 2:47 AM, the GPS Said His Truck Was Driving Again… |
+
+Назви й мініатюри доповнюють одне одне. На A мініатюра переказує GPS-зав'язку, а назва додає незнайомку. На B мініатюра дає парадокс, а назва — куди поїхала вантажівка.
+
+**Текст стіни для A:**
+`MY DAD DIED [16 YEARS AGO.] HIS TRUCK HASN'T LEFT MY BARN SINCE. MY SON PUT A {GPS TRACKER} ON IT. AT [2:47 A.M.] MY PHONE BUZZED: <"VEHICLE IN MOTION."> I RAN TO THE BARN. THE TRUCK WAS RIGHT THERE. ENGINE COLD. [BUT ON THE SCREEN, IT WAS DRIVING…]` — [жовтим], {зеленим}, <блакитним>, решта білим; плашка `TRUCKER STORY` червона.
+
+**Як збирається:** `python3 tools/story_thumb.py videos/19-long-dads-truck-gps/thumbs/thumb_a.json out.jpg` — фото праворуч, текст ліворуч, шрифт підбирається сам. Мокапи: `thumbs/thumb_a_mock.jpg`, `thumbs/thumb_b_mock.jpg` (на кадрі з кліпу «Dad's Fuel Tank»). Для фіналу потрібне нове фото Генка за промптом нижче.
+
+**Промпт фото Генка для A і B (9:16, портрет):**
+```
+Vertical 9:16 hyper-realistic cinematic portrait photograph, night, inside an old barn. A man about 49 with short graying hair and a short gray-brown beard in a worn denim jacket, chest-up, his face large and sharp, looking straight into the camera with intense shock and fear: eyes wide, eyebrows raised, mouth slightly open. He holds a smartphone near his chest, its cold blue glow lighting his face from below, a warm amber barn light from the side. Behind him, softly blurred, the green grille and round headlights of an old 1979 Kenworth W900 semi truck. Vivid saturated teal and amber colors, high contrast, eyes razor sharp. No text, no letters, no logos, no watermark.
+```
+
+## Назви й мініатюри — класичний варіант (за `docs/YOUTUBE_TITLE_RULES.md` і `docs/YOUTUBE_THUMBNAIL_RULES.md`)
 
 **10 варіантів назви** (до 60 символів, числа цифрами, без розв'язки, лікарню й наліпку не розкриваємо):
 
