@@ -5,6 +5,9 @@ Ken Burns camera with punch-ins, transitions (cut / fade / whip / dip / flash),
 film grain + vignette, word-by-word pop subtitles in the centre, and a music bed
 synthesized in code (royalty-free by construction) with ducking under the voice.
 
+A shot can also be an animated clip: {"video": "shots/01.mp4", "v_start": 1.5, "speed": 1.0,
+"blur": [[clip_t, x0, y0, x1, y1], ...]} (blur boxes hide generated gibberish text, e.g. a phone screen).
+
 Usage: python3 tools/photo_story.py videos/06-father-letter/story.json
        -> final.mp4 (voice + music) and final-no-music.mp4 next to story.json
 """
@@ -487,7 +490,58 @@ def cam_at(shot, t):
     return z, cx, cy
 
 
+_vid_cache = {}
+
+
+def video_frame(root, shot, t):
+    """Frame of an animated clip ("video" shot) at story time t, with optional blur boxes."""
+    key = shot["video"]
+    if key not in _vid_cache:
+        d = Path(tempfile.mkdtemp())
+        subprocess.run(["ffmpeg", "-v", "error", "-i", str(root / key), "-vf", "fps=30", "-q:v", "2",
+                        str(d / "%05d.jpg")], check=True)
+        _vid_cache[key] = {"files": sorted(d.glob("*.jpg")), "last": (None, None)}
+    v = _vid_cache[key]
+    tc = shot.get("v_start", 0.0) + (t - shot["start"]) * shot.get("speed", 1.0)
+    i = min(max(int(tc * 30), 0), len(v["files"]) - 1)
+    if v["last"][0] != (i, id(shot)):
+        img = Image.open(v["files"][i]).convert("RGB")
+        img = ImageEnhance.Contrast(img).enhance(1.08)
+        # "blur": [[clip_t, x0, y0, x1, y1], ...] hides generated gibberish text (e.g. a phone screen)
+        ks = shot.get("blur")
+        if ks:
+            tcl = min(max(tc, ks[0][0]), ks[-1][0])
+            for a, b in zip(ks, ks[1:] or ks):
+                if a[0] <= tcl <= b[0]:
+                    e = (tcl - a[0]) / (b[0] - a[0]) if b[0] > a[0] else 0
+                    box = [a[j] + (b[j] - a[j]) * e for j in range(1, 5)]
+                    break
+            x0, y0, x1, y1 = (int(box[0] * img.width), int(box[1] * img.height),
+                              int(box[2] * img.width), int(box[3] * img.height))
+            reg = img.crop((x0, y0, x1, y1)).filter(ImageFilter.GaussianBlur(max(3, (x1 - x0) * 0.035)))
+            m = Image.new("L", reg.size, 0)
+            f = max(4, int((x1 - x0) * 0.06))
+            ImageDraw.Draw(m).rounded_rectangle([f, f, reg.width - f, reg.height - f], radius=f * 2, fill=255)
+            img.paste(reg, (x0, y0), m.filter(ImageFilter.GaussianBlur(f / 2)))
+        v["last"] = ((i, id(shot)), img)
+    return v["last"][1]
+
+
+def render_video_shot(root, shot, t, W, H):
+    src = video_frame(root, shot, t)
+    z, cx, cy = cam_at(shot, t)
+    s = max(W / src.width, H / src.height) * z
+    hw, hh = W / (2 * s), H / (2 * s)
+    cx = min(max(cx * src.width, hw), src.width - hw)
+    cy = min(max(cy * src.height, hh), src.height - hh)
+    k = 1 / s
+    out = src.transform((W, H), Image.AFFINE, (k, 0, cx - hw, 0, k, cy - hh), resample=Image.BICUBIC)
+    return np.asarray(out.filter(ImageFilter.UnsharpMask(radius=2, percent=60, threshold=2)), np.float32)
+
+
 def render_shot(root, shot, t, W, H):
+    if "video" in shot:
+        return render_video_shot(root, shot, t, W, H)
     im = shot_image(root, shot, W, H)
     z, cx, cy = cam_at(shot, t)
     s = im["cover"] * z
