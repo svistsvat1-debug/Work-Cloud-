@@ -1359,10 +1359,10 @@ const costOf = (text) => { // voices checked by speech recognition also pay for 
 const usd = (cost) => "$" + (cost < 0.01 ? cost.toFixed(4) : cost.toFixed(2));
 function updateStats() {
   const text = $("text").value, words = (text.match(/[\p{L}\d'’]+/gu) || []).length;
-  const lang = $("lang").value, cost = costOf(text);
+  const lang = $("lang").value;
   const min = text.length / CHARS_PER_SEC[lang] / 60 / +$("speed").value, m = Math.floor(min), s = Math.round((min - m) * 60);
   const h = Math.floor(m / 60), dur = h ? `${h} год ${m % 60} хв` : m ? `${m} хв ${s} с` : `${s} с`;
-  $("stats").textContent = words ? `${words} слів · ≈ ${dur} · ${usd(cost)}` : "";
+  $("stats").textContent = words ? `${words} слів · ≈ ${dur}` : ""; // words and length only, no price (owner's call)
   store.set("text", text);
 }
 function pronMap() {
