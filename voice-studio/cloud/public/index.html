@@ -55,7 +55,6 @@
   .chip { position: relative; display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 10px;
     background: transparent; border: 1px solid var(--chip-edge); color: var(--ink); font-size: 14.5px; font-weight: 500; white-space: nowrap;
     cursor: pointer; transition: background .15s, border-color .15s; }
-  .chip.fixed { cursor: default; } .chip.fixed select { pointer-events: none; }
   .chip select { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; font-size: 16px; appearance: none; }
   #go { flex: none; width: 72px; min-height: 48px; padding: 0; border-radius: 12px; }
   .meta { display: flex; justify-content: space-between; align-items: center; gap: 12px; color: var(--faint); font-size: 12.5px;
@@ -233,7 +232,6 @@
         <div class="chips">
           <label class="chip"><span>Англійська</span><select id="lang" aria-label="Мова"><option value="en">Англійська</option><option value="de">Німецька</option><option value="es">Іспанська</option><option value="fr">Французька</option><option value="it">Італійська</option><option value="pt">Португальська</option><option value="hi">Гінді</option><option value="ja">Японська</option><option value="zh">Китайська</option></select></label>
           <label class="chip"><span></span><select id="accent" aria-label="Акцент"><option value="US">США</option><option value="UK">Британія</option></select></label>
-          <label class="chip"><span>Чоловіча</span><select id="gender" aria-label="Стать голосу"><option value="m">Чоловіча</option></select></label>
           <button type="button" class="chip" id="voiceChip" aria-haspopup="dialog" aria-label="Диктор: вибрати й прослухати"><span></span></button>
           <select id="voice" hidden aria-hidden="true" tabindex="-1"></select>
         </div>
@@ -394,7 +392,6 @@ const PREMIUM = { inworld: true }; // shown as "· преміум" in the voice 
 const SPELL_NUMBERS = { chatterbox: true }; // Chatterbox misreads long numbers ("1500" as "100-500"), so they go as words
 const SPEED = { kokoro: true, inworld: true, chatterbox: true }; // engines with a speed setting
 const NATIVE_SPEED = { kokoro: true, inworld: true }; // the rest are slowed or sped up on the page (stretch below)
-const SEXES = { m: "Чоловіча", f: "Жіноча" };
 const ACCENTS = { US: "США", UK: "Британія", DE: "Німеччина", ES: "Іспанія", MX: "Латинська Америка", FR: "Франція", IT: "Італія",
   BR: "Бразилія", IN: "Індія", JP: "Японія", CN: "Китай" };
 const LANG_NAMES = { en: "англійська", de: "німецька", es: "іспанська", fr: "французька", it: "італійська", pt: "португальська", hi: "гінді",
@@ -1295,17 +1292,15 @@ function fillVoices() {
   $("lang").value = saved.lang;
   pickVoice(saved);
 }
-function pickVoice(v) { // fills the accent, sex and voice chips for the language chosen, keeping v where it fits
+// The accent chip shows only where a language has more than one (English: US/UK, Spanish: Spain/Latin America);
+// male and female voices are chosen together in the voice sheet.
+function pickVoice(v) { // fills the accent and voice chips for the language chosen, keeping v where it fits
   const lang = $("lang").value, inLang = VOICES.filter((x) => x.lang === lang);
-  const fill = (sel, values, names, keep) => {
-    sel.replaceChildren(...values.map((x) => new Option(names[x], x)));
-    sel.value = values.includes(keep) ? keep : values[0];
-    sel.closest(".chip").classList.toggle("fixed", values.length < 2);
-  };
-  fill($("accent"), [...new Set(inLang.map((x) => x.accent))], ACCENTS, v?.accent);
-  const inAccent = inLang.filter((x) => x.accent === $("accent").value);
-  fill($("gender"), [...new Set(inAccent.map((x) => x.sex))], SEXES, v?.sex);
-  const list = inAccent.filter((x) => x.sex === $("gender").value);
+  const accents = [...new Set(inLang.map((x) => x.accent))];
+  $("accent").replaceChildren(...accents.map((x) => new Option(ACCENTS[x], x)));
+  $("accent").value = accents.includes(v?.accent) ? v.accent : accents[0];
+  $("accent").closest(".chip").hidden = accents.length < 2;
+  const list = inLang.filter((x) => x.accent === $("accent").value);
   $("voice").replaceChildren(...list.map((x) => new Option(voiceLabel(x), x.id)));
   $("voice").value = list.some((x) => x.id === v?.id) ? v.id : list[0].id;
   syncChips(); voiceSpeed();
@@ -1330,15 +1325,13 @@ function syncChips() {
 // (the language's sample line, at the voice's own speed) and kept on the device, so later taps play at once.
 const samples = new Map(), sampleAudio = new Audio();
 let sampleOf = null, sampleCtrl = null;
-function openVoices() {
-  const lang = $("lang").value, cur = $("voice").value, groups = new Map();
-  for (const v of VOICES.filter((x) => x.lang === lang)) {
-    const g = `${ACCENTS[v.accent]} · ${v.sex === "m" ? "чоловічі" : "жіночі"}`;
-    groups.set(g, [...(groups.get(g) || []), v]);
-  }
-  $("voicesTitle").textContent = "Голос · " + LANG_NAMES[lang];
+function openVoices() { // the voices of the language (and accent, where there is a choice): male, then female
+  const lang = $("lang").value, accent = $("accent").value, cur = $("voice").value;
+  const list = VOICES.filter((x) => x.lang === lang && x.accent === accent);
+  const groups = [["Чоловічі", list.filter((v) => v.sex === "m")], ["Жіночі", list.filter((v) => v.sex === "f")]].filter(([, l]) => l.length);
+  $("voicesTitle").textContent = "Голос · " + LANG_NAMES[lang] + ($("accent").closest(".chip").hidden ? "" : " · " + ACCENTS[accent]);
   $("vErr").textContent = "";
-  $("vlist").innerHTML = [...groups].map(([g, list]) => `<div class="vgroup">${g}</div>` + list.map((v) => `<div class="vrow${v.id === cur ? " now" : ""}">
+  $("vlist").innerHTML = groups.map(([g, list]) => `<div class="vgroup">${g}</div>` + list.map((v) => `<div class="vrow${v.id === cur ? " now" : ""}">
     <button type="button" class="vplay" data-sample="${v.id}" aria-label="Прослухати ${v.name}">${PLAY_ICON}</button>
     <button type="button" class="vpick" data-pick="${v.id}">${v.name}${PREMIUM[v.engine] ? " <small>преміум</small>" : ""}</button></div>`).join("")).join("");
   $("voices").showModal();
@@ -1922,8 +1915,7 @@ $("voices").addEventListener("click", (e) => {
   if (play) playSample(play.dataset.sample, play);
   if (pick) { pickVoice(voiceOf(pick.dataset.pick)); updateLabels(); updateStats(); $("voices").close(); }
 });
-$("accent").addEventListener("change", () => { pickVoice({ accent: $("accent").value, sex: $("gender").value }); updateLabels(); updateStats(); });
-$("gender").addEventListener("change", () => { pickVoice({ accent: $("accent").value, sex: $("gender").value }); updateLabels(); updateStats(); });
+$("accent").addEventListener("change", () => { pickVoice({ accent: $("accent").value }); updateLabels(); updateStats(); });
 $("lang").addEventListener("change", () => switchLang($("lang").value));
 // A pasted script in another language switches the chips to it
 $("text").addEventListener("paste", () => setTimeout(() => {
