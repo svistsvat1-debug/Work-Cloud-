@@ -1,16 +1,28 @@
 # Voice Studio · хмарна версія (Cloudflare + DeepInfra)
 
-Сайт для телефону: вставляєш текст будь-якої довжини англійською, німецькою, іспанською чи французькою,
+Сайт для телефону: вставляєш текст будь-якої довжини однією з 9 мов (англійська, німецька, іспанська, французька, італійська,
+португальська, гінді, японська, китайська),
 обираєш чоловічий чи жіночий голос, отримуєш MP3 (або WAV) і субтитри. Озвучка йде на відеокартах DeepInfra, тож телефон нічого не рахує.
 
 - **Голоси (чоловічі й жіночі, перший у списку — за замовчуванням):**
 
   | Мова | Чоловічі | Жіночі | Преміум (Inworld) |
   |---|---|---|---|
-  | англійська | Michael, Onyx та ще 10 (US/UK), Kokoro | Heart, Bella, Emma та ще 5 (US/UK), Kokoro | — |
+  | англійська | Michael, Onyx та ще 11 (US/UK), Kokoro | Heart, Bella, Emma та ще 12 (US/UK), Kokoro | — |
   | німецька | **Max**, Lukas (Chatterbox) | **Anna**, Lena (Chatterbox) | Josef |
-  | іспанська | **Alex** (Kokoro), Mateo (Chatterbox) | **Lucía** (Chatterbox), Dora (Kokoro); Valentina — Латинська Америка | Rafael, Diego |
+  | іспанська | **Alex**, Santa (Kokoro), Mateo (Chatterbox) | **Lucía** (Chatterbox), Dora (Kokoro); Valentina — Латинська Америка | Rafael, Diego |
   | французька | **Louis**, Hugo (Chatterbox) | **Camille** (Chatterbox), Siwis (Kokoro) | Lucian, Alain |
+  | італійська | **Nicola** (Kokoro) | **Sara** (Kokoro) | — |
+  | португальська (Бразилія) | **Alex**, Santa (Kokoro) | **Dora** (Kokoro) | — |
+  | гінді | **Omega**, Psi (Kokoro) | **Alpha**, Beta (Kokoro) | — |
+  | японська | **Kumo** (Kokoro) | **Alpha**, Gongitsune, Nezumi, Tebukuro (Kokoro) | — |
+  | китайська (мандаринська) | **Yunjian**, Yunxi, Yunxia, Yunyang (Kokoro) | **Xiaobei**, Xiaoni, Xiaoxiao, Xiaoyi (Kokoro) | — |
+
+  На сайті є всі 54 голоси Kokoro (англійських 28: США й Британія). Італійську, португальську, гінді, японську й китайську
+  додано без перевірки в лабораторії (рішення власника — не витрачати на тести): якість і вимова цих голосів ще не міряні,
+  правил природного читання (дати, числа, скорочення) для них немає — голос читає текст як написано. Японський і китайський
+  текст ріжеться на речення за «。！？» і шматками до 200 знаків, субтитри — до 16 знаків у рядку; гінді — за «।».
+  Якщо DeepInfra якогось голосу не має, це покаже «Перевірити з'єднання».
 
   - **Kokoro-82M** (Apache 2.0) і **Chatterbox Multilingual** (MIT, Resemble AI) — відкриті моделі, комерційне використання дозволене.
     Max, Mateo, Louis — власний голос Chatterbox; Lukas, Anna, Lena, Lucía, Valentina, Hugo, Camille — синтетичні голоси,

@@ -231,7 +231,7 @@
       <textarea id="text" aria-label="Текст для озвучки" placeholder="Вставте сценарій або почніть писати…" spellcheck="false"></textarea>
       <div class="controls">
         <div class="chips">
-          <label class="chip"><span>Англійська</span><select id="lang" aria-label="Мова"><option value="en">Англійська</option><option value="de">Німецька</option><option value="es">Іспанська</option><option value="fr">Французька</option></select></label>
+          <label class="chip"><span>Англійська</span><select id="lang" aria-label="Мова"><option value="en">Англійська</option><option value="de">Німецька</option><option value="es">Іспанська</option><option value="fr">Французька</option><option value="it">Італійська</option><option value="pt">Португальська</option><option value="hi">Гінді</option><option value="ja">Японська</option><option value="zh">Китайська</option></select></label>
           <label class="chip"><span></span><select id="accent" aria-label="Акцент"><option value="US">США</option><option value="UK">Британія</option></select></label>
           <label class="chip"><span>Чоловіча</span><select id="gender" aria-label="Стать голосу"><option value="m">Чоловіча</option></select></label>
           <button type="button" class="chip" id="voiceChip" aria-haspopup="dialog" aria-label="Диктор: вибрати й прослухати"><span></span></button>
@@ -361,23 +361,30 @@ const store = {
 // cps: characters per second at speed 1, for the length check of Inworld and Chatterbox takes. pace: the voice's default
 // speed, set so it reads at a voice-over pace (about 150-170 words a minute). Premium voices cost ~50 times more.
 const V = (id, name, lang, accent, sex, engine, cps, pace = 1) => ({ id, name, lang, accent, sex, engine, cps, pace });
+// Kokoro voices by their own ids ("am_michael" -> Michael)
+const kokoro = (lang, accent, sex, pace, ids) => ids.split(" ").map((id) => V(id, id[3].toUpperCase() + id.slice(4), lang, accent, sex, "kokoro", undefined, pace));
 const VOICES = [
   // English, Kokoro: male voices read at 160-175 words a minute at 0.95, female ones (faster) at 0.9 (voice-studio/lab, round 8)
-  ...["am_michael Michael", "am_fenrir Fenrir", "am_puck Puck", "am_onyx Onyx", "am_adam Adam", "am_echo Echo", "am_liam Liam", "am_eric Eric"]
-    .map((x) => x.split(" ")).map(([id, name]) => V(id, name, "en", "US", "m", "kokoro", undefined, 0.95)),
-  ...["bm_george George", "bm_fable Fable", "bm_lewis Lewis", "bm_daniel Daniel"].map((x) => x.split(" ")).map(([id, name]) => V(id, name, "en", "UK", "m", "kokoro", undefined, 0.95)),
-  ...["af_heart Heart", "af_bella Bella", "af_nicole Nicole", "af_sarah Sarah", "af_kore Kore", "af_aoede Aoede"]
-    .map((x) => x.split(" ")).map(([id, name]) => V(id, name, "en", "US", "f", "kokoro", undefined, 0.9)),
-  ...["bf_emma Emma", "bf_isabella Isabella"].map((x) => x.split(" ")).map(([id, name]) => V(id, name, "en", "UK", "f", "kokoro", undefined, 0.9)),
+  ...kokoro("en", "US", "m", 0.95, "am_michael am_fenrir am_puck am_onyx am_adam am_echo am_liam am_eric am_santa"),
+  ...kokoro("en", "UK", "m", 0.95, "bm_george bm_fable bm_lewis bm_daniel"),
+  ...kokoro("en", "US", "f", 0.9, "af_heart af_bella af_nicole af_sarah af_kore af_aoede af_alloy af_jessica af_nova af_river af_sky"),
+  ...kokoro("en", "UK", "f", 0.9, "bf_emma bf_isabella bf_alice bf_lily"),
   // German, Spanish, French: the first voice of each sex is the default; Chatterbox ~$1 per million characters like Kokoro.
   // Max and Louis speak fast, so they start slowed to a narrator's pace (the page stretches them; naturalness held, round 9)
   V("de_max", "Max", "de", "DE", "m", "chatterbox", 17.8, 0.9), V("de_lukas", "Lukas", "de", "DE", "m", "chatterbox", 14.6),
   V("de_anna", "Anna", "de", "DE", "f", "chatterbox", 14.5), V("de_lena", "Lena", "de", "DE", "f", "chatterbox", 16),
   V("es_alex", "Alex", "es", "ES", "m", "kokoro"), V("es_mateo", "Mateo", "es", "ES", "m", "chatterbox", 17.3, 0.9),
+  V("es_santa", "Santa", "es", "ES", "m", "kokoro"),
   V("es_lucia", "Lucía", "es", "ES", "f", "chatterbox", 14.3), V("es_dora", "Dora", "es", "ES", "f", "kokoro", undefined, 0.95),
   V("es_valentina", "Valentina", "es", "MX", "f", "chatterbox", 13.5),
   V("fr_louis", "Louis", "fr", "FR", "m", "chatterbox", 19.5, 0.85), V("fr_hugo", "Hugo", "fr", "FR", "m", "chatterbox", 14.6),
   V("fr_camille", "Camille", "fr", "FR", "f", "chatterbox", 15.8), V("fr_siwis", "Siwis", "fr", "FR", "f", "kokoro", undefined, 0.95),
+  // Italian, Portuguese (Brazil), Hindi, Japanese, Chinese (Mandarin): every voice Kokoro has, not checked in voice-studio/lab yet
+  ...kokoro("it", "IT", "m", 1, "im_nicola"), ...kokoro("it", "IT", "f", 1, "if_sara"),
+  ...kokoro("pt", "BR", "m", 1, "pm_alex pm_santa"), ...kokoro("pt", "BR", "f", 1, "pf_dora"),
+  ...kokoro("hi", "IN", "m", 1, "hm_omega hm_psi"), ...kokoro("hi", "IN", "f", 1, "hf_alpha hf_beta"),
+  ...kokoro("ja", "JP", "m", 1, "jm_kumo"), ...kokoro("ja", "JP", "f", 1, "jf_alpha jf_gongitsune jf_nezumi jf_tebukuro"),
+  ...kokoro("zh", "CN", "m", 1, "zm_yunjian zm_yunxi zm_yunxia zm_yunyang"), ...kokoro("zh", "CN", "f", 1, "zf_xiaobei zf_xiaoni zf_xiaoxiao zf_xiaoyi"),
   // Premium: Inworld, ~$50 per million characters
   V("de_josef", "Josef", "de", "DE", "m", "inworld", 13),
   V("es_rafael", "Rafael", "es", "ES", "m", "inworld", 14), V("es_diego", "Diego", "es", "ES", "m", "inworld", 12),
@@ -388,25 +395,39 @@ const SPELL_NUMBERS = { chatterbox: true }; // Chatterbox misreads long numbers 
 const SPEED = { kokoro: true, inworld: true, chatterbox: true }; // engines with a speed setting
 const NATIVE_SPEED = { kokoro: true, inworld: true }; // the rest are slowed or sped up on the page (stretch below)
 const SEXES = { m: "Чоловіча", f: "Жіноча" };
-const ACCENTS = { US: "США", UK: "Британія", DE: "Німеччина", ES: "Іспанія", MX: "Латинська Америка", FR: "Франція" };
-const LANG_NAMES = { en: "англійська", de: "німецька", es: "іспанська", fr: "французька" };
-const LANG_IN = { en: "англійською", de: "німецькою", es: "іспанською", fr: "французькою" };
-const LANG_ACC = { en: "англійську", de: "німецьку", es: "іспанську", fr: "французьку" };
+const ACCENTS = { US: "США", UK: "Британія", DE: "Німеччина", ES: "Іспанія", MX: "Латинська Америка", FR: "Франція", IT: "Італія",
+  BR: "Бразилія", IN: "Індія", JP: "Японія", CN: "Китай" };
+const LANG_NAMES = { en: "англійська", de: "німецька", es: "іспанська", fr: "французька", it: "італійська", pt: "португальська", hi: "гінді",
+  ja: "японська", zh: "китайська" };
+const LANG_IN = { en: "англійською", de: "німецькою", es: "іспанською", fr: "французькою", it: "італійською", pt: "португальською",
+  hi: "мовою гінді", ja: "японською", zh: "китайською" };
+const LANG_ACC = { en: "англійську", de: "німецьку", es: "іспанську", fr: "французьку", it: "італійську", pt: "португальську", hi: "гінді",
+  ja: "японську", zh: "китайську" };
 const PREVIEW = {
   en: "Hey there. This is how I sound. Paste your script, and I'll read it for you.",
   de: "Hallo! So klingt meine Stimme. Füg dein Skript ein, und ich lese es dir vor.",
   es: "¡Hola! Así suena mi voz. Pega tu guion y yo te lo leo.",
   fr: "Salut ! Voici ma voix. Colle ton script, et je te le lis.",
+  it: "Ciao! Ecco come suona la mia voce. Incolla il tuo testo e lo leggo per te.",
+  pt: "Olá! É assim que soa a minha voz. Cole o seu roteiro e eu leio para você.",
+  hi: "नमस्ते! यह मेरी आवाज़ है। अपनी स्क्रिप्ट यहाँ डालिए और सुनिए।",
+  ja: "こんにちは！これが私の声です。台本を貼り付ければ、私が読み上げます。",
+  zh: "你好！这就是我的声音。把你的脚本粘贴进来，我来为你朗读。",
 };
 const SR = 24000;
 const PARALLEL = 4;          // requests at a time
 const CHUNK_CHARS = { kokoro: 800, inworld: 280, chatterbox: 220 }; // characters per request: Inworld can repeat or skip words in longer ones (voice-studio/lab)
+// Japanese and Chinese say far more per character, Hindi somewhat more: shorter requests keep within what Kokoro voices at once
+const LANG_CHUNK = { ja: 200, zh: 200, hi: 400 };
+const chunkFor = (engine, lang) => Math.min(CHUNK_CHARS[engine], LANG_CHUNK[lang] || Infinity);
 // Pause where one paragraph is split into several requests, as a narrator breathes: longer after a sentence, short at a comma
 const SENTENCE_GAP = 0.42, COMMA_GAP = 0.2;
 const joinGap = (spoken) => (END.test(spoken) ? SENTENCE_GAP : COMMA_GAP);
 const PRICE_PER_M = { kokoro: 0.99, inworld: 50, chatterbox: 1 }; // USD per million characters on DeepInfra, for the estimate only
 const VERIFIED = { inworld: true, chatterbox: true }, ASR_PER_MIN = 0.0002; // the server hears these takes back with Whisper
-const CHARS_PER_SEC = { en: 14, de: 13, es: 14, fr: 13 }; // speech speed measured in voice-studio/lab, for the length estimate
+// Speech speed for the length estimate and the length check of every take: measured in voice-studio/lab for en/de/es/fr,
+// usual speaking rates for the rest (the check allows half to nearly double, so a rough figure is enough)
+const CHARS_PER_SEC = { en: 14, de: 13, es: 14, fr: 13, it: 14, pt: 14, hi: 12, ja: 8, zh: 5 };
 const TIER_FACTOR = { priority: 1.5, flex: 0.8 }; // DeepInfra's price multipliers per service tier
 const LEAD_IN = 0.25, TAIL = 0.5;
 
@@ -421,7 +442,13 @@ const ABBREVIATIONS = { // a dot after these does not end the sentence
   es: new Set(["sr", "sra", "srta", "dr", "dra", "ud", "uds", "p.ej", "ej", "ee.uu", "av", "núm", "prof", "aprox", "vs", "pág"]),
   fr: new Set(["m", "mme", "mlle", "dr", "pr", "env", "ex", "p", "cf", "n", "av", "bd", "st", "ste", "vs", "janv", "févr", "avr",
     "juil", "sept", "oct", "nov", "déc", "lun", "mar", "mer", "jeu", "ven", "sam", "dim"]),
+  it: new Set(["sig", "sigg", "sig.ra", "dott", "dr", "prof", "ing", "avv", "ecc", "pag", "es", "vs", "ca", "n"]),
+  pt: new Set(["sr", "sra", "srta", "dr", "dra", "prof", "av", "pág", "ex", "vs", "aprox", "n", "nº"]),
+  hi: new Set(["डॉ", "श्री", "श्रीमती", "dr", "mr", "mrs"]), ja: new Set(), zh: new Set(),
 };
+// Japanese and Chinese end sentences with 。！？ and no space after them; Hindi with the danda ।
+const SENTENCE_END = { ja: /[。！？!?…]+[」』”’）)]*/g, zh: /[。！？!?…]+[」』”’）)]*/g };
+const END_MARK = { ja: "。", zh: "。", hi: "।" };
 const SCALES = { k: "thousand", thousand: "thousand", m: "million", mn: "million", million: "million",
   b: "billion", bn: "billion", billion: "billion", t: "trillion", trillion: "trillion" };
 const CURRENCIES = { "$": ["dollar", "dollars", "cent", "cents"], "€": ["euro", "euros", "cent", "cents"], "£": ["pound", "pounds", "penny", "pence"] };
@@ -432,7 +459,7 @@ const RULES = [
   [/\bapprox\./gi, "approximately"], [/\b24\/7\b/g, "twenty-four seven"], [/#(\d+)/g, "number $1"],
   [/\b(\d+)x\b/g, "$1 times"], [/\s&\s/g, " and "], [/\bw\/(?=\s)/g, "with"],
 ];
-const END = /[.!?…]["”’»)\]]*$/;
+const END = /[.!?…。！？।]["”’»)\]」』）]*$/;
 
 function cleanMarkdown(text) {
   return text.replace(/\r\n?/g, "\n").split("\n").map((line) => {
@@ -924,7 +951,8 @@ function numbersToWords(text, lang) {
   }).replace(/'\u2060\s+/gu, "'");
 }
 // ---- end numbers as words
-const NATURAL = { en: naturalEn, de: naturalDe, es: naturalEs, fr: naturalFr };
+const asWritten = (t) => t; // no reading rules yet for these: the voice reads the text as written
+const NATURAL = { en: naturalEn, de: naturalDe, es: naturalEs, fr: naturalFr, it: asWritten, pt: asWritten, hi: asWritten, ja: asWritten, zh: asWritten };
 function normalize(text, lang) {
   text = NATURAL[lang](text);
   if (lang !== "en") return text;
@@ -935,7 +963,7 @@ function normalize(text, lang) {
 function splitSentences(par, lang) {
   const out = [];
   let start = 0;
-  for (const m of par.matchAll(/[.!?…]+["”’»)\]]*(?=\s|$)/g)) {
+  for (const m of par.matchAll(SENTENCE_END[lang] || /[.!?…।]+["”’»)\]]*(?=\s|$)/g)) {
     const words = par.slice(start, m.index).split(/\s+/).filter(Boolean);
     const last = (words[words.length - 1] || "").toLowerCase();
     const next = par.slice(m.index + m[0].length).trimStart().charAt(0);
@@ -980,7 +1008,7 @@ function buildScript(text, pron, paragraphPause, lang, maxChars, engine) {
         let spoken = normalize(applyPronunciations(shown, pron), lang);
         if (SPELL_NUMBERS[engine]) spoken = numbersToWords(spoken, lang);
         if (!/[\p{L}\p{N}]/u.test(spoken)) continue;
-        if (!END.test(spoken)) spoken += ".";
+        if (!END.test(spoken)) spoken += END_MARK[lang] || ".";
         // A run-on "sentence" without punctuation is cut at commas or spaces
         for (const part of chunk(spoken, maxChars)) sentences.push({ shown: part === spoken ? shown : part, spoken: part });
       }
@@ -993,7 +1021,7 @@ function buildScript(text, pron, paragraphPause, lang, maxChars, engine) {
         else requests.push({ spoken: "", sentences: [], gap: sen.pause, marked: true, pause: true });
         continue;
       }
-      if (cur && cur.spoken.length + 1 + sen.spoken.length <= maxChars) { cur.spoken += " " + sen.spoken; cur.sentences.push(sen); }
+      if (cur && cur.spoken.length + 1 + sen.spoken.length <= maxChars) { cur.spoken += (END_MARK[lang] === "。" ? "" : " ") + sen.spoken; cur.sentences.push(sen); }
       else { if (cur) { cur.gap = joinGap(cur.spoken); requests.push(cur); } cur = { spoken: sen.spoken, sentences: [sen], gap: 0 }; }
     }
     if (cur) { cur.gap = paragraphPause; requests.push(cur); }
@@ -1002,10 +1030,10 @@ function buildScript(text, pron, paragraphPause, lang, maxChars, engine) {
   if (last && !last.marked) last.gap = 0;
   return requests;
 }
-function chunk(s, max) {
+function chunk(s, max) { // at a comma (also ，、；), else a space, else (Japanese, Chinese) anywhere
   const out = [];
   while (s.length > max) {
-    let cut = s.lastIndexOf(", ", max);
+    let cut = Math.max(...[", ", "，", "、", "；", "; "].map((sep) => s.lastIndexOf(sep, max)));
     if (cut < max / 2) cut = s.lastIndexOf(" ", max);
     if (cut < 1) cut = max;
     out.push(s.slice(0, cut + 1).trim());
@@ -1014,10 +1042,12 @@ function chunk(s, max) {
   if (s) out.push(s);
   return out;
 }
-function foreignWords(text) {
-  const found = [];
+// Letters each language's voices can read: Latin everywhere, plus the language's own script
+const SCRIPT = { ja: /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}ー々〆〻ゝゞヽヾ]/u, zh: /\p{Script=Han}/u, hi: /\p{Script=Devanagari}/u };
+function foreignWords(text, lang) {
+  const found = [], own = SCRIPT[lang];
   for (const w of text.match(/[\p{L}\p{N}_]+/gu) || []) {
-    if ([...w].some((ch) => /\p{L}/u.test(ch) && !/\p{Script=Latin}/u.test(ch)) && !found.includes(w)) found.push(w);
+    if ([...w].some((ch) => /\p{L}/u.test(ch) && !/\p{Script=Latin}/u.test(ch) && !(own && own.test(ch))) && !found.includes(w)) found.push(w);
     if (found.length === 3) break;
   }
   return found;
@@ -1127,7 +1157,16 @@ function srtTime(t) {
   const p = (n, w = 2) => String(n).padStart(w, "0");
   return `${p(h)}:${p(m)}:${p(s)},${p(ms, 3)}`;
 }
+const CJK = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}]/gu;
+const isCjk = (t) => (t.match(CJK) || []).length > t.replace(/\s/g, "").length / 2;
 function wrapTwoLines(text, width = 42) {
+  if (isCjk(text)) { // two lines of up to 16 characters, split after a comma near the middle when there is one
+    if (text.length <= 16) return text;
+    const mid = Math.ceil(text.length / 2);
+    let cut = mid;
+    for (let i = 1; i < text.length - 1; i++) if ("，、。！？；：".includes(text[i - 1]) && Math.abs(i - mid) < Math.abs(cut - mid) && Math.abs(i - mid) <= 4) cut = i;
+    return text.slice(0, cut) + "\n" + text.slice(cut);
+  }
   if (text.length <= width || !text.includes(" ")) return text;
   const mid = text.length / 2;
   let cut = -1;
@@ -1135,22 +1174,23 @@ function wrapTwoLines(text, width = 42) {
   return text.slice(0, cut) + "\n" + text.slice(cut + 1);
 }
 function srtCues(sentence, start, end, short = false) {
-  const words = sentence.split(/\s+/), n = Math.max(1, Math.ceil(sentence.length / (short ? 24 : 84)));
+  const cjk = isCjk(sentence), join = cjk ? "" : " "; // Japanese and Chinese: no spaces, so every character can end a cue
+  const words = cjk ? [...sentence] : sentence.split(/\s+/), n = Math.max(1, Math.ceil(sentence.length / (cjk ? (short ? 10 : 32) : (short ? 24 : 84))));
   const ends = [];
   let pos = 0;
-  for (const w of words) { pos += w.length + 1; ends.push(pos); }
+  for (const w of words) { pos += w.length + (cjk ? 0 : 1); ends.push(pos); }
   const parts = [];
   let first = 0;
   for (let k = 1; k < n && first < words.length - 1; k++) {
     const target = (pos * k) / n;
     let cut = first, best = Infinity;
     for (let i = first; i < words.length - 1; i++) {
-      const score = Math.abs(ends[i] - target) - (",;:—".includes(words[i].slice(-1)) ? 12 : 0);
+      const score = Math.abs(ends[i] - target) - (",;:—，、；：".includes(words[i].slice(-1)) ? (cjk ? 4 : 12) : 0);
       if (score < best) { best = score; cut = i; }
     }
-    parts.push(words.slice(first, cut + 1).join(" ")); first = cut + 1;
+    parts.push(words.slice(first, cut + 1).join(join)); first = cut + 1;
   }
-  parts.push(words.slice(first).join(" "));
+  parts.push(words.slice(first).join(join));
   const total = parts.reduce((s, p) => s + p.length, 0) || 1;
   let t = start;
   return parts.filter(Boolean).map((p) => { const dt = ((end - start) * p.length) / total; const c = [t, t + dt, short ? p : wrapTwoLines(p)]; t += dt; return c; });
@@ -1343,9 +1383,14 @@ sampleAudio.addEventListener("ended", () => stopSample());
 const STOPWORDS = {
   en: "the and you that is it to of for this with what was have are but your just they", de: "der die und das ist nicht ich du sie mit auf für den dem ein eine auch wir aber sich zu",
   es: "el los las y es por una para con pero muy del al más como está lo", fr: "le les et est des une pas je tu vous il pour dans ce qui avec sur au du ne mais",
+  it: "gli che non è sono della nel questo anche più ma come ho hai molto sei alla degli perché", pt: "o os que não um uma com mas você isso no na do da são muito também ele ela",
 };
 const STOPSETS = Object.fromEntries(Object.entries(STOPWORDS).map(([l, w]) => [l, new Set(w.split(" "))]));
 function guessLang(text) {
+  const count = (re) => (text.match(re) || []).length, letters = count(/\p{L}/gu) || 1;
+  if (count(/\p{Script=Devanagari}/gu) / letters > 0.3) return "hi";
+  if (count(/[\p{Script=Hiragana}\p{Script=Katakana}]/gu) >= 5) return "ja";
+  if (count(/\p{Script=Han}/gu) / letters > 0.3) return "zh";
   const words = text.toLowerCase().match(/\p{L}+/gu) || [];
   if (words.length < 12) return null;
   const ranked = Object.keys(STOPSETS).map((l) => [l, words.filter((w) => STOPSETS[l].has(w)).length]).sort((a, b) => b[1] - a[1]);
@@ -1368,7 +1413,8 @@ function updateStats() {
   const lang = $("lang").value;
   const min = text.length / CHARS_PER_SEC[lang] / 60 / +$("speed").value, m = Math.floor(min), s = Math.round((min - m) * 60);
   const h = Math.floor(m / 60), dur = h ? `${h} год ${m % 60} хв` : m ? `${m} хв ${s} с` : `${s} с`;
-  $("stats").textContent = words ? `${words} слів · ≈ ${dur}` : ""; // words and length only, no price (owner's call)
+  const count = lang === "ja" || lang === "zh" ? `${text.replace(/\s/g, "").length} знаків` : `${words} слів`;
+  $("stats").textContent = words ? `${count} · ≈ ${dur}` : ""; // words and length only, no price (owner's call)
   store.set("text", text);
 }
 function pronMap() {
@@ -1520,15 +1566,15 @@ function generate() {
   $("err").textContent = "";
   const text = $("text").value.trim();
   if (!text) { $("err").textContent = "Спочатку вставте текст."; return; }
-  const lang = $("lang").value, foreign = foreignWords(text), guess = guessLang(text);
-  if (foreign.length) { $("err").textContent = `Голос читає латиницю (${Object.values(LANG_NAMES).join(", ")}). Замініть або видаліть: ${foreign.join(", ")}`; return; }
+  const lang = $("lang").value, guess = guessLang(text), foreign = foreignWords(text, guess || lang);
+  if (foreign.length) { $("err").textContent = `Ці слова іншою абеткою голос не прочитає: ${foreign.join(", ")}. Замініть або видаліть їх, або виберіть мову тексту на першому чипі.`; return; }
   if (guess && guess !== lang) {
     $("err").textContent = `Схоже, текст ${LANG_IN[guess]}, а вибрано ${LANG_ACC[lang]} мову. Змініть мову на першому чипі або натисніть ▶ ще раз.`;
     if (store.get("langWarned", "") !== text.slice(0, 200) + lang) { store.set("langWarned", text.slice(0, 200) + lang); return; }
     $("err").textContent = "";
   }
   const engine = voiceOf($("voice").value).engine;
-  const items = buildScript(text, pronMap(), +$("pp").value, lang, CHUNK_CHARS[engine], engine);
+  const items = buildScript(text, pronMap(), +$("pp").value, lang, chunkFor(engine, lang), engine);
   if (!items.some((it) => !it.pause)) { $("err").textContent = "Немає тексту для озвучки."; return; }
   // A voiceover of a dollar or more is started by a second tap, so a long script is never paid for by accident
   const cost = costOf(text), key = text.length + $("voice").value + text.slice(0, 100);
@@ -1696,7 +1742,7 @@ async function revoice(i, text, row) {
   const item = shown, st = item && item.job, msg = row.querySelector(".msg"), btn = row.querySelector("[data-redo]");
   if (job || !st) return;
   const engine = voiceOf(st.voice).engine;
-  const fresh = buildScript(text, pronMap(), 0, st.lang, CHUNK_CHARS[engine], engine).filter((it) => !it.pause);
+  const fresh = buildScript(text, pronMap(), 0, st.lang, chunkFor(engine, st.lang), engine).filter((it) => !it.pause);
   if (!fresh.length) { msg.textContent = "Немає тексту для озвучки."; return; }
   const ctrl = job = new AbortController();
   setBusy(true); keepAwake(true); msg.textContent = ""; btn.disabled = true; btn.textContent = "Озвучую…";

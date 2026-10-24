@@ -33,6 +33,11 @@ const ENGINES = {
 };
 const ASR_MODEL = 'openai/whisper-large-v3-turbo'; // checks Inworld and Chatterbox takes: $0.0002 per minute of audio
 const TAKES = 3; // a take that does not match its text is voiced again, at most this many times in all
+function kokoroVoices(byLang) {
+  const out = {};
+  for (const [lang, ids] of Object.entries(byLang)) for (const id of ids.split(' ')) out[id] = ['kokoro', id, lang];
+  return out;
+}
 // Chatterbox settings: LIVELY reads with more expression, CALM is steadier and slips less (voice-studio/lab, rounds 7-8)
 const LIVELY = { exaggeration: 0.5, cfg: 0.3 }, CALM = { exaggeration: 0.35, cfg: 0.3, temperature: 0.7 };
 // Voice id the page sends -> engine, the provider's voice name, language, engine options.
@@ -46,9 +51,16 @@ const VOICES = {
   af_heart: ['kokoro', 'af_heart', 'en'], af_bella: ['kokoro', 'af_bella', 'en'], af_nicole: ['kokoro', 'af_nicole', 'en'],
   af_sarah: ['kokoro', 'af_sarah', 'en'], af_kore: ['kokoro', 'af_kore', 'en'], af_aoede: ['kokoro', 'af_aoede', 'en'],
   bf_emma: ['kokoro', 'bf_emma', 'en'], bf_isabella: ['kokoro', 'bf_isabella', 'en'],
+  // The rest of Kokoro: every voice it has (its own ids; the first letter is the language, the second f/m)
+  ...kokoroVoices({
+    en: 'am_santa af_alloy af_jessica af_nova af_river af_sky bf_alice bf_lily', es: 'em_santa',
+    it: 'im_nicola if_sara', pt: 'pm_alex pm_santa pf_dora', hi: 'hm_omega hm_psi hf_alpha hf_beta',
+    ja: 'jm_kumo jf_alpha jf_gongitsune jf_nezumi jf_tebukuro',
+    zh: 'zm_yunjian zm_yunxi zm_yunxia zm_yunyang zf_xiaobei zf_xiaoni zf_xiaoxiao zf_xiaoyi',
+  }),
   de_lukas: ['chatterbox', 'menjhi06hqcmfjwzu4dz', 'de', CALM], de_max: ['chatterbox', '', 'de', CALM],
   de_anna: ['chatterbox', 'ufzc7yn3vq0tbpyyoygc', 'de', LIVELY], de_lena: ['chatterbox', 'lfwoiakcdb8ktvbutdar', 'de', CALM],
-  es_alex: ['kokoro', 'em_alex', 'es'], es_mateo: ['chatterbox', '', 'es', LIVELY],
+  es_alex: ['kokoro', 'em_alex', 'es'], es_mateo: ['chatterbox', '', 'es', LIVELY], es_santa: ['kokoro', 'em_santa', 'es'],
   es_lucia: ['chatterbox', '8qs07p4ftjdfzn00sxsc', 'es', LIVELY], es_dora: ['kokoro', 'ef_dora', 'es'],
   es_valentina: ['chatterbox', 'a8fxvnzbjx574rduzhj2', 'es', CALM],
   fr_louis: ['chatterbox', '', 'fr', LIVELY], fr_hugo: ['chatterbox', 'y1lfq42wi3gxr1qsql98', 'fr', LIVELY],
@@ -57,7 +69,8 @@ const VOICES = {
   es_rafael: ['inworld', 'Rafael', 'es'], es_diego: ['inworld', 'Diego', 'es'],
   fr_lucian: ['inworld', 'Lucian', 'fr'], fr_alain: ['inworld', 'Alain', 'fr'],
 };
-const DEFAULT_VOICE = { en: 'am_michael', de: 'de_max', es: 'es_alex', fr: 'fr_louis' };
+const DEFAULT_VOICE = { en: 'am_michael', de: 'de_max', es: 'es_alex', fr: 'fr_louis', it: 'im_nicola', pt: 'pm_alex', hi: 'hm_omega',
+  ja: 'jm_kumo', zh: 'zm_yunjian' };
 const LOGIN_WINDOW = 15 * 60 * 1000;
 const LOGIN_MAX_FAILS = 10;
 
