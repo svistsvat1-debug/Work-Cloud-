@@ -47,7 +47,7 @@ async def main():
         summary = []
         for lang, voice in CASES:
             text = script(lang)
-            await page.select_option("#lang", lang)
+            await page.evaluate("(l) => switchLang(l)", lang)  # the language chip holds language and accent; this sets the language
             await page.evaluate("(id) => { pickVoice(voiceOf(id)); updateLabels(); }", voice)
             await page.fill("#text", text)
             await page.evaluate("() => { window.__log = []; }")

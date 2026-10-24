@@ -43,7 +43,7 @@ async def main():
         for lang, voice, key in CASES:
             if ONLY and lang not in ONLY:
                 continue
-            await page.select_option("#lang", lang)
+            await page.evaluate("(l) => switchLang(l)", lang)  # the language chip holds language and accent; this sets the language
             await page.evaluate("(id) => { pickVoice(voiceOf(id)); updateLabels(); }", voice)  # sets the accent and sex chips too
             assert await page.input_value("#voice") == voice, voice
             await page.fill("#text", texts[key])
