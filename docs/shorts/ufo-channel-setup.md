@@ -6,12 +6,13 @@
 
 ## 1. Персонаж-ведучий
 
-**Walt (Old Walt)** — вигаданий старий далекобійник, який 30 років їздив нічними трасами пустелі в Неваді. Він розповідає історії про НЛО: свої, а також ті, що йому "надсилають" глядачі.
+**Walt** — вигаданий далекобійник років 30, який їздить нічними трасами пустелі в Неваді. Він розповідає історії про НЛО: свої, а також ті, що йому "надсилають" глядачі.
 
 **Візуальні якорі** (однакові в аватарі, банері й усіх кадрах, саме за ними персонажа впізнають):
-- сива щетина, густі брови, добрі втомлені очі;
-- **вицвіла червона кепка далекобійника з маленькою зеленою нашивкою-НЛО** (головна впізнавана деталь);
-- фланелева сорочка в червоно-чорну клітку, оливкова робоча куртка;
+- темне скуйовджене волосся, коротка темна щетина, уважні сміливі очі;
+- **чорна кепка далекобійника з неоново-зеленою нашивкою-НЛО** (головна впізнавана деталь);
+- темно-синій бомбер (льотна куртка) з такою ж зеленою нашивкою-НЛО на грудях, під ним чорне худі;
+- кольори персонажа: чорний / темно-синій + неоново-зелений, як у бренду каналу (ніч + світло НЛО);
 - зелене світло "згори" (від НЛО) на обличчі.
 
 **Стиль:** стилізований 3D-мультяшний, як у більшості story-каналів на YouTube зараз. Не фотореалізм.
@@ -25,7 +26,7 @@
 | Назва | Handle | Логіка |
 |---|---|---|
 | **Walt's UFO Files** (рекомендую) | `@WaltsUFOFiles` | Ім'я персонажа + "UFO" для пошуку + "files" (архів історій, серійність) |
-| Old Walt UFO Stories | `@OldWaltUFO` | Максимально прямо: хто + про що |
+| Walt UFO Stories | `@WaltUFOStories` | Максимально прямо: хто + про що |
 | UFO Walt | `@UFOWalt` | Коротко й запам'ятовується, але менш "теплий" образ |
 
 Чи вільні handle — [MISSING], перевір під час створення каналу.
@@ -34,7 +35,7 @@
 
 **Промпт (Gemini / Midjourney / ChatGPT, квадрат):**
 ```
-Stylized 3D animated cartoon character portrait, an old American trucker named Walt, around 70 years old, friendly weathered face, big expressive kind eyes, bushy grey eyebrows, short grey stubble beard, faded red trucker cap with a small green flying saucer patch on the front, red and black plaid flannel shirt under an olive-green work jacket. He looks up with a curious, slightly amazed half-smile, a soft green glow from above lights his face. Head and shoulders, centered, facing the viewer at a slight angle. Simple dark navy night-sky background with a few stars, strong rim light, high contrast, bold clean shapes, readable at small size. 1:1 square, high quality 3D animation movie style render, no text, no logo, no watermark.
+Stylized 3D animated cartoon character portrait, a young American trucker named Walt, around 30 years old, handsome friendly face, big expressive eyes, messy dark brown hair sticking out from under the cap, short dark stubble, black trucker cap with a glowing neon-green flying saucer patch on the front, dark navy bomber flight jacket with the same neon-green flying saucer patch on the chest, black hoodie underneath. He looks up with a curious, slightly amazed half-smile, a soft green glow from above lights his face. Head and shoulders, centered, facing the viewer at a slight angle. Simple dark navy night-sky background with a few stars, strong rim light, high contrast, bold clean shapes, readable at small size. 1:1 square, high quality 3D animation movie style render, no text, no logo, no watermark.
 ```
 
 **Перевірка аватара перед завантаженням:**
@@ -44,7 +45,7 @@ Stylized 3D animated cartoon character portrait, an old American trucker named W
 
 **Референс персонажа** (згенерувати один раз і потім завантажувати як reference для всіх наступних картинок з Walt):
 ```
-Character reference sheet of the same stylized 3D cartoon old trucker Walt from the reference image: front view, three-quarter view and side view, full body, standing, same red trucker cap with green flying saucer patch, same plaid shirt and olive work jacket, worn jeans, work boots. Plain light grey background, consistent proportions, 3D animation movie style, no text.
+Character reference sheet of the same stylized 3D cartoon young trucker Walt from the reference image: front view, three-quarter view and side view, full body, standing, same black trucker cap with neon-green flying saucer patch, same dark navy bomber jacket with the patch, black hoodie, dark jeans, black work boots. Plain light grey background, consistent proportions, 3D animation movie style, no text.
 ```
 
 ## 4. Банер каналу
@@ -53,7 +54,7 @@ Character reference sheet of the same stylized 3D cartoon old trucker Walt from 
 
 **Промпт:**
 ```
-Wide cinematic banner in stylized 3D animated cartoon style. Empty desert highway at night stretching to the horizon, an old red semi-truck parked on the shoulder with headlights on. The same old trucker Walt from the reference image leans against the truck in the center, looking up at a glowing green flying saucer hovering low over distant mountains. Starry navy-blue night sky, warm headlight glow vs cold green UFO light. All key elements in the center of the frame, empty dark space on the left and right sides. 16:9, high quality 3D animation movie style, no text.
+Wide cinematic banner in stylized 3D animated cartoon style. Empty desert highway at night stretching to the horizon, a black semi-truck parked on the shoulder with headlights on. The same young trucker Walt from the reference image leans against the truck in the center, looking up at a glowing green flying saucer hovering low over distant mountains. Starry navy-blue night sky, warm headlight glow vs cold green UFO light. All key elements in the center of the frame, empty dark space on the left and right sides. 16:9, high quality 3D animation movie style, no text.
 ```
 
 **Текст на банері** (додати в Canva або CapCut, по центру):
@@ -67,8 +68,8 @@ New UFO stories every week
 ```
 Pull up a chair. 🛸
 
-I'm Walt. For 30 years I drove night routes through the Nevada desert —
-and some of the things I saw in that sky, I never told anyone.
+I'm Walt. I drive night routes through the Nevada desert —
+and some of the things I've seen in that sky, I never told anyone.
 
 On this channel I tell UFO stories: strange lights over empty highways,
 missing time, voices on the CB radio, and the stories you send me.
