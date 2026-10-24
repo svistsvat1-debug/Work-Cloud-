@@ -57,6 +57,10 @@
     cursor: pointer; transition: background .15s, border-color .15s; }
   .chip select { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; font-size: 16px; appearance: none; }
   #go { flex: none; width: 72px; min-height: 48px; padding: 0; border-radius: 12px; }
+  /* Listen: the selected part or the beginning, voiced and played at once, nothing saved */
+  .listen { flex: none; width: 52px; min-height: 48px; padding: 0; border-radius: 12px; background: transparent; border: 1px solid var(--chip-edge); color: var(--ink); }
+  .listen.on { background: var(--white); color: var(--black); border-color: var(--white); }
+  .listen.wait svg { display: none; }
   .meta { display: flex; justify-content: space-between; align-items: center; gap: 12px; color: var(--faint); font-size: 12.5px;
     padding: 0 6px; font-variant-numeric: tabular-nums; min-height: 18px; }
 
@@ -106,7 +110,7 @@
   .vrow.now .vplay { background: var(--chip-active); }
   .vplay.on, .vrow.now .vplay.on { background: var(--white); color: var(--black); }
   .vplay.wait svg { display: none; }
-  .vplay.wait::after { content: ""; width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--muted); border-top-color: transparent;
+  .vplay.wait::after, .listen.wait::after { content: ""; width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--muted); border-top-color: transparent;
     animation: spin .8s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
   .vpick { justify-content: space-between; min-height: 44px; padding: 0 12px; background: transparent; text-align: left; font-size: 15.5px; }
@@ -200,8 +204,8 @@
   /* Phones on their side and other short screens: keep the controls in view */
   @media (max-height: 520px) { .app { padding-top: 8px; } .composer { height: 82vh; height: 82dvh; min-height: 220px; } }
   /* The smallest phones */
-  @media (max-width: 360px) { .chip { padding: 0 11px; font-size: 14px; } #go { width: 60px; } #text { font-size: 16px; } }
-  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } .vplay.wait::after { animation-duration: 2s; } }
+  @media (max-width: 360px) { .chip { padding: 0 11px; font-size: 14px; } #go { width: 60px; } .listen { width: 48px; } #text { font-size: 16px; } }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } .vplay.wait::after, .listen.wait::after { animation-duration: 2s; } }
 </style>
 </head>
 <body>
@@ -235,6 +239,7 @@
           <button type="button" class="chip" id="voiceChip" aria-haspopup="dialog" aria-label="Диктор: вибрати й прослухати"><span></span></button>
           <select id="voice" hidden aria-hidden="true" tabindex="-1"></select>
         </div>
+        <button class="listen" id="listen" type="button" aria-label="Прослухати виділений шматок або початок тексту" title="Прослухати: виділений шматок або початок тексту"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><path d="M4 15h3v5H5.5A1.5 1.5 0 0 1 4 18.5zM20 15h-3v5h1.5a1.5 1.5 0 0 0 1.5-1.5z"/></svg></button>
         <button class="white" id="go" type="button" aria-label="Озвучити"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M5 3.2v11.6L14.5 9z" fill="currentColor"/></svg></button>
       </div>
     </section>
@@ -1325,6 +1330,11 @@ function syncChips() {
 // (the language's sample line, at the voice's own speed) and kept on the device, so later taps play at once.
 const samples = new Map(), sampleAudio = new Audio();
 let sampleOf = null, sampleCtrl = null;
+// iPhone plays sound only from a tap, and the sound here comes seconds later: the shared player starts a moment of
+// silence during the tap, which lets it play the real sound when it is ready
+const SILENCE_URL = URL.createObjectURL(new Blob([wavHeader(480 * 2), new Int16Array(480)], { type: "audio/wav" }));
+function unlockAudio() { sampleAudio.src = SILENCE_URL; sampleAudio.play().catch(() => {}); }
+const HEADPHONES = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><path d="M4 15h3v5H5.5A1.5 1.5 0 0 1 4 18.5zM20 15h-3v5h1.5a1.5 1.5 0 0 0 1.5-1.5z"/></svg>';
 function openVoices() { // the voices of the language (and accent, where there is a choice): male, then female
   const lang = $("lang").value, accent = $("accent").value, cur = $("voice").value;
   const list = VOICES.filter((x) => x.lang === lang && x.accent === accent);
@@ -1341,11 +1351,58 @@ function stopSample() {
   sampleCtrl?.abort(); sampleCtrl = null;
   sampleAudio.pause();
   for (const b of document.querySelectorAll(".vplay.on, .vplay.wait")) { b.classList.remove("on", "wait"); b.innerHTML = PLAY_ICON; }
+  if (sampleOf === "listen") { $("listen").classList.remove("on", "wait"); $("listen").innerHTML = HEADPHONES; updateStats(); }
   sampleOf = null;
+}
+// Quick listen: the selected part of the script (or, with nothing selected, its beginning), up to about a minute,
+// voiced like the full voice-over and played at once. Nothing is saved or downloaded; ▶ voices the whole script.
+const LISTEN_CHARS = 1000;
+async function quickListen() {
+  const btn = $("listen");
+  if (sampleOf === "listen") { stopSample(); return; } // tapped again: stop
+  if (job) return;
+  const ta = $("text"), picked = ta.value.slice(ta.selectionStart, ta.selectionEnd).trim(), text = picked || ta.value.trim();
+  if (!text) { $("err").textContent = "Спочатку вставте текст."; return; }
+  const lang = $("lang").value, voice = $("voice").value, engine = voiceOf(voice).engine, speed = +$("speed").value;
+  const foreign = foreignWords(text, lang);
+  if (foreign.length) { $("err").textContent = `Ці слова іншою абеткою голос не прочитає: ${foreign.join(", ")}.`; return; }
+  stopSample(); unlockAudio();
+  const items = [];
+  let chars = 0;
+  for (const it of buildScript(text, pronMap(), +$("pp").value, lang, chunkFor(engine, lang), engine)) {
+    if (chars >= LISTEN_CHARS) break;
+    items.push(it); chars += it.pause ? 0 : it.spoken.length;
+  }
+  if (!items.some((it) => !it.pause)) { $("err").textContent = "Немає тексту для озвучки."; return; }
+  if (items[items.length - 1].pause) items.pop();
+  items[items.length - 1] = { ...items[items.length - 1], gap: 0 };
+  const st = { items, parts: items.map((it) => (it.pause ? { blob: new Blob([]), samples: 0 } : null)) };
+  const what = picked ? "виділений шматок" : "початок тексту", ctrl = sampleCtrl = new AbortController();
+  sampleOf = "listen";
+  $("err").textContent = ""; btn.classList.add("wait"); $("stats").textContent = `Озвучую ${what}…`;
+  try {
+    const todo = items.map((_, i) => i).filter((i) => !st.parts[i]);
+    await Promise.all(Array.from({ length: Math.min(PARALLEL, todo.length) }, async () => {
+      while (todo.length && !ctrl.signal.aborted) {
+        const i = todo.shift(), pcm = await speakChecked(items[i].spoken, voice, lang, speed, "wav", ctrl.signal);
+        st.parts[i] = { blob: new Blob([pcm]), samples: pcm.length };
+      }
+    }));
+    if (ctrl.signal.aborted || sampleOf !== "listen") return;
+    const out = assemble(st);
+    for (const a of document.querySelectorAll("audio")) a.pause(); // one sound at a time
+    sampleAudio.src = URL.createObjectURL(out.wav);
+    btn.classList.remove("wait"); btn.classList.add("on"); btn.innerHTML = PAUSE_ICON;
+    $("stats").textContent = `Слухаєте ${what} · ${fmtTime(out.duration)}. Подобається — ▶ озвучить увесь текст`;
+    await sampleAudio.play();
+  } catch (e) {
+    if (sampleOf === "listen") stopSample();
+    if (e instanceof AuthError) await route(); else if (e.name !== "AbortError") $("err").textContent = e.message;
+  }
 }
 async function playSample(id, btn) {
   if (sampleOf === id) { stopSample(); return; } // the same button again: stop
-  stopSample();
+  stopSample(); unlockAudio();
   const v = voiceOf(id), speed = SPEED[v.engine] ? +store.get("pace_" + id, v.pace) : 1, key = `${id}|${speed}|${PREVIEW[v.lang]}`;
   sampleOf = id;
   btn.classList.add("wait"); // at once, while the device is checked for a kept sample
@@ -1371,7 +1428,7 @@ async function playSample(id, btn) {
   for (const a of document.querySelectorAll("audio")) a.pause(); // one sound at a time
   sampleAudio.play().catch(() => stopSample());
 }
-sampleAudio.addEventListener("ended", () => stopSample());
+sampleAudio.addEventListener("ended", () => { if (sampleAudio.src !== SILENCE_URL) stopSample(); });
 // Which language a text is in, from its most common short words; null when unsure
 const STOPWORDS = {
   en: "the and you that is it to of for this with what was have are but your just they", de: "der die und das ist nicht ich du sie mit auf für den dem ein eine auch wir aber sich zu",
@@ -1550,7 +1607,7 @@ async function keepAwake(on) {
 }
 document.addEventListener("visibilitychange", () => { if (!document.hidden && job) keepAwake(true); });
 function setBusy(on) {
-  $("go").disabled = on; $("preview").disabled = on; $("check").disabled = on; $("resume").disabled = on;
+  $("go").disabled = on; $("listen").disabled = on; $("preview").disabled = on; $("check").disabled = on; $("resume").disabled = on;
   $("progress").hidden = !on;
 }
 
@@ -1585,6 +1642,7 @@ function generate() {
 async function run() {
   const st = pending;
   const ctrl = job = new AbortController();
+  stopSample(); // a quick listen or a voice sample stops: the full voice-over takes over
   setBusy(true); $("resume").hidden = true; $("result").hidden = true;
   keepAwake(true);
   const todo = st.items.map((_, i) => i).filter((i) => !st.parts[i]);
@@ -1789,14 +1847,15 @@ async function preview() {
   $("err").textContent = "";
   const btn = $("preview");
   btn.disabled = true;
+  stopSample(); unlockAudio();
   try {
     const lang = $("lang").value, voice = $("voice").value;
     const text = $("text").value, guess = guessLang(text); // a text in another language gets the sample phrase instead
     const own = guess && guess !== lang ? null : buildScript(text, pronMap(), 0, lang, 200, voiceOf(voice).engine).find((it) => !it.pause);
     const say = own ? own.spoken : PREVIEW[lang];
     const pcm = await speakChecked(say, voice, lang, +$("speed").value, "wav", new AbortController().signal);
-    const url = URL.createObjectURL(new Blob([wavHeader(pcm.length * 2), pcm], { type: "audio/wav" }));
-    await new Audio(url).play();
+    sampleAudio.src = URL.createObjectURL(new Blob([wavHeader(pcm.length * 2), pcm], { type: "audio/wav" }));
+    await sampleAudio.play();
   } catch (e) {
     if (e instanceof AuthError) await route(); else $("err").textContent = e.message;
   }
@@ -1929,6 +1988,7 @@ $("clear").onclick = () => { $("text").value = ""; updateStats(); $("text").focu
 $("go").onclick = generate;
 $("resume").onclick = () => { if (pending && !job) { $("err").textContent = ""; run(); } };
 $("preview").onclick = preview;
+$("listen").onclick = quickListen;
 $("check").onclick = check;
 $("cancel").onclick = () => job?.abort();
 $("text").addEventListener("keydown", (e) => { if ((e.ctrlKey || e.metaKey) && e.key === "Enter") generate(); });
