@@ -3,28 +3,30 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#1b1b1b">
+<meta name="theme-color" content="#000000">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Literata:opsz,wght@7..72,400;7..72,500&display=swap">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-title" content="Voice Studio">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23000000'/%3E%3Cpath d='M9 13v6M13 10v12M17 7v18M21 11v10M25 14v4' stroke='white' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
 <title>Voice Studio</title>
 <style>
-  /* Graphite studio: one large card holds the script, with the settings gear in its corner and voice chips plus a
-     white play button along its bottom. Results open in a second card below. One layout from small phones to
-     wide monitors: the card grows with the screen, chips wrap, nothing scrolls sideways. */
+  /* Black studio: one large black card holds the script, set like a manuscript (Literata), with the settings gear in its
+     corner and outlined voice chips plus a white play button along its bottom. Results open in a second card below.
+     One layout from small phones to wide monitors: the card grows with the screen, chips wrap, nothing scrolls sideways. */
   :root {
-    --bg: #1b1b1b; --card: #212121; --edge: #2e2e2e; --chip: #2b2b2b; --chip-hover: #343434; --chip-active: #3b3b3b;
-    --ink: #ececec; --muted: #9a9a9a; --faint: #6f6f6f; --white: #ffffff; --black: #111111;
-    --safe-b: env(safe-area-inset-bottom, 0px); --font: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --bg: #000000; --card: #0b0b0b; --card-top: #121212; --edge: #1f1f1f; --chip: #161616; --chip-hover: #1d1d1d; --chip-active: #252525;
+    --chip-edge: #2c2c2c; --ink: #f2f2f2; --muted: #9b9b9b; --faint: #6c6c6c; --white: #ffffff; --black: #000000;
+    --safe-b: env(safe-area-inset-bottom, 0px); --font: "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --script: "Literata", Georgia, "Times New Roman", serif;
     color-scheme: dark;
   }
   * { box-sizing: border-box; }
   [hidden] { display: none !important; }
   html { -webkit-text-size-adjust: 100%; }
-  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 var(--font); -webkit-font-smoothing: antialiased; }
+  body { margin: 0; background: radial-gradient(120vmax 70vmax at 50% -25%, #1a1a1a 0%, transparent 60%) no-repeat, var(--bg); color: var(--ink);
+    font: 15px/1.5 var(--font); -webkit-font-smoothing: antialiased; min-height: 100vh; }
   .app { max-width: 1060px; margin: 0 auto; padding: 12px 12px calc(24px + var(--safe-b)); min-height: 100vh; min-height: 100dvh;
     display: flex; flex-direction: column; gap: 10px; }
 
@@ -34,22 +36,25 @@
   button:active, .btn:active { background: var(--chip-active); }
   button:disabled { opacity: .45; cursor: default; }
   button:focus-visible, .btn:focus-visible, .chip:focus-within { outline: 2px solid var(--muted); outline-offset: 2px; }
-  .white { background: var(--white); color: var(--black); font-weight: 600; }
+  .white { background: var(--white); color: var(--black); font-weight: 600; box-shadow: 0 10px 28px -14px rgba(255, 255, 255, .35); }
   .white:active { background: #e2e2e2; }
   .link { min-height: 0; padding: 0; background: none; color: var(--faint); font-size: 13px; text-decoration: underline; text-underline-offset: 3px; }
-  .icon-btn { width: 44px; min-height: 44px; padding: 0; background: none; color: #7c7c7c; border-radius: 10px; }
+  .icon-btn { width: 44px; min-height: 44px; padding: 0; background: none; color: var(--faint); border-radius: 10px; }
 
   /* Script card */
   #studio { flex: 1; display: flex; flex-direction: column; gap: 10px; }
-  .composer { position: relative; display: flex; flex-direction: column; background: var(--card); border: 1px solid var(--edge);
-    border-radius: 18px; height: 70vh; height: 70dvh; min-height: 300px; }
+  .composer, .side, .narrow { background: linear-gradient(180deg, var(--card-top), var(--card)); border: 1px solid var(--edge);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, .04) inset, 0 30px 60px -30px rgba(0, 0, 0, .9); }
+  .composer { position: relative; display: flex; flex-direction: column; border-radius: 18px; height: 70vh; height: 70dvh; min-height: 300px; }
   #openSettings { position: absolute; top: 6px; right: 6px; z-index: 1; }
   #text { flex: 1; width: 100%; min-height: 0; border: 0; outline: none; resize: none; background: transparent; color: var(--ink);
-    padding: 18px 52px 10px 18px; font: inherit; font-size: 17px; font-weight: 500; line-height: 1.6; }
+    padding: 18px 52px 10px 18px; font-family: var(--script); font-size: 18px; font-weight: 400; line-height: 1.7; }
+  #text::placeholder { color: var(--faint); }
   .controls { display: flex; align-items: flex-end; gap: 10px; padding: 10px 12px 12px; }
   .chips { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; gap: 8px; }
   .chip { position: relative; display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 10px;
-    background: var(--chip); color: var(--ink); font-size: 14.5px; font-weight: 500; white-space: nowrap; cursor: pointer; transition: background .15s; }
+    background: transparent; border: 1px solid var(--chip-edge); color: var(--ink); font-size: 14.5px; font-weight: 500; white-space: nowrap;
+    cursor: pointer; transition: background .15s, border-color .15s; }
   .chip.fixed { cursor: default; } .chip.fixed select { pointer-events: none; }
   .chip select { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; font-size: 16px; appearance: none; }
   #go { flex: none; width: 72px; min-height: 48px; padding: 0; border-radius: 12px; }
@@ -57,7 +62,7 @@
     padding: 0 6px; font-variant-numeric: tabular-nums; min-height: 18px; }
 
   /* Results card */
-  .side { display: grid; gap: 14px; align-content: start; background: var(--card); border: 1px solid var(--edge); border-radius: 18px; padding: 16px; }
+  .side { display: grid; gap: 14px; align-content: start; border-radius: 18px; padding: 16px; }
   .side:not(:has(#result:not([hidden]), #progress:not([hidden]), #resume:not([hidden]), #err:not(:empty), #history:not([hidden]))) { display: none; }
   .side-empty { display: none; color: var(--faint); font-size: 14px; }
   #progress { display: grid; gap: 8px; }
@@ -92,9 +97,9 @@
   .frag-edit .row { display: flex; gap: 8px; flex-wrap: wrap; }
 
   /* Voice sheet: every voice of the language, grouped by accent and sex, each with its own play button */
-  .chip#voiceChip { border: 0; min-height: 40px; }
+  .chip#voiceChip { min-height: 40px; }
   .vlist { display: grid; gap: 2px; padding-bottom: 8px; }
-  .vgroup { font-size: 13px; font-weight: 600; color: var(--muted); padding: 14px 2px 6px; border-top: 1px solid var(--edge); }
+  .vgroup { font-size: 11.5px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); padding: 14px 2px 6px; border-top: 1px solid var(--edge); }
   .vgroup:first-child { border-top: 0; padding-top: 2px; }
   .vrow { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 10px; padding: 4px; border-radius: 12px; }
   .vrow.now { background: var(--chip); }
@@ -116,18 +121,17 @@
   /* Earlier voiceovers (the last 5 stay on the device): each one like the result above, with its own player and downloads */
   .history { display: grid; gap: 14px; }
   .result:not([hidden]) + .history, #err:not(:empty) ~ .history { border-top: 1px solid var(--edge); padding-top: 14px; }
-  .history-head { font-size: 13px; font-weight: 600; color: var(--muted); }
+  .history-head { font-size: 11.5px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
   #historyList { display: grid; gap: 22px; }
   .hcard { display: grid; gap: 12px; }
   .hcard + .hcard { border-top: 1px solid var(--edge); padding-top: 18px; }
   .hcard-head { display: grid; gap: 2px; min-width: 0; }
-  .hcard-head b { font-size: 15px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .hcard-head b { font-family: var(--script); font-size: 15.5px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .hcard-head span { font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
   .hcard .link { justify-self: start; font-size: 14px; color: var(--muted); }
 
   /* Sign-in and setup */
-  .narrow { width: 100%; max-width: 380px; margin: auto; display: grid; gap: 12px; background: var(--card); border: 1px solid var(--edge);
-    border-radius: 18px; padding: 22px; }
+  .narrow { width: 100%; max-width: 380px; margin: auto; display: grid; gap: 12px; border-radius: 18px; padding: 22px; }
   .narrow h2 { margin: 0 0 4px; font-size: 21px; font-weight: 700; letter-spacing: -.01em; }
   input[type=password] { width: 100%; min-height: 48px; border-radius: 12px; border: 0; background: var(--chip); color: var(--ink);
     padding: 0 16px; font: inherit; font-size: 16px; outline: none; }
@@ -164,7 +168,8 @@
   .sheet-foot span { max-width: 36ch; }
 
   @media (hover: hover) {
-    button:hover, .btn:hover, .chip:hover { background: var(--chip-hover); }
+    button:hover, .btn:hover { background: var(--chip-hover); }
+    .chip:hover { background: var(--chip); border-color: #3a3a3a; }
     .white:hover { background: #e9e9e9; }
     .seg button[aria-checked="true"]:hover { background: var(--white); }
     .link:hover, .icon-btn:hover { background: none; color: var(--ink); }
@@ -223,7 +228,7 @@
   <main id="studio" hidden>
     <section class="composer">
       <button class="icon-btn" id="openSettings" type="button" aria-label="Налаштування"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M19.4 13a7.6 7.6 0 0 0 0-2l2.1-1.6a.5.5 0 0 0 .1-.6l-2-3.5a.5.5 0 0 0-.6-.2l-2.5 1a7.4 7.4 0 0 0-1.7-1l-.4-2.6a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 0-.5.4l-.4 2.7a7.4 7.4 0 0 0-1.7 1l-2.5-1a.5.5 0 0 0-.6.2l-2 3.5a.5.5 0 0 0 .1.6L4.6 11a7.6 7.6 0 0 0 0 2l-2.1 1.6a.5.5 0 0 0-.1.6l2 3.5a.5.5 0 0 0 .6.2l2.5-1a7.4 7.4 0 0 0 1.7 1l.4 2.6a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.4l.4-2.7a7.4 7.4 0 0 0 1.7-1l2.5 1a.5.5 0 0 0 .6-.2l2-3.5a.5.5 0 0 0-.1-.6zM12 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z"/></svg></button>
-      <textarea id="text" aria-label="Текст для озвучки" spellcheck="false"></textarea>
+      <textarea id="text" aria-label="Текст для озвучки" placeholder="Вставте сценарій або почніть писати…" spellcheck="false"></textarea>
       <div class="controls">
         <div class="chips">
           <label class="chip"><span>Англійська</span><select id="lang" aria-label="Мова"><option value="en">Англійська</option><option value="de">Німецька</option><option value="es">Іспанська</option><option value="fr">Французька</option></select></label>
@@ -1310,9 +1315,10 @@ async function playSample(id, btn) {
   stopSample();
   const v = voiceOf(id), speed = SPEED[v.engine] ? +store.get("pace_" + id, v.pace) : 1, key = `${id}|${speed}|${PREVIEW[v.lang]}`;
   sampleOf = id;
+  btn.classList.add("wait"); // at once, while the device is checked for a kept sample
   let blob = samples.get(key) || (await idb("samples", "readonly", (o) => o.get(key)));
+  if (sampleOf !== id) return;
   if (!blob) {
-    btn.classList.add("wait");
     const ctrl = sampleCtrl = new AbortController();
     try {
       const pcm = await speakChecked(PREVIEW[v.lang], id, v.lang, speed, "wav", ctrl.signal);
