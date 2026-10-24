@@ -6,10 +6,10 @@
 
 ## 1. Персонаж-ведучий
 
-**Walt** — вигаданий далекобійник років 30, який їздить нічними трасами пустелі в Неваді. Він розповідає історії про НЛО: свої, а також ті, що йому "надсилають" глядачі.
+**Walt** — вигаданий далекобійник років 23–25, який їздить нічними трасами пустелі в Неваді. Він розповідає історії про НЛО: свої, а також ті, що йому "надсилають" глядачі.
 
 **Візуальні якорі** (однакові в аватарі, банері й усіх кадрах, саме за ними персонажа впізнають):
-- темне скуйовджене волосся, коротка темна щетина, уважні сміливі очі;
+- молоде обличчя без щетини, коротка сучасна стрижка (текстурований верх з легкою чубчиною, коротко по боках), темно-русе волосся, уважні очі;
 - **чорна кепка далекобійника з неоново-зеленою нашивкою-НЛО** (головна впізнавана деталь);
 - темно-синій бомбер (льотна куртка) з такою ж зеленою нашивкою-НЛО на грудях, під ним чорне худі;
 - кольори персонажа: чорний / темно-синій + неоново-зелений, як у бренду каналу (ніч + світло НЛО);
@@ -35,7 +35,7 @@
 
 **Промпт (Gemini / Midjourney / ChatGPT, квадрат):**
 ```
-Stylized 3D animated cartoon character portrait, a young American trucker named Walt, around 30 years old, handsome friendly face, expressive eyes, messy dark brown hair sticking out from under the cap, short dark stubble, black trucker cap with a glowing neon-green flying saucer patch on the front, dark navy bomber flight jacket with the same neon-green flying saucer patch on the chest, black hoodie underneath. Mouth closed, small natural mouth, calm and composed expression with a subtle confident closed-lip smile, slightly narrowed thoughtful eyes, as if he knows a secret story. He glances slightly upward, a soft green glow from above lights his face. Head and shoulders, centered, facing the viewer at a slight angle. Simple dark navy night-sky background with a few stars, strong rim light, high contrast, bold clean shapes, readable at small size. 1:1 square, high quality 3D animation movie style render, no open mouth, no teeth, no exaggerated surprise, no text, no logo, no watermark.
+Stylized 3D animated cartoon character portrait, a young American trucker named Walt, around 23-25 years old, youthful handsome friendly face, smooth skin, clean-shaven, expressive eyes, short modern textured crop haircut with a light fringe, dark brown hair, faded short on the sides, visible under the cap, black trucker cap with a glowing neon-green flying saucer patch on the front, dark navy bomber flight jacket with the same neon-green flying saucer patch on the chest, black hoodie underneath. Mouth closed, small natural mouth, calm and composed expression with a subtle confident closed-lip smile, slightly narrowed thoughtful eyes, as if he knows a secret story. He glances slightly upward, a soft green glow from above lights his face. Head and shoulders, centered, facing the viewer at a slight angle. Simple dark navy night-sky background with a few stars, strong rim light, high contrast, bold clean shapes, readable at small size. 1:1 square, high quality 3D animation movie style render, no open mouth, no teeth, no exaggerated surprise, no text, no logo, no watermark.
 ```
 
 **Перевірка аватара перед завантаженням:**
