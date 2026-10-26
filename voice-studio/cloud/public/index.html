@@ -1515,7 +1515,7 @@ async function renderHistory() {
     <button type="button" class="link" data-act="fix">Виправити фрагмент</button></div>`).join("");
   for (const r of list) {
     const card = $("historyList").querySelector(`.hcard[data-id="${r.id}"]`), out = assemble(r.job);
-    const wavUrl = URL.createObjectURL(out.wav), srtUrl = URL.createObjectURL(makeSrt(out.timeline));
+    const srtBlob = makeSrt(out.timeline), wavUrl = URL.createObjectURL(out.wav), srtUrl = URL.createObjectURL(srtBlob);
     histUrls.push(wavUrl, srtUrl);
     const audio = card.querySelector("audio"), btn = card.querySelector("[data-act=play]"), seek = card.querySelector("[data-act=seek]");
     audio.src = wavUrl;
@@ -1541,9 +1541,7 @@ async function renderHistory() {
       const a = card.querySelector("[data-act=audio]"), url = URL.createObjectURL(blob);
       histUrls.push(url);
       a.href = url; a.download = filename; a.textContent = "Скачати аудіо"; a.removeAttribute("aria-disabled");
-      const file = new File([blob], filename, { type: blob.type }), share = card.querySelector("[data-act=share]");
-      share.hidden = !(navigator.canShare && navigator.canShare({ files: [file] }));
-      share.onclick = () => navigator.share({ files: [file], title: filename }).catch(() => {});
+      shareButton(card.querySelector("[data-act=share]"), blob, filename, () => srtBlob);
     };
     if (store.get("fileFormat", "mp3") === "wav") offer(out.wav, r.name + ".wav");
     else if (r.mp3) offer(r.mp3, r.name + ".mp3");
@@ -1697,27 +1695,37 @@ function toMp3(wav, onProgress) {
     w.postMessage({ wav, kbps: MP3_KBPS });
   });
 }
-function offerFile(blob, filename) {
+// «Поділитися» sends the audio and its subtitles together (into CapCut, Telegram, Files…) where the phone shares several
+// files: iPhone does. Chrome on Android shares only some file types and .srt is not one of them, so there the audio goes alone.
+const canShare = (files) => { try { return !!navigator.canShare && navigator.canShare({ files }); } catch { return false; } };
+function shareButton(btn, audio, filename, srtNow) {
+  const file = new File([audio], filename, { type: audio.type });
+  btn.hidden = !canShare([file]);
+  btn.onclick = () => { // the subtitles as they are at the tap (normal or short)
+    const srt = new File([srtNow()], filename.replace(/\.\w+$/, ".srt"), { type: "text/plain" });
+    navigator.share({ files: canShare([file, srt]) ? [file, srt] : [file], title: filename }).catch(() => {});
+  };
+}
+function offerFile(blob, filename, srtNow) {
   const url = URL.createObjectURL(blob);
   urls.push(url);
   const a = $("dlWav");
   a.href = url; a.download = filename; a.textContent = "Скачати аудіо"; a.removeAttribute("aria-disabled");
-  const file = new File([blob], filename, { type: blob.type });
-  $("share").hidden = !(navigator.canShare && navigator.canShare({ files: [file] }));
-  $("share").onclick = () => navigator.share({ files: [file], title: filename }).catch(() => {});
+  shareButton($("share"), blob, filename, srtNow);
 }
 async function prepareDownload(item) {
   const token = ++shownToken, a = $("dlWav");
-  if (store.get("fileFormat", "mp3") === "wav") return offerFile(item.wav, item.name + ".wav");
-  if (item.mp3) return offerFile(item.mp3, item.name + ".mp3");
+  const srtNow = () => item.srt;
+  if (store.get("fileFormat", "mp3") === "wav") return offerFile(item.wav, item.name + ".wav", srtNow);
+  if (item.mp3) return offerFile(item.mp3, item.name + ".mp3", srtNow);
   a.removeAttribute("href"); a.setAttribute("aria-disabled", "true"); a.textContent = "Готую MP3…"; $("share").hidden = true;
   try {
     const mp3 = await toMp3(item.wav, (p) => { if (token === shownToken) a.textContent = `Готую MP3… ${Math.round(p * 100)}%`; });
     item.mp3 = mp3;
     if (item.saved && item.id) saveItem(item); // keeps the MP3 with its own entry
-    if (token === shownToken) offerFile(mp3, item.name + ".mp3");
+    if (token === shownToken) offerFile(mp3, item.name + ".mp3", srtNow);
   } catch {
-    if (token === shownToken) offerFile(item.wav, item.name + ".wav"); // the voiceover is never lost over the MP3 step
+    if (token === shownToken) offerFile(item.wav, item.name + ".wav", srtNow); // the voiceover is never lost over the MP3 step
   }
 }
 // how: "new" right after voicing, "restored" from the device after a reload, "opened" from the list of recent ones,
