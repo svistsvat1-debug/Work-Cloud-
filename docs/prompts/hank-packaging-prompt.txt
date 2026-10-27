@@ -30,6 +30,7 @@ STEP 1. READ THE SCRIPT AND FIND (silently)
 - The exact numbers in the script (years, times, miles, dollars, counts).
 - The emotion: fear, shock, grief, warmth, anger at injustice.
 - The ending, so that you never reveal it.
+- What a stranger must understand from the thumbnail in half a second: the key object and the paradox.
 
 =====================================================================
 STEP 2. CHOOSE THE STYLE (what works in this niche right now, October 2026)
@@ -37,6 +38,7 @@ STEP 2. CHOOSE THE STYLE (what works in this niche right now, October 2026)
 STYLE 1 - ROAD MEMOIR (like "Clyde Barrett", 965K views in 3 weeks)
  Use when the strongest moment is a road, weather or truck scene: fog, storm, snow, night highway, bridge, a truck following, a hill, a ravine, something seen through the windshield.
  Look: photorealistic dramatic road scene, the truck is the hero, no face needed. A huge first-person phrase of 2-4 words in the top-left corner: first line pure white, second line bright yellow. It sounds like Hank remembering ("I HELD MY BREATH", "BURIED IN MY CAB").
+ When the mystery is a place or an object seen from the road (a house, a light, a sign, a figure), show it from the driver's seat: a first-person view through the windshield, the top of the steering wheel and the dashboard in the foreground, the key object large and sharp outside. A plain truck on a night road reads as an ordinary drive; use it only when the road itself is the mystery.
 
 STYLE 2 - STORY CARD (like "Family Justice Served", 2.5M views with 12.9K subscribers)
  Use when the hook is a chain of events that needs words: a dead father's object, a letter, a check, a device, family secrets, dates and numbers that make the paradox.
@@ -44,7 +46,7 @@ STYLE 2 - STORY CARD (like "Family Justice Served", 2.5M views with 12.9K subscr
 
 STYLE 3 - THE MOMENT (like "Onyx Heart Stories" x33, "True Tale Time" x14)
  Use when there is one strong scene with people and a key object: a diner, a weigh station, a confrontation, road justice, a warm or emotional scene.
- Look: one hyperreal cinematic scene at the tensest moment, an older main character in the center, the key object marked with one thin red circle or one red arrow. No text.
+ Look: one hyperreal cinematic scene at the tensest moment, an older main character (or the key object itself) in the center, the key object marked with one thin red circle or one red arrow. No text, or at most 2-3 words when the scene alone does not show the paradox.
 
 STYLE 4 - NIGHT SERIES (like "Mr. Nightmare", "Whispered Diaries")
  Use only if MY WISHES asks for it (sleep compilations).
@@ -57,7 +59,12 @@ STEP 3. RULES FOR EVERY THUMBNAIL
 - It looks like the video: same places, objects, mood and colors as the story; the scene really happens in the video, ideally in the first 60 seconds.
 - Adult, serious, cinematic look for men 50-65+: no cartoon, no neon, no emojis, no childish faces, no clutter.
 - Maximum 3 main elements (text counts as one).
-- Text: 1-4 words (Style 2 is the only exception), huge, all capitals, never repeating the title, adding intrigue the title does not have.
+- CLARITY: the key object of the mystery (the house, the light, the letter, the seal...) is big and sharp, close to the camera, at least one third of the frame. Never a small detail far in the background. It must read in half a second on a phone.
+- ONE FOCUS: one point where the eye lands first, the key object or Hank's face. The brightest, warmest spot in the frame is the key object. Remove everything that competes with it: extra cars, signs, rain streaks over the object, busy sky, clutter. One thin red circle or one red arrow may mark the key object (any style except Style 2).
+- HOOK TEXT: 1-4 words (Style 2 is the only exception), huge, all capitals, hitting the main paradox from a side the title does not show. Never repeat the title or its key fact: if the title already has the year, the text uses another fact (a count, a distance, a rule like "ONLY FOR TRUCKS").
+- TRUTH: every word on the thumbnail is literally true in the script. If the light comes on for every truck, never write "ONLY FOR ME".
+- TITLE FIT: the title says the paradox in words, the thumbnail shows it in a picture, from a personal angle (Hank's face, or his view from the cab), never as a generic road landscape.
+- PHONE TEST (silently, before you reply): imagine the thumbnail 160 pixels wide. If the key object and the text are not clear in one second, make the object bigger, cut details and shorten the text.
 - Faces: big, clear, well lit, exaggerated but believable emotion (wide eyes, raised eyebrows, open mouth), looking at the camera or at the key object.
 - Strong contrast: cold blue night and fog against one warm yellow light; slightly more saturated than the video.
 - The bottom-right corner stays empty and dark (YouTube shows the video length there).
@@ -69,14 +76,14 @@ an American long-haul trucker who looks like he is in his late 50s from a life o
 
 FONTS AND COLORS (always the same, the channel style):
 - Main text: extra bold condensed sans-serif poster font in the style of Anton or Bebas Neue, all capitals, tight spacing, thick black outline, strong soft black drop shadow.
-- Colors: pure white #FFFFFF and bright yellow #FFD400. Red #C8102E only for the Style 2 bar, the red circle or the red arrow.
+- Colors: pure white #FFFFFF and bright yellow #FFD400. Red #C8102E only for the Style 2 bar, or one thin red circle or one red arrow on the key object.
 
 =====================================================================
 STEP 4. HOW TO WRITE EACH THUMBNAIL PROMPT
 =====================================================================
 Write one complete paragraph that an image generator can use directly. It must contain:
 1. "Cinematic photorealistic YouTube thumbnail, 16:9, 1280x720," and the style name.
-2. The scene: place, time, weather, light, key object, where everything sits in the frame.
+2. The scene: place, time, weather, light, the key object (large, close, at least one third of the frame, the brightest spot), where everything sits in the frame, and what is left out.
 3. Hank (if he is in it): his fixed look from above, his emotion, where he looks.
 4. TEXT: the exact words in quotes, "render exactly, spelled correctly", line by line, with the color of each line, the font description from above, the size and the exact position, and "not covering the face".
 5. Colors and grade: cold blue fog, one warm yellow light, slightly saturated cinematic teal-and-orange grade.
@@ -91,7 +98,7 @@ STEP 5. RULES FOR THE TITLE
 - Built like what works on this channel: a paradox of two short sentences with exact numbers ("Why Does Dad's GPS Still Move?" 630 views, "He Paid Me $10,000. The Check Was From 1956" 400 views in one day, "It Followed Me 300 Miles. Nobody Was Driving").
 - Opens a question that is answered only near the end. Never reveal the ending.
 - Numbers as digits. One word in capitals at most. No emojis, no hashtags, no "#shorts", never "true story".
-- Does not repeat the thumbnail text; together they make one question.
+- Does not repeat the thumbnail text; together they make one question. The title gives the paradox in words, the thumbnail shows it.
 - Everything it promises is in the video and in its first 60 seconds.
 
 =====================================================================
@@ -130,7 +137,7 @@ Subtitles: upload the SRT as "With timing", English.
 Card 1: [timestamp where Hank mentions his father, Rolling Thunder, the Silver Spur or another past story, or about one third of the video] -> playlist Season 1 – In Order.
 End screen: last 20 seconds, "Best for viewer" video + subscribe button.
 Schedule: 22:00, time zone Warsaw. Premiere: No.
-After publishing: Test & Compare with THUMBNAIL A and B (desktop only), do not change anything for 1-2 weeks; pin the comment; answer every comment in the first 30 minutes; set this video as the Related video of tomorrow's Short.
+After publishing: Test & Compare with THUMBNAIL A and B (desktop only), do not change anything while the test runs (7-14 days); if no test is running and after 48 hours and at least 500 impressions the impressions CTR is under 3%, start Test & Compare with 3 new thumbnails built on STEP 3; pin the comment; answer every comment in the first 30 minutes; set this video as the Related video of tomorrow's Short.
 
 =====================================================================
 STEP 9. PINNED COMMENT
