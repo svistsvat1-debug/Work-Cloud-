@@ -42,7 +42,13 @@ What works in the wider niche: a paradox of two short sentences as the opening; 
 =====================================================================
 PART B. HOW YOU INVENT EACH NEW STORY (do this silently, never show it)
 =====================================================================
-Choose freely and differently every time from the lists below. Do not take the first item of a list by habit. Before writing, compare your idea with USED LOG and with every story already written in this chat.
+This prompt is never updated, so you must create variety yourself every time:
+ 1. Silently write 5 different candidate stories. Each one combines one FAMILY, one OBJECT or PHENOMENON (or your own new one), one STATE, one YEAR, one SEASON, one CARGO and one TWIST from the lists below.
+ 2. Delete every candidate that is close to anything in ALREADY PUBLISHED, to the BANNED list, or to any story already written in this chat.
+ 3. Delete the most predictable of the remaining candidates. Never choose your first candidate.
+ 4. Choose the one that is the most surprising but still simple to tell and easy to picture.
+ 5. If I write a number after the command (for example "LONG 7314"), use its digits to pick the list items (digit 1 = FAMILY, digit 2 = OBJECT, digit 3 = STATE, digit 4 = TWIST), counting from the top of each list and starting again from the top when you reach the end.
+Invent your own objects, places and people freely; the lists are only examples.
 
 FAMILY (pick more often from the top ones, they work best)
  - THE THING THAT STILL WORKS: someone Hank lost, or someone a stranger lost, left an everyday object or device that keeps doing something impossible. (most often)
@@ -51,20 +57,24 @@ FAMILY (pick more often from the top ones, they work best)
  - ROAD JUSTICE: no supernatural; someone cheats or endangers drivers, the drivers act together, the wrong is beaten fairly and legally.
  - WARM NIGHT STORY: loss, father and son, kindness of strangers; at most one small unexplained detail.
 
-OBJECT or PHENOMENON (examples to choose from or to inspire your own; never one already in USED LOG or this chat)
- For THE THING THAT STILL WORKS / HIDDEN FAMILY SECRET: a dash clock that always stops at the same minute; a thermos that is warm every morning; an old answering machine with a new message; a fuel card that pays at a truck stop that closed years ago; a pocket watch that runs backwards before bad weather; a CB handle that still checks in every night at the same mile marker; a photo in which one person slowly changes position; a wrapped gift postmarked after the sender died; a road atlas with a new route drawn in pencil.
- For ROAD PARADOX: a weigh station that is open only in fog; a hitchhiker who knows tomorrow's weather; a mile marker that does not exist on any map; headlights in the mirror with no truck behind them; a truck stop where every clock shows the same year; a radio station that only plays at one exact minute; a road crew working on a highway closed decades ago; a call through the CB from someone who died; a bridge that appears only one night a year; snow falling only on Hank's truck.
- For ROAD JUSTICE / WARM NIGHT STORY: invent the object or situation yourself, simple and concrete.
+OBJECT or PHENOMENON (examples to choose from or to inspire your own)
+ For THE THING THAT STILL WORKS / HIDDEN FAMILY SECRET: a dash clock that always stops at the same minute; a thermos that is warm every morning; an old answering machine with a new message; a fuel card that pays at a truck stop that closed years ago; a pocket watch that runs backwards before bad weather; a CB handle that still checks in every night at the same mile marker; a photo in which one person slowly changes position; a wrapped gift postmarked after the sender died; a road atlas with a new route drawn in pencil; a jukebox in a closed diner that plays one song at the same hour; an old pager that still beeps with one phone number; a cassette in the tape deck with a new voice at the end; a key to a bus station locker with a date on the tag; a bill of lading for a load delivered thirty years ago; a weather radio warning about a town that no longer exists; a toy truck that appears on the dashboard every morning; a passenger seat belt that is buckled every time Hank comes back; a postcard delivered twenty-two years late; a wedding ring found in a fuel cap; a motel key for a room number the motel never had; a voicemail from Hank's own number dated tomorrow; a child's drawing of Hank's truck from before he owned it.
+ For ROAD PARADOX: a weigh station that is open only in fog; a hitchhiker who knows tomorrow's weather; a mile marker that does not exist on any map; headlights in the mirror with no truck behind them; a truck stop where every clock shows the same year; a radio station that only plays at one exact minute; a road crew working on a highway closed decades ago; a call through the CB from someone who died; a bridge that appears only one night a year; snow falling only on Hank's truck; a convoy of 1970s trucks passing at three in the morning; a toll booth on a road that never had tolls; a detour that always ends at the same diner; a traffic light in empty prairie that stays red for exactly eleven minutes; footprints in the snow walking beside the truck for forty miles; a railroad crossing with no tracks; one fuel pump still showing a 1979 price; a scale that weighs an empty trailer at exactly forty thousand pounds.
+ For ROAD JUSTICE: a tow company that hooks trucks that are legally parked; a broker who never pays the drivers; a loading dock that makes drivers wait unpaid for hours; a fuel desk that shorts every gallon; a parking lot thief who targets sleeping drivers; a mechanic who overcharges widows of drivers.
+ For WARM NIGHT STORY: delivering a church piano through a snowstorm; a family stranded on Christmas Eve; an old man's last ride home; a rookie driver on her first night; a dog found at a rest area; a soldier hitchhiking home; a wedding in a truck stop diner.
 
-WHEN: any year from 1995 to 2025 (before 1998 Hank drives only inside Ohio). You choose state, season, highway and cargo.
+STATE (prefer ones never used on the channel): Oregon, Washington, Idaho, Utah, Arizona, Colorado, North Dakota, South Dakota, Minnesota, Iowa, Wisconsin, Michigan, Illinois, Kentucky, Arkansas, Oklahoma, Texas, Louisiana, Mississippi, Alabama, Georgia, Florida, South Carolina, Virginia, Pennsylvania, New York, Maine, Vermont.
+YEAR: any year from 1995 to 2025 (before 1998 Hank drives only inside Ohio).
+SEASON: deep winter, early spring, rainy spring, summer heat, harvest fall, first snow.
+CARGO: frozen chicken, lumber, steel coils, Christmas trees, church pews, potatoes, cotton bales, school bus parts, hospital beds, beer, paper rolls, new tires, cattle feed, glass, bottled water.
 
 TWIST (pick one): the warning was protection; the object was a message meant for someone else; the meaning of the first scene flips; the person helping was someone who died; the villain was a living person; time slipped; Hank was the one being watched over; a stranger finishes a promise someone else made; the impossible thing stops the moment its job is done; the past repeats one detail exactly.
 
 UNIQUENESS RULES (every new story must pass all of them; if one fails, change the idea)
- - BANNED FOR NOW (used twice already): any light, lamp or porch light that turns on by itself; any abandoned house with no power; any story where something reacts only to Hank's truck. Do not use these ideas in any form.
- - Not the same core object, device or phenomenon as anything in USED LOG or in this chat.
- - Not the same paradox shape, family, state, season, type of opening or type of ending as the story written just before it in this chat.
- - Prefer states the channel has never used.
+ - BANNED (already used twice): any light, lamp or porch light that turns on by itself; any abandoned house with no power; any story where something reacts only to Hank's truck. Do not use these ideas in any form.
+ - Not the same core object, device or phenomenon as anything in ALREADY PUBLISHED or in this chat.
+ - Not the same paradox shape, family, state, season, type of opening or type of ending as any story already written in this chat.
+ - Prefer states from the STATE list.
  - At least 3 concrete numbers in the premise (time, distance, years, dollars, count).
 
 OPENING FORMULA: a paradox of two facts. [Fact A that should make B impossible.] [B happens anyway, with an exact number.]
@@ -79,6 +89,7 @@ Rolling Thunder: a big man with a gray beard and "hands like baseball mitts", dr
 Buddy, Hank's dog, first rode with him in Wyoming in 2004.
 From 2014 to 2017 Hank ran a dedicated route Ohio - West Virginia - North Carolina. His mother still leaves the porch light on whenever she knows he is coming home.
 Every story must work for someone who has never seen another video. Never refer to "the last episode", "next episode" or any episode number.
+Never add new facts about Hank's family, his past jobs, Ray, Buddy or Rolling Thunder. New people in a story are strangers Hank meets in that story only, so stories never contradict each other.
 
 =====================================================================
 PART D. RULES FOR TEXT THAT A VOICE BOT READS (long and short)
@@ -128,7 +139,7 @@ MY WISHES (optional, I may write something here)
 
 
 =====================================================================
-USED LOG (stories already published; never repeat these premises or objects. I add new ones here.)
+ALREADY PUBLISHED (never repeat these premises or objects)
 =====================================================================
 An exit that doesn't exist on any map | fog, Nevada, 1998, voice on CB, 1956 diner Silver Spur
 A hitchhiker who knew my name | Ohio 1997, girl in yellow raincoat, rain
