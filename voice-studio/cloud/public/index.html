@@ -272,6 +272,7 @@
           <a class="btn" id="dlWav" download>Скачати аудіо</a>
           <a class="btn" id="dlSrt" download>Скачати субтитри</a>
           <button type="button" id="share" hidden>Поділитися</button>
+          <button type="button" id="shareSrt" hidden>Поділитися субтитрами</button>
         </div>
         <button type="button" class="link" id="fragsToggle" hidden>Виправити фрагмент</button>
         <div class="frags" id="frags" hidden></div>
@@ -1511,7 +1512,7 @@ async function renderHistory() {
       <input type="range" min="0" max="1000" value="0" data-act="seek" aria-label="Позиція відтворення"><span class="time">0:00 / ${clock(r.duration)}</span></div>
     <audio preload="none"></audio>
     <div class="files"><a class="btn" data-act="audio">Скачати аудіо</a><a class="btn" data-act="srt">Скачати субтитри</a>
-      <button type="button" data-act="share" hidden>Поділитися</button></div>
+      <button type="button" data-act="share" hidden>Поділитися</button><button type="button" data-act="shareSrt" hidden>Поділитися субтитрами</button></div>
     <button type="button" class="link" data-act="fix">Виправити фрагмент</button></div>`).join("");
   for (const r of list) {
     const card = $("historyList").querySelector(`.hcard[data-id="${r.id}"]`), out = assemble(r.job);
@@ -1541,7 +1542,7 @@ async function renderHistory() {
       const a = card.querySelector("[data-act=audio]"), url = URL.createObjectURL(blob);
       histUrls.push(url);
       a.href = url; a.download = filename; a.textContent = "Скачати аудіо"; a.removeAttribute("aria-disabled");
-      shareButton(card.querySelector("[data-act=share]"), blob, filename, () => srtBlob);
+      shareButton(card.querySelector("[data-act=share]"), card.querySelector("[data-act=shareSrt]"), blob, filename, () => srtBlob);
     };
     if (store.get("fileFormat", "mp3") === "wav") offer(out.wav, r.name + ".wav");
     else if (r.mp3) offer(r.mp3, r.name + ".mp3");
@@ -1697,28 +1698,32 @@ function toMp3(wav, onProgress) {
 }
 // «Поділитися» sends the audio and its subtitles together (into CapCut, Telegram, Files…) where the phone shares several
 // files: iPhone does. Chrome on Android shares only some file types and .srt is not one of them, so there the audio goes alone.
+// «Скопіювати» in the iPhone share sheet keeps only the first file, so the subtitles also have a share of their own.
 const canShare = (files) => { try { return !!navigator.canShare && navigator.canShare({ files }); } catch { return false; } };
-function shareButton(btn, audio, filename, srtNow) {
+function shareButton(btn, srtBtn, audio, filename, srtNow) {
   const file = new File([audio], filename, { type: audio.type });
+  const srtFile = () => new File([srtNow()], filename.replace(/\.\w+$/, ".srt"), { type: "text/plain" }); // as they are at the tap (normal or short)
   btn.hidden = !canShare([file]);
-  btn.onclick = () => { // the subtitles as they are at the tap (normal or short)
-    const srt = new File([srtNow()], filename.replace(/\.\w+$/, ".srt"), { type: "text/plain" });
+  srtBtn.hidden = !canShare([srtFile()]);
+  btn.onclick = () => {
+    const srt = srtFile();
     navigator.share({ files: canShare([file, srt]) ? [file, srt] : [file], title: filename }).catch(() => {});
   };
+  srtBtn.onclick = () => { const srt = srtFile(); navigator.share({ files: [srt], title: srt.name }).catch(() => {}); };
 }
 function offerFile(blob, filename, srtNow) {
   const url = URL.createObjectURL(blob);
   urls.push(url);
   const a = $("dlWav");
   a.href = url; a.download = filename; a.textContent = "Скачати аудіо"; a.removeAttribute("aria-disabled");
-  shareButton($("share"), blob, filename, srtNow);
+  shareButton($("share"), $("shareSrt"), blob, filename, srtNow);
 }
 async function prepareDownload(item) {
   const token = ++shownToken, a = $("dlWav");
   const srtNow = () => item.srt;
   if (store.get("fileFormat", "mp3") === "wav") return offerFile(item.wav, item.name + ".wav", srtNow);
   if (item.mp3) return offerFile(item.mp3, item.name + ".mp3", srtNow);
-  a.removeAttribute("href"); a.setAttribute("aria-disabled", "true"); a.textContent = "Готую MP3…"; $("share").hidden = true;
+  a.removeAttribute("href"); a.setAttribute("aria-disabled", "true"); a.textContent = "Готую MP3…"; $("share").hidden = $("shareSrt").hidden = true;
   try {
     const mp3 = await toMp3(item.wav, (p) => { if (token === shownToken) a.textContent = `Готую MP3… ${Math.round(p * 100)}%`; });
     item.mp3 = mp3;
