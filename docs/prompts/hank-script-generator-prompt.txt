@@ -73,22 +73,23 @@ PART D. RULES FOR TEXT THAT A VOICE BOT READS (long and short)
 8. Plain American spoken English. No profanity.
 
 =====================================================================
-PART E. LONG SCRIPT (2,600-3,200 words, about 18-21 minutes)
+PART E. LONG SCRIPT (2,300-2,500 words, about 15 minutes; never more than 2,550 words = 16 minutes)
 =====================================================================
+Aim for about 2,400 words. The voice bot reads about 160 words a minute, so 2,400 words is about 15 minutes. Count the words before you reply; if the script is longer than 2,550 words, cut it.
 One continuous script, in this order (approximate words), with no visible section markers:
 1. COLD OPENING (80-110): the strongest moment, no explanation, the paradox with exact numbers, last sentence cut off with "…".
-2. "Hey. It's Hank." Where he is tonight in 2026 (a truck stop, the weather, one small detail like the coffee), then one sentence restating tonight's paradox (90-120).
-3. Exact date and context of the story: year, weekday, hour, state, highway, cargo, Hank's age (130-170).
-4. One real detail of trucking life explained for people who never drove a truck, true for that year, which later matters to the plot (250-320).
-5. Escalation 1: the impossible thing repeats, a sound or physical detail, ends with an open question to the listener (500-600).
-6. Hank's thoughts: one quiet paragraph about loneliness, fatigue or family (120-170).
-7. Turn and escalation 2: something changes the meaning of the beginning (480-560).
-8. Peak: a rhetorical question to the listener that lists the facts, then "You tell me." (120-170).
-9. Resolution: answer the main question (300-360).
-10. One detail left unexplained, stated plainly (90-130).
-11. Practical advice in two or three sentences the listener can use in real life (90-120).
-12. Outro: "Next time, I've got another one from the road.", one comment question specific to this story, "I read every one.", "Drive safe out there." and one final short line about this story (100-130).
-A new open question at least every 600 words. Sound and touch details in quiet moments (knocks, hiss of air brakes, CB squelch, cold metal, coffee smell).
+2. "Hey. It's Hank." Where he is tonight in 2026 (a truck stop, the weather, one small detail like the coffee), then one sentence restating tonight's paradox (70-100).
+3. Exact date and context of the story: year, weekday, hour, state, highway, cargo, Hank's age (110-150).
+4. One real detail of trucking life explained for people who never drove a truck, true for that year, which later matters to the plot (220-280).
+5. Escalation 1: the impossible thing repeats, a sound or physical detail, ends with an open question to the listener (430-500).
+6. Hank's thoughts: one quiet paragraph about loneliness, fatigue or family (100-140).
+7. Turn and escalation 2: something changes the meaning of the beginning (400-460).
+8. Peak: a rhetorical question to the listener that lists the facts, then "You tell me." (100-140).
+9. Resolution: answer the main question (260-310).
+10. One detail left unexplained, stated plainly (80-110).
+11. Practical advice in two or three sentences the listener can use in real life (70-90).
+12. Outro: "Next time, I've got another one from the road.", one comment question specific to this story, "I read every one.", "Drive safe out there." and one final short line about this story (80-110).
+A new open question at least every 500 words. Sound and touch details in quiet moments (knocks, hiss of air brakes, CB squelch, cold metal, coffee smell).
 
 =====================================================================
 PART F. SHORT SCRIPT (75-90 words, 30-35 seconds)
