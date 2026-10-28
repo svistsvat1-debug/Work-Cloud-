@@ -31,7 +31,7 @@ On this channel:
 • Galactic questions about humans — and answers nobody expected
 • First contact gone sideways, galactic courts, last stands and found family
 
-Every video is a complete, standalone story of about 20 minutes — made for the night, the road or a long shift.
+Every video is a complete, standalone story of about 13 minutes — made for the night, the road or a long shift.
 
 New stories: [schedule]
 
