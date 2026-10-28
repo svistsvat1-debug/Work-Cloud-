@@ -55,3 +55,15 @@ Square 1:1 YouTube channel avatar, 800x800, photorealistic cinematic sci-fi. Ext
 ```
 
 Як перевірити: згенерувати 4 варіанти, зменшити до 98×98 і вибрати той, де Землю в зіниці видно одразу.
+
+### Простіший варіант (плаский значок) — рекомендований
+
+```text
+Minimal flat vector logo icon, 1:1, 800x800. A simple glowing amber-orange planet Earth with clean flat continent shapes, centered on a solid deep navy background, surrounded by one thin bright circular scanner ring. Only navy, amber-orange and a touch of white. Bold simple shapes, no small details, readable at 98x98 pixels, centered for a circular crop. No text, no letters, no logos, no watermark, no border.
+```
+
+Запасний плаский варіант — око:
+
+```text
+Minimal flat vector logo icon, 1:1, 800x800. One stylized alien eye: an amber-gold almond shape with a vertical black slit pupil, and a tiny blue planet Earth inside the pupil, centered on a solid deep navy background. Only navy, amber-gold, black and blue. Bold simple shapes, readable at 98x98 pixels, centered for a circular crop. No text, no letters, no logos, no watermark, no border.
+```
