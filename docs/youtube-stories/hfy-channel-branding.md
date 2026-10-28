@@ -67,3 +67,17 @@ Minimal flat vector logo icon, 1:1, 800x800. A simple glowing amber-orange plane
 ```text
 Minimal flat vector logo icon, 1:1, 800x800. One stylized alien eye: an amber-gold almond shape with a vertical black slit pupil, and a tiny blue planet Earth inside the pupil, centered on a solid deep navy background. Only navy, amber-gold, black and blue. Bold simple shapes, readable at 98x98 pixels, centered for a circular crop. No text, no letters, no logos, no watermark, no border.
 ```
+
+### Мультяшний варіант (менш реалістичний)
+
+Талісман: прибулець визирає з-за Землі.
+
+```text
+2D cartoon logo icon, 1:1, 800x800, flat colors with thick dark outlines, simple sticker style, NOT photorealistic, no 3D, no realistic textures. A small friendly-but-sly alien with a teal head and two big amber-gold eyes peeks over the top of a round cartoon planet Earth (simple blue and green shapes), its two little hands gripping the planet's edge. Solid deep navy background. Only navy, teal, amber-gold, blue and green. Bold simple shapes, readable at 98x98 pixels, centered for a circular crop. No text, no letters, no logos, no watermark, no border.
+```
+
+Запасний — нашивка в стилі ретро-sci-fi:
+
+```text
+2D flat vector emblem, 1:1, 800x800, retro sci-fi patch style, NOT photorealistic, no 3D. A round badge with a thick amber-orange border; inside, a simple cartoon planet Earth with a small flying saucer orbiting it on a curved dotted line, on a deep navy background with a few tiny white stars. Only navy, amber-orange, blue, green and white. Bold simple shapes, readable at 98x98 pixels, centered for a circular crop. No text, no letters, no logos, no watermark.
+```
