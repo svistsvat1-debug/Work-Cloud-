@@ -1,0 +1,50 @@
+[
+ {
+  "id": "l1",
+  "text": "A woodpecker slams its face into a tree, over and over.",
+  "start": 0.0,
+  "end": 3.529
+ },
+ {
+  "id": "l2",
+  "text": "So why doesn't it get a concussion?",
+  "start": 3.929,
+  "end": 5.883
+ },
+ {
+  "id": "l3",
+  "text": "People used to think its skull was a built-in shock absorber.",
+  "start": 6.333,
+  "end": 10.108
+ },
+ {
+  "id": "l4",
+  "text": "But slow-motion videos showed almost no cushioning.",
+  "start": 10.508,
+  "end": 13.454
+ },
+ {
+  "id": "l5a",
+  "text": "Its head basically works like a stiff hammer,",
+  "start": 14.004,
+  "end": 16.479
+ },
+ {
+  "id": "l5b",
+  "text": "since padding would waste the force it needs to drill.",
+  "start": 16.629,
+  "end": 19.383
+ },
+ {
+  "id": "l6",
+  "text": "What protects it is size.",
+  "start": 19.883,
+  "end": 21.399
+ },
+ {
+  "id": "l7",
+  "text": "A brain that small can take hits that would concuss a human.",
+  "start": 21.749,
+  "end": 25.214
+ }
+]
