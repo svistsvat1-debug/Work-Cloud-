@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Hand;src:url(caveat.ttf);font-weight:700}
+html,body{margin:0;padding:0;background:#fbf8f1;overflow:hidden}
+#stage{width:1280px;height:720px;position:relative;background:#fbf8f1}
+svg{position:absolute;left:0;top:0}
+text{font-family:Hand;font-weight:700}
+#sub{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);max-width:1040px;
+ background:rgba(60,60,60,.82);color:#fff;font:600 23px/1.35 "DejaVu Sans",sans-serif;
+ padding:9px 20px;border-radius:10px;text-align:center;opacity:0}
+.s{fill:none;stroke-linecap:round;stroke-linejoin:round}
+</style></head>
+<body><div id="stage">
+<svg id="svg" width="1280" height="720" viewBox="0 0 1280 720">
+ <defs>
+  <filter id="marker" x="-5%" y="-5%" width="110%" height="110%">
+   <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="3"/>
+   <feDisplacementMap in="SourceGraphic" scale="3"/>
+  </filter>
+ </defs>
+ <g id="root" filter="url(#marker)"></g>
+</svg>
+<div id="sub"></div>
+</div>
+<script>
+const INK='#222', RED='#e63946', BLUE='#3a86ff', GREEN='#2a9d8f', ORANGE='#f4a261', YEL='#ffd166', PURP='#6c4cf5';
+const NS='http://www.w3.org/2000/svg';
+const root=document.getElementById('root');
+const scenes=[]; let clipId=0;
+const ease=p=>p<0?0:p>1?1:(p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2);
+const clamp=p=>p<0?0:p>1?1:p;
+
+function scene(start,end,subs){const g=document.createElementNS(NS,'g');root.appendChild(g);
+  const sc={start,end,g,items:[],subs};scenes.push(sc);return sc;}
+function add(sc,markup){const g=document.createElementNS(NS,'g');g.innerHTML=markup;sc.g.appendChild(g);return g;}
+
+// draw strokes (.s) progressively, then fade fills (.f)
+function draw(sc,start,dur,markup,opts={}){
+  const g=add(sc,markup);
+  const strokes=[...g.querySelectorAll('.s')], fills=[...g.querySelectorAll('.f')];
+  strokes.forEach(e=>{e.setAttribute('pathLength','1');e.style.strokeDasharray='1 1';});
+  fills.forEach(e=>e.style.opacity=0);
+  sc.items.push(t=>{
+    const n=strokes.length;
+    strokes.forEach((e,i)=>{const a=start+dur*i/n,b=start+dur*(i+1)/n;
+      const p=ease((t-a)/(b-a));e.style.strokeDashoffset=1-p;e.style.visibility=p>0?'visible':'hidden';});
+    const fp=clamp((t-start-dur)/0.6);fills.forEach(e=>e.style.opacity=fp);
+    if(opts.anim)opts.anim(g,t);
+  });return g;}
+
+// handwritten text: reveal left->right
+function write(sc,start,dur,txt,x,y,size,color,anchor='start'){
+  const id='c'+(clipId++);
+  const g=add(sc,`<clipPath id="${id}"><rect x="0" y="0" width="0" height="0"/></clipPath>
+   <text x="${x}" y="${y}" font-size="${size}" fill="${color}" text-anchor="${anchor}" clip-path="url(#${id})">${txt}</text>`);
+  const r=g.querySelector('rect'), te=g.querySelector('text');
+  sc.items.push(t=>{const bb=te.getBBox();const p=clamp((t-start)/dur);
+    r.setAttribute('x',bb.x-10);r.setAttribute('y',bb.y-20);r.setAttribute('height',bb.height+40);
+    r.setAttribute('width',(bb.width+20)*p);});
+  return g;}
+
+// ---------- shapes ----------
+const drop=(x,y,c=BLUE)=>`<path class="f" fill="${c}" d="M${x} ${y-16} C${x+10} ${y-2} ${x+11} ${y+6} ${x} ${y+11} C${x-11} ${y+6} ${x-10} ${y-2} ${x} ${y-16}Z"/>`;
+function gearPath(cx,cy,r,teeth){let d='';const ri=r*0.8,step=Math.PI*2/teeth;
+  for(let i=0;i<teeth;i++){const a=i*step;
+    const pts=[[ri,a],[r,a+step*.15],[r,a+step*.45],[ri,a+step*.6]];
+    pts.forEach(([rr,aa],j)=>{d+=(i==0&&j==0?'M':'L')+(cx+rr*Math.cos(aa)).toFixed(1)+' '+(cy+rr*Math.sin(aa)).toFixed(1)+' ';});}
+  return d+'Z';}
+const underline=(x1,x2,y,c=RED)=>`<path class="s" stroke="${c}" stroke-width="7" d="M${x1} ${y} Q${(x1+x2)/2} ${y+10} ${x2} ${y-4}"/>`;
+const arrow=(x1,y1,x2,y2,c=INK,w=5)=>{const a=Math.atan2(y2-y1,x2-x1),h=18;
+  const p1=[x2-h*Math.cos(a-0.45),y2-h*Math.sin(a-0.45)],p2=[x2-h*Math.cos(a+0.45),y2-h*Math.sin(a+0.45)];
+  return `<path class="s" stroke="${c}" stroke-width="${w}" d="M${x1} ${y1} Q${(x1+x2)/2} ${(y1+y2)/2-14} ${x2} ${y2}"/>
+          <path class="s" stroke="${c}" stroke-width="${w}" d="M${p1[0]} ${p1[1]} L${x2} ${y2} L${p2[0]} ${p2[1]}"/>`;};
+
+// =============== SCENE 1 : hook ===============
+{const s=scene(0,10.2,[[0.3,5,'A customer fills out the form on your website…'],[5,10.2,'…and nobody gets back to them. Sound familiar?']]);
+ write(s,0.3,1.4,'Where do your',70,190,88,INK);
+ write(s,1.6,1.3,'leads disappear?',70,300,96,RED);
+ draw(s,2.9,0.6,underline(75,560,325));
+ // funnel
+ draw(s,3.3,2.2,`
+  <path class="f" fill="#cfe0ff" d="M720 200 L1080 200 L945 400 L945 500 L855 500 L855 400 Z"/>
+  <path class="s" stroke="${INK}" stroke-width="6" d="M720 200 L855 400 L855 500"/>
+  <path class="s" stroke="${INK}" stroke-width="6" d="M1080 200 L945 400 L945 500"/>
+  <ellipse class="s" stroke="${INK}" stroke-width="6" cx="900" cy="200" rx="180" ry="30"/>
+  <path class="s" stroke="${INK}" stroke-width="6" d="M855 500 L945 500"/>
+  <path class="s" stroke="${RED}" stroke-width="5" d="M770 268 l14 10 l-10 10 l12 8"/>
+  <path class="s" stroke="${RED}" stroke-width="5" d="M1030 262 l-14 12 l10 8 l-12 10"/>
+  <path class="s" stroke="${RED}" stroke-width="5" d="M870 455 l14 6 l-8 10 l14 6"/>`);
+ // incoming leads (people heads)
+ draw(s,5.4,1.2,[820,900,980].map((x,i)=>`<circle class="f" fill="${YEL}" cx="${x}" cy="${110-(i%2)*18}" r="20"/>
+  <circle class="s" stroke="${INK}" stroke-width="4" cx="${x}" cy="${110-(i%2)*18}" r="20"/>`).join(''));
+ // leaking drops (animated falling)
+ const dg=draw(s,6.3,0.3,drop(760,300,RED)+drop(1040,295,RED)+drop(880,520,RED),{anim:(g,t)=>{
+   [...g.querySelectorAll('path')].forEach((p,i)=>{const k=((t-6.3+i*.45)%1.4)/1.4;
+     p.setAttribute('transform',`translate(${i==0?-k*30:i==1?k*30:0},${k*110})`);
+     p.style.opacity=t<6.6?clamp((t-6.3)/.3):1-k;});}});
+ write(s,7.2,1,'lost!',1060,420,64,RED);
+ write(s,7.6,0.8,'?',700,420,90,RED);
+}
+
+// =============== SCENE 2 : chaos ===============
+{const s=scene(10.2,20.4,[[10.4,15.3,'Website, Instagram, phone calls, email — requests come from everywhere…'],[15.3,20.4,'…and end up scattered across chats, notebooks and memory.']]);
+ write(s,10.4,1.6,'Leads come from everywhere',60,110,76,INK);
+ draw(s,11.9,0.5,underline(65,800,132));
+ // icons column
+ draw(s,12.3,0.8,`<rect class="f" fill="#cfe0ff" x="90" y="190" width="110" height="74" rx="8"/>
+  <rect class="s" stroke="${INK}" stroke-width="5" x="90" y="190" width="110" height="74" rx="8"/>
+  <path class="s" stroke="${INK}" stroke-width="4" d="M90 208 L200 208"/>
+  <circle class="s" stroke="${RED}" stroke-width="4" cx="102" cy="199" r="3"/>`);
+ write(s,12.7,0.6,'Website',220,240,44,INK);
+ draw(s,13.1,0.8,`<rect class="f" fill="#ffe3ec" x="122" y="290" width="50" height="86" rx="10"/>
+  <rect class="s" stroke="${INK}" stroke-width="5" x="122" y="290" width="50" height="86" rx="10"/>
+  <circle class="s" stroke="${INK}" stroke-width="3" cx="147" cy="364" r="4"/>`);
+ write(s,13.5,0.6,'Instagram',220,345,44,INK);
+ draw(s,13.9,0.8,`<path class="f" fill="#d8f3dc" d="M100 410 L190 410 L190 470 L100 470Z"/>
+  <path class="s" stroke="${INK}" stroke-width="5" d="M100 410 L190 410 L190 470 L100 470Z"/>
+  <path class="s" stroke="${INK}" stroke-width="5" d="M100 410 L145 445 L190 410"/>`);
+ write(s,14.3,0.6,'Email',220,452,44,INK);
+ draw(s,14.7,0.8,`<path class="f" fill="#fff1c9" d="M100 510 C100 490 200 490 200 510 L200 545 C200 565 140 565 130 565 L110 585 L114 562 C104 558 100 552 100 545Z"/>
+  <path class="s" stroke="${INK}" stroke-width="5" d="M100 510 C100 490 200 490 200 510 L200 545 C200 565 140 565 130 565 L110 585 L114 562 C104 558 100 552 100 545Z"/>`);
+ write(s,15.1,0.6,'Calls & DMs',220,552,44,INK);
+ // arrows to pile
+ draw(s,15.5,1.2,arrow(450,230,720,330)+arrow(450,345,720,360)+arrow(450,450,720,395)+arrow(450,545,720,430));
+ // messy pile
+ const papers=[[860,300,-12],[900,330,8],[840,360,-4],[930,390,14],[870,420,-9]];
+ draw(s,16.6,1.6,papers.map(([x,y,r])=>`<g transform="rotate(${r} ${x+60} ${y+40})">
+  <rect class="f" fill="#ffffff" x="${x}" y="${y}" width="140" height="90"/>
+  <rect class="s" stroke="${INK}" stroke-width="4" x="${x}" y="${y}" width="140" height="90"/>
+  <path class="s" stroke="#888" stroke-width="3" d="M${x+15} ${y+25} L${x+120} ${y+25} M${x+15} ${y+48} L${x+100} ${y+48}"/></g>`).join(''));
+ write(s,18.2,0.6,'?',1110,320,110,RED);
+ write(s,18.5,0.6,'!',780,300,100,RED);
+ write(s,18.8,0.8,'chaos',910,580,64,RED);
+}
+
+// =============== SCENE 3 : time ===============
+{const s=scene(20.4,30.6,[[20.6,25.5,'Every hour you take to reply, the lead gets colder.'],[25.5,30.6,'While you answer manually, the customer is already talking to your competitor.']]);
+ write(s,20.6,1.4,'Every minute counts',60,110,80,INK);
+ draw(s,22,0.5,underline(65,640,132));
+ const ticks=[...Array(12)].map((_,i)=>{const a=i*Math.PI/6;return `M${330+125*Math.cos(a)} ${390+125*Math.sin(a)} L${330+142*Math.cos(a)} ${390+142*Math.sin(a)}`}).join(' ');
+ draw(s,22.2,1.6,`<circle class="f" fill="#fff1c9" cx="330" cy="390" r="165"/>
+  <circle class="s" stroke="${INK}" stroke-width="7" cx="330" cy="390" r="165"/>
+  <path class="s" stroke="${INK}" stroke-width="5" d="${ticks}"/>`);
+ draw(s,23.6,0.6,`<path class="s hand1" stroke="${RED}" stroke-width="8" d="M330 390 L330 270"/>
+  <path class="s" stroke="${INK}" stroke-width="9" d="M330 390 L395 390"/><circle class="f" fill="${INK}" cx="330" cy="390" r="10"/>`,
+  {anim:(g,t)=>{const a=Math.max(0,t-24.2)*120;g.querySelector('.hand1').setAttribute('transform',`rotate(${a} 330 390)`);}});
+ // competitor shop
+ draw(s,25.4,1.6,`<path class="f" fill="#ffe3ec" d="M930 320 L1170 320 L1170 520 L930 520Z"/>
+  <path class="s" stroke="${INK}" stroke-width="6" d="M930 320 L1170 320 L1170 520 L930 520Z"/>
+  <path class="f" fill="${RED}" d="M910 270 L1190 270 L1170 320 L930 320Z"/>
+  <path class="s" stroke="${INK}" stroke-width="6" d="M910 270 L1190 270 L1170 320 L930 320Z"/>
+  <path class="s" stroke="${INK}" stroke-width="5" d="M1020 520 L1020 420 L1080 420 L1080 520"/>`);
+ write(s,26.6,1,'COMPETITOR',1050,252,46,INK,'middle');
+ // walking person
+ draw(s,27,1.2,`<circle class="s" stroke="${INK}" stroke-width="5" cx="0" cy="-95" r="18"/>
+  <path class="s" stroke="${INK}" stroke-width="5" d="M0 -77 L0 -25 M0 -60 L-22 -38 M0 -60 L22 -40 M0 -25 L-18 10 M0 -25 L18 10"/>`,
+  {anim:(g,t)=>{const x=600+Math.max(0,t-27.4)*80;g.setAttribute('transform',`translate(${Math.min(x,860)},520)`);}});
+ draw(s,27.8,0.8,`<path class="s" stroke="${BLUE}" stroke-width="4" stroke-dasharray="1" d="M560 470 L590 470 M560 490 L585 490"/>`);
+}
+
+// =============== SCENE 4 : the system ===============
+{const s=scene(30.6,42.4,[[30.8,36.3,'The fix is not just another website. It is a system.'],[36.3,42.4,'Every lead is captured, saved to a CRM and followed up — automatically.']]);
+ write(s,30.8,1.8,'Build a system, not just a website',60,110,74,INK);
+ draw(s,32.6,0.5,underline(65,940,132));
+ const boxes=[['Website','#cfe0ff'],['Lead','#fff1c9'],['CRM','#d8f3dc'],['Follow-up','#ffe3d1'],['Customer','#ffe3ec']];
+ boxes.forEach(([lab,c],i)=>{const cx=150+i*245,t0=33+i*1.15;
+   draw(s,t0,0.6,`<rect class="f" fill="${c}" x="${cx-95}" y="300" width="190" height="110" rx="18"/>
+    <rect class="s" stroke="${INK}" stroke-width="6" x="${cx-95}" y="300" width="190" height="110" rx="18"/>`);
+   write(s,t0+0.4,0.5,lab,cx,370,46,INK,'middle');
+   if(i<4)draw(s,t0+0.8,0.35,arrow(cx+100,355,cx+142,355,INK,5));
+ });
+ // icons above: person -> customer star
+ draw(s,38.8,1,`<path class="s" stroke="${GREEN}" stroke-width="6" d="M90 460 Q640 560 1190 460"/>`);
+ write(s,39.6,1.2,'no lead gets lost',640,560,58,GREEN,'middle');
+ draw(s,40.6,0.6,`<path class="f" fill="${YEL}" d="M1150 235 l12 26 28 3 -21 19 6 28 -25 -14 -25 14 6 -28 -21 -19 28 -3z"/>
+  <path class="s" stroke="${INK}" stroke-width="4" d="M1150 235 l12 26 28 3 -21 19 6 28 -25 -14 -25 14 6 -28 -21 -19 28 -3z"/>`);
+}
+
+// =============== SCENE 5 : automation ===============
+{const s=scene(42.4,52.6,[[42.6,47.6,'Let automation handle the routine work.'],[47.6,52.6,'Instant replies, reminders and follow-ups — all on autopilot.']]);
+ write(s,42.6,1.6,'Let automation do the routine',60,110,76,INK);
+ draw(s,44.2,0.5,underline(65,860,132));
+ draw(s,44.4,1.6,`<path class="f" fill="#cfe0ff" d="${gearPath(0,0,120,10)}"/><path class="s" stroke="${INK}" stroke-width="6" d="${gearPath(0,0,120,10)}"/>
+   <circle class="s" stroke="${INK}" stroke-width="6" cx="0" cy="0" r="38"/>`,
+   {anim:(g,t)=>g.setAttribute('transform',`translate(270,380) rotate(${Math.max(0,t-45)*40})`)});
+ draw(s,45.2,1.2,`<path class="f" fill="#fff1c9" d="${gearPath(0,0,70,8)}"/><path class="s" stroke="${INK}" stroke-width="5" d="${gearPath(0,0,70,8)}"/>
+   <circle class="s" stroke="${INK}" stroke-width="5" cx="0" cy="0" r="22"/>`,
+   {anim:(g,t)=>g.setAttribute('transform',`translate(430,250) rotate(${-Math.max(0,t-45.5)*65+12})`)});
+ const items=['Instant reply to every request','Lead saved to the CRM','Automatic follow-up','You get notified right away'];
+ items.forEach((txt,i)=>{const y=250+i*88,t0=46.2+i*1.3;
+   draw(s,t0,0.4,`<rect class="s" stroke="${INK}" stroke-width="5" x="600" y="${y-38}" width="46" height="46" rx="6"/>`);
+   draw(s,t0+0.35,0.35,`<path class="s" stroke="${GREEN}" stroke-width="8" d="M608 ${y-18} L622 ${y-2} L656 ${y-50}"/>`);
+   write(s,t0+0.5,0.8,txt,672,y,50,INK);
+ });
+}
+
+// =============== SCENE 6 : outro ===============
+{const s=scene(52.6,62.5,[[52.8,56.8,'Fewer lost leads. Less manual work. More customers.'],[56.8,61,'Start with a system — not just a website.']]);
+ write(s,52.8,1.4,'Fewer lost leads.',640,250,104,INK,'middle');
+ write(s,54.3,1.3,'More customers.',640,370,104,GREEN,'middle');
+ draw(s,55.6,0.6,underline(380,900,395,GREEN));
+ draw(s,56.4,1,`<rect class="f" fill="${RED}" x="350" y="450" width="580" height="96" rx="48"/>
+  <rect class="s" stroke="${INK}" stroke-width="6" x="350" y="450" width="580" height="96" rx="48"/>`);
+ write(s,57.4,1.2,'Let’s build your system →',640,515,58,'#fff','middle');
+ const spark=(x,y)=>`<path class="s" stroke="${ORANGE}" stroke-width="6" d="M${x} ${y-26} L${x} ${y-10} M${x} ${y+10} L${x} ${y+26} M${x-26} ${y} L${x-10} ${y} M${x+10} ${y} L${x+26} ${y}"/>`;
+ draw(s,58.4,0.8,spark(250,200)+spark(1040,180)+spark(1080,470)+spark(210,470));
+}
+
+const sub=document.getElementById('sub');
+window.DURATION=61.5;
+window.render=function(t){
+  let txt='',so=0;
+  scenes.forEach(sc=>{const vis=t>=sc.start-0.01&&t<sc.end;sc.g.style.display=vis?'':'none';
+    if(!vis)return;sc.g.style.opacity=t>sc.end-0.45?clamp((sc.end-t)/0.45):1;
+    sc.items.forEach(f=>f(t));
+    sc.subs.forEach(([a,b,x])=>{if(t>=a&&t<b){txt=x;so=Math.min(clamp((t-a)/.25),clamp((b-t)/.2));}});});
+  sub.textContent=txt;sub.style.opacity=txt?so:0;
+};
+document.fonts.load('700 40px Hand').then(()=>{render(0);window.ready=true;});
+</script></body></html>
