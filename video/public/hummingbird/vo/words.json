@@ -1,0 +1,422 @@
+{
+ "voice": "am_michael",
+ "sr": 24000,
+ "duration": 25.131,
+ "lines": [
+  {
+   "text": "How does a hummingbird survive a cold night without food?",
+   "spoken": "How does a hummingbird survive a cold night without food?",
+   "start": 0.0,
+   "end": 3.073
+  },
+  {
+   "text": "It burns energy so fast that staying warm until morning could use up its fat.",
+   "spoken": "It burns energy so fast that staying warm until morning could use up its fat.",
+   "start": 3.453,
+   "end": 8.386
+  },
+  {
+   "text": "So it does the opposite.",
+   "spoken": "So it does the opposite.",
+   "start": 8.686,
+   "end": 10.0
+  },
+  {
+   "text": "It goes still and lets its body go cold.",
+   "spoken": "It goes still and lets its body go cold.",
+   "start": 10.22,
+   "end": 12.876
+  },
+  {
+   "text": "Its heartbeat drops from about 1,200 a minute to as low as 40.",
+   "spoken": "Its heartbeat drops from about twelve hundred a minute to as low as forty.",
+   "start": 13.216,
+   "end": 17.296
+  },
+  {
+   "text": "One black metaltail cooled to 3.3 degrees Celsius.",
+   "spoken": "One black metal tail cooled to three point three degrees Celsius.",
+   "start": 17.616,
+   "end": 21.525
+  },
+  {
+   "text": "That's fridge cold.",
+   "spoken": "That's fridge cold.",
+   "start": 21.765,
+   "end": 22.963
+  },
+  {
+   "text": "No bird has been measured colder.",
+   "spoken": "No bird has been measured colder.",
+   "start": 23.203,
+   "end": 25.131
+  }
+ ],
+ "words": [
+  {
+   "w": "How",
+   "start": 0.0,
+   "end": 0.335
+  },
+  {
+   "w": "does",
+   "start": 0.335,
+   "end": 0.594
+  },
+  {
+   "w": "a",
+   "start": 0.594,
+   "end": 0.729
+  },
+  {
+   "w": "hummingbird",
+   "start": 0.729,
+   "end": 1.191
+  },
+  {
+   "w": "survive",
+   "start": 1.191,
+   "end": 1.576
+  },
+  {
+   "w": "a",
+   "start": 1.576,
+   "end": 1.693
+  },
+  {
+   "w": "cold",
+   "start": 1.693,
+   "end": 2.046
+  },
+  {
+   "w": "night",
+   "start": 2.046,
+   "end": 2.217
+  },
+  {
+   "w": "without",
+   "start": 2.217,
+   "end": 2.649
+  },
+  {
+   "w": "food?",
+   "start": 2.649,
+   "end": 3.073
+  },
+  {
+   "w": "It",
+   "start": 3.453,
+   "end": 3.693
+  },
+  {
+   "w": "burns",
+   "start": 3.693,
+   "end": 4.121
+  },
+  {
+   "w": "energy",
+   "start": 4.121,
+   "end": 4.523
+  },
+  {
+   "w": "so",
+   "start": 4.523,
+   "end": 4.746
+  },
+  {
+   "w": "fast",
+   "start": 4.746,
+   "end": 5.059
+  },
+  {
+   "w": "that",
+   "start": 5.059,
+   "end": 5.278
+  },
+  {
+   "w": "staying",
+   "start": 5.278,
+   "end": 5.712
+  },
+  {
+   "w": "warm",
+   "start": 5.712,
+   "end": 5.996
+  },
+  {
+   "w": "until",
+   "start": 5.996,
+   "end": 6.479
+  },
+  {
+   "w": "morning",
+   "start": 6.479,
+   "end": 6.923
+  },
+  {
+   "w": "could",
+   "start": 6.923,
+   "end": 7.255
+  },
+  {
+   "w": "use",
+   "start": 7.255,
+   "end": 7.558
+  },
+  {
+   "w": "up",
+   "start": 7.558,
+   "end": 7.758
+  },
+  {
+   "w": "its",
+   "start": 7.758,
+   "end": 7.993
+  },
+  {
+   "w": "fat.",
+   "start": 7.993,
+   "end": 8.386
+  },
+  {
+   "w": "So",
+   "start": 8.686,
+   "end": 9.059
+  },
+  {
+   "w": "it",
+   "start": 9.059,
+   "end": 9.175
+  },
+  {
+   "w": "does",
+   "start": 9.175,
+   "end": 9.387
+  },
+  {
+   "w": "the",
+   "start": 9.387,
+   "end": 9.596
+  },
+  {
+   "w": "opposite.",
+   "start": 9.596,
+   "end": 10.0
+  },
+  {
+   "w": "It",
+   "start": 10.22,
+   "end": 10.455
+  },
+  {
+   "w": "goes",
+   "start": 10.455,
+   "end": 10.829
+  },
+  {
+   "w": "still",
+   "start": 10.829,
+   "end": 11.058
+  },
+  {
+   "w": "and",
+   "start": 11.058,
+   "end": 11.259
+  },
+  {
+   "w": "lets",
+   "start": 11.259,
+   "end": 11.475
+  },
+  {
+   "w": "its",
+   "start": 11.475,
+   "end": 11.73
+  },
+  {
+   "w": "body",
+   "start": 11.73,
+   "end": 12.182
+  },
+  {
+   "w": "go",
+   "start": 12.182,
+   "end": 12.309
+  },
+  {
+   "w": "cold.",
+   "start": 12.309,
+   "end": 12.876
+  },
+  {
+   "w": "Its",
+   "start": 13.216,
+   "end": 13.488
+  },
+  {
+   "w": "heartbeat",
+   "start": 13.488,
+   "end": 13.975
+  },
+  {
+   "w": "drops",
+   "start": 13.975,
+   "end": 14.333
+  },
+  {
+   "w": "from",
+   "start": 14.333,
+   "end": 14.505
+  },
+  {
+   "w": "about",
+   "start": 14.505,
+   "end": 14.837
+  },
+  {
+   "w": "twelve",
+   "start": 14.837,
+   "end": 15.18
+  },
+  {
+   "w": "hundred",
+   "start": 15.18,
+   "end": 15.629
+  },
+  {
+   "w": "a",
+   "start": 15.629,
+   "end": 15.866
+  },
+  {
+   "w": "minute",
+   "start": 15.866,
+   "end": 15.997
+  },
+  {
+   "w": "to",
+   "start": 15.997,
+   "end": 16.247
+  },
+  {
+   "w": "as",
+   "start": 16.247,
+   "end": 16.454
+  },
+  {
+   "w": "low",
+   "start": 16.454,
+   "end": 16.624
+  },
+  {
+   "w": "as",
+   "start": 16.624,
+   "end": 16.879
+  },
+  {
+   "w": "forty.",
+   "start": 16.879,
+   "end": 17.296
+  },
+  {
+   "w": "One",
+   "start": 17.616,
+   "end": 17.966
+  },
+  {
+   "w": "black",
+   "start": 17.966,
+   "end": 18.267
+  },
+  {
+   "w": "metal",
+   "start": 18.267,
+   "end": 18.53
+  },
+  {
+   "w": "tail",
+   "start": 18.53,
+   "end": 18.897
+  },
+  {
+   "w": "cooled",
+   "start": 18.897,
+   "end": 19.245
+  },
+  {
+   "w": "to",
+   "start": 19.245,
+   "end": 19.435
+  },
+  {
+   "w": "three",
+   "start": 19.435,
+   "end": 19.689
+  },
+  {
+   "w": "point",
+   "start": 19.689,
+   "end": 19.976
+  },
+  {
+   "w": "three",
+   "start": 19.976,
+   "end": 20.265
+  },
+  {
+   "w": "degrees",
+   "start": 20.265,
+   "end": 20.818
+  },
+  {
+   "w": "Celsius.",
+   "start": 20.818,
+   "end": 21.525
+  },
+  {
+   "w": "That's",
+   "start": 21.765,
+   "end": 22.177
+  },
+  {
+   "w": "fridge",
+   "start": 22.177,
+   "end": 22.524
+  },
+  {
+   "w": "cold.",
+   "start": 22.524,
+   "end": 22.963
+  },
+  {
+   "w": "No",
+   "start": 23.203,
+   "end": 23.585
+  },
+  {
+   "w": "bird",
+   "start": 23.585,
+   "end": 23.827
+  },
+  {
+   "w": "has",
+   "start": 23.827,
+   "end": 24.117
+  },
+  {
+   "w": "been",
+   "start": 24.117,
+   "end": 24.285
+  },
+  {
+   "w": "measured",
+   "start": 24.285,
+   "end": 24.644
+  },
+  {
+   "w": "colder.",
+   "start": 24.644,
+   "end": 25.131
+  }
+ ]
+}

@@ -54,3 +54,5 @@
 - Science News (пульс, денна температура ~40 °C, поза в торпорі): https://www.sciencenews.org/article/hummingbirds-black-metaltail-cold-torpor
 - Halter et al., 2025, Proc. R. Soc. B, торпор вмикається при нестачі жиру: https://royalsocietypublishing.org/rspb/article/292/2038/20242489/104787/The-hummingbird-s-adipostat-can-a-simple-rule
 - FDA, температура холодильника ≤ 4 °C: https://www.fda.gov/consumers/consumer-updates/are-you-storing-food-safely
+
+**Виробництво #2 (безкоштовно):** відео зроблено в `video/` (Remotion). Голос — Kokoro `am_michael` (локально, безкоштовно), персонажі намальовані кодом (SVG), звуки синтезовані кодом. Beat sheet та інструкції — `video/README.md`. Фінальний файл 4K не комітиться (великий), його можна перерендерити командою з README.
