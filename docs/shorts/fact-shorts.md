@@ -6,9 +6,10 @@
 
 | # | Дата | Тема | Категорія |
 |---|---|---|---|
-| 1 | 2026-11-03 | Чому землетруси не повалили Пізанську вежу (м'який ґрунт, через який вона нахилилась, її ж і рятує) | Інженерія / історія |
+| 1 | 2026-11-03 | Чому землетруси не повалили Пізанську вежу (м'який ґрунт, через який вона нахилилась, її ж і рятує) | Інженерія / історія. **Відхилено: тема вже є** |
+| 2 | 2026-11-03 | Як колібрі переживає холодну ніч: охолоджує тіло майже до температури холодильника (торпор) | Тварини |
 
-Ідеї, які розглядались і поки не використані: дятли не мають «амортизуючого» черепа (Current Biology, 2022); самовідновний римський бетон (MIT, 2023); пальці зморщуються у воді через нервову систему, а не через воду.
+Теж відхилено як «вже є» (не пропонувати): дятли без «амортизуючого» черепа; самовідновний римський бетон; пальці зморщуються у воді через нервову систему.
 
 ---
 
@@ -31,3 +32,25 @@
 - Institution of Civil Engineers, чому вежа нахилилась: https://www.ice.org.uk/what-is-civil-engineering/infrastructure-projects/stabilising-the-leaning-tower-of-pisa
 - Imperial College London, стабілізація вежі (Burland): https://spiral.imperial.ac.uk/entities/publication/fe83f08f-89d7-4396-91a5-1e40c293546c
 - USGS, м'який ґрунт посилює коливання: https://pubs.usgs.gov/fs/old.1995/fs176-95/
+
+---
+
+## #2. How does a hummingbird survive a cold night without food?
+
+**Ідея:** колібрі витрачає енергію так швидко, що не може гріти себе всю ніч, тому вмикає торпор: серце сповільнюється з ~1 200 до ~40 ударів на хвилину, а тіло охолоджується. Чорна металтейл охолола до 3,3 °C, це рекорд серед птахів.
+
+**Озвучка (69 слів):**
+
+> How does a hummingbird survive a cold night without food? It burns energy so fast that staying warm until morning could use up its fat. So it does the opposite. It goes still and lets its body go cold. Its heartbeat drops from about 1,200 a minute to as low as 40. One black metaltail cooled to 3.3 degrees Celsius. That's fridge cold. No bird has been measured colder.
+
+Вимова: "twelve hundred", "three point three".
+
+**Що варто знати:** 3,3 °C — рекорд однієї особини, а не типова температура. Пульс 1 200 → 40 наведено за Science News для андських колібрі з того ж дослідження. Торпор вмикається не щоночі, а коли запасів жиру може не вистачити до ранку.
+
+**Джерела:**
+- Wolf et al., 2020, Biology Letters (першоджерело): https://royalsocietypublishing.org/rsbl/article/16/9/20200428/62818/Extreme-and-variable-torpor-among-high-elevation
+- Cornell Lab of Ornithology, All About Birds: https://www.allaboutbirds.org/news/the-coolest-hummingbird-as-measured-by-an-actual-thermometer/
+- University of Pretoria (співавтор Andrew McKechnie): https://www.up.ac.za/news/zoology-prof-part-of-study-finds-hummingbirds-drop-body-temperature-near-freezing-point
+- Science News (пульс, денна температура ~40 °C, поза в торпорі): https://www.sciencenews.org/article/hummingbirds-black-metaltail-cold-torpor
+- Halter et al., 2025, Proc. R. Soc. B, торпор вмикається при нестачі жиру: https://royalsocietypublishing.org/rspb/article/292/2038/20242489/104787/The-hummingbird-s-adipostat-can-a-simple-rule
+- FDA, температура холодильника ≤ 4 °C: https://www.fda.gov/consumers/consumer-updates/are-you-storing-food-safely
