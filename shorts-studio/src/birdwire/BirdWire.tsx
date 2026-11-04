@@ -26,7 +26,7 @@ import {
   SPAN,
 } from './util';
 import {Bird, BirdPose, Bolt, Dot, Eagle, EaglePose, Equals, Feather, Note, Pole, Puffs, Spark, Sweat, eagleWingTip} from './art';
-import {Clouds, FarHills, Layer, NearHills, Sky} from './Scenery';
+import {Backdrop, Layer, Sky} from './Scenery';
 import {Sound} from './Sound';
 
 // ---------------------------------------------------------------- keyframe helper (eased between points, holds = repeated values)
@@ -507,18 +507,8 @@ export const BirdWire: React.FC = () => {
   return (
     <AbsoluteFill style={{background: '#9BD7FA'}}>
       <Sky />
-      {/* far layers share ONE depth-of-field blur pass (much cheaper at 4K than one per layer) */}
-      <AbsoluteFill style={{filter: dof > 0.05 ? `blur(${dof.toFixed(2)}px)` : undefined}}>
-        <Layer cam={cam} z={5200} shake={shake}>
-          <Clouds t={t} dur={DURATION} />
-        </Layer>
-        <Layer cam={cam} z={3800} shake={shake}>
-          <FarHills />
-        </Layer>
-        <Layer cam={cam} z={2300} shake={shake}>
-          <NearHills />
-        </Layer>
-      </AbsoluteFill>
+      {/* far layers on a canvas: depth of field is blurred at lower resolution (cheap at 4K) */}
+      <Backdrop cam={cam} shake={shake} dof={dof} t={t} dur={DURATION} />
       <Layer cam={cam} z={1000} shake={shake}>
         {[-1, 0, 1].map((k) => (
           <Pole key={k} x={POLE_X + k * SPAN} glow={k === 0 ? bump(t, T.pole - 0.05, T.pole + 0.6) : 0} />
