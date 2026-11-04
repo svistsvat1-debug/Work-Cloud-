@@ -1,0 +1,31 @@
+1
+00:00:00,100 --> 00:00:04,940
+A motor is spinning, but the last gear it drives is stuck in solid concrete.
+
+2
+00:00:05,500 --> 00:00:07,120
+So why doesn't anything break?
+
+3
+00:00:08,000 --> 00:00:10,040
+Between them are twelve pairs of gears,
+
+4
+00:00:10,440 --> 00:00:12,920
+and each pair slows the spin fifty times.
+
+5
+00:00:13,400 --> 00:00:15,040
+Those slowdowns multiply.
+
+6
+00:00:15,660 --> 00:00:19,060
+The last gear would need over two trillion years to turn once.
+
+7
+00:00:19,580 --> 00:00:22,780
+That's more than a hundred times the age of the universe.
+
+8
+00:00:23,300 --> 00:00:26,039
+To the concrete, it's basically standing still.
