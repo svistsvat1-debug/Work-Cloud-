@@ -19,10 +19,27 @@
 | 10 | Popcorn Has a Secret LEG?! | food |
 | 11 | Why Is the Ocean Salty but Rivers Aren't? | ocean |
 | 12 | Flamingos Stand on One Leg Because It's LAZY | animals |
+| 13 | Why don't we just nuke a hurricane? | weather |
 
 ## Нові сценарії
 
-### #13 — Why don't we just nuke a hurricane? (weather)
+### #14 — Why don't birds on power lines get electrocuted? (physics / electricity)
+
+**Ідея:** птах на дроті під напругою не гине не через особливі лапки, а тому що обидві лапки на одному дроті й мають однакову напругу. Небезпека з'являється, коли крило торкається другого дроту або стовпа, тому орли з великим розмахом крил ризикують набагато більше.
+
+**Озвучка (68 слів):**
+
+> Why doesn't a bird on a power line get electrocuted? Its feet aren't special. Current only flows through a body that connects two points at different voltages. Both feet sit on one wire, at the same voltage, so no dangerous current flows. But if a wing touches a second wire or the pole, the circuit closes. That's why eagles, with their huge wingspans, are at much higher risk.
+
+**Джерела:**
+- MIT School of Engineering, Ask an Engineer: https://engineering.mit.edu/ask-an-engineer/how-do-birds-sit-on-high-voltage-power-lines-without-getting-electrocuted
+- Harvard Science Demonstrations: https://sciencedemonstrations.fas.harvard.edu/presentations/bird-high-voltage-transmission-line
+- USGS, Electrocution: https://pubs.usgs.gov/publication/2001163
+- National Wildlife Federation: https://www.nwf.org/Magazines/National-Wildlife/2021/Feb-Mar/Animals/Eagles-and-Powerlines
+
+**Примітка:** у сценарії немає цифр про кількість загиблих птахів, бо оцінки FWS дуже приблизні й різняться між документами.
+
+### #13 — Why don't we just nuke a hurricane? (weather) — ВЖЕ ЗНЯТО
 
 **Ідея:** ядерний вибух здається простим способом знищити ураган, але ураган виділяє набагато більше енергії, вибух не змінює низький тиск, на якому тримається шторм, а радіоактивні опади вітер понесе на сушу.
 
