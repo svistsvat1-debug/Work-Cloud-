@@ -1,3 +1,6 @@
 node_modules/
 out/
+build/
 .cache/
+images/gear/qa/beats/
+images/gear/qa/check/

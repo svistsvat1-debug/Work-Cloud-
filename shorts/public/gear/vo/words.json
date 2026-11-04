@@ -1,0 +1,804 @@
+{
+ "voice": "am_michael",
+ "speed": 1.0,
+ "duration": 25.939,
+ "lines": [
+  "A motor is spinning, but the last gear it drives is stuck in solid concrete.",
+  "So why doesn't anything break?",
+  "Between them are twelve pairs of gears, and each pair slows the spin fifty times.",
+  "Those slowdowns multiply.",
+  "The last gear would need over two trillion years to turn once.",
+  "That's more than a hundred times the age of the universe.",
+  "To the concrete, it's basically standing still."
+ ],
+ "words": [
+  {
+   "word": "A",
+   "start": 0.0,
+   "end": 0.251
+  },
+  {
+   "word": "motor",
+   "start": 0.251,
+   "end": 0.553
+  },
+  {
+   "word": "is",
+   "start": 0.553,
+   "end": 0.743
+  },
+  {
+   "word": "spinning,",
+   "start": 0.743,
+   "end": 1.08
+  },
+  {
+   "word": "but",
+   "start": 1.6,
+   "end": 1.851
+  },
+  {
+   "word": "the",
+   "start": 1.851,
+   "end": 2.034
+  },
+  {
+   "word": "last",
+   "start": 2.034,
+   "end": 2.391
+  },
+  {
+   "word": "gear",
+   "start": 2.391,
+   "end": 2.709
+  },
+  {
+   "word": "it",
+   "start": 2.709,
+   "end": 2.882
+  },
+  {
+   "word": "drives",
+   "start": 2.882,
+   "end": 3.268
+  },
+  {
+   "word": "is",
+   "start": 3.268,
+   "end": 3.48
+  },
+  {
+   "word": "stuck",
+   "start": 3.48,
+   "end": 3.77
+  },
+  {
+   "word": "in",
+   "start": 3.77,
+   "end": 4.059
+  },
+  {
+   "word": "solid",
+   "start": 4.059,
+   "end": 4.435
+  },
+  {
+   "word": "concrete.",
+   "start": 4.435,
+   "end": 4.84
+  },
+  {
+   "word": "So",
+   "start": 5.4,
+   "end": 5.695
+  },
+  {
+   "word": "why",
+   "start": 5.695,
+   "end": 5.98
+  },
+  {
+   "word": "doesn't",
+   "start": 5.98,
+   "end": 6.311
+  },
+  {
+   "word": "anything",
+   "start": 6.311,
+   "end": 6.735
+  },
+  {
+   "word": "break?",
+   "start": 6.735,
+   "end": 7.02
+  },
+  {
+   "word": "Between",
+   "start": 7.9,
+   "end": 8.303
+  },
+  {
+   "word": "them",
+   "start": 8.303,
+   "end": 8.577
+  },
+  {
+   "word": "are",
+   "start": 8.577,
+   "end": 8.833
+  },
+  {
+   "word": "twelve",
+   "start": 8.833,
+   "end": 9.126
+  },
+  {
+   "word": "pairs",
+   "start": 9.126,
+   "end": 9.428
+  },
+  {
+   "word": "of",
+   "start": 9.428,
+   "end": 9.629
+  },
+  {
+   "word": "gears,",
+   "start": 9.629,
+   "end": 9.94
+  },
+  {
+   "word": "and",
+   "start": 10.34,
+   "end": 10.632
+  },
+  {
+   "word": "each",
+   "start": 10.632,
+   "end": 10.885
+  },
+  {
+   "word": "pair",
+   "start": 10.885,
+   "end": 11.167
+  },
+  {
+   "word": "slows",
+   "start": 11.167,
+   "end": 11.546
+  },
+  {
+   "word": "the",
+   "start": 11.546,
+   "end": 11.731
+  },
+  {
+   "word": "spin",
+   "start": 11.731,
+   "end": 12.071
+  },
+  {
+   "word": "fifty",
+   "start": 12.071,
+   "end": 12.431
+  },
+  {
+   "word": "times.",
+   "start": 12.431,
+   "end": 12.82
+  },
+  {
+   "word": "Those",
+   "start": 13.3,
+   "end": 13.725
+  },
+  {
+   "word": "slowdowns",
+   "start": 13.725,
+   "end": 14.333
+  },
+  {
+   "word": "multiply.",
+   "start": 14.333,
+   "end": 14.94
+  },
+  {
+   "word": "The",
+   "start": 15.56,
+   "end": 15.725
+  },
+  {
+   "word": "last",
+   "start": 15.725,
+   "end": 16.047
+  },
+  {
+   "word": "gear",
+   "start": 16.047,
+   "end": 16.334
+  },
+  {
+   "word": "would",
+   "start": 16.334,
+   "end": 16.595
+  },
+  {
+   "word": "need",
+   "start": 16.595,
+   "end": 16.908
+  },
+  {
+   "word": "over",
+   "start": 16.908,
+   "end": 17.221
+  },
+  {
+   "word": "two",
+   "start": 17.221,
+   "end": 17.49
+  },
+  {
+   "word": "trillion",
+   "start": 17.49,
+   "end": 17.838
+  },
+  {
+   "word": "years",
+   "start": 17.838,
+   "end": 18.143
+  },
+  {
+   "word": "to",
+   "start": 18.143,
+   "end": 18.395
+  },
+  {
+   "word": "turn",
+   "start": 18.395,
+   "end": 18.673
+  },
+  {
+   "word": "once.",
+   "start": 18.673,
+   "end": 18.96
+  },
+  {
+   "word": "That's",
+   "start": 19.48,
+   "end": 19.772
+  },
+  {
+   "word": "more",
+   "start": 19.772,
+   "end": 20.064
+  },
+  {
+   "word": "than",
+   "start": 20.064,
+   "end": 20.355
+  },
+  {
+   "word": "a",
+   "start": 20.355,
+   "end": 20.628
+  },
+  {
+   "word": "hundred",
+   "start": 20.628,
+   "end": 21.024
+  },
+  {
+   "word": "times",
+   "start": 21.024,
+   "end": 21.4
+  },
+  {
+   "word": "the",
+   "start": 21.4,
+   "end": 21.579
+  },
+  {
+   "word": "age",
+   "start": 21.579,
+   "end": 21.871
+  },
+  {
+   "word": "of",
+   "start": 21.871,
+   "end": 22.078
+  },
+  {
+   "word": "the",
+   "start": 22.078,
+   "end": 22.256
+  },
+  {
+   "word": "universe.",
+   "start": 22.256,
+   "end": 22.68
+  },
+  {
+   "word": "To",
+   "start": 23.2,
+   "end": 23.445
+  },
+  {
+   "word": "the",
+   "start": 23.445,
+   "end": 23.605
+  },
+  {
+   "word": "concrete,",
+   "start": 23.605,
+   "end": 23.96
+  },
+  {
+   "word": "it's",
+   "start": 24.2,
+   "end": 24.486
+  },
+  {
+   "word": "basically",
+   "start": 24.486,
+   "end": 25.022
+  },
+  {
+   "word": "standing",
+   "start": 25.022,
+   "end": 25.534
+  },
+  {
+   "word": "still.",
+   "start": 25.534,
+   "end": 25.939
+  }
+ ],
+ "pauses": [
+  [
+   1.08,
+   1.6
+  ],
+  [
+   4.84,
+   5.4
+  ],
+  [
+   7.02,
+   7.9
+  ],
+  [
+   9.94,
+   10.34
+  ],
+  [
+   12.82,
+   13.3
+  ],
+  [
+   14.94,
+   15.56
+  ],
+  [
+   18.96,
+   19.48
+  ],
+  [
+   22.68,
+   23.2
+  ],
+  [
+   23.96,
+   24.2
+  ]
+ ],
+ "words_dtw": [
+  {
+   "line": 0,
+   "word": "A",
+   "start": 0.0,
+   "end": 0.2
+  },
+  {
+   "line": 0,
+   "word": "motor",
+   "start": 0.2,
+   "end": 0.59
+  },
+  {
+   "line": 0,
+   "word": "is",
+   "start": 0.59,
+   "end": 0.7
+  },
+  {
+   "line": 0,
+   "word": "spinning,",
+   "start": 0.7,
+   "end": 1.26
+  },
+  {
+   "line": 0,
+   "word": "but",
+   "start": 1.26,
+   "end": 1.59
+  },
+  {
+   "line": 0,
+   "word": "the",
+   "start": 1.59,
+   "end": 1.72
+  },
+  {
+   "line": 0,
+   "word": "last",
+   "start": 1.72,
+   "end": 2.23
+  },
+  {
+   "line": 0,
+   "word": "gear",
+   "start": 2.23,
+   "end": 2.49
+  },
+  {
+   "line": 0,
+   "word": "it",
+   "start": 2.49,
+   "end": 2.555
+  },
+  {
+   "line": 0,
+   "word": "drives",
+   "start": 2.555,
+   "end": 3.37
+  },
+  {
+   "line": 0,
+   "word": "is",
+   "start": 3.37,
+   "end": 3.375
+  },
+  {
+   "line": 0,
+   "word": "stuck",
+   "start": 3.375,
+   "end": 3.585
+  },
+  {
+   "line": 0,
+   "word": "in",
+   "start": 3.585,
+   "end": 3.78
+  },
+  {
+   "line": 0,
+   "word": "solid",
+   "start": 3.78,
+   "end": 4.265
+  },
+  {
+   "line": 0,
+   "word": "concrete.",
+   "start": 4.265,
+   "end": 5.035
+  },
+  {
+   "line": 1,
+   "word": "So",
+   "start": 5.355,
+   "end": 5.675
+  },
+  {
+   "line": 1,
+   "word": "why",
+   "start": 5.675,
+   "end": 5.96
+  },
+  {
+   "line": 1,
+   "word": "doesn't",
+   "start": 5.96,
+   "end": 6.295
+  },
+  {
+   "line": 1,
+   "word": "anything",
+   "start": 6.295,
+   "end": 6.765
+  },
+  {
+   "line": 1,
+   "word": "break?",
+   "start": 6.765,
+   "end": 7.445
+  },
+  {
+   "line": 2,
+   "word": "Between",
+   "start": 7.865,
+   "end": 8.305
+  },
+  {
+   "line": 2,
+   "word": "them",
+   "start": 8.305,
+   "end": 8.435
+  },
+  {
+   "line": 2,
+   "word": "are",
+   "start": 8.435,
+   "end": 8.67
+  },
+  {
+   "line": 2,
+   "word": "twelve",
+   "start": 8.67,
+   "end": 9.045
+  },
+  {
+   "line": 2,
+   "word": "pairs",
+   "start": 9.045,
+   "end": 9.38
+  },
+  {
+   "line": 2,
+   "word": "of",
+   "start": 9.38,
+   "end": 9.42
+  },
+  {
+   "line": 2,
+   "word": "gears,",
+   "start": 9.42,
+   "end": 10.05
+  },
+  {
+   "line": 2,
+   "word": "and",
+   "start": 10.05,
+   "end": 10.7
+  },
+  {
+   "line": 2,
+   "word": "each",
+   "start": 10.7,
+   "end": 10.755
+  },
+  {
+   "line": 2,
+   "word": "pair",
+   "start": 10.755,
+   "end": 11.025
+  },
+  {
+   "line": 2,
+   "word": "slows",
+   "start": 11.025,
+   "end": 11.405
+  },
+  {
+   "line": 2,
+   "word": "the",
+   "start": 11.405,
+   "end": 11.495
+  },
+  {
+   "line": 2,
+   "word": "spin",
+   "start": 11.495,
+   "end": 11.94
+  },
+  {
+   "line": 2,
+   "word": "fifty",
+   "start": 11.94,
+   "end": 12.25
+  },
+  {
+   "line": 2,
+   "word": "times.",
+   "start": 12.25,
+   "end": 12.9
+  },
+  {
+   "line": 3,
+   "word": "Those",
+   "start": 13.26,
+   "end": 13.645
+  },
+  {
+   "line": 3,
+   "word": "slowdowns",
+   "start": 13.645,
+   "end": 14.22
+  },
+  {
+   "line": 3,
+   "word": "multiply.",
+   "start": 14.22,
+   "end": 15.116
+  },
+  {
+   "line": 4,
+   "word": "The",
+   "start": 15.516,
+   "end": 15.551
+  },
+  {
+   "line": 4,
+   "word": "last",
+   "start": 15.551,
+   "end": 16.046
+  },
+  {
+   "line": 4,
+   "word": "gear",
+   "start": 16.046,
+   "end": 16.336
+  },
+  {
+   "line": 4,
+   "word": "would",
+   "start": 16.336,
+   "end": 16.451
+  },
+  {
+   "line": 4,
+   "word": "need",
+   "start": 16.451,
+   "end": 16.701
+  },
+  {
+   "line": 4,
+   "word": "over",
+   "start": 16.701,
+   "end": 16.986
+  },
+  {
+   "line": 4,
+   "word": "two",
+   "start": 16.986,
+   "end": 17.256
+  },
+  {
+   "line": 4,
+   "word": "trillion",
+   "start": 17.256,
+   "end": 17.776
+  },
+  {
+   "line": 4,
+   "word": "years",
+   "start": 17.776,
+   "end": 18.096
+  },
+  {
+   "line": 4,
+   "word": "to",
+   "start": 18.096,
+   "end": 18.231
+  },
+  {
+   "line": 4,
+   "word": "turn",
+   "start": 18.231,
+   "end": 18.551
+  },
+  {
+   "line": 4,
+   "word": "once.",
+   "start": 18.551,
+   "end": 19.036
+  },
+  {
+   "line": 5,
+   "word": "That's",
+   "start": 19.416,
+   "end": 19.696
+  },
+  {
+   "line": 5,
+   "word": "more",
+   "start": 19.696,
+   "end": 20.051
+  },
+  {
+   "line": 5,
+   "word": "than",
+   "start": 20.051,
+   "end": 20.161
+  },
+  {
+   "line": 5,
+   "word": "a",
+   "start": 20.161,
+   "end": 20.271
+  },
+  {
+   "line": 5,
+   "word": "hundred",
+   "start": 20.271,
+   "end": 20.761
+  },
+  {
+   "line": 5,
+   "word": "times",
+   "start": 20.761,
+   "end": 21.271
+  },
+  {
+   "line": 5,
+   "word": "the",
+   "start": 21.271,
+   "end": 21.436
+  },
+  {
+   "line": 5,
+   "word": "age",
+   "start": 21.436,
+   "end": 21.826
+  },
+  {
+   "line": 5,
+   "word": "of",
+   "start": 21.826,
+   "end": 21.961
+  },
+  {
+   "line": 5,
+   "word": "the",
+   "start": 21.961,
+   "end": 22.011
+  },
+  {
+   "line": 5,
+   "word": "universe.",
+   "start": 22.011,
+   "end": 22.765
+  },
+  {
+   "line": 6,
+   "word": "To",
+   "start": 23.165,
+   "end": 23.285
+  },
+  {
+   "line": 6,
+   "word": "the",
+   "start": 23.285,
+   "end": 23.35
+  },
+  {
+   "line": 6,
+   "word": "concrete,",
+   "start": 23.35,
+   "end": 24.155
+  },
+  {
+   "line": 6,
+   "word": "it's",
+   "start": 24.155,
+   "end": 24.35
+  },
+  {
+   "line": 6,
+   "word": "basically",
+   "start": 24.35,
+   "end": 24.915
+  },
+  {
+   "line": 6,
+   "word": "standing",
+   "start": 24.915,
+   "end": 25.39
+  },
+  {
+   "line": 6,
+   "word": "still.",
+   "start": 25.39,
+   "end": 25.939
+  }
+ ]
+}
