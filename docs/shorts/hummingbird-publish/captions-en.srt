@@ -1,0 +1,31 @@
+1
+00:00:00,100 --> 00:00:03,323
+How does a hummingbird survive a cold night without food?
+
+2
+00:00:03,553 --> 00:00:08,636
+It burns energy so fast that staying warm until morning could use up its fat.
+
+3
+00:00:08,786 --> 00:00:10,250
+So it does the opposite.
+
+4
+00:00:10,320 --> 00:00:13,126
+It goes still and lets its body go cold.
+
+5
+00:00:13,316 --> 00:00:17,546
+Its heartbeat drops from about 1,200 a minute to as low as 40.
+
+6
+00:00:17,716 --> 00:00:21,775
+One black metaltail cooled to 3.3 degrees Celsius.
+
+7
+00:00:21,865 --> 00:00:23,213
+That's fridge cold.
+
+8
+00:00:23,303 --> 00:00:25,381
+No bird has been measured colder.
