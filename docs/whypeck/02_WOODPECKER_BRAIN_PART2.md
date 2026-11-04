@@ -35,7 +35,7 @@
 
 ## Виробництво (skill `cutout-cartoon-shorts`)
 
-**Фінал:** `studio/out/wp02-woodpecker-brain-4K.mp4` — 2160×3840, 60 fps, 26,5 с, голос + SFX + музика, −14 LUFS. Остання сцена закільцьована з кадром 0 (дятел знову стукає).
+**Фінал:** `videos/whypeck-02-woodpecker-brain/final-4K.mp4` (20,5 МБ) — 2160×3840, 60 fps, 1590 кадрів, 26,5 с, H.264 + AAC 320k, голос + SFX + музика, −14,1 LUFS. Рендер: 6 частин по 265 кадрів (`studio/_render_seg.mjs`, ~45 хв на CPU), склейка без перекодування + звук. Остання сцена закільцьована з кадром 0 (дятел знову стукає).
 
 **Голос:** ElevenLabs через Higgsfield (`text2speech_v2`, variant `elevenlabs`), пресет **Mark** — молодий чоловічий американський, природний розмовний; 25,8 с; job `f1029c01-85f5-4faf-be02-f21f494bdb67`; 1,2 кредиту. Таймінги слів — Whisper small.en + паузи за RMS (`vo/words_raw.json`). Kokoro (`voice.wav`) був лише тимчасовою доріжкою.
 
@@ -68,6 +68,6 @@
 ```bash
 python3 videos/whypeck-02-woodpecker-brain/build_beats.py
 python3 videos/whypeck-02-woodpecker-brain/mix.py
-cd studio && node _render.mjs out/wp02-woodpecker-brain-4K.mp4 2 1 16
+cd studio && node _render_seg.mjs 2 265   # частини -> out/seg/, далі склейка ffmpeg concat + mix.wav
 ```
 Remotion Studio: `cd studio && npm run studio` → композиція `wp02-woodpecker-brain`.
