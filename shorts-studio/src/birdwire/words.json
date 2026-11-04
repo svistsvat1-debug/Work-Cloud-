@@ -1,0 +1,405 @@
+{
+ "voice": "am_michael",
+ "speed": 1.08,
+ "duration": 23.78,
+ "lines": [
+  "So why doesn't this bird on a power line get zapped?",
+  "It's not special feet.",
+  "Basically, current only goes through you if you touch two spots at different voltages.",
+  "Both feet are on one wire, same voltage, so nothing really flows.",
+  "But if a wing touches another wire, or the pole, the circuit closes.",
+  "That's why big birds, like eagles, are in way more danger."
+ ],
+ "words": [
+  {
+   "w": "So",
+   "line": 0,
+   "start": 0.1,
+   "end": 0.42
+  },
+  {
+   "w": "why",
+   "line": 0,
+   "start": 0.42,
+   "end": 0.6
+  },
+  {
+   "w": "doesn't",
+   "line": 0,
+   "start": 0.6,
+   "end": 0.9
+  },
+  {
+   "w": "this",
+   "line": 0,
+   "start": 0.9,
+   "end": 1.08
+  },
+  {
+   "w": "bird",
+   "line": 0,
+   "start": 1.08,
+   "end": 1.38
+  },
+  {
+   "w": "on",
+   "line": 0,
+   "start": 1.38,
+   "end": 1.48
+  },
+  {
+   "w": "a",
+   "line": 0,
+   "start": 1.48,
+   "end": 1.58
+  },
+  {
+   "w": "power",
+   "line": 0,
+   "start": 1.58,
+   "end": 1.88
+  },
+  {
+   "w": "line",
+   "line": 0,
+   "start": 1.88,
+   "end": 1.98
+  },
+  {
+   "w": "get",
+   "line": 0,
+   "start": 1.98,
+   "end": 2.3
+  },
+  {
+   "w": "zapped",
+   "line": 0,
+   "start": 2.3,
+   "end": 2.75
+  },
+  {
+   "w": "It's",
+   "line": 1,
+   "start": 3.05,
+   "end": 3.21
+  },
+  {
+   "w": "not",
+   "line": 1,
+   "start": 3.21,
+   "end": 3.59
+  },
+  {
+   "w": "special",
+   "line": 1,
+   "start": 3.59,
+   "end": 3.91
+  },
+  {
+   "w": "feet",
+   "line": 1,
+   "start": 3.91,
+   "end": 4.26
+  },
+  {
+   "w": "Basically",
+   "line": 2,
+   "start": 4.56,
+   "end": 5.18
+  },
+  {
+   "w": "current",
+   "line": 2,
+   "start": 5.18,
+   "end": 5.62
+  },
+  {
+   "w": "only",
+   "line": 2,
+   "start": 5.62,
+   "end": 5.9
+  },
+  {
+   "w": "goes",
+   "line": 2,
+   "start": 5.9,
+   "end": 6.16
+  },
+  {
+   "w": "through",
+   "line": 2,
+   "start": 6.16,
+   "end": 6.32
+  },
+  {
+   "w": "you",
+   "line": 2,
+   "start": 6.32,
+   "end": 6.54
+  },
+  {
+   "w": "if",
+   "line": 2,
+   "start": 6.54,
+   "end": 6.64
+  },
+  {
+   "w": "you",
+   "line": 2,
+   "start": 6.64,
+   "end": 6.84
+  },
+  {
+   "w": "touch",
+   "line": 2,
+   "start": 6.84,
+   "end": 7.12
+  },
+  {
+   "w": "two",
+   "line": 2,
+   "start": 7.12,
+   "end": 7.42
+  },
+  {
+   "w": "spots",
+   "line": 2,
+   "start": 7.42,
+   "end": 7.9
+  },
+  {
+   "w": "at",
+   "line": 2,
+   "start": 7.9,
+   "end": 8.0
+  },
+  {
+   "w": "different",
+   "line": 2,
+   "start": 8.0,
+   "end": 8.58
+  },
+  {
+   "w": "voltages",
+   "line": 2,
+   "start": 8.58,
+   "end": 9.47
+  },
+  {
+   "w": "Both",
+   "line": 3,
+   "start": 9.77,
+   "end": 10.07
+  },
+  {
+   "w": "feet",
+   "line": 3,
+   "start": 10.07,
+   "end": 10.37
+  },
+  {
+   "w": "are",
+   "line": 3,
+   "start": 10.37,
+   "end": 10.55
+  },
+  {
+   "w": "on",
+   "line": 3,
+   "start": 10.55,
+   "end": 10.69
+  },
+  {
+   "w": "one",
+   "line": 3,
+   "start": 10.69,
+   "end": 10.79
+  },
+  {
+   "w": "wire",
+   "line": 3,
+   "start": 10.79,
+   "end": 11.13
+  },
+  {
+   "w": "same",
+   "line": 3,
+   "start": 11.13,
+   "end": 11.63
+  },
+  {
+   "w": "voltage",
+   "line": 3,
+   "start": 11.63,
+   "end": 12.21
+  },
+  {
+   "w": "so",
+   "line": 3,
+   "start": 12.21,
+   "end": 12.43
+  },
+  {
+   "w": "nothing",
+   "line": 3,
+   "start": 12.43,
+   "end": 12.81
+  },
+  {
+   "w": "really",
+   "line": 3,
+   "start": 12.81,
+   "end": 13.27
+  },
+  {
+   "w": "flows",
+   "line": 3,
+   "start": 13.27,
+   "end": 13.86
+  },
+  {
+   "w": "But",
+   "line": 4,
+   "start": 14.21,
+   "end": 14.53
+  },
+  {
+   "w": "if",
+   "line": 4,
+   "start": 14.53,
+   "end": 14.63
+  },
+  {
+   "w": "a",
+   "line": 4,
+   "start": 14.63,
+   "end": 14.77
+  },
+  {
+   "w": "wing",
+   "line": 4,
+   "start": 14.77,
+   "end": 14.89
+  },
+  {
+   "w": "touches",
+   "line": 4,
+   "start": 14.89,
+   "end": 15.25
+  },
+  {
+   "w": "another",
+   "line": 4,
+   "start": 15.25,
+   "end": 15.69
+  },
+  {
+   "w": "wire",
+   "line": 4,
+   "start": 15.69,
+   "end": 16.07
+  },
+  {
+   "w": "or",
+   "line": 4,
+   "start": 16.07,
+   "end": 16.17
+  },
+  {
+   "w": "the",
+   "line": 4,
+   "start": 16.17,
+   "end": 16.35
+  },
+  {
+   "w": "pole",
+   "line": 4,
+   "start": 16.35,
+   "end": 16.63
+  },
+  {
+   "w": "the",
+   "line": 4,
+   "start": 16.63,
+   "end": 16.97
+  },
+  {
+   "w": "circuit",
+   "line": 4,
+   "start": 16.97,
+   "end": 17.45
+  },
+  {
+   "w": "closes",
+   "line": 4,
+   "start": 17.45,
+   "end": 18.38
+  },
+  {
+   "w": "That's",
+   "line": 5,
+   "start": 19.23,
+   "end": 19.65
+  },
+  {
+   "w": "why",
+   "line": 5,
+   "start": 19.65,
+   "end": 19.75
+  },
+  {
+   "w": "big",
+   "line": 5,
+   "start": 19.75,
+   "end": 19.97
+  },
+  {
+   "w": "birds",
+   "line": 5,
+   "start": 19.97,
+   "end": 20.33
+  },
+  {
+   "w": "like",
+   "line": 5,
+   "start": 20.33,
+   "end": 20.59
+  },
+  {
+   "w": "eagles",
+   "line": 5,
+   "start": 20.59,
+   "end": 21.03
+  },
+  {
+   "w": "are",
+   "line": 5,
+   "start": 21.03,
+   "end": 21.15
+  },
+  {
+   "w": "in",
+   "line": 5,
+   "start": 21.15,
+   "end": 21.41
+  },
+  {
+   "w": "way",
+   "line": 5,
+   "start": 21.41,
+   "end": 21.69
+  },
+  {
+   "w": "more",
+   "line": 5,
+   "start": 21.69,
+   "end": 22.11
+  },
+  {
+   "w": "danger",
+   "line": 5,
+   "start": 22.11,
+   "end": 22.68
+  }
+ ]
+}

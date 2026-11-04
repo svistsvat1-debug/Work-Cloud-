@@ -1,0 +1,7 @@
+node_modules/
+out/
+.models/
+build/
+images/birdwire/qa/
+*.log
+__pycache__/
