@@ -60,3 +60,37 @@ Kokoro v1.0 (ONNX, локально), голос `am_michael` (звичайни�
 - Контрольний аркуш із 29 бітів: `shorts-studio/images/birdwire/qa/sheet.png` (не в git).
 - Pop scan прев'ю: позначені кадри — лише навмисні (спалах ZAP і заміна на скелет). Ривки на 1.28 с (присідання після стрибка), на посадці орла (дріт) і на зльоті (крила) виправлені.
 - Кадр 0 і останній кадр: середня різниця 0.13/255, луп безшовний.
+
+## Пакет публікації (YouTube Shorts)
+
+**Назва (основна):** Why Birds DON'T Get Zapped on Power Lines ⚡🐦 #shorts #science #physics
+
+Запасні назви:
+- This Bird Sits on a LIVE Wire… And Nothing Happens ⚡😳 #shorts #science
+- It's NOT Their Feet! Why Birds Survive Power Lines ⚡🐦 #shorts #science
+- One Wing Too Far… Why Eagles Get Zapped ⚡🦅 #shorts #science #animals
+
+**Опис:**
+
+```
+Why doesn't a bird on a power line get zapped? 🐦⚡ It's not special feet.
+
+Electricity only flows through a body that connects two points at different voltages. Both of the bird's feet sit on the same wire, at the same voltage, so no dangerous current goes through it.
+
+But if a wing touches a second wire or the pole, the circuit closes. That's why big birds with wide wings, like eagles, are at much higher risk.
+
+⚠️ Never touch or go near power lines. People are not birds: standing on the ground or a ladder connects you to a different voltage.
+
+Sources:
+MIT School of Engineering: https://engineering.mit.edu/ask-an-engineer/how-do-birds-sit-on-high-voltage-power-lines-without-getting-electrocuted
+Harvard Science Demonstrations: https://sciencedemonstrations.fas.harvard.edu/presentations/bird-high-voltage-transmission-line
+USGS: https://pubs.usgs.gov/publication/2001163
+
+#shorts #science #physics #electricity #birds #animals #funfacts
+```
+
+**Теги:** birds on power lines, why dont birds get electrocuted, bird on a wire, power lines, electricity explained, how electricity works, voltage, electric current, circuit, physics, science shorts, science facts, fun facts, eagle, eagle electrocuted, animals, animation, cartoon, 2d animation, shorts
+
+**Закріплений коментар:** Would you land on that second wire? 😅⚡
+
+**Обкладинка / перший кадр:** пташка на дроті великим планом (кадр 0); за бажання текст зверху "WHY NO ZAP? ⚡".
