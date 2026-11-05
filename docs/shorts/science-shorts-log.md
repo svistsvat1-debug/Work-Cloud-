@@ -1,35 +1,45 @@
 # Science Shorts: журнал тем і сценаріїв
 
 Формат: 20–30 с, 50–70 слів озвучки (EN), прості 2D-анімації.
-Перед новою темою переглядати список нижче, щоб не повторюватись і чергувати категорії.
+Перед новою темою переглядати обидва списки нижче, щоб не повторюватись і чергувати категорії.
 
-## Уже зняті теми
+## Уже зняті теми (канал)
 
-| # | Назва | Категорія |
-|---|---|---|
-| 1 | Scientists Were Wrong About This Bird's Head | animals |
-| 2 | We Tried Digging Through the Earth… It Fought Back | earth |
-| 3 | Why You Can't Tickle Yourself (A Robot Proved It) | brain |
-| 4 | NASA Lit a Candle in Space… It Turned Into THIS | space |
-| 5 | Roman Concrete HEALS Itself?! | history / materials |
-| 6 | This Animal Has 3 Hearts… And One STOPS When It Swims | animals |
-| 7 | Your Fingers Wrinkle ON PURPOSE | human body |
-| 8 | The Hottest Planet ISN'T the Closest to the Sun | space |
-| 9 | Why Airplane Windows Are NEVER Square | engineering |
-| 10 | Popcorn Has a Secret LEG?! | food |
-| 11 | Why Is the Ocean Salty but Rivers Aren't? | ocean |
-| 12 | Flamingos Stand on One Leg Because It's LAZY | animals |
-| 13 | Why don't we just nuke a hurricane? | weather |
+Список для копіювання в промпт:
 
-## Нові сценарії
+```
+1. Scientists Were Wrong About This Bird's Head 🤯🐦 #shorts #science #animals
+2. We Tried Digging Through the Earth… It Fought Back 🌍🔥 #shorts #science #earth
+3. Why You Can't Tickle Yourself (A Robot Proved It) 🤖😂 #shorts #science #brain
+4. NASA Lit a Candle in Space… It Turned Into THIS 🔥🚀 #shorts #space #science
+5. Roman Concrete HEALS Itself?! Scientists Finally Know Why 🏛️🤯 #shorts #history #science
+6. This Animal Has 3 Hearts… And One STOPS When It Swims 🐙💙 #shorts #animals #science
+7. Your Fingers Wrinkle ON PURPOSE (It's Not the Water) 🛁🤯 #shorts #science #humanbody
+8. The Hottest Planet ISN'T the Closest to the Sun 🔥🪐 #shorts #space #science
+9. Why Airplane Windows Are NEVER Square ✈️😳 #shorts #engineering #science
+10. Popcorn Has a Secret LEG?! 🍿🤸 (Slow-Mo Science) #shorts #science #food
+11. Why Is the Ocean Salty but Rivers Aren't? 🌊🧂 #shorts #science #ocean
+12. Flamingos Stand on One Leg Because It's LAZY 🦩😴 #shorts #animals #science
+13. This Hummingbird Can Get as Cold as a FRIDGE 🥶🐦 #shorts #animals #science
+14. Why Birds DON'T Get Zapped on Power Lines ⚡🐦 #shorts #science #physics
+```
 
-### #14 — Why don't birds on power lines get electrocuted? (physics / electricity)
+Категорії: animals ×4 (1, 6, 12, 13), space ×2 (4, 8), birds ×4 (1, 12, 13, 14), engineering (9), history (5), human body / brain (3, 7), earth (2), food (10), ocean (11), physics (14).
+Наступну тему краще брати з категорії, якої ще не було або була один раз (історія, інженерія, хімія, погода, геологія), і не про птахів.
+
+## Відхилені теми (не пропонувати повторно)
+
+- Why don't we just nuke a hurricane? — за словами користувача, вже знято (не на цьому каналі).
+
+## Сценарії
+
+### #14 — Why Birds DON'T Get Zapped on Power Lines (physics / electricity) — ЗНЯТО
 
 **Ідея:** птах на дроті під напругою не гине не через особливі лапки, а тому що обидві лапки на одному дроті й мають однакову напругу. Небезпека з'являється, коли крило торкається другого дроту або стовпа, тому орли з великим розмахом крил ризикують набагато більше.
 
-**Озвучка (68 слів):**
+**Озвучка (фінальна розмовна версія, 65 слів):**
 
-> Why doesn't a bird on a power line get electrocuted? Its feet aren't special. Current only flows through a body that connects two points at different voltages. Both feet sit on one wire, at the same voltage, so no dangerous current flows. But if a wing touches a second wire or the pole, the circuit closes. That's why eagles, with their huge wingspans, are at much higher risk.
+> So why doesn't this bird on a power line get zapped? It's not special feet. Basically, current only goes through you if you touch two spots at different voltages. Both feet are on one wire, same voltage, so nothing really flows. But if a wing touches another wire, or the pole, the circuit closes. That's why big birds, like eagles, are in way more danger.
 
 **Джерела:**
 - MIT School of Engineering, Ask an Engineer: https://engineering.mit.edu/ask-an-engineer/how-do-birds-sit-on-high-voltage-power-lines-without-getting-electrocuted
@@ -39,9 +49,9 @@
 
 **Примітка:** у сценарії немає цифр про кількість загиблих птахів, бо оцінки FWS дуже приблизні й різняться між документами.
 
-**Анімація:** зроблена. Розмовна версія тексту, beat sheet і файли описані в `docs/shorts/birdwire-production.md`, код лежить у `shorts-studio/`.
+**Анімація і пакет публікації:** `docs/shorts/birdwire-production.md`, код — `shorts-studio/`.
 
-### #13 — Why don't we just nuke a hurricane? (weather) — ВЖЕ ЗНЯТО
+### (відхилено) Why don't we just nuke a hurricane? (weather)
 
 **Ідея:** ядерний вибух здається простим способом знищити ураган, але ураган виділяє набагато більше енергії, вибух не змінює низький тиск, на якому тримається шторм, а радіоактивні опади вітер понесе на сушу.
 
@@ -54,5 +64,3 @@
 - Live Science: https://www.livescience.com/24383-can-you-stop-a-hurricane-by-nuking-it.html
 - CNN (2019): https://amp.cnn.com/cnn/2019/08/26/weather/hurricane-nuclear-bomb-noaa-wxc-trnd
 - WTOP (2019): https://wtop.com/weather-news/2019/08/why-not-bomb-a-hurricane-noaa-gets-asked-about-it-all-the-time/
-
-**Примітка:** порівняння "10 мегатонн кожні 20 хвилин" стосується тепла, яке виділяє ураган; у вітер переходить лише невелика частка цієї енергії. Сторінку NOAA напряму відкрити не вдалося (домен заблокований мережевою політикою сесії), текст звірено через пошукову видачу і вторинні джерела, які цитують NOAA.
