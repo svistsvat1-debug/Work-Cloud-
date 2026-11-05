@@ -78,3 +78,8 @@ Remotion Studio: `cd studio && npm run studio` → композиція `wp02-wo
 - Кандидати в бібліотеці ElevenLabs (сторонній каталог json2video + публічна сторінка elevenlabs.io): **Mark - Natural Conversations** `UgBBYS2sOqTuMpoF3BR0`; **Mark - Friendly Companion** `1SM7GgM6IMuvQlz2BwM3` (опис «Mark - ConvoAI», прев'ю завантажене, F0 ≈107 Гц проти 122 Гц у нашій озвучці — той самий регістр, але це не доказ); також «Mark» `ec0Fx65Vil8JBr4VRwe6`, «Mark - Normal» `WTUK291rZZ9CLPCiFTfh`, «Mark - Clear, Natural and Conversational» `YeJvxQiuGycUuaORfuAA`.
 - Повний пошук блокує ElevenLabs без входу («You must be logged in to use filters / fetch more than 3 voices»).
 - Наступний крок після входу (конектор ElevenLabs або API-ключ як network secret `xi-api-key` для `api.elevenlabs.io`): `GET /v1/shared-voices?search=Mark`, завантажити прев'ю всіх «Mark», порівняти тембр з `vo/eleven_mark_take1.mp3`, видати точну назву + ID + посилання.
+
+### Результат пошуку (2026-11-05, через конектор ElevenLabs)
+- Знайдено в бібліотеці: **Mark - Natural Conversations** — ID `UgBBYS2sOqTuMpoF3BR0`, professional, american, young, casual, conversational. Посилання: https://elevenlabs.io/app/voice-library?voiceId=UgBBYS2sOqTuMpoF3BR0
+- Порівняння «відбитків» голосу (WeSpeaker ResNet34, косинус): наша озвучка ↔ прев'ю пресета Higgsfield 0,81 (той самий голос; половини нашого запису між собою 0,88); ↔ Mark - Natural Conversations **0,56** (найвищий серед бібліотеки); ↔ Mark - Friendly Companion (`1SM7GgM6IMuvQlz2BwM3`, той самий автор) 0,41; інші «Mark» ≤ 0,19.
+- Висновок: найімовірніше це Mark - Natural Conversations; 100% підтвердження — згенерувати один рядок цим ID в ElevenLabs і порівняти (витрачає кредити ElevenLabs, лише за згодою власника).
