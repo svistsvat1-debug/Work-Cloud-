@@ -71,3 +71,10 @@ python3 videos/whypeck-02-woodpecker-brain/mix.py
 cd studio && node _render_seg.mjs 2 265   # частини -> out/seg/, далі склейка ffmpeg concat + mix.wav
 ```
 Remotion Studio: `cd studio && npm run studio` → композиція `wp02-woodpecker-brain`.
+
+## Пошук голосу «Mark» в ElevenLabs (статус 2026-11-05)
+
+- Higgsfield показує лише пресет **Mark** (male, young, рушій elevenlabs, Higgsfield ID `27c04473-84a9-4b60-a41f-c8e8458bd4f1`). Його власне прев'ю: «Hey, it's Mark. Just keeping it real… late night coffee chat or a casual vlog». ElevenLabs-ID Higgsfield не віддає.
+- Кандидати в бібліотеці ElevenLabs (сторонній каталог json2video + публічна сторінка elevenlabs.io): **Mark - Natural Conversations** `UgBBYS2sOqTuMpoF3BR0`; **Mark - Friendly Companion** `1SM7GgM6IMuvQlz2BwM3` (опис «Mark - ConvoAI», прев'ю завантажене, F0 ≈107 Гц проти 122 Гц у нашій озвучці — той самий регістр, але це не доказ); також «Mark» `ec0Fx65Vil8JBr4VRwe6`, «Mark - Normal» `WTUK291rZZ9CLPCiFTfh`, «Mark - Clear, Natural and Conversational» `YeJvxQiuGycUuaORfuAA`.
+- Повний пошук блокує ElevenLabs без входу («You must be logged in to use filters / fetch more than 3 voices»).
+- Наступний крок після входу (конектор ElevenLabs або API-ключ як network secret `xi-api-key` для `api.elevenlabs.io`): `GET /v1/shared-voices?search=Mark`, завантажити прев'ю всіх «Mark», порівняти тембр з `vo/eleven_mark_take1.mp3`, видати точну назву + ID + посилання.
