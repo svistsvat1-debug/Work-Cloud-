@@ -2,6 +2,8 @@
 
 Зріз даних: 05.11.2026, vidIQ. Канал: [@WhyPeck](https://www.youtube.com/@WhyPeck/shorts) (`UCbMEI_H0kOeVIgGd8NgDqIw`).
 
+**Трекер у Notion:** [WhyPeck · Конкуренти (YouTube Shorts)](https://app.notion.com/p/713d13be1a404f1994200fcf7126d598) — 25 каналів із посиланнями, метриками й топ-відео.
+
 **Ніша:** англомовні Shorts-пояснювачі «чому…»: тварини, тіло людини, космос, інженерія, побутова наука. Анімація без обличчя автора, 25–30 с.
 
 **Метод:** vidIQ: статистика каналу, пошук схожих каналів (автоматичний і ручний за нішею), пошук каналів, що швидко ростуть, вірусні Shorts, схожі на наш найкращий ролик, найпопулярніші Shorts 10 конкурентів, метадані 20 каналів. Витрачено ~100 кредитів vidIQ.
@@ -117,16 +119,18 @@
 
 ### Шаблон «Scientists were wrong» в інших каналах (Shorts, останні ~8 міс.)
 
+Перегляди тут округлені: vidIQ віддає їх із точністю до сотень.
+
 | Перегляди | Відео | Канал (підписники) |
 |---:|---|---|
-| 771 814 | [Scientists Cut a Deer's Antler…What Happened Next Shocked Everyone!😱🦌](https://youtu.be/e1NXcHc-Ky8) | HD Facts 27 (137 тис.) |
-| 730 915 | [Scientists thought this creature was fake… #rare](https://youtu.be/CfsMPKMLjmk) | Morbid Facts (1,4 млн) |
-| 644 500 | [Scientists Found Proof Dragons Were REAL🤯](https://youtu.be/XdeVi2s4m7w) | AceFlow (107 тис.) |
-| 383 200 | [The Dinosaur Science Rebuilt Wrong](https://youtu.be/kZ1vonCls-c) | Lost Beast X (24,1 тис.) |
-| 310 300 | [5 Animals Scientists Thought Were Gone Forever 😱](https://youtu.be/Q02BjrRX9KY) | MisfitDog Wild (11,2 тис.) |
-| 261 100 | [The Animals Scientists Were Never Able to Control 😱](https://youtu.be/jZv6DPiLryw) | FurrFact (34,2 тис.) |
-| 29 300 | [Biology Says This Bird Should Be Dead](https://youtu.be/or5qljyOtOg) | BioCurious (2,8 тис.) — 15 % лайків від переглядів |
-| 15 600 | [The Animal That Confused Scientists for Years 🤯](https://youtu.be/r0Qtjqw3hEM) | WildGavyn (12,1 тис.) |
+| 771,8 тис. | [Scientists Cut a Deer's Antler…What Happened Next Shocked Everyone!😱🦌](https://youtu.be/e1NXcHc-Ky8) | HD Facts 27 (137 тис.) |
+| 730,9 тис. | [Scientists thought this creature was fake… #rare](https://youtu.be/CfsMPKMLjmk) | Morbid Facts (1,4 млн) |
+| 644,5 тис. | [Scientists Found Proof Dragons Were REAL🤯](https://youtu.be/XdeVi2s4m7w) | AceFlow (107 тис.) |
+| 383,2 тис. | [The Dinosaur Science Rebuilt Wrong](https://youtu.be/kZ1vonCls-c) | Lost Beast X (24,1 тис.) |
+| 310,3 тис. | [5 Animals Scientists Thought Were Gone Forever 😱](https://youtu.be/Q02BjrRX9KY) | MisfitDog Wild (11,2 тис.) |
+| 261,1 тис. | [The Animals Scientists Were Never Able to Control 😱](https://youtu.be/jZv6DPiLryw) | FurrFact (34,2 тис.) |
+| 29,3 тис. | [Biology Says This Bird Should Be Dead](https://youtu.be/or5qljyOtOg) | BioCurious (2,8 тис.) — 15 % лайків від переглядів |
+| 15,6 тис. | [The Animal That Confused Scientists for Years 🤯](https://youtu.be/r0Qtjqw3hEM) | WildGavyn (12,1 тис.) |
 
 ---
 
