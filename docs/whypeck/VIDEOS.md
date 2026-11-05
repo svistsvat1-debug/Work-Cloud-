@@ -18,7 +18,7 @@
 13. This Hummingbird Can Get as Cold as a FRIDGE 🥶🐦 #shorts #animals #science
 14. Why Birds DON'T Get Zapped on Power Lines ⚡🐦 #shorts #science #physics
 15. Why Doesn't This Machine Break? Its Last Gear Is in Concrete ⚙️ #shorts #science #engineering
-16. Woodpeckers Never Get Knocked Out… So Why Does Their Brain Look Like THIS? 🧠🐦 #shorts #science #animals
+16. Woodpeckers Might Have BRAIN DAMAGE After All?! 🧠🐦 #shorts #science #animals
 ```
 
 #16 — частина 2 до #1 (tau у мозку дятлів), файл `videos/whypeck-02-woodpecker-brain/final-4K.mp4`, нотатки `docs/whypeck/02_WOODPECKER_BRAIN_PART2.md`.
