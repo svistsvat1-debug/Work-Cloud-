@@ -8,6 +8,7 @@ import {Video03, video03Duration} from './videos/v03/Video03';
 import {Video04, video04Duration} from './videos/v04/Video04';
 import {Video05, video05Duration} from './videos/v05/Video05';
 import {WP02, wp02Duration} from './videos/wp02/WP02';
+import {EG03, eg03Duration} from './videos/eg03/EG03';
 import {AvatarLineup, AvatarSolo, avatarTestDuration} from './videos/avatar-test/AvatarTest';
 
 export const RemotionRoot: React.FC = () => (
@@ -18,6 +19,7 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="v04-instagram-myth" component={Video04} durationInFrames={video04Duration} fps={FPS} width={W} height={H} />
     <Composition id="v05-site-redesign" component={Video05} durationInFrames={video05Duration} fps={FPS} width={W} height={H} />
     <Composition id="wp02-woodpecker-brain" component={WP02} durationInFrames={wp02Duration} fps={60} width={1080} height={1920} defaultProps={{withAudio: false}} />
+    <Composition id="eg03-water-on-sand" component={EG03} durationInFrames={eg03Duration} fps={60} width={1080} height={1920} defaultProps={{withAudio: false}} />
     <Composition id="avatar-lineup" component={AvatarLineup} durationInFrames={avatarTestDuration} fps={FPS} width={W} height={H} />
     <Composition
       id="avatar-solo"

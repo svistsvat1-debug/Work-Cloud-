@@ -1,0 +1,412 @@
+[
+{
+"t": 3.01,
+"name": "heave",
+"db": -27
+},
+{
+"t": 3.06,
+"name": "rope",
+"db": -31
+},
+{
+"t": 4.09,
+"name": "heave",
+"db": -27
+},
+{
+"t": 5.17,
+"name": "heave",
+"db": -27
+},
+{
+"t": 5.22,
+"name": "rope",
+"db": -31
+},
+{
+"t": 6.25,
+"name": "heave",
+"db": -27
+},
+{
+"t": 7.33,
+"name": "heave",
+"db": -27
+},
+{
+"t": 7.38,
+"name": "rope",
+"db": -31
+},
+{
+"t": 8.41,
+"name": "heave",
+"db": -27
+},
+{
+"t": 9.49,
+"name": "heave",
+"db": -27
+},
+{
+"t": 9.54,
+"name": "rope",
+"db": -31
+},
+{
+"t": 10.57,
+"name": "heave",
+"db": -27
+},
+{
+"t": 20.29,
+"name": "heave",
+"db": -27
+},
+{
+"t": 20.34,
+"name": "rope",
+"db": -31
+},
+{
+"t": 21.37,
+"name": "heave",
+"db": -27
+},
+{
+"t": 22.45,
+"name": "heave",
+"db": -27
+},
+{
+"t": 22.5,
+"name": "rope",
+"db": -31
+},
+{
+"t": 23.53,
+"name": "heave",
+"db": -27
+},
+{
+"t": 24.61,
+"name": "heave",
+"db": -27
+},
+{
+"t": 24.66,
+"name": "rope",
+"db": -31
+},
+{
+"t": 2.61,
+"name": "wake",
+"db": -19
+},
+{
+"t": 2.76,
+"name": "blink",
+"db": -27
+},
+{
+"t": 2.85,
+"name": "blink",
+"db": -28
+},
+{
+"t": 2.94,
+"name": "blink",
+"db": -29
+},
+{
+"t": 3.03,
+"name": "blink",
+"db": -30
+},
+{
+"t": 3.05,
+"name": "glide",
+"db": -28
+},
+{
+"t": 4.66,
+"name": "sledge-creak",
+"db": -19
+},
+{
+"t": 4.68,
+"name": "sledge-thump",
+"db": -17
+},
+{
+"t": 5.32,
+"name": "stone-eyes",
+"db": -17
+},
+{
+"t": 5.52,
+"name": "eyes-pop",
+"db": -21
+},
+{
+"t": 5.72,
+"name": "smug",
+"db": -24
+},
+{
+"t": 6.32,
+"name": "push",
+"db": -26
+},
+{
+"t": 7.48,
+"name": "head-turn",
+"db": -24
+},
+{
+"t": 7.62,
+"name": "glare",
+"db": -24
+},
+{
+"t": 8.92,
+"name": "pour",
+"db": -17
+},
+{
+"t": 10.22,
+"name": "pose",
+"db": -27
+},
+{
+"t": 10.58,
+"name": "ritual",
+"db": -17
+},
+{
+"t": 11.1,
+"name": "cut-lab",
+"db": -22
+},
+{
+"t": 11.56,
+"name": "sci-pop",
+"db": -18
+},
+{
+"t": 12.12,
+"name": "strain-rope",
+"db": -21
+},
+{
+"t": 12.14,
+"name": "gauge-spring",
+"db": -21
+},
+{
+"t": 12.22,
+"name": "sled-scrape",
+"db": -30
+},
+{
+"t": 13.12,
+"name": "visitor-pop",
+"db": -21
+},
+{
+"t": 13.66,
+"name": "pour2",
+"db": -18
+},
+{
+"t": 13.7,
+"name": "needle-down",
+"db": -21
+},
+{
+"t": 15.03,
+"name": "half-ding",
+"db": -18
+},
+{
+"t": 16.08,
+"name": "wag",
+"db": -29
+},
+{
+"t": 16.247,
+"name": "wag",
+"db": -29
+},
+{
+"t": 16.414,
+"name": "wag",
+"db": -29
+},
+{
+"t": 16.22,
+"name": "bubble",
+"db": -20
+},
+{
+"t": 16.46,
+"name": "skate",
+"db": -31
+},
+{
+"t": 17.2,
+"name": "ice-glint",
+"db": -24
+},
+{
+"t": 17.64,
+"name": "x-stamp",
+"db": -15
+},
+{
+"t": 17.66,
+"name": "x-buzz",
+"db": -24
+},
+{
+"t": 17.96,
+"name": "bubble-pop",
+"db": -22
+},
+{
+"t": 18.08,
+"name": "dump-swing",
+"db": -24
+},
+{
+"t": 18.28,
+"name": "flood",
+"db": -15
+},
+{
+"t": 18.32,
+"name": "flood-pour",
+"db": -18
+},
+{
+"t": 19.03,
+"name": "needle-up",
+"db": -20
+},
+{
+"t": 19.38,
+"name": "needle-hit",
+"db": -22
+},
+{
+"t": 19.58,
+"name": "cut-back",
+"db": -22
+},
+{
+"t": 20.5,
+"name": "drip",
+"db": -21
+},
+{
+"t": 20.72,
+"name": "drip",
+"db": -21
+},
+{
+"t": 20.94,
+"name": "drip",
+"db": -21
+},
+{
+"t": 21.16,
+"name": "drip",
+"db": -21
+},
+{
+"t": 21.22,
+"name": "lens-pop",
+"db": -18
+},
+{
+"t": 21.26,
+"name": "lens-shimmer",
+"db": -24
+},
+{
+"t": 21.72,
+"name": "bridge",
+"db": -25
+},
+{
+"t": 21.8,
+"name": "bridge",
+"db": -25
+},
+{
+"t": 21.88,
+"name": "bridge",
+"db": -25
+},
+{
+"t": 21.96,
+"name": "bridge",
+"db": -25
+},
+{
+"t": 22.04,
+"name": "bridge",
+"db": -25
+},
+{
+"t": 22.12,
+"name": "bridge",
+"db": -25
+},
+{
+"t": 22.2,
+"name": "bridge",
+"db": -25
+},
+{
+"t": 22.28,
+"name": "bridge",
+"db": -25
+},
+{
+"t": 22.17,
+"name": "together",
+"db": -16
+},
+{
+"t": 22.54,
+"name": "lens-out",
+"db": -24
+},
+{
+"t": 23.46,
+"name": "ghost-rise",
+"db": -24
+},
+{
+"t": 23.96,
+"name": "x2",
+"db": -19
+},
+{
+"t": 24.16,
+"name": "pull-back",
+"db": -24
+},
+{
+"t": 24.28,
+"name": "ghost-pop",
+"db": -24
+},
+{
+"t": 24.96,
+"name": "freeze",
+"db": -27
+}
+]
