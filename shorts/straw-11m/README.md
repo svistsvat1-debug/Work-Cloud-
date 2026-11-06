@@ -29,3 +29,11 @@ Why can't anyone drink through an eleven-meter straw? It's not about weak lungs.
 | 16.0 | So even a perfect vacuum pump | Зверху падає вакуумний насос, герой качає | O02 → P06/P07 | thud, pump squeaks |
 | 18.0 | would leave the water stuck short of your lips. | Сік тремтить на тій самій позначці, до губ ~1 м; герой дивиться в камеру (P08), крапля поту | P08 | small "plip" |
 | ~21 | (кінець) | Камера відʼїжджає у кадр 0 → луп | building | — |
+
+## Анімація (крок 3) — як зроблено
+- Озвучка: ElevenLabs, Mark – Natural Conversations, v4 (`raw/take1.mp3`, 23.7 с), таймінги слів — faster-whisper (`words.json`).
+- Картинки: Google Flow на #00FF00 → `key.py` (кеїнг + despill, 2x) → `cut/`; `prep.py` міряє голову/ноги, ділить P06 на персонажа+ручку і корпус насоса; у будинку перила замінені вікном з нижнього поверху (перила/балкон малюються кодом).
+- Не використано: фото-P07 (реальна людина) і перегенерований P07 (ручка не з'єднана з насосом) — качання зроблено зі P06 (stretch + шток кодом). Склянка, лінійка, трубочка, хмарки-повітря, шланг, піт — кодом.
+- Remotion: `anim/` (`npm run studio`), композиція `Straw`, 1080x1920, 60 fps, 25.1 с. Рендер: `node anim/render.mjs 2 out/straw-11m-4K.mp4 16`.
+- SFX: процедурно (`sfx.py` → `anim/public/straw/sfx.wav`), пік міксу −2.5 dBFS.
+- QA: `qa/contact.jpg` (кадри по бітах), pop scan (`popscan.py`) — усі стрибки = заплановані свопи/удари.
