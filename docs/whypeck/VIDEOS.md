@@ -21,4 +21,14 @@
 16. Woodpeckers Might Have BRAIN DAMAGE After All?! 🧠🐦 #shorts #science #animals
 ```
 
+Також уже є на каналі (знайдено через vidIQ 2026-11-06, у списку вище їх не було):
+
+```text
+- How Do Trains Turn If Both Wheels Spin Together? #shorts
+- Why Seawater Makes You THIRSTIER 😱🌊 #shorts #facts #science #didyouknow
+- Why Don't We Just NUKE a Hurricane? ☢️🌀💥 #shorts #science #hurricane
+```
+
+У роботі: «Water on the sand» (Єгипет, мокрий пісок) → `docs/whypeck/03_EGYPT_WET_SAND.md`.
+
 #16 — частина 2 до #1 (tau у мозку дятлів), файл `videos/whypeck-02-woodpecker-brain/final-4K.mp4`, нотатки `docs/whypeck/02_WOODPECKER_BRAIN_PART2.md`.
