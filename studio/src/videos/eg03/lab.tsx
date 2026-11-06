@@ -443,7 +443,7 @@ const visitorMouth = (t: number): P2 => {
 const camB = (t: number) =>
   camAt(
     [
-      {t: T.cutLab, x: 450, y: 1000, z: 80},
+      {t: T.cutLab, x: 470, y: 990, z: 40, ease: (u: number) => u},
       {t: T.physicists, x: 450, y: 1000, z: 80},
       {t: T.tested + 0.5, x: 400, y: 1030, z: 60},
       {t: T.water2 - 0.45, x: 400, y: 1030, z: 60},
@@ -476,7 +476,7 @@ export const LabShot: React.FC<{t: number}> = ({t}) => {
   else if (t >= T.not - 0.04 && t < T.too + 0.05) expr = 'wag';
   else if (t >= T.too + 0.05 && t < T.worse - 0.05) expr = 'shock';
   else if (t >= T.worse - 0.05) expr = 'strain';
-  const lean = straining ? -9 + 1.5 * Math.sin(t * 31) : expr === 'easy' ? -3 : expr === 'shock' ? 4 : 0;
+  const lean = (straining ? -9 + 1.5 * Math.sin(t * 31) : expr === 'easy' ? -3 : expr === 'shock' ? 4 : 0) + 0.8 * Math.sin(2 * Math.PI * 0.5 * t);
   const pullDX = straining ? -10 : 0;
   const handle: P2 = [GAUGE[0] - GAUGE_R - 70 + pullDX, GAUGE[1]];
   const handA: P2 = [handle[0] - 8, handle[1] - 6];
@@ -484,7 +484,7 @@ export const LabShot: React.FC<{t: number}> = ({t}) => {
   const swaps = [T.tested, T.cut + 0.3, T.not - 0.04, T.too + 0.05, T.worse - 0.05];
   let squash = 1;
   for (const w of swaps) squash *= 1 - 0.08 * Math.max(0, 1 - Math.abs(t - w) / 0.08);
-  squash *= appear;
+  squash *= appear * (1 + 0.012 * Math.sin(2 * Math.PI * 0.6 * t));
   const wag = 16 * Math.sin((t - T.not) * 2 * Math.PI * 3);
   // gauge jump with the pull
   const gx = pullDX * 0.6;
