@@ -4,3 +4,6 @@ build/
 images/*/work/
 images/*/qa/*.mp4
 *.log
+images/*/qa/s*/
+images/*/qa/full/
+images/*/qa/pop/
