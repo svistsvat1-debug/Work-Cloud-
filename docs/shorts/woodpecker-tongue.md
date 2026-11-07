@@ -259,3 +259,52 @@ npx remotion render src/index.ts WoodpeckerTongue out/woodpecker-tongue-4K.mp4 \
 Підготовка асетів (якщо міняються картинки/звук): `tools/key.py` → `images/woodpecker-tongue/prep_upscale.py` → `prep_xray.py` → `sfx_mix.py`.
 
 **Для наступних роликів:** качати з Flow максимальну роздільність (ці файли були 768×1376 — для 4K збільшені ×3 програмно); пози-правки робити від 01 з тим самим напрямком погляду і без стовбура/гілок у кадрі.
+
+---
+
+## 5. Публікація (vidIQ, 2026-11-07)
+
+Дані vidIQ: канал WhyPeck (@whypeck), 42 підписники. Хіт про дятла "Scientists Were Wrong About This Bird’s Head" — 4 313 переглядів (слот 14:00 UTC). "woodpecker tongue" ≈ 4,8 тис. пошуків/міс (competition 59), "woodpecker anatomy" ≈ 7 тис. (competition 34), "hyoid bone" ≈ 5,4 тис. Конкуренти: "The Woodpecker Secret" — 898 тис. і 652 тис. переглядів.
+
+Оцінки назв (vidIQ score, Shorts, з даними каналу):
+| Назва | Score |
+|---|---|
+| **This Bird's Tongue Goes Around Its ENTIRE Skull 🤯🐦** (основна) | 93 |
+| Where Does a Woodpecker's Tongue Actually END? 🤔🐦 (запасна, з ключем) | 93 |
+| I X-Rayed a Woodpecker… Its Tongue Doesn't End in Its Mouth 🤯 | 89 |
+| This Bird Keeps Its Tongue Wrapped Around Its Skull 🤯 (робоча) | 88 |
+| Woodpeckers Hide a HARPOON Inside Their Heads 😱🐦 | 85 |
+Відкинуто: "Why Woodpeckers Never Get a Headache" — підтримує міф про захист мозку.
+
+**Назва:** `This Bird's Tongue Goes Around Its ENTIRE Skull 🤯🐦 #shorts #science #animals`
+
+**Опис:**
+```
+Its tongue doesn't end in its mouth 🤯 We X-rayed a woodpecker to see where it really goes.
+
+A woodpecker's tongue sits on two thin hyoid bones that curl behind its skull and over the top of its head. In some species they reach all the way to the nostril. Muscles slide them forward, and the tongue shoots far past the beak into a beetle tunnel. Backward barbs + sticky spit hook the grub and reel it in 🎣
+
+Which bird should I X-ray next? 🦉🐧 Tell me in the comments 👇
+Subscribe for new science Shorts every day 🔔
+
+Sources:
+Cornell Lab of Ornithology: https://dl.allaboutbirds.org/woodpeckers-at-work
+BirdNote: https://birdnote.org/node/14663
+
+#shorts #science #animals #birds #woodpecker
+```
+
+**Теги:** woodpecker tongue, woodpecker, woodpecker anatomy, hyoid bone, woodpecker tongue skull, woodpecker tongue wraps around skull, how do woodpeckers eat, woodpecker x-ray, bird facts, animal facts, animals with long tongues, science shorts, birds, whypeck
+
+**Налаштування:**
+- Категорія: Science & Technology (або та сама, що в попередніх Shorts каналу).
+- Аудиторія: "No, it's not made for kids" — науковий контент для широкої аудиторії; позначка "для дітей" вимикає коментарі (вбиває питання "which bird next?"). Рішення за власником каналу.
+- Altered or synthetic content: No (стилізована мультиплікація, не реалістична сцена).
+- Мова відео: English; субтитри: завантажити `docs/shorts/woodpecker-tongue.en.srt`.
+- Related video (Shorts): "Scientists Were Wrong About This Bird’s Head" (youtu.be/uc0ab1fAaQc) — продовження хіта.
+- Плейлист: "Bird Secrets 🐦" (голова дятла, птахи на дротах, колібрі, фламінго, цей ролик).
+- Коментарі: увімкнені, сортування Top; Remix: дозволити.
+- Обкладинка: кадр 0:11–0:12 (повна петля кісток навколо черепа + "?"), файл `docs/shorts/woodpecker-tongue-thumbnail.jpg`.
+- Закріплений коментар: `Which bird should I X-ray next? 🦉 Owl, 🐧 penguin… or something weirder? Drop it below 👇`
+- Час: неділя 2026-11-08, 14:00 UTC (16:00 за Києвом) — слот хіта про дятла.
+- Якщо через ~24 год перегляди/год нижчі за звичні для каналу — змінити назву на запасну.
