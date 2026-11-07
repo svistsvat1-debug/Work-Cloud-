@@ -109,3 +109,18 @@
 3. Через 12–24 год написати "реплай" під своїм закріпленим коментарем.
 4. Виправити переплутані коментарі на 6T0rsp6WkHo і dfb-6yaxHqo.
 5. Головне обмеження: у Shorts коментарі відкриває мало людей. Щоб pin запрацював, у нових відео наприкінці потрібен CTA голосом або текстом на екрані: "Answer the question in the pinned comment 👇".
+
+---
+
+## Шаблони відповідей глядачам
+
+Принцип: подякувати → зробити людину особливою → поставити питання, на яке можна відповісти одним словом і яке стосується теми відео. Розмову тримаємо в одному треді.
+
+**"First comment on yt"** (відео про динозаврів, 0lODvWjNd9c):
+> Wait, your FIRST comment on YouTube ever?! 🥹 And you chose WhyPeck — that's an honor 🏆
+> Okay, important question: if we COULD clone one dinosaur, which one would you pick? 🦖👇
+
+Коли людина відповість, наприклад "T-Rex":
+> Solid pick 🦖 Fun fact: T. rex lived closer in time to US than to Stegosaurus 🤯
+
+**Коментар з одного емодзі (❤)**: поставити серце. Можна коротко відповісти "❤️🦖", але основну розмову краще вести в іншому треді.
