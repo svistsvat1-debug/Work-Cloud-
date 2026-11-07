@@ -232,15 +232,24 @@ Higgsfield і ElevenLabs генерував ти сам, тож скільки �
 
 Канал: WhyPeck (@whypeck). Формула назви взята з каналу: одне слово капсом, 2 емодзі, 3 хештеги (як у «Why Birds DON'T Get Zapped on Power Lines ⚡🐦» — 4 430 переглядів).
 
-**Назва (vidIQ score 96):**
+**Назва (оновлено після аналізу каналу, vidIQ score 94):**
 ```
-Why Birds DON'T Fall Off Branches When They Sleep 😴🐦 #shorts #science #animals
+Why Birds Don't Fall Off Branches When They Sleep 😴
+```
+Чому без капсу й хештегів: аналіз 30 конкурентів радить назву без хештегів з одним емодзі в кінці (Zack D. Films, Blink, Huh Neat). Ця назва — ідея №3 з топ-10 звіту, і vidIQ оцінює її майже так само (94 проти 96 у версії з капсом і хештегами). Хештеги лишаються в описі. Обидва попередні хіти каналу мали капс і хештеги, тож це тест: порівняти з «птахами на дротах».
+
+Попередній варіант (vidIQ 96): `Why Birds DON'T Fall Off Branches When They Sleep 😴🐦 #shorts #science #animals`
+
+**Закріплений коментар:**
+```
+Which bird should I X-ray next? 🦉🐧🦩 Drop it below 👇
 ```
 
 Інші варіанти (оцінка vidIQ):
 | Варіант | Score | Коментар |
 |---|---|---|
-| Why Birds DON'T Fall Off Branches When They Sleep 😴🐦 #shorts #science #animals | 96 | ✅ обрано: формула каналу + точна фраза пошуку |
+| Why Birds Don't Fall Off Branches When They Sleep 😴 | 94 | ✅ обрано: чиста назва за правилами аналізу + точна фраза пошуку |
+| Why Birds DON'T Fall Off Branches When They Sleep 😴🐦 #shorts #science #animals | 96 | формула каналу з капсом і хештегами |
 | Why Birds Don't Fall Off Branches When They Sleep 🤔 #shorts #science | 96 | те саме без капсу й #animals |
 | This Is How Birds Lock Their Feet While Sleeping 🐦😴 | 95 | ❌ видає замок сухожиль за єдину причину, а ролик каже, що важить і баланс |
 | Why Birds CAN'T Fall Off Branches While Sleeping 😴 | 90 | ❌ неправда: шпаки під наркозом падали з жердини |
@@ -269,4 +278,4 @@ why don't birds fall off branches when they sleep,how do birds sleep,how do bird
 ```
 
 Дані vidIQ (місячні пошуки, оцінка): «how do birds sleep at night» ~4 794 (конкуренція 36), «bird sleep» ~4 505 (42), «animal facts» ~429 000 (56), «science facts» ~263 000 (61), «nature facts» ~50 000 (39), «wildlife facts» ~46 800 (48), «animal adaptations» ~12 400 (56). Точна фраза «why don't birds fall off branches when they sleep» — <750/міс, конкуренція 29 (низька).
-Витрачено 30 кредитів vidIQ (залишок ~448).
+Витрачено 40 кредитів vidIQ (залишок ~438).
