@@ -1,0 +1,402 @@
+[
+{
+"w": "this",
+"start": 0.0,
+"end": 0.31
+},
+{
+"w": "woodpeckers",
+"start": 0.31,
+"end": 0.95
+},
+{
+"w": "tongue",
+"start": 0.95,
+"end": 1.39
+},
+{
+"w": "doesn't",
+"start": 1.39,
+"end": 1.72
+},
+{
+"w": "end",
+"start": 1.72,
+"end": 1.93
+},
+{
+"w": "in",
+"start": 1.93,
+"end": 2.02
+},
+{
+"w": "its",
+"start": 2.02,
+"end": 2.2
+},
+{
+"w": "mouth",
+"start": 2.2,
+"end": 2.82
+},
+{
+"w": "it's",
+"start": 3.19,
+"end": 3.31
+},
+{
+"w": "attached",
+"start": 3.31,
+"end": 3.71
+},
+{
+"w": "to(3)",
+"start": 3.71,
+"end": 3.81
+},
+{
+"w": "two",
+"start": 3.81,
+"end": 4.16
+},
+{
+"w": "thin",
+"start": 4.16,
+"end": 4.56
+},
+{
+"w": "bones",
+"start": 4.56,
+"end": 5.1
+},
+{
+"w": "that",
+"start": 5.25,
+"end": 5.4
+},
+{
+"w": "curl",
+"start": 5.4,
+"end": 5.7
+},
+{
+"w": "behind",
+"start": 5.7,
+"end": 6.02
+},
+{
+"w": "its",
+"start": 6.02,
+"end": 6.17
+},
+{
+"w": "skull",
+"start": 6.17,
+"end": 6.69
+},
+{
+"w": "over",
+"start": 6.77,
+"end": 6.99
+},
+{
+"w": "the",
+"start": 6.99,
+"end": 7.08
+},
+{
+"w": "top",
+"start": 7.08,
+"end": 7.32
+},
+{
+"w": "of",
+"start": 7.32,
+"end": 7.42
+},
+{
+"w": "its",
+"start": 7.42,
+"end": 7.56
+},
+{
+"w": "head",
+"start": 7.56,
+"end": 7.94
+},
+{
+"w": "and(2)",
+"start": 8.32,
+"end": 8.48
+},
+{
+"w": "in",
+"start": 8.48,
+"end": 8.59
+},
+{
+"w": "some",
+"start": 8.59,
+"end": 8.88
+},
+{
+"w": "species",
+"start": 8.88,
+"end": 9.41
+},
+{
+"w": "all",
+"start": 9.41,
+"end": 9.91
+},
+{
+"w": "the",
+"start": 9.91,
+"end": 9.97
+},
+{
+"w": "way",
+"start": 9.97,
+"end": 10.16
+},
+{
+"w": "to(3)",
+"start": 10.16,
+"end": 10.25
+},
+{
+"w": "the",
+"start": 10.25,
+"end": 10.34
+},
+{
+"w": "nostril",
+"start": 10.34,
+"end": 11.12
+},
+{
+"w": "why(2)",
+"start": 11.5,
+"end": 11.97
+},
+{
+"w": "muscles",
+"start": 12.39,
+"end": 12.83
+},
+{
+"w": "slide",
+"start": 12.83,
+"end": 13.22
+},
+{
+"w": "those",
+"start": 13.22,
+"end": 13.41
+},
+{
+"w": "bones",
+"start": 13.41,
+"end": 13.73
+},
+{
+"w": "forward",
+"start": 13.73,
+"end": 14.29
+},
+{
+"w": "and(2)",
+"start": 14.29,
+"end": 14.45
+},
+{
+"w": "the",
+"start": 14.45,
+"end": 14.52
+},
+{
+"w": "tongue",
+"start": 14.52,
+"end": 14.84
+},
+{
+"w": "shoots",
+"start": 14.84,
+"end": 15.12
+},
+{
+"w": "way",
+"start": 15.12,
+"end": 15.57
+},
+{
+"w": "past",
+"start": 15.57,
+"end": 15.88
+},
+{
+"w": "the",
+"start": 15.88,
+"end": 15.95
+},
+{
+"w": "beak",
+"start": 15.95,
+"end": 16.36
+},
+{
+"w": "deep",
+"start": 16.36,
+"end": 16.77
+},
+{
+"w": "into",
+"start": 16.77,
+"end": 17.02
+},
+{
+"w": "a",
+"start": 17.02,
+"end": 17.07
+},
+{
+"w": "beetle",
+"start": 17.07,
+"end": 17.41
+},
+{
+"w": "tunnel",
+"start": 17.41,
+"end": 17.78
+},
+{
+"w": "the",
+"start": 18.16,
+"end": 18.24
+},
+{
+"w": "tip",
+"start": 18.24,
+"end": 18.55
+},
+{
+"w": "has",
+"start": 18.55,
+"end": 18.74
+},
+{
+"w": "backward",
+"start": 18.74,
+"end": 19.25
+},
+{
+"w": "barbs",
+"start": 19.25,
+"end": 19.73
+},
+{
+"w": "and(2)",
+"start": 19.73,
+"end": 19.86
+},
+{
+"w": "sticky",
+"start": 19.86,
+"end": 20.3
+},
+{
+"w": "spit",
+"start": 20.3,
+"end": 20.77
+},
+{
+"w": "so",
+"start": 20.95,
+"end": 21.21
+},
+{
+"w": "the",
+"start": 21.21,
+"end": 21.3
+},
+{
+"w": "grub",
+"start": 21.3,
+"end": 21.63
+},
+{
+"w": "gets",
+"start": 21.63,
+"end": 21.87
+},
+{
+"w": "hooked",
+"start": 21.87,
+"end": 22.25
+},
+{
+"w": "and(2)",
+"start": 22.25,
+"end": 22.55
+},
+{
+"w": "reeled",
+"start": 22.55,
+"end": 22.88
+},
+{
+"w": "in",
+"start": 22.88,
+"end": 23.16
+},
+{
+"w": "so",
+"start": 23.57,
+"end": 23.87
+},
+{
+"w": "which(2)",
+"start": 23.87,
+"end": 24.26
+},
+{
+"w": "bird",
+"start": 24.26,
+"end": 24.5
+},
+{
+"w": "should",
+"start": 24.5,
+"end": 24.63
+},
+{
+"w": "i",
+"start": 24.63,
+"end": 24.73
+},
+{
+"w": "x-ray",
+"start": 24.73,
+"end": 25.07
+},
+{
+"w": "next",
+"start": 25.07,
+"end": 25.53
+},
+{
+"w": "subscribe",
+"start": 25.9,
+"end": 26.35
+},
+{
+"w": "for(2)",
+"start": 26.35,
+"end": 26.45
+},
+{
+"w": "more",
+"start": 26.45,
+"end": 26.9
+}
+]

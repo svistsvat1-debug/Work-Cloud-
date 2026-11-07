@@ -2,3 +2,7 @@ node_modules/
 out/
 build/
 images/*/raw/*.json
+images/*/keyed/
+images/*/qa/
+images/*/vo/*.wav
+public/*/audio/sfx.wav
