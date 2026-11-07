@@ -182,6 +182,30 @@ def bird(name, rawfile, g, ylo, xray_keep_legs):
         x[..., 3] = a * 255
         xr = xray_style(np.clip(x, 0, 255).astype(np.uint8)[y0:y1])
         cv2.imwrite(f'{PUB}/{name}_xray.png', xr)
+        # normal-colour split for the balance wobble: base = twig + toes/legs (fixed), body = the rest + tail bridged (rotates)
+        toe_full = (ndi.distance_transform_edt(~pink) <= 9)
+        toe_soft = cv2.resize(cv2.GaussianBlur(toe_full.astype(np.float32), (0, 0), 0.8), (ww, hh), interpolation=cv2.INTER_LINEAR)
+        toe_soft = np.clip((toe_soft - 0.3) / 0.4, 0, 1)
+        basem = np.maximum(twig_cov, toe_soft)
+        nb = rgba.astype(np.float32).copy(); nb[..., 3] *= basem
+        cv2.imwrite(f'{PUB}/{name}_base.png', np.clip(nb, 0, 255).astype(np.uint8)[y0:y1])
+        bd = rgba.astype(np.float32).copy()
+        ab = bd[..., 3] / 255 * (1 - twig_cov) * (1 - toe_soft)
+        ab[(np.abs(dd) < g['T'] / 2 + 1.5) & ~thr_hi] = 0
+        isink = np.sqrt(((bd[..., :3] - np.array(INK[::-1], np.float32)) ** 2).sum(2)) < 90
+        istwig = np.minimum(np.sqrt(((bd[..., :3] - np.array(TOP[::-1], np.float32)) ** 2).sum(2)),
+                            np.sqrt(((bd[..., :3] - np.array(BOT[::-1], np.float32)) ** 2).sum(2))) < 60
+        ring2 = ndi.binary_dilation(thr_hi, iterations=60) & ~thr_hi & (bd[..., 3] > 240) & ~isink & ~istwig & (toe_soft < 0.01)
+        bd[thr_hi, :3] = np.median(bd[ring2, :3], 0)
+        ab = np.maximum(ab, thr_hi.astype(np.float32))
+        m2 = ab > 0.5
+        edge2 = m2 & ~ndi.binary_erosion(m2, iterations=24) & ndi.binary_dilation(thr_hi, iterations=30)
+        bd[edge2, :3] = np.array(INK[::-1], np.float32)
+        holes = ndi.binary_fill_holes(ab > 0.5) & ~(ab > 0.5)
+        holes = ndi.binary_dilation(holes, iterations=3) & (toe_soft > 0)
+        bd[holes, :3] = np.median(bd[ring2, :3], 0); ab[holes] = 1
+        bd[..., 3] = ab * 255
+        cv2.imwrite(f'{PUB}/{name}_body.png', np.clip(bd, 0, 255).astype(np.uint8)[y0:y1])
         # toes only (drawn above the x-ray branch)
         tm = cv2.dilate(prot_hi.astype(np.uint8), np.ones((9, 9), np.uint8)).astype(np.float32)
         tm = cv2.GaussianBlur(tm, (0, 0), 2)[y0:y1]
@@ -192,15 +216,27 @@ def bird(name, rawfile, g, ylo, xray_keep_legs):
         print(name, rgba.shape, 'y0', y0)
         return
     else:
-        legs = ndi.distance_transform_edt(~pink) <= 6
+        legs = ndi.distance_transform_edt(~pink) <= 9
         legs[:ylo] = False
-        cut = bandx | legs
+        yy, xx = np.mgrid[0:obj.shape[0], 0:obj.shape[1]]
+        curl = (xx - 332) ** 2 + (yy - 829) ** 2 <= 16 ** 2          # stray curl stroke at the leg top
+        cut = bandx | legs | curl
         body = obj & ~cut
         thr = tail_bridge(body, bandx & ~legs, d, g)
+        # rebuild the belly edge where the near leg overlapped it: quadratic through the belly bottom on both sides
+        bx = np.array([272, 280, 288, 360, 376, 392, 408, 424], float)
+        by = np.array([848, 851, 854, 871, 872, 873, 873, 873], float)
+        cf = np.polyfit(bx, by, 2)
+        fy = np.polyval(cf, xx)
+        fill = (xx >= 288) & (xx <= 362) & (yy >= 800) & (yy <= fy + 3.5)
+        thr = thr | (fill & ~body)
+        belly_line = (xx >= 286) & (xx <= 364) & (np.abs(yy - fy) <= 3.6)
     body2 = body | thr
     base = bgr.copy()
     base[~obj] = np.median(bgr[body & (signed_d(bgr.shape[:2], g) < -g['T'])], 0).astype(np.uint8)   # no light checker in the fill
     src = cv2.inpaint(base, (thr | (cut & ~body2)).astype(np.uint8) * 255, 5, cv2.INPAINT_TELEA)
+    if not xray_keep_legs:
+        src[belly_line] = np.array(INK[::-1], np.uint8)
     xr, _ = key_upscale(src, S, keep_mask=body2, drop_mask=~body2)
     xr = xray_style(xr[y0:y1])
     cv2.imwrite(f'{PUB}/{name}_xray.png', xr)

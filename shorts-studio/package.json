@@ -8,6 +8,7 @@
     "render": "remotion render"
   },
   "dependencies": {
+    "@fontsource/fredoka": "^5.2.10",
     "@remotion/cli": "4.0.536",
     "react": "18.3.1",
     "react-dom": "18.3.1",
