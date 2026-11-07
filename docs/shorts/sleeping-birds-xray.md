@@ -225,3 +225,48 @@ A small pair of cartoon scissors seen from the side, blades slightly open, simpl
 
 ### Витрати
 Higgsfield і ElevenLabs генерував ти сам, тож скільки кредитів пішло — не знаю, [MISSING]. З мого боку платних генерацій не було.
+
+---
+
+## Метадані для YouTube (vidIQ, 2026-11-07)
+
+Канал: WhyPeck (@whypeck). Формула назви взята з каналу: одне слово капсом, 2 емодзі, 3 хештеги (як у «Why Birds DON'T Get Zapped on Power Lines ⚡🐦» — 4 430 переглядів).
+
+**Назва (vidIQ score 96):**
+```
+Why Birds DON'T Fall Off Branches When They Sleep 😴🐦 #shorts #science #animals
+```
+
+Інші варіанти (оцінка vidIQ):
+| Варіант | Score | Коментар |
+|---|---|---|
+| Why Birds DON'T Fall Off Branches When They Sleep 😴🐦 #shorts #science #animals | 96 | ✅ обрано: формула каналу + точна фраза пошуку |
+| Why Birds Don't Fall Off Branches When They Sleep 🤔 #shorts #science | 96 | те саме без капсу й #animals |
+| This Is How Birds Lock Their Feet While Sleeping 🐦😴 | 95 | ❌ видає замок сухожиль за єдину причину, а ролик каже, що важить і баланс |
+| Why Birds CAN'T Fall Off Branches While Sleeping 😴 | 90 | ❌ неправда: шпаки під наркозом падали з жердини |
+| Why Sleeping Birds DON'T Fall Off Branches 😴🐦 #shorts #science #animals | 89 | початкова формула |
+| Birds Don't Fall Off Branches Because of THIS 🐦🦵 | 89 | — |
+| The Bird Knee Is Hidden Under Its Feathers 🦵🐦 | 89 | — |
+
+**Опис:**
+```
+Why don't birds fall off branches when they sleep? 😴🐦
+
+We X-rayed a sleeping robin's leg. Tendons run behind the ankle into the toes, so when the bird crouches, its toes curl shut around the branch. That "backward knee" is actually the ankle – the real knee is hidden under the feathers. Many songbirds also have tiny ridges on those tendons that lock like a zip tie.
+
+The twist: starlings with those tendons cut still slept on their perch. So balance does a lot of the work too.
+
+Which bird should I X-ray next? 👇
+
+Source: Galton & Shepherd (2012), "Experimental Analysis of Perching in the European Starling", Journal of Experimental Zoology Part A.
+
+#shorts #science #animals #birds #animalfacts #birdsleep #sciencefacts #nature
+```
+
+**Теги (388/500 знаків):**
+```
+why don't birds fall off branches when they sleep,how do birds sleep,how do birds sleep at night,bird sleep,birds sleeping on branches,how do birds sleep without falling,bird feet,bird tendon lock,tendon locking mechanism,perching birds,do birds have knees,bird knees,bird x-ray,robin,starling,birds,animal facts,science facts,nature facts,wildlife facts,animal adaptations,science shorts
+```
+
+Дані vidIQ (місячні пошуки, оцінка): «how do birds sleep at night» ~4 794 (конкуренція 36), «bird sleep» ~4 505 (42), «animal facts» ~429 000 (56), «science facts» ~263 000 (61), «nature facts» ~50 000 (39), «wildlife facts» ~46 800 (48), «animal adaptations» ~12 400 (56). Точна фраза «why don't birds fall off branches when they sleep» — <750/міс, конкуренція 29 (низька).
+Витрачено 30 кредитів vidIQ (залишок ~448).
