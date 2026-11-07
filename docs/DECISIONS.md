@@ -16,4 +16,5 @@
 
 ## Записи
 
+- 2026-11-07 · YouTube Shorts: наступний ролик — язик дятла (`docs/shorts/woodpecker-tongue.md`). Пайплайн cut-out cartoon: картинки з Google Flow на зеленому фоні (Higgsfield не підключений) → вирізання `shorts-studio/tools/key.py`, озвучка ElevenLabs v4 з audio tags робить автор, анімація Remotion у `shorts-studio/` · пташина тема дала обидва прориви каналу.
 - 2026-10-01 · Зафіксовано MASTER CONTEXT як базу роботи (`docs/MASTER_CONTEXT.md`) · щоб AI працював за одними правилами на всіх пристроях.
