@@ -1,4 +1,5 @@
-"""Chroma-key a Flow picture on flat green -> transparent PNG trimmed to its alpha box (+12 px).
+"""Chroma-key a Flow picture on flat green (or magenta, for green subjects like leaves)
+-> transparent PNG trimmed to its alpha box (+12 px).
 
 usage: python3 -I tools/key.py in.png out.png
 Background = every pixel close to the flat border colour, including green gaps enclosed by the
@@ -17,8 +18,12 @@ h, w, _ = im.shape
 border = np.concatenate([im[0], im[-1], im[:, 0], im[:, -1]])
 bgc = np.median(border, 0)
 dist = np.sqrt(((im - bgc) ** 2).sum(2))
-g_dom = im[..., 1] - np.maximum(im[..., 0], im[..., 2])          # how "green" a pixel is
-near = (dist < 90) | (g_dom > 60)
+is_magenta = min(bgc[0], bgc[2]) > bgc[1] + 60
+if is_magenta:   # how strongly a pixel leans to the background hue
+    dom = np.minimum(im[..., 0], im[..., 2]) - im[..., 1]
+else:
+    dom = im[..., 1] - np.maximum(im[..., 0], im[..., 2])
+near = (dist < 90) | (dom > 60)
 
 # background = all near-bg pixels (thin slivers too), minus isolated specks under 6 px
 n, lab, stats, _ = cv2.connectedComponentsWithStats(near.astype(np.uint8), connectivity=8)
@@ -37,9 +42,14 @@ out = im.copy()
 a3 = alpha[..., None]
 fg = (im - (1 - a3) * bgc) / np.maximum(a3, 1e-3)
 out = np.where(band[..., None], np.clip(fg, 0, 255), out)
-# spill: no channel-G higher than max(R, B) on edge pixels
-spill = band & (out[..., 1] > np.maximum(out[..., 0], out[..., 2]))
-out[..., 1] = np.where(spill, np.maximum(out[..., 0], out[..., 2]), out[..., 1])
+# spill on edge pixels: green bg -> G <= max(R, B); magenta bg -> min(R, B) <= G
+if is_magenta:
+    ex = np.clip(np.minimum(out[..., 0], out[..., 2]) - out[..., 1], 0, None) * band
+    out[..., 0] -= ex
+    out[..., 2] -= ex
+else:
+    spill = band & (out[..., 1] > np.maximum(out[..., 0], out[..., 2]))
+    out[..., 1] = np.where(spill, np.maximum(out[..., 0], out[..., 2]), out[..., 1])
 alpha[alpha < 0.04] = 0
 
 rgba = np.dstack([out, alpha * 255]).astype(np.uint8)
