@@ -16,4 +16,5 @@
 
 ## Записи
 
+- 2026-11-07 · Shorts, пташина серія: наступний епізод «Why Sleeping Birds Don't Fall Off Branches 😴» (рентген ноги, cut-out cartoon). Замок сухожиль подаємо як «класичну відповідь», баланс як фінальний поворот; "Which bird should I X-ray next?" лише текстом на екрані · сценарій і промпти: `docs/shorts/sleeping-birds-xray.md`.
 - 2026-10-01 · Зафіксовано MASTER CONTEXT як базу роботи (`docs/MASTER_CONTEXT.md`) · щоб AI працював за одними правилами на всіх пристроях.
