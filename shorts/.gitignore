@@ -1,0 +1,6 @@
+node_modules/
+out/
+build/
+.remotion/
+images/*/qa/frames/
+images/*/cut/
