@@ -133,7 +133,7 @@ const camA: CamKey[] = [
   {t: 6.92, x: 585, y: 915, k: 2.37, e: linear},
 ];
 
-const ShotA: React.FC<{t: number}> = ({t}) => {
+export const ShotA: React.FC<{t: number}> = ({t}) => {
   const cam = camAt(t, camA);
   const K = 1000 / (1000 - cam.z);
   const dof = clamp((K - 1.15) / 0.7) * 3.2;
@@ -306,7 +306,7 @@ const PUMP0 = 13.5;
 const PUMP_DT = 0.42;
 const PUMP_N = 8; // 13.5 .. 16.44
 
-const ShotB: React.FC<{t: number}> = ({t}) => {
+export const ShotB: React.FC<{t: number}> = ({t}) => {
   let cam = camAt(t, camB);
   // little zoom bump on "barbed"
   const bump = 0.045 * kick(t - T.barbed, 2.5, 6);
