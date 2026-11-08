@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Channel Banner</title>
+<!--
+  YouTube channel banner template, 2560x1440.
+  Safe area (visible on all devices): 1546x423 in the center.
+  Params: ?name=WhyZap&tagline=...&accent=bolt|sparkle&guides=1
+  Render: node render.js (Playwright screenshot of #b)
+-->
+<style>
+  @font-face { font-family: 'Fredoka'; src: url('fonts/Fredoka-600.ttf') format('truetype'); font-weight: 600; }
+  @font-face { font-family: 'Fredoka'; src: url('fonts/Fredoka-700.ttf') format('truetype'); font-weight: 700; }
+  html, body { margin: 0; padding: 0; background: #FFD84D; }
+  svg { display: block; }
+  text { font-family: 'Fredoka', sans-serif; }
+</style>
+</head>
+<body>
+<svg id="b" xmlns="http://www.w3.org/2000/svg" width="2560" height="1440" viewBox="0 0 2560 1440">
+  <defs>
+    <clipPath id="headClip"><circle cx="680" cy="690" r="128"/></clipPath>
+    <clipPath id="mouthClip"><path d="M668 714 Q706 722 744 708 Q736 770 702 768 Q672 764 668 714 Z"/></clipPath>
+  </defs>
+
+  <!-- background -->
+  <rect width="2560" height="1440" fill="#FFD84D"/>
+  <g id="rays"></g>
+  <circle id="halo" cx="1350" cy="720" r="500" fill="#FFE47D"/>
+
+  <!-- doodles (filled by script) -->
+  <g id="doodles"></g>
+
+  <!-- character: same white cartoon guy as the avatar, raising a hand ("I have a question!") -->
+  <g id="character" stroke="#151515" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <ellipse cx="680" cy="1180" rx="135" ry="18" fill="#000" fill-opacity="0.10" stroke="none"/>
+    <!-- legs + arms: outline pass -->
+    <path d="M636 1035 L628 1158" stroke-width="66"/>
+    <path d="M724 1035 L734 1158" stroke-width="66"/>
+    <path d="M598 860 Q552 930 566 1010" stroke-width="62"/>
+    <path d="M760 860 Q840 820 864 688" stroke-width="62"/>
+    <!-- torso -->
+    <path d="M596 790 C580 900 582 990 600 1040 Q680 1078 760 1040 C778 990 780 900 764 790 Z" fill="#FFFFFF" stroke-width="10"/>
+    <!-- legs + arms: fill pass -->
+    <path d="M636 1035 L628 1158" stroke="#FFFFFF" stroke-width="44"/>
+    <path d="M724 1035 L734 1158" stroke="#FFFFFF" stroke-width="44"/>
+    <path d="M598 860 Q552 930 566 1010" stroke="#FFFFFF" stroke-width="40"/>
+    <path d="M760 860 Q840 820 864 688" stroke="#FFFFFF" stroke-width="40"/>
+    <!-- feet caps -->
+    <path d="M600 1166 Q628 1150 656 1166" stroke-width="10"/>
+    <path d="M706 1166 Q734 1150 762 1166" stroke-width="10"/>
+    <!-- hands -->
+    <circle cx="568" cy="1022" r="28" fill="#FFFFFF" stroke-width="10"/>
+    <path d="M872 600 L868 650" stroke-width="40"/>
+    <path d="M872 600 L868 650" stroke="#FFFFFF" stroke-width="20"/>
+    <circle cx="866" cy="672" r="32" fill="#FFFFFF" stroke-width="10"/>
+    <!-- head with soft shading like the avatar -->
+    <g clip-path="url(#headClip)" stroke="none">
+      <rect x="540" y="550" width="290" height="290" fill="#E8E9EE"/>
+      <circle cx="664" cy="680" r="126" fill="#FFFFFF"/>
+    </g>
+    <circle cx="680" cy="690" r="128" stroke-width="10"/>
+    <!-- face: looking up-right, toward the name -->
+    <ellipse cx="664" cy="668" rx="11" ry="19" fill="#151515" stroke="none"/>
+    <ellipse cx="732" cy="666" rx="11" ry="19" fill="#151515" stroke="none"/>
+    <path d="M640 622 Q660 606 682 614" stroke-width="9"/>
+    <path d="M714 610 Q736 600 758 612" stroke-width="9"/>
+    <g clip-path="url(#mouthClip)" stroke="none">
+      <rect x="660" y="700" width="100" height="80" fill="#3B1F23"/>
+      <ellipse cx="704" cy="766" rx="26" ry="16" fill="#FF8FA3"/>
+    </g>
+    <path d="M668 714 Q706 722 744 708 Q736 770 702 768 Q672 764 668 714 Z" stroke-width="8"/>
+  </g>
+
+  <!-- name + tagline -->
+  <g id="logo">
+    <g id="logoInner">
+      <text id="logoShadow" font-size="250" font-weight="700" fill="#151515" stroke="#151515" stroke-width="26" stroke-linejoin="round" paint-order="stroke">WhyZap</text>
+      <text id="logoMain" font-size="250" font-weight="700" fill="#FFFFFF" stroke="#151515" stroke-width="26" stroke-linejoin="round" paint-order="stroke">WhyZap</text>
+      <g id="accent"></g>
+    </g>
+    <text id="tagline" font-size="64" font-weight="600" fill="#151515" text-anchor="middle">Weird questions. Shocking answers.</text>
+  </g>
+
+  <!-- sticker badge -->
+  <g id="badge" transform="translate(1912 705) rotate(10) scale(0.92)">
+    <path id="badgeShape" fill="#FFFFFF" stroke="#151515" stroke-width="9" stroke-linejoin="round"/>
+    <text y="-30" font-size="36" font-weight="700" fill="#151515" text-anchor="middle">NEW</text>
+    <text y="16" font-size="44" font-weight="700" fill="#151515" text-anchor="middle">SHORTS</text>
+    <text y="58" font-size="36" font-weight="700" fill="#151515" text-anchor="middle">DAILY</text>
+  </g>
+
+  <g id="guides"></g>
+</svg>
+
+<script>
+const INK = '#151515';
+const P = new URLSearchParams(location.search);
+const NAME = P.get('name') || 'WhyZap';
+const TAGLINE = P.get('tagline') || 'Weird questions. Shocking answers.';
+const ACCENT = P.get('accent') || 'bolt';
+const $ = (id) => document.getElementById(id);
+
+// --- background rays (subtle comic sunburst) ---
+(function rays() {
+  const cx = 1350, cy = 720, R = 3000, n = 22;
+  let d = '';
+  for (let i = 0; i < n; i++) {
+    const a0 = (i * 2) * Math.PI / n, a1 = (i * 2 + 1) * Math.PI / n;
+    d += `M${cx} ${cy} L${cx + R * Math.cos(a0)} ${cy + R * Math.sin(a0)} L${cx + R * Math.cos(a1)} ${cy + R * Math.sin(a1)} Z `;
+  }
+  $('rays').innerHTML = `<path d="${d}" fill="#FFDD5E"/>`;
+})();
+
+// --- shapes ---
+function starPath(points, rOut, rIn) {
+  let d = '';
+  for (let i = 0; i < points * 2; i++) {
+    const r = i % 2 === 0 ? rOut : rIn;
+    const a = -Math.PI / 2 + i * Math.PI / points;
+    d += (i === 0 ? 'M' : 'L') + (r * Math.cos(a)).toFixed(1) + ' ' + (r * Math.sin(a)).toFixed(1) + ' ';
+  }
+  return d + 'Z';
+}
+function gearPath(teeth, rOut, rIn) {
+  let d = '';
+  const step = Math.PI * 2 / teeth;
+  for (let i = 0; i < teeth; i++) {
+    const a = i * step;
+    const pts = [
+      [rIn, a], [rOut, a + step * 0.12], [rOut, a + step * 0.42], [rIn, a + step * 0.54]
+    ];
+    pts.forEach(([r, t], j) => {
+      d += (i === 0 && j === 0 ? 'M' : 'L') + (r * Math.cos(t)).toFixed(1) + ' ' + (r * Math.sin(t)).toFixed(1) + ' ';
+    });
+  }
+  return d + 'Z';
+}
+$('badgeShape').setAttribute('d', starPath(18, 116, 102));
+
+const SPARKLE = '<path d="M0 -40 Q6 -6 40 0 Q6 6 0 40 Q-6 6 -40 0 Q-6 -6 0 -40 Z" fill="#FFFFFF"/>';
+const BOLT = '<path d="M14 -74 L-44 12 L-6 12 L-22 74 L44 -16 L6 -16 Z" fill="#FFFFFF"/>';
+const Q = '<text x="0" y="52" font-size="150" font-weight="700" text-anchor="middle" fill="#FFFFFF" stroke="#151515" stroke-width="14" paint-order="stroke">?</text>';
+
+const D = {
+  planet: `
+    <g transform="rotate(-18)">
+      <ellipse rx="104" ry="30" fill="none"/>
+      <circle r="56" fill="#FF9F68"/>
+      <path d="M-50 -20 Q0 -6 50 -22" fill="none"/>
+      <path d="M-104 0 A104 30 0 0 0 104 0" fill="none"/>
+    </g>`,
+  bulb: `
+    <path d="M0 -72 C-44 -72 -64 -40 -60 -10 C-57 12 -40 26 -32 44 L32 44 C40 26 57 12 60 -10 C64 -40 44 -72 0 -72 Z" fill="#FFF7CC"/>
+    <path d="M-14 44 L-14 10 L0 22 L14 10 L14 44" fill="none"/>
+    <rect x="-32" y="44" width="64" height="18" rx="5" fill="#D7DCE4"/>
+    <rect x="-27" y="62" width="54" height="16" rx="5" fill="#D7DCE4"/>
+    <path d="M-100 -44 L-80 -36 M100 -44 L80 -36 M0 -112 L0 -92 M-72 -98 L-60 -80 M72 -98 L60 -80" fill="none"/>`,
+  atom: `
+    <ellipse rx="88" ry="32" fill="none"/>
+    <ellipse rx="88" ry="32" fill="none" transform="rotate(60)"/>
+    <ellipse rx="88" ry="32" fill="none" transform="rotate(-60)"/>
+    <circle r="18" fill="#FF7A9A"/>
+    <circle cx="88" cy="0" r="9" fill="#151515" stroke="none"/>`,
+  rocket: `
+    <path d="M-16 50 Q0 108 16 50 Z" fill="#FF9F68"/>
+    <path d="M-34 4 L-62 44 L-32 36 Z" fill="#FF6B5B"/>
+    <path d="M34 4 L62 44 L32 36 Z" fill="#FF6B5B"/>
+    <path d="M-20 30 L-16 48 L16 48 L20 30 Z" fill="#D7DCE4"/>
+    <path d="M0 -92 C32 -62 40 -20 34 32 L-34 32 C-40 -20 -32 -62 0 -92 Z" fill="#FFFFFF"/>
+    <circle cx="0" cy="-24" r="17" fill="#7CC4FF"/>`,
+  stopwatch: `
+    <rect x="-15" y="-100" width="30" height="24" rx="6" fill="#D7DCE4"/>
+    <path d="M50 -58 L64 -72" fill="none"/>
+    <circle r="72" fill="#FFFFFF"/>
+    <path d="M0 -56 L0 -46 M56 0 L46 0 M0 56 L0 46 M-56 0 L-46 0" fill="none"/>
+    <path d="M0 0 L0 -40 M0 0 L28 14" fill="none"/>
+    <circle r="7" fill="#151515" stroke="none"/>`,
+  gear: `
+    <path d="${gearPath(10, 66, 50)}" fill="#D7DCE4"/>
+    <circle r="20" fill="#FFD84D"/>`,
+  earth: `
+    <clipPath id="earthClip"><circle r="64"/></clipPath>
+    <circle r="64" fill="#7CC4FF"/>
+    <g clip-path="url(#earthClip)">
+      <path d="M-70 -20 Q-40 -50 -10 -38 Q10 -28 -4 -8 Q-20 8 -44 4 Q-60 2 -70 -20 Z" fill="#7ED67A"/>
+      <path d="M10 18 Q40 6 58 22 Q70 40 50 58 Q24 70 14 48 Q6 32 10 18 Z" fill="#7ED67A"/>
+      <path d="M24 -56 Q44 -60 52 -44 Q40 -36 24 -56 Z" fill="#7ED67A"/>
+    </g>
+    <circle r="64" fill="none"/>`,
+  volcano: `
+    <circle cx="-14" cy="-84" r="22" fill="#FFFFFF"/>
+    <circle cx="16" cy="-104" r="27" fill="#FFFFFF"/>
+    <path d="M-104 62 L-36 -46 L36 -46 L104 62 Z" fill="#C89B78"/>
+    <path d="M-36 -46 Q-22 -22 -30 0 Q-12 -10 0 12 Q12 -14 26 -2 Q22 -26 36 -46 Z" fill="#FF6B5B"/>`,
+  flask: `
+    <path d="M-18 -72 L-18 -20 L-60 54 Q-64 66 -52 66 L52 66 Q64 66 60 54 L18 -20 L18 -72 Z" fill="#FFFFFF"/>
+    <path d="M-38 20 L38 20 L58 56 Q61 63 52 63 L-52 63 Q-61 63 -58 56 Z" fill="#B79CFF" stroke="none"/>
+    <path d="M-18 -72 L-18 -20 L-60 54 Q-64 66 -52 66 L52 66 Q64 66 60 54 L18 -20 L18 -72" fill="none"/>
+    <path d="M-30 -72 L30 -72" fill="none"/>
+    <circle cx="-10" cy="40" r="7" fill="#FFFFFF"/>
+    <circle cx="14" cy="30" r="5" fill="#FFFFFF"/>`,
+  popcorn: `
+    <circle cx="-36" cy="-20" r="23" fill="#FFF6DE"/>
+    <circle cx="36" cy="-20" r="23" fill="#FFF6DE"/>
+    <circle cx="-12" cy="-38" r="25" fill="#FFF6DE"/>
+    <circle cx="16" cy="-36" r="25" fill="#FFF6DE"/>
+    <path d="M-52 -8 L52 -8 L40 82 L-40 82 Z" fill="#FFFFFF"/>
+    <path d="M-24 -8 L-18 82 L-4 82 L-8 -8 Z M8 -8 L4 82 L18 82 L24 -8 Z" fill="#FF6B5B" stroke="none"/>
+    <path d="M-52 -8 L52 -8 L40 82 L-40 82 Z" fill="none"/>`,
+  magnifier: `
+    <path d="M38 38 L90 90" stroke-width="30"/>
+    <circle r="58" fill="#D9F1FF"/>
+    <path d="M-32 -14 Q-26 -34 -6 -38" fill="none" stroke="#FFFFFF" stroke-width="9"/>`,
+  sparkle: SPARKLE,
+  bolt: BOLT,
+  q: Q,
+};
+
+// x, y, rotation, scale
+const LAYOUT = [
+  // desktop strip, left (outside safe area)
+  ['planet', 210, 630, -8, 1.0], ['bulb', 400, 845, 12, 0.85], ['sparkle', 70, 820, 0, 0.7], ['q', 345, 600, -14, 0.6],
+  // desktop strip, right
+  ['atom', 2330, 650, 15, 0.95], ['rocket', 2475, 860, 35, 0.8], ['sparkle', 2180, 870, 0, 0.55], ['q', 2140, 600, 12, 0.55],
+  // TV only: top
+  ['stopwatch', 420, 300, -10, 1.05], ['q', 820, 190, -12, 0.9], ['gear', 1130, 330, 0, 1.0], ['sparkle', 1470, 120, 0, 0.75],
+  ['earth', 1800, 280, 0, 1.0], ['bolt', 2160, 210, 15, 0.95], ['sparkle', 2470, 430, 0, 0.55], ['sparkle', 120, 170, 0, 0.6],
+  // TV only: bottom
+  ['volcano', 290, 1215, 0, 1.05], ['flask', 1060, 1235, -8, 0.95], ['q', 1440, 1235, 10, 0.85], ['popcorn', 1790, 1250, 6, 0.95],
+  ['magnifier', 2220, 1200, -20, 0.95], ['bolt', 2470, 1330, -10, 0.75], ['sparkle', 860, 1370, 0, 0.6], ['sparkle', 1300, 1390, 0, 0.5],
+];
+const SW = 9;
+$('doodles').innerHTML = LAYOUT.map(([k, x, y, r, s]) =>
+  `<g transform="translate(${x} ${y}) rotate(${r}) scale(${s})" stroke="${INK}" stroke-width="${(SW / s).toFixed(2)}" stroke-linecap="round" stroke-linejoin="round">${D[k]}</g>`
+).join('');
+
+// --- logo layout ---
+async function layout() {
+  await document.fonts.ready;
+  $('logoMain').textContent = NAME;
+  $('logoShadow').textContent = NAME;
+  $('tagline').textContent = TAGLINE;
+
+  const LEFT = 945, RIGHT = 1765;          // horizontal room between the character and the badge
+  const BASE = 752;                          // logo baseline
+  const ACC_W = ACCENT === 'none' ? 0 : 100; // accent sticker width + gap
+  let fs = 250;
+  const main = $('logoMain'), shadow = $('logoShadow');
+  const setFs = (v) => { main.setAttribute('font-size', v); shadow.setAttribute('font-size', v); };
+  setFs(fs);
+  let w = main.getBBox().width;
+  const maxW = RIGHT - LEFT - ACC_W;
+  if (w > maxW) { fs = Math.floor(fs * maxW / w); setFs(fs); w = main.getBBox().width; }
+  const total = w + ACC_W;
+  const x0 = LEFT + (RIGHT - LEFT - total) / 2;
+  main.setAttribute('x', x0); main.setAttribute('y', BASE);
+  shadow.setAttribute('x', x0 + 11); shadow.setAttribute('y', BASE + 13);
+
+  if (ACCENT !== 'none') {
+    const ax = x0 + w + ACC_W / 2 + 12, ay = BASE - fs * 0.56;
+    const shape = ACCENT === 'sparkle' ? SPARKLE : BOLT;
+    $('accent').innerHTML =
+      `<g transform="translate(${ax + 8} ${ay + 10}) rotate(14) scale(1.05)" fill="#151515" stroke="#151515" stroke-width="9" stroke-linejoin="round">${shape.replace('fill="#FFFFFF"', 'fill="#151515"')}</g>` +
+      `<g transform="translate(${ax} ${ay}) rotate(14) scale(1.05)" stroke="#151515" stroke-width="9" stroke-linejoin="round">${shape.replace('fill="#FFFFFF"', 'fill="#FFD84D"')}</g>`;
+  }
+  const tg = $('tagline');
+  tg.setAttribute('x', (LEFT + RIGHT) / 2);
+  tg.setAttribute('y', 892);
+  const tw = tg.getBBox().width;
+  if (tw > RIGHT - LEFT + 40) tg.setAttribute('font-size', Math.floor(64 * (RIGHT - LEFT + 40) / tw));
+
+  if (P.get('guides')) {
+    $('guides').innerHTML = `
+      <rect x="0" y="508.5" width="2560" height="423" fill="none" stroke="#0057FF" stroke-width="4" stroke-dasharray="20 12"/>
+      <rect x="352.5" y="508.5" width="1855" height="423" fill="none" stroke="#00A86B" stroke-width="4" stroke-dasharray="20 12"/>
+      <rect x="507" y="508.5" width="1546" height="423" fill="none" stroke="#E0002B" stroke-width="5"/>`;
+  }
+  document.body.setAttribute('data-ready', '1');
+}
+layout();
+</script>
+</body>
+</html>
