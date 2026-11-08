@@ -20,6 +20,9 @@ npm i
 python3 audio/timeline.py && python3 audio/mix.py   # таймінг + мікс
 npx remotion studio src/index.ts                    # Remotion Studio
 npx remotion render src/index.ts RingFinger out/ring-finger-4K.mp4 --scale=2 --crf=16 --pixel-format=yuv420p
+# гучність для Shorts (~-15 LUFS, пік -1.5 dBTP) і підміна доріжки без перерендеру картинки:
+ffmpeg -i public/mix.wav -af loudnorm=I=-14:TP=-1.5:LRA=9 -ar 48000 audio/mix_loud.wav
+ffmpeg -i out/ring-finger-4K.mp4 -i audio/mix_loud.wav -map 0:v -map 1:a -c:v copy -c:a aac -b:a 256k -shortest out/ring-finger-4K-final.mp4
 ./qa/stills.sh "0 7.6 14.7 21 27.9 33.9" 0.3      # контакт-шит кадрів -> qa/sheet.png
 python3 qa/popscan.py out/preview.mp4               # пошук стрибків між кадрами
 ```
