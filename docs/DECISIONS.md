@@ -16,4 +16,5 @@
 
 ## Записи
 
+- 2026-11-08 · Shorts "Check Yours" (cut-out cartoon): картинки — Google Flow на зеленому фоні (Higgsfield не підключений), озвучка — ElevenLabs v4 з тегами, анімація — Remotion (`docs/shorts/ring-finger-check-yours.md`) · Flow не дає прозорий фон, фон вирізаємо в коді.
 - 2026-10-01 · Зафіксовано MASTER CONTEXT як базу роботи (`docs/MASTER_CONTEXT.md`) · щоб AI працював за одними правилами на всіх пристроях.
