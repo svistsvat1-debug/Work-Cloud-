@@ -13,13 +13,13 @@ export const FLOOR = 1560;
 export const GUY_X = 740;
 export const HEAD_R = 115; // every guy pose is scaled so its head has this radius
 export const PHAGE_H = 150;
-export const BW: Record<string, number> = {bact_rod: 360, bact_round: 240, bact_comma: 300};
+export const BW: Record<string, number> = {bact_rod: 420, bact_round: 270, bact_comma: 330};
 export const PILL_W = 230;
 export const HORIZON_Y = 1510; // at Z 3000
 export const LAB_W = 2500;
-export const RODA_X = 320; // frame-0 bacterium
-export const TOUGH_X = 305; // the tough one at the end (same spot -> loop)
-export const TOUGH_K = 1.05;
+export const RODA_X = 330; // frame-0 bacterium
+export const TOUGH_X = 300; // the tough one at the end (same spot -> loop)
+export const TOUGH_K = 1.15;
 
 export const T = {
   eyesOpen: 1.85, // "phages"
@@ -78,9 +78,9 @@ export const SHOTS: Shot[] = [
   {t0: 0.0, t1: 2.3, to: {x: 520, y: 1230, z: 420}}, // slow push in on the phage in the hand
   {t0: 2.3, t1: 3.35, to: {x: 420, y: 1250, z: 380}}, // follow the hop to the bacterium
   {t0: 3.55, t1: 4.75, to: {x: 590, y: 1200, z: 340}}, // up to the head
-  {t0: 5.3, t1: 6.5, to: {x: 775, y: 1230, z: 350}}, // shrug framing (room for the pill on the right)
-  {t0: 8.9, t1: 12.1, to: {x: 760, y: 1215, z: 420}, ease: easeInOutSine}, // creeping push in the flashback
-  {t0: 12.25, t1: 13.5, to: {x: -290, y: 1160, z: -30}}, // glide left: the line-up
+  {t0: 5.3, t1: 6.5, to: {x: 800, y: 1230, z: 350}}, // shrug framing (room for the pill on the right)
+  {t0: 8.9, t1: 12.1, to: {x: 790, y: 1215, z: 410}, ease: easeInOutSine}, // creeping push in the flashback
+  {t0: 12.25, t1: 13.5, to: {x: -320, y: 1160, z: -80}}, // glide left: the line-up
   {t0: 15.0, t1: 17.0, to: {x: -400, y: 1170, z: 40}}, // drift toward the rod
   {t0: 18.15, t1: 19.15, to: {x: -130, y: 1080, z: -900}}, // wide for the bowling strike
   {t0: 20.7, t1: 22.15, to: {x: 630, y: 1230, z: 360}}, // back to the guy

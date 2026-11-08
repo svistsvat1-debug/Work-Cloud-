@@ -69,8 +69,18 @@ function guyAt(t: number) {
     dx = 1.6 * Math.sin(TAU * 13.3 * t) + 1.0 * Math.sin(TAU * 7.1 * t);
     dy = 0.8 * Math.sin(TAU * 11 * t);
   }
+  return {pose, s: poseScale(pose), sx, sy, dx, dy};
+}
+
+/** AI poses differ in proportions (head vs body). Pure head-normalising makes the height jump on a swap, pure
+ * height-normalising makes the head jump - split the difference: both change by the square root of the mismatch. */
+const ratio = (pose: string) => {
   const m = S[pose];
-  return {pose, s: HEAD_R / m.head![2], sx, sy, dx, dy};
+  return (m.feet![1] - (m.head![1] - m.head![2])) / m.head![2];
+};
+function poseScale(pose: string) {
+  const m = S[pose];
+  return (HEAD_R / m.head![2]) * Math.sqrt(ratio('guy_present') / ratio(pose));
 }
 
 /** world position of a point given in the CURRENT pose's sprite pixels */
@@ -135,15 +145,15 @@ function rodA(t: number): BState {
   return {id: 'rodA', name: 'bact_rod', vis: t < T.pop1, air: false, x: RODA_X, y: FLOOR, s, sx: 1 + 0.18 * swell + wob - land * 0.5 - i, sy: 1 + 0.22 * swell - wob + land + i, rot: 0, face};
 }
 
-const LINE = {comma1: 40, round1: -270, rodL: -600};
+const LINE = {comma1: 40, round1: -290, rodL: -650};
 const pillHitTime = (bx: number, bw: number) => T.pillLand + (bx - bw / 2 - PILL_W * 0.4 - PILL_LAND_X) / PILL_V;
 type Bowl = {id: string; name: string; x: number; k: number; tIn: number};
 const BOWL: Bowl[] = [
-  {id: 'round2', name: 'bact_round', x: -830, k: 0.75, tIn: T.extras},
-  {id: 'comma2', name: 'bact_comma', x: -540, k: 0.8, tIn: T.extras + 0.07},
+  {id: 'round2', name: 'bact_round', x: -860, k: 0.75, tIn: T.extras},
+  {id: 'comma2', name: 'bact_comma', x: -575, k: 0.8, tIn: T.extras + 0.07},
   {id: 'round1', name: 'bact_round', x: LINE.round1, k: 1, tIn: T.flash2},
   {id: 'comma1', name: 'bact_comma', x: LINE.comma1, k: 1, tIn: T.flash2},
-  {id: 'rod2', name: 'bact_rod', x: 230, k: 0.7, tIn: T.extras + 0.14},
+  {id: 'rod2', name: 'bact_rod', x: 360, k: 0.7, tIn: T.extras + 0.14},
 ];
 const HIT = Object.fromEntries(BOWL.map((b) => [b.id, pillHitTime(b.x, BW[b.name] * b.k)]));
 const POP_AFTER_HIT = 0.42;
@@ -210,10 +220,10 @@ function tough(t: number): BState {
 }
 
 // ------------------------------------------------------------------ the pill
-const SHRUG_S = HEAD_R / S.guy_shrug.head![2];
+const SHRUG_S = poseScale('guy_shrug');
 const PILL_HOVER: Pt = {
-  x: GUY_X + (S.guy_shrug.palmR![0] - S.guy_shrug.feet![0]) * SHRUG_S,
-  y: FLOOR + (S.guy_shrug.palmR![1] - S.guy_shrug.feet![1]) * SHRUG_S - PILL_H / 2 - 14,
+  x: GUY_X + (S.guy_shrug.palmR![0] - S.guy_shrug.feet![0]) * SHRUG_S + 90, // clear of the head
+  y: FLOOR + (S.guy_shrug.palmR![1] - S.guy_shrug.feet![1]) * SHRUG_S - PILL_H / 2 - 30,
 };
 const PILL_R = (PILL_W / 2 + PILL_H / 2) / 2;
 
@@ -254,8 +264,10 @@ function pillHitPoint(): Pt {
 // ------------------------------------------------------------------ the phage (feet point + spin)
 const HOVER: Pt = {x: -420, y: 1150};
 const DROP_G = 3200;
+const DROP_VX = 140;
 const dropFrom = () => palmAt(T.drop - 0.001);
 const DROP_LAND = T.drop + A.fallTime(palmAt(T.drop - 0.001).y, FLOOR, DROP_G);
+const DROP_X = palmAt(T.drop - 0.001).x + DROP_VX * (DROP_LAND - T.drop);
 const BOUNCE_END = DROP_LAND + 0.2;
 const bTop = (b: BState, dx = 0) => ({x: centreOf(b).x + dx, y: topAt(b, centreOf(b).x + dx)});
 const commaB = (t: number) => bowlB(t, BOWL[3], 3);
@@ -330,18 +342,18 @@ function phageAt(t: number) {
     p = palmAt(t);
     sy += land(T.palmBack);
   } else if (t < DROP_LAND) {
-    p = A.fall(t, T.drop, dropFrom(), DROP_G, FLOOR);
+    p = A.fall(t, T.drop, dropFrom(), DROP_G, FLOOR, DROP_VX);
     rot = 10 * A.inv(T.drop, DROP_LAND, t);
   } else if (t < BOUNCE_END) {
-    const f = {x: dropFrom().x, y: FLOOR};
+    const f = {x: DROP_X, y: FLOOR};
     p = A.hop(t, DROP_LAND, BOUNCE_END, f, f, 26);
     rot = 10 * (1 - A.inv(DROP_LAND, BOUNCE_END, t));
     sy += land(DROP_LAND, -0.2);
   } else if (t < T.hopUp0) {
-    p = {x: dropFrom().x, y: FLOOR};
+    p = {x: DROP_X, y: FLOOR};
     sy += land(BOUNCE_END, -0.1);
   } else if (t < T.palmEnd) {
-    p = A.hop(t, T.hopUp0, T.palmEnd, {x: dropFrom().x, y: FLOOR}, palmAt(T.palmEnd), 110);
+    p = A.hop(t, T.hopUp0, T.palmEnd, {x: DROP_X, y: FLOOR}, palmAt(T.palmEnd), 110);
   } else {
     p = palmAt(t);
     sy += land(T.palmEnd);

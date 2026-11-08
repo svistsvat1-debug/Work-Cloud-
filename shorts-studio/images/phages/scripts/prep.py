@@ -194,6 +194,9 @@ def main():
     for name in NAMES:
         path, kind = find_source(name)
         rgba = load_rgba(path)
+        if kind == "raw" and max(rgba.shape[:2]) < 2000:
+            # small generator output (Flow: 768x1376) -> 2x Lanczos before keying = smoother outline edges at 4K
+            rgba = cv2.resize(rgba, (rgba.shape[1] * 2, rgba.shape[0] * 2), interpolation=cv2.INTER_LANCZOS4)
         if not has_transparency(rgba):
             rgba = key(rgba)
         rgba, off, s = trim(rgba)
