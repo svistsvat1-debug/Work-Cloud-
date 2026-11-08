@@ -173,3 +173,57 @@ Style: flat 2D cartoon, thick smooth black outlines of even weight, flat white f
 | 32,3 | cut → фронт, "COULD YOU LIFT IT?" |
 | 33,9 / 34,2 | кнопки YES / NO |
 | 34,7–35,3 | середній палець розгинається → кадр як на старті (луп) |
+
+---
+
+## 7. Публікація (YouTube Shorts)
+
+**Назва:**
+```
+You Can't Lift This Finger (Check Yours) 🖐️
+```
+Альтернатива для A/B (точніша, збігається з "most people" у відео): `Most People Can't Lift This Finger (Check Yours) 🖐️`
+
+**Опис:**
+```
+Put your hand on a table, fold your middle finger under, and try to lift your ring finger. For most people, it barely moves.
+
+Why? One muscle (extensor digitorum) lifts your fingers, and the ring finger's tendon is tied to its neighbors by small bands called juncturae tendinum. With the middle finger folded, those bands hold the ring finger down like a leash. Your index finger and pinky have their own extra muscles (extensor indicis and extensor digiti minimi). The ring finger doesn't.
+
+Anatomy varies, so some people can lift it a little.
+
+Could you lift it? Comment YES or NO 👇
+
+Sources:
+StatPearls (NCBI Bookshelf): https://ncbi.nlm.nih.gov/books/NBK534805
+Häger-Ross & Schieber, Journal of Neuroscience (2000): https://pmc.ncbi.nlm.nih.gov/articles/PMC6773164
+
+#shorts #fingertrick #anatomy #humanbody #science
+```
+
+**Теги:**
+```
+ring finger trick, can't lift ring finger, why can't i lift my ring finger, finger trick, try this, check yours, hand anatomy, tendons, juncturae tendinum, extensor digitorum, human body facts, science shorts, body facts
+```
+
+**Налаштування:**
+
+| Пункт | Значення |
+|---|---|
+| Аудиторія | "No, it's not made for kids" (загальна аудиторія). Якщо поставити "made for kids", YouTube вимкне коментарі, і заклик "Comment YES or NO" не спрацює. Остаточне рішення про аудиторію — за власником каналу. |
+| Altered or synthetic content | No: відео явно анімоване, голос не імітує реальну людину |
+| Категорія | Education (або Science & Technology) |
+| Мова відео / субтитрів | English |
+| Субтитри | `shorts/ring-finger/ring-finger.en.srt` (точний текст озвучки) |
+| Коментарі | On; "Hold potentially inappropriate comments for review" |
+| Обкладинка (кадр) | ~16,0 с (безіменний тужиться "> <" + "TRY IT") або ~29,9 с (рентген із м'язами) |
+| Плейлист | серія "Check Yours" / "Try This" (якщо є) — [MISSING] |
+| Related video | твій хіт "(Check Yours)" — [MISSING] посилання |
+| Час публікації | [MISSING]: YouTube Studio → Analytics → Audience → "When your viewers are on YouTube" |
+| Ліцензія | Standard YouTube License, embedding allowed, publish to subscriptions feed |
+
+**Закріплений коментар:**
+```
+Be honest 👀 Could you lift your ring finger? YES or NO 👇
+```
+Наступний коментар для дискусії (опційно): `Now try it with your other hand. Same result?`
