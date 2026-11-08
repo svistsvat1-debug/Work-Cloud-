@@ -78,7 +78,7 @@ const ratio = (pose: string) => {
   const m = S[pose];
   return (m.feet![1] - (m.head![1] - m.head![2])) / m.head![2];
 };
-function poseScale(pose: string) {
+export function poseScale(pose: string) {
   const m = S[pose];
   return (HEAD_R / m.head![2]) * Math.sqrt(ratio('guy_present') / ratio(pose));
 }
@@ -429,7 +429,7 @@ const BactSprite: React.FC<{b: BState; t: number}> = ({b, t}) => {
   );
 };
 
-function shade(hex: string, k: number) {
+export function shade(hex: string, k: number) {
   const n = parseInt(hex.slice(1), 16);
   const c = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map((v) => Math.round(v * k));
   return `rgb(${c.join(',')})`;

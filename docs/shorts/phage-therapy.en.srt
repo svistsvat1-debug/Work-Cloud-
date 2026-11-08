@@ -1,0 +1,88 @@
+1
+00:00:00,050 --> 00:00:01,210
+Some viruses,
+
+2
+00:00:01,230 --> 00:00:02,450
+called phages,
+
+3
+00:00:02,470 --> 00:00:04,070
+kill bacteria but can't
+
+4
+00:00:04,090 --> 00:00:05,170
+infect people.
+
+5
+00:00:05,450 --> 00:00:06,530
+So why don't doctors
+
+6
+00:00:06,550 --> 00:00:07,670
+use them instead of
+
+7
+00:00:07,690 --> 00:00:08,590
+antibiotics?
+
+8
+00:00:09,010 --> 00:00:09,930
+They did.
+
+9
+00:00:09,950 --> 00:00:12,170
+Before antibiotics even existed.
+
+10
+00:00:12,470 --> 00:00:13,590
+But each phage kills
+
+11
+00:00:13,610 --> 00:00:14,910
+only certain types of
+
+12
+00:00:14,930 --> 00:00:15,650
+bacteria,
+
+13
+00:00:15,670 --> 00:00:17,190
+so every infection needed
+
+14
+00:00:17,210 --> 00:00:18,390
+the right match.
+
+15
+00:00:18,670 --> 00:00:20,210
+Antibiotics killed many kinds
+
+16
+00:00:20,230 --> 00:00:20,910
+at once,
+
+17
+00:00:20,930 --> 00:00:22,430
+so Western doctors mostly
+
+18
+00:00:22,450 --> 00:00:23,530
+dropped phages.
+
+19
+00:00:23,790 --> 00:00:24,850
+Now that more bacteria
+
+20
+00:00:24,870 --> 00:00:26,430
+resist antibiotics,
+
+21
+00:00:26,530 --> 00:00:27,590
+doctors are testing phages
+
+22
+00:00:27,610 --> 00:00:28,270
+again.
+
