@@ -1,6 +1,6 @@
 """popscan.py video.mp4 - mean blurred frame-to-frame difference at 270x480; flag frames > 2.2x local median."""
 import subprocess, sys, numpy as np, cv2
-FF = "node_modules/@remotion/compositor-linux-x64-gnu/ffmpeg"
+FF = "ffmpeg"
 W, H = 270, 480
 raw = subprocess.run([FF, "-v", "error", "-i", sys.argv[1], "-vf", f"scale={W}:{H}", "-f", "rawvideo", "-pix_fmt", "gray", "-"], capture_output=True, check=True).stdout
 fr = np.frombuffer(raw, np.uint8).reshape(-1, H, W).astype(np.float32)

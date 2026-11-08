@@ -128,8 +128,8 @@ const camA: CamKey[] = [
   {t: 0, x: 450, y: 1040, k: 0.86},
   {t: 3.5, x: 460, y: 1030, k: 0.9, e: linear},
   {t: 4.55, x: 650, y: 960, k: 1.45},
-  {t: 5.62, x: 660, y: 955, k: 1.52, e: linear},
-  {t: 6.05, x: 590, y: 920, k: 2.25, e: easeOut},
+  {t: 5.45, x: 660, y: 955, k: 1.52, e: linear},
+  {t: 6.3, x: 590, y: 920, k: 2.25},
   {t: 6.92, x: 585, y: 915, k: 2.37, e: linear},
 ];
 
@@ -214,7 +214,8 @@ const ShotA: React.FC<{t: number}> = ({t}) => {
     const jab = easeIn(seg(t, 4.6, 4.7));
     const rot = lerp(-20, -55, rise);
     // place by the stinger tip: hovering point above the hand -> the hand
-    const hover: P = [STING_PT[0] + 18, STING_PT[1] - 70 - 25 * rise];
+    const tip44 = placed('bee_hero', [STING_PT[0] + 40, STING_PT[1] - 150], 'c', BEE_S, 'tip', false, -20);
+    const hover: P = [lerp(tip44[0], STING_PT[0] + 18, rise), lerp(tip44[1], STING_PT[1] - 95, rise)];
     const hit = mapGuy(STING_PT, g);
     bee = {
       n: 'bee_hero',
@@ -325,7 +326,7 @@ const ShotB: React.FC<{t: number}> = ({t}) => {
   // flick-off on "fast": the card scrapes, the stinger + sac fly out
   const flyT = t - 16.8;
   const stFly: {dx: number; dy: number; rot: number} =
-    flyT < 0 ? {dx: 0, dy: 0, rot: 0} : {dx: 900 * flyT, dy: -1700 * flyT + 0.5 * 3600 * flyT * flyT, rot: 720 * flyT};
+    flyT < 0 ? {dx: 0, dy: 0, rot: 0} : {dx: 1100 * flyT, dy: -1900 * flyT + 0.5 * 3200 * flyT * flyT, rot: 600 * flyT};
 
   // venom pumping
   let sacSX = 1;
@@ -420,7 +421,7 @@ const ShotB: React.FC<{t: number}> = ({t}) => {
             </>
           ) : null}
         </WSvg>
-        {stGroup(
+        {flyT < 0.7 && stGroup(
           <>
             <Spr n="stinger" at={ST_TIP} a="tip" s={ST_S} />
             {sacSq}
