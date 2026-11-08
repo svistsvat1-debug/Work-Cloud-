@@ -320,7 +320,6 @@ export const SceneC: React.FC<{t: number}> = ({t}) => {
           <Lamp uid="lampC" x={BASE.x} y={lampY} s={LAMP_S} on={lampOn} cover={cover} tilt={0.22 * smug} brow={brow} smirk={smug}
             sx={1 + 0.05 * land} sy={1 - 0.06 * land} eyePop={wobble(t, 18.18, 3, 7)} look={look(LC.x, LC.y, heroPos.x, heroPos.y)} />
         </>}>
-          {t > T.nearby && t < T.nearby + 0.9 && <Puff x={BASE.x} y={GROUND.near + 10} t={t} t0={T.nearby + 0.02} size={230} seed={7} />}
           {SWARM.slice(0, 4).map((o, i) => {
             const t0 = 26.8 + i * 0.12;
             if (t < t0) return null;
@@ -329,7 +328,7 @@ export const SceneC: React.FC<{t: number}> = ({t}) => {
             const pos = {x: lerp(ENTRY[i].x, op.x, u), y: lerp(ENTRY[i].y, op.y, u)};
             return <SwarmMoth key={i} o={o} t={t} L={LC} pos={pos} uid={`swC${i}`} />;
           })}
-          <Puff x={LAND.x} y={GROUND.near + 60} t={t} t0={T.land} size={330} seed={3} />
+          <Puff x={LAND.x} y={GROUND.near + 60} t={t} t0={T.land} size={280} seed={3} color="#CFC7B6" />
           {h ? (
             <Moth uid="heroC" x={h.x} y={h.y} s={t < 26.7 ? HERO_S : lerp(HERO_S, SWARM[4].size, seg(t, 26.7, HERO_END, E.inOut))} t={t}
               rot={h.rot} hz={h.hz} amp={h.amp} wing={h.wing} expr={h.expr} sx={h.sx} sy={h.sy} sweat={h.sweat} look={h.look} seed={SWARM[4].ph} />

@@ -65,3 +65,14 @@ https://doi.org/10.1038/s41467-024-44785-3
 - Стаття: https://doi.org/10.1038/s41467-024-44785-3 (повний текст: https://pmc.ncbi.nlm.nih.gov/articles/PMC10827719)
 - Science News: https://www.sciencenews.org/article/insects-artificial-light-moth-direction-pollution
 - FIU News: https://news.fiu.edu/2024/millennia-old-mystery-about-insects-and-light-at-night-gets-a-new-explanation
+
+## Продакшн (крок 2–3) — що зроблено
+
+- Голос: `video/public/moths/vo/take1.mp3` (ElevenLabs eleven_v4, Mark - Natural Conversations, 29.3 с). Розмітка слів: `video/images/moths/words.json`.
+- Картинки: Google Flow (Higgsfield не підключений) → вирізано фон, апскейл ×2–3 з чіткою обводкою: `video/public/moths/sprites/`.
+  - Герой = `moth_up` як маріонетка: крила окремим шаром (махи в коді), обличчя в коді. moth_down / worried від Flow вийшли іншими метеликами → стали масовкою.
+  - `lamp_off` = перефарбований `lamp_on` (Flow намалював іншу лампу).
+- Анімація: Remotion, `video/src/moths/` (3 шоти, 2.5D-камера, обличчя лампи/Місяця/метелика, пил, зірочки, крапля поту, підписи). Останній кадр = кадр 0 (луп).
+- Звук: 19 ефектів синтезовано кодом (`video/images/moths/scripts/sfx.py`), рівні в `video/src/moths/sfx-cues.json`.
+- Перевірки: contact sheets `video/out/stills/`, pop scan `video/scripts/popscan.py`.
+- Рендер: `cd video && IMG=jpeg node scripts/render.mjs 2 out/moths-4K.mp4 16` (CPU, без GPU).

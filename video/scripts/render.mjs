@@ -10,7 +10,7 @@ const composition = await selectComposition({serveUrl, id: 'MothsShort', browser
 let last = -1;
 await renderMedia({
   composition, serveUrl, codec: 'h264', outputLocation: out, scale: Number(scale), crf: Number(crf), pixelFormat: 'yuv420p',
-  imageFormat: 'png', browserExecutable: BROWSER, chromiumOptions: {gl: 'swangle'}, concurrency: os.cpus().length,
+  imageFormat: process.env.IMG === 'jpeg' ? 'jpeg' : 'png', jpegQuality: 95, browserExecutable: BROWSER, chromiumOptions: {gl: 'swangle'}, concurrency: os.cpus().length,
   audioBitrate: '320k',
   onProgress: ({progress}) => { const p = Math.floor(progress * 20); if (p !== last) { last = p; console.log(`${(progress * 100).toFixed(0)}% ${new Date().toISOString()}`); } },
 });
