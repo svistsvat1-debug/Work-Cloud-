@@ -216,7 +216,7 @@ ring finger trick, can't lift ring finger, why can't i lift my ring finger, fing
 | Мова відео / субтитрів | English |
 | Субтитри | `shorts/ring-finger/ring-finger.en.srt` (точний текст озвучки) |
 | Коментарі | On; "Hold potentially inappropriate comments for review" |
-| Обкладинка (кадр) | ~16,0 с (безіменний тужиться "> <" + "TRY IT") або ~29,9 с (рентген із м'язами) |
+| Обкладинка | `shorts/ring-finger/thumbnail.jpg` (1080x1920): "TRY THIS / MOST PEOPLE CAN'T", безіменний з очима + стрілка. Якщо завантажити свою обкладинку не дає — кадр ~16,0 с |
 | Плейлист | серія "Check Yours" / "Try This" (якщо є) — [MISSING] |
 | Related video | твій хіт "(Check Yours)" — [MISSING] посилання |
 | Час публікації | [MISSING]: YouTube Studio → Analytics → Audience → "When your viewers are on YouTube" |

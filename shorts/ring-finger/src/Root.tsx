@@ -1,6 +1,7 @@
 import React from 'react';
-import {Composition, continueRender, delayRender, staticFile} from 'remotion';
+import {Composition, Still, continueRender, delayRender, staticFile} from 'remotion';
 import {RingFinger} from './Scene';
+import {Thumb} from './Thumb';
 import {DURATION, FPS} from './timeline';
 
 if (typeof document !== 'undefined') {
@@ -13,5 +14,8 @@ if (typeof document !== 'undefined') {
 }
 
 export const RemotionRoot: React.FC = () => (
-  <Composition id="RingFinger" component={RingFinger} durationInFrames={Math.round(DURATION * FPS)} fps={FPS} width={1080} height={1920} />
+  <>
+    <Composition id="RingFinger" component={RingFinger} durationInFrames={Math.round(DURATION * FPS)} fps={FPS} width={1080} height={1920} />
+    <Still id="Thumbnail" component={Thumb} width={1080} height={1920} />
+  </>
 );
