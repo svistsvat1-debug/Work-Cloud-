@@ -52,12 +52,33 @@
 - Автори називають dorsal light response найімовірнішим поясненням; у пресі зазначено, що зв'язок із навігацією за небом ще треба підтвердити. У ролику це не стверджується як 100% доведене.
 - Останній рядок — заклик до дії. Крок 1 радить без CTA: якщо прибрати його з голосу, залишити тільки текстом на екрані.
 
-## Опис (чернетка)
+## Упаковка (фінал)
 
+**Назва:** Scientists Were Wrong About Moths and Lights 💡
+Запасні для A/B: «Moths Don't Actually Love Light 💡» · «Why Moths Circle Lamps (It's Not Attraction)»
+
+**Опис:**
 ```
-Moths don't fly toward lamps — they get trapped by them. 💡
-Source: Fabian et al., "Why flying insects gather at artificial light", Nature Communications (2024)
+Moths don't fly to lamps because they love light. They get trapped. 💡
+
+The popular explanation was the Moon: moths steer by it, and a nearby lamp sends them spiraling. In 2024, researchers filmed insects around lights with high-speed cameras and found something else. Flying insects keep their backs turned toward the brightest light. In nature, that's the sky, so it tells them which way is up. A lamp nearby throws that off, so they circle it, climb until they stall, or flip over and crash.
+
+Source: Fabian, S.T., Sondhi, Y., Allen, P.E., Theobald, J.C., Lin, H.-T. (2024). Why flying insects gather at artificial light. Nature Communications, 15, 689.
 https://doi.org/10.1038/s41467-024-44785-3
+
+What should I debunk next? 👇
+
+#shorts #moths #science #insects #animalfacts
+```
+
+**Теги:** moths, moths and light, why are moths attracted to light, moth lamp, insects and light, dorsal light response, science facts, animal facts, debunked, shorts
+
+**Обкладинка:** кадр 0:00 (лампа, метелики, текст «MOTHS AREN'T ATTRACTED TO LIGHT.»). Запасна — 0:07.5 (червоний хрест + «WRONG.»).
+
+**Закріплений коментар:**
+```
+Scientists filmed this with high-speed cameras in 2024. Source is in the description 🔬
+What should I debunk next? 👇
 ```
 
 ## Джерела
