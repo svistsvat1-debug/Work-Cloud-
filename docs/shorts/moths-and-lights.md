@@ -75,4 +75,7 @@ https://doi.org/10.1038/s41467-024-44785-3
 - Анімація: Remotion, `video/src/moths/` (3 шоти, 2.5D-камера, обличчя лампи/Місяця/метелика, пил, зірочки, крапля поту, підписи). Останній кадр = кадр 0 (луп).
 - Звук: 19 ефектів синтезовано кодом (`video/images/moths/scripts/sfx.py`), рівні в `video/src/moths/sfx-cues.json`.
 - Перевірки: contact sheets `video/out/stills/`, pop scan `video/scripts/popscan.py`.
-- Рендер: `cd video && IMG=jpeg node scripts/render.mjs 2 out/moths-4K.mp4 16` (CPU, без GPU).
+- Рендер: `cd video && IMG=jpeg node scripts/render.mjs 2 out/moths-4K.mp4 16` (CPU, без GPU, ~40 хв), потім стандартний колірний діапазон:
+  `ffmpeg -i out/moths-4K.mp4 -vf "scale=in_range=full:out_range=tv,format=yuv420p" -color_range tv -c:v libx264 -preset medium -crf 16 -movflags +faststart -c:a copy out/moths-4K-final.mp4`
+- Результат перевірено: 2160×3840, 60 fps, 1788 кадрів, звук 29.8 с, пік −4.0 dBFS (−21.6 LUFS), застиглих кадрів немає, останній кадр = кадр 0.
+- Remotion Studio: `cd video && npx remotion studio src/index.ts --port 3000`
