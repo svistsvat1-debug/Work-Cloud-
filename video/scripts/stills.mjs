@@ -9,10 +9,10 @@ const serveUrl = process.env.REBUNDLE || !fs.existsSync('build/index.html')
   ? await bundle({entryPoint: path.resolve('src/index.ts'), outDir: path.resolve('build')})
   : path.resolve('build');
 const browser = await openBrowser('chrome', {browserExecutable: BROWSER, chromiumOptions: {gl: 'swangle'}});
-const composition = await selectComposition({serveUrl, id: 'MothsShort', puppeteerInstance: browser, browserExecutable: BROWSER});
+const composition = await selectComposition({serveUrl, id: process.env.COMP || 'MothsShort', puppeteerInstance: browser, browserExecutable: BROWSER});
 for (const t of times) {
   const frame = Math.min(composition.durationInFrames - 1, Math.round(t * 60));
-  await renderStill({composition, serveUrl, frame, output: `out/stills/t_${t.toFixed(2)}.png`, scale: 0.5, puppeteerInstance: browser, browserExecutable: BROWSER});
+  await renderStill({composition, serveUrl, frame, output: process.env.OUT || `out/stills/t_${t.toFixed(2)}.png`, scale: Number(process.env.SCALE || 0.5), puppeteerInstance: browser, browserExecutable: BROWSER});
   console.log('still', t);
 }
 await browser.close({silent: true});

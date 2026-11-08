@@ -73,7 +73,9 @@ What should I debunk next? 👇
 
 **Теги:** moths, moths and light, why are moths attracted to light, moth lamp, insects and light, dorsal light response, science facts, animal facts, debunked, shorts
 
-**Обкладинка:** кадр 0:00 (лампа, метелики, текст «MOTHS AREN'T ATTRACTED TO LIGHT.»). Запасна — 0:07.5 (червоний хрест + «WRONG.»).
+**Обкладинка:** `docs/shorts/moths-cover.jpg` (1080×1920) — переляканий метелик кружляє довкола самовдоволеної лампи, текст «NOT ATTRACTED. / TRAPPED.».
+Рендер: композиція `MothsCover` (`video/src/moths/Cover.tsx`): `cd video && COMP=MothsCover SCALE=2 OUT=out/moths-cover-4K.png node scripts/stills.mjs 0`.
+Якщо платформа дає лише вибрати кадр із відео — кадр 0:00 (лампа, метелики, «MOTHS AREN'T ATTRACTED TO LIGHT.»).
 
 **Закріплений коментар:**
 ```
