@@ -104,4 +104,7 @@
 
 ---
 
+Крок 2 (beat sheet + промпти для Google Flow): `docs/shorts/why-bees-die-step2-images.md`
+Озвучка take1 + таймінги: `shorts/why-bees-die/vo/`
+
 Наступна тема в черзі: "Why Do You Get Nosebleeds?"

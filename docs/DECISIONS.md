@@ -16,5 +16,6 @@
 
 ## Записи
 
+- 2026-11-08 · Зображення для cut-out Shorts генерує власник у Google Flow (Nano Banana) за готовими промптами, без Higgsfield; фон — суцільний `#9BCFFD`, вирізання й анімація в коді (Remotion) · у власника немає Higgsfield.
 - 2026-11-08 · Озвучка Shorts — ElevenLabs Eleven v4 (`eleven_v4`) з audio tags; у кінці ролика CTA "Subscribe for more" · рішення власника, перший ролик — `docs/shorts/why-bees-die-after-stinging.md`.
 - 2026-10-01 · Зафіксовано MASTER CONTEXT як базу роботи (`docs/MASTER_CONTEXT.md`) · щоб AI працював за одними правилами на всіх пристроях.
