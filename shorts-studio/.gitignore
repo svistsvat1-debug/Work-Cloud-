@@ -1,0 +1,6 @@
+node_modules/
+out/
+build/
+images/*/qa/
+*.log
+__pycache__/
