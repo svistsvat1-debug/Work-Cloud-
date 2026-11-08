@@ -3,7 +3,7 @@
 Файли:
 - відео: `video/out/why-you-see-stars-4K.mp4` (надіслано в чат)
 - субтитри: `docs/shorts/why-you-see-stars.en.srt`
-- обкладинка: `docs/shorts/why-you-see-stars-cover.jpg` (кадр 2,3 с)
+- обкладинка: `docs/shorts/why-you-see-stars-cover.jpg` (1080×1920, для завантаження) і `why-you-see-stars-cover-4K.png` (2160×3840). Текст «STOOD UP TOO FAST?», герой із зірочками, сірий тунель по краях. Джерело: Remotion Still `WhyYouSeeStarsCover` (`video/src/stars/Cover.tsx`)
 
 ## Назва
 
@@ -64,7 +64,7 @@ why do i see stars when i stand up, seeing stars when standing up, head rush, st
 | Shorts remixing | Allow video and audio remixing | Ремікси дають додаткові покази |
 | Comments | On, «Hold potentially inappropriate comments for review», сортування Top | Відео закінчується питанням до глядача |
 | Show like count | Yes | — |
-| Thumbnail | Кадр 2,3 с (герой із зірочками), див. `why-you-see-stars-cover.jpg` | Це premise ролика, читається як мініатюра. У застосунку YouTube кадр вибирається під час завантаження |
+| Thumbnail | `why-you-see-stars-cover.jpg`. Якщо Studio не дає завантажити свою обкладинку для Shorts, вибери кадр 2,3 с (герой із зірочками) | Текст на обкладинці доповнює назву, а не повторює її |
 | Playlist | Пропозиція: серія «Body Glitches» (чому болить голова від морозива, гикавка…) | Щоб глядачі дивилися кілька Shorts поспіль. Назва — [MISSING], обери свою |
 | Related video | [MISSING] | Коли на каналі буде схожий Short |
 | Publish time | [MISSING] | Залежить від аудиторії каналу: YouTube Studio → Analytics → Audience → «When your viewers are on YouTube» |
