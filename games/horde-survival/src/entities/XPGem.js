@@ -23,6 +23,9 @@ class XPGem extends Pickup {
 
   collect(game) {
     game.player.addXp(this.value);
+    const color = this.value >= 10 ? '#ff8a9a' : this.value >= 5 ? '#8affb0' : '#9fe3ff';
+    game.effects.sparkle(game.player.x, game.player.y - 20, color, 4);
+    game.audio.play('pickup');
   }
 
   render(ctx, sprites) {

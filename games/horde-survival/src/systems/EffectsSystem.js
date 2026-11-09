@@ -1,18 +1,26 @@
 /**
  * EffectsSystem holds short-lived visual effects that are not game objects:
- * the "poof" when an enemy dies and the floating damage numbers.
- * Every effect has a `time` that counts up and a `duration`; it is removed when time runs out.
+ * puffs, particles and floating text (damage numbers, "+12 HP").
+ * Every effect has a `time` that counts up and a `duration`; it is removed when
+ * time runs out. Particles are recycled with an ObjectPool and capped, so even
+ * a huge fight never spawns more than GameConfig.effects.maxParticles.
  */
 class EffectsSystem {
   constructor(game) {
     this.game = game;
+    this.particlePool = new ObjectPool(() => ({}));
+    this.particles = [];
     this.reset();
   }
 
   reset() {
+    for (const particle of this.particles) this.particlePool.release(particle);
+    this.particles.length = 0;
     this.puffs = [];
     this.damageNumbers = [];
   }
+
+  // ---------------------------------------------------------------- Spawning
 
   /** A quick expanding ring + flash where an enemy died. */
   spawnPuff(x, y, color, size) {
@@ -38,16 +46,104 @@ class EffectsSystem {
     });
   }
 
+  /** One particle. Dropped silently when the cap is reached (the screen is busy enough). */
+  spawnParticle(x, y, vx, vy, duration, size, color, gravity = 0, additive = false) {
+    if (this.particles.length >= GameConfig.effects.maxParticles) return;
+    const particle = this.particlePool.get();
+    particle.x = x;
+    particle.y = y;
+    particle.vx = vx;
+    particle.vy = vy;
+    particle.time = 0;
+    particle.duration = duration;
+    particle.size = size;
+    particle.color = color;
+    particle.gravity = gravity;
+    particle.additive = additive;
+    this.particles.push(particle);
+  }
+
+  /** Particles flying out in every direction (enemy deaths, chest bursts). */
+  burst(x, y, color, count, speed, size = 6) {
+    for (let i = 0; i < count; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const velocity = speed * MathUtils.randomRange(0.35, 1);
+      this.spawnParticle(
+        x,
+        y,
+        Math.cos(angle) * velocity,
+        Math.sin(angle) * velocity - speed * 0.2,
+        MathUtils.randomRange(0.3, 0.6),
+        size * MathUtils.randomRange(0.6, 1.2),
+        color,
+        speed * 1.2
+      );
+    }
+  }
+
+  /** A few glowing sparks drifting up (pickups). */
+  sparkle(x, y, color, count = 5) {
+    for (let i = 0; i < count; i++) {
+      this.spawnParticle(
+        x + MathUtils.randomRange(-14, 14),
+        y + MathUtils.randomRange(-10, 10),
+        MathUtils.randomRange(-40, 40),
+        MathUtils.randomRange(-140, -60),
+        MathUtils.randomRange(0.25, 0.45),
+        MathUtils.randomRange(3, 6),
+        color,
+        0,
+        true
+      );
+    }
+  }
+
+  // ---------------------------------------------------------------- Update and drawing
+
   update(dt) {
     for (const list of [this.puffs, this.damageNumbers]) {
       for (const effect of list) effect.time += dt;
       ArrayUtils.removeWhere(list, (effect) => effect.time >= effect.duration);
     }
+
+    // Particles: move, fall, then recycle the finished ones (swap-remove keeps it fast).
+    const particles = this.particles;
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const particle = particles[i];
+      particle.time += dt;
+      if (particle.time >= particle.duration) {
+        this.particlePool.release(particle);
+        particles[i] = particles[particles.length - 1];
+        particles.pop();
+        continue;
+      }
+      particle.vy += particle.gravity * dt;
+      particle.x += particle.vx * dt;
+      particle.y += particle.vy * dt;
+    }
   }
 
   render(ctx) {
     this.renderPuffs(ctx);
+    this.renderParticles(ctx);
     this.renderDamageNumbers(ctx);
+    ctx.globalAlpha = 1;
+  }
+
+  renderParticles(ctx) {
+    // Normal particles first, then glowing ones with additive blending.
+    for (const additive of [false, true]) {
+      ctx.globalCompositeOperation = additive ? 'lighter' : 'source-over';
+      for (const particle of this.particles) {
+        if (particle.additive !== additive) continue;
+        const life = 1 - particle.time / particle.duration;
+        ctx.globalAlpha = life;
+        ctx.fillStyle = particle.color;
+        const size = particle.size * (0.5 + 0.5 * life);
+        ctx.fillRect(particle.x - size / 2, particle.y - size / 2, size, size);
+      }
+    }
+    ctx.globalCompositeOperation = 'source-over';
     ctx.globalAlpha = 1;
   }
 
@@ -65,6 +161,7 @@ class EffectsSystem {
       ctx.arc(puff.x, puff.y, puff.size * (0.3 + 0.5 * progress), 0, Math.PI * 2);
       ctx.stroke();
     }
+    ctx.globalAlpha = 1;
   }
 
   renderDamageNumbers(ctx) {

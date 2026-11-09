@@ -21,6 +21,8 @@ const ProceduralSprites = {
       gemGreen: this.createGem('#4fe07a', '#d4ffdf', '#1d7a3a'),
       gemRed: this.createGem('#ff5a6e', '#ffd0d6', '#9b1f30'),
       coin: this.createCoin(),
+      glowGold: WorldSprites.createGlow('255, 214, 107'),
+      glowPink: WorldSprites.createGlow('255, 120, 225'),
       ...this.createPassiveIcons(),
       ...this.createWeaponIcons(),
     };

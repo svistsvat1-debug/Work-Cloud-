@@ -23,6 +23,7 @@ class Game {
 
     this.input = new Input(canvas);
     this.camera = new Camera(this.width, this.height);
+    this.audio = new AudioSystem(); // generated sounds, starts after the first click/key
     this.sprites = ProceduralSprites.createAll();
     ImageSprites.loadInto(this.sprites); // swaps in image files when there are any
 
@@ -112,6 +113,12 @@ class Game {
   }
 
   update(dt) {
+    // Mute works on every screen (M key or the speaker button).
+    if (this.input.wasPressed('mute') || this.input.wasClicked(GameConfig.ui.muteButton)) {
+      this.audio.toggleMute();
+      this.input.pointer.pressed = false; // the click must not also press something underneath
+    }
+
     switch (this.state) {
       case GameState.START:
         this.ui.startScreen.update(dt);
@@ -165,8 +172,18 @@ class Game {
   /** Called by an enemy the moment it dies. */
   onEnemyKilled(enemy) {
     this.kills += 1;
-    if (enemy.stats.isBoss) this.bossesDefeated += 1;
     this.effects.spawnPuff(enemy.x, enemy.y, enemy.stats.color, enemy.drawSize * 0.5);
+    // Bigger enemies burst into more particles.
+    this.effects.burst(enemy.x, enemy.y, enemy.stats.color, Math.round(6 + enemy.radius / 5), 160 + enemy.radius * 2);
+    if (enemy.stats.isBoss) {
+      this.bossesDefeated += 1;
+      const shake = GameConfig.shakes.bossDeath;
+      this.camera.shake(shake.strength, shake.duration);
+      this.effects.burst(enemy.x, enemy.y, '#ffd166', 40, 420, 9);
+      this.audio.play('bossDeath');
+    } else {
+      this.audio.play('death');
+    }
     this.dropXp(enemy.x, enemy.y, enemy.stats.xp);
     this.dropCoins(enemy);
 
@@ -181,6 +198,7 @@ class Game {
 
   /** Called by the player when health reaches 0. */
   onPlayerDied() {
+    this.audio.play('gameOver');
     this.bankRun();
     this.ui.gameOverScreen.open();
     this.state = GameState.GAME_OVER;
@@ -255,6 +273,7 @@ class Game {
     }
     this.ui.levelUpMenu.open(choices);
     this.state = GameState.LEVEL_UP;
+    this.audio.play('levelUp');
     return true;
   }
 

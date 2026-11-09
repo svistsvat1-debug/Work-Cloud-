@@ -11,7 +11,22 @@ class UISystem {
     this.levelUpMenu = new LevelUpMenu(game);
     this.chestScreen = new ChestScreen(game);
     this.gameOverScreen = new GameOverScreen(game);
+    this.lowHealthVignette = this.createVignette();
     this.reset();
+  }
+
+  /** Red edges, transparent middle: drawn when HP is low. Made small, then stretched. */
+  createVignette() {
+    const canvas = document.createElement('canvas');
+    canvas.width = 480;
+    canvas.height = 270;
+    const ctx = canvas.getContext('2d');
+    const gradient = ctx.createRadialGradient(240, 135, 90, 240, 135, 290);
+    gradient.addColorStop(0, 'rgba(200, 0, 20, 0)');
+    gradient.addColorStop(1, 'rgba(200, 0, 20, 0.85)');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, 480, 270);
+    return canvas;
   }
 
   reset() {
@@ -46,11 +61,13 @@ class UISystem {
     if (state === GameState.START) this.startScreen.render(ctx);
     else if (state === GameState.SHOP) this.shopScreen.render(ctx);
     else {
+      this.renderLowHealthWarning(ctx);
       this.renderHud(ctx);
       if (state === GameState.LEVEL_UP) this.levelUpMenu.render(ctx);
       if (state === GameState.CHEST) this.chestScreen.render(ctx);
       if (state === GameState.GAME_OVER) this.gameOverScreen.render(ctx);
     }
+    this.renderMuteButton(ctx);
 
     ctx.restore();
   }
@@ -97,6 +114,55 @@ class UISystem {
     if (GameConfig.ui.showDebugInfo) {
       const debug = `FPS: ${this.game.fps}   X: ${Math.round(player.x)}   Y: ${Math.round(player.y)}`;
       DrawUtils.text(ctx, debug, width - 40, height - 52, { size: 22, color: '#b9c4bd', align: 'right' });
+    }
+  }
+
+  /** Pulsing red edges when HP is low: noticeable, but the middle stays clear. */
+  renderLowHealthWarning(ctx) {
+    const player = this.game.player;
+    if (player.isDead() || player.currentHealth / player.maxHealth >= GameConfig.ui.lowHealthWarning) return;
+    ctx.globalAlpha = 0.45 + Math.sin(this.game.clock * 6) * 0.2;
+    ctx.drawImage(this.lowHealthVignette, 0, 0, this.game.width, this.game.height);
+    ctx.globalAlpha = 1;
+  }
+
+  /** A speaker button (click it or press M). Crossed out when muted. */
+  renderMuteButton(ctx) {
+    const button = GameConfig.ui.muteButton;
+    const muted = this.game.audio.muted;
+    const hovered = this.game.input.isPointerOver(button);
+    DrawUtils.roundRect(ctx, button.x, button.y, button.width, button.height, 10);
+    ctx.fillStyle = hovered ? 'rgba(60, 70, 96, 0.9)' : 'rgba(20, 24, 36, 0.75)';
+    ctx.fill();
+
+    const x = button.x + 12;
+    const y = button.y + button.height / 2;
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath(); // speaker: a small box and a cone
+    ctx.moveTo(x, y - 6);
+    ctx.lineTo(x + 7, y - 6);
+    ctx.lineTo(x + 16, y - 14);
+    ctx.lineTo(x + 16, y + 14);
+    ctx.lineTo(x + 7, y + 6);
+    ctx.lineTo(x, y + 6);
+    ctx.closePath();
+    ctx.fill();
+    ctx.lineWidth = 3;
+    if (muted) {
+      ctx.strokeStyle = '#ff6b6b';
+      ctx.beginPath();
+      ctx.moveTo(x + 21, y - 8);
+      ctx.lineTo(x + 31, y + 8);
+      ctx.moveTo(x + 31, y - 8);
+      ctx.lineTo(x + 21, y + 8);
+      ctx.stroke();
+    } else {
+      ctx.strokeStyle = '#ffffff';
+      for (const radius of [8, 14]) {
+        ctx.beginPath();
+        ctx.arc(x + 16, y, radius, -0.8, 0.8);
+        ctx.stroke();
+      }
     }
   }
 

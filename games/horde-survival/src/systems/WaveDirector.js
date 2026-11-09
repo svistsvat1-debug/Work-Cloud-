@@ -99,6 +99,7 @@ class WaveDirector {
     scaling.speed = 1; // bosses stay slow
     this.game.spawner.spawnGroup('boss', 1, scaling);
     this.game.ui.showBanner(`BOSS: ${GameConfig.enemies.boss.name}`, 'Defeat it to win a treasure chest!', '#d9a2ff');
+    this.game.audio.play('bossToll');
     this.nextBossTime = time + config.interval;
   }
 

@@ -268,6 +268,7 @@ const GameConfig = {
 
   // ---------------------------------------------------------------- Effects
   effects: {
+    maxParticles: 600, // hard cap: extra particles are simply skipped
     puffDuration: 0.35,
     maxDamageNumbers: 80, // the oldest numbers disappear first when there are more
     damageNumberDuration: 0.7,
@@ -317,6 +318,21 @@ const GameConfig = {
     choice3: ['Digit3', 'Numpad3'],
     confirm: ['Space', 'Enter', 'NumpadEnter'],
     back: ['Escape'],
+    mute: ['KeyM'],
+  },
+
+  // ---------------------------------------------------------------- Audio
+  audio: {
+    volume: 0.5,
+    // Minimum seconds between two plays of the same sound (keeps big fights from getting noisy).
+    minGap: { shoot: 0.07, hit: 0.045, death: 0.035, pickup: 0.03, coin: 0.05, hurt: 0.2 },
+  },
+
+  // Screen shakes (pixels, seconds). Small on purpose: shake should be felt, not annoying.
+  shakes: {
+    bossDeath: { strength: 14, duration: 0.45 },
+    chestOpen: { strength: 8, duration: 0.25 },
+    evolution: { strength: 13, duration: 0.4 },
   },
 
   // ---------------------------------------------------------------- UI
@@ -332,6 +348,8 @@ const GameConfig = {
     enemyHealthBar: { widthFactor: 0.55, height: 5, offsetY: 0.42 },
     bannerDuration: 2.6, // seconds a banner stays on screen (several banners queue up)
     bossBar: { width: 760, height: 24, y: 168 },
+    muteButton: { x: 1852, y: 136, width: 48, height: 48 },
+    lowHealthWarning: 0.25, // red pulsing edges below 25% HP
     playerHealthBar: { x: 40, y: 50, width: 460, height: 30 },
     xpBar: { height: 26 },
     slotIconSize: 60, // weapon icons under the HP bar

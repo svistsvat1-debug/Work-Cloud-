@@ -70,6 +70,7 @@ class Enemy extends Entity {
     this.flashTimer = GameConfig.combat.hitFlashTime;
     this.applyKnockback(knockbackX, knockbackY);
     game.effects.spawnDamageNumber(this.x, this.y - this.drawSize * 0.35, amount);
+    game.audio.play('hit');
 
     if (this.currentHealth <= 0) {
       this.dead = true;

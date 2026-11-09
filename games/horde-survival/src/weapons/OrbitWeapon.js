@@ -54,6 +54,7 @@ class OrbitWeapon extends Weapon {
     }
 
     for (const blade of this.blades) {
+      if (this.definition.glowSprite) DrawUtils.glow(ctx, sprites[this.definition.glowSprite], blade.x, blade.y, size * 1.6);
       // Point the blade along its path, plus a fast spin for style.
       DrawUtils.rotated(ctx, sprite, blade.x, blade.y, size, blade.angle + Math.PI / 2 + this.angle * 2);
     }

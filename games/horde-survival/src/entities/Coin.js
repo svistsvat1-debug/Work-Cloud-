@@ -11,6 +11,8 @@ class Coin extends Pickup {
 
   collect(game) {
     game.addCoins(this.value);
+    game.effects.sparkle(game.player.x, game.player.y - 20, '#ffd166', 4);
+    game.audio.play('coin');
   }
 
   render(ctx, sprites) {

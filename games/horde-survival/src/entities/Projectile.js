@@ -19,6 +19,7 @@ class Projectile extends Entity {
     this.lifetime = shot.lifetime;
     this.pierce = shot.pierce || 1;
     this.sprite = shot.sprite;
+    this.glow = shot.glow || null; // glow sprite name for evolved weapons
     this.rotation = Math.atan2(directionY, directionX);
     this.hitEnemies = new Set(); // so a piercing shot never hits the same enemy twice
   }
@@ -44,6 +45,7 @@ class Projectile extends Entity {
   }
 
   render(ctx, sprites) {
+    if (this.glow) DrawUtils.glow(ctx, sprites[this.glow], this.x, this.y, this.drawSize * 1.7);
     DrawUtils.rotated(ctx, sprites[this.sprite], this.x, this.y, this.drawSize, this.rotation);
   }
 }

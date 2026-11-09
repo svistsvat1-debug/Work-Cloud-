@@ -36,7 +36,7 @@ class StartScreen {
       align: 'center',
       color: '#ffd166',
     });
-    DrawUtils.text(ctx, 'Move with WASD or the arrow keys · weapons attack on their own · Enter to play', centerX, 980, {
+    DrawUtils.text(ctx, 'Move with WASD or the arrow keys · weapons attack on their own · Enter to play · M to mute', centerX, 980, {
       size: 26,
       align: 'center',
       color: '#e3e8ee',

@@ -134,6 +134,7 @@ class Player extends Entity {
     this.invulnerableTimer = config.invulnerabilityTime;
     this.hurtTimer = config.hurtFlashTime;
     game.camera.shake(config.hurtShake.strength, config.hurtShake.duration);
+    game.audio.play('hurt');
     game.effects.spawnDamageNumber(this.x, this.y - this.drawSize * 0.45, amount, '#ff6b6b');
 
     if (this.isDead()) game.onPlayerDied();

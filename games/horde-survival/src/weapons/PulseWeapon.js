@@ -66,6 +66,7 @@ class PulseWeapon extends Weapon {
     const player = this.game.player;
     const ringColor = this.definition.ringColor || '#ffe27a';
     const fillColor = this.definition.fillColor || '#fff1b8';
+    if (this.isEvolved) ctx.globalCompositeOperation = 'lighter'; // evolved light glows
     for (const pulse of this.pulses) {
       const fadeProgress = Math.max(0, pulse.time - this.stats.expandTime) / this.fadeTime;
       const alpha = 1 - fadeProgress;
@@ -85,5 +86,6 @@ class PulseWeapon extends Weapon {
       });
     }
     ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = 'source-over';
   }
 }

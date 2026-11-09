@@ -33,6 +33,15 @@ const DrawUtils = {
     ctx.restore();
   },
 
+  /** A soft additive glow ("light") centered on (x, y). */
+  glow(ctx, image, x, y, size, alpha = 1) {
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.globalAlpha = alpha;
+    ctx.drawImage(image, x - size / 2, y - size / 2, size, size);
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = 'source-over';
+  },
+
   /** A horizontal bar (health, XP...). fraction is 0..1, (x, y) is the top-left corner. */
   bar(ctx, x, y, width, height, fraction, fillColor, backColor = 'rgba(10, 8, 12, 0.75)') {
     ctx.fillStyle = backColor;

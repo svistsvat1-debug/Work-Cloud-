@@ -109,7 +109,8 @@ class StrikeWeapon extends Weapon {
       ctx.stroke();
     }
 
-    // Lightning: a wide soft glow under a thin bright core.
+    // Lightning: a wide soft glow under a thin bright core (additive when evolved).
+    if (this.isEvolved) ctx.globalCompositeOperation = 'lighter';
     for (const bolt of this.bolts) {
       const alpha = 1 - bolt.time / StrikeWeapon.BOLT_TIME;
       for (const [width, color] of [[16, `rgba(${glowRGB}, ${alpha * 0.45})`], [5, `rgba(255, 255, 255, ${alpha})`]]) {
@@ -126,6 +127,7 @@ class StrikeWeapon extends Weapon {
         ctx.fill();
       }
     }
+    ctx.globalCompositeOperation = 'source-over';
   }
 }
 

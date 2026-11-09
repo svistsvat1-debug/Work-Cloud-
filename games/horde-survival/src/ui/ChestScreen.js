@@ -16,6 +16,8 @@ class ChestScreen {
     this.rewards = rewards;
     this.time = 0;
     this.hasEvolution = rewards.some((reward) => reward.kind === 'evolution');
+    this.burstPlayed = false;
+    this.game.audio.play('chestShake');
   }
 
   /** Seconds from opening until the last reward is fully visible. */
@@ -25,6 +27,10 @@ class ChestScreen {
 
   update(dt) {
     this.time += dt;
+    if (!this.burstPlayed && this.time >= ChestScreen.OPEN_AT) {
+      this.burstPlayed = true;
+      this.game.audio.play(this.hasEvolution ? 'evolution' : 'chestOpen');
+    }
     const input = this.game.input;
     const pressed = input.wasPressed('confirm') || input.pointer.pressed;
     if (!pressed) return;
@@ -40,6 +46,13 @@ class ChestScreen {
     const centerX = width / 2;
     const chestY = 360;
     const opened = this.time >= ChestScreen.OPEN_AT;
+
+    // A short screen shake when the chest bursts open (stronger for an evolution).
+    const shake = this.hasEvolution ? GameConfig.shakes.evolution : GameConfig.shakes.chestOpen;
+    const sinceOpen = this.time - ChestScreen.OPEN_AT;
+    const shakePower = opened && sinceOpen < shake.duration ? shake.strength * (1 - sinceOpen / shake.duration) : 0;
+    ctx.save();
+    ctx.translate((Math.random() * 2 - 1) * shakePower, (Math.random() * 2 - 1) * shakePower);
 
     ctx.fillStyle = 'rgba(8, 6, 14, 0.82)';
     ctx.fillRect(0, 0, width, height);
@@ -70,6 +83,8 @@ class ChestScreen {
     }
 
     if (opened) this.renderRewards(ctx);
+
+    ctx.restore();
 
     if (this.time >= this.revealEnd && Math.floor(this.time * 2) % 2 === 0) {
       DrawUtils.text(ctx, 'Press Space or click to continue', centerX, 960, {

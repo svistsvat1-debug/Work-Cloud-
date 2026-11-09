@@ -18,6 +18,7 @@ class ProjectileWeapon extends Weapon {
       }
       this.spawnProjectile(Math.cos(angle), Math.sin(angle));
     }
+    this.game.audio.play('shoot');
     return true;
   }
 
@@ -34,6 +35,7 @@ class ProjectileWeapon extends Weapon {
         knockback: stats.knockback,
         pierce: stats.pierce,
         sprite: this.definition.projectileSprite,
+        glow: this.definition.glowSprite,
       })
     );
   }

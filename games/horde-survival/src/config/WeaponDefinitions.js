@@ -147,6 +147,7 @@ Object.assign(WeaponDefinitions, {
     behavior: 'projectile',
     icon: 'iconArcaneStorm',
     projectileSprite: 'stormBolt',
+    glowSprite: 'glowPink', // evolved weapons glow
     amountName: 'bolt',
     isEvolution: true,
     base: {
@@ -171,6 +172,7 @@ Object.assign(WeaponDefinitions, {
     behavior: 'orbit',
     icon: 'iconCelestialBlades',
     sprite: 'celestialBlade',
+    glowSprite: 'glowGold',
     amountName: 'blade',
     isEvolution: true,
     orbitTrailColor: 'rgba(255, 224, 138, 0.18)', // faint golden ring along the orbit
