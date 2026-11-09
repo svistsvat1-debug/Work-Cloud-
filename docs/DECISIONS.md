@@ -16,5 +16,8 @@
 
 ## Записи
 
+- 2026-11-09 · Візуальний стиль long-form: whiteboard-маркер як у Golpo (без логотипа, без субтитрів), опис — `docs/longform/style-whiteboard.md`, інструмент — `tools/whiteboard/` · користувач скинув референс і попросив запам'ятати стиль; робимо локально й безкоштовно.
+- 2026-11-09 · Епізод 1 озвучено голосом Kokoro `am_fenrir` (EN) · рішення користувача.
+
 - 2026-11-09 · YouTube long-form: формат 16:9, 10–15 хв; референс — "World War 2 Explained" (The Life Guide), розбір у `docs/longform/ww2-explained-format.md` · користувач уточнив, що референс для довгих відео, а не Shorts.
 - 2026-10-01 · Зафіксовано MASTER CONTEXT як базу роботи (`docs/MASTER_CONTEXT.md`) · щоб AI працював за одними правилами на всіх пристроях.
