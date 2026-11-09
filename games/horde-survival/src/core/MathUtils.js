@@ -59,6 +59,18 @@ const MathUtils = {
     return items[items.length - 1];
   },
 
+  /**
+   * A repeatable "random" number in [0, 1) for a grid cell (x, y).
+   * The same cell always gives the same number, so the endless world looks the
+   * same every time you walk past (no need to store anything).
+   */
+  hash2D(x, y, seed = 0) {
+    let h = Math.imul(x, 374761393) + Math.imul(y, 668265263) + Math.imul(seed, 982451653);
+    h = Math.imul(h ^ (h >>> 13), 1274126177);
+    h ^= h >>> 16;
+    return (h >>> 0) / 4294967296;
+  },
+
   /** 75.4 -> "01:15" */
   formatTime(seconds) {
     const minutes = Math.floor(seconds / 60);

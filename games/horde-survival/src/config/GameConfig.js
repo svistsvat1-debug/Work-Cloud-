@@ -271,10 +271,31 @@ const GameConfig = {
   },
 
   // ---------------------------------------------------------------- World
-  background: {
-    tileSize: 128,
-    colors: ['#1c2a21', '#1f2f25'],
-    gridColor: 'rgba(255, 255, 255, 0.035)',
+  // The endless ground (see WorldRenderer). Sizes in pixels.
+  world: {
+    tileSize: 256, // seamless ground tiles
+    groundVariants: 4, // different tiles mixed at random, so no pattern is visible
+    patches: {
+      cellSize: 640, // at most one big patch per 640x640 area...
+      chance: 0.55, // ...with this chance
+      minSize: 380,
+      maxSize: 760,
+      weights: { moss: 4, dirt: 3, meadow: 2, stone: 1.2 },
+    },
+    decorations: {
+      cellSize: 210, // at most one decoration per 210x210 area (keeps the ground clean)
+      chance: 0.2,
+      types: [
+        { sprite: 'decoGrass', weight: 5, size: [56, 84] },
+        { sprite: 'decoStones', weight: 3, size: [50, 74] },
+        { sprite: 'decoRock', weight: 2.5, size: [72, 110] },
+        { sprite: 'decoBones', weight: 1.4, size: [62, 84] },
+        { sprite: 'decoCandles', weight: 1, size: [62, 78], flames: true },
+        { sprite: 'decoGrave', weight: 1, size: [82, 110] },
+        { sprite: 'decoPillar', weight: 0.7, size: [104, 150] },
+        { sprite: 'decoBell', weight: 0.6, size: [72, 92] },
+      ],
+    },
   },
 
   // ---------------------------------------------------------------- Controls

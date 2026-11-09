@@ -1,10 +1,11 @@
 /**
- * Renderer draws the game world in layers: background, enemies, player,
- * projectiles, effects. The UI is drawn afterwards by UISystem.
+ * Renderer draws the game world in layers: ground, pickups, enemies, player,
+ * weapons, projectiles, effects. The UI is drawn afterwards by UISystem.
  */
 class Renderer {
   constructor(game) {
     this.game = game;
+    this.world = new WorldRenderer(game); // ground tiles and decorations
   }
 
   render() {
@@ -16,7 +17,7 @@ class Renderer {
 
     // From here on we draw in world coordinates.
     camera.applyTransform(ctx);
-    this.drawBackground(ctx, camera);
+    this.world.render(ctx, camera);
 
     // Items on the ground sit below everything that moves.
     for (const pickup of pickups) {
@@ -37,36 +38,5 @@ class Renderer {
 
     // Back to screen coordinates for the UI.
     ctx.setTransform(1, 0, 0, 1, 0, 0);
-  }
-
-  /** A checkerboard of tiles, so you can see the world move. Only visible tiles are drawn. */
-  drawBackground(ctx, camera) {
-    const { tileSize, colors, gridColor } = GameConfig.background;
-    const startCol = Math.floor(camera.left / tileSize);
-    const endCol = Math.floor(camera.right / tileSize);
-    const startRow = Math.floor(camera.top / tileSize);
-    const endRow = Math.floor(camera.bottom / tileSize);
-
-    for (let row = startRow; row <= endRow; row++) {
-      for (let col = startCol; col <= endCol; col++) {
-        // Even/odd (col + row) makes the checkerboard; "+ 2) % 2" handles negative numbers.
-        ctx.fillStyle = colors[(((col + row) % 2) + 2) % 2];
-        ctx.fillRect(col * tileSize, row * tileSize, tileSize, tileSize);
-      }
-    }
-
-    // Faint grid lines on top of the tiles
-    ctx.strokeStyle = gridColor;
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    for (let col = startCol; col <= endCol + 1; col++) {
-      ctx.moveTo(col * tileSize, startRow * tileSize);
-      ctx.lineTo(col * tileSize, (endRow + 1) * tileSize);
-    }
-    for (let row = startRow; row <= endRow + 1; row++) {
-      ctx.moveTo(startCol * tileSize, row * tileSize);
-      ctx.lineTo((endCol + 1) * tileSize, row * tileSize);
-    }
-    ctx.stroke();
   }
 }

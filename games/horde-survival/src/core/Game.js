@@ -41,6 +41,7 @@ class Game {
     this.pickups = [];
 
     // Frame timing
+    this.clock = 0; // real seconds since the page opened (for animations that never pause)
     this.lastTimestamp = null;
     this.fps = 0;
     this.fpsFrames = 0;
@@ -98,6 +99,7 @@ class Game {
     // by it, so the game runs at the same speed on 60 Hz and 144 Hz screens.
     const rawDt = this.lastTimestamp === null ? 0 : (timestamp - this.lastTimestamp) / 1000;
     this.lastTimestamp = timestamp;
+    this.clock = timestamp / 1000;
     const dt = Math.min(rawDt, GameConfig.maxDeltaTime);
 
     this.measureFps(rawDt);
