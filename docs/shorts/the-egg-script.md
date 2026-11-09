@@ -2,7 +2,7 @@
 
 Референс: https://youtu.be/h6fcK_fRYaI — "The Egg - A Short Story", канал Kurzgesagt – In a Nutshell.
 Це анімована адаптація оповідання Andy Weir "The Egg" (2009).
-Статус: крок 1 (сценарій + озвучка) готовий. Крок 2: [MISSING], чекаємо ТЗ.
+Статус: крок 1 (сценарій + озвучка) готовий. Крок 2 (відео): план, beat sheet і промпти для картинок — у `docs/shorts/the-egg-video-plan.md`.
 
 ## Ідея (1 речення)
 

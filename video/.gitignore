@@ -1,0 +1,6 @@
+node_modules/
+out/
+build/
+.cache/
+*.f32
+images/**/raw/*.json
