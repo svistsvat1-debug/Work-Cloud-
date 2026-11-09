@@ -124,3 +124,61 @@
 > Solid pick 🦖 Fun fact: T. rex lived closer in time to US than to Stegosaurus 🤯
 
 **Коментар з одного емодзі (❤)**: поставити серце. Можна коротко відповісти "❤️🦖", але основну розмову краще вести в іншому треді.
+
+---
+
+# Пакет 2 (2026-11-09): коментар + твоя відповідь на нього
+
+Формат: обидва пишемо з акаунта WhyPeck. Спочатку PIN (питання, квіз або голосування). Відповідь під ним — через 12–24 год або після перших відповідей глядачів, щоб не зіпсувати їм відгадування.
+Список відео взято з RSS каналу станом на 2026-11-08. vidIQ без кредитів до 2026-11-28, тож кількість коментарів не перевірена.
+
+## Leaning Tower of Pisa — N7PES3j8mno (найкраще відео, ~4.9K)
+**PIN:**
+> Should engineers straighten it completely? 🤔
+> YES = fix it 🔧 / NO = the lean IS the point 📸 👇
+**ВІДПОВІДЬ:**
+> Careful what you wish for 😅 The soft clay that makes it lean is also why it survived at least 4 strong earthquakes since 1280. The soft ground keeps the tower from shaking in rhythm with the quake 🤯
+Джерело: дослідження Roma Tre / University of Bristol, 2018 (dynamic soil-structure interaction).
+
+## Volcano / Surtsey — p7-NyLh0Ucg
+**PIN:**
+> This island is so protected that visitors can't even bring a single seed 🌱
+> Guess what STILL managed to grow there 👀👇
+**ВІДПОВІДЬ:**
+> A tomato plant 🍅 In 1969 a researcher found one growing out of… human poop 💩 Someone on the island didn't use the toilet properly. It was pulled out right away.
+Джерела: CS Monitor (лише науковці з дозволом), розповідь ботаніка Ágúst Bjarnason (відома з вторинних джерел).
+
+## Woodpecker tongue — _CJBa48MK4Y
+**PIN:**
+> Be honest 👅 Can you touch your NOSE with your tongue? Try it right now 😂👇
+**ВІДПОВІДЬ:**
+> The woodpecker basically can 🤯 Its tongue bones curl over the skull and in some species reach the nostril. A Northern Flicker can stick its tongue out about 2 inches past the tip of its beak.
+Джерела: Cornell Lab (опис відео), American Bird Conservancy.
+
+## Water on sand — YV-Bph8cV-s
+**PIN:**
+> Pop quiz 🧪 A little water makes the sledge easier to pull…
+> So does MORE water make it even easier? YES or NO 👇
+**ВІДПОВІДЬ:**
+> NO 😅 Too much water and the sand loses its stiffness, so it gets hard to pull again. The sweet spot is only a few % water, and with it you need about HALF the pulling force.
+Джерела: Fall et al. 2014 (PRL), Live Science, phys.org.
+
+## Woodpecker brain damage — FpjLcrxrsVM
+**PIN:**
+> Quick vote 🧠 That tau in woodpecker brains is…
+> 🤕 DAMAGE or 🛡️ PROTECTION? Pick one 👇
+**ВІДПОВІДЬ:**
+> Bonus twist: a 2022 study found their skull doesn't absorb shock at all, it works like a stiff hammer 🔨 The brain survives mostly because it's tiny, about 700× smaller than a human's 🤯
+Джерела: Van Wassenbergh et al. 2022 (Current Biology), Smithsonian, phys.org.
+
+## Machine with Concrete — 6SKTxHV1SGc
+**PIN:**
+> Guess 👀 Which gear is the LAST one you could actually see moving?
+> Pick a number from 1 to 12 👇
+**ВІДПОВІДЬ:**
+> Math time 🧮 Motor at 200 rpm →
+> after 2 gear pairs: 1 turn every 12.5 min
+> after 4: 1 turn every ~3 weeks
+> after 6: 1 turn every ~150 years
+> the last one: over 2 TRILLION years ⏳
+Розрахунок: 50^n / 200 хв на один оберт (дані з опису відео).
