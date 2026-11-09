@@ -1,0 +1,21 @@
+{
+  "name": "shorts-video",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Remotion project for vertical cartoon Shorts",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "render": "remotion render src/index.ts"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.541",
+    "@remotion/google-fonts": "4.0.541",
+    "remotion": "4.0.541",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.1.8",
+    "typescript": "5.8.3"
+  }
+}
