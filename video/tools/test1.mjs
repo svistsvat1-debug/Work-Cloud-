@@ -1,0 +1,32 @@
+import { createCanvas } from '@napi-rs/canvas';
+import fs from 'fs';
+import { C, W, H } from '../engine/core.js';
+import { G, g, compile } from '../engine/group.js';
+const out = process.argv[2] || 'out';
+function board(p) {
+  const c = createCanvas(W, H); const x = c.getContext('2d');
+  x.fillStyle = C.paper; x.fillRect(0, 0, W, H);
+  const a = g();
+  a.text('Kola Superdeep', 110, 150, { size: 96, rot: -3 });
+  a.text('Borehole', 120, 250, { size: 96, rot: -3 });
+  a.path('M105 172 Q300 150 520 158', { stroke: C.red, w: 9 });
+  const b = g();
+  b.circle(700, 600, 250, { fill: C.blue, w: 11 });
+  b.path('M560 420 Q640 400 690 450 Q660 520 700 560 Q640 640 580 600 Q520 560 540 480 Z', { fill: C.green, w: 6 });
+  b.path('M700 350 Q560 600 700 850 A250 250 0 0 0 700 350 Z', { fill: C.orange, w: 9, hatch: 60 });
+  b.circle(760, 700, 110, { fill: C.red, w: 7 });
+  const h = g();
+  h.hero('180°C', 1150, 330, { size: 240, fill: C.red });
+  h.hero('22 JUNE 1941', 1060, 620, { size: 130, fill: C.yellow, outline: C.ink });
+  const m = g();
+  m.text('BOLD GAMBLES PAY OFF', 1050, 800, { size: 80, font: 'marker', color: C.red });
+  m.text('Why did nobody stop him? Compiègne 338,000', 1050, 900, { size: 60 });
+  m.rect(1100, 930, 300, 110, { fill: C.yellow, r: 14 });
+  m.rect(1450, 930, 300, 110, { fill: C.gray, r: 14, hatch: 20 });
+  const cs = [a, b, h, m].map((q, i) => compile(q, { seed: 11 + i }));
+  cs.forEach(k => { console.log('dur', k.dur.toFixed(2), 'work', Math.round(k.work), 'bb', Math.round(k.bb.x0), Math.round(k.bb.y0), Math.round(k.bb.x1), Math.round(k.bb.y1)); k.draw(x, p); });
+  return c;
+}
+const t0 = Date.now();
+for (const p of [0.25, 0.5, 0.75, 1]) fs.writeFileSync(`${out}/test1_${String(p * 100).padStart(3, '0')}.png`, board(p).toBuffer('image/png'));
+console.log('ms', Date.now() - t0);

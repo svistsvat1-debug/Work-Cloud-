@@ -1,0 +1,19 @@
+{
+  "name": "whiteboard-video",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Marker whiteboard animation engine (draw-on style) + video projects",
+  "type": "module",
+  "scripts": {
+    "render": "node engine/render.js"
+  },
+  "dependencies": {
+    "@napi-rs/canvas": "^1.1.0",
+    "d3-geo": "^3.1.2",
+    "opentype.js": "^2.0.0",
+    "polygon-clipping": "^0.15.7",
+    "svgpath": "^2.6.0",
+    "topojson-client": "^3.1.0",
+    "world-atlas": "^2.0.2"
+  }
+}
