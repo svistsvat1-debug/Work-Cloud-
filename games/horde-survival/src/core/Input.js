@@ -78,4 +78,5 @@ class Input {
   }
 }
 
-Input.SCROLL_KEYS = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'];
+// Keys whose browser behavior we block (scrolling, F3 = "find next").
+Input.SCROLL_KEYS = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space', 'F3'];

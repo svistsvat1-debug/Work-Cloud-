@@ -41,17 +41,18 @@ const GameConfig = {
     walkFrameRate: 8, // walk-cycle frames per second
     healthBar: { width: 84, height: 9, offsetY: 0.6 }, // offsetY: fraction of drawSize above the center
     pickupRadius: 36, // gems closer than this are collected
-    magnetRadius: 150, // gems closer than this start flying toward the player
+    magnetRadius: 180, // gems closer than this start flying toward the player
   },
 
   // ---------------------------------------------------------------- Experience
   // XP needed to go from `level` to `level + 1`:
   //   base + linear * (level - 1) + quadratic * (level - 1)^2
-  // -> 5, 13, 23, 33, 43 ... fast early level-ups, then a bit slower.
+  // -> 3, 5, 8, 11, 15, 19, 23 ... ~38 at level 10, ~101 at level 20:
+  // very frequent level-ups early (about 5 in the first minute), then gradually slower.
   xp: {
-    base: 5,
-    linear: 8,
-    quadratic: 0.4,
+    base: 3,
+    linear: 2.2,
+    quadratic: 0.2,
   },
 
   xpGems: {
@@ -150,7 +151,7 @@ const GameConfig = {
       name: 'Brute',
       maxHealth: 110,
       speed: 52,
-      damage: 20,
+      damage: 16,
       xp: 5,
       radius: 50,
       drawSize: 150,
@@ -163,9 +164,9 @@ const GameConfig = {
     },
     elite: {
       name: 'Elite',
-      maxHealth: 420,
+      maxHealth: 320,
       speed: 82,
-      damage: 24,
+      damage: 20,
       xp: 10,
       radius: 56,
       drawSize: 172,
@@ -176,14 +177,14 @@ const GameConfig = {
       shadowOffset: 0.42,
       color: '#ff5a5a',
       alwaysShowHealthBar: true,
-      chestChance: 0.25,
+      chestChance: 0.4,
       coins: [5, 10], // always drops this many coins (min, max)
     },
     boss: {
       name: 'Dread Colossus',
-      maxHealth: 2200,
+      maxHealth: 800,
       speed: 58, // slightly slower than normal enemies
-      damage: 30,
+      damage: 25,
       xp: 30,
       radius: 82,
       drawSize: 290, // the 182x182 sprite drawn much bigger
@@ -236,7 +237,7 @@ const GameConfig = {
   bosses: {
     firstAt: 120, // seconds
     interval: 120, // a new boss every 2 minutes
-    healthGrowthPerBoss: 0.6, // each next boss has +60% health (on top of the time scaling)
+    healthGrowthPerBoss: 0.5, // each next boss has +50% health (on top of the time scaling)
   },
 
   // Treasure chests (from bosses, sometimes from elites).
@@ -259,6 +260,14 @@ const GameConfig = {
   },
 
   // ---------------------------------------------------------------- Combat
+  collision: {
+    gridCellSize: 128, // size of the spatial grid cells used to find nearby enemies quickly
+  },
+
+  performance: {
+    squashEnemyLimit: 120, // above this many enemies, skip the squash animation (faster drawing)
+  },
+
   combat: {
     hitFlashTime: 0.1, // how long an enemy flashes white when hit
     knockbackDecay: 9, // how fast knockback fades (higher = shorter push)
@@ -270,7 +279,7 @@ const GameConfig = {
   effects: {
     maxParticles: 600, // hard cap: extra particles are simply skipped
     puffDuration: 0.35,
-    maxDamageNumbers: 80, // the oldest numbers disappear first when there are more
+    maxDamageNumbers: 50, // the oldest numbers disappear first when there are more
     damageNumberDuration: 0.7,
     damageNumberRise: 46, // pixels a number floats up during its life
     damageNumberSize: 30,
@@ -319,6 +328,8 @@ const GameConfig = {
     confirm: ['Space', 'Enter', 'NumpadEnter'],
     back: ['Escape'],
     mute: ['KeyM'],
+    pause: ['Escape', 'KeyP'],
+    debug: ['F3', 'Backquote'], // debug panel with performance numbers and test cheats
   },
 
   // ---------------------------------------------------------------- Audio

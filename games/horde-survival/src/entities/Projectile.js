@@ -45,7 +45,7 @@ class Projectile extends Entity {
   }
 
   render(ctx, sprites) {
-    if (this.glow) DrawUtils.glow(ctx, sprites[this.glow], this.x, this.y, this.drawSize * 1.7);
+    if (this.glow) DrawUtils.glow(ctx, sprites[this.glow], this.x, this.y, this.drawSize * 1.3);
     DrawUtils.rotated(ctx, sprites[this.sprite], this.x, this.y, this.drawSize, this.rotation);
   }
 }

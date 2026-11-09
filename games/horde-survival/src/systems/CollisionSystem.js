@@ -5,17 +5,36 @@
  * Everything uses circles: two circles touch when the distance between their
  * centers is smaller than the sum of their radii. Circles are smaller than the
  * sprites, so hits only count when things clearly overlap.
+ *
+ * Enemies are sorted into a SpatialGrid once per frame, so each check only
+ * looks at nearby enemies instead of all of them.
  */
 class CollisionSystem {
   constructor(game) {
     this.game = game;
+    this.grid = new SpatialGrid(GameConfig.collision.gridCellSize);
+    // Queries reach this far beyond their own radius, so even the biggest enemy is found.
+    this.maxEnemyRadius = Math.max(...Object.values(GameConfig.enemies).map((enemy) => enemy.radius));
+  }
+
+  /** Forget everything (a new run starts). */
+  reset() {
+    this.grid.clear();
   }
 
   update() {
+    this.rebuildGrid();
     this.projectilesVsEnemies();
     this.enemiesVsPlayer();
     this.separateEnemies();
     this.pickupsVsPlayer();
+  }
+
+  rebuildGrid() {
+    this.grid.clear();
+    for (const enemy of this.game.enemies) {
+      if (!enemy.dead) this.grid.insert(enemy);
+    }
   }
 
   static circlesOverlap(a, b) {
@@ -26,13 +45,12 @@ class CollisionSystem {
   // ---------------------------------------------------------------- Collisions
 
   projectilesVsEnemies() {
-    const { projectiles, enemies } = this.game;
-    for (const projectile of projectiles) {
-      for (const enemy of enemies) {
-        if (projectile.dead) break; // used up its pierce
-        if (enemy.dead || !CollisionSystem.circlesOverlap(projectile, enemy)) continue;
-        projectile.hit(enemy, this.game);
-      }
+    for (const projectile of this.game.projectiles) {
+      if (projectile.dead) continue;
+      this.grid.query(projectile.x, projectile.y, projectile.radius + this.maxEnemyRadius, (enemy) => {
+        if (projectile.dead || enemy.dead || !CollisionSystem.circlesOverlap(projectile, enemy)) return;
+        projectile.hit(enemy, this.game); // stops counting once its pierce is used up
+      });
     }
   }
 
@@ -44,13 +62,13 @@ class CollisionSystem {
   enemiesVsPlayer() {
     const player = this.game.player;
     const padding = GameConfig.combat.contactPadding;
-    for (const enemy of this.game.enemies) {
-      if (enemy.dead) continue;
+    this.grid.query(player.x, player.y, player.radius + this.maxEnemyRadius + padding, (enemy) => {
+      if (enemy.dead) return;
       const touchDistance = player.radius + enemy.radius + padding;
       const distanceSq = MathUtils.distanceSquared(player.x, player.y, enemy.x, enemy.y);
       if (distanceSq <= touchDistance * touchDistance) player.takeDamage(enemy.damage, this.game);
       CollisionSystem.pushApart(enemy, player, 1, 0);
-    }
+    });
   }
 
   /**
@@ -58,15 +76,14 @@ class CollisionSystem {
    * instead of stacking. Bigger enemies move less (a boss shoves slimes aside).
    */
   separateEnemies() {
-    const enemies = this.game.enemies;
     const strength = GameConfig.combat.enemySeparation;
-    for (let i = 0; i < enemies.length; i++) {
-      for (let j = i + 1; j < enemies.length; j++) {
-        const a = enemies[i];
-        const b = enemies[j];
+    for (const a of this.game.enemies) {
+      if (a.dead) continue;
+      this.grid.query(a.x, a.y, a.radius + this.maxEnemyRadius, (b) => {
+        if (b.id <= a.id || b.dead) return; // handle each pair only once
         const total = a.radius + b.radius;
         CollisionSystem.pushApart(a, b, strength * (b.radius / total), strength * (a.radius / total));
-      }
+      });
     }
   }
 
@@ -75,6 +92,8 @@ class CollisionSystem {
     const { player, pickups } = this.game;
     if (player.isDead()) return;
     for (const pickup of pickups) {
+      // A chest may have just opened its screen: leave the other pickups for later.
+      if (this.game.state !== GameState.PLAYING) return;
       if (pickup.dead) continue;
       const reach = player.pickupRadius + pickup.radius;
       if (MathUtils.distanceSquared(player.x, player.y, pickup.x, pickup.y) < reach * reach) {
@@ -115,20 +134,19 @@ class CollisionSystem {
 
   /** Calls fn(enemy) for every living enemy whose circle overlaps the circle (x, y, radius). */
   forEachEnemyInRadius(x, y, radius, fn) {
-    for (const enemy of this.game.enemies) {
-      if (enemy.dead) continue;
+    this.grid.query(x, y, radius + this.maxEnemyRadius, (enemy) => {
+      if (enemy.dead) return;
       const reach = radius + enemy.radius;
       if (MathUtils.distanceSquared(x, y, enemy.x, enemy.y) < reach * reach) fn(enemy);
-    }
+    });
   }
 
   anyEnemyInRadius(x, y, radius) {
-    for (const enemy of this.game.enemies) {
-      if (enemy.dead) continue;
-      const reach = radius + enemy.radius;
-      if (MathUtils.distanceSquared(x, y, enemy.x, enemy.y) < reach * reach) return true;
-    }
-    return false;
+    let found = false;
+    this.forEachEnemyInRadius(x, y, radius, () => {
+      found = true;
+    });
+    return found;
   }
 
   /** Up to `count` living enemies closest to (x, y), nearest first, within maxDistance. */

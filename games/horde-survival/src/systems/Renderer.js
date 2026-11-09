@@ -27,7 +27,7 @@ class Renderer {
     // Enemies lower on screen are drawn later, so they appear in front.
     enemies.sort((a, b) => a.y - b.y);
     for (const enemy of enemies) {
-      if (enemy.isVisible(camera)) enemy.render(ctx, sprites);
+      if (enemy.isVisible(camera)) enemy.render(ctx, sprites, this.game);
     }
 
     // The player is always drawn on top of enemies, so you never lose sight of yourself.

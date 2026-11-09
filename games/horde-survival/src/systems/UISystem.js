@@ -10,6 +10,8 @@ class UISystem {
     this.shopScreen = new ShopScreen(game);
     this.levelUpMenu = new LevelUpMenu(game);
     this.chestScreen = new ChestScreen(game);
+    this.pauseScreen = new PauseScreen(game);
+    this.showDebugPanel = false; // F3 or ` toggles it
     this.gameOverScreen = new GameOverScreen(game);
     this.lowHealthVignette = this.createVignette();
     this.reset();
@@ -65,9 +67,11 @@ class UISystem {
       this.renderHud(ctx);
       if (state === GameState.LEVEL_UP) this.levelUpMenu.render(ctx);
       if (state === GameState.CHEST) this.chestScreen.render(ctx);
+      if (state === GameState.PAUSED) this.pauseScreen.render(ctx);
       if (state === GameState.GAME_OVER) this.gameOverScreen.render(ctx);
     }
     this.renderMuteButton(ctx);
+    if (this.showDebugPanel) this.renderDebugPanel(ctx);
 
     ctx.restore();
   }
@@ -115,6 +119,28 @@ class UISystem {
       const debug = `FPS: ${this.game.fps}   X: ${Math.round(player.x)}   Y: ${Math.round(player.y)}`;
       DrawUtils.text(ctx, debug, width - 40, height - 52, { size: 22, color: '#b9c4bd', align: 'right' });
     }
+  }
+
+  /** Performance numbers and test cheats (toggle with F3 or `). */
+  renderDebugPanel(ctx) {
+    const game = this.game;
+    const coins = game.pickups.filter((pickup) => pickup instanceof Coin).length;
+    const lines = [
+      `FPS ${game.fps}   frame ${game.frameTime.toFixed(2)} ms`,
+      `Enemies ${game.enemies.length} / ${GameConfig.spawn.maxEnemies}`,
+      `Projectiles ${game.projectiles.length}`,
+      `Particles ${game.effects.particles.length} / ${GameConfig.effects.maxParticles}`,
+      `Pickups ${game.pickups.length}  (gems ${game.xpGemCount}, coins ${coins})`,
+      `Spawn rate ${game.waves.spawnRate(game.survivalTime).toFixed(1)}/s   god mode ${game.godMode ? 'ON' : 'off'}`,
+      'Cheats: L level · T +1 min · E elite · B boss · K kill all · G god',
+    ];
+    const x = 30;
+    const top = this.game.height - 90 - lines.length * 30;
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+    ctx.fillRect(x - 10, top - 10, 640, lines.length * 30 + 16);
+    lines.forEach((line, index) => {
+      DrawUtils.text(ctx, line, x, top + index * 30, { size: 22, color: index === lines.length - 1 ? '#ffd166' : '#d7f5d0' });
+    });
   }
 
   /** Pulsing red edges when HP is low: noticeable, but the middle stays clear. */

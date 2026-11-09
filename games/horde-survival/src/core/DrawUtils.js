@@ -3,12 +3,24 @@
  * so everything draws sprites, shadows, bars and text the same way.
  */
 const DrawUtils = {
-  /** Soft oval shadow on the ground. */
+  /** Soft oval shadow on the ground (a ready-made picture: faster than drawing an ellipse). */
   shadow(ctx, x, y, width, alpha = 0.35) {
-    ctx.fillStyle = `rgba(0, 0, 0, ${alpha})`;
+    if (!DrawUtils.shadowImage) DrawUtils.shadowImage = DrawUtils.createShadowImage();
+    ctx.globalAlpha = alpha;
+    ctx.drawImage(DrawUtils.shadowImage, x - width, y - width * 0.35, width * 2, width * 0.7);
+    ctx.globalAlpha = 1;
+  },
+
+  createShadowImage() {
+    const canvas = document.createElement('canvas');
+    canvas.width = 64;
+    canvas.height = 22;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#000000';
     ctx.beginPath();
-    ctx.ellipse(x, y, width, width * 0.35, 0, 0, Math.PI * 2);
+    ctx.ellipse(32, 11, 31, 10.5, 0, 0, Math.PI * 2);
     ctx.fill();
+    return canvas;
   },
 
   /**
@@ -16,11 +28,19 @@ const DrawUtils = {
    * facing = -1 mirrors it. scaleX / scaleY squash or stretch it around the feet.
    */
   character(ctx, image, x, y, size, facing = 1, scaleX = 1, scaleY = 1, alpha = 1) {
+    const sprite = SpriteCache.get(image, size, facing < 0); // already shrunk (and mirrored)
+    const drawSize = sprite.width;
+
+    // Fast path: no squash, no fade -> a plain copy at whole pixels (the cheapest kind of draw).
+    if (scaleX === 1 && scaleY === 1 && alpha === 1) {
+      ctx.drawImage(sprite, Math.round(x - drawSize / 2), Math.round(y - drawSize / 2));
+      return;
+    }
     ctx.save();
     ctx.globalAlpha = alpha;
     ctx.translate(x, y + size / 2); // pivot at the feet
-    ctx.scale(facing * scaleX, scaleY);
-    ctx.drawImage(image, -size / 2, -size, size, size);
+    ctx.scale(scaleX, scaleY);
+    ctx.drawImage(sprite, -drawSize / 2, -drawSize, drawSize, drawSize);
     ctx.restore();
   },
 
@@ -29,7 +49,7 @@ const DrawUtils = {
     ctx.save();
     ctx.translate(x, y);
     ctx.rotate(rotation);
-    ctx.drawImage(image, -size / 2, -size / 2, size, size);
+    ctx.drawImage(SpriteCache.get(image, size), -size / 2, -size / 2, size, size);
     ctx.restore();
   },
 

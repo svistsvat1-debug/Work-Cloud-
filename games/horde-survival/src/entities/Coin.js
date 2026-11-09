@@ -21,6 +21,6 @@ class Coin extends Pickup {
     // A spinning coin: squeeze it horizontally back and forth.
     const width = size * Math.max(0.15, Math.abs(Math.cos(this.bobTime * 3)));
     DrawUtils.shadow(ctx, this.x, this.y + size * 0.55, size * 0.3, 0.25);
-    ctx.drawImage(sprites.coin, this.x - width / 2, this.y - size / 2 + bob, width, size);
+    ctx.drawImage(SpriteCache.get(sprites.coin, size), this.x - width / 2, this.y - size / 2 + bob, width, size);
   }
 }

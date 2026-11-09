@@ -66,15 +66,17 @@ class PulseWeapon extends Weapon {
     const player = this.game.player;
     const ringColor = this.definition.ringColor || '#ffe27a';
     const fillColor = this.definition.fillColor || '#fff1b8';
-    if (this.isEvolved) ctx.globalCompositeOperation = 'lighter'; // evolved light glows
     for (const pulse of this.pulses) {
       const fadeProgress = Math.max(0, pulse.time - this.stats.expandTime) / this.fadeTime;
       const alpha = 1 - fadeProgress;
+      ctx.globalCompositeOperation = 'source-over';
       ctx.globalAlpha = alpha * 0.16;
       ctx.fillStyle = fillColor;
       ctx.beginPath();
       ctx.arc(player.x, player.y, pulse.radius, 0, Math.PI * 2);
       ctx.fill();
+      // Evolved rings glow (additive light); only the thin rings, not the big fill, to stay fast.
+      if (this.isEvolved) ctx.globalCompositeOperation = 'lighter';
       // A bell's toll: the main ring plus two fainter echo rings behind it.
       ctx.strokeStyle = ringColor;
       [[1, 1, 12], [0.86, 0.45, 7], [0.72, 0.22, 5]].forEach(([scale, strength, width]) => {

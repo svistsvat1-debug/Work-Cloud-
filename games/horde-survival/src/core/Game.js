@@ -3,6 +3,7 @@ const GameState = Object.freeze({
   START: 'start', // title screen
   SHOP: 'shop', // permanent upgrades between runs
   PLAYING: 'playing', // the normal game
+  PAUSED: 'paused', // Esc / P, or the window lost focus
   LEVEL_UP: 'levelup', // the action is paused while the player picks an upgrade
   CHEST: 'chest', // the action is paused while a treasure chest opens
   GAME_OVER: 'gameover', // the player died; the run summary is shown
@@ -52,6 +53,14 @@ class Game {
     // The browser calls loop() without an object, so bind it to this Game.
     this.loop = this.loop.bind(this);
 
+    // Pause automatically when the player switches to another window or tab.
+    window.addEventListener('blur', () => this.pause());
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) this.pause();
+    });
+    this.frameTime = 0; // milliseconds spent on update + render (debug panel)
+    this.godMode = false; // debug cheat
+
     this.startNewRun(); // prepares an empty world...
     this.showStartScreen(); // ...but we begin on the title screen
   }
@@ -83,7 +92,10 @@ class Game {
     this.bossesDefeated = 0;
     this.weaponsEvolved = []; // names of weapons evolved this run
     this.runCoins = ShopDefinitions.startingCoins.perLevel * (permanent.startingCoins || 0);
+    this.xpGemCount = 0;
 
+    this.camera.reset();
+    this.collisions.reset();
     this.spawner.reset();
     this.waves.reset();
     this.weapons.reset(); // also gives the starting weapon
@@ -105,8 +117,10 @@ class Game {
     const dt = Math.min(rawDt, GameConfig.maxDeltaTime);
 
     this.measureFps(rawDt);
+    const workStart = performance.now();
     this.update(dt);
     this.render();
+    this.frameTime = MathUtils.lerp(this.frameTime, performance.now() - workStart, 0.1);
     this.input.endFrame();
 
     requestAnimationFrame(this.loop);
@@ -118,6 +132,7 @@ class Game {
       this.audio.toggleMute();
       this.input.pointer.pressed = false; // the click must not also press something underneath
     }
+    if (this.input.wasPressed('debug')) this.ui.showDebugPanel = !this.ui.showDebugPanel;
 
     switch (this.state) {
       case GameState.START:
@@ -127,7 +142,15 @@ class Game {
         this.ui.shopScreen.update(dt);
         break;
       case GameState.PLAYING:
+        if (this.input.wasPressed('pause')) {
+          this.pause();
+          break;
+        }
+        if (this.ui.showDebugPanel) this.handleDebugKeys();
         this.updatePlaying(dt);
+        break;
+      case GameState.PAUSED:
+        this.ui.pauseScreen.update(dt);
         break;
       case GameState.LEVEL_UP:
         this.ui.levelUpMenu.update(dt); // the world is paused
@@ -165,6 +188,35 @@ class Game {
 
     // Only open the menu while still playing (never on top of the game over screen).
     if (this.state === GameState.PLAYING && this.player.pendingLevelUps > 0) this.openLevelUpMenu();
+  }
+
+  // ---------------------------------------------------------------- Pause and debug
+
+  pause() {
+    if (this.state === GameState.PLAYING) this.state = GameState.PAUSED;
+  }
+
+  resume() {
+    if (this.state === GameState.PAUSED) this.state = GameState.PLAYING;
+  }
+
+  /** "End run" in the pause menu: same as dying (coins are kept). */
+  endRun() {
+    this.player.currentHealth = 0;
+    this.onPlayerDied();
+  }
+
+  /** Test cheats, only while the debug panel (F3) is open. */
+  handleDebugKeys() {
+    const keys = this.input.keysPressed;
+    const player = this.player;
+    if (keys.has('KeyL')) player.addXp(player.xpToNextLevel - player.xp);
+    if (keys.has('KeyT')) this.survivalTime += 60;
+    if (keys.has('KeyE')) this.spawner.spawnGroup('elite', 1, this.waves.scaling(this.survivalTime));
+    if (keys.has('KeyB')) this.spawner.spawnGroup('boss', 1, this.waves.scaling(this.survivalTime));
+    if (keys.has('KeyK')) for (const enemy of this.enemies) enemy.takeDamage(1e9, this);
+    if (keys.has('KeyG')) this.godMode = !this.godMode;
+    if (this.godMode) player.invulnerableTimer = Math.max(player.invulnerableTimer, 0.1);
   }
 
   // ---------------------------------------------------------------- Events
@@ -228,21 +280,24 @@ class Game {
     }
 
     // Too many gems on the ground? Merge into the nearest one instead (no XP is lost).
-    const gems = this.pickups.filter((pickup) => pickup instanceof XPGem);
-    if (gems.length >= config.maxOnGround) {
-      let nearest = gems[0];
+    if (this.xpGemCount >= config.maxOnGround) {
+      let nearest = null;
       let nearestDistanceSq = Infinity;
-      for (const gem of gems) {
-        const distanceSq = MathUtils.distanceSquared(x, y, gem.x, gem.y);
+      for (const pickup of this.pickups) {
+        if (!(pickup instanceof XPGem) || pickup.dead) continue;
+        const distanceSq = MathUtils.distanceSquared(x, y, pickup.x, pickup.y);
         if (distanceSq < nearestDistanceSq) {
-          nearest = gem;
+          nearest = pickup;
           nearestDistanceSq = distanceSq;
         }
       }
-      nearest.addValue(value);
-      return;
+      if (nearest) {
+        nearest.addValue(value);
+        return;
+      }
     }
     this.pickups.push(new XPGem(x, y, value));
+    this.xpGemCount += 1;
   }
 
   /** Elites and bosses always drop a handful of coins; other enemies sometimes drop one. */

@@ -7,6 +7,7 @@ class Enemy extends Entity {
   constructor(type, x, y, scaling = { health: 1, speed: 1 }) {
     const stats = GameConfig.enemies[type];
     super(x, y, stats.radius, stats.drawSize);
+    this.id = Enemy.nextId++; // unique number, used to check each pair of enemies once
     this.type = type;
     this.stats = stats;
     this.speed = stats.speed * scaling.speed;
@@ -78,7 +79,7 @@ class Enemy extends Entity {
     }
   }
 
-  render(ctx, sprites) {
+  render(ctx, sprites, game) {
     const size = this.drawSize;
     const animation = this.stats.animation;
     const wave = Math.sin(this.animTime * animation.speed);
@@ -86,9 +87,13 @@ class Enemy extends Entity {
     let scaleY = 1;
     let liftY = 0;
 
-    // Cheap animation without extra frames:
+    // Cheap animation on top of the frames:
     // slimes squish, bats bob up and down, crawlers wiggle fast, brutes stomp.
-    if (animation.style === 'squish' || animation.style === 'scuttle') {
+    // With a huge crowd the squash is skipped (frames still animate): it keeps drawing fast.
+    const squashAllowed = game.enemies.length <= GameConfig.performance.squashEnemyLimit;
+    if (!squashAllowed) {
+      if (animation.lift) liftY = wave * animation.lift;
+    } else if (animation.style === 'squish' || animation.style === 'scuttle') {
       scaleX = 1 + wave * animation.squash;
       scaleY = 1 - wave * animation.squash;
     } else if (animation.style === 'flap') {
@@ -125,3 +130,5 @@ class Enemy extends Entity {
     );
   }
 }
+
+Enemy.nextId = 0;

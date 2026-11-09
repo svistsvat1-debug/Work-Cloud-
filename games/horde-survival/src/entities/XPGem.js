@@ -22,6 +22,7 @@ class XPGem extends Pickup {
   }
 
   collect(game) {
+    game.xpGemCount -= 1;
     game.player.addXp(this.value);
     const color = this.value >= 10 ? '#ff8a9a' : this.value >= 5 ? '#8affb0' : '#9fe3ff';
     game.effects.sparkle(game.player.x, game.player.y - 20, color, 4);
@@ -32,6 +33,6 @@ class XPGem extends Pickup {
     const size = this.drawSize;
     const bob = Math.sin(this.bobTime * 4) * 4;
     DrawUtils.shadow(ctx, this.x, this.y + size * 0.55, size * 0.28, 0.25);
-    ctx.drawImage(sprites[this.sprite], this.x - size / 2, this.y - size / 2 + bob, size, size);
+    ctx.drawImage(SpriteCache.get(sprites[this.sprite], size), this.x - size / 2, this.y - size / 2 + bob, size, size);
   }
 }

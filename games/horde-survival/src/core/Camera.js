@@ -17,6 +17,14 @@ class Camera {
     this.shakeY = 0;
   }
 
+  /** Stops any shake (a new run starts). */
+  reset() {
+    this.shakeTime = 0;
+    this.shakeStrength = 0;
+    this.shakeX = 0;
+    this.shakeY = 0;
+  }
+
   follow(target) {
     this.x = target.x;
     this.y = target.y;

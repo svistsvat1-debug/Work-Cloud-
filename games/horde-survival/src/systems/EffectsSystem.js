@@ -169,14 +169,14 @@ class EffectsSystem {
     ctx.font = `bold ${config.damageNumberSize}px ${GameConfig.ui.font}`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.lineWidth = 5;
-    ctx.strokeStyle = 'rgba(0, 0, 0, 0.8)';
     for (const number of this.damageNumbers) {
       const progress = number.time / number.duration;
       const easeOut = 1 - (1 - progress) * (1 - progress); // fast at first, then slows down
       const y = number.y - config.damageNumberRise * easeOut;
       ctx.globalAlpha = progress < 0.6 ? 1 : 1 - (progress - 0.6) / 0.4;
-      ctx.strokeText(number.text, number.x, y);
+      // A dark copy slightly offset works as an outline and is much cheaper than strokeText.
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.85)';
+      ctx.fillText(number.text, number.x + 2, y + 2);
       ctx.fillStyle = number.color;
       ctx.fillText(number.text, number.x, y);
     }
