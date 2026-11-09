@@ -98,7 +98,7 @@ class WaveDirector {
     scaling.health *= 1 + config.healthGrowthPerBoss * (this.bossCount - 1); // each boss is tougher
     scaling.speed = 1; // bosses stay slow
     this.game.spawner.spawnGroup('boss', 1, scaling);
-    this.game.ui.showBanner(`BOSS: ${GameConfig.enemies.boss.name}`, 'Defeat it to win a treasure chest!', '#d9a2ff');
+    this.game.ui.showBanner(`BOSS: ${GameConfig.enemies.boss.name}`, 'The cracked bell wakes. Silence it to win a treasure chest!', '#d9a2ff');
     this.game.audio.play('bossToll');
     this.nextBossTime = time + config.interval;
   }
@@ -107,7 +107,7 @@ class WaveDirector {
     if (time < this.nextEliteTime) return;
     const config = GameConfig.elites;
     this.game.spawner.spawnGroup('elite', 1, this.scaling(time));
-    this.game.ui.showBanner('An Elite approaches!', 'A strong enemy with a big reward', '#ff7a7a');
+    this.game.ui.showBanner('A Hush Knight approaches!', 'A strong enemy with a big reward', '#ff7a7a');
     const interval = Math.max(config.minInterval, config.interval - (time / 60) * config.intervalDecreasePerMinute);
     this.nextEliteTime = time + interval;
   }

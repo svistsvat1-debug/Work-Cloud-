@@ -1,5 +1,5 @@
 /**
- * Fires projectiles at the nearest enemies (Arcane Bolt).
+ * Fires projectiles at the nearest enemies (Chime Bolt, evolved: Carillon Storm).
  */
 class ProjectileWeapon extends Weapon {
   fire() {

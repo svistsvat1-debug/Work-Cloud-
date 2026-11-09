@@ -24,7 +24,7 @@ const GameConfig = {
   maxDeltaTime: 0.05,
 
   // Name of the localStorage entry that keeps coins, upgrades and settings.
-  saveKey: 'horde-survival-save-v1',
+  saveKey: 'hushbreaker-save-v1',
 
   // ---------------------------------------------------------------- Player
   player: {
@@ -103,7 +103,7 @@ const GameConfig = {
   //   chestChance: chance to drop a treasure chest (chests arrive in a later step)
   enemies: {
     slime: {
-      name: 'Slime',
+      name: 'Hushling',
       maxHealth: 20,
       speed: 70,
       damage: 10, // contact damage to the player
@@ -118,7 +118,7 @@ const GameConfig = {
       color: '#9be35a',
     },
     bat: {
-      name: 'Bat',
+      name: 'Mutewing',
       maxHealth: 10,
       speed: 145,
       damage: 6,
@@ -133,7 +133,7 @@ const GameConfig = {
       color: '#b98af0',
     },
     crawler: {
-      name: 'Crawler',
+      name: 'Gloamcrawler',
       maxHealth: 24,
       speed: 105,
       damage: 9,
@@ -148,7 +148,7 @@ const GameConfig = {
       color: '#ef8a3c',
     },
     brute: {
-      name: 'Brute',
+      name: 'Muzzled Brute',
       maxHealth: 110,
       speed: 52,
       damage: 16,
@@ -163,7 +163,7 @@ const GameConfig = {
       color: '#a8896a',
     },
     elite: {
-      name: 'Elite',
+      name: 'Hush Knight',
       maxHealth: 320,
       speed: 82,
       damage: 20,
@@ -181,7 +181,7 @@ const GameConfig = {
       coins: [5, 10], // always drops this many coins (min, max)
     },
     boss: {
-      name: 'Dread Colossus',
+      name: 'The Unrung',
       maxHealth: 800,
       speed: 58, // slightly slower than normal enemies
       damage: 25,
@@ -348,8 +348,8 @@ const GameConfig = {
 
   // ---------------------------------------------------------------- UI
   ui: {
-    title: 'Horde Survival',
-    tagline: 'Survive the endless horde',
+    title: 'HUSHBREAKER',
+    tagline: 'The last Bellwarden against the living silence',
     // Picture behind the start screen and the shop. null = a background drawn with code.
     menuBackgroundImage: 'assets/images/menu-background.jpg',
     font: 'system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif',

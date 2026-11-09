@@ -16,12 +16,12 @@
  */
 const WeaponDefinitions = {
   bolt: {
-    name: 'Arcane Bolt',
-    description: 'Fires a magic bolt at the nearest enemy.',
+    name: 'Chime Bolt',
+    description: 'A focused chime of sound that seeks the nearest Hushborn.',
     tagline: 'Strong single-target damage',
     behavior: 'projectile',
     icon: 'iconBolt',
-    projectileSprite: 'arcaneBolt',
+    projectileSprite: 'chimeBolt',
     amountName: 'bolt',
     weight: 1,
     base: {
@@ -49,12 +49,12 @@ const WeaponDefinitions = {
   },
 
   blade: {
-    name: 'Orbiting Blade',
-    description: 'Blades circle around you and cut every enemy they touch.',
+    name: 'Peal Blades',
+    description: 'Bell-bronze blades ring around you and cut every enemy they touch.',
     tagline: 'Close-range defense',
     behavior: 'orbit',
     icon: 'iconBlade',
-    sprite: 'orbitBlade',
+    sprite: 'pealBlade',
     amountName: 'blade',
     weight: 1,
     base: {
@@ -81,8 +81,8 @@ const WeaponDefinitions = {
   },
 
   pulse: {
-    name: 'Holy Pulse',
-    description: 'Releases a burst of holy light around you every few seconds.',
+    name: 'Toll Wave',
+    description: 'Every few seconds a great bell tolls, and its wave hurls the silence back.',
     tagline: 'Area damage that pushes enemies away',
     behavior: 'pulse',
     icon: 'iconPulse',
@@ -107,8 +107,8 @@ const WeaponDefinitions = {
   },
 
   lightning: {
-    name: 'Lightning Mark',
-    description: 'Marks random enemies on screen, then lightning strikes them.',
+    name: 'Thunder Peal',
+    description: 'Marks random Hushborn on screen, then the storm answers with lightning.',
     tagline: 'Hits anywhere on screen',
     behavior: 'strike',
     icon: 'iconLightning',
@@ -140,13 +140,13 @@ const WeaponDefinitions = {
 // They have no levels: an evolved weapon is already at its peak.
 // Extra fields are read by the behavior classes (heal, chains, colors...).
 Object.assign(WeaponDefinitions, {
-  arcaneStorm: {
-    name: 'Arcane Storm',
-    description: 'A rapid storm of piercing arcane bolts.',
+  carillonStorm: {
+    name: 'Carillon Storm',
+    description: 'A whole carillon rings at once: a rapid storm of piercing chimes.',
     tagline: 'Fires faster and pierces whole lines of enemies',
     behavior: 'projectile',
-    icon: 'iconArcaneStorm',
-    projectileSprite: 'stormBolt',
+    icon: 'iconCarillonStorm',
+    projectileSprite: 'carillonBolt',
     glowSprite: 'glowPink', // evolved weapons glow
     amountName: 'bolt',
     isEvolution: true,
@@ -165,13 +165,13 @@ Object.assign(WeaponDefinitions, {
     levels: [],
   },
 
-  celestialBlades: {
-    name: 'Celestial Blades',
-    description: 'A ring of golden blades that shreds anything nearby.',
+  choirOfBlades: {
+    name: 'Choir of Blades',
+    description: 'A singing halo of golden blades that shreds anything nearby.',
     tagline: 'More blades, bigger, much stronger',
     behavior: 'orbit',
-    icon: 'iconCelestialBlades',
-    sprite: 'celestialBlade',
+    icon: 'iconChoirOfBlades',
+    sprite: 'choirBlade',
     glowSprite: 'glowGold',
     amountName: 'blade',
     isEvolution: true,
@@ -190,12 +190,12 @@ Object.assign(WeaponDefinitions, {
     levels: [],
   },
 
-  divineNova: {
-    name: 'Divine Nova',
-    description: 'A huge, lasting wave of holy light that heals you as it hits.',
+  cathedralToll: {
+    name: 'Cathedral Toll',
+    description: 'The cathedral bell answers: a huge, lasting wave that heals you as it hits.',
     tagline: 'Bigger pulse, heals you on hit',
     behavior: 'pulse',
-    icon: 'iconDivineNova',
+    icon: 'iconCathedralToll',
     isEvolution: true,
     ringColor: '#fff4c2',
     fillColor: '#ffe9a0',
@@ -212,12 +212,12 @@ Object.assign(WeaponDefinitions, {
     levels: [],
   },
 
-  thunderCrown: {
-    name: 'Thunder Crown',
-    description: 'A crown of storms: lightning rains down and jumps between enemies.',
+  stormKnell: {
+    name: 'Storm Knell',
+    description: 'A knell of thunder: lightning rains down and jumps between the Hushborn.',
     tagline: 'More strikes that chain to nearby enemies',
     behavior: 'strike',
-    icon: 'iconThunderCrown',
+    icon: 'iconStormKnell',
     amountName: 'strike',
     isEvolution: true,
     glowRGB: '255, 214, 102', // golden lightning instead of blue

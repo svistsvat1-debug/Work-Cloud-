@@ -12,7 +12,7 @@
  */
 const ShopDefinitions = {
   maxHealth: {
-    name: 'Toughness',
+    name: 'Tempered Armor',
     description: '+5 max HP per level',
     stat: 'maxHealthBonus',
     perLevel: 5,
@@ -20,10 +20,10 @@ const ShopDefinitions = {
     maxLevel: 10,
     baseCost: 40,
     costGrowth: 1.35,
-    icon: 'iconIronHeart',
+    icon: 'iconBronzeHeart',
   },
   damage: {
-    name: 'Training',
+    name: 'Heavier Bells',
     description: '+5% damage per level',
     stat: 'damageBonus',
     perLevel: 0.05,
@@ -31,10 +31,10 @@ const ShopDefinitions = {
     maxLevel: 10,
     baseCost: 60,
     costGrowth: 1.4,
-    icon: 'iconPowerStone',
+    icon: 'iconClapper',
   },
   moveSpeed: {
-    name: 'Agility',
+    name: "Pilgrim's Stride",
     description: '+3% move speed per level',
     stat: 'moveSpeedBonus',
     perLevel: 0.03,
@@ -42,10 +42,10 @@ const ShopDefinitions = {
     maxLevel: 5,
     baseCost: 50,
     costGrowth: 1.4,
-    icon: 'iconWindBoots',
+    icon: 'iconBoots',
   },
   xpGain: {
-    name: 'Wisdom',
+    name: 'Keen Ear',
     description: '+5% XP gain per level',
     stat: 'xpBonus',
     perLevel: 0.05,
@@ -56,7 +56,7 @@ const ShopDefinitions = {
     icon: 'iconXpGain',
   },
   pickupRange: {
-    name: 'Attraction',
+    name: 'Resonance',
     description: '+5% pickup range per level',
     stat: 'magnetBonus',
     perLevel: 0.05,
@@ -64,10 +64,10 @@ const ShopDefinitions = {
     maxLevel: 5,
     baseCost: 40,
     costGrowth: 1.35,
-    icon: 'iconMagnetCharm',
+    icon: 'iconTuningFork',
   },
   startingCoins: {
-    name: 'Lucky Purse',
+    name: 'Tithe Purse',
     description: '+10 coins at the start of every run',
     stat: 'startingCoins',
     perLevel: 10,

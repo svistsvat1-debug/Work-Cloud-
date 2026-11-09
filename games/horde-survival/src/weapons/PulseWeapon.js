@@ -1,9 +1,9 @@
 /**
  * A ring of light that grows around the player and hits every enemy it
- * passes, pushing them away (Holy Pulse). It only fires when an enemy is
+ * passes, pushing them away (Toll Wave). It only fires when an enemy is
  * close enough to be hit.
  *
- * Optional stats used by evolved versions (Divine Nova):
+ * Optional stats used by evolved versions (Cathedral Toll):
  *   healPerHit / maxHealPerPulse  heal the player for each enemy hit
  *   fadeTime                      how long the light lingers after growing
  * Optional definition fields: ringColor, fillColor.
@@ -53,7 +53,7 @@ class PulseWeapon extends Weapon {
     ArrayUtils.removeWhere(this.pulses, (pulse) => pulse.time >= stats.expandTime + this.fadeTime);
   }
 
-  /** Divine Nova: each enemy hit heals a little, up to maxHealPerPulse per pulse. */
+  /** Cathedral Toll: each enemy hit heals a little, up to maxHealPerPulse per pulse. */
   healFromHit(pulse) {
     const { healPerHit, maxHealPerPulse } = this.stats;
     if (!healPerHit || pulse.healedTotal >= maxHealPerPulse) return;

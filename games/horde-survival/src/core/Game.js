@@ -271,7 +271,7 @@ class Game {
   dropXp(x, y, baseValue) {
     const config = GameConfig.xpGems;
     let value = baseValue;
-    const luck = 1 + this.player.stats.luck; // Clover Coin makes valuable gems more likely
+    const luck = 1 + this.player.stats.luck; // Wishing Chime makes valuable gems more likely
     for (const bonus of config.bonusDrops) {
       if (Math.random() < bonus.chance * luck) {
         value = Math.max(value, bonus.value);

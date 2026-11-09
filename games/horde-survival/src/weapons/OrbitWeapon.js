@@ -1,5 +1,5 @@
 /**
- * Blades that circle around the player and damage enemies they touch (Orbiting Blade).
+ * Blades that circle around the player and damage enemies they touch (Peal Blades, evolved: Choir of Blades).
  * It has no cooldown: the blades are always there. Each enemy can only be
  * hit once every `hitCooldown` seconds, otherwise it would be hit every frame.
  */

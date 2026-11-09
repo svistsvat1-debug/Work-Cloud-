@@ -12,10 +12,10 @@ const ProceduralSprites = {
       ...CharacterSprites.createAll(), // player and enemies: arrays of animation frames
       chest: this.createChest(false),
       chestOpen: this.createChest(true),
-      arcaneBolt: this.createBolt(),
-      stormBolt: this.createBolt({ light: '255, 230, 250', mid: '255, 120, 225', edge: '170, 70, 255' }),
-      orbitBlade: this.createOrbitBlade(),
-      celestialBlade: this.createOrbitBlade({ glow: '255, 240, 190', steelLight: '#ffffff', steelDark: '#ffd166', guard: '#ffffff', grip: '#e0b84a' }),
+      chimeBolt: this.createBolt(),
+      carillonBolt: this.createBolt({ light: '255, 230, 250', mid: '255, 120, 225', edge: '170, 70, 255' }),
+      pealBlade: this.createOrbitBlade(),
+      choirBlade: this.createOrbitBlade({ glow: '255, 240, 190', steelLight: '#ffffff', steelDark: '#ffd166', guard: '#ffffff', grip: '#e0b84a' }),
       ...this.createEvolvedIcons(),
       gemBlue: this.createGem('#4fc3ff', '#d2f1ff', '#1b5f99'),
       gemGreen: this.createGem('#4fe07a', '#d4ffdf', '#1d7a3a'),
@@ -282,29 +282,36 @@ const ProceduralSprites = {
   /** Icons for passive items and fallback rewards: a colored badge with a white symbol. */
   createPassiveIcons() {
     return {
-      iconSpellbook: this.createIcon('#8e5bd6', (ctx) => {
-        // An open book
+      iconMetronome: this.createIcon('#8e5bd6', (ctx) => {
+        // A metronome: tall body with a swinging arm and weight
         ctx.beginPath();
-        ctx.moveTo(91, 62);
-        ctx.quadraticCurveTo(62, 40, 32, 46);
-        ctx.lineTo(32, 136);
-        ctx.quadraticCurveTo(62, 130, 91, 150);
-        ctx.quadraticCurveTo(120, 130, 150, 136);
-        ctx.lineTo(150, 46);
-        ctx.quadraticCurveTo(120, 40, 91, 62);
+        ctx.moveTo(56, 152);
+        ctx.lineTo(126, 152);
+        ctx.lineTo(104, 30);
+        ctx.lineTo(78, 30);
         ctx.closePath();
-      }),
-      iconPowerStone: this.createIcon('#d9534f', (ctx) => {
-        // A cut gemstone
+      }, false, (ctx) => {
+        ctx.lineWidth = 7;
         ctx.beginPath();
-        ctx.moveTo(91, 30);
-        ctx.lineTo(140, 66);
-        ctx.lineTo(122, 148);
-        ctx.lineTo(60, 148);
-        ctx.lineTo(42, 66);
-        ctx.closePath();
+        ctx.moveTo(91, 136);
+        ctx.lineTo(124, 50);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(116, 72, 9, 0, Math.PI * 2);
+        ctx.fill();
       }),
-      iconWindBoots: this.createIcon('#4cae4c', (ctx) => {
+      iconClapper: this.createIcon('#d9534f', (ctx) => {
+        // A heavy bell clapper: a thick rod with a big ball at the end
+        ctx.beginPath();
+        ctx.moveTo(52, 40);
+        ctx.lineTo(66, 30);
+        ctx.lineTo(116, 104);
+        ctx.lineTo(100, 114);
+        ctx.closePath();
+        ctx.moveTo(146, 128);
+        ctx.arc(122, 128, 24, 0, Math.PI * 2);
+      }),
+      iconBoots: this.createIcon('#4cae4c', (ctx) => {
         // A boot with two speed lines behind it
         ctx.beginPath();
         ctx.moveTo(74, 36);
@@ -317,28 +324,48 @@ const ProceduralSprites = {
         ctx.rect(22, 70, 40, 12);
         ctx.rect(30, 98, 32, 12);
       }),
-      iconMagnetCharm: this.createIcon('#7e57c2', (ctx) => {
-        // Horseshoe magnet: an upside-down U
+      iconTuningFork: this.createIcon('#7e57c2', (ctx) => {
+        // A tuning fork: two prongs joined by a curve, and a handle
         ctx.beginPath();
-        ctx.moveTo(40, 140);
-        ctx.lineTo(40, 88);
-        ctx.arc(91, 88, 51, Math.PI, 0);
-        ctx.lineTo(142, 140);
-        ctx.lineTo(112, 140);
-        ctx.lineTo(112, 88);
-        ctx.arc(91, 88, 21, 0, Math.PI, true);
-        ctx.lineTo(70, 140);
+        ctx.moveTo(56, 28);
+        ctx.lineTo(74, 28);
+        ctx.lineTo(74, 86);
+        ctx.arc(91, 86, 17, Math.PI, 0, true);
+        ctx.lineTo(108, 28);
+        ctx.lineTo(126, 28);
+        ctx.lineTo(126, 86);
+        ctx.arc(91, 86, 35, 0, Math.PI);
         ctx.closePath();
-      }),
-      iconIronHeart: this.createIcon('#7d8aa0', (ctx) => this.heart(ctx, 91, 96, 52)),
-      iconCloverCoin: this.createIcon('#3fae5a', (ctx) => {
-        // Four-leaf clover: four round leaves and a stem
-        ctx.beginPath();
-        for (const [dx, dy] of [[-1, -1], [1, -1], [-1, 1], [1, 1]]) {
-          ctx.moveTo(91 + dx * 24 + 26, 84 + dy * 24);
-          ctx.arc(91 + dx * 24, 84 + dy * 24, 26, 0, Math.PI * 2);
+        ctx.rect(83, 118, 16, 42);
+      }, false, (ctx) => {
+        ctx.lineWidth = 4;
+        for (const r of [16, 26]) {
+          ctx.beginPath();
+          ctx.arc(91, 50, r + 38, -0.5, 0.5); // humming waves
+          ctx.stroke();
         }
-        ctx.rect(85, 110, 12, 50);
+      }),
+      iconBronzeHeart: this.createIcon('#7d8aa0', (ctx) => this.heart(ctx, 91, 96, 52)),
+      iconWishingChime: this.createIcon('#3fae5a', (ctx) => {
+        // A small wishing bell with a ring on top
+        ctx.beginPath();
+        ctx.moveTo(40, 132);
+        ctx.quadraticCurveTo(46, 120, 50, 92);
+        ctx.quadraticCurveTo(56, 50, 91, 48);
+        ctx.quadraticCurveTo(126, 50, 132, 92);
+        ctx.quadraticCurveTo(136, 120, 142, 132);
+        ctx.closePath();
+        ctx.moveTo(103, 36);
+        ctx.arc(91, 36, 12, 0, Math.PI * 2);
+        ctx.moveTo(101, 148);
+        ctx.arc(91, 148, 10, 0, Math.PI * 2);
+      }, false, (ctx) => {
+        // a four-leaf clover stamped on the bell
+        for (const [dx, dy] of [[-7, -7], [7, -7], [-7, 7], [7, 7]]) {
+          ctx.beginPath();
+          ctx.arc(91 + dx, 100 + dy, 7, 0, Math.PI * 2);
+          ctx.fill();
+        }
       }),
       iconHeal: this.createIcon('#2fa86f', (ctx) => {
         ctx.beginPath();
@@ -364,7 +391,7 @@ const ProceduralSprites = {
     };
   },
 
-  /** A spinning dagger for the Orbiting Blade (points up; the game rotates it). */
+  /** A spinning dagger for the Peal Blades (points up; the game rotates it). */
   createOrbitBlade(colors = { glow: '255, 214, 140', steelLight: '#fbf1d0', steelDark: '#c9963f', guard: '#2d8084', grip: '#164447' }) {
     const canvas = this.createCanvas();
     const ctx = canvas.getContext('2d');
@@ -473,7 +500,7 @@ const ProceduralSprites = {
   /** Icons for evolved weapons: richer colors and a golden inner frame. */
   createEvolvedIcons() {
     return {
-      iconArcaneStorm: this.createIcon('#b8329c', (ctx) => {
+      iconCarillonStorm: this.createIcon('#b8329c', (ctx) => {
         // Two bolts
         ctx.beginPath();
         for (const [x, y] of [[118, 62], [92, 110]]) {
@@ -485,9 +512,9 @@ const ProceduralSprites = {
           ctx.closePath();
         }
       }, true),
-      iconCelestialBlades: this.createIcon('#c9930f', (ctx) => this.star(ctx, 91, 91, 6, 64, 18), true),
-      iconDivineNova: this.createIcon('#e0a93a', (ctx) => this.star(ctx, 91, 91, 12, 66, 34), true),
-      iconThunderCrown: this.createIcon('#3657b8', (ctx) => {
+      iconChoirOfBlades: this.createIcon('#c9930f', (ctx) => this.star(ctx, 91, 91, 6, 64, 18), true),
+      iconCathedralToll: this.createIcon('#e0a93a', (ctx) => this.star(ctx, 91, 91, 12, 66, 34), true),
+      iconStormKnell: this.createIcon('#3657b8', (ctx) => {
         // A crown with a lightning bolt on it
         ctx.beginPath();
         ctx.moveTo(34, 140);
@@ -506,7 +533,7 @@ const ProceduralSprites = {
    * Badge + symbol. drawSymbol(ctx) only builds a path; it is filled white with a dark outline.
    * evolved = true adds a golden inner frame.
    */
-  createIcon(color, drawSymbol, evolved = false) {
+  createIcon(color, drawSymbol, evolved = false, details = null) {
     const canvas = this.createCanvas();
     const ctx = canvas.getContext('2d');
 
@@ -533,6 +560,12 @@ const ProceduralSprites = {
     drawSymbol(ctx);
     ctx.stroke();
     ctx.fill();
+    if (details) {
+      // Small dark details on top of the white symbol
+      ctx.fillStyle = color;
+      ctx.strokeStyle = color;
+      details(ctx);
+    }
     return canvas;
   },
 

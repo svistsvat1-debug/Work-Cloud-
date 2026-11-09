@@ -15,7 +15,7 @@ class Player extends Entity {
     this.xp = 0;
     this.xpToNextLevel = Player.xpRequiredFor(1);
     this.pendingLevelUps = 0; // level-ups earned but not chosen yet
-    this.passiveLevels = {}; // passive id -> level, e.g. { powerStone: 2 }
+    this.passiveLevels = {}; // passive id -> level, e.g. { bronzeClapper: 2 }
     this.recalculateStats();
 
     this.facing = 1; // 1 = looking right, -1 = looking left

@@ -1,8 +1,8 @@
 /**
- * Marks random enemies on screen, then lightning strikes each mark (Lightning Mark).
+ * Marks random enemies on screen, then lightning strikes each mark (Thunder Peal).
  * The mark follows its target for a moment, so the strike is easy to read.
  *
- * Optional stats used by evolved versions (Thunder Crown):
+ * Optional stats used by evolved versions (Storm Knell):
  *   chainChance / chainCount / chainRange  lightning jumps to nearby enemies
  * Optional definition fields: glowRGB ("r, g, b"), markColor.
  */
@@ -49,7 +49,7 @@ class StrikeWeapon extends Weapon {
     if (this.stats.chainChance) this.chain(x, y, hit);
   }
 
-  /** Thunder Crown: from the strike, lightning may jump to the nearest enemies not hit yet. */
+  /** Storm Knell: from the strike, lightning may jump to the nearest enemies not hit yet. */
   chain(x, y, alreadyHit) {
     const { chainChance, chainCount, chainRange } = this.stats;
     let fromX = x;
