@@ -1,9 +1,12 @@
+/** The states the game can be in. Using constants avoids typos like 'gamover'. */
+const GameState = Object.freeze({
+  PLAYING: 'playing', // the normal game
+  GAME_OVER: 'gameover', // the player died; the world is frozen until restart
+});
+
 /**
  * Game owns everything: the main loop, the world objects and the systems.
- *
- * The game is always in one state:
- *   'playing'  - the normal game
- *   'gameover' - the player died; the world is frozen until restart
+ * It decides the order things happen in each frame; the systems do the actual work.
  */
 class Game {
   constructor(canvas) {
@@ -17,12 +20,16 @@ class Game {
     this.sprites = ProceduralSprites.createAll();
 
     // Systems: each one has a single job.
-    this.spawner = new Spawner(this);
-    this.weapons = new WeaponSystem(this);
-    this.collisions = new CollisionSystem(this);
-    this.effects = new EffectsSystem(this);
-    this.renderer = new Renderer(this);
-    this.ui = new UISystem(this);
+    this.spawner = new Spawner(this); // creates enemies
+    this.weapons = new WeaponSystem(this); // fires at enemies
+    this.collisions = new CollisionSystem(this); // checks what touches what
+    this.effects = new EffectsSystem(this); // puffs and damage numbers
+    this.renderer = new Renderer(this); // draws the world
+    this.ui = new UISystem(this); // draws the HUD and menus
+
+    // World objects
+    this.enemies = [];
+    this.projectiles = [];
 
     // Frame timing
     this.lastTimestamp = null;
@@ -43,16 +50,17 @@ class Game {
   /** Resets the world for a fresh attempt. */
   startNewRun() {
     this.player = new Player(0, 0);
-    this.enemies = [];
-    this.projectiles = [];
+    this.enemies.length = 0;
+    this.projectiles.length = 0;
     this.survivalTime = 0;
     this.kills = 0;
 
     this.spawner.reset();
     this.weapons.reset();
     this.effects.reset();
+    this.ui.reset();
     this.camera.follow(this.player);
-    this.state = 'playing';
+    this.state = GameState.PLAYING;
   }
 
   /** The main loop: runs once per screen refresh (usually 60 times per second). */
@@ -72,7 +80,7 @@ class Game {
   }
 
   update(dt) {
-    if (this.state === 'gameover') {
+    if (this.state === GameState.GAME_OVER) {
       // The world stays frozen. Only listen for a restart.
       if (this.input.wasPressed('restart') || this.input.wasClicked(this.ui.restartButton)) {
         this.startNewRun();
@@ -93,7 +101,10 @@ class Game {
 
     this.collisions.update();
     this.effects.update(dt);
-    this.removeDeadObjects();
+    this.ui.update(dt);
+
+    ArrayUtils.removeDead(this.enemies);
+    ArrayUtils.removeDead(this.projectiles);
   }
 
   /** Called by an enemy the moment it dies. */
@@ -104,12 +115,7 @@ class Game {
 
   /** Called by the player when health reaches 0. */
   onPlayerDied() {
-    this.state = 'gameover';
-  }
-
-  removeDeadObjects() {
-    this.enemies = this.enemies.filter((enemy) => !enemy.dead);
-    this.projectiles = this.projectiles.filter((projectile) => !projectile.dead);
+    this.state = GameState.GAME_OVER;
   }
 
   render() {

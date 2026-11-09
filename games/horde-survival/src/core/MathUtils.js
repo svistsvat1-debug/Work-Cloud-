@@ -48,6 +48,17 @@ const MathUtils = {
     return array[Math.floor(Math.random() * array.length)];
   },
 
+  /** Picks one item at random; items with a bigger weight are picked more often. */
+  pickWeighted(items, getWeight) {
+    const total = items.reduce((sum, item) => sum + getWeight(item), 0);
+    let roll = Math.random() * total;
+    for (const item of items) {
+      roll -= getWeight(item);
+      if (roll <= 0) return item;
+    }
+    return items[items.length - 1];
+  },
+
   /** 75.4 -> "01:15" */
   formatTime(seconds) {
     const minutes = Math.floor(seconds / 60);

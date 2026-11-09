@@ -2,17 +2,12 @@
  * A monster that chases the player.
  * Its numbers (speed, health, size...) come from GameConfig.enemies[type].
  */
-class Enemy {
+class Enemy extends Entity {
   constructor(type, x, y) {
     const stats = GameConfig.enemies[type];
+    super(x, y, stats.radius, stats.drawSize);
     this.type = type;
     this.stats = stats;
-    this.x = x;
-    this.y = y;
-    this.vx = 0;
-    this.vy = 0;
-    this.radius = stats.radius;
-    this.drawSize = stats.drawSize;
     this.speed = stats.speed;
     this.damage = stats.damage;
     this.maxHealth = stats.maxHealth;
@@ -22,30 +17,31 @@ class Enemy {
     this.flashTimer = 0; // > 0 means "just got hit": draw the white flash
     this.facing = 1;
     this.animTime = Math.random() * 10; // random start, so enemies don't animate in sync
-    this.dead = false;
   }
 
   update(dt, game) {
     const player = game.player;
     const direction = MathUtils.normalize(player.x - this.x, player.y - this.y);
-    this.vx = direction.x * this.speed;
-    this.vy = direction.y * this.speed;
+    let chaseX = direction.x * this.speed;
+    let chaseY = direction.y * this.speed;
 
     // Some enemies wobble sideways while they chase (bats flutter).
-    if (this.stats.wobble) {
-      const sideways = Math.sin(this.animTime * 5) * this.stats.wobble;
-      this.vx += -direction.y * sideways;
-      this.vy += direction.x * sideways;
+    const wobble = this.stats.wobble;
+    if (wobble) {
+      const sideways = Math.sin(this.animTime * wobble.speed) * wobble.strength;
+      chaseX += -direction.y * sideways;
+      chaseY += direction.x * sideways;
     }
 
     // Knockback pushes the enemy away for a moment, then fades out.
-    this.x += (this.vx + this.knockbackX) * dt;
-    this.y += (this.vy + this.knockbackY) * dt;
+    this.vx = chaseX + this.knockbackX;
+    this.vy = chaseY + this.knockbackY;
+    this.move(dt);
     const fade = Math.exp(-GameConfig.combat.knockbackDecay * dt);
     this.knockbackX *= fade;
     this.knockbackY *= fade;
 
-    if (Math.abs(this.vx) > 1) this.facing = Math.sign(this.vx);
+    if (Math.abs(chaseX) > 1) this.facing = Math.sign(chaseX);
     this.flashTimer = Math.max(0, this.flashTimer - dt);
     this.animTime += dt;
   }
@@ -67,18 +63,19 @@ class Enemy {
 
   render(ctx, sprites) {
     const size = this.drawSize;
+    const animation = this.stats.animation;
+    const wave = Math.sin(this.animTime * animation.speed);
     let scaleX = 1;
     let scaleY = 1;
     let liftY = 0;
 
     // Cheap animation without extra frames: slimes squish, bats bob up and down.
-    if (this.stats.animation === 'squish') {
-      const squish = Math.sin(this.animTime * 7) * 0.07;
-      scaleX = 1 + squish;
-      scaleY = 1 - squish;
-    } else if (this.stats.animation === 'flap') {
-      liftY = Math.sin(this.animTime * 9) * 6;
-      scaleY = 1 + Math.sin(this.animTime * 18) * 0.08;
+    if (animation.style === 'squish') {
+      scaleX = 1 + wave * animation.squash;
+      scaleY = 1 - wave * animation.squash;
+    } else if (animation.style === 'flap') {
+      liftY = wave * animation.lift;
+      scaleY = 1 + Math.sin(this.animTime * animation.speed * 2) * animation.squash;
     }
 
     const sprite = this.flashTimer > 0 ? sprites[`${this.type}Flash`] : sprites[this.type];
@@ -90,13 +87,14 @@ class Enemy {
   renderHealthBar(ctx) {
     const isDamaged = this.currentHealth < this.maxHealth;
     if (GameConfig.ui.enemyHealthBars === 'damaged' && !isDamaged) return;
-    const width = this.drawSize * 0.55;
+    const bar = GameConfig.ui.enemyHealthBar;
+    const width = this.drawSize * bar.widthFactor;
     DrawUtils.bar(
       ctx,
       this.x - width / 2,
-      this.y - this.drawSize * 0.42,
+      this.y - this.drawSize * bar.offsetY,
       width,
-      5,
+      bar.height,
       this.currentHealth / this.maxHealth,
       '#ef5050'
     );

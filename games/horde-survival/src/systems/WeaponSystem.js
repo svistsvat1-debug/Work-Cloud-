@@ -13,16 +13,16 @@ class WeaponSystem {
   }
 
   update(dt) {
-    const stats = GameConfig.autoAttack;
+    const weapon = GameConfig.weapons.magicBolt;
     this.cooldownTimer -= dt;
     if (this.cooldownTimer > 0) return;
 
-    const target = this.findNearestEnemy(stats.range);
+    const target = this.findNearestEnemy(weapon.range);
     // No enemy in range: stay ready and fire the moment one shows up.
     if (!target) return;
 
-    this.fireAt(target, stats);
-    this.cooldownTimer = stats.cooldown;
+    this.fireAt(target, weapon);
+    this.cooldownTimer = weapon.cooldown;
   }
 
   findNearestEnemy(maxDistance) {
@@ -40,9 +40,9 @@ class WeaponSystem {
     return nearest;
   }
 
-  fireAt(target, stats) {
+  fireAt(target, weapon) {
     const player = this.game.player;
     const direction = MathUtils.normalize(target.x - player.x, target.y - player.y);
-    this.game.projectiles.push(new Projectile(player.x, player.y, direction.x, direction.y, stats));
+    this.game.projectiles.push(new Projectile(player.x, player.y, direction.x, direction.y, weapon));
   }
 }

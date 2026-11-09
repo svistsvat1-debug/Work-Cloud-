@@ -52,7 +52,7 @@ class CollisionSystem {
   /** Overlapping enemies gently push each other apart, so the horde spreads out instead of stacking. */
   separateEnemies() {
     const enemies = this.game.enemies;
-    const strength = GameConfig.collision.enemySeparation;
+    const strength = GameConfig.combat.enemySeparation;
     for (let i = 0; i < enemies.length; i++) {
       for (let j = i + 1; j < enemies.length; j++) {
         CollisionSystem.pushApart(enemies[i], enemies[j], strength * 0.5, strength * 0.5);

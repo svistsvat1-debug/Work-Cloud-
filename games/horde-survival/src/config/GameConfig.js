@@ -1,57 +1,55 @@
 /**
- * GameConfig holds the numbers that shape the game.
- * Tune the game here instead of hunting for numbers inside the logic.
+ * GameConfig: the numbers that shape the game live here.
+ * Tune the game by changing values in this file, not inside the logic.
+ *
+ * Units: distances and sizes in pixels, speeds in pixels per second, times in seconds.
  */
 const GameConfig = {
+  // ---------------------------------------------------------------- Screen
   // The game always renders at this internal resolution.
   // main.js scales the canvas to fit the window while keeping 16:9.
   width: 1920,
   height: 1080,
 
-  // Every character and monster sprite is drawn into a canvas of this size.
+  // Every character and monster sprite is drawn into a canvas of this size,
+  // then drawn smaller on screen (see drawSize below).
   spriteSourceSize: 182,
 
-  // Longest time step (seconds) simulated in one frame. Prevents huge jumps
-  // after the tab was hidden or the browser froze for a moment.
+  // Longest time step simulated in one frame. Prevents huge jumps after the
+  // tab was hidden or the browser froze for a moment.
   maxDeltaTime: 0.05,
 
+  // ---------------------------------------------------------------- Player
   player: {
-    speed: 300, // pixels per second
+    speed: 300,
     acceleration: 14, // how fast the player reaches full speed (higher = snappier)
-    drawSize: 128, // on-screen size of the 182x182 sprite
-    radius: 28, // collision circle: smaller than the sprite, so hits feel fair
     maxHealth: 100,
+    radius: 28, // collision circle: smaller than the sprite, so hits feel fair
+    drawSize: 128, // on-screen size of the 182x182 sprite
     invulnerabilityTime: 0.6, // seconds of safety after taking a hit
     hurtFlashTime: 0.15, // red flash right after a hit
     hurtShake: { strength: 6, duration: 0.15 }, // a very small screen shake
+    blinkRate: 14, // blinking speed while invulnerable
+    walkBounce: { speed: 16, amount: 0.05 },
+    healthBar: { width: 84, height: 9, offsetY: 0.6 }, // offsetY: fraction of drawSize above the center
   },
 
-  combat: {
-    hitFlashTime: 0.1, // how long an enemy flashes white when hit
-    knockbackDecay: 9, // how fast knockback fades (higher = shorter push)
-    contactPadding: 2, // enemies this close to the player count as touching
-  },
-
-  effects: {
-    maxDamageNumbers: 80, // oldest numbers disappear first when there are more
-    damageNumberDuration: 0.7,
-    damageNumberRise: 46, // pixels a number floats up during its life
-  },
-
-  // Enemy types. spawnWeight: higher = appears more often.
+  // ---------------------------------------------------------------- Enemies
+  // spawnWeight: higher = appears more often.
+  // knockbackMultiplier: 1 = normal, higher = flies back further when hit.
   // shadowOffset: how far below the center the shadow sits (bats fly, so theirs is lower).
   enemies: {
     slime: {
       name: 'Slime',
       maxHealth: 20,
       speed: 70,
+      damage: 10, // contact damage to the player
       radius: 34,
       drawSize: 104,
-      damage: 10, // contact damage to the player
-      knockbackMultiplier: 1, // 1 = normal, higher = flies back further
+      knockbackMultiplier: 1,
       spawnWeight: 3,
-      animation: 'squish',
-      wobble: 0,
+      wobble: null,
+      animation: { style: 'squish', speed: 7, squash: 0.07 },
       shadowOffset: 0.4,
       color: '#9be35a',
     },
@@ -59,18 +57,31 @@ const GameConfig = {
       name: 'Bat',
       maxHealth: 10,
       speed: 145,
+      damage: 6,
       radius: 24,
       drawSize: 92,
-      damage: 6,
       knockbackMultiplier: 1.4,
       spawnWeight: 1,
-      animation: 'flap',
-      wobble: 70, // sideways flutter speed (pixels per second)
+      wobble: { strength: 70, speed: 5 }, // sideways flutter while chasing
+      animation: { style: 'flap', speed: 9, lift: 6, squash: 0.08 },
       shadowOffset: 0.55,
       color: '#b98af0',
     },
   },
 
+  // ---------------------------------------------------------------- Weapons
+  weapons: {
+    magicBolt: {
+      name: 'Magic Bolt',
+      cooldown: 0.6, // seconds between shots
+      damage: 10,
+      range: 950, // only enemies closer than this are targeted (about one screen)
+      knockback: 280, // push speed given to an enemy on hit
+      projectile: { speed: 900, radius: 12, drawSize: 64, lifetime: 2 },
+    },
+  },
+
+  // ---------------------------------------------------------------- Spawning
   spawn: {
     startInterval: 1.1, // seconds between spawns at the start
     minInterval: 0.3, // the fastest it ever gets
@@ -79,28 +90,31 @@ const GameConfig = {
     maxEnemies: 300,
   },
 
-  // The automatic magic bolt
-  autoAttack: {
-    cooldown: 0.6, // seconds between shots
-    damage: 10,
-    range: 950, // only enemies closer than this are targeted (about one screen)
-    projectileSpeed: 900,
-    projectileRadius: 12,
-    projectileDrawSize: 64,
-    projectileLifetime: 2,
-    knockback: 280, // push speed given to an enemy on hit
-  },
-
-  collision: {
+  // ---------------------------------------------------------------- Combat
+  combat: {
+    hitFlashTime: 0.1, // how long an enemy flashes white when hit
+    knockbackDecay: 9, // how fast knockback fades (higher = shorter push)
+    contactPadding: 2, // enemies this close to the player count as touching
     enemySeparation: 0.5, // how strongly overlapping enemies push apart (0..1)
   },
 
+  // ---------------------------------------------------------------- Effects
+  effects: {
+    puffDuration: 0.35,
+    maxDamageNumbers: 80, // the oldest numbers disappear first when there are more
+    damageNumberDuration: 0.7,
+    damageNumberRise: 46, // pixels a number floats up during its life
+    damageNumberSize: 30,
+  },
+
+  // ---------------------------------------------------------------- World
   background: {
     tileSize: 128,
     colors: ['#1c2a21', '#1f2f25'],
     gridColor: 'rgba(255, 255, 255, 0.035)',
   },
 
+  // ---------------------------------------------------------------- Controls
   // Keyboard bindings use KeyboardEvent.code (the physical key),
   // so WASD also works on non-English keyboard layouts.
   controls: {
@@ -111,10 +125,15 @@ const GameConfig = {
     restart: ['KeyR'],
   },
 
+  // ---------------------------------------------------------------- UI
   ui: {
     title: 'Horde Survival',
     font: 'system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif',
+    showDebugInfo: true, // FPS and player position at the bottom right
     // 'damaged' shows enemy health bars only after the first hit (less clutter), 'always' shows all.
     enemyHealthBars: 'damaged',
+    enemyHealthBar: { widthFactor: 0.55, height: 5, offsetY: 0.42 },
+    playerHealthBar: { x: 40, y: 36, width: 460, height: 30 },
+    restartButton: { x: 780, y: 690, width: 360, height: 84 },
   },
 };

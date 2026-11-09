@@ -32,13 +32,7 @@ class Spawner {
   /** Picks an enemy type at random, using spawnWeight (higher = more common). */
   pickEnemyType() {
     const types = Object.keys(GameConfig.enemies);
-    const totalWeight = types.reduce((sum, type) => sum + GameConfig.enemies[type].spawnWeight, 0);
-    let roll = Math.random() * totalWeight;
-    for (const type of types) {
-      roll -= GameConfig.enemies[type].spawnWeight;
-      if (roll <= 0) return type;
-    }
-    return types[0];
+    return MathUtils.pickWeighted(types, (type) => GameConfig.enemies[type].spawnWeight);
   }
 
   /**

@@ -1,6 +1,6 @@
 /**
- * Drawing helpers shared by the player, enemies and the UI,
- * so everything draws sprites, shadows and bars the same way.
+ * Drawing helpers shared by the world objects and the UI,
+ * so everything draws sprites, shadows, bars and text the same way.
  */
 const DrawUtils = {
   /** Soft oval shadow on the ground. */
@@ -33,10 +33,7 @@ const DrawUtils = {
     ctx.restore();
   },
 
-  /**
-   * A horizontal bar (health, XP...). `fraction` is 0..1.
-   * (x, y) is the top-left corner.
-   */
+  /** A horizontal bar (health, XP...). fraction is 0..1, (x, y) is the top-left corner. */
   bar(ctx, x, y, width, height, fraction, fillColor, backColor = 'rgba(10, 8, 12, 0.75)') {
     ctx.fillStyle = backColor;
     ctx.fillRect(x - 2, y - 2, width + 4, height + 4);
@@ -49,5 +46,30 @@ const DrawUtils = {
     if (fraction > 0.6) return '#5ad66f';
     if (fraction > 0.3) return '#f2c94c';
     return '#ef5050';
+  },
+
+  /** Text with a dark drop shadow, so it stays readable on any background. */
+  text(ctx, text, x, y, { size = 24, weight = 'normal', color = '#ffffff', align = 'left' } = {}) {
+    ctx.font = `${weight} ${size}px ${GameConfig.ui.font}`;
+    ctx.textAlign = align;
+    ctx.textBaseline = 'top';
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
+    ctx.fillText(text, x + 2, y + 3);
+    ctx.fillStyle = color;
+    ctx.fillText(text, x, y);
+  },
+
+  /** A rectangular button. `rect` is {x, y, width, height}. */
+  button(ctx, rect, label, hovered) {
+    ctx.fillStyle = hovered ? '#3fae6a' : '#2e8c55';
+    ctx.fillRect(rect.x, rect.y, rect.width, rect.height);
+    ctx.strokeStyle = '#bff5cf';
+    ctx.lineWidth = 3;
+    ctx.strokeRect(rect.x, rect.y, rect.width, rect.height);
+    DrawUtils.text(ctx, label, rect.x + rect.width / 2, rect.y + rect.height / 2 - 22, {
+      size: 40,
+      weight: 'bold',
+      align: 'center',
+    });
   },
 };
