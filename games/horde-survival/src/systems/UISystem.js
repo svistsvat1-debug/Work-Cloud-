@@ -1,11 +1,13 @@
 /**
- * UISystem draws everything that sits on top of the world: text, bars, menus.
- * It always works in screen coordinates (0..1920, 0..1080).
+ * UISystem draws everything that sits on top of the world: the HUD (bars,
+ * timer, counters) and the current menu screen. It works in screen
+ * coordinates (0..1920, 0..1080).
  */
 class UISystem {
   constructor(game) {
     this.game = game;
-    this.restartButton = GameConfig.ui.restartButton;
+    this.levelUpMenu = new LevelUpMenu(game);
+    this.gameOverScreen = new GameOverScreen(game);
     this.reset();
   }
 
@@ -26,7 +28,8 @@ class UISystem {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
 
     this.renderHud(ctx);
-    if (this.game.state === GameState.GAME_OVER) this.renderGameOver(ctx);
+    if (this.game.state === GameState.LEVEL_UP) this.levelUpMenu.render(ctx);
+    if (this.game.state === GameState.GAME_OVER) this.gameOverScreen.render(ctx);
 
     ctx.restore();
   }
@@ -34,17 +37,18 @@ class UISystem {
   renderHud(ctx) {
     const { player, width, height } = this.game;
 
+    this.renderXpBar(ctx, player);
     this.renderPlayerHealth(ctx, player);
 
     // Top center: survival timer
-    DrawUtils.text(ctx, MathUtils.formatTime(this.game.survivalTime), width / 2, 28, {
+    DrawUtils.text(ctx, MathUtils.formatTime(this.game.survivalTime), width / 2, 44, {
       size: 56,
       weight: 'bold',
       align: 'center',
     });
 
     // Top right: kills
-    DrawUtils.text(ctx, `Kills: ${this.game.kills}`, width - 40, 32, {
+    DrawUtils.text(ctx, `Kills: ${this.game.kills}`, width - 40, 50, {
       size: 34,
       weight: 'bold',
       align: 'right',
@@ -59,6 +63,21 @@ class UISystem {
     }
   }
 
+  /** Full-width XP bar along the top edge, with the level written inside. */
+  renderXpBar(ctx, player) {
+    const barHeight = GameConfig.ui.xpBar.height;
+    const width = this.game.width;
+    ctx.fillStyle = 'rgba(8, 10, 18, 0.85)';
+    ctx.fillRect(0, 0, width, barHeight + 4);
+    ctx.fillStyle = '#4fb8ff';
+    ctx.fillRect(0, 0, width * (player.xp / player.xpToNextLevel), barHeight);
+    DrawUtils.text(ctx, `LV ${player.level}   ${Math.floor(player.xp)} / ${player.xpToNextLevel} XP`, width / 2, 1, {
+      size: 21,
+      weight: 'bold',
+      align: 'center',
+    });
+  }
+
   /** The large HP bar in the top-left corner. */
   renderPlayerHealth(ctx, player) {
     const { x, y, width, height } = GameConfig.ui.playerHealthBar;
@@ -70,38 +89,6 @@ class UISystem {
     DrawUtils.text(ctx, `HP ${Math.ceil(player.currentHealth)} / ${player.maxHealth}`, x + 14, y + 2, {
       size: 22,
       weight: 'bold',
-    });
-  }
-
-  renderGameOver(ctx) {
-    const { width, height, player } = this.game;
-    const centerX = width / 2;
-
-    ctx.fillStyle = 'rgba(6, 8, 10, 0.78)';
-    ctx.fillRect(0, 0, width, height);
-
-    DrawUtils.text(ctx, 'GAME OVER', centerX, 250, {
-      size: 96,
-      weight: 'bold',
-      align: 'center',
-      color: '#ff6464',
-    });
-
-    const lines = [
-      `Survival time: ${MathUtils.formatTime(this.game.survivalTime)}`,
-      `Enemies killed: ${this.game.kills}`,
-      `Final level: ${player.level}`,
-    ];
-    lines.forEach((line, index) => {
-      DrawUtils.text(ctx, line, centerX, 420 + index * 64, { size: 42, align: 'center' });
-    });
-
-    const button = this.restartButton;
-    DrawUtils.button(ctx, button, 'Restart', this.game.input.isPointerOver(button));
-    DrawUtils.text(ctx, 'or press R to restart', centerX, button.y + button.height + 26, {
-      size: 26,
-      align: 'center',
-      color: '#b9c4bd',
     });
   }
 }

@@ -11,6 +11,10 @@ const ProceduralSprites = {
       slime: this.createSlime(),
       bat: this.createBat(),
       projectile: this.createProjectile(),
+      gemBlue: this.createGem('#4fc3ff', '#d2f1ff', '#1b5f99'),
+      gemGreen: this.createGem('#4fe07a', '#d4ffdf', '#1d7a3a'),
+      gemRed: this.createGem('#ff5a6e', '#ffd0d6', '#9b1f30'),
+      ...this.createUpgradeIcons(),
     };
 
     // Tinted copies for hit feedback: red for the player, white flash for enemies.
@@ -249,7 +253,163 @@ const ProceduralSprites = {
     return canvas;
   },
 
+  /** A faceted crystal with a soft glow. */
+  createGem(baseColor, lightColor, darkColor) {
+    const canvas = this.createCanvas();
+    const ctx = canvas.getContext('2d');
+
+    const glow = ctx.createRadialGradient(91, 91, 8, 91, 91, 90);
+    glow.addColorStop(0, lightColor);
+    glow.addColorStop(1, 'rgba(255, 255, 255, 0)');
+    ctx.globalAlpha = 0.45;
+    ctx.fillStyle = glow;
+    this.circle(ctx, 91, 91, 90);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+
+    // Diamond body
+    ctx.beginPath();
+    ctx.moveTo(91, 18);
+    ctx.lineTo(148, 91);
+    ctx.lineTo(91, 164);
+    ctx.lineTo(34, 91);
+    ctx.closePath();
+    ctx.fillStyle = baseColor;
+    ctx.fill();
+    ctx.lineJoin = 'round';
+    ctx.lineWidth = 9;
+    ctx.strokeStyle = darkColor;
+    ctx.stroke();
+
+    // Facets: light upper-left, shadowed lower-right
+    ctx.fillStyle = lightColor;
+    ctx.beginPath();
+    ctx.moveTo(91, 26);
+    ctx.lineTo(42, 91);
+    ctx.lineTo(91, 91);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.22)';
+    ctx.beginPath();
+    ctx.moveTo(91, 91);
+    ctx.lineTo(140, 91);
+    ctx.lineTo(91, 156);
+    ctx.closePath();
+    ctx.fill();
+
+    return canvas;
+  },
+
+  /** Icons for the level-up cards: a colored badge with a white symbol. */
+  createUpgradeIcons() {
+    return {
+      iconDamage: this.createIcon('#d9534f', (ctx) => this.star(ctx, 91, 91, 8, 60, 26)),
+      iconFireRate: this.createIcon('#f0ad4e', (ctx) => {
+        this.chevron(ctx, 40);
+        this.chevron(ctx, 84);
+      }),
+      iconProjectileSpeed: this.createIcon('#3fa7d6', (ctx) => {
+        ctx.beginPath();
+        ctx.moveTo(34, 80);
+        ctx.lineTo(104, 80);
+        ctx.lineTo(104, 54);
+        ctx.lineTo(150, 91);
+        ctx.lineTo(104, 128);
+        ctx.lineTo(104, 102);
+        ctx.lineTo(34, 102);
+        ctx.closePath();
+      }),
+      iconMoveSpeed: this.createIcon('#4cae4c', (ctx) => {
+        // A boot
+        ctx.beginPath();
+        ctx.moveTo(62, 36);
+        ctx.lineTo(104, 36);
+        ctx.lineTo(104, 104);
+        ctx.lineTo(140, 112);
+        ctx.quadraticCurveTo(152, 118, 150, 142);
+        ctx.lineTo(56, 142);
+        ctx.closePath();
+      }),
+      iconMaxHealth: this.createIcon('#c9302c', (ctx) => this.heart(ctx, 91, 96, 52)),
+      iconHeal: this.createIcon('#2fa86f', (ctx) => {
+        ctx.beginPath();
+        ctx.rect(76, 38, 30, 106);
+        ctx.rect(38, 76, 106, 30);
+      }),
+      iconMagnet: this.createIcon('#7e57c2', (ctx) => {
+        // Horseshoe magnet: an upside-down U
+        ctx.beginPath();
+        ctx.moveTo(40, 140);
+        ctx.lineTo(40, 88);
+        ctx.arc(91, 88, 51, Math.PI, 0);
+        ctx.lineTo(142, 140);
+        ctx.lineTo(112, 140);
+        ctx.lineTo(112, 88);
+        ctx.arc(91, 88, 21, 0, Math.PI, true);
+        ctx.lineTo(70, 140);
+        ctx.closePath();
+      }),
+    };
+  },
+
+  /** Badge + symbol. drawSymbol(ctx) only builds a path; it is filled white with a dark outline. */
+  createIcon(color, drawSymbol) {
+    const canvas = this.createCanvas();
+    const ctx = canvas.getContext('2d');
+
+    this.roundRect(ctx, 12, 12, 158, 158, 34);
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.lineWidth = 8;
+    ctx.strokeStyle = 'rgba(0, 0, 0, 0.55)';
+    ctx.stroke();
+    this.roundRect(ctx, 24, 20, 134, 56, 24);
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.16)';
+    ctx.fill();
+
+    ctx.lineJoin = 'round';
+    ctx.lineWidth = 8;
+    ctx.strokeStyle = 'rgba(0, 0, 0, 0.6)';
+    ctx.fillStyle = '#ffffff';
+    drawSymbol(ctx);
+    ctx.stroke();
+    ctx.fill();
+    return canvas;
+  },
+
   // ---------- small drawing helpers ----------
+
+  star(ctx, x, y, points, outerRadius, innerRadius) {
+    ctx.beginPath();
+    for (let i = 0; i < points * 2; i++) {
+      const radius = i % 2 === 0 ? outerRadius : innerRadius;
+      const angle = -Math.PI / 2 + (i * Math.PI) / points;
+      ctx.lineTo(x + Math.cos(angle) * radius, y + Math.sin(angle) * radius);
+    }
+    ctx.closePath();
+  },
+
+  heart(ctx, x, y, size) {
+    ctx.beginPath();
+    ctx.moveTo(x, y + size * 0.9);
+    ctx.bezierCurveTo(x - size * 1.4, y - size * 0.1, x - size * 0.6, y - size * 1.1, x, y - size * 0.35);
+    ctx.bezierCurveTo(x + size * 0.6, y - size * 1.1, x + size * 1.4, y - size * 0.1, x, y + size * 0.9);
+    ctx.closePath();
+  },
+
+  /** A ">" shape starting at x, used twice for a fast-forward icon. */
+  chevron(ctx, x) {
+    ctx.beginPath();
+    ctx.moveTo(x, 44);
+    ctx.lineTo(x + 30, 44);
+    ctx.lineTo(x + 62, 91);
+    ctx.lineTo(x + 30, 138);
+    ctx.lineTo(x, 138);
+    ctx.lineTo(x + 32, 91);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.fill();
+  },
 
   /** A cartoon eye: white circle with a pupil looking right. */
   eye(ctx, x, y, radius) {

@@ -46,13 +46,18 @@ class Enemy extends Entity {
     this.animTime += dt;
   }
 
+  /** Adds a push (pixels per second) that fades out over a short time. */
+  applyKnockback(pushX, pushY) {
+    this.knockbackX += pushX * this.stats.knockbackMultiplier;
+    this.knockbackY += pushY * this.stats.knockbackMultiplier;
+  }
+
   /** knockbackX / knockbackY: push velocity (pixels per second) away from the hit. */
   takeDamage(amount, game, knockbackX = 0, knockbackY = 0) {
     if (this.dead) return;
     this.currentHealth -= amount;
     this.flashTimer = GameConfig.combat.hitFlashTime;
-    this.knockbackX += knockbackX * this.stats.knockbackMultiplier;
-    this.knockbackY += knockbackY * this.stats.knockbackMultiplier;
+    this.applyKnockback(knockbackX, knockbackY);
     game.effects.spawnDamageNumber(this.x, this.y - this.drawSize * 0.35, amount);
 
     if (this.currentHealth <= 0) {

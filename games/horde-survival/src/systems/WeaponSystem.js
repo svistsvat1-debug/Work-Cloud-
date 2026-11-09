@@ -1,6 +1,7 @@
 /**
  * WeaponSystem attacks automatically. The player never aims or presses a button.
  * Right now there is one weapon: a magic bolt fired at the nearest enemy.
+ * Upgrades (player.stats) make it hit harder, fire faster and fly faster.
  */
 class WeaponSystem {
   constructor(game) {
@@ -22,7 +23,7 @@ class WeaponSystem {
     if (!target) return;
 
     this.fireAt(target, weapon);
-    this.cooldownTimer = weapon.cooldown;
+    this.cooldownTimer = weapon.cooldown / this.game.player.stats.fireRateMultiplier;
   }
 
   findNearestEnemy(maxDistance) {
@@ -42,7 +43,17 @@ class WeaponSystem {
 
   fireAt(target, weapon) {
     const player = this.game.player;
+    const stats = player.stats;
     const direction = MathUtils.normalize(target.x - player.x, target.y - player.y);
-    this.game.projectiles.push(new Projectile(player.x, player.y, direction.x, direction.y, weapon));
+    const shot = {
+      damage: weapon.damage * stats.damageMultiplier,
+      speed: weapon.projectile.speed * stats.projectileSpeedMultiplier,
+      radius: weapon.projectile.radius,
+      drawSize: weapon.projectile.drawSize,
+      lifetime: weapon.projectile.lifetime,
+      knockback: weapon.knockback,
+      sprite: 'projectile',
+    };
+    this.game.projectiles.push(new Projectile(player.x, player.y, direction.x, direction.y, shot));
   }
 }

@@ -18,6 +18,7 @@
 
   <!-- Numbers that shape the game -->
   <script src="src/config/GameConfig.js"></script>
+  <script src="src/config/UpgradeDefinitions.js"></script>
 
   <!-- Core helpers and engine pieces -->
   <script src="src/core/MathUtils.js"></script>
@@ -34,12 +35,18 @@
   <script src="src/entities/Player.js"></script>
   <script src="src/entities/Enemy.js"></script>
   <script src="src/entities/Projectile.js"></script>
+  <script src="src/entities/Pickup.js"></script>
   <script src="src/entities/XPGem.js"></script>
+
+  <!-- Menu screens -->
+  <script src="src/ui/LevelUpMenu.js"></script>
+  <script src="src/ui/GameOverScreen.js"></script>
 
   <!-- Systems: each one does one job every frame -->
   <script src="src/systems/Spawner.js"></script>
   <script src="src/systems/CollisionSystem.js"></script>
   <script src="src/systems/WeaponSystem.js"></script>
+  <script src="src/systems/UpgradeSystem.js"></script>
   <script src="src/systems/EffectsSystem.js"></script>
   <script src="src/systems/Renderer.js"></script>
   <script src="src/systems/UISystem.js"></script>

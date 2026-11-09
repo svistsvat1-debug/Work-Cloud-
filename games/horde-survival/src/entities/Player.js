@@ -1,18 +1,32 @@
 /**
  * The player. Movement is the only control: WASD or the arrow keys.
+ * The player also owns the run's progress: XP, level and upgrade levels.
  */
 class Player extends Entity {
   constructor(x, y) {
     const config = GameConfig.player;
     super(x, y, config.radius, config.drawSize);
-    this.speed = config.speed;
     this.maxHealth = config.maxHealth;
     this.currentHealth = config.maxHealth;
+
     this.level = 1;
+    this.xp = 0;
+    this.xpToNextLevel = Player.xpRequiredFor(1);
+    this.pendingLevelUps = 0; // level-ups earned but not chosen yet
+    this.upgradeLevels = {}; // upgrade id -> level, e.g. { damage: 2 }
+    this.recalculateStats();
+
     this.facing = 1; // 1 = looking right, -1 = looking left
     this.walkTime = 0; // drives the small walking bounce
     this.invulnerableTimer = 0; // > 0 means enemies can't hurt us right now
     this.hurtTimer = 0; // > 0 shows the red "ouch" flash
+  }
+
+  /** XP needed to go from `level` to the next one (formula in GameConfig.xp). */
+  static xpRequiredFor(level) {
+    const { base, linear, quadratic } = GameConfig.xp;
+    const n = level - 1;
+    return Math.round(base + linear * n + quadratic * n * n);
   }
 
   update(dt, game) {
@@ -39,6 +53,56 @@ class Player extends Entity {
     return this.currentHealth <= 0;
   }
 
+  // ---------------------------------------------------------------- Progress
+
+  addXp(amount) {
+    this.xp += amount;
+    // Enough XP for several levels at once? Each one is counted and chosen in turn.
+    while (this.xp >= this.xpToNextLevel) {
+      this.xp -= this.xpToNextLevel;
+      this.level += 1;
+      this.pendingLevelUps += 1;
+      this.xpToNextLevel = Player.xpRequiredFor(this.level);
+    }
+  }
+
+  getUpgradeLevel(id) {
+    return this.upgradeLevels[id] || 0;
+  }
+
+  /**
+   * Rebuilds player.stats from scratch: base values + every upgrade level.
+   * Recalculating (instead of adding a bit each time) means stats can never drift.
+   */
+  recalculateStats() {
+    const stats = {
+      damageMultiplier: 1,
+      fireRateMultiplier: 1,
+      projectileSpeedMultiplier: 1,
+      moveSpeedMultiplier: 1,
+      magnetMultiplier: 1,
+      maxHealthBonus: 0,
+    };
+    for (const [id, level] of Object.entries(this.upgradeLevels)) {
+      const upgrade = UpgradeDefinitions[id];
+      if (upgrade.stat) stats[upgrade.stat] += upgrade.perLevel * level;
+    }
+    this.stats = stats;
+
+    const config = GameConfig.player;
+    const previousMaxHealth = this.maxHealth;
+    this.maxHealth = config.maxHealth + stats.maxHealthBonus;
+    // Gaining max HP also heals by the same amount.
+    this.heal(Math.max(0, this.maxHealth - previousMaxHealth));
+    this.speed = config.speed * stats.moveSpeedMultiplier;
+    this.magnetRadius = config.magnetRadius * stats.magnetMultiplier;
+    this.pickupRadius = config.pickupRadius;
+  }
+
+  heal(amount) {
+    this.currentHealth = Math.min(this.maxHealth, this.currentHealth + amount);
+  }
+
   /** Returns true if the hit landed (false while invulnerable). */
   takeDamage(amount, game) {
     if (this.invulnerableTimer > 0 || this.isDead()) return false;
@@ -53,6 +117,8 @@ class Player extends Entity {
     if (this.isDead()) game.onPlayerDied();
     return true;
   }
+
+  // ---------------------------------------------------------------- Drawing
 
   render(ctx, sprites) {
     const config = GameConfig.player;

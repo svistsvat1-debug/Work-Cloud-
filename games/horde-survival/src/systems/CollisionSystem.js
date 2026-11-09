@@ -13,6 +13,20 @@ class CollisionSystem {
     this.projectilesVsEnemies();
     this.enemiesVsPlayer();
     this.separateEnemies();
+    this.pickupsVsPlayer();
+  }
+
+  /** Pickups are collected when they reach the player's pickup radius. */
+  pickupsVsPlayer() {
+    const { player, pickups } = this.game;
+    for (const pickup of pickups) {
+      if (pickup.dead) continue;
+      const reach = player.pickupRadius + pickup.radius;
+      if (MathUtils.distanceSquared(player.x, player.y, pickup.x, pickup.y) < reach * reach) {
+        pickup.dead = true;
+        pickup.collect(this.game);
+      }
+    }
   }
 
   static circlesOverlap(a, b) {

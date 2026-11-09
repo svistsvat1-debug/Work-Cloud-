@@ -59,6 +59,35 @@ const DrawUtils = {
     ctx.fillText(text, x, y);
   },
 
+  /** Builds a rounded rectangle path. Call ctx.fill() / ctx.stroke() afterwards. */
+  roundRect(ctx, x, y, width, height, radius) {
+    ctx.beginPath();
+    ctx.moveTo(x + radius, y);
+    ctx.arcTo(x + width, y, x + width, y + height, radius);
+    ctx.arcTo(x + width, y + height, x, y + height, radius);
+    ctx.arcTo(x, y + height, x, y, radius);
+    ctx.arcTo(x, y, x + width, y, radius);
+    ctx.closePath();
+  },
+
+  /** Splits text into lines that fit maxWidth (uses the current ctx.font). */
+  wrapText(ctx, text, maxWidth) {
+    const words = text.split(' ');
+    const lines = [];
+    let line = '';
+    for (const word of words) {
+      const candidate = line ? `${line} ${word}` : word;
+      if (ctx.measureText(candidate).width > maxWidth && line) {
+        lines.push(line);
+        line = word;
+      } else {
+        line = candidate;
+      }
+    }
+    if (line) lines.push(line);
+    return lines;
+  },
+
   /** A rectangular button. `rect` is {x, y, width, height}. */
   button(ctx, rect, label, hovered) {
     ctx.fillStyle = hovered ? '#3fae6a' : '#2e8c55';

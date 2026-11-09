@@ -3,17 +3,20 @@
  * when it hits an enemy, leaves the screen, or runs out of lifetime.
  */
 class Projectile extends Entity {
-  /** weapon: a weapon config, e.g. GameConfig.weapons.magicBolt */
-  constructor(x, y, directionX, directionY, weapon) {
-    const shot = weapon.projectile;
+  /**
+   * shot: the final numbers for this shot, already including upgrades:
+   * { damage, speed, radius, drawSize, lifetime, knockback, sprite }
+   */
+  constructor(x, y, directionX, directionY, shot) {
     super(x, y, shot.radius, shot.drawSize);
     this.directionX = directionX;
     this.directionY = directionY;
     this.vx = directionX * shot.speed;
     this.vy = directionY * shot.speed;
-    this.damage = weapon.damage;
-    this.knockback = weapon.knockback;
+    this.damage = shot.damage;
+    this.knockback = shot.knockback;
     this.lifetime = shot.lifetime;
+    this.sprite = shot.sprite;
     this.rotation = Math.atan2(directionY, directionX);
   }
 
@@ -35,6 +38,6 @@ class Projectile extends Entity {
   }
 
   render(ctx, sprites) {
-    DrawUtils.rotated(ctx, sprites.projectile, this.x, this.y, this.drawSize, this.rotation);
+    DrawUtils.rotated(ctx, sprites[this.sprite], this.x, this.y, this.drawSize, this.rotation);
   }
 }

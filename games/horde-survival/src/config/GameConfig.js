@@ -32,6 +32,50 @@ const GameConfig = {
     blinkRate: 14, // blinking speed while invulnerable
     walkBounce: { speed: 16, amount: 0.05 },
     healthBar: { width: 84, height: 9, offsetY: 0.6 }, // offsetY: fraction of drawSize above the center
+    pickupRadius: 36, // gems closer than this are collected
+    magnetRadius: 150, // gems closer than this start flying toward the player
+  },
+
+  // ---------------------------------------------------------------- Experience
+  // XP needed to go from `level` to `level + 1`:
+  //   base + linear * (level - 1) + quadratic * (level - 1)^2
+  // -> 5, 13, 23, 33, 43 ... fast early level-ups, then a bit slower.
+  xp: {
+    base: 5,
+    linear: 8,
+    quadratic: 0.4,
+  },
+
+  xpGems: {
+    // Bigger gems first. A gem looks like the biggest tier its value reaches.
+    tiers: [
+      { minValue: 10, sprite: 'gemRed', drawSize: 46 },
+      { minValue: 5, sprite: 'gemGreen', drawSize: 40 },
+      { minValue: 1, sprite: 'gemBlue', drawSize: 34 },
+    ],
+    radius: 14,
+    // Small chance that an enemy drops a more valuable gem instead.
+    bonusDrops: [
+      { value: 10, chance: 0.01 },
+      { value: 5, chance: 0.04 },
+    ],
+    maxOnGround: 400, // above this, new XP is merged into the nearest gem (nothing is lost)
+  },
+
+  // Pickups fly toward the player once inside the magnet radius.
+  pickups: {
+    attractStartSpeed: 260,
+    attractAcceleration: 2600,
+    attractMaxSpeed: 1600,
+  },
+
+  levelUp: {
+    choices: 3,
+    inputDelay: 0.35, // ignore clicks/keys right after the menu opens (avoids accidental picks)
+    // When the game resumes, nearby enemies are pushed back and the player is safe for a moment.
+    resumePushRadius: 240,
+    resumePushForce: 700,
+    resumeInvulnerability: 0.5,
   },
 
   // ---------------------------------------------------------------- Enemies
@@ -44,6 +88,7 @@ const GameConfig = {
       maxHealth: 20,
       speed: 70,
       damage: 10, // contact damage to the player
+      xp: 1, // value of the gem it drops
       radius: 34,
       drawSize: 104,
       knockbackMultiplier: 1,
@@ -58,6 +103,7 @@ const GameConfig = {
       maxHealth: 10,
       speed: 145,
       damage: 6,
+      xp: 1,
       radius: 24,
       drawSize: 92,
       knockbackMultiplier: 1.4,
@@ -123,6 +169,9 @@ const GameConfig = {
     left: ['KeyA', 'ArrowLeft'],
     right: ['KeyD', 'ArrowRight'],
     restart: ['KeyR'],
+    choice1: ['Digit1', 'Numpad1'],
+    choice2: ['Digit2', 'Numpad2'],
+    choice3: ['Digit3', 'Numpad3'],
   },
 
   // ---------------------------------------------------------------- UI
@@ -133,7 +182,8 @@ const GameConfig = {
     // 'damaged' shows enemy health bars only after the first hit (less clutter), 'always' shows all.
     enemyHealthBars: 'damaged',
     enemyHealthBar: { widthFactor: 0.55, height: 5, offsetY: 0.42 },
-    playerHealthBar: { x: 40, y: 36, width: 460, height: 30 },
+    playerHealthBar: { x: 40, y: 50, width: 460, height: 30 },
+    xpBar: { height: 26 },
     restartButton: { x: 780, y: 690, width: 360, height: 84 },
   },
 };

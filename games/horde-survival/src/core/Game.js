@@ -1,6 +1,7 @@
 /** The states the game can be in. Using constants avoids typos like 'gamover'. */
 const GameState = Object.freeze({
   PLAYING: 'playing', // the normal game
+  LEVEL_UP: 'levelup', // the action is paused while the player picks an upgrade
   GAME_OVER: 'gameover', // the player died; the world is frozen until restart
 });
 
@@ -23,6 +24,7 @@ class Game {
     this.spawner = new Spawner(this); // creates enemies
     this.weapons = new WeaponSystem(this); // fires at enemies
     this.collisions = new CollisionSystem(this); // checks what touches what
+    this.upgrades = new UpgradeSystem(this); // level-up choices
     this.effects = new EffectsSystem(this); // puffs and damage numbers
     this.renderer = new Renderer(this); // draws the world
     this.ui = new UISystem(this); // draws the HUD and menus
@@ -30,6 +32,7 @@ class Game {
     // World objects
     this.enemies = [];
     this.projectiles = [];
+    this.pickups = [];
 
     // Frame timing
     this.lastTimestamp = null;
@@ -52,6 +55,7 @@ class Game {
     this.player = new Player(0, 0);
     this.enemies.length = 0;
     this.projectiles.length = 0;
+    this.pickups.length = 0;
     this.survivalTime = 0;
     this.kills = 0;
 
@@ -80,14 +84,20 @@ class Game {
   }
 
   update(dt) {
-    if (this.state === GameState.GAME_OVER) {
-      // The world stays frozen. Only listen for a restart.
-      if (this.input.wasPressed('restart') || this.input.wasClicked(this.ui.restartButton)) {
-        this.startNewRun();
-      }
-      return;
+    switch (this.state) {
+      case GameState.PLAYING:
+        this.updatePlaying(dt);
+        break;
+      case GameState.LEVEL_UP:
+        this.ui.levelUpMenu.update(dt); // the world is paused
+        break;
+      case GameState.GAME_OVER:
+        this.ui.gameOverScreen.update(dt); // the world is frozen
+        break;
     }
+  }
 
+  updatePlaying(dt) {
     this.survivalTime += dt;
 
     this.player.update(dt, this);
@@ -98,6 +108,7 @@ class Game {
     this.weapons.update(dt);
     for (const enemy of this.enemies) enemy.update(dt, this);
     for (const projectile of this.projectiles) projectile.update(dt, this);
+    for (const pickup of this.pickups) pickup.update(dt, this);
 
     this.collisions.update();
     this.effects.update(dt);
@@ -105,18 +116,97 @@ class Game {
 
     ArrayUtils.removeDead(this.enemies);
     ArrayUtils.removeDead(this.projectiles);
+    ArrayUtils.removeDead(this.pickups);
+
+    // Only open the menu while still playing (never on top of the game over screen).
+    if (this.state === GameState.PLAYING && this.player.pendingLevelUps > 0) this.openLevelUpMenu();
   }
+
+  // ---------------------------------------------------------------- Events
 
   /** Called by an enemy the moment it dies. */
   onEnemyKilled(enemy) {
     this.kills += 1;
     this.effects.spawnPuff(enemy.x, enemy.y, enemy.stats.color, enemy.drawSize * 0.5);
+    this.dropXp(enemy.x, enemy.y, enemy.stats.xp);
   }
 
   /** Called by the player when health reaches 0. */
   onPlayerDied() {
     this.state = GameState.GAME_OVER;
   }
+
+  // ---------------------------------------------------------------- XP and level-ups
+
+  /** Drops an XP gem. Sometimes it is a more valuable one (bonusDrops). */
+  dropXp(x, y, baseValue) {
+    const config = GameConfig.xpGems;
+    let value = baseValue;
+    for (const bonus of config.bonusDrops) {
+      if (Math.random() < bonus.chance) {
+        value = Math.max(value, bonus.value);
+        break;
+      }
+    }
+
+    // Too many gems on the ground? Merge into the nearest one instead (no XP is lost).
+    const gems = this.pickups.filter((pickup) => pickup instanceof XPGem);
+    if (gems.length >= config.maxOnGround) {
+      let nearest = gems[0];
+      let nearestDistanceSq = Infinity;
+      for (const gem of gems) {
+        const distanceSq = MathUtils.distanceSquared(x, y, gem.x, gem.y);
+        if (distanceSq < nearestDistanceSq) {
+          nearest = gem;
+          nearestDistanceSq = distanceSq;
+        }
+      }
+      nearest.addValue(value);
+      return;
+    }
+    this.pickups.push(new XPGem(x, y, value));
+  }
+
+  /** Returns false if there was nothing left to offer. */
+  openLevelUpMenu() {
+    const choices = this.upgrades.rollChoices(GameConfig.levelUp.choices);
+    if (choices.length === 0) {
+      // Everything is maxed out: nothing to choose.
+      this.player.pendingLevelUps = 0;
+      return false;
+    }
+    this.ui.levelUpMenu.open(choices);
+    this.state = GameState.LEVEL_UP;
+    return true;
+  }
+
+  /** Called by the level-up menu when the player picks a card. */
+  chooseUpgrade(choice) {
+    this.upgrades.apply(choice);
+    this.player.pendingLevelUps -= 1;
+    // More level-ups waiting? Show a fresh set of cards instead of resuming.
+    if (this.player.pendingLevelUps > 0 && this.openLevelUpMenu()) return;
+    this.resumeAfterLevelUp();
+  }
+
+  /** Gives the player a moment to breathe: pushes nearby enemies back and grants brief safety. */
+  resumeAfterLevelUp() {
+    const { resumePushRadius, resumePushForce, resumeInvulnerability } = GameConfig.levelUp;
+    const player = this.player;
+    for (const enemy of this.enemies) {
+      const dx = enemy.x - player.x;
+      const dy = enemy.y - player.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      if (distance > 0 && distance < resumePushRadius) {
+        enemy.applyKnockback((dx / distance) * resumePushForce, (dy / distance) * resumePushForce);
+      }
+    }
+    player.invulnerableTimer = Math.max(player.invulnerableTimer, resumeInvulnerability);
+    this.effects.spawnPuff(player.x, player.y, '#ffd166', resumePushRadius);
+    this.state = GameState.PLAYING;
+  }
+
+  // ---------------------------------------------------------------- Drawing
 
   render() {
     this.renderer.render();

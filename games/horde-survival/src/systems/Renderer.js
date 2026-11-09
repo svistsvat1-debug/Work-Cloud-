@@ -8,7 +8,7 @@ class Renderer {
   }
 
   render() {
-    const { ctx, camera, sprites, enemies, projectiles, player, effects } = this.game;
+    const { ctx, camera, sprites, enemies, projectiles, pickups, player, effects } = this.game;
 
     // Reset the transform and clear the whole screen.
     ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -17,6 +17,11 @@ class Renderer {
     // From here on we draw in world coordinates.
     camera.applyTransform(ctx);
     this.drawBackground(ctx, camera);
+
+    // Items on the ground sit below everything that moves.
+    for (const pickup of pickups) {
+      if (pickup.isVisible(camera)) pickup.render(ctx, sprites);
+    }
 
     // Enemies lower on screen are drawn later, so they appear in front.
     enemies.sort((a, b) => a.y - b.y);
