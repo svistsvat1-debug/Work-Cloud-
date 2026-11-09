@@ -80,7 +80,7 @@ def build(srt_path, geo_path, audio_end):
     title(sc, "November 1918", 0.3, size=96)
     sprite(sc, "forest", c(2) - 0.3, 1400, 360, h=430)
     label(sc, "Compiègne, France", c(2) + 1.0, 1440, 640, size=50, color=RED)
-    sprite(sc, "carriage", c(3) - 0.2, 900, 740, w=860, h=430, dur=2.4)
+    sprite(sc, "carriage", c(3) - 0.2, 860, 700, w=860, h=560, dur=2.4)
     sprite(sc, "signing", c(3) + 2.2, 1620, 860, h=300)
     sprite(sc, "helmet", c(4), 270, 420, h=210)
     label(sc, "Germany *lost*", c(4) + 1.0, 280, 590, size=58, color=INK)
@@ -88,17 +88,17 @@ def build(srt_path, geo_path, audio_end):
     sc = S(5)
     big(sc, "1940", c(5) + 0.1, 400, 230, size=170)
     label(sc, "+22 years", c(5) + 1.4, 400, 380, size=60, color=BLUE)
-    car = sprite(sc, "carriage", c(6) - 0.3, 1220, 440, w=820, h=420, dur=2.0)
-    label(sc, "the same carriage", c(6) + 1.6, 1220, 110, size=54, color=RED)
-    ring(sc, 1220, 735, 440, 55, c(6) + 3.0)
-    label(sc, "the same spot!", c(6) + 3.4, 1220, 830, size=54, color=RED)
+    car = sprite(sc, "carriage", c(6) - 0.3, 1220, 410, w=820, h=500, dur=2.0)
+    label(sc, "the same carriage", c(6) + 1.6, 1220, 100, size=54, color=RED)
+    ring(sc, 1220, 680, 400, 50, c(6) + 3.0)
+    label(sc, "the same spot!", c(6) + 3.4, 1220, 780, size=54, color=RED)
     flag(sc, "FR", c(7) - 0.2, 420, 690, w=300)
     label(sc, "France signs", c(7) + 0.9, 420, 930, size=56, color=BLUE)
 
     sc = S(8, zoom=(1.0, 1.05), focus=(620, 520))
     v = maps.MapView(-11, 40, 35, 62, 40, 130, 1180, 900)
     land(sc, v, c(8) - 0.2, 1.6)
-    title(sc, "1918 → 1940", c(8), size=78)
+    title(sc, "From 1918 to 1940", c(8), size=78)
     cx, cy = v.p(9, 49.5)
     rx = (v.p(23, 49.5)[0] - v.p(-3, 49.5)[0]) / 2
     ry = (v.p(9, 44.0)[1] - v.p(9, 56.5)[1]) / 2
@@ -172,7 +172,7 @@ def build(srt_path, geo_path, audio_end):
     zigzag_tear(sc, 300, 260, 420, 700, c(40) + 1.4)
     label(sc, "step by step", c(40) + 2.2, 360, 780, size=52, color=RED)
     big(sc, "1935", c(41), 1000, 150, size=110)
-    sprite(sc, "marching", c(41) + 0.5, 1000, 420, w=600, dur=1.8)
+    sprite(sc, "marching", c(41) + 0.5, 1000, 400, w=600, h=330, dur=1.8)
     label(sc, "conscription", c(41) + 2.0, 1000, 610, size=48, color=BLUE)
     sprite(sc, "warplanes", c(41) + 2.3, 1600, 380, w=440, dur=1.5)
     label(sc, "Luftwaffe", c(41) + 3.6, 1600, 590, size=56, color=RED)
@@ -275,7 +275,8 @@ def build(srt_path, geo_path, audio_end):
 
     sc = S(78)
     big(sc, "< 6 months", c(78), 520, 200, size=120)
-    sprite(sc, "torn_paper", c(79) - 0.2, 520, 580, h=420)
+    sprite(sc, "treaty", c(79) - 0.2, 520, 580, h=420)
+    zigzag_tear(sc, 470, 400, 570, 760, c(79) + 1.4)
     label(sc, "promises meant nothing", c(80), 520, 900, size=52, color=RED)
     label(sc, "March 1939: the rest of Czechoslovakia", c(79) + 0.6, 1380, 260, size=48, color=INK, max_w=760)
     target(sc, c(81), 1380, 690, r=180)
@@ -310,6 +311,7 @@ def build(srt_path, geo_path, audio_end):
     marrow(sc, v, [(28.8, 50.3), (26.5, 50.4), (24.2, 50.7)], c(89) + 1.0, color=DARK_RED, width=16)
     mlabel(sc, v, "17 Sept", 29.0, 51.6, c(89) + 1.5, size=38, color=DARK_RED)
     sprite(sc, "burning", c(90) - 0.2, 1630, 680, h=260)
+    sprite(sc, "flames", c(90) + 0.9, 1630, 640, h=170, dur=0.8)
     label(sc, "within weeks: Poland *gone*", c(90) + 0.6, 1630, 920, size=46, color=INK, max_w=520)
 
     sc = S(91)
@@ -382,7 +384,7 @@ def build(srt_path, geo_path, audio_end):
 
     sc = S(120)
     lightning(sc, c(120), 360, 330, h=380)
-    sprite(sc, "tank_column", c(120) + 0.2, 1000, 760, w=1100, dur=2.2)
+    sprite(sc, "tank_column", c(120) + 0.2, 980, 770, w=900, h=470, dur=2.2)
     big(sc, "BLITZKRIEG", c(120) + 2.4, 1100, 260, size=150)
     label(sc, "= lightning war", c(121), 1500, 440, size=66, color=BLUE)
 
@@ -537,7 +539,7 @@ def build(srt_path, geo_path, audio_end):
     dashed_arrow(sc, (560, 640), (900, 790), c(187) + 2.4, color=BLUE, bend=0.15)
     label(sc, "hope", c(186) + 2.2, 720, 600, size=46, color=BLUE)
     xmark(sc, 1060, 420, 120, c(188) + 0.9)
-    label(sc, "crush the USSR → Britain loses all hope", c(188) + 1.8, 1560, 600, size=50, color=RED,
+    label(sc, "crush the USSR = Britain loses all hope", c(188) + 1.8, 1560, 600, size=50, color=RED,
           max_w=560)
 
     sc = S(189)
@@ -553,8 +555,8 @@ def build(srt_path, geo_path, audio_end):
     sc = S(193)
     calendar(sc, c(193) - 0.1, 470, 500, "JUNE", "22", "1940", w=400, cross_year_t=c(193) + 2.4, new_year="1941")
     label(sc, "exactly *one year* later", c(194) + 0.2, 560, 900, size=58, color=INK)
-    sprite(sc, "key", c(194) + 1.4, 960, 330, h=150, dur=0.6)
-    label(sc, "clue #2!", c(194) + 1.8, 960, 450, size=40, color=RED)
+    sprite(sc, "key", c(194) + 1.4, 900, 330, h=140, dur=0.6)
+    label(sc, "clue #2!", c(194) + 1.8, 900, 450, size=40, color=RED)
     big(sc, "3,000,000+", c(195) + 0.6, 1440, 300, size=118)
     label(sc, "German soldiers", c(195) + 1.8, 1440, 450, size=56, color=BLUE)
     title(sc, "Operation Barbarossa", c(196) - 0.1, x=1400, y=720, anchor="mm", size=84)
@@ -588,7 +590,7 @@ def build(srt_path, geo_path, audio_end):
     for i, x in enumerate([1080, 1380, 1680]):
         sprite(sc, "soldiers", c(203) + 0.2 + 0.6 * i, x, 380, w=280, dur=0.7)
     label(sc, "another army... and another", c(203) + 2.0, 1380, 540, size=46, color=BLUE)
-    sprite(sc, "factory_train", c(204), 760, 820, w=640)
+    sprite(sc, "factory_train", c(204), 760, 800, w=560, h=360)
     arrow(sc, (1150, 830), (1650, 830), c(204) + 1.4, width=14, bend=0.0)
     label(sc, "EAST", c(204) + 1.8, 1400, 760, size=56, color=RED)
 
