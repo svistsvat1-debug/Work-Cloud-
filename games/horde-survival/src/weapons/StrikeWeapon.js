@@ -1,12 +1,16 @@
 /**
  * Marks random enemies on screen, then lightning strikes each mark (Lightning Mark).
  * The mark follows its target for a moment, so the strike is easy to read.
+ *
+ * Optional stats used by evolved versions (Thunder Crown):
+ *   chainChance / chainCount / chainRange  lightning jumps to nearby enemies
+ * Optional definition fields: glowRGB ("r, g, b"), markColor.
  */
 class StrikeWeapon extends Weapon {
   constructor(id, game) {
     super(id, game);
     this.marks = []; // { target, x, y, timer }
-    this.bolts = []; // lightning visuals: { x, y, time, points }
+    this.bolts = []; // lightning visuals: { x, y, time, points, impact }
   }
 
   fire() {
@@ -36,50 +40,81 @@ class StrikeWeapon extends Weapon {
   }
 
   strike(x, y) {
+    const hit = new Set();
     this.game.collisions.forEachEnemyInRadius(x, y, this.stats.strikeRadius, (enemy) => {
+      hit.add(enemy);
       this.hitAwayFromPlayer(enemy, this.stats.knockback);
     });
-    this.bolts.push({ x, y, time: 0, points: StrikeWeapon.makeBoltPath(x, y) });
+    this.bolts.push({ x, y, time: 0, impact: true, points: StrikeWeapon.makeBoltPath(x, y - 640, x, y) });
+    if (this.stats.chainChance) this.chain(x, y, hit);
   }
 
-  /** A zig-zag line from high above down to the target. */
-  static makeBoltPath(x, y) {
+  /** Thunder Crown: from the strike, lightning may jump to the nearest enemies not hit yet. */
+  chain(x, y, alreadyHit) {
+    const { chainChance, chainCount, chainRange } = this.stats;
+    let fromX = x;
+    let fromY = y;
+    for (let jump = 0; jump < chainCount; jump++) {
+      if (Math.random() >= chainChance) return;
+      const candidates = this.game.collisions.findNearestEnemies(fromX, fromY, 6, chainRange);
+      const next = candidates.find((enemy) => !alreadyHit.has(enemy));
+      if (!next) return;
+      alreadyHit.add(next);
+      this.hitAwayFromPlayer(next, this.stats.knockback);
+      this.bolts.push({ x: next.x, y: next.y, time: 0, impact: false, points: StrikeWeapon.makeBoltPath(fromX, fromY, next.x, next.y) });
+      fromX = next.x;
+      fromY = next.y;
+    }
+  }
+
+  /** A zig-zag line between two points. */
+  static makeBoltPath(fromX, fromY, toX, toY) {
     const points = [];
     const segments = 9;
-    const height = 640;
+    const length = Math.hypot(toX - fromX, toY - fromY);
+    // Jitter sideways (perpendicular to the line), so the zig-zag works in any direction.
+    const sideX = -(toY - fromY) / (length || 1);
+    const sideY = (toX - fromX) / (length || 1);
     for (let i = 0; i <= segments; i++) {
       const t = i / segments;
-      const jitter = i === 0 || i === segments ? 0 : MathUtils.randomRange(-34, 34);
-      points.push({ x: x + jitter + (1 - t) * 60, y: y - height * (1 - t) });
+      const jitter = i === 0 || i === segments ? 0 : MathUtils.randomRange(-1, 1) * Math.min(34, length * 0.08);
+      points.push({
+        x: fromX + (toX - fromX) * t + sideX * jitter,
+        y: fromY + (toY - fromY) * t + sideY * jitter,
+      });
     }
     return points;
   }
 
   render(ctx) {
-    // Marks: a pulsing ring that shrinks onto the target.
+    const glowRGB = this.definition.glowRGB || '120, 190, 255';
+
+    // Marks: a ring that shrinks onto the target.
+    ctx.strokeStyle = this.definition.markColor || '#9fd8ff';
+    ctx.lineWidth = 4;
     for (const mark of this.marks) {
       const progress = 1 - mark.timer / this.stats.markDelay;
-      ctx.strokeStyle = '#9fd8ff';
-      ctx.lineWidth = 4;
       ctx.beginPath();
       ctx.arc(mark.x, mark.y, 60 - 30 * progress, 0, Math.PI * 2);
       ctx.stroke();
     }
 
-    // Lightning bolts: a wide soft glow under a thin bright core.
+    // Lightning: a wide soft glow under a thin bright core.
     for (const bolt of this.bolts) {
       const alpha = 1 - bolt.time / StrikeWeapon.BOLT_TIME;
-      for (const [width, color] of [[16, `rgba(120, 190, 255, ${alpha * 0.45})`], [5, `rgba(255, 255, 255, ${alpha})`]]) {
+      for (const [width, color] of [[16, `rgba(${glowRGB}, ${alpha * 0.45})`], [5, `rgba(255, 255, 255, ${alpha})`]]) {
         ctx.strokeStyle = color;
         ctx.lineWidth = width;
         ctx.beginPath();
         bolt.points.forEach((point, index) => (index === 0 ? ctx.moveTo(point.x, point.y) : ctx.lineTo(point.x, point.y)));
         ctx.stroke();
       }
-      ctx.fillStyle = `rgba(190, 225, 255, ${alpha * 0.5})`;
-      ctx.beginPath();
-      ctx.arc(bolt.x, bolt.y, this.stats.strikeRadius * (0.6 + 0.4 * alpha), 0, Math.PI * 2);
-      ctx.fill();
+      if (bolt.impact) {
+        ctx.fillStyle = `rgba(${glowRGB}, ${alpha * 0.5})`;
+        ctx.beginPath();
+        ctx.arc(bolt.x, bolt.y, this.stats.strikeRadius * (0.6 + 0.4 * alpha), 0, Math.PI * 2);
+        ctx.fill();
+      }
     }
   }
 }

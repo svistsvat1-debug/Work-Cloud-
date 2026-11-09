@@ -21,12 +21,17 @@ class EffectsSystem {
 
   /** A number that floats up and fades out. */
   spawnDamageNumber(x, y, amount, color = '#ffffff') {
+    this.spawnText(x, y, String(Math.round(amount)), color);
+  }
+
+  /** Any short text that floats up and fades out (damage, "+12 HP"...). */
+  spawnText(x, y, text, color = '#ffffff') {
     const config = GameConfig.effects;
     if (this.damageNumbers.length >= config.maxDamageNumbers) this.damageNumbers.shift();
     this.damageNumbers.push({
       x: x + MathUtils.randomRange(-14, 14),
       y,
-      text: String(Math.round(amount)),
+      text,
       color,
       time: 0,
       duration: config.damageNumberDuration,

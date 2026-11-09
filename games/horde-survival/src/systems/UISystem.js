@@ -177,9 +177,20 @@ class UISystem {
     const weaponsTop = barY + barHeight + 16;
     const passivesTop = weaponsTop + size + 10;
 
+    const readyToEvolve = new Set(this.game.upgrades.availableEvolutions().map((evolution) => evolution.weapon));
     this.game.weapons.weapons.forEach((weapon, index) => {
-      const badge = weapon.isMaxLevel() ? 'MAX' : String(weapon.level);
-      this.drawSlot(ctx, weapon.definition.icon, x + index * (size + 10), weaponsTop, size, badge);
+      const left = x + index * (size + 10);
+      if (weapon.isEvolved) {
+        // Evolved weapons: thick golden frame and an EVO badge.
+        this.drawFrame(ctx, left, weaponsTop, size, '#ff9cf0', 5);
+        this.drawSlot(ctx, weapon.definition.icon, left, weaponsTop, size, 'EVO');
+        return;
+      }
+      // Ready to evolve (max level + its passive): a pulsing frame hints "open a chest!".
+      if (readyToEvolve.has(weapon.id) && Math.floor(this.game.survivalTime * 3) % 2 === 0) {
+        this.drawFrame(ctx, left, weaponsTop, size, '#ffe08a', 3);
+      }
+      this.drawSlot(ctx, weapon.definition.icon, left, weaponsTop, size, weapon.isMaxLevel() ? 'MAX' : String(weapon.level));
     });
 
     const player = this.game.player;
@@ -188,6 +199,12 @@ class UISystem {
       const badge = level >= GameConfig.passives.maxLevel ? 'MAX' : String(level);
       this.drawSlot(ctx, PassiveDefinitions[id].icon, x + index * (size + 10), passivesTop, size * 0.8, badge);
     });
+  }
+
+  drawFrame(ctx, left, top, size, color, width) {
+    ctx.strokeStyle = color;
+    ctx.lineWidth = width;
+    ctx.strokeRect(left - 4, top - 4, size + 8, size + 8);
   }
 
   drawSlot(ctx, iconKey, left, top, size, badge) {
@@ -200,7 +217,7 @@ class UISystem {
       size: 18,
       weight: 'bold',
       align: 'center',
-      color: badge === 'MAX' ? '#ffd166' : '#ffffff',
+      color: badge === 'EVO' ? '#ff9cf0' : badge === 'MAX' ? '#ffd166' : '#ffffff',
     });
   }
 

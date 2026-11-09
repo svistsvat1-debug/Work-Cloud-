@@ -19,8 +19,13 @@ class Weapon {
     return this.definition.name;
   }
 
+  /** Evolved weapons are already at their peak: their only level is the max level. */
+  get isEvolved() {
+    return Boolean(this.definition.isEvolution);
+  }
+
   get maxLevel() {
-    return GameConfig.weapons.maxLevel;
+    return this.isEvolved ? 1 : GameConfig.weapons.maxLevel;
   }
 
   isMaxLevel() {

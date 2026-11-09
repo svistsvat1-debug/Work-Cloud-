@@ -15,6 +15,7 @@ class ChestScreen {
   open(rewards) {
     this.rewards = rewards;
     this.time = 0;
+    this.hasEvolution = rewards.some((reward) => reward.kind === 'evolution');
   }
 
   /** Seconds from opening until the last reward is fully visible. */
@@ -43,12 +44,14 @@ class ChestScreen {
     ctx.fillStyle = 'rgba(8, 6, 14, 0.82)';
     ctx.fillRect(0, 0, width, height);
 
-    DrawUtils.text(ctx, opened ? 'TREASURE!' : 'Opening chest...', centerX, 110, {
-      size: 72,
-      weight: 'bold',
-      align: 'center',
-      color: '#ffd166',
-    });
+    let title = opened ? 'TREASURE!' : 'Opening chest...';
+    let titleColor = '#ffd166';
+    if (opened && this.hasEvolution) {
+      // The big moment: pulsing pink-gold title.
+      title = 'WEAPON EVOLVED!';
+      titleColor = Math.floor(this.time * 6) % 2 === 0 ? '#ff9cf0' : '#ffe08a';
+    }
+    DrawUtils.text(ctx, title, centerX, 110, { size: 72, weight: 'bold', align: 'center', color: titleColor });
 
     if (opened) this.renderLightRays(ctx, centerX, chestY);
 
@@ -77,14 +80,14 @@ class ChestScreen {
     }
   }
 
-  /** Rotating golden rays behind the open chest. */
+  /** Rotating light rays behind the open chest (pink and faster for an evolution). */
   renderLightRays(ctx, x, y) {
-    const rays = 12;
-    const spin = this.time * 0.6;
+    const rays = this.hasEvolution ? 18 : 12;
+    const spin = this.time * (this.hasEvolution ? 1.2 : 0.6);
     ctx.save();
     ctx.translate(x, y);
-    ctx.globalAlpha = 0.28;
-    ctx.fillStyle = '#ffe9a8';
+    ctx.globalAlpha = this.hasEvolution ? 0.36 : 0.28;
+    ctx.fillStyle = this.hasEvolution ? '#ffc6f5' : '#ffe9a8';
     for (let i = 0; i < rays; i++) {
       const angle = spin + (i * Math.PI * 2) / rays;
       ctx.beginPath();
@@ -98,27 +101,56 @@ class ChestScreen {
   }
 
   renderRewards(ctx) {
-    const cardWidth = 340;
     const cardHeight = 330;
     const gap = 40;
-    const total = this.rewards.length * cardWidth + (this.rewards.length - 1) * gap;
-    const startX = (this.game.width - total) / 2;
+    const widths = this.rewards.map((reward) => (reward.kind === 'evolution' ? 460 : 340));
+    const total = widths.reduce((sum, width) => sum + width, 0) + (this.rewards.length - 1) * gap;
+    let left = (this.game.width - total) / 2;
 
     this.rewards.forEach((reward, index) => {
+      const cardWidth = widths[index];
+      const x = left + cardWidth / 2;
+      left += cardWidth + gap;
+
       const appearAt = ChestScreen.OPEN_AT + 0.3 + index * ChestScreen.REWARD_DELAY;
       const progress = MathUtils.clamp((this.time - appearAt) / 0.25, 0, 1);
       if (progress <= 0) return;
 
       // Pop in: grows from 60% to 100% and fades in.
       const scale = 0.6 + 0.4 * progress;
-      const x = startX + index * (cardWidth + gap) + cardWidth / 2;
-      const y = 520 + cardHeight / 2;
       ctx.save();
       ctx.globalAlpha = progress;
-      ctx.translate(x, y);
+      ctx.translate(x, 520 + cardHeight / 2);
       ctx.scale(scale, scale);
-      this.renderRewardCard(ctx, reward, cardWidth, cardHeight);
+      if (reward.kind === 'evolution') this.renderEvolutionCard(ctx, reward, cardWidth, cardHeight);
+      else this.renderRewardCard(ctx, reward, cardWidth, cardHeight);
       ctx.restore();
+    });
+  }
+
+  /** The evolution card: old weapon -> new weapon, with a glowing animated border. */
+  renderEvolutionCard(ctx, reward, width, height) {
+    const left = -width / 2;
+    const top = -height / 2;
+    DrawUtils.roundRect(ctx, left, top, width, height, 24);
+    ctx.fillStyle = '#2d1838';
+    ctx.fill();
+    ctx.lineWidth = 6 + Math.sin(this.time * 8) * 2;
+    ctx.strokeStyle = Math.floor(this.time * 6) % 2 === 0 ? '#ff9cf0' : '#ffe08a';
+    ctx.stroke();
+
+    const sprites = this.game.sprites;
+    ctx.globalAlpha *= 0.75;
+    ctx.drawImage(sprites[reward.fromIcon], -150, top + 48, 86, 86);
+    ctx.globalAlpha /= 0.75;
+    DrawUtils.text(ctx, '→', -30, top + 62, { size: 52, weight: 'bold', align: 'center', color: '#ffe08a' });
+    ctx.drawImage(sprites[reward.icon], 30, top + 26, 130, 130);
+
+    DrawUtils.text(ctx, `${reward.fromName} evolved into`, 0, top + 172, { size: 24, align: 'center', color: '#d7e0ea' });
+    DrawUtils.text(ctx, reward.name, 0, top + 206, { size: 38, weight: 'bold', align: 'center', color: '#ff9cf0' });
+    ctx.font = `24px ${GameConfig.ui.font}`;
+    DrawUtils.wrapText(ctx, reward.effect, width - 50).slice(0, 2).forEach((line, index) => {
+      DrawUtils.text(ctx, line, 0, top + 258 + index * 30, { size: 24, align: 'center', color: '#ffe08a' });
     });
   }
 

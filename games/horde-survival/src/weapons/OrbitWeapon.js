@@ -41,6 +41,18 @@ class OrbitWeapon extends Weapon {
   render(ctx, sprites) {
     const size = this.stats.bladeDrawSize * this.stats.size;
     const sprite = sprites[this.definition.sprite];
+
+    // Evolved blades leave a faint ring along their path.
+    if (this.definition.orbitTrailColor && this.blades.length > 0) {
+      const player = this.game.player;
+      const first = this.blades[0];
+      ctx.strokeStyle = this.definition.orbitTrailColor;
+      ctx.lineWidth = 26;
+      ctx.beginPath();
+      ctx.arc(player.x, player.y, Math.hypot(first.x - player.x, first.y - player.y), 0, Math.PI * 2);
+      ctx.stroke();
+    }
+
     for (const blade of this.blades) {
       // Point the blade along its path, plus a fast spin for style.
       DrawUtils.rotated(ctx, sprite, blade.x, blade.y, size, blade.angle + Math.PI / 2 + this.angle * 2);

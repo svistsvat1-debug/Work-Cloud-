@@ -62,9 +62,10 @@ class UpgradeSystem {
     const weapons = this.game.weapons;
     const options = [];
     for (const [id, definition] of Object.entries(WeaponDefinitions)) {
+      if (definition.isEvolution) continue; // evolved weapons only come from chests
       const owned = weapons.getWeapon(id);
       if (owned && !owned.isMaxLevel()) options.push(this.describeWeaponLevel(owned));
-      if (!owned && weapons.hasFreeSlot()) options.push(this.describeNewWeapon(id, definition));
+      if (!weapons.ownsOrEvolved(id) && weapons.hasFreeSlot()) options.push(this.describeNewWeapon(id, definition));
     }
     return options;
   }
@@ -183,38 +184,86 @@ class UpgradeSystem {
     const player = this.game.player;
     const rewards = [];
 
-    // How many item upgrades: 1, plus a chance for a 2nd and then a 3rd (luck helps).
-    let itemCount = 1;
-    for (const chance of config.extraRewardChances) {
-      if (Math.random() >= chance + player.stats.luck) break;
-      itemCount += 1;
+    // An evolution is the best possible reward: if one is ready, it IS the item reward.
+    const evolution = this.pickEvolution();
+    let itemCount = 0;
+    if (evolution) {
+      rewards.push(this.evolve(evolution));
+    } else {
+      // 1 item upgrade, plus a chance for a 2nd and then a 3rd (luck helps).
+      itemCount = 1;
+      for (const chance of config.extraRewardChances) {
+        if (Math.random() >= chance + player.stats.luck) break;
+        itemCount += 1;
+      }
     }
 
-    const chosen = new Set();
+    // (Item upgrades below are skipped when the chest gave an evolution.)
+    const chosenItems = new Set();
     for (let i = 0; i < itemCount; i++) {
       // Different items when possible; never an item that is already maxed.
-      let candidates = this.upgradableItems().filter((item) => !chosen.has(item.id));
+      let candidates = this.upgradableItems().filter((item) => !chosenItems.has(item.id));
       if (candidates.length === 0) candidates = this.upgradableItems();
       if (candidates.length === 0) break;
       const item = MathUtils.randomItem(candidates);
-      chosen.add(item.id);
+      chosenItems.add(item.id);
       rewards.push(this.giveItemLevel(item));
     }
 
-    // Coins: always. Extra coins if there was nothing left to upgrade.
+    return this.addChestExtras(rewards);
+  }
+
+  /** Coins always; healing when hurt or when nothing could be upgraded. */
+  addChestExtras(rewards) {
+    const config = GameConfig.chests;
+    const player = this.game.player;
+    const gotItems = rewards.length > 0;
+
     const minutes = this.game.survivalTime / 60;
     let coins = MathUtils.randomInt(config.coins.min, config.coins.max) + Math.floor(minutes * config.coins.perMinute);
-    if (rewards.length === 0) coins += config.fallbackCoins;
+    if (!gotItems) coins += config.fallbackCoins;
     this.game.addCoins(coins);
     rewards.push({ kind: 'coins', icon: 'iconCoins', title: 'COINS', name: 'A pile of coins', effect: `+${coins}`, color: '#ffd166' });
 
-    // Healing: when hurt, or when everything is maxed.
-    if (player.currentHealth < player.maxHealth * config.healBelowFraction || chosen.size === 0) {
+    if (player.currentHealth < player.maxHealth * config.healBelowFraction || !gotItems) {
       const amount = Math.round(player.maxHealth * config.healFraction);
       player.heal(amount);
       rewards.push({ kind: 'heal', icon: 'iconHeal', title: 'HEAL', name: 'Healing light', effect: `+${amount} HP`, color: '#7ee08a' });
     }
     return rewards;
+  }
+
+  // ---------------------------------------------------------------- Evolutions
+
+  /** Evolutions the player qualifies for right now (rules in EvolutionDefinitions.js). */
+  availableEvolutions() {
+    const { weapons, player } = this.game;
+    return EvolutionDefinitions.filter((evolution) => {
+      const weapon = weapons.getWeapon(evolution.weapon);
+      return weapon && weapon.isMaxLevel() && player.getPassiveLevel(evolution.passive) > 0;
+    });
+  }
+
+  /** One random evolution out of the possible ones (or null). */
+  pickEvolution() {
+    const possible = this.availableEvolutions();
+    return possible.length > 0 ? MathUtils.randomItem(possible) : null;
+  }
+
+  evolve(evolution) {
+    const before = this.game.weapons.getWeapon(evolution.weapon);
+    const after = this.game.weapons.evolve(evolution.weapon, evolution.result);
+    this.game.weaponsEvolved.push(after.name);
+    return {
+      kind: 'evolution',
+      icon: after.definition.icon,
+      fromIcon: before.definition.icon,
+      title: 'EVOLVED!',
+      name: after.name,
+      fromName: before.name,
+      effect: after.definition.tagline,
+      color: '#ff9cf0',
+    };
   }
 
   /** Owned weapons and passives that can still level up. */

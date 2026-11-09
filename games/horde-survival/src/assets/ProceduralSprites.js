@@ -16,8 +16,11 @@ const ProceduralSprites = {
       boss: this.createBoss(),
       chest: this.createChest(false),
       chestOpen: this.createChest(true),
-      arcaneBolt: this.createProjectile(),
+      arcaneBolt: this.createBolt(),
+      stormBolt: this.createBolt({ tail: '255, 120, 230', light: '255, 225, 250', mid: '255, 110, 220', edge: '160, 60, 255' }),
       orbitBlade: this.createOrbitBlade(),
+      celestialBlade: this.createOrbitBlade({ glow: '255, 220, 120', steelLight: '#fff8d6', steelDark: '#e0b84a', guard: '#ffffff' }),
+      ...this.createEvolvedIcons(),
       gemBlue: this.createGem('#4fc3ff', '#d2f1ff', '#1b5f99'),
       gemGreen: this.createGem('#4fe07a', '#d4ffdf', '#1d7a3a'),
       gemRed: this.createGem('#ff5a6e', '#ffd0d6', '#9b1f30'),
@@ -604,15 +607,18 @@ const ProceduralSprites = {
     return canvas;
   },
 
-  /** A glowing magic bolt flying to the right (the game rotates it toward the target). */
-  createProjectile() {
+  /**
+   * A glowing magic bolt flying to the right (the game rotates it toward the target).
+   * `palette` (RGB strings) lets evolved weapons reuse the same shape in other colors.
+   */
+  createBolt(palette = { tail: '120, 220, 255', light: '210, 250, 255', mid: '110, 220, 255', edge: '60, 160, 255' }) {
     const canvas = this.createCanvas();
     const ctx = canvas.getContext('2d');
 
     // Tail
     const tail = ctx.createLinearGradient(4, 0, 91, 0);
-    tail.addColorStop(0, 'rgba(120, 220, 255, 0)');
-    tail.addColorStop(1, 'rgba(170, 240, 255, 0.9)');
+    tail.addColorStop(0, `rgba(${palette.tail}, 0)`);
+    tail.addColorStop(1, `rgba(${palette.light}, 0.9)`);
     ctx.fillStyle = tail;
     ctx.beginPath();
     ctx.moveTo(4, 91);
@@ -623,9 +629,9 @@ const ProceduralSprites = {
 
     // Glow
     const glow = ctx.createRadialGradient(91, 91, 0, 91, 91, 52);
-    glow.addColorStop(0, 'rgba(210, 250, 255, 1)');
-    glow.addColorStop(0.35, 'rgba(110, 220, 255, 0.85)');
-    glow.addColorStop(1, 'rgba(60, 160, 255, 0)');
+    glow.addColorStop(0, `rgba(${palette.light}, 1)`);
+    glow.addColorStop(0.35, `rgba(${palette.mid}, 0.85)`);
+    glow.addColorStop(1, `rgba(${palette.edge}, 0)`);
     ctx.fillStyle = glow;
     this.circle(ctx, 91, 91, 52);
     ctx.fill();
@@ -762,13 +768,13 @@ const ProceduralSprites = {
   },
 
   /** A spinning dagger for the Orbiting Blade (points up; the game rotates it). */
-  createOrbitBlade() {
+  createOrbitBlade(colors = { glow: '180, 220, 255', steelLight: '#f4f8ff', steelDark: '#93a4bd', guard: '#e0b84a' }) {
     const canvas = this.createCanvas();
     const ctx = canvas.getContext('2d');
 
     const glow = ctx.createRadialGradient(91, 80, 4, 91, 80, 86);
-    glow.addColorStop(0, 'rgba(180, 220, 255, 0.55)');
-    glow.addColorStop(1, 'rgba(180, 220, 255, 0)');
+    glow.addColorStop(0, `rgba(${colors.glow}, 0.55)`);
+    glow.addColorStop(1, `rgba(${colors.glow}, 0)`);
     ctx.fillStyle = glow;
     this.circle(ctx, 91, 80, 86);
     ctx.fill();
@@ -779,8 +785,8 @@ const ProceduralSprites = {
 
     // Blade
     const steel = ctx.createLinearGradient(70, 0, 112, 0);
-    steel.addColorStop(0, '#f4f8ff');
-    steel.addColorStop(1, '#93a4bd');
+    steel.addColorStop(0, colors.steelLight);
+    steel.addColorStop(1, colors.steelDark);
     ctx.fillStyle = steel;
     ctx.beginPath();
     ctx.moveTo(91, 10);
@@ -801,7 +807,7 @@ const ProceduralSprites = {
     // Crossguard, grip, pommel
     ctx.strokeStyle = '#1c2230';
     ctx.lineWidth = 5;
-    ctx.fillStyle = '#e0b84a';
+    ctx.fillStyle = colors.guard;
     this.roundRect(ctx, 60, 124, 62, 14, 6);
     ctx.fill();
     ctx.stroke();
@@ -867,8 +873,43 @@ const ProceduralSprites = {
     };
   },
 
-  /** Badge + symbol. drawSymbol(ctx) only builds a path; it is filled white with a dark outline. */
-  createIcon(color, drawSymbol) {
+  /** Icons for evolved weapons: richer colors and a golden inner frame. */
+  createEvolvedIcons() {
+    return {
+      iconArcaneStorm: this.createIcon('#b8329c', (ctx) => {
+        // Two bolts
+        ctx.beginPath();
+        for (const [x, y] of [[118, 62], [92, 110]]) {
+          ctx.moveTo(x + 22, y);
+          ctx.arc(x, y, 22, 0, Math.PI * 2);
+          ctx.moveTo(x - 16, y + 14);
+          ctx.lineTo(x - 56, y + 50);
+          ctx.lineTo(x - 6, y + 22);
+          ctx.closePath();
+        }
+      }, true),
+      iconCelestialBlades: this.createIcon('#c9930f', (ctx) => this.star(ctx, 91, 91, 6, 64, 18), true),
+      iconDivineNova: this.createIcon('#e0a93a', (ctx) => this.star(ctx, 91, 91, 12, 66, 34), true),
+      iconThunderCrown: this.createIcon('#3657b8', (ctx) => {
+        // A crown with a lightning bolt on it
+        ctx.beginPath();
+        ctx.moveTo(34, 140);
+        ctx.lineTo(34, 62);
+        ctx.lineTo(62, 92);
+        ctx.lineTo(91, 46);
+        ctx.lineTo(120, 92);
+        ctx.lineTo(148, 62);
+        ctx.lineTo(148, 140);
+        ctx.closePath();
+      }, true),
+    };
+  },
+
+  /**
+   * Badge + symbol. drawSymbol(ctx) only builds a path; it is filled white with a dark outline.
+   * evolved = true adds a golden inner frame.
+   */
+  createIcon(color, drawSymbol, evolved = false) {
     const canvas = this.createCanvas();
     const ctx = canvas.getContext('2d');
 
@@ -878,6 +919,12 @@ const ProceduralSprites = {
     ctx.lineWidth = 8;
     ctx.strokeStyle = 'rgba(0, 0, 0, 0.55)';
     ctx.stroke();
+    if (evolved) {
+      this.roundRect(ctx, 22, 22, 138, 138, 26);
+      ctx.lineWidth = 5;
+      ctx.strokeStyle = '#ffe08a';
+      ctx.stroke();
+    }
     this.roundRect(ctx, 24, 20, 134, 56, 24);
     ctx.fillStyle = 'rgba(255, 255, 255, 0.16)';
     ctx.fill();

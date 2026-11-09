@@ -61,6 +61,7 @@ class Game {
     this.survivalTime = 0;
     this.kills = 0;
     this.bossesDefeated = 0;
+    this.weaponsEvolved = []; // names of weapons evolved this run
     this.runCoins = 0; // coins earned during this run
 
     this.spawner.reset();

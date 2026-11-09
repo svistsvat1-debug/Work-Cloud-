@@ -15,11 +15,30 @@ class WeaponSystem {
   }
 
   addWeapon(id) {
-    const definition = WeaponDefinitions[id];
-    const WeaponClass = WeaponSystem.BEHAVIORS[definition.behavior];
-    const weapon = new WeaponClass(id, this.game);
+    const weapon = this.createWeapon(id);
     this.weapons.push(weapon);
     return weapon;
+  }
+
+  createWeapon(id) {
+    const definition = WeaponDefinitions[id];
+    const WeaponClass = WeaponSystem.BEHAVIORS[definition.behavior];
+    return new WeaponClass(id, this.game);
+  }
+
+  /** Replaces a weapon with its evolved form, in the same slot. */
+  evolve(weaponId, evolvedId) {
+    const index = this.weapons.findIndex((weapon) => weapon.id === weaponId);
+    if (index === -1) return null;
+    const evolved = this.createWeapon(evolvedId);
+    this.weapons[index] = evolved;
+    return evolved;
+  }
+
+  /** True if the player has this weapon, or already evolved it into something else. */
+  ownsOrEvolved(id) {
+    if (this.getWeapon(id)) return true;
+    return EvolutionDefinitions.some((evolution) => evolution.weapon === id && this.getWeapon(evolution.result));
   }
 
   getWeapon(id) {

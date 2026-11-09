@@ -135,6 +135,106 @@ const WeaponDefinitions = {
   },
 };
 
+// ---------------------------------------------------------------- Evolved weapons
+// Created only through EvolutionDefinitions (never offered on level-up).
+// They have no levels: an evolved weapon is already at its peak.
+// Extra fields are read by the behavior classes (heal, chains, colors...).
+Object.assign(WeaponDefinitions, {
+  arcaneStorm: {
+    name: 'Arcane Storm',
+    description: 'A rapid storm of piercing arcane bolts.',
+    tagline: 'Fires faster and pierces whole lines of enemies',
+    behavior: 'projectile',
+    icon: 'iconArcaneStorm',
+    projectileSprite: 'stormBolt',
+    amountName: 'bolt',
+    isEvolution: true,
+    base: {
+      damage: 32,
+      cooldown: 0.24,
+      amount: 2,
+      projectileSpeed: 1400,
+      pierce: 6,
+      range: 1000,
+      knockback: 320,
+      lifetime: 2,
+      projectileRadius: 18,
+      projectileDrawSize: 96,
+    },
+    levels: [],
+  },
+
+  celestialBlades: {
+    name: 'Celestial Blades',
+    description: 'A ring of golden blades that shreds anything nearby.',
+    tagline: 'More blades, bigger, much stronger',
+    behavior: 'orbit',
+    icon: 'iconCelestialBlades',
+    sprite: 'celestialBlade',
+    amountName: 'blade',
+    isEvolution: true,
+    orbitTrailColor: 'rgba(255, 224, 138, 0.18)', // faint golden ring along the orbit
+    base: {
+      damage: 36,
+      amount: 7,
+      orbitRadius: 150,
+      rotationSpeed: 4.2,
+      size: 1.9,
+      hitCooldown: 0.35,
+      knockback: 300,
+      bladeRadius: 24,
+      bladeDrawSize: 76,
+    },
+    levels: [],
+  },
+
+  divineNova: {
+    name: 'Divine Nova',
+    description: 'A huge, lasting wave of holy light that heals you as it hits.',
+    tagline: 'Bigger pulse, heals you on hit',
+    behavior: 'pulse',
+    icon: 'iconDivineNova',
+    isEvolution: true,
+    ringColor: '#fff4c2',
+    fillColor: '#ffe9a0',
+    base: {
+      damage: 60,
+      cooldown: 2.1,
+      radius: 430,
+      knockback: 620,
+      expandTime: 0.55,
+      fadeTime: 0.7, // the light lingers longer
+      healPerHit: 1, // HP restored per enemy hit...
+      maxHealPerPulse: 12, // ...but at most this much per pulse
+    },
+    levels: [],
+  },
+
+  thunderCrown: {
+    name: 'Thunder Crown',
+    description: 'A crown of storms: lightning rains down and jumps between enemies.',
+    tagline: 'More strikes that chain to nearby enemies',
+    behavior: 'strike',
+    icon: 'iconThunderCrown',
+    amountName: 'strike',
+    isEvolution: true,
+    glowRGB: '255, 214, 102', // golden lightning instead of blue
+    markColor: '#ffd166',
+    base: {
+      damage: 70,
+      cooldown: 1.3,
+      amount: 8,
+      strikeRadius: 95,
+      markDelay: 0.25,
+      knockback: 160,
+      chainChance: 0.5, // chance for each jump to the next enemy
+      chainCount: 3, // at most this many jumps
+      chainRange: 280,
+    },
+    levels: [],
+  },
+});
+
 /** How each stat change is written on a level-up card, e.g. { damage: 5 } -> "+5 damage". */
 const WeaponStatText = {
   damage: (value) => `+${value} damage`,
