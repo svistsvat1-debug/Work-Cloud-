@@ -45,7 +45,7 @@ def cutout(img, paper=(250, 249, 245)):
     work = cv2.GaussianBlur(img, (3, 3), 0)
     mask = np.zeros((h + 2, w + 2), np.uint8)
     flags = 4 | cv2.FLOODFILL_MASK_ONLY | (255 << 8)
-    lo = up = (7, 7, 7)
+    lo = up = (5, 5, 5)
     for x in range(0, w, 16):
         for y in (0, h - 1):
             if mask[y + 1, x + 1] == 0:
@@ -55,20 +55,28 @@ def cutout(img, paper=(250, 249, 245)):
             if mask[y + 1, x + 1] == 0:
                 cv2.floodFill(work, mask, (x, y), 0, lo, up, flags)
     bg = mask[1:-1, 1:-1] > 0
-    # light, low-saturation pixels touching the background are background too (halo/sticker rim)
     a16 = img.astype(np.int16)
-    light = (a16.min(2) > 200) & (a16.max(2) - a16.min(2) < 28)
-    for _ in range(6):
-        grow = cv2.dilate(bg.astype(np.uint8), np.ones((3, 3), np.uint8)).astype(bool) & light
-        if (grow & ~bg).sum() == 0:
-            break
-        bg |= grow
     fg = (~bg).astype(np.uint8)
     fg = cv2.morphologyEx(fg, cv2.MORPH_OPEN, np.ones((3, 3), np.uint8))
+    # silhouette: close small gaps in the outline, then fill every enclosed hole, so light areas
+    # inside the object (that the flood fill leaked into) stay part of the sprite
+    k = max(9, int(min(h, w) * 0.014))
+    sil = cv2.morphologyEx(fg, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (k, k)))
+    inv = (1 - sil).astype(np.uint8)
+    m2 = np.zeros((h + 2, w + 2), np.uint8)
+    for x in range(0, w, 8):
+        for y in (0, h - 1):
+            if inv[y, x] == 1 and m2[y + 1, x + 1] == 0:
+                cv2.floodFill(inv, m2, (x, y), 2)
+    for y in range(0, h, 8):
+        for x in (0, w - 1):
+            if inv[y, x] == 1 and m2[y + 1, x + 1] == 0:
+                cv2.floodFill(inv, m2, (x, y), 2)
+    fg = ((sil > 0) | (inv == 1)).astype(np.uint8)
     n, lab, st, _ = cv2.connectedComponentsWithStats(fg, connectivity=8)
     if n > 1:
         areas = st[1:, cv2.CC_STAT_AREA]
-        keep = [i + 1 for i, ar in enumerate(areas) if ar >= max(200, 0.02 * areas.max())]
+        keep = [i + 1 for i, ar in enumerate(areas) if ar >= max(400, 0.03 * areas.max())]
         fg = np.isin(lab, keep).astype(np.uint8)
     alpha = cv2.GaussianBlur(fg.astype(np.float32), (0, 0), 0.9)
     alpha = np.maximum(alpha, cv2.erode(fg, np.ones((3, 3), np.uint8)).astype(np.float32))
@@ -89,8 +97,18 @@ def cutout(img, paper=(250, 249, 245)):
 def main():
     spec = json.load(open(sys.argv[1]))
     out = sys.argv[2]
-    only = set(sys.argv[3:])
+    only = set(a for a in sys.argv[3:] if not a.startswith("--"))
     os.makedirs(os.path.join(out, "raw"), exist_ok=True)
+    if "--recut" in sys.argv:
+        for k in spec:
+            rp = os.path.join(out, "raw", k + ".png")
+            if (only and k not in only) or not os.path.exists(rp):
+                continue
+            cut = cutout(np.asarray(Image.open(rp).convert("RGB")))
+            if cut is not None:
+                Image.fromarray(cut, "RGBA").save(os.path.join(out, k + ".png"))
+        print("recut done")
+        return
     todo = [(k, v) for k, v in spec.items() if (not only or k in only)
             and not os.path.exists(os.path.join(out, "raw", k + ".png"))]
     print(f"{len(todo)} sprites to generate", flush=True)
