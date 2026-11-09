@@ -1,0 +1,25 @@
+/* The page is just a black stage. The canvas is centered and scaled by main.js. */
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#game-canvas {
+  display: block;
+  background: #0d1210;
+  /* Stops the browser from scrolling or zooming when the canvas is touched. */
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  outline: none;
+}

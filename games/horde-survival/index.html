@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Horde Survival</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <canvas id="game-canvas" width="1920" height="1080"></canvas>
+
+  <!--
+    Scripts load in this exact order. Each file defines one class or object.
+    We use classic scripts (not ES modules), so the game runs by simply
+    double-clicking index.html: no local server needed.
+  -->
+  <script src="src/config/GameConfig.js"></script>
+
+  <script src="src/core/MathUtils.js"></script>
+  <script src="src/core/Input.js"></script>
+  <script src="src/core/Camera.js"></script>
+
+  <script src="src/assets/ProceduralSprites.js"></script>
+
+  <script src="src/entities/Player.js"></script>
+  <script src="src/entities/Enemy.js"></script>
+  <script src="src/entities/Projectile.js"></script>
+  <script src="src/entities/XPGem.js"></script>
+
+  <script src="src/systems/Spawner.js"></script>
+  <script src="src/systems/CollisionSystem.js"></script>
+  <script src="src/systems/WeaponSystem.js"></script>
+  <script src="src/systems/Renderer.js"></script>
+  <script src="src/systems/UISystem.js"></script>
+
+  <script src="src/core/Game.js"></script>
+  <script src="src/main.js"></script>
+</body>
+</html>
