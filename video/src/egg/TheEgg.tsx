@@ -436,7 +436,7 @@ const CUES: Cue[] = [
   {f: 'poof', at: 5.12, db: -19},
   {f: 'poof', at: 5.24, db: -21},
   {f: 'whoosh', at: 6.02, db: -21},
-  {f: 'gulp', at: 6.12, db: -15},
+  {f: 'gulp', at: 5.85, db: -15},              // ElevenLabs take peaks 0.45 s in -> lands right after "back"
   {f: 'crowd', at: 6.46, db: -26, fadeIn: 0.25},
   {f: 'crowd', at: 9.75, db: -28, dur: 2.68, fadeOut: 0.2},
   {f: 'ticks', at: 6.72, db: -27},
@@ -444,7 +444,7 @@ const CUES: Cue[] = [
   {f: 'ticks', at: 8.42, db: -29},
   {f: 'ding', at: 9.14, db: -18},
   {f: 'ding', at: 11.72, db: -18},
-  {f: 'shimmer', at: 11.7, db: -25},
+  {f: 'shimmer', at: 10.36, db: -24},          // rising shimmer, peak (1.39 s in) on "you"
   {f: 'lowhit', at: 12.45, db: -13},
   {f: 'pop', at: 13.7, db: -18},
   {f: 'squeak', at: 16.42, db: -15},
