@@ -31,6 +31,7 @@ class Renderer {
 
     // The player is always drawn on top of enemies, so you never lose sight of yourself.
     player.render(ctx, sprites);
+    this.game.weapons.render(ctx, sprites); // blades, pulses, lightning
     for (const projectile of projectiles) projectile.render(ctx, sprites);
     effects.render(ctx);
 

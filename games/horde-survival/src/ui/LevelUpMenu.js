@@ -81,7 +81,7 @@ class LevelUpMenu {
     ctx.strokeStyle = hovered ? '#ffd166' : '#4a5878';
     ctx.stroke();
 
-    // Key number badge
+    // Key number badge (top-left)
     ctx.fillStyle = '#ffd166';
     ctx.beginPath();
     ctx.arc(card.x + 42, card.y + 42, 26, 0, Math.PI * 2);
@@ -93,32 +93,41 @@ class LevelUpMenu {
       color: '#1b2233',
     });
 
+    // Category tag (WEAPON / UPGRADE) in the top-right corner
+    const tagColor = LevelUpMenu.TAG_COLORS[choice.tag] || '#c9d3e0';
+    DrawUtils.text(ctx, choice.tag, card.x + card.width - 26, card.y + 26, {
+      size: 22,
+      weight: 'bold',
+      align: 'right',
+      color: tagColor,
+    });
+
     // Icon, name, level
-    const icon = this.game.sprites[choice.upgrade.icon];
-    ctx.drawImage(icon, centerX - 64, card.y + 36, 128, 128);
-    DrawUtils.text(ctx, choice.name, centerX, card.y + 186, { size: 38, weight: 'bold', align: 'center' });
-    DrawUtils.text(ctx, choice.levelText, centerX, card.y + 240, {
+    ctx.drawImage(this.game.sprites[choice.icon], centerX - 64, card.y + 36, 128, 128);
+    DrawUtils.text(ctx, choice.name, centerX, card.y + 182, { size: 38, weight: 'bold', align: 'center' });
+    DrawUtils.text(ctx, choice.levelText, centerX, card.y + 234, {
       size: 30,
       weight: 'bold',
       align: 'center',
       color: choice.isNew ? '#ffd166' : '#8fd3ff',
     });
 
-    // Description (wrapped to the card width) and the effect
-    ctx.font = `28px ${GameConfig.ui.font}`;
-    const lines = DrawUtils.wrapText(ctx, choice.description, card.width - 60);
-    lines.forEach((line, lineIndex) => {
-      DrawUtils.text(ctx, line, centerX, card.y + 300 + lineIndex * 36, {
-        size: 28,
-        align: 'center',
-        color: '#c9d3e0',
-      });
-    });
-    DrawUtils.text(ctx, choice.effectText, centerX, card.y + card.height - 84, {
-      size: 36,
-      weight: 'bold',
-      align: 'center',
-      color: '#7ee08a',
+    // Description and effect, wrapped to the card width
+    this.drawWrapped(ctx, choice.description, centerX, card.y + 290, card.width - 60, 28, 'normal', '#c9d3e0', 3);
+    this.drawWrapped(ctx, choice.effectText, centerX, card.y + card.height - 100, card.width - 50, 32, 'bold', '#7ee08a', 2);
+  }
+
+  drawWrapped(ctx, text, centerX, y, maxWidth, size, weight, color, maxLines) {
+    ctx.font = `${weight} ${size}px ${GameConfig.ui.font}`;
+    const lines = DrawUtils.wrapText(ctx, text, maxWidth).slice(0, maxLines);
+    lines.forEach((line, index) => {
+      DrawUtils.text(ctx, line, centerX, y + index * (size + 8), { size, weight, align: 'center', color });
     });
   }
 }
+
+/** Color of the category tag on each card. */
+LevelUpMenu.TAG_COLORS = {
+  WEAPON: '#ffad5c',
+  UPGRADE: '#8fd3ff',
+};

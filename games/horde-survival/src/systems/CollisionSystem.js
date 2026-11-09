@@ -1,5 +1,7 @@
 /**
- * CollisionSystem checks which objects touch each other.
+ * CollisionSystem checks which objects touch each other, and answers
+ * "which enemies are near this point?" for the weapons.
+ *
  * Everything uses circles: two circles touch when the distance between their
  * centers is smaller than the sum of their radii. Circles are smaller than the
  * sprites, so hits only count when things clearly overlap.
@@ -16,32 +18,20 @@ class CollisionSystem {
     this.pickupsVsPlayer();
   }
 
-  /** Pickups are collected when they reach the player's pickup radius. */
-  pickupsVsPlayer() {
-    const { player, pickups } = this.game;
-    for (const pickup of pickups) {
-      if (pickup.dead) continue;
-      const reach = player.pickupRadius + pickup.radius;
-      if (MathUtils.distanceSquared(player.x, player.y, pickup.x, pickup.y) < reach * reach) {
-        pickup.dead = true;
-        pickup.collect(this.game);
-      }
-    }
-  }
-
   static circlesOverlap(a, b) {
     const radii = a.radius + b.radius;
     return MathUtils.distanceSquared(a.x, a.y, b.x, b.y) < radii * radii;
   }
 
+  // ---------------------------------------------------------------- Collisions
+
   projectilesVsEnemies() {
     const { projectiles, enemies } = this.game;
     for (const projectile of projectiles) {
-      if (projectile.dead) continue;
       for (const enemy of enemies) {
+        if (projectile.dead) break; // used up its pierce
         if (enemy.dead || !CollisionSystem.circlesOverlap(projectile, enemy)) continue;
         projectile.hit(enemy, this.game);
-        break;
       }
     }
   }
@@ -74,6 +64,19 @@ class CollisionSystem {
     }
   }
 
+  /** Pickups are collected when they reach the player's pickup radius. */
+  pickupsVsPlayer() {
+    const { player, pickups } = this.game;
+    for (const pickup of pickups) {
+      if (pickup.dead) continue;
+      const reach = player.pickupRadius + pickup.radius;
+      if (MathUtils.distanceSquared(player.x, player.y, pickup.x, pickup.y) < reach * reach) {
+        pickup.dead = true;
+        pickup.collect(this.game);
+      }
+    }
+  }
+
   /**
    * If circles a and b overlap, moves them apart along the line between their centers.
    * aShare / bShare = how much of the overlap each one moves (0 = doesn't move).
@@ -99,5 +102,56 @@ class CollisionSystem {
     a.y += ny * overlap * aShare;
     b.x -= nx * overlap * bShare;
     b.y -= ny * overlap * bShare;
+  }
+
+  // ---------------------------------------------------------------- Queries for weapons
+
+  /** Calls fn(enemy) for every living enemy whose circle overlaps the circle (x, y, radius). */
+  forEachEnemyInRadius(x, y, radius, fn) {
+    for (const enemy of this.game.enemies) {
+      if (enemy.dead) continue;
+      const reach = radius + enemy.radius;
+      if (MathUtils.distanceSquared(x, y, enemy.x, enemy.y) < reach * reach) fn(enemy);
+    }
+  }
+
+  anyEnemyInRadius(x, y, radius) {
+    for (const enemy of this.game.enemies) {
+      if (enemy.dead) continue;
+      const reach = radius + enemy.radius;
+      if (MathUtils.distanceSquared(x, y, enemy.x, enemy.y) < reach * reach) return true;
+    }
+    return false;
+  }
+
+  /** Up to `count` living enemies closest to (x, y), nearest first, within maxDistance. */
+  findNearestEnemies(x, y, count, maxDistance) {
+    const maxDistanceSq = maxDistance * maxDistance;
+    const nearest = []; // sorted list of { enemy, distanceSq }, at most `count` long
+    for (const enemy of this.game.enemies) {
+      if (enemy.dead) continue;
+      const distanceSq = MathUtils.distanceSquared(x, y, enemy.x, enemy.y);
+      if (distanceSq > maxDistanceSq) continue;
+      if (nearest.length < count || distanceSq < nearest[nearest.length - 1].distanceSq) {
+        nearest.push({ enemy, distanceSq });
+        nearest.sort((a, b) => a.distanceSq - b.distanceSq);
+        if (nearest.length > count) nearest.pop();
+      }
+    }
+    return nearest.map((entry) => entry.enemy);
+  }
+
+  /** Up to `count` different living enemies that are on screen, picked at random. */
+  findRandomVisibleEnemies(count) {
+    const camera = this.game.camera;
+    const visible = this.game.enemies.filter((enemy) => !enemy.dead && camera.isVisible(enemy.x, enemy.y));
+    const picked = [];
+    while (picked.length < count && visible.length > 0) {
+      const index = Math.floor(Math.random() * visible.length);
+      picked.push(visible[index]);
+      visible[index] = visible[visible.length - 1]; // remove without shifting the whole array
+      visible.pop();
+    }
+    return picked;
   }
 }

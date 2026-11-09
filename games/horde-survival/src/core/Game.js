@@ -60,7 +60,7 @@ class Game {
     this.kills = 0;
 
     this.spawner.reset();
-    this.weapons.reset();
+    this.weapons.reset(); // also gives the starting weapon
     this.effects.reset();
     this.ui.reset();
     this.camera.follow(this.player);

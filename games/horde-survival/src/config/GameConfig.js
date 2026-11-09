@@ -116,15 +116,12 @@ const GameConfig = {
   },
 
   // ---------------------------------------------------------------- Weapons
+  // Each weapon's own numbers live in WeaponDefinitions.js.
   weapons: {
-    magicBolt: {
-      name: 'Magic Bolt',
-      cooldown: 0.6, // seconds between shots
-      damage: 10,
-      range: 950, // only enemies closer than this are targeted (about one screen)
-      knockback: 280, // push speed given to an enemy on hit
-      projectile: { speed: 900, radius: 12, drawSize: 64, lifetime: 2 },
-    },
+    startingWeapon: 'bolt',
+    maxSlots: 6, // how many different weapons the player can own
+    maxLevel: 8,
+    ownedUpgradeWeight: 1.3, // level-ups for owned weapons show up a bit more often than new ones
   },
 
   // ---------------------------------------------------------------- Spawning
@@ -184,6 +181,7 @@ const GameConfig = {
     enemyHealthBar: { widthFactor: 0.55, height: 5, offsetY: 0.42 },
     playerHealthBar: { x: 40, y: 50, width: 460, height: 30 },
     xpBar: { height: 26 },
+    slotIconSize: 60, // weapon icons under the HP bar
     restartButton: { x: 780, y: 690, width: 360, height: 84 },
   },
 };

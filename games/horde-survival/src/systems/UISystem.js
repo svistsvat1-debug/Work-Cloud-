@@ -39,6 +39,7 @@ class UISystem {
 
     this.renderXpBar(ctx, player);
     this.renderPlayerHealth(ctx, player);
+    this.renderWeaponSlots(ctx);
 
     // Top center: survival timer
     DrawUtils.text(ctx, MathUtils.formatTime(this.game.survivalTime), width / 2, 44, {
@@ -75,6 +76,31 @@ class UISystem {
       size: 21,
       weight: 'bold',
       align: 'center',
+    });
+  }
+
+  /** Owned weapons under the HP bar: icon + level badge ("MAX" at max level). */
+  renderWeaponSlots(ctx) {
+    const { x, y: barY, height: barHeight } = GameConfig.ui.playerHealthBar;
+    const size = GameConfig.ui.slotIconSize;
+    const top = barY + barHeight + 16;
+    this.game.weapons.weapons.forEach((weapon, index) => {
+      const left = x + index * (size + 10);
+      this.drawSlot(ctx, weapon.definition.icon, left, top, size, weapon.isMaxLevel() ? 'MAX' : String(weapon.level));
+    });
+  }
+
+  drawSlot(ctx, iconKey, left, top, size, badge) {
+    ctx.drawImage(this.game.sprites[iconKey], left, top, size, size);
+    ctx.font = `bold 18px ${GameConfig.ui.font}`;
+    const badgeWidth = Math.max(26, ctx.measureText(badge).width + 12);
+    ctx.fillStyle = 'rgba(10, 12, 20, 0.85)';
+    ctx.fillRect(left + size - badgeWidth, top + size - 22, badgeWidth, 22);
+    DrawUtils.text(ctx, badge, left + size - badgeWidth / 2, top + size - 22, {
+      size: 18,
+      weight: 'bold',
+      align: 'center',
+      color: badge === 'MAX' ? '#ffd166' : '#ffffff',
     });
   }
 

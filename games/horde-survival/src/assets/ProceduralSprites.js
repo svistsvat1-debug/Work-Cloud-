@@ -10,11 +10,13 @@ const ProceduralSprites = {
       player: this.createPlayer(),
       slime: this.createSlime(),
       bat: this.createBat(),
-      projectile: this.createProjectile(),
+      arcaneBolt: this.createProjectile(),
+      orbitBlade: this.createOrbitBlade(),
       gemBlue: this.createGem('#4fc3ff', '#d2f1ff', '#1b5f99'),
       gemGreen: this.createGem('#4fe07a', '#d4ffdf', '#1d7a3a'),
       gemRed: this.createGem('#ff5a6e', '#ffd0d6', '#9b1f30'),
       ...this.createUpgradeIcons(),
+      ...this.createWeaponIcons(),
     };
 
     // Tinted copies for hit feedback: red for the player, white flash for enemies.
@@ -347,6 +349,112 @@ const ProceduralSprites = {
         ctx.lineTo(112, 88);
         ctx.arc(91, 88, 21, 0, Math.PI, true);
         ctx.lineTo(70, 140);
+        ctx.closePath();
+      }),
+    };
+  },
+
+  /** A spinning dagger for the Orbiting Blade (points up; the game rotates it). */
+  createOrbitBlade() {
+    const canvas = this.createCanvas();
+    const ctx = canvas.getContext('2d');
+
+    const glow = ctx.createRadialGradient(91, 80, 4, 91, 80, 86);
+    glow.addColorStop(0, 'rgba(180, 220, 255, 0.55)');
+    glow.addColorStop(1, 'rgba(180, 220, 255, 0)');
+    ctx.fillStyle = glow;
+    this.circle(ctx, 91, 80, 86);
+    ctx.fill();
+
+    ctx.lineJoin = 'round';
+    ctx.lineWidth = 6;
+    ctx.strokeStyle = '#1c2230';
+
+    // Blade
+    const steel = ctx.createLinearGradient(70, 0, 112, 0);
+    steel.addColorStop(0, '#f4f8ff');
+    steel.addColorStop(1, '#93a4bd');
+    ctx.fillStyle = steel;
+    ctx.beginPath();
+    ctx.moveTo(91, 10);
+    ctx.lineTo(113, 70);
+    ctx.lineTo(102, 128);
+    ctx.lineTo(80, 128);
+    ctx.lineTo(69, 70);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(91, 22);
+    ctx.lineTo(91, 120);
+    ctx.stroke();
+
+    // Crossguard, grip, pommel
+    ctx.strokeStyle = '#1c2230';
+    ctx.lineWidth = 5;
+    ctx.fillStyle = '#e0b84a';
+    this.roundRect(ctx, 60, 124, 62, 14, 6);
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle = '#6b4a2f';
+    this.roundRect(ctx, 84, 138, 14, 28, 4);
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle = '#e0b84a';
+    this.circle(ctx, 91, 170, 8);
+    ctx.fill();
+    ctx.stroke();
+
+    return canvas;
+  },
+
+  /** Icons for the weapons (level-up cards and the HUD). */
+  createWeaponIcons() {
+    return {
+      iconBolt: this.createIcon('#5b6ee1', (ctx) => {
+        ctx.beginPath();
+        ctx.arc(108, 74, 30, 0, Math.PI * 2);
+        ctx.moveTo(84, 92);
+        ctx.lineTo(36, 146);
+        ctx.lineTo(96, 104);
+        ctx.closePath();
+      }),
+      iconBlade: this.createIcon('#7d8aa0', (ctx) => {
+        ctx.beginPath();
+        ctx.moveTo(91, 24);
+        ctx.lineTo(108, 70);
+        ctx.lineTo(100, 118);
+        ctx.lineTo(124, 118);
+        ctx.lineTo(124, 132);
+        ctx.lineTo(98, 132);
+        ctx.lineTo(98, 158);
+        ctx.lineTo(84, 158);
+        ctx.lineTo(84, 132);
+        ctx.lineTo(58, 132);
+        ctx.lineTo(58, 118);
+        ctx.lineTo(82, 118);
+        ctx.lineTo(74, 70);
+        ctx.closePath();
+      }),
+      iconPulse: this.createIcon('#d9a83a', (ctx) => {
+        // A ring (outer circle minus inner circle) around a dot
+        ctx.beginPath();
+        ctx.arc(91, 91, 58, 0, Math.PI * 2);
+        ctx.arc(91, 91, 40, 0, Math.PI * 2, true);
+        ctx.moveTo(113, 91);
+        ctx.arc(91, 91, 22, 0, Math.PI * 2);
+      }),
+      iconLightning: this.createIcon('#3e7bd6', (ctx) => {
+        ctx.beginPath();
+        ctx.moveTo(104, 20);
+        ctx.lineTo(50, 102);
+        ctx.lineTo(86, 102);
+        ctx.lineTo(70, 162);
+        ctx.lineTo(134, 74);
+        ctx.lineTo(98, 74);
+        ctx.lineTo(116, 20);
         ctx.closePath();
       }),
     };

@@ -15,6 +15,7 @@ class Enemy extends Entity {
     this.knockbackX = 0;
     this.knockbackY = 0;
     this.flashTimer = 0; // > 0 means "just got hit": draw the white flash
+    this.hitCooldowns = {}; // weapon id -> time when that weapon may hit again
     this.facing = 1;
     this.animTime = Math.random() * 10; // random start, so enemies don't animate in sync
   }
@@ -44,6 +45,15 @@ class Enemy extends Entity {
     if (Math.abs(chaseX) > 1) this.facing = Math.sign(chaseX);
     this.flashTimer = Math.max(0, this.flashTimer - dt);
     this.animTime += dt;
+  }
+
+  /** For weapons that touch enemies continuously (orbiting blades). */
+  canBeHitBy(weaponId, now) {
+    return !(this.hitCooldowns[weaponId] > now);
+  }
+
+  markHitBy(weaponId, readyAgainAt) {
+    this.hitCooldowns[weaponId] = readyAgainAt;
   }
 
   /** Adds a push (pixels per second) that fades out over a short time. */
