@@ -79,9 +79,12 @@ const GameConfig = {
   },
 
   // ---------------------------------------------------------------- Enemies
-  // spawnWeight: higher = appears more often.
-  // knockbackMultiplier: 1 = normal, higher = flies back further when hit.
-  // shadowOffset: how far below the center the shadow sits (bats fly, so theirs is lower).
+  // Which enemies appear when is decided by WaveDefinitions.js.
+  //   group: how many spawn together [min, max]
+  //   knockbackMultiplier: 1 = normal, lower = heavier (hardly pushed back)
+  //   shadowOffset: how far below the center the shadow sits (bats fly, so theirs is lower)
+  //   alwaysShowHealthBar: show the bar even before the first hit
+  //   chestChance: chance to drop a treasure chest (chests arrive in a later step)
   enemies: {
     slime: {
       name: 'Slime',
@@ -92,7 +95,7 @@ const GameConfig = {
       radius: 34,
       drawSize: 104,
       knockbackMultiplier: 1,
-      spawnWeight: 3,
+      group: [1, 3],
       wobble: null,
       animation: { style: 'squish', speed: 7, squash: 0.07 },
       shadowOffset: 0.4,
@@ -107,11 +110,58 @@ const GameConfig = {
       radius: 24,
       drawSize: 92,
       knockbackMultiplier: 1.4,
-      spawnWeight: 1,
+      group: [2, 4],
       wobble: { strength: 70, speed: 5 }, // sideways flutter while chasing
       animation: { style: 'flap', speed: 9, lift: 6, squash: 0.08 },
       shadowOffset: 0.55,
       color: '#b98af0',
+    },
+    crawler: {
+      name: 'Crawler',
+      maxHealth: 24,
+      speed: 105,
+      damage: 9,
+      xp: 2,
+      radius: 26, // a bit smaller than its body: easy to slip past
+      drawSize: 96,
+      knockbackMultiplier: 1.1,
+      group: [1, 3],
+      wobble: null,
+      animation: { style: 'scuttle', speed: 18, squash: 0.06 },
+      shadowOffset: 0.36,
+      color: '#ef8a3c',
+    },
+    brute: {
+      name: 'Brute',
+      maxHealth: 110,
+      speed: 52,
+      damage: 20,
+      xp: 5,
+      radius: 50,
+      drawSize: 150,
+      knockbackMultiplier: 0.3,
+      group: [1, 1],
+      wobble: null,
+      animation: { style: 'stomp', speed: 5, lift: 6, squash: 0.05 },
+      shadowOffset: 0.42,
+      color: '#a8896a',
+    },
+    elite: {
+      name: 'Elite',
+      maxHealth: 420,
+      speed: 82,
+      damage: 24,
+      xp: 10,
+      radius: 56,
+      drawSize: 172,
+      knockbackMultiplier: 0.2,
+      group: [1, 1],
+      wobble: null,
+      animation: { style: 'stomp', speed: 6, lift: 5, squash: 0.04 },
+      shadowOffset: 0.42,
+      color: '#ff5a5a',
+      alwaysShowHealthBar: true,
+      chestChance: 0.25,
     },
   },
 
@@ -133,11 +183,27 @@ const GameConfig = {
 
   // ---------------------------------------------------------------- Spawning
   spawn: {
-    startInterval: 1.1, // seconds between spawns at the start
-    minInterval: 0.3, // the fastest it ever gets
-    intervalDecreasePerSecond: 0.004,
     edgeMargin: 120, // enemies appear this far outside the visible screen
-    maxEnemies: 300,
+    groupSpread: 60, // members of a group appear this close to each other
+    maxEnemies: 350, // above this, spawning waits instead of slowing the game down
+    recycleDistance: 1700, // enemies further than this are moved back near the screen
+  },
+
+  // How the game gets harder over time (on top of WaveDefinitions).
+  difficulty: {
+    healthGrowthPerMinute: 0.15, // +15% enemy HP per minute
+    speedGrowthPerMinute: 0.03, // +3% enemy speed per minute...
+    maxSpeedMultiplier: 1.3, // ...but never more than +30%, so the player can always outrun them
+    extraSpawnsPerMinute: 0.5, // after the last wave: +0.5 spawns per second, every minute
+    maxSpawnsPerSecond: 9,
+  },
+
+  // Elites come on their own timer, not from the wave weights.
+  elites: {
+    firstAt: 150, // seconds
+    interval: 60, // seconds between elites at first...
+    minInterval: 30, // ...getting shorter over time, but never below this
+    intervalDecreasePerMinute: 4,
   },
 
   // ---------------------------------------------------------------- Combat
@@ -186,6 +252,7 @@ const GameConfig = {
     // 'damaged' shows enemy health bars only after the first hit (less clutter), 'always' shows all.
     enemyHealthBars: 'damaged',
     enemyHealthBar: { widthFactor: 0.55, height: 5, offsetY: 0.42 },
+    bannerDuration: 3, // seconds a wave banner stays on screen
     playerHealthBar: { x: 40, y: 50, width: 460, height: 30 },
     xpBar: { height: 26 },
     slotIconSize: 60, // weapon icons under the HP bar

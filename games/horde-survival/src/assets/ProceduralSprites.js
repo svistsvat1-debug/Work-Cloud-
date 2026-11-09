@@ -10,6 +10,9 @@ const ProceduralSprites = {
       player: this.createPlayer(),
       slime: this.createSlime(),
       bat: this.createBat(),
+      crawler: this.createCrawler(),
+      brute: this.createBrute(),
+      elite: this.createElite(),
       arcaneBolt: this.createProjectile(),
       orbitBlade: this.createOrbitBlade(),
       gemBlue: this.createGem('#4fc3ff', '#d2f1ff', '#1b5f99'),
@@ -217,6 +220,201 @@ const ProceduralSprites = {
     ctx.lineTo(98, 122);
     ctx.lineTo(102, 112);
     ctx.fill();
+
+    return canvas;
+  },
+
+  /** An orange beetle on six legs. Faces right. */
+  createCrawler() {
+    const canvas = this.createCanvas();
+    const ctx = canvas.getContext('2d');
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+
+    // Legs (behind the body)
+    ctx.strokeStyle = '#3d1d0b';
+    ctx.lineWidth = 8;
+    for (let i = 0; i < 3; i++) {
+      const x = 58 + i * 28;
+      ctx.beginPath();
+      ctx.moveTo(x, 118);
+      ctx.lineTo(x - 16, 142);
+      ctx.lineTo(x - 6, 164);
+      ctx.stroke();
+    }
+
+    // Antennae
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(140, 96);
+    ctx.quadraticCurveTo(150, 70, 168, 64);
+    ctx.moveTo(130, 96);
+    ctx.quadraticCurveTo(132, 68, 146, 56);
+    ctx.stroke();
+
+    // Shell
+    ctx.lineWidth = 6;
+    ctx.strokeStyle = '#3d1d0b';
+    const shell = ctx.createLinearGradient(0, 74, 0, 142);
+    shell.addColorStop(0, '#ffb066');
+    shell.addColorStop(1, '#c9561c');
+    ctx.fillStyle = shell;
+    ctx.beginPath();
+    ctx.ellipse(86, 110, 54, 34, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(80, 30, 8, 0.45)';
+    for (const [x, y, r] of [[62, 100, 8], [86, 94, 7], [104, 112, 8], [72, 120, 6]]) {
+      this.circle(ctx, x, y, r);
+      ctx.fill();
+    }
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.35)';
+    ctx.beginPath();
+    ctx.ellipse(70, 88, 20, 7, -0.2, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Head with eyes and mandibles
+    ctx.fillStyle = '#a8441a';
+    this.circle(ctx, 138, 112, 21);
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle = '#ffe066';
+    this.circle(ctx, 146, 106, 6);
+    ctx.fill();
+    ctx.fillStyle = '#1a0d05';
+    this.circle(ctx, 148, 106, 3);
+    ctx.fill();
+    ctx.strokeStyle = '#f2e6d0';
+    ctx.lineWidth = 5;
+    ctx.beginPath();
+    ctx.moveTo(152, 120);
+    ctx.quadraticCurveTo(166, 120, 164, 132);
+    ctx.stroke();
+
+    return canvas;
+  },
+
+  /** A big horned brute. Faces right. */
+  createBrute() {
+    return this.createHornedBeast({
+      bodyTop: '#c4a383',
+      bodyBottom: '#7a5c42',
+      belly: '#dcc3a2',
+      outline: '#2d1f14',
+      horn: '#efe3c8',
+      eye: '#ffffff',
+      pupil: '#1a1008',
+      glow: null,
+    });
+  },
+
+  /** A crimson, gold-armored elite with glowing eyes. Faces right. */
+  createElite() {
+    return this.createHornedBeast({
+      bodyTop: '#d9474f',
+      bodyBottom: '#6e1621',
+      belly: '#e2b34a',
+      outline: '#22080c',
+      horn: '#2a1418',
+      hornTip: '#ffd166',
+      eye: '#ffe066',
+      pupil: '#ff8a00',
+      glow: 'rgba(255, 70, 70, 0.55)',
+    });
+  },
+
+  /** Shared drawing for the brute and the elite: same shape, different colors. */
+  createHornedBeast(colors) {
+    const canvas = this.createCanvas();
+    const ctx = canvas.getContext('2d');
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+
+    if (colors.glow) {
+      const aura = ctx.createRadialGradient(91, 104, 20, 91, 104, 90);
+      aura.addColorStop(0, colors.glow);
+      aura.addColorStop(1, 'rgba(255, 70, 70, 0)');
+      ctx.fillStyle = aura;
+      this.circle(ctx, 91, 104, 90);
+      ctx.fill();
+    }
+
+    ctx.lineWidth = 6;
+    ctx.strokeStyle = colors.outline;
+
+    // Horns
+    for (const side of [-1, 1]) {
+      ctx.fillStyle = colors.horn;
+      ctx.beginPath();
+      ctx.moveTo(91 + side * 22, 62);
+      ctx.quadraticCurveTo(91 + side * 52, 50, 91 + side * 54, 18);
+      ctx.quadraticCurveTo(91 + side * 66, 52, 91 + side * 40, 72);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      if (colors.hornTip) {
+        ctx.fillStyle = colors.hornTip;
+        this.circle(ctx, 91 + side * 54, 22, 6);
+        ctx.fill();
+      }
+    }
+
+    // Fists
+    ctx.fillStyle = colors.bodyBottom;
+    this.circle(ctx, 30, 130, 19);
+    ctx.fill();
+    ctx.stroke();
+    this.circle(ctx, 154, 132, 21);
+    ctx.fill();
+    ctx.stroke();
+
+    // Body
+    const body = ctx.createLinearGradient(0, 52, 0, 170);
+    body.addColorStop(0, colors.bodyTop);
+    body.addColorStop(1, colors.bodyBottom);
+    ctx.fillStyle = body;
+    ctx.beginPath();
+    ctx.ellipse(91, 112, 62, 58, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    // Belly / chest plate
+    ctx.fillStyle = colors.belly;
+    ctx.beginPath();
+    ctx.ellipse(96, 130, 34, 26, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Angry face looking right
+    ctx.fillStyle = colors.eye;
+    this.circle(ctx, 104, 92, 9);
+    ctx.fill();
+    this.circle(ctx, 130, 92, 9);
+    ctx.fill();
+    ctx.fillStyle = colors.pupil;
+    this.circle(ctx, 107, 93, 4.5);
+    ctx.fill();
+    this.circle(ctx, 133, 93, 4.5);
+    ctx.fill();
+    ctx.lineWidth = 6;
+    ctx.beginPath();
+    ctx.moveTo(94, 78);
+    ctx.lineTo(114, 84);
+    ctx.moveTo(140, 78);
+    ctx.lineTo(122, 84);
+    ctx.stroke();
+
+    // Tusks
+    ctx.fillStyle = '#f7f1e3';
+    ctx.lineWidth = 3;
+    for (const x of [108, 128]) {
+      ctx.beginPath();
+      ctx.moveTo(x - 5, 112);
+      ctx.lineTo(x, 98);
+      ctx.lineTo(x + 5, 112);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+    }
 
     return canvas;
   },

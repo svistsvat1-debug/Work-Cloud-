@@ -14,9 +14,19 @@ class UISystem {
   reset() {
     // The HP bar shows recent damage as a lighter "trail" that catches up.
     this.healthTrail = 1;
+    this.banner = null;
+  }
+
+  /** A big message in the middle of the screen for a few seconds (e.g. a new wave). */
+  showBanner(title, subtitle, color = '#ffd166') {
+    this.banner = { title, subtitle, color, time: 0 };
   }
 
   update(dt) {
+    if (this.banner) {
+      this.banner.time += dt;
+      if (this.banner.time >= GameConfig.ui.bannerDuration) this.banner = null;
+    }
     const player = this.game.player;
     const fraction = player.currentHealth / player.maxHealth;
     this.healthTrail = Math.max(fraction, MathUtils.lerp(this.healthTrail, fraction, MathUtils.smoothFactor(3, dt)));
@@ -41,12 +51,19 @@ class UISystem {
     this.renderPlayerHealth(ctx, player);
     this.renderInventory(ctx);
 
-    // Top center: survival timer
+    // Top center: survival timer and the current wave
     DrawUtils.text(ctx, MathUtils.formatTime(this.game.survivalTime), width / 2, 44, {
       size: 56,
       weight: 'bold',
       align: 'center',
     });
+    const waves = this.game.waves;
+    DrawUtils.text(ctx, `Wave ${waves.waveNumber} · ${waves.currentWave.name}`, width / 2, 108, {
+      size: 24,
+      align: 'center',
+      color: '#c9d3e0',
+    });
+    this.renderBanner(ctx);
 
     // Top right: kills and coins
     DrawUtils.text(ctx, `Kills: ${this.game.kills}`, width - 40, 50, {
@@ -68,6 +85,18 @@ class UISystem {
       const debug = `FPS: ${this.game.fps}   X: ${Math.round(player.x)}   Y: ${Math.round(player.y)}`;
       DrawUtils.text(ctx, debug, width - 40, height - 52, { size: 22, color: '#b9c4bd', align: 'right' });
     }
+  }
+
+  renderBanner(ctx) {
+    if (!this.banner) return;
+    const { title, subtitle, color, time } = this.banner;
+    const duration = GameConfig.ui.bannerDuration;
+    // Fade in during the first 0.3 s, fade out during the last 0.7 s.
+    const alpha = Math.min(1, time / 0.3, (duration - time) / 0.7);
+    ctx.globalAlpha = Math.max(0, alpha);
+    DrawUtils.text(ctx, title, this.game.width / 2, 190, { size: 54, weight: 'bold', align: 'center', color });
+    DrawUtils.text(ctx, subtitle, this.game.width / 2, 256, { size: 30, align: 'center', color: '#e8eef5' });
+    ctx.globalAlpha = 1;
   }
 
   /** Full-width XP bar along the top edge, with the level written inside. */

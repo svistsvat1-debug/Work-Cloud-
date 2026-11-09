@@ -21,7 +21,8 @@ class Game {
     this.sprites = ProceduralSprites.createAll();
 
     // Systems: each one has a single job.
-    this.spawner = new Spawner(this); // creates enemies
+    this.spawner = new Spawner(this); // places enemies around the screen
+    this.waves = new WaveDirector(this); // decides what spawns and when
     this.weapons = new WeaponSystem(this); // fires at enemies
     this.collisions = new CollisionSystem(this); // checks what touches what
     this.upgrades = new UpgradeSystem(this); // level-up choices
@@ -61,6 +62,7 @@ class Game {
     this.runCoins = 0; // coins earned during this run
 
     this.spawner.reset();
+    this.waves.reset();
     this.weapons.reset(); // also gives the starting weapon
     this.effects.reset();
     this.ui.reset();
@@ -105,6 +107,7 @@ class Game {
     this.camera.follow(this.player);
     this.camera.update(dt);
 
+    this.waves.update(dt);
     this.spawner.update(dt);
     this.weapons.update(dt);
     for (const enemy of this.enemies) enemy.update(dt, this);

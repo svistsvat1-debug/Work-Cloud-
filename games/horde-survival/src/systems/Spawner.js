@@ -1,38 +1,46 @@
 /**
- * Spawner creates enemies just outside the visible screen,
- * a little faster as time goes on.
+ * Spawner knows WHERE enemies appear: in small groups just outside the
+ * visible screen, from a random direction each time. It also moves enemies
+ * that were left far behind back near the screen, so the pressure never drops.
+ * WHAT and WHEN to spawn is decided by the WaveDirector.
  */
 class Spawner {
   constructor(game) {
     this.game = game;
-    this.reset();
   }
 
-  reset() {
-    this.timer = 0;
+  reset() {}
+
+  update() {
+    this.recycleFarEnemies();
   }
 
-  update(dt) {
-    this.timer -= dt;
-    if (this.timer > 0) return;
-    this.timer = this.currentInterval();
-
-    if (this.game.enemies.length >= GameConfig.spawn.maxEnemies) return;
-
-    const position = this.randomEdgePosition();
-    this.game.enemies.push(new Enemy(this.pickEnemyType(), position.x, position.y));
+  /**
+   * Spawns `count` enemies of one type close together, just off screen.
+   * scaling: { health, speed } multipliers from the WaveDirector.
+   */
+  spawnGroup(type, count, scaling) {
+    const center = this.randomEdgePosition();
+    const spread = GameConfig.spawn.groupSpread;
+    for (let i = 0; i < count; i++) {
+      const x = center.x + MathUtils.randomRange(-spread, spread);
+      const y = center.y + MathUtils.randomRange(-spread, spread);
+      this.game.enemies.push(new Enemy(type, x, y, scaling));
+    }
   }
 
-  /** Seconds until the next spawn: shrinks over time, never below minInterval. */
-  currentInterval() {
-    const { startInterval, minInterval, intervalDecreasePerSecond } = GameConfig.spawn;
-    return Math.max(minInterval, startInterval - this.game.survivalTime * intervalDecreasePerSecond);
-  }
-
-  /** Picks an enemy type at random, using spawnWeight (higher = more common). */
-  pickEnemyType() {
-    const types = Object.keys(GameConfig.enemies);
-    return MathUtils.pickWeighted(types, (type) => GameConfig.enemies[type].spawnWeight);
+  /** Enemies far behind the player are moved to the edge of the screen again. */
+  recycleFarEnemies() {
+    const player = this.game.player;
+    const maxDistance = GameConfig.spawn.recycleDistance;
+    for (const enemy of this.game.enemies) {
+      if (MathUtils.distanceSquared(player.x, player.y, enemy.x, enemy.y) < maxDistance * maxDistance) continue;
+      const position = this.randomEdgePosition();
+      enemy.x = position.x;
+      enemy.y = position.y;
+      enemy.knockbackX = 0;
+      enemy.knockbackY = 0;
+    }
   }
 
   /**

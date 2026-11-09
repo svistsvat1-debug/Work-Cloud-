@@ -1,17 +1,18 @@
 /**
  * A monster that chases the player.
  * Its numbers (speed, health, size...) come from GameConfig.enemies[type].
+ * `scaling` makes enemies tougher the longer the run lasts (from the WaveDirector).
  */
 class Enemy extends Entity {
-  constructor(type, x, y) {
+  constructor(type, x, y, scaling = { health: 1, speed: 1 }) {
     const stats = GameConfig.enemies[type];
     super(x, y, stats.radius, stats.drawSize);
     this.type = type;
     this.stats = stats;
-    this.speed = stats.speed;
+    this.speed = stats.speed * scaling.speed;
     this.damage = stats.damage;
-    this.maxHealth = stats.maxHealth;
-    this.currentHealth = stats.maxHealth;
+    this.maxHealth = Math.round(stats.maxHealth * scaling.health);
+    this.currentHealth = this.maxHealth;
     this.knockbackX = 0;
     this.knockbackY = 0;
     this.flashTimer = 0; // > 0 means "just got hit": draw the white flash
@@ -84,13 +85,18 @@ class Enemy extends Entity {
     let scaleY = 1;
     let liftY = 0;
 
-    // Cheap animation without extra frames: slimes squish, bats bob up and down.
-    if (animation.style === 'squish') {
+    // Cheap animation without extra frames:
+    // slimes squish, bats bob up and down, crawlers wiggle fast, brutes stomp.
+    if (animation.style === 'squish' || animation.style === 'scuttle') {
       scaleX = 1 + wave * animation.squash;
       scaleY = 1 - wave * animation.squash;
     } else if (animation.style === 'flap') {
       liftY = wave * animation.lift;
       scaleY = 1 + Math.sin(this.animTime * animation.speed * 2) * animation.squash;
+    } else if (animation.style === 'stomp') {
+      const step = Math.abs(wave);
+      liftY = -step * animation.lift;
+      scaleY = 1 - (1 - step) * animation.squash;
     }
 
     const sprite = this.flashTimer > 0 ? sprites[`${this.type}Flash`] : sprites[this.type];
@@ -101,7 +107,8 @@ class Enemy extends Entity {
 
   renderHealthBar(ctx) {
     const isDamaged = this.currentHealth < this.maxHealth;
-    if (GameConfig.ui.enemyHealthBars === 'damaged' && !isDamaged) return;
+    const showAlways = GameConfig.ui.enemyHealthBars === 'always' || this.stats.alwaysShowHealthBar;
+    if (!showAlways && !isDamaged) return;
     const bar = GameConfig.ui.enemyHealthBar;
     const width = this.drawSize * bar.widthFactor;
     DrawUtils.bar(
