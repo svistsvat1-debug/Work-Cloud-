@@ -22,6 +22,58 @@ const GameConfig = {
     radius: 28, // collision circle: smaller than the sprite, so hits feel fair
   },
 
+  // Enemy types. spawnWeight: higher = appears more often.
+  // shadowOffset: how far below the center the shadow sits (bats fly, so theirs is lower).
+  enemies: {
+    slime: {
+      name: 'Slime',
+      maxHealth: 20,
+      speed: 70,
+      radius: 34,
+      drawSize: 104,
+      spawnWeight: 3,
+      animation: 'squish',
+      wobble: 0,
+      shadowOffset: 0.4,
+      color: '#9be35a',
+    },
+    bat: {
+      name: 'Bat',
+      maxHealth: 10,
+      speed: 145,
+      radius: 24,
+      drawSize: 92,
+      spawnWeight: 1,
+      animation: 'flap',
+      wobble: 70, // sideways flutter speed (pixels per second)
+      shadowOffset: 0.55,
+      color: '#b98af0',
+    },
+  },
+
+  spawn: {
+    startInterval: 1.1, // seconds between spawns at the start
+    minInterval: 0.3, // the fastest it ever gets
+    intervalDecreasePerSecond: 0.004,
+    edgeMargin: 120, // enemies appear this far outside the visible screen
+    maxEnemies: 300,
+  },
+
+  // The automatic magic bolt
+  autoAttack: {
+    cooldown: 0.6, // seconds between shots
+    damage: 10,
+    range: 950, // only enemies closer than this are targeted (about one screen)
+    projectileSpeed: 900,
+    projectileRadius: 12,
+    projectileDrawSize: 64,
+    projectileLifetime: 2,
+  },
+
+  collision: {
+    enemySeparation: 0.5, // how strongly overlapping enemies push apart (0..1)
+  },
+
   background: {
     tileSize: 128,
     colors: ['#1c2a21', '#1f2f25'],

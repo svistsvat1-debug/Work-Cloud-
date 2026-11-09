@@ -11,10 +11,23 @@ class Game {
     this.input = new Input(canvas);
     this.camera = new Camera(this.width, this.height);
     this.sprites = ProceduralSprites.createAll();
+
+    // Systems: each one has a single job.
+    this.spawner = new Spawner(this);
+    this.weapons = new WeaponSystem(this);
+    this.collisions = new CollisionSystem(this);
+    this.effects = new EffectsSystem(this);
     this.renderer = new Renderer(this);
     this.ui = new UISystem(this);
 
+    // World objects
     this.player = new Player(0, 0);
+    this.enemies = [];
+    this.projectiles = [];
+
+    // Run statistics
+    this.survivalTime = 0;
+    this.kills = 0;
 
     // Frame timing
     this.lastTimestamp = null;
@@ -47,8 +60,30 @@ class Game {
   }
 
   update(dt) {
+    this.survivalTime += dt;
+
     this.player.update(dt, this);
     this.camera.follow(this.player);
+
+    this.spawner.update(dt);
+    this.weapons.update(dt);
+    for (const enemy of this.enemies) enemy.update(dt, this);
+    for (const projectile of this.projectiles) projectile.update(dt, this);
+
+    this.collisions.update();
+    this.effects.update(dt);
+    this.removeDeadObjects();
+  }
+
+  /** Called by an enemy the moment it dies. */
+  onEnemyKilled(enemy) {
+    this.kills += 1;
+    this.effects.spawnPuff(enemy.x, enemy.y, enemy.stats.color, enemy.drawSize * 0.5);
+  }
+
+  removeDeadObjects() {
+    this.enemies = this.enemies.filter((enemy) => !enemy.dead);
+    this.projectiles = this.projectiles.filter((projectile) => !projectile.dead);
   }
 
   render() {

@@ -35,19 +35,10 @@ class Player {
 
   render(ctx, sprites) {
     const size = this.drawSize;
-
-    // Soft shadow under the feet
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.35)';
-    ctx.beginPath();
-    ctx.ellipse(this.x, this.y + size * 0.43, size * 0.26, size * 0.09, 0, 0, Math.PI * 2);
-    ctx.fill();
+    DrawUtils.shadow(ctx, this.x, this.y + size * 0.43, size * 0.26);
 
     // A small squash-and-stretch bounce while walking makes a still image feel alive.
     const bounce = this.isMoving() ? Math.sin(this.walkTime * 16) * 0.05 : 0;
-    ctx.save();
-    ctx.translate(this.x, this.y + size / 2); // pivot at the feet
-    ctx.scale(this.facing * (1 - bounce * 0.5), 1 + bounce);
-    ctx.drawImage(sprites.player, -size / 2, -size, size, size);
-    ctx.restore();
+    DrawUtils.character(ctx, sprites.player, this.x, this.y, size, this.facing, 1 - bounce * 0.5, 1 + bounce);
   }
 }

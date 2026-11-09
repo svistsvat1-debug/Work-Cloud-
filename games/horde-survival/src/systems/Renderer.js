@@ -17,7 +17,19 @@ class Renderer {
     // From here on we draw in world coordinates.
     camera.applyTransform(ctx);
     this.drawBackground(ctx, camera);
-    this.game.player.render(ctx, this.game.sprites);
+
+    const { sprites, enemies, projectiles, player } = this.game;
+
+    // Enemies lower on screen are drawn later, so they appear in front.
+    enemies.sort((a, b) => a.y - b.y);
+    for (const enemy of enemies) {
+      if (camera.isVisible(enemy.x, enemy.y, enemy.drawSize)) enemy.render(ctx, sprites);
+    }
+
+    // The player is always drawn on top of enemies, so you never lose sight of yourself.
+    player.render(ctx, sprites);
+    for (const projectile of projectiles) projectile.render(ctx, sprites);
+    this.game.effects.render(ctx);
 
     // Back to screen coordinates for the UI.
     ctx.setTransform(1, 0, 0, 1, 0, 0);

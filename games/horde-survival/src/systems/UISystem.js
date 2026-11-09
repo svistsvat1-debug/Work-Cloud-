@@ -12,13 +12,24 @@ class UISystem {
     ctx.save();
     ctx.setTransform(1, 0, 0, 1, 0, 0);
 
-    this.drawText(ctx, GameConfig.ui.title, 40, 36, { size: 44, weight: 'bold' });
-    this.drawText(ctx, 'Move with WASD or the arrow keys', 40, 92, { size: 24, color: '#b9c4bd' });
+    // Top left: title
+    this.drawText(ctx, GameConfig.ui.title, 40, 32, { size: 36, weight: 'bold' });
+    this.drawText(ctx, 'Move with WASD or the arrow keys', 40, 78, { size: 22, color: '#b9c4bd' });
 
+    // Top center: survival timer
+    this.drawText(ctx, MathUtils.formatTime(this.game.survivalTime), this.game.width / 2, 28, {
+      size: 56,
+      weight: 'bold',
+      align: 'center',
+    });
+
+    // Top right: kills, FPS, position
     const right = this.game.width - 40;
-    this.drawText(ctx, `FPS: ${this.game.fps}`, right, 36, { size: 26, align: 'right' });
-    this.drawText(ctx, `X: ${Math.round(player.x)}   Y: ${Math.round(player.y)}`, right, 72, {
-      size: 26,
+    this.drawText(ctx, `Kills: ${this.game.kills}`, right, 32, { size: 34, weight: 'bold', align: 'right' });
+    this.drawText(ctx, `FPS: ${this.game.fps}`, right, 80, { size: 22, color: '#b9c4bd', align: 'right' });
+    this.drawText(ctx, `X: ${Math.round(player.x)}   Y: ${Math.round(player.y)}`, right, 108, {
+      size: 22,
+      color: '#b9c4bd',
       align: 'right',
     });
 
