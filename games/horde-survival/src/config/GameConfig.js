@@ -124,6 +124,13 @@ const GameConfig = {
     ownedUpgradeWeight: 1.3, // level-ups for owned weapons show up a bit more often than new ones
   },
 
+  // Each passive's own numbers live in PassiveDefinitions.js.
+  passives: {
+    maxSlots: 6, // how many different passives the player can own
+    maxLevel: 5,
+    ownedUpgradeWeight: 1.2,
+  },
+
   // ---------------------------------------------------------------- Spawning
   spawn: {
     startInterval: 1.1, // seconds between spawns at the start

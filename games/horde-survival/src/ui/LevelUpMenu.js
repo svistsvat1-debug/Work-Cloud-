@@ -129,5 +129,6 @@ class LevelUpMenu {
 /** Color of the category tag on each card. */
 LevelUpMenu.TAG_COLORS = {
   WEAPON: '#ffad5c',
-  UPGRADE: '#8fd3ff',
+  PASSIVE: '#8fd3ff',
+  REWARD: '#7ee08a',
 };

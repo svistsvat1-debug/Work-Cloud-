@@ -58,6 +58,7 @@ class Game {
     this.pickups.length = 0;
     this.survivalTime = 0;
     this.kills = 0;
+    this.runCoins = 0; // coins earned during this run
 
     this.spawner.reset();
     this.weapons.reset(); // also gives the starting weapon
@@ -131,6 +132,10 @@ class Game {
     this.dropXp(enemy.x, enemy.y, enemy.stats.xp);
   }
 
+  addCoins(amount) {
+    this.runCoins += amount;
+  }
+
   /** Called by the player when health reaches 0. */
   onPlayerDied() {
     this.state = GameState.GAME_OVER;
@@ -142,8 +147,9 @@ class Game {
   dropXp(x, y, baseValue) {
     const config = GameConfig.xpGems;
     let value = baseValue;
+    const luck = 1 + this.player.stats.luck; // Clover Coin makes valuable gems more likely
     for (const bonus of config.bonusDrops) {
-      if (Math.random() < bonus.chance) {
+      if (Math.random() < bonus.chance * luck) {
         value = Math.max(value, bonus.value);
         break;
       }

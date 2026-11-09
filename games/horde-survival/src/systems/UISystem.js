@@ -39,7 +39,7 @@ class UISystem {
 
     this.renderXpBar(ctx, player);
     this.renderPlayerHealth(ctx, player);
-    this.renderWeaponSlots(ctx);
+    this.renderInventory(ctx);
 
     // Top center: survival timer
     DrawUtils.text(ctx, MathUtils.formatTime(this.game.survivalTime), width / 2, 44, {
@@ -48,11 +48,17 @@ class UISystem {
       align: 'center',
     });
 
-    // Top right: kills
+    // Top right: kills and coins
     DrawUtils.text(ctx, `Kills: ${this.game.kills}`, width - 40, 50, {
       size: 34,
       weight: 'bold',
       align: 'right',
+    });
+    DrawUtils.text(ctx, `Coins: ${this.game.runCoins}`, width - 40, 94, {
+      size: 28,
+      weight: 'bold',
+      align: 'right',
+      color: '#ffd166',
     });
 
     // Bottom: title and controls hint, plus FPS and position for debugging
@@ -79,14 +85,26 @@ class UISystem {
     });
   }
 
-  /** Owned weapons under the HP bar: icon + level badge ("MAX" at max level). */
-  renderWeaponSlots(ctx) {
+  /**
+   * Owned weapons (first row) and passives (second row) under the HP bar:
+   * icon + level badge ("MAX" at max level).
+   */
+  renderInventory(ctx) {
     const { x, y: barY, height: barHeight } = GameConfig.ui.playerHealthBar;
     const size = GameConfig.ui.slotIconSize;
-    const top = barY + barHeight + 16;
+    const weaponsTop = barY + barHeight + 16;
+    const passivesTop = weaponsTop + size + 10;
+
     this.game.weapons.weapons.forEach((weapon, index) => {
-      const left = x + index * (size + 10);
-      this.drawSlot(ctx, weapon.definition.icon, left, top, size, weapon.isMaxLevel() ? 'MAX' : String(weapon.level));
+      const badge = weapon.isMaxLevel() ? 'MAX' : String(weapon.level);
+      this.drawSlot(ctx, weapon.definition.icon, x + index * (size + 10), weaponsTop, size, badge);
+    });
+
+    const player = this.game.player;
+    player.ownedPassiveIds().forEach((id, index) => {
+      const level = player.getPassiveLevel(id);
+      const badge = level >= GameConfig.passives.maxLevel ? 'MAX' : String(level);
+      this.drawSlot(ctx, PassiveDefinitions[id].icon, x + index * (size + 10), passivesTop, size * 0.8, badge);
     });
   }
 

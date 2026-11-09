@@ -1,6 +1,6 @@
 /**
  * The player. Movement is the only control: WASD or the arrow keys.
- * The player also owns the run's progress: XP, level and upgrade levels.
+ * The player also owns the run's progress: XP, level and passive item levels.
  */
 class Player extends Entity {
   constructor(x, y) {
@@ -13,7 +13,7 @@ class Player extends Entity {
     this.xp = 0;
     this.xpToNextLevel = Player.xpRequiredFor(1);
     this.pendingLevelUps = 0; // level-ups earned but not chosen yet
-    this.upgradeLevels = {}; // upgrade id -> level, e.g. { damage: 2 }
+    this.passiveLevels = {}; // passive id -> level, e.g. { powerStone: 2 }
     this.recalculateStats();
 
     this.facing = 1; // 1 = looking right, -1 = looking left
@@ -66,36 +66,50 @@ class Player extends Entity {
     }
   }
 
-  getUpgradeLevel(id) {
-    return this.upgradeLevels[id] || 0;
+  getPassiveLevel(id) {
+    return this.passiveLevels[id] || 0;
+  }
+
+  ownedPassiveIds() {
+    return Object.keys(this.passiveLevels);
   }
 
   /**
-   * Rebuilds player.stats from scratch: base values + every upgrade level.
+   * Rebuilds player.stats from scratch: base values + every passive level.
    * Recalculating (instead of adding a bit each time) means stats can never drift.
    */
   recalculateStats() {
-    const stats = {
-      damageMultiplier: 1,
-      fireRateMultiplier: 1,
-      projectileSpeedMultiplier: 1,
-      moveSpeedMultiplier: 1,
-      magnetMultiplier: 1,
+    // 1. Add up the bonuses from all passives.
+    const bonus = {
+      damageBonus: 0,
+      cooldownReduction: 0,
+      moveSpeedBonus: 0,
+      magnetBonus: 0,
       maxHealthBonus: 0,
+      luck: 0,
     };
-    for (const [id, level] of Object.entries(this.upgradeLevels)) {
-      const upgrade = UpgradeDefinitions[id];
-      if (upgrade.stat) stats[upgrade.stat] += upgrade.perLevel * level;
+    for (const [id, level] of Object.entries(this.passiveLevels)) {
+      const passive = PassiveDefinitions[id];
+      bonus[passive.stat] += passive.perLevel * level;
     }
-    this.stats = stats;
+
+    // 2. Turn bonuses into the numbers the rest of the game reads.
+    this.stats = {
+      damageMultiplier: 1 + bonus.damageBonus,
+      cooldownMultiplier: Math.max(0.4, 1 - bonus.cooldownReduction), // never below 40% cooldown
+      moveSpeedMultiplier: 1 + bonus.moveSpeedBonus,
+      magnetMultiplier: 1 + bonus.magnetBonus,
+      projectileSpeedMultiplier: 1,
+      luck: bonus.luck,
+    };
 
     const config = GameConfig.player;
     const previousMaxHealth = this.maxHealth;
-    this.maxHealth = config.maxHealth + stats.maxHealthBonus;
+    this.maxHealth = config.maxHealth + bonus.maxHealthBonus;
     // Gaining max HP also heals by the same amount.
     this.heal(Math.max(0, this.maxHealth - previousMaxHealth));
-    this.speed = config.speed * stats.moveSpeedMultiplier;
-    this.magnetRadius = config.magnetRadius * stats.magnetMultiplier;
+    this.speed = config.speed * this.stats.moveSpeedMultiplier;
+    this.magnetRadius = config.magnetRadius * this.stats.magnetMultiplier;
     this.pickupRadius = config.pickupRadius;
   }
 

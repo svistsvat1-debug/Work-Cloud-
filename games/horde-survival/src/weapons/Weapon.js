@@ -52,7 +52,7 @@ class Weapon {
   }
 
   get cooldown() {
-    return Math.max(0.1, this.stats.cooldown / this.game.player.stats.fireRateMultiplier);
+    return Math.max(0.1, this.stats.cooldown * this.game.player.stats.cooldownMultiplier);
   }
 
   update(dt) {

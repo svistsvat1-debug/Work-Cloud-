@@ -15,7 +15,7 @@ const ProceduralSprites = {
       gemBlue: this.createGem('#4fc3ff', '#d2f1ff', '#1b5f99'),
       gemGreen: this.createGem('#4fe07a', '#d4ffdf', '#1d7a3a'),
       gemRed: this.createGem('#ff5a6e', '#ffd0d6', '#9b1f30'),
-      ...this.createUpgradeIcons(),
+      ...this.createPassiveIcons(),
       ...this.createWeaponIcons(),
     };
 
@@ -302,43 +302,45 @@ const ProceduralSprites = {
     return canvas;
   },
 
-  /** Icons for the level-up cards: a colored badge with a white symbol. */
-  createUpgradeIcons() {
+  /** Icons for passive items and fallback rewards: a colored badge with a white symbol. */
+  createPassiveIcons() {
     return {
-      iconDamage: this.createIcon('#d9534f', (ctx) => this.star(ctx, 91, 91, 8, 60, 26)),
-      iconFireRate: this.createIcon('#f0ad4e', (ctx) => {
-        this.chevron(ctx, 40);
-        this.chevron(ctx, 84);
-      }),
-      iconProjectileSpeed: this.createIcon('#3fa7d6', (ctx) => {
+      iconSpellbook: this.createIcon('#8e5bd6', (ctx) => {
+        // An open book
         ctx.beginPath();
-        ctx.moveTo(34, 80);
-        ctx.lineTo(104, 80);
-        ctx.lineTo(104, 54);
-        ctx.lineTo(150, 91);
-        ctx.lineTo(104, 128);
-        ctx.lineTo(104, 102);
-        ctx.lineTo(34, 102);
+        ctx.moveTo(91, 62);
+        ctx.quadraticCurveTo(62, 40, 32, 46);
+        ctx.lineTo(32, 136);
+        ctx.quadraticCurveTo(62, 130, 91, 150);
+        ctx.quadraticCurveTo(120, 130, 150, 136);
+        ctx.lineTo(150, 46);
+        ctx.quadraticCurveTo(120, 40, 91, 62);
         ctx.closePath();
       }),
-      iconMoveSpeed: this.createIcon('#4cae4c', (ctx) => {
-        // A boot
+      iconPowerStone: this.createIcon('#d9534f', (ctx) => {
+        // A cut gemstone
         ctx.beginPath();
-        ctx.moveTo(62, 36);
-        ctx.lineTo(104, 36);
-        ctx.lineTo(104, 104);
-        ctx.lineTo(140, 112);
-        ctx.quadraticCurveTo(152, 118, 150, 142);
-        ctx.lineTo(56, 142);
+        ctx.moveTo(91, 30);
+        ctx.lineTo(140, 66);
+        ctx.lineTo(122, 148);
+        ctx.lineTo(60, 148);
+        ctx.lineTo(42, 66);
         ctx.closePath();
       }),
-      iconMaxHealth: this.createIcon('#c9302c', (ctx) => this.heart(ctx, 91, 96, 52)),
-      iconHeal: this.createIcon('#2fa86f', (ctx) => {
+      iconWindBoots: this.createIcon('#4cae4c', (ctx) => {
+        // A boot with two speed lines behind it
         ctx.beginPath();
-        ctx.rect(76, 38, 30, 106);
-        ctx.rect(38, 76, 106, 30);
+        ctx.moveTo(74, 36);
+        ctx.lineTo(114, 36);
+        ctx.lineTo(114, 104);
+        ctx.lineTo(146, 112);
+        ctx.quadraticCurveTo(158, 118, 156, 142);
+        ctx.lineTo(68, 142);
+        ctx.closePath();
+        ctx.rect(22, 70, 40, 12);
+        ctx.rect(30, 98, 32, 12);
       }),
-      iconMagnet: this.createIcon('#7e57c2', (ctx) => {
+      iconMagnetCharm: this.createIcon('#7e57c2', (ctx) => {
         // Horseshoe magnet: an upside-down U
         ctx.beginPath();
         ctx.moveTo(40, 140);
@@ -350,6 +352,28 @@ const ProceduralSprites = {
         ctx.arc(91, 88, 21, 0, Math.PI, true);
         ctx.lineTo(70, 140);
         ctx.closePath();
+      }),
+      iconIronHeart: this.createIcon('#7d8aa0', (ctx) => this.heart(ctx, 91, 96, 52)),
+      iconCloverCoin: this.createIcon('#3fae5a', (ctx) => {
+        // Four-leaf clover: four round leaves and a stem
+        ctx.beginPath();
+        for (const [dx, dy] of [[-1, -1], [1, -1], [-1, 1], [1, 1]]) {
+          ctx.moveTo(91 + dx * 24 + 26, 84 + dy * 24);
+          ctx.arc(91 + dx * 24, 84 + dy * 24, 26, 0, Math.PI * 2);
+        }
+        ctx.rect(85, 110, 12, 50);
+      }),
+      iconHeal: this.createIcon('#2fa86f', (ctx) => {
+        ctx.beginPath();
+        ctx.rect(76, 38, 30, 106);
+        ctx.rect(38, 76, 106, 30);
+      }),
+      iconCoins: this.createIcon('#e0a92e', (ctx) => {
+        // A coin: ring + slot
+        ctx.beginPath();
+        ctx.arc(91, 91, 58, 0, Math.PI * 2);
+        ctx.arc(91, 91, 40, 0, Math.PI * 2, true);
+        ctx.rect(84, 64, 14, 54);
       }),
     };
   },
