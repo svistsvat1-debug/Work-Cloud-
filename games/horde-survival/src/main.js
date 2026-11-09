@@ -19,6 +19,9 @@
   window.addEventListener('resize', fitCanvasToWindow);
   fitCanvasToWindow();
 
+  SaveData.load(); // coins, permanent upgrades, best time, settings
+  MenuBackground.load(); // the picture behind the menus (optional)
+
   const game = new Game(canvas);
   window.game = game; // type "game" in the browser console to inspect it
   game.start();

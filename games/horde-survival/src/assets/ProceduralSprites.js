@@ -24,6 +24,7 @@ const ProceduralSprites = {
       gemBlue: this.createGem('#4fc3ff', '#d2f1ff', '#1b5f99'),
       gemGreen: this.createGem('#4fe07a', '#d4ffdf', '#1d7a3a'),
       gemRed: this.createGem('#ff5a6e', '#ffd0d6', '#9b1f30'),
+      coin: this.createCoin(),
       ...this.createPassiveIcons(),
       ...this.createWeaponIcons(),
     };
@@ -644,6 +645,52 @@ const ProceduralSprites = {
     return canvas;
   },
 
+  /** A gold coin with a small bell stamped on it. */
+  createCoin() {
+    const canvas = this.createCanvas();
+    const ctx = canvas.getContext('2d');
+    ctx.lineJoin = 'round';
+
+    const gold = ctx.createLinearGradient(30, 20, 150, 160);
+    gold.addColorStop(0, '#fff1a8');
+    gold.addColorStop(0.5, '#f2c14e');
+    gold.addColorStop(1, '#b07a1e');
+    ctx.fillStyle = gold;
+    ctx.lineWidth = 8;
+    ctx.strokeStyle = '#6b4a12';
+    this.circle(ctx, 91, 91, 70);
+    ctx.fill();
+    ctx.stroke();
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = 'rgba(107, 74, 18, 0.6)';
+    this.circle(ctx, 91, 91, 54);
+    ctx.stroke();
+
+    // Stamped bell
+    ctx.fillStyle = '#c98f25';
+    ctx.strokeStyle = '#6b4a12';
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(66, 118);
+    ctx.quadraticCurveTo(70, 112, 72, 92);
+    ctx.quadraticCurveTo(76, 62, 91, 60);
+    ctx.quadraticCurveTo(106, 62, 110, 92);
+    ctx.quadraticCurveTo(112, 112, 116, 118);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+    this.circle(ctx, 91, 124, 7);
+    ctx.fill();
+    ctx.stroke();
+
+    // Shine
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.55)';
+    ctx.beginPath();
+    ctx.ellipse(62, 58, 16, 9, -0.7, 0, Math.PI * 2);
+    ctx.fill();
+    return canvas;
+  },
+
   /** A faceted crystal with a soft glow. */
   createGem(baseColor, lightColor, darkColor) {
     const canvas = this.createCanvas();
@@ -756,6 +803,15 @@ const ProceduralSprites = {
         ctx.beginPath();
         ctx.rect(76, 38, 30, 106);
         ctx.rect(38, 76, 106, 30);
+      }),
+      iconXpGain: this.createIcon('#2f7fc1', (ctx) => {
+        // A crystal shard
+        ctx.beginPath();
+        ctx.moveTo(91, 26);
+        ctx.lineTo(138, 91);
+        ctx.lineTo(91, 156);
+        ctx.lineTo(44, 91);
+        ctx.closePath();
       }),
       iconCoins: this.createIcon('#e0a92e', (ctx) => {
         // A coin: ring + slot

@@ -6,6 +6,8 @@
 class UISystem {
   constructor(game) {
     this.game = game;
+    this.startScreen = new StartScreen(game);
+    this.shopScreen = new ShopScreen(game);
     this.levelUpMenu = new LevelUpMenu(game);
     this.chestScreen = new ChestScreen(game);
     this.gameOverScreen = new GameOverScreen(game);
@@ -40,10 +42,15 @@ class UISystem {
     ctx.save();
     ctx.setTransform(1, 0, 0, 1, 0, 0);
 
-    this.renderHud(ctx);
-    if (this.game.state === GameState.LEVEL_UP) this.levelUpMenu.render(ctx);
-    if (this.game.state === GameState.CHEST) this.chestScreen.render(ctx);
-    if (this.game.state === GameState.GAME_OVER) this.gameOverScreen.render(ctx);
+    const state = this.game.state;
+    if (state === GameState.START) this.startScreen.render(ctx);
+    else if (state === GameState.SHOP) this.shopScreen.render(ctx);
+    else {
+      this.renderHud(ctx);
+      if (state === GameState.LEVEL_UP) this.levelUpMenu.render(ctx);
+      if (state === GameState.CHEST) this.chestScreen.render(ctx);
+      if (state === GameState.GAME_OVER) this.gameOverScreen.render(ctx);
+    }
 
     ctx.restore();
   }

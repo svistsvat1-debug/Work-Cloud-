@@ -19,6 +19,9 @@ const GameConfig = {
   // tab was hidden or the browser froze for a moment.
   maxDeltaTime: 0.05,
 
+  // Name of the localStorage entry that keeps coins, upgrades and settings.
+  saveKey: 'horde-survival-save-v1',
+
   // ---------------------------------------------------------------- Player
   player: {
     speed: 300,
@@ -60,6 +63,13 @@ const GameConfig = {
       { value: 5, chance: 0.04 },
     ],
     maxOnGround: 400, // above this, new XP is merged into the nearest gem (nothing is lost)
+  },
+
+  // Coins: any enemy may drop one; elites and bosses drop a handful (enemy "coins").
+  coins: {
+    dropChance: 0.04, // 4% per normal enemy (luck raises it)
+    radius: 14,
+    drawSize: 34,
   },
 
   // Pickups fly toward the player once inside the magnet radius.
@@ -162,6 +172,7 @@ const GameConfig = {
       color: '#ff5a5a',
       alwaysShowHealthBar: true,
       chestChance: 0.25,
+      coins: [5, 10], // always drops this many coins (min, max)
     },
     boss: {
       name: 'Dread Colossus',
@@ -179,6 +190,7 @@ const GameConfig = {
       color: '#c77dff',
       isBoss: true, // gets the big health bar at the top of the screen
       chestChance: 1,
+      coins: [20, 35],
     },
   },
 
@@ -278,11 +290,15 @@ const GameConfig = {
     choice2: ['Digit2', 'Numpad2'],
     choice3: ['Digit3', 'Numpad3'],
     confirm: ['Space', 'Enter', 'NumpadEnter'],
+    back: ['Escape'],
   },
 
   // ---------------------------------------------------------------- UI
   ui: {
     title: 'Horde Survival',
+    tagline: 'Survive the endless horde',
+    // Picture behind the start screen and the shop. null = a background drawn with code.
+    menuBackgroundImage: 'assets/images/menu-background.jpg',
     font: 'system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif',
     showDebugInfo: true, // FPS and player position at the bottom right
     // 'damaged' shows enemy health bars only after the first hit (less clutter), 'always' shows all.

@@ -3,9 +3,11 @@
  * The player also owns the run's progress: XP, level and passive item levels.
  */
 class Player extends Entity {
-  constructor(x, y) {
+  /** permanentLevels: levels bought in the shop, e.g. { damage: 2 } (see ShopDefinitions). */
+  constructor(x, y, permanentLevels = {}) {
     const config = GameConfig.player;
     super(x, y, config.radius, config.drawSize);
+    this.permanentLevels = permanentLevels;
     this.maxHealth = config.maxHealth;
     this.currentHealth = config.maxHealth;
 
@@ -56,7 +58,7 @@ class Player extends Entity {
   // ---------------------------------------------------------------- Progress
 
   addXp(amount) {
-    this.xp += amount;
+    this.xp += amount * this.stats.xpMultiplier;
     // Enough XP for several levels at once? Each one is counted and chosen in turn.
     while (this.xp >= this.xpToNextLevel) {
       this.xp -= this.xpToNextLevel;
@@ -79,18 +81,23 @@ class Player extends Entity {
    * Recalculating (instead of adding a bit each time) means stats can never drift.
    */
   recalculateStats() {
-    // 1. Add up the bonuses from all passives.
+    // 1. Add up the bonuses from passives (this run) and shop upgrades (permanent).
     const bonus = {
       damageBonus: 0,
       cooldownReduction: 0,
       moveSpeedBonus: 0,
       magnetBonus: 0,
       maxHealthBonus: 0,
+      xpBonus: 0,
       luck: 0,
     };
     for (const [id, level] of Object.entries(this.passiveLevels)) {
       const passive = PassiveDefinitions[id];
       bonus[passive.stat] += passive.perLevel * level;
+    }
+    for (const [id, level] of Object.entries(this.permanentLevels)) {
+      const upgrade = ShopDefinitions[id];
+      if (upgrade && upgrade.stat in bonus) bonus[upgrade.stat] += upgrade.perLevel * level;
     }
 
     // 2. Turn bonuses into the numbers the rest of the game reads.
@@ -100,6 +107,7 @@ class Player extends Entity {
       moveSpeedMultiplier: 1 + bonus.moveSpeedBonus,
       magnetMultiplier: 1 + bonus.magnetBonus,
       projectileSpeedMultiplier: 1,
+      xpMultiplier: 1 + bonus.xpBonus,
       luck: bonus.luck,
     };
 

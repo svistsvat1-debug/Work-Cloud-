@@ -1,14 +1,18 @@
 /** The states the game can be in. Using constants avoids typos like 'gamover'. */
 const GameState = Object.freeze({
+  START: 'start', // title screen
+  SHOP: 'shop', // permanent upgrades between runs
   PLAYING: 'playing', // the normal game
   LEVEL_UP: 'levelup', // the action is paused while the player picks an upgrade
   CHEST: 'chest', // the action is paused while a treasure chest opens
-  GAME_OVER: 'gameover', // the player died; the world is frozen until restart
+  GAME_OVER: 'gameover', // the player died; the run summary is shown
 });
 
 /**
  * Game owns everything: the main loop, the world objects and the systems.
  * It decides the order things happen in each frame; the systems do the actual work.
+ *
+ * Flow: START -> SHOP -> PLAYING (with LEVEL_UP / CHEST pauses) -> GAME_OVER -> SHOP or PLAYING
  */
 class Game {
   constructor(canvas) {
@@ -45,16 +49,29 @@ class Game {
     // The browser calls loop() without an object, so bind it to this Game.
     this.loop = this.loop.bind(this);
 
-    this.startNewRun();
+    this.startNewRun(); // prepares an empty world...
+    this.showStartScreen(); // ...but we begin on the title screen
   }
 
   start() {
     requestAnimationFrame(this.loop);
   }
 
-  /** Resets the world for a fresh attempt. */
+  // ---------------------------------------------------------------- Screens and runs
+
+  showStartScreen() {
+    this.state = GameState.START;
+  }
+
+  openShop() {
+    this.ui.shopScreen.open();
+    this.state = GameState.SHOP;
+  }
+
+  /** Resets the world for a fresh attempt, with the permanent upgrades from the shop. */
   startNewRun() {
-    this.player = new Player(0, 0);
+    const permanent = SaveData.data.upgrades;
+    this.player = new Player(0, 0, permanent);
     this.enemies.length = 0;
     this.projectiles.length = 0;
     this.pickups.length = 0;
@@ -62,7 +79,7 @@ class Game {
     this.kills = 0;
     this.bossesDefeated = 0;
     this.weaponsEvolved = []; // names of weapons evolved this run
-    this.runCoins = 0; // coins earned during this run
+    this.runCoins = ShopDefinitions.startingCoins.perLevel * (permanent.startingCoins || 0);
 
     this.spawner.reset();
     this.waves.reset();
@@ -72,6 +89,8 @@ class Game {
     this.camera.follow(this.player);
     this.state = GameState.PLAYING;
   }
+
+  // ---------------------------------------------------------------- Main loop
 
   /** The main loop: runs once per screen refresh (usually 60 times per second). */
   loop(timestamp) {
@@ -91,6 +110,12 @@ class Game {
 
   update(dt) {
     switch (this.state) {
+      case GameState.START:
+        this.ui.startScreen.update(dt);
+        break;
+      case GameState.SHOP:
+        this.ui.shopScreen.update(dt);
+        break;
       case GameState.PLAYING:
         this.updatePlaying(dt);
         break;
@@ -140,6 +165,7 @@ class Game {
     if (enemy.stats.isBoss) this.bossesDefeated += 1;
     this.effects.spawnPuff(enemy.x, enemy.y, enemy.stats.color, enemy.drawSize * 0.5);
     this.dropXp(enemy.x, enemy.y, enemy.stats.xp);
+    this.dropCoins(enemy);
 
     // Bosses always drop a treasure chest, elites sometimes.
     const chestChance = enemy.stats.chestChance || 0;
@@ -152,10 +178,21 @@ class Game {
 
   /** Called by the player when health reaches 0. */
   onPlayerDied() {
+    this.bankRun();
+    this.ui.gameOverScreen.open();
     this.state = GameState.GAME_OVER;
   }
 
-  // ---------------------------------------------------------------- XP and level-ups
+  /** Adds this run's coins to the saved total and remembers the best time. */
+  bankRun() {
+    const save = SaveData.data;
+    save.totalCoins += this.runCoins;
+    this.isNewBestTime = this.survivalTime > save.bestTime;
+    if (this.isNewBestTime) save.bestTime = this.survivalTime;
+    SaveData.save();
+  }
+
+  // ---------------------------------------------------------------- Drops
 
   /** Drops an XP gem. Sometimes it is a more valuable one (bonusDrops). */
   dropXp(x, y, baseValue) {
@@ -186,6 +223,24 @@ class Game {
     }
     this.pickups.push(new XPGem(x, y, value));
   }
+
+  /** Elites and bosses always drop a handful of coins; other enemies sometimes drop one. */
+  dropCoins(enemy) {
+    let count = 0;
+    if (enemy.stats.coins) {
+      count = MathUtils.randomInt(enemy.stats.coins[0], enemy.stats.coins[1]);
+    } else if (Math.random() < GameConfig.coins.dropChance * (1 + this.player.stats.luck)) {
+      count = 1;
+    }
+    const spread = count > 1 ? enemy.radius : 0;
+    for (let i = 0; i < count; i++) {
+      const x = enemy.x + MathUtils.randomRange(-spread, spread);
+      const y = enemy.y + MathUtils.randomRange(-spread, spread);
+      this.pickups.push(new Coin(x, y));
+    }
+  }
+
+  // ---------------------------------------------------------------- Level-ups
 
   /** Returns false if there was nothing left to offer. */
   openLevelUpMenu() {
@@ -246,8 +301,13 @@ class Game {
 
   // ---------------------------------------------------------------- Drawing
 
+  /** Menus (start, shop) cover the whole screen; otherwise the world is drawn under the HUD. */
+  isMenuScreen() {
+    return this.state === GameState.START || this.state === GameState.SHOP;
+  }
+
   render() {
-    this.renderer.render();
+    if (!this.isMenuScreen()) this.renderer.render();
     this.ui.render();
   }
 

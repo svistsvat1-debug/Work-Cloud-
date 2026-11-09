@@ -88,17 +88,30 @@ const DrawUtils = {
     return lines;
   },
 
-  /** A rectangular button. `rect` is {x, y, width, height}. */
-  button(ctx, rect, label, hovered) {
-    ctx.fillStyle = hovered ? '#3fae6a' : '#2e8c55';
-    ctx.fillRect(rect.x, rect.y, rect.width, rect.height);
-    ctx.strokeStyle = '#bff5cf';
+  /**
+   * A rectangular button. `rect` is {x, y, width, height}.
+   * style: 'primary' (green), 'secondary' (blue-grey), 'danger' (red) or 'disabled'.
+   */
+  button(ctx, rect, label, hovered, style = 'primary', size = 36) {
+    const colors = DrawUtils.BUTTON_STYLES[style];
+    DrawUtils.roundRect(ctx, rect.x, rect.y, rect.width, rect.height, 14);
+    ctx.fillStyle = hovered && style !== 'disabled' ? colors.hover : colors.fill;
+    ctx.fill();
     ctx.lineWidth = 3;
-    ctx.strokeRect(rect.x, rect.y, rect.width, rect.height);
-    DrawUtils.text(ctx, label, rect.x + rect.width / 2, rect.y + rect.height / 2 - 22, {
-      size: 40,
+    ctx.strokeStyle = colors.border;
+    ctx.stroke();
+    DrawUtils.text(ctx, label, rect.x + rect.width / 2, rect.y + rect.height / 2 - size * 0.6, {
+      size,
       weight: 'bold',
       align: 'center',
+      color: colors.text,
     });
   },
+};
+
+DrawUtils.BUTTON_STYLES = {
+  primary: { fill: '#2e8c55', hover: '#3fae6a', border: '#bff5cf', text: '#ffffff' },
+  secondary: { fill: '#34405a', hover: '#465676', border: '#a9b8d6', text: '#ffffff' },
+  danger: { fill: '#8c2e3a', hover: '#ad3d4c', border: '#f5bfc6', text: '#ffffff' },
+  disabled: { fill: '#2a2d35', hover: '#2a2d35', border: '#4a4f5c', text: '#7d8494' },
 };
