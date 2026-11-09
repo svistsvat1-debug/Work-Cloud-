@@ -89,13 +89,23 @@ class StrikeWeapon extends Weapon {
   render(ctx) {
     const glowRGB = this.definition.glowRGB || '120, 190, 255';
 
-    // Marks: a ring that shrinks onto the target.
+    // Marks: a spinning sigil (ring + four ticks) that tightens onto the target.
     ctx.strokeStyle = this.definition.markColor || '#9fd8ff';
-    ctx.lineWidth = 4;
     for (const mark of this.marks) {
       const progress = 1 - mark.timer / this.stats.markDelay;
+      const radius = 60 - 30 * progress;
+      const spin = progress * Math.PI;
+      ctx.lineWidth = 4;
       ctx.beginPath();
-      ctx.arc(mark.x, mark.y, 60 - 30 * progress, 0, Math.PI * 2);
+      ctx.arc(mark.x, mark.y, radius, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.lineWidth = 5;
+      ctx.beginPath();
+      for (let i = 0; i < 4; i++) {
+        const angle = spin + (i * Math.PI) / 2;
+        ctx.moveTo(mark.x + Math.cos(angle) * (radius + 4), mark.y + Math.sin(angle) * (radius + 4));
+        ctx.lineTo(mark.x + Math.cos(angle) * (radius + 16), mark.y + Math.sin(angle) * (radius + 16));
+      }
       ctx.stroke();
     }
 

@@ -146,6 +146,12 @@ class Player extends Entity {
     const config = GameConfig.player;
     const size = this.drawSize;
     DrawUtils.shadow(ctx, this.x, this.y + size * 0.43, size * 0.26);
+    // A soft light ring at the feet, so you can always find yourself in a crowd.
+    ctx.strokeStyle = 'rgba(143, 247, 255, 0.45)';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.ellipse(this.x, this.y + size * 0.43, size * 0.36, size * 0.13, 0, 0, Math.PI * 2);
+    ctx.stroke();
 
     // A small squash-and-stretch bounce while walking makes a still image feel alive.
     const bounce = this.isMoving()
@@ -155,7 +161,10 @@ class Player extends Entity {
     // While invulnerable the player blinks; right after a hit it flashes red.
     const blinkOff =
       this.invulnerableTimer > 0 && Math.floor(this.invulnerableTimer * config.blinkRate) % 2 === 0;
-    const sprite = this.hurtTimer > 0 ? sprites.playerHurt : sprites.player;
+    // Walk cycle while moving; frame 1 (neutral stance) when standing still.
+    const frames = this.hurtTimer > 0 ? sprites.playerHurt : sprites.player;
+    const frameIndex = this.isMoving() ? Math.floor(this.walkTime * config.walkFrameRate) % frames.length : 1 % frames.length;
+    const sprite = frames[frameIndex];
     DrawUtils.character(ctx, sprite, this.x, this.y, size, this.facing, 1 - bounce * 0.5, 1 + bounce, blinkOff ? 0.35 : 1);
 
     // Small health bar above the head

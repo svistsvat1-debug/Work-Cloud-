@@ -99,7 +99,8 @@ class Enemy extends Entity {
       scaleY = 1 - (1 - step) * animation.squash;
     }
 
-    const sprite = this.flashTimer > 0 ? sprites[`${this.type}Flash`] : sprites[this.type];
+    const frames = this.flashTimer > 0 ? sprites[`${this.type}Flash`] : sprites[this.type];
+    const sprite = frames[Math.floor(this.animTime * animation.frameRate) % frames.length];
     DrawUtils.shadow(ctx, this.x, this.y + size * this.stats.shadowOffset, size * 0.26);
     DrawUtils.character(ctx, sprite, this.x, this.y + liftY, size, this.facing, scaleX, scaleY);
     this.renderHealthBar(ctx);

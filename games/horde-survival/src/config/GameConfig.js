@@ -15,6 +15,10 @@ const GameConfig = {
   // then drawn smaller on screen (see drawSize below).
   spriteSourceSize: 182,
 
+  // Optional image files that replace sprites drawn with code (see ImageSprites.js).
+  // Key = sprite name, value = path. Example: player: 'assets/sprites/player.png'
+  spriteImages: {},
+
   // Longest time step simulated in one frame. Prevents huge jumps after the
   // tab was hidden or the browser froze for a moment.
   maxDeltaTime: 0.05,
@@ -33,7 +37,8 @@ const GameConfig = {
     hurtFlashTime: 0.15, // red flash right after a hit
     hurtShake: { strength: 6, duration: 0.15 }, // a very small screen shake
     blinkRate: 14, // blinking speed while invulnerable
-    walkBounce: { speed: 16, amount: 0.05 },
+    walkBounce: { speed: 16, amount: 0.025 },
+    walkFrameRate: 8, // walk-cycle frames per second
     healthBar: { width: 84, height: 9, offsetY: 0.6 }, // offsetY: fraction of drawSize above the center
     pickupRadius: 36, // gems closer than this are collected
     magnetRadius: 150, // gems closer than this start flying toward the player
@@ -107,7 +112,7 @@ const GameConfig = {
       knockbackMultiplier: 1,
       group: [1, 3],
       wobble: null,
-      animation: { style: 'squish', speed: 7, squash: 0.07 },
+      animation: { style: 'squish', speed: 7, squash: 0.06, frameRate: 3 },
       shadowOffset: 0.4,
       color: '#9be35a',
     },
@@ -122,7 +127,7 @@ const GameConfig = {
       knockbackMultiplier: 1.4,
       group: [2, 4],
       wobble: { strength: 70, speed: 5 }, // sideways flutter while chasing
-      animation: { style: 'flap', speed: 9, lift: 6, squash: 0.08 },
+      animation: { style: 'flap', speed: 9, lift: 6, squash: 0.03, frameRate: 12 },
       shadowOffset: 0.55,
       color: '#b98af0',
     },
@@ -137,7 +142,7 @@ const GameConfig = {
       knockbackMultiplier: 1.1,
       group: [1, 3],
       wobble: null,
-      animation: { style: 'scuttle', speed: 18, squash: 0.06 },
+      animation: { style: 'scuttle', speed: 18, squash: 0.04, frameRate: 10 },
       shadowOffset: 0.36,
       color: '#ef8a3c',
     },
@@ -152,7 +157,7 @@ const GameConfig = {
       knockbackMultiplier: 0.3,
       group: [1, 1],
       wobble: null,
-      animation: { style: 'stomp', speed: 5, lift: 6, squash: 0.05 },
+      animation: { style: 'stomp', speed: 5, lift: 6, squash: 0.05, frameRate: 4 },
       shadowOffset: 0.42,
       color: '#a8896a',
     },
@@ -167,7 +172,7 @@ const GameConfig = {
       knockbackMultiplier: 0.2,
       group: [1, 1],
       wobble: null,
-      animation: { style: 'stomp', speed: 6, lift: 5, squash: 0.04 },
+      animation: { style: 'stomp', speed: 6, lift: 5, squash: 0.04, frameRate: 3 },
       shadowOffset: 0.42,
       color: '#ff5a5a',
       alwaysShowHealthBar: true,
@@ -185,7 +190,7 @@ const GameConfig = {
       knockbackMultiplier: 0.05,
       group: [1, 1],
       wobble: null,
-      animation: { style: 'stomp', speed: 3.5, lift: 8, squash: 0.04 },
+      animation: { style: 'stomp', speed: 3.5, lift: 8, squash: 0.04, frameRate: 3 },
       shadowOffset: 0.42,
       color: '#c77dff',
       isBoss: true, // gets the big health bar at the top of the screen

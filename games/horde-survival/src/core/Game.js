@@ -24,6 +24,7 @@ class Game {
     this.input = new Input(canvas);
     this.camera = new Camera(this.width, this.height);
     this.sprites = ProceduralSprites.createAll();
+    ImageSprites.loadInto(this.sprites); // swaps in image files when there are any
 
     // Systems: each one has a single job.
     this.spawner = new Spawner(this); // places enemies around the screen

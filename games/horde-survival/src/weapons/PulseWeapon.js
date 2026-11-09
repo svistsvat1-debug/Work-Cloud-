@@ -69,15 +69,20 @@ class PulseWeapon extends Weapon {
     for (const pulse of this.pulses) {
       const fadeProgress = Math.max(0, pulse.time - this.stats.expandTime) / this.fadeTime;
       const alpha = 1 - fadeProgress;
-      ctx.globalAlpha = alpha * 0.18;
+      ctx.globalAlpha = alpha * 0.16;
       ctx.fillStyle = fillColor;
       ctx.beginPath();
       ctx.arc(player.x, player.y, pulse.radius, 0, Math.PI * 2);
       ctx.fill();
-      ctx.globalAlpha = alpha;
+      // A bell's toll: the main ring plus two fainter echo rings behind it.
       ctx.strokeStyle = ringColor;
-      ctx.lineWidth = 12 * (1 - fadeProgress * 0.7);
-      ctx.stroke();
+      [[1, 1, 12], [0.86, 0.45, 7], [0.72, 0.22, 5]].forEach(([scale, strength, width]) => {
+        ctx.globalAlpha = alpha * strength;
+        ctx.lineWidth = width * (1 - fadeProgress * 0.7);
+        ctx.beginPath();
+        ctx.arc(player.x, player.y, pulse.radius * scale, 0, Math.PI * 2);
+        ctx.stroke();
+      });
     }
     ctx.globalAlpha = 1;
   }
