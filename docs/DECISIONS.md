@@ -16,4 +16,5 @@
 
 ## Записи
 
+- 2026-11-09 · YouTube long-form: формат 16:9, 10–15 хв; референс — "World War 2 Explained" (The Life Guide), розбір у `docs/longform/ww2-explained-format.md` · користувач уточнив, що референс для довгих відео, а не Shorts.
 - 2026-10-01 · Зафіксовано MASTER CONTEXT як базу роботи (`docs/MASTER_CONTEXT.md`) · щоб AI працював за одними правилами на всіх пристроях.
