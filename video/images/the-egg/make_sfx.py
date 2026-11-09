@@ -71,11 +71,39 @@ def reverb(x, dur=1.2, mix=0.25, damp=3.0):
     return dry * (1 - mix) + wet * mix
 
 
-# ---------- 1. ElevenLabs takes ----------
-for name, src in [("splash", "splash_a.mp3"), ("choir", "choir.mp3"), ("gulp", "gulp.mp3"),
-                  ("crowd", "crowd.mp3"), ("ticks", "ticks.mp3")]:
-    x = trim(load(os.path.join(SRC, src)))
-    save(name, x)
+def first_event(x, gap=0.12, rel_db=-30):
+    """keep only the first sound event (one-shots: a take can contain a second squeak / pop)"""
+    hop = int(0.01 * SR); n = len(x) // hop
+    db = np.array([20 * np.log10(np.sqrt(np.mean(x[i * hop:(i + 1) * hop] ** 2)) + 1e-9) for i in range(n)])
+    on = db > db.max() + rel_db
+    i0 = int(np.argmax(on)); g = int(gap / 0.01)
+    j = i0
+    while j < n and on[j:j + g].any():
+        j += 1
+    return x[: min(len(x), (j + 4) * hop)]
+
+
+# ---------- 1. ElevenLabs takes: every sound that has a file in sfx_src wins over the synthesised one ----------
+ELEVEN = {"splash": "splash_a.mp3"}            # default file name: <name>.mp3
+ONE_SHOT = {"pop", "squeak", "ding", "lowhit", "crack", "poof", "gulp", "heartbeat", "burst"}
+ALL = ["splash", "choir", "gulp", "crowd", "ticks", "squeak", "whoosh", "pop", "poof", "ding", "lowhit", "shimmer",
+       "crack", "burst", "heartbeat", "pad"]
+done = set()
+for name in ALL:
+    f = os.path.join(SRC, ELEVEN.get(name, name + ".mp3"))
+    if os.path.exists(f):
+        x = trim(load(f))
+        if name in ONE_SHOT:
+            x = first_event(x)
+        save(name, x, peak_db=-3.0 if name == "pad" else -1.0)
+        done.add(name)
+print("from ElevenLabs:", sorted(done))
+
+
+def save_synth(name, x, peak_db=-1.0):
+    if name not in done:
+        save(name + "", x, peak_db)
+
 
 # ---------- 2. synthesised ----------
 # whoosh: band of noise sweeping up then down, bell envelope (peak at 45 %)
@@ -83,7 +111,7 @@ d = 0.9; t = t_(d); u = t / d
 env = np.where(u < 0.45, np.sin(np.pi / 2 * u / 0.45) ** 2, np.cos(np.pi / 2 * (u - 0.45) / 0.55) ** 2)
 fc = lambda tt: 350 + 2200 * np.sin(np.pi * min(tt / d, 1)) ** 1.5
 w = stft_shape(rng.standard_normal(len(t)), lambda tt, f: np.exp(-((np.log(f + 1) - np.log(fc(tt))) ** 2) / 0.35))
-save("whoosh", w * env)
+save_synth("whoosh", w * env)
 
 # pop: bubble pop - fast upward blip + click
 d = 0.16; t = t_(d)
@@ -91,12 +119,12 @@ f = 380 + 1500 * (1 - np.exp(-t / 0.018))
 ph = 2 * np.pi * np.cumsum(f) / SR
 p = np.sin(ph) * np.exp(-t / 0.035) * (1 - np.exp(-t / 0.0015))
 click = rng.standard_normal(len(t)) * np.exp(-t / 0.002) * 0.3
-save("pop", p + click)
+save_synth("pop", p + click)
 
 # poof: soft noise puff with falling low-pass
 d = 0.55; t = t_(d)
 pf = stft_shape(rng.standard_normal(len(t)), lambda tt, f: 1 / (1 + (f / (1800 * np.exp(-tt * 3) + 250)) ** 4))
-save("poof", pf * (1 - np.exp(-t / 0.012)) * np.exp(-t / 0.16))
+save_synth("poof", pf * (1 - np.exp(-t / 0.012)) * np.exp(-t / 0.16))
 
 # ding: bell partials + air
 d = 1.8; t = t_(d)
@@ -104,14 +132,14 @@ f0 = 1318.5
 bell = sum(a * np.sin(2 * np.pi * f0 * r * t + rng.uniform(0, 6)) * np.exp(-t / dec)
            for r, a, dec in [(1, 1, 0.9), (2.0, 0.45, 0.5), (2.76, 0.35, 0.35), (3.9, 0.22, 0.22), (5.4, 0.15, 0.12)])
 bell *= 1 - np.exp(-t / 0.002)
-save("ding", reverb(bell, 1.0, 0.3)[:int(2.2 * SR)])
+save_synth("ding", reverb(bell, 1.0, 0.3)[:int(2.2 * SR)])
 
 # low hit: sub drop + low noise impact + soft saturation
 d = 1.7; t = t_(d)
 f = 46 + 50 * np.exp(-t / 0.12)
 sub = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-t / 0.55) * (1 - np.exp(-t / 0.004))
 imp = stft_shape(rng.standard_normal(len(t)), lambda tt, f: 1 / (1 + (f / 260) ** 4)) * np.exp(-t / 0.09)
-save("lowhit", np.tanh(1.8 * (sub + 0.8 * imp)))
+save_synth("lowhit", np.tanh(1.8 * (sub + 0.8 * imp)))
 
 # squeak: rubber toy "squee-eak"
 d = 0.38; t = t_(d)
@@ -119,7 +147,7 @@ f = 1500 + 700 * np.sin(np.pi * np.clip(t / 0.3, 0, 1)) + 60 * np.sin(2 * np.pi 
 ph = 2 * np.pi * np.cumsum(f) / SR
 sq = np.sin(ph) + 0.45 * np.sin(2 * ph) + 0.25 * np.sin(3 * ph)
 envq = np.clip(t / 0.02, 0, 1) * np.clip((d - t) / 0.06, 0, 1)
-save("squeak", np.tanh(1.5 * sq) * envq)
+save_synth("squeak", np.tanh(1.5 * sq) * envq)
 
 # shimmer: rising cloud of sine pings + airy swell
 d = 2.1; t = t_(d)
@@ -132,7 +160,7 @@ for k in range(70):
 air = stft_shape(rng.standard_normal(len(t)), lambda tt, f: np.exp(-((f - (2500 + 3000 * tt / d)) / 1500) ** 2))
 sh = sh / np.abs(sh).max() + 0.35 * air / np.abs(air).max() * (t / d) ** 1.5
 sh *= np.clip((d - t) / 0.25, 0, 1)
-save("shimmer", reverb(sh, 0.8, 0.3)[:int(2.4 * SR)])
+save_synth("shimmer", reverb(sh, 0.8, 0.3)[:int(2.4 * SR)])
 
 # crack: eggshell cracks - sharp high transients + small woody "tok"
 d = 0.7; t = t_(d)
@@ -141,7 +169,7 @@ for st, a in [(0.0, 1.0), (0.07, 0.6), (0.16, 0.85), (0.33, 0.45)]:
     n0 = int(st * SR); tt = t[: len(t) - n0]
     burst = stft_shape(rng.standard_normal(len(tt)), lambda x, f: (f / 9000) ** 0.6 / (1 + (f / 9000) ** 2))
     cr[n0:] += a * (burst * np.exp(-tt / 0.006) + 0.5 * np.sin(2 * np.pi * 620 * tt) * np.exp(-tt / 0.012))
-save("crack", cr)
+save_synth("crack", cr)
 
 # burst: shell bursting - noise blast + pops + shimmer tail
 d = 1.5; t = t_(d)
@@ -153,7 +181,7 @@ for k in range(30):
     n0 = int(st * SR); tt = t[: len(t) - n0]
     tail[n0:] += np.sin(2 * np.pi * fr * tt) * np.exp(-tt / 0.09) * (1 - st)
 bu = bl / np.abs(bl).max() + 0.4 * tail / np.abs(tail).max()
-save("burst", reverb(bu, 0.9, 0.25)[:int(1.8 * SR)])
+save_synth("burst", reverb(bu, 0.9, 0.25)[:int(1.8 * SR)])
 
 # heartbeat: lub-dub
 d = 1.3; t = t_(d)
@@ -162,7 +190,7 @@ for st, a, f0 in [(0.0, 1.0, 58), (0.28, 0.7, 52)]:
     n0 = int(st * SR); tt = t[: len(t) - n0]
     thump = np.sin(2 * np.pi * (f0 + 30 * np.exp(-tt / 0.03)) * tt) * np.exp(-tt / 0.11) * (1 - np.exp(-tt / 0.004))
     hb[n0:] += a * thump
-save("heartbeat", np.tanh(1.3 * hb))
+save_synth("heartbeat", np.tanh(1.3 * hb))
 
 # underscore pad: soft chords that follow the story (comp seconds), very quiet in the mix
 DUR = 26.6
@@ -197,4 +225,4 @@ pad *= sw
 pad = stft_shape(pad, lambda tt, f: 1 / (1 + (f / 1600) ** 2))
 pad = reverb(pad, 2.0, 0.35)[:len(t)]
 fi = int(0.4 * SR); pad[:fi] *= np.linspace(0, 1, fi)
-save("pad", pad, peak_db=-3.0)
+save_synth("pad", pad, peak_db=-3.0)
