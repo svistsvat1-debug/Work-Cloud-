@@ -1,5 +1,9 @@
 /**
  * Game owns everything: the main loop, the world objects and the systems.
+ *
+ * The game is always in one state:
+ *   'playing'  - the normal game
+ *   'gameover' - the player died; the world is frozen until restart
  */
 class Game {
   constructor(canvas) {
@@ -20,15 +24,6 @@ class Game {
     this.renderer = new Renderer(this);
     this.ui = new UISystem(this);
 
-    // World objects
-    this.player = new Player(0, 0);
-    this.enemies = [];
-    this.projectiles = [];
-
-    // Run statistics
-    this.survivalTime = 0;
-    this.kills = 0;
-
     // Frame timing
     this.lastTimestamp = null;
     this.fps = 0;
@@ -37,10 +32,27 @@ class Game {
 
     // The browser calls loop() without an object, so bind it to this Game.
     this.loop = this.loop.bind(this);
+
+    this.startNewRun();
   }
 
   start() {
     requestAnimationFrame(this.loop);
+  }
+
+  /** Resets the world for a fresh attempt. */
+  startNewRun() {
+    this.player = new Player(0, 0);
+    this.enemies = [];
+    this.projectiles = [];
+    this.survivalTime = 0;
+    this.kills = 0;
+
+    this.spawner.reset();
+    this.weapons.reset();
+    this.effects.reset();
+    this.camera.follow(this.player);
+    this.state = 'playing';
   }
 
   /** The main loop: runs once per screen refresh (usually 60 times per second). */
@@ -60,10 +72,19 @@ class Game {
   }
 
   update(dt) {
+    if (this.state === 'gameover') {
+      // The world stays frozen. Only listen for a restart.
+      if (this.input.wasPressed('restart') || this.input.wasClicked(this.ui.restartButton)) {
+        this.startNewRun();
+      }
+      return;
+    }
+
     this.survivalTime += dt;
 
     this.player.update(dt, this);
     this.camera.follow(this.player);
+    this.camera.update(dt);
 
     this.spawner.update(dt);
     this.weapons.update(dt);
@@ -79,6 +100,11 @@ class Game {
   onEnemyKilled(enemy) {
     this.kills += 1;
     this.effects.spawnPuff(enemy.x, enemy.y, enemy.stats.color, enemy.drawSize * 0.5);
+  }
+
+  /** Called by the player when health reaches 0. */
+  onPlayerDied() {
+    this.state = 'gameover';
   }
 
   removeDeadObjects() {

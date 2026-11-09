@@ -14,8 +14,12 @@ class Enemy {
     this.radius = stats.radius;
     this.drawSize = stats.drawSize;
     this.speed = stats.speed;
+    this.damage = stats.damage;
     this.maxHealth = stats.maxHealth;
     this.currentHealth = stats.maxHealth;
+    this.knockbackX = 0;
+    this.knockbackY = 0;
+    this.flashTimer = 0; // > 0 means "just got hit": draw the white flash
     this.facing = 1;
     this.animTime = Math.random() * 10; // random start, so enemies don't animate in sync
     this.dead = false;
@@ -34,15 +38,27 @@ class Enemy {
       this.vy += direction.x * sideways;
     }
 
-    this.x += this.vx * dt;
-    this.y += this.vy * dt;
+    // Knockback pushes the enemy away for a moment, then fades out.
+    this.x += (this.vx + this.knockbackX) * dt;
+    this.y += (this.vy + this.knockbackY) * dt;
+    const fade = Math.exp(-GameConfig.combat.knockbackDecay * dt);
+    this.knockbackX *= fade;
+    this.knockbackY *= fade;
+
     if (Math.abs(this.vx) > 1) this.facing = Math.sign(this.vx);
+    this.flashTimer = Math.max(0, this.flashTimer - dt);
     this.animTime += dt;
   }
 
-  takeDamage(amount, game) {
+  /** knockbackX / knockbackY: push velocity (pixels per second) away from the hit. */
+  takeDamage(amount, game, knockbackX = 0, knockbackY = 0) {
     if (this.dead) return;
     this.currentHealth -= amount;
+    this.flashTimer = GameConfig.combat.hitFlashTime;
+    this.knockbackX += knockbackX * this.stats.knockbackMultiplier;
+    this.knockbackY += knockbackY * this.stats.knockbackMultiplier;
+    game.effects.spawnDamageNumber(this.x, this.y - this.drawSize * 0.35, amount);
+
     if (this.currentHealth <= 0) {
       this.dead = true;
       game.onEnemyKilled(this);
@@ -65,7 +81,24 @@ class Enemy {
       scaleY = 1 + Math.sin(this.animTime * 18) * 0.08;
     }
 
+    const sprite = this.flashTimer > 0 ? sprites[`${this.type}Flash`] : sprites[this.type];
     DrawUtils.shadow(ctx, this.x, this.y + size * this.stats.shadowOffset, size * 0.26);
-    DrawUtils.character(ctx, sprites[this.type], this.x, this.y + liftY, size, this.facing, scaleX, scaleY);
+    DrawUtils.character(ctx, sprite, this.x, this.y + liftY, size, this.facing, scaleX, scaleY);
+    this.renderHealthBar(ctx);
+  }
+
+  renderHealthBar(ctx) {
+    const isDamaged = this.currentHealth < this.maxHealth;
+    if (GameConfig.ui.enemyHealthBars === 'damaged' && !isDamaged) return;
+    const width = this.drawSize * 0.55;
+    DrawUtils.bar(
+      ctx,
+      this.x - width / 2,
+      this.y - this.drawSize * 0.42,
+      width,
+      5,
+      this.currentHealth / this.maxHealth,
+      '#ef5050'
+    );
   }
 }

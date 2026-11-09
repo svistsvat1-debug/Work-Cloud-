@@ -1,11 +1,16 @@
 /**
- * EffectsSystem holds short-lived visual effects that are not game objects,
- * like the "poof" when an enemy dies.
+ * EffectsSystem holds short-lived visual effects that are not game objects:
+ * the "poof" when an enemy dies and the floating damage numbers.
  */
 class EffectsSystem {
   constructor(game) {
     this.game = game;
+    this.reset();
+  }
+
+  reset() {
     this.puffs = [];
+    this.damageNumbers = [];
   }
 
   /** A quick expanding ring + flash where an enemy died. */
@@ -13,12 +18,34 @@ class EffectsSystem {
     this.puffs.push({ x, y, color, size, time: 0, duration: 0.35 });
   }
 
+  /** A number that floats up and fades out. */
+  spawnDamageNumber(x, y, amount, color = '#ffffff') {
+    const config = GameConfig.effects;
+    if (this.damageNumbers.length >= config.maxDamageNumbers) this.damageNumbers.shift();
+    this.damageNumbers.push({
+      x: x + MathUtils.randomRange(-14, 14),
+      y,
+      text: String(Math.round(amount)),
+      color,
+      time: 0,
+      duration: config.damageNumberDuration,
+    });
+  }
+
   update(dt) {
     for (const puff of this.puffs) puff.time += dt;
+    for (const number of this.damageNumbers) number.time += dt;
     this.puffs = this.puffs.filter((puff) => puff.time < puff.duration);
+    this.damageNumbers = this.damageNumbers.filter((number) => number.time < number.duration);
   }
 
   render(ctx) {
+    this.renderPuffs(ctx);
+    this.renderDamageNumbers(ctx);
+    ctx.globalAlpha = 1;
+  }
+
+  renderPuffs(ctx) {
     for (const puff of this.puffs) {
       const progress = puff.time / puff.duration; // 0 -> 1
       ctx.globalAlpha = 1 - progress;
@@ -32,6 +59,23 @@ class EffectsSystem {
       ctx.arc(puff.x, puff.y, puff.size * (0.3 + 0.5 * progress), 0, Math.PI * 2);
       ctx.stroke();
     }
-    ctx.globalAlpha = 1;
+  }
+
+  renderDamageNumbers(ctx) {
+    ctx.font = `bold 30px ${GameConfig.ui.font}`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = 'rgba(0, 0, 0, 0.8)';
+    const rise = GameConfig.effects.damageNumberRise;
+    for (const number of this.damageNumbers) {
+      const progress = number.time / number.duration;
+      const easeOut = 1 - (1 - progress) * (1 - progress); // fast at first, then slows down
+      const y = number.y - rise * easeOut;
+      ctx.globalAlpha = progress < 0.6 ? 1 : 1 - (progress - 0.6) / 0.4;
+      ctx.strokeText(number.text, number.x, y);
+      ctx.fillStyle = number.color;
+      ctx.fillText(number.text, number.x, y);
+    }
   }
 }

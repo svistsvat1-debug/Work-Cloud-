@@ -6,12 +6,32 @@
  */
 const ProceduralSprites = {
   createAll() {
-    return {
+    const sprites = {
       player: this.createPlayer(),
       slime: this.createSlime(),
       bat: this.createBat(),
       projectile: this.createProjectile(),
     };
+
+    // Tinted copies for hit feedback: red for the player, white flash for enemies.
+    sprites.playerHurt = this.createTinted(sprites.player, '#ff3b3b', 0.65);
+    for (const type of Object.keys(GameConfig.enemies)) {
+      sprites[`${type}Flash`] = this.createTinted(sprites[type], '#ffffff', 0.8);
+    }
+    return sprites;
+  },
+
+  /** Copy of a sprite with a color painted over its visible pixels. */
+  createTinted(source, color, strength) {
+    const canvas = this.createCanvas(source.width);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(source, 0, 0);
+    // "source-atop" paints only where the sprite already has pixels.
+    ctx.globalCompositeOperation = 'source-atop';
+    ctx.globalAlpha = strength;
+    ctx.fillStyle = color;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    return canvas;
   },
 
   /** An empty square canvas for one sprite. */

@@ -5,6 +5,10 @@
 class WeaponSystem {
   constructor(game) {
     this.game = game;
+    this.reset();
+  }
+
+  reset() {
     this.cooldownTimer = 0;
   }
 

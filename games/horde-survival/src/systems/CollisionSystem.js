@@ -26,17 +26,25 @@ class CollisionSystem {
       if (projectile.dead) continue;
       for (const enemy of enemies) {
         if (enemy.dead || !CollisionSystem.circlesOverlap(projectile, enemy)) continue;
-        enemy.takeDamage(projectile.damage, this.game);
-        projectile.dead = true; // one projectile hits one enemy
+        projectile.hit(enemy, this.game);
         break;
       }
     }
   }
 
-  /** Enemies can't walk through the player: push them back to the edge of the player's circle. */
+  /**
+   * Enemies that touch the player deal contact damage (the player's short
+   * invulnerability limits how often). Then they are pushed back to the edge
+   * of the player's circle, so they can't walk through.
+   */
   enemiesVsPlayer() {
     const player = this.game.player;
+    const padding = GameConfig.combat.contactPadding;
     for (const enemy of this.game.enemies) {
+      if (enemy.dead) continue;
+      const touchDistance = player.radius + enemy.radius + padding;
+      const distanceSq = MathUtils.distanceSquared(player.x, player.y, enemy.x, enemy.y);
+      if (distanceSq <= touchDistance * touchDistance) player.takeDamage(enemy.damage, this.game);
       CollisionSystem.pushApart(enemy, player, 1, 0);
     }
   }

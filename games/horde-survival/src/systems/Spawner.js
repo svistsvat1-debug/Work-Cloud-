@@ -5,6 +5,10 @@
 class Spawner {
   constructor(game) {
     this.game = game;
+    this.reset();
+  }
+
+  reset() {
     this.timer = 0;
   }
 
