@@ -58,6 +58,7 @@ export class Renderer {
     this.renderWorld(ctx);
     this.renderLighting(ctx);
     game.ui.drawHUD(ctx);
+    if (game.state === 'playing') game.ui.drawTouchStick(ctx);
 
     if (game.state === 'levelup') game.ui.drawLevelUp(ctx);
     else if (game.state === 'chest') game.ui.drawChest(ctx);

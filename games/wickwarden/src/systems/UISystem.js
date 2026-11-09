@@ -190,6 +190,42 @@ export class UISystem {
     ctx.stroke();
   }
 
+  /** Pause button — needed on phones, which have no Esc key. */
+  pauseButton(ctx, x = W - 84, y = 96) {
+    const size = 50;
+    this.buttons.push({ id: 'pause', x, y, w: size, h: size, enabled: true });
+    const hover = this.isHovered(x, y, size, size);
+    this.panel(ctx, x, y, size, size, { fill: hover ? 'rgba(70,54,98,0.95)' : 'rgba(20,14,30,0.8)', radius: 10 });
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(x + 16, y + 14, 6, 22);
+    ctx.fillRect(x + 28, y + 14, 6, 22);
+  }
+
+  /** Virtual joystick drawn where the thumb went down (touch only). */
+  drawTouchStick(ctx) {
+    const touch = this.game.input.touch;
+    if (!touch.active) return;
+    const max = 90;
+    let dx = touch.x - touch.startX;
+    let dy = touch.y - touch.startY;
+    const len = Math.hypot(dx, dy);
+    if (len > max) {
+      dx = (dx / len) * max;
+      dy = (dy / len) * max;
+    }
+    ctx.lineWidth = 4;
+    ctx.strokeStyle = 'rgba(255,255,255,0.35)';
+    ctx.fillStyle = 'rgba(255,255,255,0.08)';
+    ctx.beginPath();
+    ctx.arc(touch.startX, touch.startY, max, 0, TAU);
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(255,215,140,0.55)';
+    ctx.beginPath();
+    ctx.arc(touch.startX + dx, touch.startY + dy, 36, 0, TAU);
+    ctx.fill();
+  }
+
   // ---------- HUD ----------
 
   drawHUD(ctx) {
@@ -250,6 +286,7 @@ export class UISystem {
     this.text(ctx, `${run.coins}`, W - 108, 106, 28, '#ffd76a', 'right');
     this.icon(ctx, 'coin', W - 108 - ctx.measureText(`${run.coins}`).width - 24, 96, 32);
     this.muteButton(ctx);
+    this.pauseButton(ctx);
 
     this.drawBossBar(ctx);
     this.drawBanner(ctx);

@@ -218,7 +218,7 @@ export class Game {
         this.updateShop(clicked);
         break;
       case 'playing':
-        if (input.wasPressed('Escape', 'KeyP')) {
+        if (input.wasPressed('Escape', 'KeyP') || clicked === 'pause') {
           this.state = 'paused';
           break;
         }

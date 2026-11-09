@@ -4,7 +4,9 @@
 import { GameConfig } from '../config/GameConfig.js';
 
 function defaultSave() {
-  return { totalCoins: 0, meta: {}, muted: false, bestTime: 0, runs: 0, showDebug: true };
+  // The debug panel is on by default on desktop (F3 toggles it); phones have no F3, so it starts hidden there.
+  const touchOnly = typeof matchMedia === 'function' && matchMedia('(pointer: coarse)').matches;
+  return { totalCoins: 0, meta: {}, muted: false, bestTime: 0, runs: 0, showDebug: !touchOnly };
 }
 
 export const SaveData = {

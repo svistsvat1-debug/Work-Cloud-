@@ -56,7 +56,10 @@ export class Input {
       this.touch.y = this.mouse.y;
       e.preventDefault();
     }, { passive: false });
-    canvas.addEventListener('touchend', () => { this.touch.active = false; });
+    canvas.addEventListener('touchend', () => {
+      this.touch.active = false;
+      this.interacted(); // iOS unlocks audio more reliably on touchend
+    });
   }
 
   interacted() {
