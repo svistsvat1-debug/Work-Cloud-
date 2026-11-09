@@ -106,6 +106,7 @@ class Enemy extends Entity {
   }
 
   renderHealthBar(ctx) {
+    if (this.stats.isBoss) return; // bosses use the big bar at the top of the screen
     const isDamaged = this.currentHealth < this.maxHealth;
     const showAlways = GameConfig.ui.enemyHealthBars === 'always' || this.stats.alwaysShowHealthBar;
     if (!showAlways && !isDamaged) return;

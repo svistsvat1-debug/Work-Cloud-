@@ -163,6 +163,23 @@ const GameConfig = {
       alwaysShowHealthBar: true,
       chestChance: 0.25,
     },
+    boss: {
+      name: 'Dread Colossus',
+      maxHealth: 2200,
+      speed: 58, // slightly slower than normal enemies
+      damage: 30,
+      xp: 30,
+      radius: 82,
+      drawSize: 290, // the 182x182 sprite drawn much bigger
+      knockbackMultiplier: 0.05,
+      group: [1, 1],
+      wobble: null,
+      animation: { style: 'stomp', speed: 3.5, lift: 8, squash: 0.04 },
+      shadowOffset: 0.42,
+      color: '#c77dff',
+      isBoss: true, // gets the big health bar at the top of the screen
+      chestChance: 1,
+    },
   },
 
   // ---------------------------------------------------------------- Weapons
@@ -196,6 +213,24 @@ const GameConfig = {
     maxSpeedMultiplier: 1.3, // ...but never more than +30%, so the player can always outrun them
     extraSpawnsPerMinute: 0.5, // after the last wave: +0.5 spawns per second, every minute
     maxSpawnsPerSecond: 9,
+  },
+
+  // A boss arrives on a fixed timer and always drops a treasure chest.
+  bosses: {
+    firstAt: 120, // seconds
+    interval: 120, // a new boss every 2 minutes
+    healthGrowthPerBoss: 0.6, // each next boss has +60% health (on top of the time scaling)
+  },
+
+  // Treasure chests (from bosses, sometimes from elites).
+  chests: {
+    drawSize: 112,
+    radius: 44,
+    coins: { min: 20, max: 40, perMinute: 6 }, // every chest gives coins; more later in the run
+    extraRewardChances: [0.4, 0.15], // chance for a 2nd and a 3rd item reward (luck adds to it)
+    healBelowFraction: 0.7, // the chest also heals if HP is below 70%...
+    healFraction: 0.3, // ...by 30% of max HP
+    fallbackCoins: 60, // extra coins when every weapon and passive is already maxed
   },
 
   // Elites come on their own timer, not from the wave weights.
@@ -242,6 +277,7 @@ const GameConfig = {
     choice1: ['Digit1', 'Numpad1'],
     choice2: ['Digit2', 'Numpad2'],
     choice3: ['Digit3', 'Numpad3'],
+    confirm: ['Space', 'Enter', 'NumpadEnter'],
   },
 
   // ---------------------------------------------------------------- UI
@@ -252,7 +288,8 @@ const GameConfig = {
     // 'damaged' shows enemy health bars only after the first hit (less clutter), 'always' shows all.
     enemyHealthBars: 'damaged',
     enemyHealthBar: { widthFactor: 0.55, height: 5, offsetY: 0.42 },
-    bannerDuration: 3, // seconds a wave banner stays on screen
+    bannerDuration: 2.6, // seconds a banner stays on screen (several banners queue up)
+    bossBar: { width: 760, height: 24, y: 168 },
     playerHealthBar: { x: 40, y: 50, width: 460, height: 30 },
     xpBar: { height: 26 },
     slotIconSize: 60, // weapon icons under the HP bar

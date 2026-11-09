@@ -13,6 +13,9 @@ const ProceduralSprites = {
       crawler: this.createCrawler(),
       brute: this.createBrute(),
       elite: this.createElite(),
+      boss: this.createBoss(),
+      chest: this.createChest(false),
+      chestOpen: this.createChest(true),
       arcaneBolt: this.createProjectile(),
       orbitBlade: this.createOrbitBlade(),
       gemBlue: this.createGem('#4fc3ff', '#d2f1ff', '#1b5f99'),
@@ -415,6 +418,188 @@ const ProceduralSprites = {
       ctx.fill();
       ctx.stroke();
     }
+
+    return canvas;
+  },
+
+  /** The boss: a hulking shadow giant with one huge glowing eye. Faces right. */
+  createBoss() {
+    const canvas = this.createCanvas();
+    const ctx = canvas.getContext('2d');
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+
+    // Purple aura
+    const aura = ctx.createRadialGradient(91, 100, 20, 91, 100, 91);
+    aura.addColorStop(0, 'rgba(199, 125, 255, 0.55)');
+    aura.addColorStop(1, 'rgba(199, 125, 255, 0)');
+    ctx.fillStyle = aura;
+    this.circle(ctx, 91, 100, 91);
+    ctx.fill();
+
+    ctx.lineWidth = 6;
+    ctx.strokeStyle = '#0e0716';
+
+    // Spikes along the back
+    ctx.fillStyle = '#2a1840';
+    for (let i = 0; i < 5; i++) {
+      const x = 40 + i * 25;
+      ctx.beginPath();
+      ctx.moveTo(x - 13, 66);
+      ctx.lineTo(x, 22 + Math.abs(i - 2) * 9);
+      ctx.lineTo(x + 13, 66);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+    }
+
+    // Fists
+    ctx.fillStyle = '#3a2556';
+    this.circle(ctx, 26, 134, 21);
+    ctx.fill();
+    ctx.stroke();
+    this.circle(ctx, 158, 136, 23);
+    ctx.fill();
+    ctx.stroke();
+
+    // Body
+    const body = ctx.createLinearGradient(0, 50, 0, 172);
+    body.addColorStop(0, '#6b4a8f');
+    body.addColorStop(1, '#241536');
+    ctx.fillStyle = body;
+    ctx.beginPath();
+    ctx.moveTo(30, 120);
+    ctx.bezierCurveTo(26, 64, 60, 48, 91, 48);
+    ctx.bezierCurveTo(122, 48, 158, 64, 154, 120);
+    ctx.bezierCurveTo(152, 160, 124, 170, 91, 170);
+    ctx.bezierCurveTo(58, 170, 32, 160, 30, 120);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    // Glowing cracks
+    ctx.strokeStyle = 'rgba(214, 150, 255, 0.85)';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(52, 132);
+    ctx.lineTo(62, 118);
+    ctx.lineTo(58, 104);
+    ctx.moveTo(70, 156);
+    ctx.lineTo(80, 142);
+    ctx.stroke();
+
+    // One huge eye looking right
+    const eye = ctx.createRadialGradient(110, 96, 4, 110, 96, 26);
+    eye.addColorStop(0, '#fff2ff');
+    eye.addColorStop(0.45, '#ff6fe1');
+    eye.addColorStop(1, '#8a1fa0');
+    ctx.fillStyle = eye;
+    ctx.strokeStyle = '#0e0716';
+    ctx.lineWidth = 5;
+    this.circle(ctx, 110, 96, 24);
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle = '#12051a';
+    ctx.beginPath();
+    ctx.ellipse(115, 96, 5, 15, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Jagged teeth
+    ctx.fillStyle = '#f4ecff';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(80, 136);
+    for (let i = 0; i < 6; i++) {
+      ctx.lineTo(86 + i * 10, 148);
+      ctx.lineTo(91 + i * 10, 136);
+    }
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    return canvas;
+  },
+
+  /** A wooden treasure chest with gold trim. `open` shows the lid up and light inside. */
+  createChest(open) {
+    const canvas = this.createCanvas();
+    const ctx = canvas.getContext('2d');
+    ctx.lineJoin = 'round';
+    ctx.lineWidth = 6;
+    ctx.strokeStyle = '#2a1608';
+
+    if (open) {
+      // Light pouring out
+      const light = ctx.createLinearGradient(0, 20, 0, 100);
+      light.addColorStop(0, 'rgba(255, 240, 170, 0)');
+      light.addColorStop(1, 'rgba(255, 240, 170, 0.9)');
+      ctx.fillStyle = light;
+      ctx.beginPath();
+      ctx.moveTo(44, 96);
+      ctx.lineTo(20, 10);
+      ctx.lineTo(162, 10);
+      ctx.lineTo(138, 96);
+      ctx.closePath();
+      ctx.fill();
+      // Lid tilted back
+      ctx.fillStyle = '#9c6634';
+      this.roundRect(ctx, 34, 40, 114, 30, 12);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = '#e0b84a';
+      ctx.fillRect(34, 50, 114, 8);
+      // Treasure inside
+      ctx.fillStyle = '#ffd166';
+      for (const [x, y] of [[66, 92], [84, 86], [102, 90], [118, 94]]) {
+        this.circle(ctx, x, y, 9);
+        ctx.fill();
+      }
+    }
+
+    // Body
+    ctx.fillStyle = '#8b5a2b';
+    this.roundRect(ctx, 30, 92, 122, 70, 10);
+    ctx.fill();
+    ctx.stroke();
+    ctx.strokeStyle = 'rgba(42, 22, 8, 0.6)';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(34, 116);
+    ctx.lineTo(148, 116);
+    ctx.moveTo(34, 140);
+    ctx.lineTo(148, 140);
+    ctx.stroke();
+
+    if (!open) {
+      // Closed lid
+      ctx.strokeStyle = '#2a1608';
+      ctx.lineWidth = 6;
+      ctx.fillStyle = '#a56b37';
+      ctx.beginPath();
+      ctx.moveTo(30, 96);
+      ctx.lineTo(30, 72);
+      ctx.quadraticCurveTo(91, 34, 152, 72);
+      ctx.lineTo(152, 96);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+    }
+
+    // Gold bands and lock
+    ctx.strokeStyle = '#2a1608';
+    ctx.lineWidth = 4;
+    ctx.fillStyle = '#e0b84a';
+    for (const x of [44, 128]) {
+      ctx.fillRect(x, open ? 92 : 62, 12, open ? 70 : 100);
+      ctx.strokeRect(x, open ? 92 : 62, 12, open ? 70 : 100);
+    }
+    this.roundRect(ctx, 78, 94, 26, 30, 5);
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle = '#2a1608';
+    this.circle(ctx, 91, 106, 4);
+    ctx.fill();
+    ctx.fillRect(89, 106, 4, 10);
 
     return canvas;
   },

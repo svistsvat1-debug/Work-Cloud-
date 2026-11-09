@@ -7,6 +7,7 @@ class UISystem {
   constructor(game) {
     this.game = game;
     this.levelUpMenu = new LevelUpMenu(game);
+    this.chestScreen = new ChestScreen(game);
     this.gameOverScreen = new GameOverScreen(game);
     this.reset();
   }
@@ -14,18 +15,20 @@ class UISystem {
   reset() {
     // The HP bar shows recent damage as a lighter "trail" that catches up.
     this.healthTrail = 1;
-    this.banner = null;
+    this.banners = []; // waiting banners; the first one is on screen
   }
 
-  /** A big message in the middle of the screen for a few seconds (e.g. a new wave). */
+  /** A big message for a few seconds (new wave, boss...). Several banners queue up. */
   showBanner(title, subtitle, color = '#ffd166') {
-    this.banner = { title, subtitle, color, time: 0 };
+    if (this.banners.length >= 3) this.banners.shift(); // keep the queue short
+    this.banners.push({ title, subtitle, color, time: 0 });
   }
 
   update(dt) {
-    if (this.banner) {
-      this.banner.time += dt;
-      if (this.banner.time >= GameConfig.ui.bannerDuration) this.banner = null;
+    const banner = this.banners[0];
+    if (banner) {
+      banner.time += dt;
+      if (banner.time >= GameConfig.ui.bannerDuration) this.banners.shift();
     }
     const player = this.game.player;
     const fraction = player.currentHealth / player.maxHealth;
@@ -39,6 +42,7 @@ class UISystem {
 
     this.renderHud(ctx);
     if (this.game.state === GameState.LEVEL_UP) this.levelUpMenu.render(ctx);
+    if (this.game.state === GameState.CHEST) this.chestScreen.render(ctx);
     if (this.game.state === GameState.GAME_OVER) this.gameOverScreen.render(ctx);
 
     ctx.restore();
@@ -63,6 +67,8 @@ class UISystem {
       align: 'center',
       color: '#c9d3e0',
     });
+    this.renderBossBars(ctx);
+    this.renderChestPointers(ctx);
     this.renderBanner(ctx);
 
     // Top right: kills and coins
@@ -87,15 +93,62 @@ class UISystem {
     }
   }
 
+  /** A big health bar at the top for every living boss (at most two). */
+  renderBossBars(ctx) {
+    const { width, height, y } = GameConfig.ui.bossBar;
+    const bosses = this.game.enemies.filter((enemy) => enemy.stats.isBoss && !enemy.dead).slice(0, 2);
+    bosses.forEach((boss, index) => {
+      const top = y + index * 62;
+      const left = (this.game.width - width) / 2;
+      DrawUtils.text(ctx, boss.stats.name, this.game.width / 2, top - 30, {
+        size: 24,
+        weight: 'bold',
+        align: 'center',
+        color: '#e3c2ff',
+      });
+      DrawUtils.bar(ctx, left, top, width, height, boss.currentHealth / boss.maxHealth, '#b44dff');
+    });
+  }
+
+  /** Gold arrows at the screen edge pointing to chests that are off screen. */
+  renderChestPointers(ctx) {
+    const { camera, width, height } = this.game;
+    const inset = 70;
+    for (const pickup of this.game.pickups) {
+      if (!(pickup instanceof Chest) || pickup.isVisible(camera)) continue;
+      const angle = Math.atan2(pickup.y - camera.y, pickup.x - camera.x);
+      // Push the arrow from the screen center toward the chest until it hits the inset border.
+      const scale = Math.min(
+        (width / 2 - inset) / Math.abs(Math.cos(angle) || 1e-6),
+        (height / 2 - inset) / Math.abs(Math.sin(angle) || 1e-6)
+      );
+      const x = width / 2 + Math.cos(angle) * scale;
+      const y = height / 2 + Math.sin(angle) * scale;
+      ctx.drawImage(this.game.sprites.chest, x - 30, y - 30, 60, 60);
+      ctx.save();
+      ctx.translate(x + Math.cos(angle) * 46, y + Math.sin(angle) * 46);
+      ctx.rotate(angle);
+      ctx.fillStyle = '#ffd166';
+      ctx.beginPath();
+      ctx.moveTo(14, 0);
+      ctx.lineTo(-10, -12);
+      ctx.lineTo(-10, 12);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+
   renderBanner(ctx) {
-    if (!this.banner) return;
-    const { title, subtitle, color, time } = this.banner;
+    const banner = this.banners[0];
+    if (!banner) return;
+    const { title, subtitle, color, time } = banner;
     const duration = GameConfig.ui.bannerDuration;
     // Fade in during the first 0.3 s, fade out during the last 0.7 s.
     const alpha = Math.min(1, time / 0.3, (duration - time) / 0.7);
     ctx.globalAlpha = Math.max(0, alpha);
-    DrawUtils.text(ctx, title, this.game.width / 2, 190, { size: 54, weight: 'bold', align: 'center', color });
-    DrawUtils.text(ctx, subtitle, this.game.width / 2, 256, { size: 30, align: 'center', color: '#e8eef5' });
+    DrawUtils.text(ctx, title, this.game.width / 2, 270, { size: 54, weight: 'bold', align: 'center', color });
+    DrawUtils.text(ctx, subtitle, this.game.width / 2, 336, { size: 30, align: 'center', color: '#e8eef5' });
     ctx.globalAlpha = 1;
   }
 

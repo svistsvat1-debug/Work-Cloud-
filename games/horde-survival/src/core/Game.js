@@ -2,6 +2,7 @@
 const GameState = Object.freeze({
   PLAYING: 'playing', // the normal game
   LEVEL_UP: 'levelup', // the action is paused while the player picks an upgrade
+  CHEST: 'chest', // the action is paused while a treasure chest opens
   GAME_OVER: 'gameover', // the player died; the world is frozen until restart
 });
 
@@ -25,7 +26,7 @@ class Game {
     this.waves = new WaveDirector(this); // decides what spawns and when
     this.weapons = new WeaponSystem(this); // fires at enemies
     this.collisions = new CollisionSystem(this); // checks what touches what
-    this.upgrades = new UpgradeSystem(this); // level-up choices
+    this.upgrades = new UpgradeSystem(this); // level-up choices and chest rewards
     this.effects = new EffectsSystem(this); // puffs and damage numbers
     this.renderer = new Renderer(this); // draws the world
     this.ui = new UISystem(this); // draws the HUD and menus
@@ -59,6 +60,7 @@ class Game {
     this.pickups.length = 0;
     this.survivalTime = 0;
     this.kills = 0;
+    this.bossesDefeated = 0;
     this.runCoins = 0; // coins earned during this run
 
     this.spawner.reset();
@@ -93,6 +95,9 @@ class Game {
         break;
       case GameState.LEVEL_UP:
         this.ui.levelUpMenu.update(dt); // the world is paused
+        break;
+      case GameState.CHEST:
+        this.ui.chestScreen.update(dt); // the world is paused
         break;
       case GameState.GAME_OVER:
         this.ui.gameOverScreen.update(dt); // the world is frozen
@@ -131,8 +136,13 @@ class Game {
   /** Called by an enemy the moment it dies. */
   onEnemyKilled(enemy) {
     this.kills += 1;
+    if (enemy.stats.isBoss) this.bossesDefeated += 1;
     this.effects.spawnPuff(enemy.x, enemy.y, enemy.stats.color, enemy.drawSize * 0.5);
     this.dropXp(enemy.x, enemy.y, enemy.stats.xp);
+
+    // Bosses always drop a treasure chest, elites sometimes.
+    const chestChance = enemy.stats.chestChance || 0;
+    if (Math.random() < chestChance) this.pickups.push(new Chest(enemy.x, enemy.y));
   }
 
   addCoins(amount) {
@@ -195,11 +205,29 @@ class Game {
     this.player.pendingLevelUps -= 1;
     // More level-ups waiting? Show a fresh set of cards instead of resuming.
     if (this.player.pendingLevelUps > 0 && this.openLevelUpMenu()) return;
-    this.resumeAfterLevelUp();
+    this.resumePlaying();
   }
 
-  /** Gives the player a moment to breathe: pushes nearby enemies back and grants brief safety. */
-  resumeAfterLevelUp() {
+  // ---------------------------------------------------------------- Treasure chests
+
+  /** Called when the player touches a chest. */
+  openChest() {
+    if (this.state !== GameState.PLAYING) return;
+    const rewards = this.upgrades.openChest();
+    this.ui.chestScreen.open(rewards);
+    this.state = GameState.CHEST;
+  }
+
+  /** Called by the chest screen when the player continues. */
+  closeChest() {
+    this.resumePlaying();
+  }
+
+  /**
+   * Back to the action after a menu. Gives the player a moment to breathe:
+   * pushes nearby enemies back and grants brief safety.
+   */
+  resumePlaying() {
     const { resumePushRadius, resumePushForce, resumeInvulnerability } = GameConfig.levelUp;
     const player = this.player;
     for (const enemy of this.enemies) {

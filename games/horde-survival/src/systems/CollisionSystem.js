@@ -53,13 +53,19 @@ class CollisionSystem {
     }
   }
 
-  /** Overlapping enemies gently push each other apart, so the horde spreads out instead of stacking. */
+  /**
+   * Overlapping enemies gently push each other apart, so the horde spreads out
+   * instead of stacking. Bigger enemies move less (a boss shoves slimes aside).
+   */
   separateEnemies() {
     const enemies = this.game.enemies;
     const strength = GameConfig.combat.enemySeparation;
     for (let i = 0; i < enemies.length; i++) {
       for (let j = i + 1; j < enemies.length; j++) {
-        CollisionSystem.pushApart(enemies[i], enemies[j], strength * 0.5, strength * 0.5);
+        const a = enemies[i];
+        const b = enemies[j];
+        const total = a.radius + b.radius;
+        CollisionSystem.pushApart(a, b, strength * (b.radius / total), strength * (a.radius / total));
       }
     }
   }
@@ -67,6 +73,7 @@ class CollisionSystem {
   /** Pickups are collected when they reach the player's pickup radius. */
   pickupsVsPlayer() {
     const { player, pickups } = this.game;
+    if (player.isDead()) return;
     for (const pickup of pickups) {
       if (pickup.dead) continue;
       const reach = player.pickupRadius + pickup.radius;

@@ -3,6 +3,7 @@
  *   - the current wave (WaveDefinitions) sets the enemy mix and spawn rate,
  *   - enemies get more health and speed every minute (GameConfig.difficulty),
  *   - elites arrive on their own timer (GameConfig.elites),
+ *   - a boss arrives every 2 minutes (GameConfig.bosses),
  *   - spawning waits when there are already too many enemies.
  */
 class WaveDirector {
@@ -15,6 +16,8 @@ class WaveDirector {
     this.waveIndex = -1;
     this.spawnBudget = 0; // grows every frame; each enemy spawned spends 1
     this.nextEliteTime = GameConfig.elites.firstAt;
+    this.nextBossTime = GameConfig.bosses.firstAt;
+    this.bossCount = 0;
   }
 
   get currentWave() {
@@ -27,6 +30,7 @@ class WaveDirector {
 
   update(dt) {
     const time = this.game.survivalTime;
+    this.spawnBoss(time); // first, so its banner is shown before the wave banner
     this.updateWave(time);
     this.spawnRegularEnemies(dt, time);
     this.spawnElite(time);
@@ -84,6 +88,18 @@ class WaveDirector {
   pickEnemyType() {
     const weights = this.currentWave.weights;
     return MathUtils.pickWeighted(Object.keys(weights), (type) => weights[type]);
+  }
+
+  spawnBoss(time) {
+    if (time < this.nextBossTime) return;
+    const config = GameConfig.bosses;
+    this.bossCount += 1;
+    const scaling = this.scaling(time);
+    scaling.health *= 1 + config.healthGrowthPerBoss * (this.bossCount - 1); // each boss is tougher
+    scaling.speed = 1; // bosses stay slow
+    this.game.spawner.spawnGroup('boss', 1, scaling);
+    this.game.ui.showBanner(`BOSS: ${GameConfig.enemies.boss.name}`, 'Defeat it to win a treasure chest!', '#d9a2ff');
+    this.nextBossTime = time + config.interval;
   }
 
   spawnElite(time) {

@@ -8,6 +8,8 @@
  *   passiveLevel  +1 level for an owned passive (never offered at max level)
  *   fallback      healing or coins, only when there isn't enough else to offer
  *
+ * Treasure chests (openChest) use the same items: several upgrades at once.
+ *
  * Weapons, passives and fallbacks are described in data files. Nothing here is
  * specific to one item, so adding new items never requires changes here.
  */
@@ -167,6 +169,95 @@ class UpgradeSystem {
     const reward = FallbackRewards[id];
     if (reward.healFraction) this.game.player.heal(this.game.player.maxHealth * reward.healFraction);
     if (reward.coins) this.game.addCoins(reward.coins);
+  }
+
+  // ---------------------------------------------------------------- Treasure chests
+
+  /**
+   * Rolls and applies the rewards of one treasure chest. A chest is better
+   * than a level-up: 1-3 item upgrades at once, always coins, sometimes healing.
+   * Returns the list of rewards for the chest screen to show.
+   */
+  openChest() {
+    const config = GameConfig.chests;
+    const player = this.game.player;
+    const rewards = [];
+
+    // How many item upgrades: 1, plus a chance for a 2nd and then a 3rd (luck helps).
+    let itemCount = 1;
+    for (const chance of config.extraRewardChances) {
+      if (Math.random() >= chance + player.stats.luck) break;
+      itemCount += 1;
+    }
+
+    const chosen = new Set();
+    for (let i = 0; i < itemCount; i++) {
+      // Different items when possible; never an item that is already maxed.
+      let candidates = this.upgradableItems().filter((item) => !chosen.has(item.id));
+      if (candidates.length === 0) candidates = this.upgradableItems();
+      if (candidates.length === 0) break;
+      const item = MathUtils.randomItem(candidates);
+      chosen.add(item.id);
+      rewards.push(this.giveItemLevel(item));
+    }
+
+    // Coins: always. Extra coins if there was nothing left to upgrade.
+    const minutes = this.game.survivalTime / 60;
+    let coins = MathUtils.randomInt(config.coins.min, config.coins.max) + Math.floor(minutes * config.coins.perMinute);
+    if (rewards.length === 0) coins += config.fallbackCoins;
+    this.game.addCoins(coins);
+    rewards.push({ kind: 'coins', icon: 'iconCoins', title: 'COINS', name: 'A pile of coins', effect: `+${coins}`, color: '#ffd166' });
+
+    // Healing: when hurt, or when everything is maxed.
+    if (player.currentHealth < player.maxHealth * config.healBelowFraction || chosen.size === 0) {
+      const amount = Math.round(player.maxHealth * config.healFraction);
+      player.heal(amount);
+      rewards.push({ kind: 'heal', icon: 'iconHeal', title: 'HEAL', name: 'Healing light', effect: `+${amount} HP`, color: '#7ee08a' });
+    }
+    return rewards;
+  }
+
+  /** Owned weapons and passives that can still level up. */
+  upgradableItems() {
+    const items = [];
+    for (const weapon of this.game.weapons.weapons) {
+      if (!weapon.isMaxLevel()) items.push({ kind: 'weaponLevel', id: weapon.id });
+    }
+    const player = this.game.player;
+    for (const id of player.ownedPassiveIds()) {
+      if (player.getPassiveLevel(id) < GameConfig.passives.maxLevel) items.push({ kind: 'passiveLevel', id });
+    }
+    return items;
+  }
+
+  /** Levels up one item and describes it for the chest screen. */
+  giveItemLevel(item) {
+    if (item.kind === 'weaponLevel') {
+      const weapon = this.game.weapons.getWeapon(item.id);
+      const before = weapon.level;
+      weapon.levelUp();
+      return {
+        kind: item.kind,
+        icon: weapon.definition.icon,
+        title: 'WEAPON UP',
+        name: weapon.name,
+        effect: weapon.isMaxLevel() ? `Lv ${before} → MAX` : `Lv ${before} → ${weapon.level}`,
+        color: '#ffad5c',
+      };
+    }
+    const player = this.game.player;
+    const passive = PassiveDefinitions[item.id];
+    const before = player.getPassiveLevel(item.id);
+    this.apply({ kind: 'passiveLevel', id: item.id });
+    const after = player.getPassiveLevel(item.id);
+    return {
+      kind: item.kind,
+      icon: passive.icon,
+      title: 'PASSIVE UP',
+      name: passive.name,
+      effect: after >= GameConfig.passives.maxLevel ? `Lv ${before} → MAX` : `Lv ${before} → ${after}`,
+      color: '#8fd3ff',
+    };
   }
 
   // ---------------------------------------------------------------- Helpers
