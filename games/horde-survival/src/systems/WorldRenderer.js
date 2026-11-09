@@ -31,10 +31,11 @@ class WorldRenderer {
   }
 
   renderGround(ctx, camera) {
-    const { tileSize, groundVariants } = GameConfig.world;
     const tiles = this.art.groundTiles;
+    // Code-drawn tiles are GameConfig.world.tileSize wide; picture tiles keep their own size.
+    const tileSize = tiles[0].width;
     this.forEachVisibleCell(camera, tileSize, 0, (col, row) => {
-      const variant = Math.floor(MathUtils.hash2D(col, row, 1) * groundVariants);
+      const variant = Math.floor(MathUtils.hash2D(col, row, 1) * tiles.length);
       ctx.drawImage(tiles[variant], col * tileSize, row * tileSize);
     });
   }
@@ -62,18 +63,23 @@ class WorldRenderer {
       const y = (row + 0.15 + MathUtils.hash2D(col, row, 11) * 0.7) * config.cellSize;
       const flip = MathUtils.hash2D(col, row, 12) < 0.5 ? -1 : 1;
 
+      const sprite = this.art[type.sprite];
       DrawUtils.shadow(ctx, x, y + size * 0.36, size * 0.32, 0.25);
       ctx.save();
       ctx.translate(x, y);
       ctx.scale(flip, 1);
-      ctx.drawImage(this.art[type.sprite], -size / 2, -size / 2, size, size);
+      ctx.drawImage(sprite, -size / 2, -size / 2, size, size);
       ctx.restore();
-      if (type.flames) this.renderCandleFlames(ctx, x, y, size, flip, col * 7 + row);
+      if (type.flames) {
+        // A picture of candles has its flames painted in; it only gets the flickering glow.
+        const drawFlames = !ImageSprites.isPicture(sprite);
+        this.renderCandleFlames(ctx, x, y, size, flip, col * 7 + row, drawFlames);
+      }
     });
   }
 
   /** Small flickering flames + a warm glow for the candle decoration. */
-  renderCandleFlames(ctx, x, y, size, flip, seed) {
+  renderCandleFlames(ctx, x, y, size, flip, seed, drawFlames = true) {
     const time = this.game.clock; // real seconds since the page opened
     const flicker = 0.75 + Math.sin(time * 9 + seed) * 0.15 + Math.sin(time * 23 + seed * 2) * 0.1;
     ctx.globalCompositeOperation = 'lighter';
@@ -82,6 +88,7 @@ class WorldRenderer {
     ctx.drawImage(this.art.candleGlow, x - glowSize / 2, y - glowSize / 2 - size * 0.1, glowSize, glowSize);
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = 'source-over';
+    if (!drawFlames) return;
     ctx.fillStyle = '#ffd27a';
     for (const [fx, fy] of WorldSprites.CANDLE_TOPS) {
       const px = x + (fx - 0.5) * size * flip;

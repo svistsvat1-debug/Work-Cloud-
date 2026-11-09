@@ -26,7 +26,6 @@ class Game {
     this.camera = new Camera(this.width, this.height);
     this.audio = new AudioSystem(); // generated sounds, starts after the first click/key
     this.sprites = ProceduralSprites.createAll();
-    ImageSprites.loadInto(this.sprites); // swaps in image files when there are any
 
     // Systems: each one has a single job.
     this.spawner = new Spawner(this); // places enemies around the screen
@@ -37,6 +36,8 @@ class Game {
     this.effects = new EffectsSystem(this); // puffs and damage numbers
     this.renderer = new Renderer(this); // draws the world
     this.ui = new UISystem(this); // draws the HUD and menus
+    // Picture files replace the code-drawn sprites as soon as they load.
+    ImageSprites.loadInto(this.sprites, this.renderer.world.art);
 
     // World objects
     this.enemies = [];
@@ -216,6 +217,7 @@ class Game {
     if (keys.has('KeyB')) this.spawner.spawnGroup('boss', 1, this.waves.scaling(this.survivalTime));
     if (keys.has('KeyK')) for (const enemy of this.enemies) enemy.takeDamage(1e9, this);
     if (keys.has('KeyG')) this.godMode = !this.godMode;
+    if (keys.has('KeyI')) ImageSprites.setEnabled(!ImageSprites.enabled); // pictures <-> code-drawn art
     if (this.godMode) player.invulnerableTimer = Math.max(player.invulnerableTimer, 0.1);
   }
 

@@ -15,9 +15,46 @@ const GameConfig = {
   // then drawn smaller on screen (see drawSize below).
   spriteSourceSize: 182,
 
-  // Optional image files that replace sprites drawn with code (see ImageSprites.js).
-  // Key = sprite name, value = path. Example: player: 'assets/sprites/player.png'
-  spriteImages: {},
+  // Picture files that replace sprites drawn with code (see ImageSprites.js).
+  // They were made from generated art with tools/process_art.py.
+  // Delete a line to bring back the code-drawn sprite. A list of files means
+  // animation frames (characters) or variants (ground tiles).
+  useSpriteImages: true, // false = start with the code-drawn art (debug key I switches)
+  spriteImages: {
+    // Hero and enemies
+    player: 'assets/sprites/player.png',
+    slime: 'assets/sprites/slime.png',
+    bat: 'assets/sprites/bat.png',
+    crawler: 'assets/sprites/crawler.png',
+    brute: 'assets/sprites/brute.png',
+    elite: 'assets/sprites/elite.png', // pixel-art alternative: 'assets/sprites/elite-pixel.png'
+    boss: 'assets/sprites/boss.png',
+    // Pickups and weapons
+    gemBlue: 'assets/sprites/gem-blue.png',
+    gemGreen: 'assets/sprites/gem-green.png',
+    gemRed: 'assets/sprites/gem-red.png',
+    coin: 'assets/sprites/coin.png',
+    chest: 'assets/sprites/chest.png',
+    chestOpen: 'assets/sprites/chest-open.png',
+    pealBlade: 'assets/sprites/peal-blade.png',
+    choirBlade: 'assets/sprites/choir-blade.png',
+    iconBlade: 'assets/sprites/icon-blade.png',
+    // World (WorldRenderer)
+    groundTiles: [
+      'assets/sprites/ground-1.jpg',
+      'assets/sprites/ground-2.jpg',
+      'assets/sprites/ground-3.jpg',
+      'assets/sprites/ground-4.jpg',
+    ],
+    decoRock: 'assets/sprites/deco-rock.png',
+    decoStones: 'assets/sprites/deco-stones.png',
+    decoBones: 'assets/sprites/deco-bones.png',
+    decoGrass: 'assets/sprites/deco-grass.png',
+    decoCandles: 'assets/sprites/deco-candles.png',
+    decoPillar: 'assets/sprites/deco-pillar.png',
+    decoBell: 'assets/sprites/deco-bell.png',
+    decoGrave: 'assets/sprites/deco-grave.png',
+  },
 
   // Longest time step simulated in one frame. Prevents huge jumps after the
   // tab was hidden or the browser froze for a moment.
@@ -288,7 +325,7 @@ const GameConfig = {
   // ---------------------------------------------------------------- World
   // The endless ground (see WorldRenderer). Sizes in pixels.
   world: {
-    tileSize: 256, // seamless ground tiles
+    tileSize: 256, // code-drawn seamless ground tiles (picture tiles keep their own size)
     groundVariants: 4, // different tiles mixed at random, so no pattern is visible
     patches: {
       cellSize: 640, // at most one big patch per 640x640 area...

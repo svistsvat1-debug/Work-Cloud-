@@ -132,14 +132,18 @@ class UISystem {
       `Particles ${game.effects.particles.length} / ${GameConfig.effects.maxParticles}`,
       `Pickups ${game.pickups.length}  (gems ${game.xpGemCount}, coins ${coins})`,
       `Spawn rate ${game.waves.spawnRate(game.survivalTime).toFixed(1)}/s   god mode ${game.godMode ? 'ON' : 'off'}`,
-      'Cheats: L level · T +1 min · E elite · B boss · K kill all · G god',
+      `Art: ${ImageSprites.enabled ? 'pictures' : 'drawn with code'}`,
+      'Cheats: L level · T +1 min · E elite · B boss',
+      'K kill all · G god mode · I pictures on/off',
     ];
+    const cheatLines = 2; // the last lines are drawn in yellow
     const x = 30;
     const top = this.game.height - 90 - lines.length * 30;
     ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
     ctx.fillRect(x - 10, top - 10, 640, lines.length * 30 + 16);
     lines.forEach((line, index) => {
-      DrawUtils.text(ctx, line, x, top + index * 30, { size: 22, color: index === lines.length - 1 ? '#ffd166' : '#d7f5d0' });
+      const color = index >= lines.length - cheatLines ? '#ffd166' : '#d7f5d0';
+      DrawUtils.text(ctx, line, x, top + index * 30, { size: 22, color });
     });
   }
 
