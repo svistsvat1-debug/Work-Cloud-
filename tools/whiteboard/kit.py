@@ -196,15 +196,30 @@ def flag(sc, kind, t, cx, cy, w=240, dur=1.4, pole=True):
             for (dx, dy) in dots:
                 cv2.circle(m, (int(dx - x0), int(dy - y0)), max(2, int(w * 0.012)), 1, -1)
         mask_draw(dd, WHITE)
-    elif kind == "SU":
+    emblem = []
+    if kind == "SU":
+        # red field + gold hammer & sickle + star outline (so it can't be mistaken for another flag)
         band(rect, (205, 30, 35))
-        sx, sy, sr = x0 + w * 0.17, y0 + h * 0.25, h * 0.11
+        s = h * 0.40
+        ex, ey = x0 + w * 0.2, y0 + h * 0.47
+        sw = max(3.0, h * 0.05)
         star = []
-        for i in range(10):
+        for i in range(11):
             ang = -math.pi / 2 + i * math.pi / 5
-            rr = sr if i % 2 == 0 else sr * 0.45
-            star.append([sx + rr * math.cos(ang), sy + rr * math.sin(ang)])
-        band(np.array(star), YELLOW)
+            rr = s * 0.17 if i % 2 == 0 else s * 0.07
+            star.append([ex + rr * math.cos(ang), ey - s * 0.78 + rr * math.sin(ang)])
+        ts = np.radians(np.linspace(-45, -275, 40))
+        r = s * 0.36
+        blade = np.stack([ex + r * np.cos(ts), ey + r * np.sin(ts)], 1)
+        handle = np.array([blade[-1], [ex - s * 0.32, ey + s * 0.58]])
+        top, bot = np.array([ex - s * 0.24, ey - s * 0.22]), np.array([ex + s * 0.34, ey + s * 0.52])
+        d = (top - bot) / np.linalg.norm(top - bot)
+        n = np.array([-d[1], d[0]])
+        head = np.array([top - n * s * 0.26 + d * s * 0.04, top + n * s * 0.22 + d * s * 0.04])
+        emblem.append(wb.stroke_layer([np.array(star)], YELLOW, max(2.5, sw * 0.55), wobble=0.2, seed=nseed()))
+        emblem.append(wb.stroke_layer([blade, handle], YELLOW, sw, wobble=0.3, seed=nseed()))
+        emblem.append(wb.stroke_layer([np.array([bot, top])], YELLOW, sw * 1.05, wobble=0.3, seed=nseed()))
+        emblem.append(wb.stroke_layer([head], YELLOW, sw * 1.9, wobble=0.2, seed=nseed()))
     order = []
     if pole:
         order.append(wb.stroke_layer([np.array([[x0 - 4, y0 - 16], [x0 - 4, y1 + h * 0.9]])], (120, 80, 45), 9,
@@ -214,8 +229,8 @@ def flag(sc, kind, t, cx, cy, w=240, dur=1.4, pole=True):
     for i, L in enumerate(order):
         sc.add(L, t_, 0.35)
         t_ += 0.25
-    step = (dur - 0.5) / max(1, len(layers))
-    for L in layers:
+    step = (dur - 0.5) / max(1, len(layers) + len(emblem))
+    for L in layers + emblem:
         sc.add(L, t_, max(0.25, step * 1.4))
         t_ += step
 
@@ -292,8 +307,15 @@ def bubble(sc, t, x0, y0, x1, y1, text, tail=None, size=60, color=INK, thought=F
                 sc.add(wb.circle_layer(bx + (tx - bx) * f, by + (ty - by) * f, rr, color=INK, width=5,
                                        seed=nseed()), t + 0.5 + 0.1 * k, 0.2)
         else:
-            sc.add(wb.stroke_layer([np.array([[bx - 30, by - 2], [tx, ty], [bx + 30, by - 2]])], INK, 6,
-                                   seed=nseed()), t + 0.5, 0.3)
+            if tx < x0:
+                b1, b2 = (x0 + 2, (y0 + y1) / 2 - 22), (x0 + 2, (y0 + y1) / 2 + 22)
+            elif tx > x1:
+                b1, b2 = (x1 - 2, (y0 + y1) / 2 - 22), (x1 - 2, (y0 + y1) / 2 + 22)
+            elif ty > y1:
+                b1, b2 = (bx - 26, y1 - 2), (bx + 26, y1 - 2)
+            else:
+                b1, b2 = (bx - 26, y0 + 2), (bx + 26, y0 + 2)
+            sc.add(wb.stroke_layer([np.array([b1, [tx, ty], b2])], INK, 6, seed=nseed()), t + 0.5, 0.3)
     label(sc, text, t + 0.6, (x0 + x1) / 2, (y0 + y1) / 2, size=size, color=color, max_w=(x1 - x0) - 60,
           fname=fname)
 
