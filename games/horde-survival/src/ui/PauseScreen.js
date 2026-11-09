@@ -25,6 +25,8 @@ class PauseScreen {
     DrawUtils.text(ctx, 'PAUSED', width / 2, 300, { size: 96, weight: 'bold', align: 'center', color: '#ffd166' });
     DrawUtils.button(ctx, this.resumeButton, 'Resume', input.isPointerOver(this.resumeButton), 'primary', 44);
     DrawUtils.button(ctx, this.endRunButton, 'End run', input.isPointerOver(this.endRunButton), 'danger', 36);
-    DrawUtils.text(ctx, 'Esc / P / Enter: resume', width / 2, 740, { size: 26, align: 'center', color: '#b9c4bd' });
+    if (!input.touchMode) {
+      DrawUtils.text(ctx, 'Esc / P / Enter: resume', width / 2, 740, { size: 26, align: 'center', color: '#b9c4bd' });
+    }
   }
 }

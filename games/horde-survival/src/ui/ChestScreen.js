@@ -87,7 +87,8 @@ class ChestScreen {
     ctx.restore();
 
     if (this.time >= this.revealEnd && Math.floor(this.time * 2) % 2 === 0) {
-      DrawUtils.text(ctx, 'Press Space or click to continue', centerX, 960, {
+      const hint = this.game.input.touchMode ? 'Tap to continue' : 'Press Space or click to continue';
+      DrawUtils.text(ctx, hint, centerX, 960, {
         size: 32,
         align: 'center',
         color: '#e8eef5',

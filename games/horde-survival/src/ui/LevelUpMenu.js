@@ -59,7 +59,8 @@ class LevelUpMenu {
       align: 'center',
       color: '#ffd166',
     });
-    DrawUtils.text(ctx, `Level ${player.level - player.pendingLevelUps + 1}  ·  choose an upgrade: press 1, 2, 3 or click`, width / 2, 250, {
+    const how = this.game.input.touchMode ? 'tap an upgrade' : 'choose an upgrade: press 1, 2, 3 or click';
+    DrawUtils.text(ctx, `Level ${player.level - player.pendingLevelUps + 1}  ·  ${how}`, width / 2, 250, {
       size: 32,
       align: 'center',
       color: '#d7e0ea',

@@ -70,6 +70,10 @@ class UISystem {
       if (state === GameState.PAUSED) this.pauseScreen.render(ctx);
       if (state === GameState.GAME_OVER) this.gameOverScreen.render(ctx);
     }
+    if (state === GameState.PLAYING) {
+      this.renderTouchStick(ctx);
+      this.renderPauseButton(ctx);
+    }
     this.renderMuteButton(ctx);
     if (this.showDebugPanel) this.renderDebugPanel(ctx);
 
@@ -113,9 +117,10 @@ class UISystem {
     });
 
     // Bottom: title and controls hint, plus FPS and position for debugging
-    const hint = `${GameConfig.ui.title}  ·  move with WASD or the arrow keys`;
-    DrawUtils.text(ctx, hint, 40, height - 52, { size: 22, color: '#b9c4bd' });
-    if (GameConfig.ui.showDebugInfo) {
+    const touch = this.game.input.touchMode;
+    const controls = touch ? 'drag anywhere to move' : 'move with WASD or the arrow keys';
+    DrawUtils.text(ctx, `${GameConfig.ui.title}  ·  ${controls}`, 40, height - 52, { size: 22, color: '#b9c4bd' });
+    if (GameConfig.ui.showDebugInfo && !touch) {
       const debug = `FPS: ${this.game.fps}   X: ${Math.round(player.x)}   Y: ${Math.round(player.y)}`;
       DrawUtils.text(ctx, debug, width - 40, height - 52, { size: 22, color: '#b9c4bd', align: 'right' });
     }
@@ -156,44 +161,83 @@ class UISystem {
     ctx.globalAlpha = 1;
   }
 
+  /** The round-cornered dark square behind the pause and sound buttons. */
+  renderButtonBack(ctx, button) {
+    const hovered = this.game.input.isPointerOver(button);
+    DrawUtils.roundRect(ctx, button.x, button.y, button.width, button.height, 12);
+    ctx.fillStyle = hovered ? 'rgba(60, 70, 96, 0.9)' : 'rgba(20, 24, 36, 0.75)';
+    ctx.fill();
+  }
+
+  /** Two bars: pauses the run (the same as Esc or P). Needed on phones, which have no keys. */
+  renderPauseButton(ctx) {
+    const button = GameConfig.ui.pauseButton;
+    this.renderButtonBack(ctx, button);
+    const unit = button.width / 48; // the icon was drawn for a 48 px button
+    const cx = button.x + button.width / 2;
+    const cy = button.y + button.height / 2;
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(cx - 9 * unit, cy - 12 * unit, 6 * unit, 24 * unit);
+    ctx.fillRect(cx + 3 * unit, cy - 12 * unit, 6 * unit, 24 * unit);
+  }
+
   /** A speaker button (click it or press M). Crossed out when muted. */
   renderMuteButton(ctx) {
     const button = GameConfig.ui.muteButton;
     const muted = this.game.audio.muted;
-    const hovered = this.game.input.isPointerOver(button);
-    DrawUtils.roundRect(ctx, button.x, button.y, button.width, button.height, 10);
-    ctx.fillStyle = hovered ? 'rgba(60, 70, 96, 0.9)' : 'rgba(20, 24, 36, 0.75)';
-    ctx.fill();
+    this.renderButtonBack(ctx, button);
 
-    const x = button.x + 12;
-    const y = button.y + button.height / 2;
+    const unit = button.width / 48; // the icon was drawn for a 48 px button
+    ctx.save();
+    ctx.translate(button.x + button.width / 2, button.y + button.height / 2);
+    ctx.scale(unit, unit);
+    const x = -12; // left edge of the speaker, relative to the button center
     ctx.fillStyle = '#ffffff';
     ctx.beginPath(); // speaker: a small box and a cone
-    ctx.moveTo(x, y - 6);
-    ctx.lineTo(x + 7, y - 6);
-    ctx.lineTo(x + 16, y - 14);
-    ctx.lineTo(x + 16, y + 14);
-    ctx.lineTo(x + 7, y + 6);
-    ctx.lineTo(x, y + 6);
+    ctx.moveTo(x, -6);
+    ctx.lineTo(x + 7, -6);
+    ctx.lineTo(x + 16, -14);
+    ctx.lineTo(x + 16, 14);
+    ctx.lineTo(x + 7, 6);
+    ctx.lineTo(x, 6);
     ctx.closePath();
     ctx.fill();
     ctx.lineWidth = 3;
     if (muted) {
       ctx.strokeStyle = '#ff6b6b';
       ctx.beginPath();
-      ctx.moveTo(x + 21, y - 8);
-      ctx.lineTo(x + 31, y + 8);
-      ctx.moveTo(x + 31, y - 8);
-      ctx.lineTo(x + 21, y + 8);
+      ctx.moveTo(x + 21, -8);
+      ctx.lineTo(x + 31, 8);
+      ctx.moveTo(x + 31, -8);
+      ctx.lineTo(x + 21, 8);
       ctx.stroke();
     } else {
       ctx.strokeStyle = '#ffffff';
       for (const radius of [8, 14]) {
         ctx.beginPath();
-        ctx.arc(x + 16, y, radius, -0.8, 0.8);
+        ctx.arc(x + 16, 0, radius, -0.8, 0.8);
         ctx.stroke();
       }
     }
+    ctx.restore();
+  }
+
+  /** The touch joystick: a ring where the finger landed and a knob under the finger. */
+  renderTouchStick(ctx) {
+    const stick = this.game.input.stick;
+    if (!stick.active) return;
+    const radius = GameConfig.touch.stickRadius;
+    ctx.lineWidth = 4;
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)';
+    ctx.fillStyle = 'rgba(10, 14, 22, 0.25)';
+    ctx.beginPath();
+    ctx.arc(stick.baseX, stick.baseY, radius, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+    ctx.beginPath();
+    ctx.arc(stick.knobX, stick.knobY, radius * 0.42, 0, Math.PI * 2);
+    ctx.fill();
   }
 
   /** A big health bar at the top for every living boss (at most two). */

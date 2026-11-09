@@ -2,12 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Hushbreaker</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <canvas id="game-canvas" width="1920" height="1080"></canvas>
+  <div id="stage">
+    <canvas id="game-canvas" width="1920" height="1080" aria-label="Hushbreaker game"></canvas>
+    <p id="rotate-hint" hidden>↺ Turn your phone sideways to play</p>
+  </div>
 
   <!--
     Scripts load in this exact order: a file can only use things defined above it
@@ -34,6 +37,7 @@
   <script src="src/core/Input.js"></script>
   <script src="src/core/Camera.js"></script>
   <script src="src/core/SaveData.js"></script>
+  <script src="src/core/CloudSave.js"></script>
 
   <!-- Sprites drawn with code (no image files) -->
   <script src="src/assets/ProceduralSprites.js"></script>

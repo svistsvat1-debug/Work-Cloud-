@@ -16,10 +16,12 @@ class AudioSystem {
     this.lastPickupTime = 0;
     this.muted = SaveData.data.settings.muted;
 
-    // Audio may only start after a user gesture.
+    // Audio may only start after a user gesture. Phones count a finger being
+    // lifted (pointerup / touchend), not touching down, so listen to all of them.
     const unlock = () => this.unlock();
-    window.addEventListener('pointerdown', unlock);
-    window.addEventListener('keydown', unlock);
+    for (const type of ['pointerdown', 'pointerup', 'touchend', 'keydown']) {
+      window.addEventListener(type, unlock);
+    }
   }
 
   unlock() {

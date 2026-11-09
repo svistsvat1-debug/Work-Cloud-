@@ -61,6 +61,7 @@ class Game {
     });
     this.frameTime = 0; // milliseconds spent on update + render (debug panel)
     this.godMode = false; // debug cheat
+    this.previousState = null; // to notice when the screen changes (see update)
 
     this.startNewRun(); // prepares an empty world...
     this.showStartScreen(); // ...but we begin on the title screen
@@ -128,8 +129,16 @@ class Game {
   }
 
   update(dt) {
+    // When a menu opens or closes, a finger still on the screen must be lifted
+    // and put down again to steer: a tap on a menu card never moves the hero.
+    if (this.state !== this.previousState) {
+      this.input.releaseStick();
+      this.previousState = this.state;
+    }
+
     // Mute works on every screen (M key or the speaker button).
-    if (this.input.wasPressed('mute') || this.input.wasClicked(GameConfig.ui.muteButton)) {
+    const padding = GameConfig.touch.buttonPadding;
+    if (this.input.wasPressed('mute') || this.input.wasClicked(GameConfig.ui.muteButton, padding)) {
       this.audio.toggleMute();
       this.input.pointer.pressed = false; // the click must not also press something underneath
     }
@@ -143,7 +152,8 @@ class Game {
         this.ui.shopScreen.update(dt);
         break;
       case GameState.PLAYING:
-        if (this.input.wasPressed('pause')) {
+        if (this.input.wasPressed('pause') || this.input.wasClicked(GameConfig.ui.pauseButton, padding)) {
+          this.input.pointer.pressed = false; // the tap must not also press the pause menu's buttons
           this.pause();
           break;
         }

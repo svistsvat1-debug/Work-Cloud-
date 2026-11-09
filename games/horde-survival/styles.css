@@ -1,25 +1,51 @@
-/* The page is just a black stage. The canvas is centered and scaled by main.js. */
+/* The page is a dark stage. main.js scales the 16:9 canvas to fit it
+   (and turns it sideways on a phone held upright). */
 html,
 body {
   margin: 0;
   width: 100%;
   height: 100%;
   overflow: hidden;
+  overscroll-behavior: none;
   background: #000;
 }
 
 body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  /* No text selection, long-press menus or tap flashes while playing with fingers. */
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  /* Stops the browser from scrolling or zooming when the game is touched. */
+  touch-action: none;
 }
 
 #game-canvas {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   display: block;
   background: #0d1210;
-  /* Stops the browser from scrolling or zooming when the canvas is touched. */
   touch-action: none;
-  user-select: none;
-  -webkit-user-select: none;
   outline: none;
+}
+
+#rotate-hint {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  right: 0;
+  margin: 0;
+  text-align: center;
+  font: 14px system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  color: #9a94ad;
+  pointer-events: none;
 }

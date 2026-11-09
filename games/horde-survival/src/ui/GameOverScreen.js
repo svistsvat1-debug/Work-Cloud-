@@ -43,7 +43,9 @@ class GameOverScreen {
 
     DrawUtils.button(ctx, this.shopButton, 'Upgrade Shop', input.isPointerOver(this.shopButton), 'secondary', 36);
     DrawUtils.button(ctx, this.playAgainButton, 'Play Again', input.isPointerOver(this.playAgainButton), 'primary', 40);
-    DrawUtils.text(ctx, 'R or Enter: play again  ·  Esc: shop', width / 2, 1040, { size: 22, align: 'center', color: '#9fb0c8' });
+    if (!input.touchMode) {
+      DrawUtils.text(ctx, 'R or Enter: play again  ·  Esc: shop', width / 2, 1040, { size: 22, align: 'center', color: '#9fb0c8' });
+    }
   }
 
   /** Left column: the numbers of the run. */

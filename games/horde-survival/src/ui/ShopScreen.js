@@ -111,7 +111,9 @@ class ShopScreen {
     const resetLabel = this.resetConfirmTimer > 0 ? 'Really reset?' : 'Reset save';
     DrawUtils.button(ctx, this.resetButton, resetLabel, input.isPointerOver(this.resetButton), 'danger', 30);
     DrawUtils.button(ctx, this.startButton, 'START RUN', input.isPointerOver(this.startButton), 'primary', 44);
-    DrawUtils.text(ctx, 'Enter: start  ·  Esc: back', 1590, 1018, { size: 22, align: 'center', color: '#b9c4bd' });
+    if (!input.touchMode) {
+      DrawUtils.text(ctx, 'Enter: start  ·  Esc: back', 1590, 1018, { size: 22, align: 'center', color: '#b9c4bd' });
+    }
 
     if (this.message) {
       ctx.globalAlpha = Math.min(1, this.message.time / 0.4);

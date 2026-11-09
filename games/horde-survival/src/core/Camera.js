@@ -32,6 +32,7 @@ class Camera {
 
   /** Starts a shake. A stronger shake replaces a weaker one. */
   shake(strength, duration) {
+    if (Camera.REDUCED_MOTION) return; // the player's system asks for less motion
     if (strength < this.shakeStrength * (this.shakeTime / (this.shakeDuration || 1))) return;
     this.shakeStrength = strength;
     this.shakeDuration = duration;
@@ -85,3 +86,6 @@ class Camera {
     ctx.setTransform(1, 0, 0, 1, offsetX, offsetY);
   }
 }
+
+// True when the player's system settings ask for less motion (no screen shake then).
+Camera.REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

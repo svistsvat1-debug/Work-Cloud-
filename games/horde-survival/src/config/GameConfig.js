@@ -369,6 +369,14 @@ const GameConfig = {
     debug: ['F3', 'Backquote'], // debug panel with performance numbers and test cheats
   },
 
+  // Touch screens: a finger anywhere on the game works as a joystick (see Input).
+  touch: {
+    stickRadius: 140, // how far the knob can move from the joystick's center (game pixels)
+    deadZone: 0.15, // part of the radius that does nothing, so a resting thumb doesn't drift
+    fullSpeedAt: 0.6, // part of the radius that already gives full speed
+    buttonPadding: 24, // extra tap area around the small pause and sound buttons
+  },
+
   // ---------------------------------------------------------------- Audio
   audio: {
     volume: 0.5,
@@ -396,7 +404,8 @@ const GameConfig = {
     enemyHealthBar: { widthFactor: 0.55, height: 5, offsetY: 0.42 },
     bannerDuration: 2.6, // seconds a banner stays on screen (several banners queue up)
     bossBar: { width: 760, height: 24, y: 168 },
-    muteButton: { x: 1852, y: 136, width: 48, height: 48 },
+    pauseButton: { x: 1720, y: 128, width: 64, height: 64 }, // shown during a run (keep 2x buttonPadding from the sound button)
+    muteButton: { x: 1836, y: 128, width: 64, height: 64 },
     lowHealthWarning: 0.25, // red pulsing edges below 25% HP
     playerHealthBar: { x: 40, y: 50, width: 460, height: 30 },
     xpBar: { height: 26 },
