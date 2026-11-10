@@ -1,0 +1,7 @@
+node_modules/
+out/
+build/
+images/*/raw/*.json
+images/*/tts_resp.json
+images/*/qa/
+out/stills/

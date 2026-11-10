@@ -1,0 +1,37 @@
+{
+ "whoosh": {
+  "dur": 1.0,
+  "onset": 0.031,
+  "peak": 0.086
+ },
+ "thud": {
+  "dur": 1.0,
+  "onset": 0.022,
+  "peak": 0.035
+ },
+ "pop": {
+  "dur": 0.6,
+  "onset": 0.0,
+  "peak": 0.005
+ },
+ "click": {
+  "dur": 0.48,
+  "onset": 0.0,
+  "peak": 0.012
+ },
+ "wobble": {
+  "dur": 1.48,
+  "onset": 0.017,
+  "peak": 0.213
+ },
+ "snore": {
+  "dur": 2.0,
+  "onset": 0.0,
+  "peak": 0.1
+ },
+ "splash": {
+  "dur": 1.0,
+  "onset": 0.018,
+  "peak": 0.103
+ }
+}
