@@ -114,7 +114,98 @@ def place(canvas, rgb, a, x, y):
     wb.composite(canvas, L, L.a)
 
 
-def whiteboard(army_path, out, text1, text2):
+# ---------------------------------------------------------------- bold title styles (PIL)
+def _font(name, size):
+    return ImageFont.truetype(os.path.join(HERE, "fonts", name), size)
+
+
+def _fit(name, text, size, max_w, stroke=0):
+    while True:
+        f = _font(name, size)
+        bb = f.getbbox(text, stroke_width=stroke)
+        if bb[2] - bb[0] <= max_w or size < 80:
+            return f
+        size = int(size * 0.95)
+
+
+def _text_img(text, f, fill, stroke=0, stroke_fill=None, pad=30):
+    bb = f.getbbox(text, stroke_width=stroke)
+    im = Image.new("RGBA", (bb[2] - bb[0] + 2 * pad, bb[3] - bb[1] + 2 * pad), (0, 0, 0, 0))
+    ImageDraw.Draw(im).text((pad - bb[0], pad - bb[1]), text, font=f, fill=fill, stroke_width=stroke,
+                            stroke_fill=stroke_fill)
+    return im
+
+
+def _paste(base, layer, x, y, angle=0.0, anchor="lt"):
+    r = layer.rotate(angle, resample=Image.BICUBIC, expand=True) if angle else layer
+    if anchor == "mm":
+        x, y = x - r.width / 2, y - r.height / 2
+    base.alpha_composite(r, (int(x), int(y)))
+    return r
+
+
+def _shadowed(im, offset=(12, 12), color=(0, 0, 0, 255)):
+    """Hard offset shadow behind an RGBA image."""
+    a = im.split()[3]
+    sh = Image.new("RGBA", im.size, color)
+    sh.putalpha(a)
+    out = Image.new("RGBA", (im.width + abs(offset[0]), im.height + abs(offset[1])), (0, 0, 0, 0))
+    out.alpha_composite(sh, (max(0, offset[0]), max(0, offset[1])))
+    out.alpha_composite(im, (max(0, -offset[0]), max(0, -offset[1])))
+    return out
+
+
+def title_box(base, t1, t2):
+    """'HITLER' heavy black; 'LOST' white on a tilted red label with a hard shadow."""
+    f1 = _fit("Anton-Regular.ttf", t1, 340, 880)
+    _paste(base, _shadowed(_text_img(t1, f1, (20, 20, 22, 255)), (9, 9), (226, 36, 44, 255)), 60, 70)
+    f2 = _fit("Anton-Regular.ttf", t2, 300, 560)
+    txt = _text_img(t2, f2, (255, 255, 255, 255), pad=0)
+    px, py = 46, 22
+    box = Image.new("RGBA", (txt.width + 2 * px, txt.height + 2 * py), (226, 36, 44, 255))
+    box.alpha_composite(txt, (px, py))
+    _paste(base, _shadowed(box, (16, 16)), 470, 700, angle=4, anchor="mm")
+
+
+def title_stamp(base, t1, t2):
+    """Military stencil 'HITLER'; 'LOST' as an inked red rubber stamp."""
+    f1 = _fit("BlackOpsOne-Regular.ttf", t1, 300, 920)
+    _paste(base, _shadowed(_text_img(t1, f1, (24, 24, 26, 255)), (8, 8), (205, 30, 38, 255)), 40, 120)
+    red = (205, 30, 38, 255)
+    f2 = _fit("BlackOpsOne-Regular.ttf", t2, 330, 700)
+    txt = _text_img(t2, f2, red, pad=0)
+    px, py, o, i_ = 50, 34, 16, 6
+    st = Image.new("RGBA", (txt.width + 2 * px, txt.height + 2 * py), (0, 0, 0, 0))
+    d = ImageDraw.Draw(st)
+    d.rectangle([0, 0, st.width - 1, st.height - 1], outline=red, width=o)
+    d.rectangle([o + 10, o + 10, st.width - o - 11, st.height - o - 11], outline=red, width=i_)
+    st.alpha_composite(txt, (px, py))
+    rng = np.random.default_rng(3)
+    noise = cv2.resize(rng.random((st.height // 6 + 1, st.width // 6 + 1)).astype(np.float32),
+                       (st.width, st.height), interpolation=cv2.INTER_LINEAR)
+    speck = rng.random((st.height, st.width)) > 0.06
+    ink = np.clip((noise - 0.18) * 3.0, 0, 1) * speck
+    a = np.asarray(st.split()[3]).astype(np.float32) * (0.78 + 0.22 * ink)
+    st.putalpha(Image.fromarray(a.astype(np.uint8)))
+    _paste(base, st, 480, 700, angle=8, anchor="mm")
+
+
+def title_band(base, t1, t2):
+    """'HITLER' white on a black band; 'LOST' red with thick outline and hard shadow."""
+    f1 = _fit("Anton-Regular.ttf", t1, 300, 820)
+    txt = _text_img(t1, f1, (255, 255, 255, 255), pad=0)
+    band = Image.new("RGBA", (txt.width + 140, txt.height + 70), (18, 18, 20, 255))
+    band.alpha_composite(txt, (70, 35))
+    _paste(base, band, 30, 90, angle=2)
+    f2 = _fit("Anton-Regular.ttf", t2, 380, 700, stroke=16)
+    lost = _text_img(t2, f2, (230, 34, 42, 255), stroke=16, stroke_fill=(15, 15, 15, 255))
+    _paste(base, _shadowed(lost, (14, 14)), 450, 720, angle=-3, anchor="mm")
+
+
+TITLE_STYLES = {"box": title_box, "stamp": title_stamp, "band": title_band}
+
+
+def whiteboard(army_path, out, text1, text2, style="marker"):
     canvas = wb.paper_background(seed=7).astype(np.float32)
     # flags carried above the column (behind the soldiers)
     for i, (px, top, fw) in enumerate([(1030, 60, 290), (1325, 95, 280), (1610, 130, 270)]):
@@ -125,6 +216,11 @@ def whiteboard(army_path, out, text1, text2):
     # the column of soldiers
     army = wb.sprite_layer(army_path, 1380, 1075, h=640, anchor="mb", seed=5)
     wb.composite(canvas, army, army.a)
+    if style in TITLE_STYLES:
+        im = Image.fromarray(np.clip(canvas, 0, 255).astype(np.uint8)).convert("RGBA")
+        TITLE_STYLES[style](im, text1, text2)
+        save(np.asarray(im.convert("RGB")).astype(np.float32), out)
+        return
     # two words, auto-fitted so they never run into the flags
     def fit(text, x, y, size, color, seed, max_w=930):
         while True:
@@ -192,5 +288,9 @@ if __name__ == "__main__":
     ap.add_argument("out")
     ap.add_argument("--text1", default="FATAL")
     ap.add_argument("--text2", default="BET")
+    ap.add_argument("--style", default="marker", choices=["marker"] + list(TITLE_STYLES))
     a = ap.parse_args()
-    (whiteboard if a.kind == "whiteboard" else realistic)(a.src, a.out, a.text1, a.text2)
+    if a.kind == "whiteboard":
+        whiteboard(a.src, a.out, a.text1, a.text2, a.style)
+    else:
+        realistic(a.src, a.out, a.text1, a.text2)
