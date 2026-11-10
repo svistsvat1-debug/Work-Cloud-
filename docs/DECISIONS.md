@@ -16,4 +16,5 @@
 
 ## Записи
 
+- 2026-11-10 · Підключено ElevenLabs через API-ключ (network secret середовища Default для `api.elevenlabs.io`); озвучка — тільки за командою "озвуч eleven labs", інструкція в `.claude/skills/elevenlabs-ozvuch/SKILL.md` · щоб використовувати потрібний акаунт ElevenLabs у всіх сесіях без плутанини між акаунтами.
 - 2026-10-01 · Зафіксовано MASTER CONTEXT як базу роботи (`docs/MASTER_CONTEXT.md`) · щоб AI працював за одними правилами на всіх пристроях.
