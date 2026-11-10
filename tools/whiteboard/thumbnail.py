@@ -109,6 +109,38 @@ def realistic_flag_rgba(w, seed=0):
     return np.clip(rgb, 0, 255), a, (pad, pad, w, h)
 
 
+def flag_decal(w, ss=6):
+    """Tiny flag sticker (for helmets): red field, white disc, black hooked cross, black rim."""
+    h = int(round(w * 0.62))
+    W_, H_ = w * ss, h * ss
+    img = np.zeros((H_, W_, 4), np.uint8)
+    cv2.rectangle(img, (0, 0), (W_ - 1, H_ - 1), (204, 28, 34, 255), -1)
+    cx, cy, r = W_ / 2, H_ / 2, H_ * 0.36
+    cv2.circle(img, (int(cx), int(cy)), int(r), (250, 249, 244, 255), -1, cv2.LINE_AA)
+    L, th = H_ * 0.21, max(1, int(H_ * 0.085))
+    c45 = s45 = math.sqrt(0.5)
+    for arm in [[(0, 0), (0, -L), (L, -L)], [(0, 0), (L, 0), (L, L)], [(0, 0), (0, L), (-L, L)], [(0, 0), (-L, 0), (-L, -L)]]:
+        pts = np.array([[cx + px * c45 - py * s45, cy + px * s45 + py * c45] for px, py in arm], np.int32)
+        cv2.polylines(img, [pts], False, (18, 18, 20, 255), th, cv2.LINE_AA)
+    cv2.rectangle(img, (0, 0), (W_ - 1, H_ - 1), (20, 20, 22, 255), max(2, int(H_ * 0.07)))
+    return Image.fromarray(cv2.resize(img, (w, h), interpolation=cv2.INTER_AREA), "RGBA")
+
+
+# helmet positions (x, y, decal width, rotation) on the episode-1 army sprite (876x909)
+ARMY_A_HELMETS = [(214, 108, 38, -6), (348, 126, 36, 4), (447, 136, 34, -10), (544, 136, 33, -4), (657, 120, 37, 2)]
+
+
+def add_helmet_decals(src, out, spots=ARMY_A_HELMETS):
+    im = Image.open(src).convert("RGBA")
+    base = im.copy()
+    for cx, cy, w, rot in spots:
+        d = flag_decal(w).rotate(rot, resample=Image.BICUBIC, expand=True)
+        base.alpha_composite(d, (int(cx - d.width / 2), int(cy - d.height / 2)))
+    arr = np.asarray(base).copy()
+    arr[..., 3] = np.minimum(arr[..., 3], np.asarray(im.split()[3]))
+    Image.fromarray(arr, "RGBA").save(out)
+
+
 def place(canvas, rgb, a, x, y):
     L = wb.Layer(rgb, a, np.zeros_like(a), x, y)
     wb.composite(canvas, L, L.a)
