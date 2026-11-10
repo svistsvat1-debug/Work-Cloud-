@@ -202,19 +202,47 @@ def title_band(base, t1, t2):
     _paste(base, _shadowed(lost, (14, 14)), 450, 720, angle=-3, anchor="mm")
 
 
-TITLE_STYLES = {"box": title_box, "stamp": title_stamp, "band": title_band}
+def _title_simple(base, t1, t2, font, max_w=880):
+    """Plain and readable: two big straight lines, black + red, no boxes, tilt or shadows."""
+    f1 = _fit(font, t1, 360, max_w)
+    s1 = f1.size
+    f2 = _fit(font, t2, int(s1 * 1.25), max_w)
+    i1 = _text_img(t1, f1, (20, 20, 22, 255), pad=0)
+    i2 = _text_img(t2, f2, (222, 30, 38, 255), pad=0)
+    gap = int(s1 * 0.18)
+    y0 = (1080 - (i1.height + gap + i2.height)) // 2 - 20
+    _paste(base, i1, 75, y0)
+    _paste(base, i2, 75, y0 + i1.height + gap)
+
+
+def title_simple(base, t1, t2):
+    _title_simple(base, t1, t2, "Anton-Regular.ttf")
+
+
+def title_simple_wide(base, t1, t2):
+    _title_simple(base, t1, t2, "ArchivoBlack-Regular.ttf")
+
+
+TITLE_STYLES = {"box": title_box, "stamp": title_stamp, "band": title_band,
+                "simple": title_simple, "simple_wide": title_simple_wide}
 
 
 def whiteboard(army_path, out, text1, text2, style="marker"):
     canvas = wb.paper_background(seed=7).astype(np.float32)
     # flags carried above the column (behind the soldiers)
-    for i, (px, top, fw) in enumerate([(1030, 60, 290), (1325, 95, 280), (1610, 130, 270)]):
-        pole = wb.stroke_layer([np.array([[px, top - 10], [px + 6, top + 640]])], (110, 72, 40), 12, seed=40 + i)
+    # the column of soldiers (built first to know its width; drawn after the flags)
+    army = wb.sprite_layer(army_path, 1490, 1075, h=720, anchor="mb", seed=5)
+    ax0, ax1 = army.x, army.x + army.w
+    # flags behind the soldiers, carried on poles; the rightmost flag ends inside the column
+    span = ax1 - ax0
+    specs = [(ax0 + 0.06 * span, 60, 0.43 * span), (ax0 + 0.38 * span, 95, 0.40 * span),
+             (ax0 + 0.68 * span, 130, 0.30 * span)]
+    for i, (px, top, fw) in enumerate(specs):
+        px, fw = int(px), int(min(fw, ax1 - 12 - px))
+        pole = wb.stroke_layer([np.array([[px, top - 10], [px + 4, 930]])], (110, 72, 40), 11, seed=40 + i)
         wb.composite(canvas, pole, pole.a)
-        frgb, fa, (fx0, fy0, fw_, fh) = historic_flag_rgba(fw, seed=11 + i)
-        place(canvas, frgb, fa, px + 4 - fx0, top - fy0)
-    # the column of soldiers
-    army = wb.sprite_layer(army_path, 1380, 1075, h=640, anchor="mb", seed=5)
+        frgb, fa, (fx0, fy0, fw_, fh) = historic_flag_rgba(fw, wave=0.05, seed=11 + i)
+        place(canvas, frgb, fa, px + 3 - fx0, top - fy0)
     wb.composite(canvas, army, army.a)
     if style in TITLE_STYLES:
         im = Image.fromarray(np.clip(canvas, 0, 255).astype(np.uint8)).convert("RGBA")
