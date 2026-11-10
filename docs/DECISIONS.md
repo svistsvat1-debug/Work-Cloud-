@@ -16,4 +16,5 @@
 
 ## Записи
 
+- 2026-11-10 · Новий Shorts-формат "Curiosity 2D explainer": EN озвучка 50–70 слів (20–30 с), ElevenLabs `eleven_v4` з audio tags, flat 2D візуал. Теми фіксуються в `docs/shorts/curiosity-shorts-log.md` · щоб не повторювати теми між сесіями й тримати один стандарт озвучки.
 - 2026-10-01 · Зафіксовано MASTER CONTEXT як базу роботи (`docs/MASTER_CONTEXT.md`) · щоб AI працював за одними правилами на всіх пристроях.
