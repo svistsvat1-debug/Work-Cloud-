@@ -95,7 +95,7 @@ export const RIDE = {
   dropStartY: -385,
   v: 760, // world px per sim-second
   groundY: 1950,
-  puddleY: 1992,
+  puddleY: 2028, // centre of the puddle in BG4 (art/Backgrounds.tsx GROUND.puddleY)
 };
 
 export const rideDropY = (t: number) => RIDE.dropStartY + RIDE.v * (simTime(t) - simTime(T.drop));

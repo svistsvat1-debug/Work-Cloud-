@@ -2,7 +2,8 @@ import React from 'react';
 import {AbsoluteFill, useCurrentFrame} from 'remotion';
 import {At, Cam, Layer, camAt, shakeAt} from './camera';
 import {BusSprite, DropExpr, DropSprite, GuyPose, GuySprite, MosqPose, MosqSprite, ScaleBack, ScaleFront, scaleGeom} from './art/Sprites';
-import {Clouds, GroundBand, Hills, Puddle, RAIN_LAYERS, RainField, Sky, Buildings, Road} from './art/Scenery';
+import {RAIN_LAYERS, RainField} from './art/Scenery';
+import {MeadowLayers, STREET_VP, StreetPlate} from './art/Backgrounds';
 import {Badge, ForceArrow, ImpactSpray, ImpactStar, SpeedLines, Splash} from './art/Effects';
 import {RIDE, SPLASH_T, T, rideDropY, simTime, timeScale} from './timing';
 import {Sound} from './Sound';
@@ -35,24 +36,7 @@ const pick = <V,>(s: Sched<V>, t: number) => {
 /* ======================================================================= shared rainy world */
 const FAR_CAM: Cam = {x: 540, y: 860, z: 120};
 
-const RainWorldBack: React.FC<{cam: Cam}> = ({cam}) => (
-  <>
-    <Sky />
-    <Layer cam={cam} z={2600}>
-      <Clouds x={540} y={-1224 + 140} w={5200} seed={4} />
-    </Layer>
-    <Layer cam={cam} z={3000}>
-      <Hills y={2864} color="#7AA68E" seed={5} />
-    </Layer>
-    <Layer cam={cam} z={1700}>
-      <GroundBand y={2220} color="#86BF73" dark="#76AE64" tufts={false} />
-    </Layer>
-    <Layer cam={cam} z={1000}>
-      <GroundBand y={RIDE.groundY} />
-      <Puddle x={RIDE.dropX} y={RIDE.puddleY} rx={240} ry={44} />
-    </Layer>
-  </>
-);
+const RainWorldBack: React.FC<{cam: Cam}> = ({cam}) => <MeadowLayers cam={cam} />;
 void FAR_CAM;
 
 const RainBack: React.FC<{cam: Cam; sim: number; speed: number}> = ({cam, sim, speed}) => (
@@ -250,19 +234,15 @@ const SceneC: React.FC<{t: number}> = ({t}) => {
   const sy = antic ? 0.93 : 1 + (jumpU < 1 && t >= T.bus ? 0.05 * Math.sin(jumpU * Math.PI) : 0);
   return (
     <>
-      <Sky top="#7A90A8" bottom="#C1CEDA" />
-      <Layer cam={cam} z={6000}>
-        <Buildings y={SC.groundY + 300} />
-      </Layer>
-      <Road cam={cam} groundY={SC.groundY} />
+      <StreetPlate cam={cam} refZ={250} />
       <RainField cam={cam} simT={sim} speed={1} spec={RAIN_LAYERS[0]} />
-      <Layer cam={cam} z={busZ} minDepth={120} shake={sh}>
+      <Layer cam={cam} z={busZ} minDepth={120} shake={sh} cy={STREET_VP.y}>
         <At x={busX} y={SC.groundY - busBounce}>
           <BusSprite />
         </At>
       </Layer>
       <RainField cam={cam} simT={sim} speed={1} spec={RAIN_LAYERS[1]} />
-      <Layer cam={cam} z={1000} shake={sh}>
+      <Layer cam={cam} z={1000} shake={sh} cy={STREET_VP.y}>
         <At x={SC.guyX + tremble} y={SC.groundY - jump} sx={(antic ? 1.05 : 1) * guy.pop} sy={sy * breathe * guy.pop}>
           <GuySprite pose={guy.v} sweat={guySweat} sweatSlide={clamp((t - T.hit) / 0.6)} />
         </At>

@@ -37,8 +37,9 @@ export const Layer: React.FC<{
   blur?: number;
   shake?: {x: number; y: number};
   minDepth?: number;
+  cy?: number; // screen y of the principal point (horizon); 960 = frame centre
   children: React.ReactNode;
-}> = ({cam, z, blur = 0, shake, minDepth = 250, children}) => {
+}> = ({cam, z, blur = 0, shake, minDepth = 250, cy = 960, children}) => {
   const d = z - cam.z;
   if (d < minDepth) return null;
   const k = F / d;
@@ -52,7 +53,7 @@ export const Layer: React.FC<{
           left: 0,
           top: 0,
           transformOrigin: '0 0',
-          transform: `translate(${540 + sx}px, ${960 + sy}px) scale(${k}) translate(${-cam.x}px, ${-cam.y}px)`,
+          transform: `translate(${540 + sx}px, ${cy + sy}px) scale(${k}) translate(${-cam.x}px, ${-cam.y}px)`,
         }}
       >
         {children}

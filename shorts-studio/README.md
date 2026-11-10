@@ -10,6 +10,7 @@ Remotion 4 project for vertical cut-out cartoon Shorts (1080×1920, 60 fps).
 - `public/mosquito/` — voice-over (ElevenLabs v4, Mark – Natural Conversations) and processed SFX (ElevenLabs SFX v2).
 - `sfx_raw/` — SFX exactly as downloaded from ElevenLabs.
 - `images/mosquito/raw/` — the source pictures (M1 from ElevenLabs GPT Image 2.5, the rest from ChatGPT, flat magenta background).
+- `images/mosquito/prep_bg.py` — background plates BG1–BG5 -> `public/mosquito/bg/` + `src/mosquito/bg.json`; layered in `art/Backgrounds.tsx`.
 - `images/mosquito/` — sprite cut-out/alignment (`prep_sprites.py` -> `public/mosquito/sprites/`, `src/mosquito/sprites.json`), word times (`words.json`), SFX slicing (`sfx_prep.py`, `sfx_cfg.json`), pop scan, thumbnail script.
 
 ```bash
