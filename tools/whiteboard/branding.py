@@ -152,3 +152,70 @@ if __name__ == "__main__":
     avatar_map(geo, os.path.join(a.out_dir, "avatar_map.png"))
     avatar_helmet(os.path.join(a.out_dir, "avatar_helmet.png"))
     banner(geo, a.sprites, os.path.join(a.out_dir, "banner.png"), a.name, a.tagline)
+
+
+# ------------------------------------------------------------------ 'WARBOARD' avatar: a board with the war drawn on it
+def _board_drawing(geo, w, h, seed=0):
+    """Europe in marker + bold red attack arrow, on a transparent (w,h) RGBA float canvas over white."""
+    c = np.ones((h, w, 3), np.float32) * 252.0
+    v = maps.MapView(-11, 42, 35, 62, int(w * 0.04), int(h * 0.05), int(w * 0.92), int(h * 0.9))
+    ol, fl = maps.land_layers(v, geo, fill=SAND, width=max(3.0, w / 170), seed=3 + seed)
+    _put(c, fl)
+    _put(c, ol)
+    _arrow(c, [v.p(-1.5, 47.5), v.p(9, 51.3), v.p(20, 52.3), v.p(32, 54.6)], width=max(10, w / 16), seed=5 + seed,
+           head=w / 7.5)
+    return c
+
+
+def avatar_warboard(geo, out, bg=(30, 32, 37)):
+    """Whiteboard-style: a framed board on a dark background, war map + red arrow, red marker on the tray."""
+    S = 1000
+    c = np.ones((S, S, 3), np.float32) * np.array(bg, np.float32)
+    rng = np.random.default_rng(2)
+    c += (wb.smooth_noise(S, S, 40, rng) * 3)[..., None]
+    bx0, by0, bx1, by1 = 105, 250, 895, 705
+    board = _board_drawing(geo, bx1 - bx0, by1 - by0)
+    c[by0:by1, bx0:bx1] = board
+    frame = wb.rounded_rect_path(bx0 - 6, by0 - 6, bx1 + 6, by1 + 6, r=14)
+    _put(c, wb.stroke_layer([frame], (178, 182, 188), 22, wobble=0.3, seed=8, tex=0.04))
+    _put(c, wb.stroke_layer([frame], (60, 62, 66), 4, wobble=0.3, seed=9, tex=0.02))
+    # marker tray + red marker
+    tray = wb.rect_poly(bx0 + 40, by1 + 16, bx1 - 40, by1 + 44)
+    ol, fl = wb.shape_layers([tray], (150, 154, 160), (60, 62, 66), 5, seed=10)
+    _put(c, fl)
+    _put(c, ol)
+    body = wb.rect_poly(560, by1 + 2, 760, by1 + 30)
+    cap = wb.rect_poly(760, by1 + 4, 812, by1 + 28)
+    for poly, col, sd in [(body, RED, 11), (cap, (150, 20, 24), 12)]:
+        ol, fl = wb.shape_layers([poly], col, INK, 5, seed=sd)
+        _put(c, fl)
+        _put(c, ol)
+    im = Image.fromarray(np.clip(c, 0, 255).astype(np.uint8))
+    im.save(out)
+    _circle_previews(im, out)
+
+
+def avatar_warboard_real(geo, photo, out):
+    """Realistic: draw the war map onto the blank board of a real-looking whiteboard photo (multiply blend)."""
+    im = np.asarray(Image.open(photo).convert("RGB")).astype(np.float32)
+    g = cv2.cvtColor(im.astype(np.uint8), cv2.COLOR_RGB2GRAY)
+    bright = (g > 185).astype(np.uint8)
+    bright = cv2.morphologyEx(bright, cv2.MORPH_OPEN, np.ones((9, 9), np.uint8))
+    n, lab, st, _ = cv2.connectedComponentsWithStats(bright, connectivity=4)
+    i = 1 + int(np.argmax(st[1:, cv2.CC_STAT_AREA]))
+    x, y, w, h = st[i, 0], st[i, 1], st[i, 2], st[i, 3]
+    pad = int(min(w, h) * 0.06)
+    x0, y0, x1, y1 = x + pad, y + pad, x + w - pad, y + h - pad
+    drawing = _board_drawing(geo, x1 - x0, y1 - y0, seed=1) / 252.0
+    region = im[y0:y1, x0:x1]
+    mask = (lab[y0:y1, x0:x1] == i)[..., None].astype(np.float32)
+    mask = cv2.GaussianBlur(mask[..., 0], (0, 0), 2)[..., None]
+    im[y0:y1, x0:x1] = region * (1 - mask) + region * drawing * mask
+    out_im = Image.fromarray(np.clip(im, 0, 255).astype(np.uint8))
+    # square crop centred on the board, slightly larger than it
+    cx, cy, side = x + w / 2, y + h / 2, int(max(w, h) * 1.22)
+    left, top = int(max(0, cx - side / 2)), int(max(0, cy - side / 2))
+    side = min(side, out_im.width - left, out_im.height - top)
+    out_im = out_im.crop((left, top, left + side, top + side)).resize((1000, 1000), Image.LANCZOS)
+    out_im.save(out)
+    _circle_previews(out_im, out)

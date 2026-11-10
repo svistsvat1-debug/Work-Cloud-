@@ -102,8 +102,8 @@ def historic_flag_rgba(w, wave=0.07, seed=0, kind="nazi"):
     return rgb, a, (x0, y0, w, h)
 
 
-def realistic_flag_rgba(w, seed=0):
-    """Photo-like waving 1933-45 German flag (fabric folds and shading), for the realistic thumbnail."""
+def realistic_flag_rgba(w, seed=0, kind="nazi"):
+    """Photo-like waving flag (fabric folds and shading) for the realistic thumbnail. kind: nazi | de | cross."""
     h = int(w * 0.62)
     pad = int(h * 0.3)
     W_, H_ = w + 2 * pad, h + 2 * pad
@@ -111,15 +111,26 @@ def realistic_flag_rgba(w, seed=0):
     big = np.zeros((H_ * ss, W_ * ss, 3), np.uint8)
     am = np.zeros((H_ * ss, W_ * ss), np.uint8)
     x0, y0 = pad * ss, pad * ss
-    cv2.rectangle(big, (x0, y0), (x0 + w * ss, y0 + h * ss), (176, 20, 26), -1)
     cv2.rectangle(am, (x0, y0), (x0 + w * ss, y0 + h * ss), 255, -1)
-    cx, cy, r = x0 + w * ss / 2, y0 + h * ss / 2, h * ss * 0.36
-    cv2.circle(big, (int(cx), int(cy)), int(r), (236, 232, 224), -1, cv2.LINE_AA)
-    L, th = h * ss * 0.21, int(h * ss * 0.075)
-    c45, s45 = math.cos(math.pi / 4), math.sin(math.pi / 4)
-    for arm in [[(0, 0), (0, -L), (L, -L)], [(0, 0), (L, 0), (L, L)], [(0, 0), (0, L), (-L, L)], [(0, 0), (-L, 0), (-L, -L)]]:
-        pts = np.array([[cx + px * c45 - py * s45, cy + px * s45 + py * c45] for px, py in arm], np.int32)
-        cv2.polylines(big, [pts], False, (18, 18, 20), th, cv2.LINE_AA)
+    cx, cy = x0 + w * ss / 2, y0 + h * ss / 2
+    if kind == "de":
+        for i, col in enumerate([(22, 22, 24), (200, 24, 30), (240, 186, 18)]):
+            cv2.rectangle(big, (x0, int(y0 + i * h * ss / 3)), (x0 + w * ss, int(y0 + (i + 1) * h * ss / 3)), col, -1)
+    elif kind == "cross":
+        cv2.rectangle(big, (x0, y0), (x0 + w * ss, y0 + h * ss), (104, 112, 92), -1)
+        for poly, col in [(_cross_polys(cx, cy, h * ss * 0.78, h * ss * 0.30), (236, 234, 226)),
+                          (_cross_polys(cx, cy, h * ss * 0.66, h * ss * 0.16), (18, 18, 20))]:
+            cv2.fillPoly(big, [poly.astype(np.int32)], col, cv2.LINE_AA)
+    else:
+        cv2.rectangle(big, (x0, y0), (x0 + w * ss, y0 + h * ss), (176, 20, 26), -1)
+        r = h * ss * 0.36
+        cv2.circle(big, (int(cx), int(cy)), int(r), (236, 232, 224), -1, cv2.LINE_AA)
+        L, th = h * ss * 0.21, int(h * ss * 0.075)
+        c45, s45 = math.cos(math.pi / 4), math.sin(math.pi / 4)
+        for arm in [[(0, 0), (0, -L), (L, -L)], [(0, 0), (L, 0), (L, L)], [(0, 0), (0, L), (-L, L)],
+                    [(0, 0), (-L, 0), (-L, -L)]]:
+            pts = np.array([[cx + px * c45 - py * s45, cy + px * s45 + py * c45] for px, py in arm], np.int32)
+            cv2.polylines(big, [pts], False, (18, 18, 20), th, cv2.LINE_AA)
     rgb = cv2.resize(big, (W_, H_), interpolation=cv2.INTER_AREA).astype(np.float32)
     a = cv2.resize(am, (W_, H_), interpolation=cv2.INTER_AREA).astype(np.float32) / 255.0
     yy, xx = np.mgrid[0:H_, 0:W_].astype(np.float32)
@@ -339,7 +350,7 @@ def whiteboard(army_path, out, text1, text2, style="marker", flag="nazi"):
     save(canvas, out)
 
 
-def realistic(photo_path, out, text1, text2):
+def realistic(photo_path, out, text1, text2, flag="nazi"):
     im = Image.open(photo_path).convert("RGB")
     # cover-fit to 1920x1080
     s = max(1920 / im.width, 1080 / im.height)
@@ -356,7 +367,7 @@ def realistic(photo_path, out, text1, text2):
     cv2.line(pole, (px, top - 20), (px + 8, 1080), 1, 16, cv2.LINE_AA)
     pm = cv2.GaussianBlur(pole.astype(np.float32), (0, 0), 1.0)
     arr = arr * (1 - pm[..., None]) + np.array([62, 44, 30], np.float32) * pm[..., None]
-    frgb, fa, (fx0, fy0, _, _) = realistic_flag_rgba(fw, seed=2)
+    frgb, fa, (fx0, fy0, _, _) = realistic_flag_rgba(fw, seed=2, kind=flag)
     L = wb.Layer(frgb, fa, np.zeros_like(fa), px + 6 - fx0, top - fy0)
     wb.composite(arr, L, L.a)
     im = Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8))
@@ -393,7 +404,7 @@ if __name__ == "__main__":
     if a.kind == "whiteboard":
         whiteboard(a.src, a.out, a.text1, a.text2, a.style, a.flag)
     else:
-        realistic(a.src, a.out, a.text1, a.text2)
+        realistic(a.src, a.out, a.text1, a.text2, a.flag)
 
 
 # ---------------------------------------------------------------- channel avatar (800x800, shown as a circle)
