@@ -125,10 +125,16 @@ def whiteboard(army_path, out, text1, text2):
     # the column of soldiers
     army = wb.sprite_layer(army_path, 1380, 1075, h=640, anchor="mb", seed=5)
     wb.composite(canvas, army, army.a)
-    # two words
-    t1 = wb.text_layer(text1, 60, 150, size=290, color=INK, rot=-4, seed=1)
+    # two words, auto-fitted so they never run into the flags
+    def fit(text, x, y, size, color, seed, max_w=930):
+        while True:
+            L = wb.text_layer(text, x, y, size=size, color=color, rot=-4, seed=seed)
+            if L.w <= max_w or size < 120:
+                return L
+            size = int(size * 0.94)
+    t1 = fit(text1, 60, 150, 290, INK, 1)
     wb.composite(canvas, t1, t1.a)
-    t2 = wb.text_layer(text2, 120, 500, size=360, color=RED, rot=-4, seed=2)
+    t2 = fit(text2, 110, 500, 380, RED, 2, max_w=780)
     wb.composite(canvas, t2, t2.a)
     x0, y0, x1, y1 = t2.bbox()
     ul = wb.underline_layer(x0, x1, y1 + 10, color=RED, width=26, seed=3)
@@ -160,10 +166,15 @@ def realistic(photo_path, out, text1, text2):
     wb.composite(arr, L, L.a)
     im = Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8))
     d = ImageDraw.Draw(im)
-    f1 = ImageFont.truetype(os.path.join(HERE, "fonts", "Anton-Regular.ttf"), 260)
-    f2 = ImageFont.truetype(os.path.join(HERE, "fonts", "Anton-Regular.ttf"), 330)
-    d.text((70, 60), text1, font=f1, fill=(255, 255, 255), stroke_width=14, stroke_fill=(0, 0, 0))
-    d.text((70, 380), text2, font=f2, fill=(255, 214, 0), stroke_width=16, stroke_fill=(0, 0, 0))
+    def fit(text, size, max_w=1080):
+        while True:
+            f = ImageFont.truetype(os.path.join(HERE, "fonts", "Anton-Regular.ttf"), size)
+            if d.textlength(text, font=f) <= max_w or size < 120:
+                return f
+            size = int(size * 0.94)
+    f1, f2 = fit(text1, 300), fit(text2, 380)
+    d.text((70, 50), text1, font=f1, fill=(255, 255, 255), stroke_width=15, stroke_fill=(0, 0, 0))
+    d.text((70, 420), text2, font=f2, fill=(236, 32, 38), stroke_width=17, stroke_fill=(0, 0, 0))
     save(np.asarray(im).astype(np.float32), out)
 
 
