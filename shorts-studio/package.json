@@ -1,0 +1,22 @@
+{
+  "name": "shorts-studio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cut-out cartoon Shorts (Remotion). One folder per Short in src/, public/ and images/.",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "render:tiger": "remotion render src/index.ts Tiger out/tiger-orange-4K.mp4 --scale=2 --image-format=png --crf=16 --pixel-format=yuv420p"
+  },
+  "dependencies": {
+    "@remotion/bundler": "4.0.290",
+    "@remotion/cli": "4.0.290",
+    "@remotion/renderer": "4.0.290",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remotion": "4.0.290"
+  },
+  "devDependencies": {
+    "@types/react": "18.3.12",
+    "typescript": "5.6.3"
+  }
+}
