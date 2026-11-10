@@ -12,14 +12,19 @@
 
 Перевірка: каналів з назвами WARBOARD та INKFRONT пошук не знайшов. Чи вільний хендл — [MISSING] перевірити в YouTube при створенні.
 
-## Опис каналу (About)
+## Опис каналу (About) — 861 символ із 1000
 
 ```
-WARBOARD — World War 2, one question at a time.
+WARBOARD — World War 2, explained with whiteboard animation.
 
-Every video on this channel is a historical mystery: one big question at the start, clues along the way, and the answer at the end. No dry lists of dates — just the decisions, gambles and mistakes that shaped the Second World War, explained on a whiteboard.
+Every story on this channel unfolds on a whiteboard: maps sketched in marker, armies moving across Europe, dates and numbers appearing exactly when you hear them. No dry lectures and no endless lists of dates — just clear whiteboard animation that makes the Second World War easy to follow.
 
-When did Hitler really lose the war? How did France fall in six weeks? Why didn't Britain give up?
+Each video is built like a quest. We start with one big question, unlock clues along the way and reveal the answer at the end:
+✏️ When did Hitler really lose the war?
+✏️ How did France fall in just six weeks?
+✏️ Why didn't Britain give up in 1940?
+
+Animated whiteboard documentaries about World War 2: the rise of the Third Reich, Blitzkrieg, Dunkirk, the Battle of Britain, Operation Barbarossa and the turning points that decided the war.
 
 Subscribe and solve World War 2 with us — one question at a time.
 ```

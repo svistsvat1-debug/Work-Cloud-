@@ -14,7 +14,7 @@ The Day Hitler Lost WW2 | WW2 Documentary | Part 1
 ```
 In June 1940, Hitler forced France to surrender in the same railway carriage where Germany had surrendered in 1918. He ruled almost all of Europe. Five years later, he was dead and Germany lay in ruins. So when did Hitler actually lose World War 2?
 
-In this WW2 documentary we solve five questions and collect three clues that reveal the exact day the war was lost: the rise of the Third Reich, appeasement and the Munich Agreement, the fall of France, Dunkirk and the Battle of Britain, and Operation Barbarossa.
+In this animated whiteboard documentary we solve five questions and collect three clues that reveal the exact day the war was lost: the rise of the Third Reich, appeasement and the Munich Agreement, the fall of France, Dunkirk and the Battle of Britain, and Operation Barbarossa.
 
 ⏱ Chapters
 0:00 The Railway Carriage
@@ -34,6 +34,8 @@ In this WW2 documentary we solve five questions and collect three clues that rev
 • Winston Churchill, "We shall fight on the beaches" (4 June 1940)
 • Winston Churchill, "Never in the field of human conflict..." (20 August 1940)
 
+Animated in a whiteboard style: maps, arrows, dates and key moments are drawn as the story unfolds.
+
 This video is made for educational purposes. It explains historical events and does not promote any ideology. Illustrations and maps are simplified for clarity.
 
 #WW2 #WorldWar2 #HistoryDocumentary
@@ -42,7 +44,7 @@ This video is made for educational purposes. It explains historical events and d
 ## Теги (поле «Теги», ~430 символів)
 
 ```
-world war 2, ww2, ww2 documentary, world war 2 documentary, world war 2 explained, ww2 explained, second world war, hitler, how hitler lost ww2, the day hitler lost ww2, operation barbarossa, battle of britain, dunkirk, fall of france, munich agreement, appeasement, treaty of versailles, rhineland 1936, blitzkrieg, history documentary, part 1
+world war 2, ww2, ww2 documentary, world war 2 documentary, world war 2 explained, ww2 explained, second world war, hitler, how hitler lost ww2, the day hitler lost ww2, operation barbarossa, battle of britain, dunkirk, fall of france, munich agreement, appeasement, treaty of versailles, rhineland 1936, blitzkrieg, history documentary, whiteboard animation, animated history, part 1
 ```
 
 Назву каналу чи відео конкурента в теги **не** додаємо (правила YouTube про оманливі метадані).
