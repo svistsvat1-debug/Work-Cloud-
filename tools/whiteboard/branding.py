@@ -219,3 +219,88 @@ def avatar_warboard_real(geo, photo, out):
     out_im = out_im.crop((left, top, left + side, top + side)).resize((1000, 1000), Image.LANCZOS)
     out_im.save(out)
     _circle_previews(out_im, out)
+
+
+# ------------------------------------------------------------------ creative avatars v3 (paper, edge to edge, no frame)
+def _rot(poly, cx, cy, ang):
+    c, s = math.cos(ang), math.sin(ang)
+    p = np.asarray(poly, float) - [cx, cy]
+    return np.stack([p[:, 0] * c - p[:, 1] * s, p[:, 0] * s + p[:, 1] * c], 1) + [cx, cy]
+
+
+def _shape(c, polys, fill, seed, width=10, spacing=10):
+    """Opaque marker shape: solid base (so nothing shows through), hatch texture, ink outline."""
+    m, x0, y0 = wb.poly_mask(polys)
+    base = wb.Layer(np.ones(m.shape + (3,), np.float32) * np.array(fill, np.float32), m.astype(np.float32),
+                    np.zeros(m.shape, np.float32), x0, y0)
+    _put(c, base)
+    ol, fl = wb.shape_layers(polys, fill, INK, width, seed=seed, spacing=spacing)
+    _put(c, fl)
+    _put(c, ol)
+
+
+def _marker(c, cx, cy, length, w, ang, body, cap, seed):
+    """Whiteboard marker centred at (cx, cy), rotated by ang: body, cap, white label band, conical tip."""
+    L, h = length / 2, w / 2
+    parts = [
+        (wb.rect_poly(cx - L + 0.10 * length, cy - h, cx + L - 0.26 * length, cy + h), body),        # barrel
+        (wb.rect_poly(cx + L - 0.26 * length, cy - h * 1.08, cx + L - 0.06 * length, cy + h * 1.08), cap),  # cap
+        (wb.rect_poly(cx - L + 0.30 * length, cy - h * 0.98, cx - L + 0.42 * length, cy + h * 0.98), (250, 249, 244)),  # label
+        (np.array([[cx - L + 0.10 * length, cy - h * 0.8], [cx - L + 0.10 * length, cy + h * 0.8],
+                   [cx - L, cy + h * 0.25], [cx - L, cy - h * 0.25]]), (40, 40, 44)),                    # tip
+        (wb.rect_poly(cx + L - 0.06 * length, cy - h * 0.7, cx + L, cy + h * 0.7), cap),                # cap end
+    ]
+    for i, (poly, col) in enumerate(parts):
+        _shape(c, [_rot(poly, cx, cy, ang)], col, seed + i, width=max(6, w * 0.09))
+
+
+def _helmet(c, cx, cy, w, seed=0):
+    rx, ry = w * 0.42, w * 0.40
+    t = np.linspace(math.pi, 2 * math.pi, 90)
+    dome = np.vstack([np.stack([cx + rx * np.cos(t), cy + ry * np.sin(t)], 1), [[cx + rx, cy], [cx - rx, cy]]])
+    _shape(c, [dome], OLIVE, seed, width=w * 0.025, spacing=11)
+    bw = w * 0.52
+    tb = np.linspace(0, 1, 50)
+    top = np.stack([cx - bw + 2 * bw * tb, cy - w * 0.005 + w * 0.025 * np.sin(np.pi * tb)], 1)
+    bot = np.stack([cx + bw - 2 * bw * tb, cy + w * 0.075 + w * 0.045 * np.sin(np.pi * tb)], 1)
+    _shape(c, [np.vstack([top, bot])], OLIVE_DARK, seed + 1, width=w * 0.025, spacing=10)
+    ht = np.linspace(math.pi * 1.2, math.pi * 1.42, 30)
+    _put(c, wb.stroke_layer([np.stack([cx + rx * 0.7 * np.cos(ht), cy + ry * 0.7 * np.sin(ht)], 1)],
+                            (205, 218, 170), w * 0.04, wobble=0.4, seed=seed + 2))
+
+
+def avatar_crest(out):
+    """Helmet over two crossed whiteboard markers (like crossed sabres on a military crest)."""
+    S = 1000
+    c = _paper(S, S, seed=21)
+    # tips up (like raised sabres), caps at the bottom
+    _marker(c, 500, 545, 820, 112, math.radians(180 - 38), RED, (160, 18, 24), seed=30)
+    _marker(c, 500, 545, 820, 112, math.radians(38), (40, 40, 44), (20, 20, 22), seed=40)
+    _helmet(c, 500, 500, 560, seed=50)
+    im = Image.fromarray(np.clip(c, 0, 255).astype(np.uint8))
+    im.save(out)
+    _circle_previews(im, out)
+
+
+def avatar_tank_marker(out):
+    """A marker-doodle tank whose gun barrel is a red whiteboard marker."""
+    S = 1000
+    c = _paper(S, S, seed=22)
+    # barrel = red marker pointing up-right from the turret
+    dy = -45
+    _marker(c, 690, 380 + dy, 470, 70, math.radians(180 - 22), RED, (160, 18, 24), seed=70)
+    t = np.linspace(math.pi, 2 * math.pi, 60)
+    turret = np.vstack([np.stack([440 + 165 * np.cos(t), 470 + dy + 120 * np.sin(t)], 1), [[605, 500 + dy], [275, 500 + dy]]])
+    _shape(c, [turret], OLIVE, 80, width=12)
+    hull = np.array([[170, 500], [830, 500], [880, 600], [120, 600]], float) + [0, dy]
+    _shape(c, [hull], OLIVE_DARK, 81, width=12)
+    track = wb.rounded_rect_path(130, 600 + dy, 870, 760 + dy, r=78)[:-1]
+    _shape(c, [track], (70, 72, 70), 82, width=12)
+    for i, x in enumerate(np.linspace(225, 775, 5)):
+        m = np.zeros((S, S), np.uint8)
+        cv2.circle(m, (int(x), 680 + dy), 52, 1, -1)
+        _put(c, wb.hatch_layer(m.astype(bool), 0, 0, (150, 152, 146), spacing=8, seed=90 + i))
+        _put(c, wb.circle_layer(x, 680 + dy, 52, color=INK, width=9, seed=100 + i))
+    im = Image.fromarray(np.clip(c, 0, 255).astype(np.uint8))
+    im.save(out)
+    _circle_previews(im, out)
