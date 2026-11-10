@@ -304,3 +304,105 @@ def avatar_tank_marker(out):
     im = Image.fromarray(np.clip(c, 0, 255).astype(np.uint8))
     im.save(out)
     _circle_previews(im, out)
+
+
+# ------------------------------------------------------------------ unique avatars v4
+def _helmet_shapes(cx, cy, w):
+    rx, ry = w * 0.42, w * 0.40
+    t = np.linspace(math.pi, 2 * math.pi, 90)
+    dome = np.vstack([np.stack([cx + rx * np.cos(t), cy + ry * np.sin(t)], 1), [[cx + rx, cy], [cx - rx, cy]]])
+    bw = w * 0.52
+    tb = np.linspace(0, 1, 50)
+    top = np.stack([cx - bw + 2 * bw * tb, cy - w * 0.005 + w * 0.025 * np.sin(np.pi * tb)], 1)
+    bot = np.stack([cx + bw - 2 * bw * tb, cy + w * 0.075 + w * 0.045 * np.sin(np.pi * tb)], 1)
+    return dome, np.vstack([top, bot])
+
+
+def avatar_marker_soldier(out):
+    """Mascot: a red whiteboard marker as a saluting soldier in a WWII helmet."""
+    S = 1000
+    c = _paper(S, S, seed=31)
+    x0, x1 = 395, 605
+    # arms behind the body: left arm down, right arm saluting to the brim
+    _put(c, wb.stroke_layer([np.array([[x0 + 10, 600], [345, 690], [330, 770]])], INK, 22, wobble=0.6, seed=1))
+    _put(c, wb.stroke_layer([np.array([[x1 - 10, 600], [700, 520], [655, 395]])], INK, 22, wobble=0.6, seed=2))
+    _put(c, wb.circle_layer(330, 785, 20, color=INK, width=14, seed=3))
+    _shape(c, [wb.rect_poly(x0, 380, x1, 860)], RED, 10, width=12)                       # body
+    _shape(c, [wb.rect_poly(x0 - 8, 360, x1 + 8, 430)], (160, 18, 24), 11, width=12)     # cap ring
+    _shape(c, [wb.rect_poly(x0, 500, x1, 660)], (250, 249, 244), 12, width=10)           # label = face
+    _shape(c, [np.array([[x0 + 30, 860], [x1 - 30, 860], [530, 935], [470, 935]], float)], (40, 40, 44), 13,
+           width=12)                                                                       # tip = feet
+    # face: determined eyes, brows, mouth
+    for ex in (462, 538):
+        m = np.zeros((S, S), np.uint8)
+        cv2.circle(m, (ex, 572), 15, 1, -1)
+        _put(c, wb.Layer(np.zeros((S, S, 3), np.float32) + 25, m.astype(np.float32), np.zeros((S, S), np.float32), 0, 0))
+    _put(c, wb.stroke_layer([np.array([[440, 538], [482, 550]]), np.array([[518, 550], [560, 538]])], INK, 10,
+                            wobble=0.3, seed=4))
+    _put(c, wb.stroke_layer([np.array([[478, 622], [500, 616], [522, 622]])], INK, 9, wobble=0.3, seed=5))
+    # helmet on the cap
+    dome, brim = _helmet_shapes(500, 372, 400)
+    _shape(c, [dome], OLIVE, 20, width=12, spacing=11)
+    _shape(c, [brim], OLIVE_DARK, 21, width=12)
+    ht = np.linspace(math.pi * 1.2, math.pi * 1.42, 30)
+    _put(c, wb.stroke_layer([np.stack([500 + 168 * 0.7 * np.cos(ht), 372 + 160 * 0.7 * np.sin(ht)], 1)],
+                            (205, 218, 170), 14, wobble=0.4, seed=22))
+    # saluting hand at the brim
+    _shape(c, [np.array([[630, 372], [690, 360], [700, 392], [640, 404]], float)], (240, 205, 170), 23, width=9)
+    im = Image.fromarray(np.clip(c, 0, 255).astype(np.uint8))
+    im.save(out)
+    _circle_previews(im, out)
+
+
+def avatar_drawing_helmet(out):
+    """A WWII helmet half coloured in, with the green marker still colouring it."""
+    S = 1000
+    c = _paper(S, S, seed=32)
+    dome, brim = _helmet_shapes(470, 560, 640)
+    m, x0, y0 = wb.poly_mask([dome, brim])
+    yy, xx = np.mgrid[0:m.shape[0], 0:m.shape[1]]
+    X, Y = xx + x0, yy + y0
+    done = (X + 0.55 * (Y - 560)) < 520                        # coloured part (left), frontier is diagonal
+    md, mb = wb.poly_mask([dome]), wb.poly_mask([brim])
+    for (mm, mx, my), col, sd in [(md, OLIVE, 40), (mb, OLIVE_DARK, 41)]:
+        yy2, xx2 = np.mgrid[0:mm.shape[0], 0:mm.shape[1]]
+        keep = mm & ((xx2 + mx + 0.55 * (yy2 + my - 560)) < 520)
+        _put(c, wb.Layer(np.ones(mm.shape + (3,), np.float32) * np.array(col, np.float32),
+                         keep.astype(np.float32), np.zeros(mm.shape, np.float32), mx, my))
+        _put(c, wb.hatch_layer(keep, mx, my, col, spacing=11, seed=sd))
+    # loose scribbles at the frontier
+    rng = np.random.default_rng(5)
+    scr = []
+    for k in range(5):
+        y = 330 + k * 55
+        xf = 520 - 0.55 * (y - 560)
+        scr.append(np.array([[xf - 40, y + rng.uniform(-8, 8)], [xf + 25, y - 20], [xf - 10, y + 25]]))
+    _put(c, wb.stroke_layer(scr, OLIVE, 18, wobble=1.0, seed=42))
+    _put(c, wb.stroke_layer([np.vstack([dome, dome[:1]]), np.vstack([brim, brim[:1]])], INK, 16, wobble=0.8,
+                            seed=43))
+    # the marker, tip touching the frontier
+    _marker(c, 760, 330, 520, 90, math.radians(180 + 125), OLIVE_DARK, (50, 60, 34), seed=44)
+    im = Image.fromarray(np.clip(c, 0, 255).astype(np.uint8))
+    im.save(out)
+    _circle_previews(im, out)
+
+
+def avatar_marker_bullet(out):
+    """A rifle cartridge whose bullet is a red marker tip."""
+    S = 1000
+    c = _paper(S, S, seed=33)
+    BRASS, BRASS_D = (214, 168, 64), (170, 128, 44)
+    cx = 500
+    _shape(c, [wb.rect_poly(cx - 120, 470, cx + 120, 900)], BRASS, 50, width=12)               # case
+    _shape(c, [wb.rect_poly(cx - 135, 880, cx + 135, 930)], BRASS_D, 51, width=12)             # rim
+    _shape(c, [np.array([[cx - 120, 470], [cx + 120, 470], [cx + 80, 400], [cx - 80, 400]], float)], BRASS, 52,
+           width=12)                                                                            # shoulder
+    _shape(c, [wb.rect_poly(cx - 80, 300, cx + 80, 405)], (250, 249, 244), 53, width=12)        # marker collar
+    _shape(c, [np.array([[cx - 80, 300], [cx + 80, 300], [cx + 30, 140], [cx - 30, 140]], float)], RED, 54,
+           width=12)                                                                            # red felt tip
+    _put(c, wb.stroke_layer([np.array([[cx - 70, 620], [cx + 70, 620]]), np.array([[cx - 70, 660], [cx + 70, 660]])],
+                            BRASS_D, 10, wobble=0.4, seed=55))
+    _put(c, wb.stroke_layer([np.array([[cx - 85, 520], [cx - 85, 840]])], (245, 222, 150), 18, wobble=0.4, seed=56))
+    im = Image.fromarray(np.clip(c, 0, 255).astype(np.uint8))
+    im.save(out)
+    _circle_previews(im, out)
