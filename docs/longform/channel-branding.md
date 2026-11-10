@@ -1,42 +1,44 @@
-# YouTube-канал про Другу світову — назва, опис, аватарка
+# YouTube-канал про Другу світову — назва, опис, аватарка, банер
 
-Статус: пропозиція (назву ще не підтверджено).
+Статус: пропозиція v2 (назву ще не підтверджено).
 
 ## Назва
 
 | # | Назва | Хендл | Чому |
 |---|---|---|---|
-| 1 | **WW2 Unlocked** ← рекомендую | @WW2Unlocked | «Відмикаємо» відповідь ключами-підказками — наша механіка; WW2 у назві для пошуку |
-| 2 | WW2 Quest | @WW2Quest | Акцент на ігровій механіці квестів |
-| 3 | WW2 Clues | @WW2Clues | Акцент на підказках |
+| 1 | **WARBOARD** ← рекомендую | @Warboard | «Війна + дошка»: коротко, запам'ятовується, одразу описує формат — війна на whiteboard |
+| 2 | INKFRONT | @Inkfront | «Чорнило + фронт»: лінії фронту, намальовані маркером |
+| 3 | WW2 Unlocked | @WW2Unlocked | Відповідь «відмикаємо» ключами-підказками (v1) |
 
-Перевірка: серед відомих WW2-каналів таких назв не знайдено (є WW2TV, World War Two, WW2 Tales, WW2 Headquarters, WW2 Wayfinder — їх уникаємо). Чи вільний хендл — [MISSING] перевірити в YouTube при створенні.
+Перевірка: каналів з назвами WARBOARD та INKFRONT пошук не знайшов. Чи вільний хендл — [MISSING] перевірити в YouTube при створенні.
 
 ## Опис каналу (About)
 
 ```
-World War 2, one question at a time.
+WARBOARD — World War 2, one question at a time.
 
-Every video on this channel is a historical mystery: one big question at the start, clues along the way, and the answer unlocked at the end. No dry lists of dates — just the decisions, gambles and mistakes that shaped the Second World War, told in a hand-drawn whiteboard style.
+Every video on this channel is a historical mystery: one big question at the start, clues along the way, and the answer at the end. No dry lists of dates — just the decisions, gambles and mistakes that shaped the Second World War, explained on a whiteboard.
 
 When did Hitler really lose the war? How did France fall in six weeks? Why didn't Britain give up?
 
-Subscribe and unlock World War 2 — one question at a time.
+Subscribe and solve World War 2 with us — one question at a time.
 ```
 
-Переклад: «Друга світова — по одному питанню. Кожне відео — історична загадка: велике питання на початку, підказки по ходу, відповідь у кінці. Жодних сухих списків дат — лише рішення, ставки й помилки, що визначили Другу світову, у стилі whiteboard. Коли Гітлер насправді програв? Як Франція впала за шість тижнів? Чому Британія не здалася? Підписуйтесь і відмикайте історію Другої світової — по одному питанню.»
-
-Графік виходу відео й контакт для співпраці — [MISSING] (додати, коли буде).
+Графік виходу відео й контакт для співпраці — [MISSING].
 
 ## Ключові слова каналу (Studio → Налаштування → Канал)
 
 ```
-world war 2, ww2, second world war, ww2 documentary, world war 2 explained, history documentary, animated history, whiteboard history, military history, hitler
+world war 2, ww2, second world war, ww2 documentary, world war 2 explained, history documentary, animated history, whiteboard history, military history, warboard
 ```
 
-## Аватарка
+## Файли
 
-Файл: `docs/longform/assets/channel-avatar.png` (800×800, YouTube показує колом).
-Папір, червоне маркерне коло, «WW2» (чорне WW + червона 2), золотий маркерний ключ — символ підказок.
-Перевірено на розмірах 176 px і 98 px — читається.
-Без нацистської символіки: аватарка — обличчя каналу на кожному коментарі й у пошуку.
+| Файл | Що |
+|---|---|
+| `assets/channel-avatar-warboard-helmet.png` | Аватарка 1000×1000 (основна): маркерний шолом + червона стрілка наступу, без рамки й тексту |
+| `assets/channel-avatar-warboard-map.png` | Запасна аватарка: карта Європи + стрілка |
+| `assets/channel-banner-warboard.jpg` | Банер 2560×1440: блідо-маркерна карта Європи, WARBOARD + слоган у безпечній зоні 1546×423, танк і Spitfire по краях (видно лише на широкому екрані) |
+| `assets/channel-avatar.png` | Старий варіант v1 (WW2 + ключ) |
+
+Інструмент: `tools/whiteboard/branding.py` (назва й слоган — параметри `--name`, `--tagline`).
