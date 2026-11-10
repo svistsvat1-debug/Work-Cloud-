@@ -138,6 +138,52 @@ const WATER = 1655;
 
 const flW = (legX: number, p: number[]) => [legX + (p[0] - LEG[0]) * S_FL, FLOOR + (p[1] - LEG[1]) * S_FL];
 
+// scientist poses live in different frames: each has its own feet pivot
+const SCI_PIV: Record<string, number[]> = {
+  sci: SCI.feet, sci_oneleg: SCI.feet, sci_pointer: (meta as any).sci_pointer.feet, sci_amazed: (meta as any).sci_amazed.feet,
+};
+// which pose is on screen at t, with a squash-swap around every change
+const poseAt = (t: number, keys: [number, string][]) => {
+  let pose = keys[0][1];
+  let last = -99;
+  let next = 999;
+  for (const [k, n] of keys) {
+    if (t >= k) { pose = n; last = k; } else if (k < next) next = k;
+  }
+  const sq = next - t < 0.12 ? swapScale(t, next) : swapScale(t, last);
+  return {pose, sx: sq.sx, sy: sq.sy};
+};
+const SciPose: React.FC<{x: number; y: number; pose: string; rot?: number; sx?: number; sy?: number}> = ({x, y, pose, rot = 0, sx = 1, sy = 1}) => (
+  <Rig x={x} y={y} px={SCI_PIV[pose][0]} py={SCI_PIV[pose][1]} s={S_SCI} rot={rot} sx={sx} sy={sy}>
+    <Sprite name={pose} />
+  </Rig>
+);
+
+// X-ray card of the leg, laid over the real leg (card joint = world joint)
+const XR = (meta as any).xray_card;
+const XR_W = 250;
+const XR_S = XR_W / XR.w;
+const XR_MID = [334, 653];
+const XR_TOP = [342, 128];
+const XrayCard: React.FC<{jx: number; jy: number; s: number}> = ({jx, jy, s}) => {
+  if (s <= 0.001) return null;
+  const x0 = jx - XR_MID[0] * XR_S;
+  const y0 = jy - XR_MID[1] * XR_S;
+  const w = XR_W;
+  const h = XR.h * XR_S;
+  return (
+    <div style={{position: 'absolute', left: x0, top: y0, width: w, height: h, transformOrigin: `${XR_MID[0] * XR_S}px ${XR_MID[1] * XR_S}px`, transform: `scale(${s})`}}>
+      <div style={{position: 'absolute', left: 0, top: 0, width: w, height: h, borderRadius: 16, overflow: 'hidden', border: `8px solid ${INK}`, boxSizing: 'border-box', background: '#0B1E3F'}}>
+        <Img src={staticFile('flamingo/sprites/xray_card.png')} style={{position: 'absolute', left: -8, top: -8, width: w, height: h}} />
+      </div>
+      <svg style={{position: 'absolute', left: w / 2 - 70, top: -34, overflow: 'visible'}} width={140} height={50}>
+        <rect x={0} y={0} width={140} height={46} rx={12} fill="#7FE3FF" stroke={INK} strokeWidth={7} />
+        <text x={70} y={33} textAnchor="middle" fontFamily={FONT} fontWeight={800} fontSize={28} fill={INK} letterSpacing={2}>X-RAY</text>
+      </svg>
+    </div>
+  );
+};
+
 // ---------------------------------------------------------------------------------------------
 // drawn props
 const Halo: React.FC<{t: number; scale?: number}> = ({t, scale = 1}) => {
@@ -425,40 +471,50 @@ const Scene1: React.FC<{t: number}> = ({t}) => {
   );
 };
 
-// SCENE 2: researcher + zoo crate, two flamingo heads pop up
+// SCENE 2: zoo entrance, a crate drops from the sky, two flamingo heads pop up
+const ZOO_BG = {cx: 560, cy: 1317, w: 5600};
+const CRATE_DROP = 6.02;
+const CRATE_LAND = 6.45;
+
 const Scene2: React.FC<{t: number}> = ({t}) => {
-  const sh = shakeAt(t, [{t: T.zoo, a: 6, d: 0.3}]);
+  const sh = shakeAt(t, [{t: CRATE_LAND, a: 10, d: 0.35}, {t: T.zoo, a: 5, d: 0.3}]);
   const c = camAt([{t: T.cut1, x: 660, y: 1330, z: -40}, {t: T.cut2, x: 665, y: 1320, z: 30, e: (u) => u}], t);
   const cam = {x: c.x + sh.x, y: c.y + sh.y, z: c.z};
   const crate = {x: 610, y: 1300, w: 460, h: 400};
+  const cu = clamp((t - CRATE_DROP) / (CRATE_LAND - CRATE_DROP));
+  const off = t < CRATE_LAND ? -1500 * (1 - cu * cu) : -Math.abs(30 * Math.exp(-(t - CRATE_LAND) * 8) * Math.sin((t - CRATE_LAND) * 17));
+  const crateSq = 1 + spring(t, CRATE_LAND, 0.1, 9, 24);
   const hop = Math.max(0, Math.sin(clamp((t - T.researchers) / 0.32) * Math.PI)) * 34;
   const breathe = 1 + 0.009 * Math.sin(t * 2 * Math.PI * 0.6);
+  const sci = poseAt(t, [[-99, 'sci'], [CRATE_LAND + 0.03, 'sci_amazed'], [7.0, 'sci_pointer']]);
   const headA = 1 - pop(t, T.twoB);
   const headB = 1 - pop(t, T.flam);
   const stamp = 1 + spring(t, T.zoo, 0.18, 6, 20);
+  const shadowS = clamp(1 - Math.abs(off) / 1500);
   return (
     <>
-      <Layer cam={cam} z={BG_Z} blur={2.5}>
-        <Plate name="bg_lab" {...LAB_BG} />
+      <Layer cam={cam} z={BG_Z} blur={2.2}>
+        <Plate name="bg_zoo" {...ZOO_BG} />
       </Layer>
       <Layer cam={cam} z={1000}>
         <Shadow x={330} y={FLOOR} w={340} />
-        <Rig x={330} y={FLOOR - hop} px={SCI.feet[0]} py={SCI.feet[1]} s={S_SCI} sy={breathe}>
-          <Sprite name="sci" />
-        </Rig>
-        <Shadow x={crate.x + crate.w / 2} y={FLOOR} w={540} />
-        <ClipBelow y={crate.y + 30}>
+        <SciPose x={330} y={FLOOR - hop} pose={sci.pose} sx={sci.sx} sy={sci.sy * breathe} />
+        <Shadow x={crate.x + crate.w / 2} y={FLOOR} w={540 * (0.4 + 0.6 * shadowS)} o={shadowS} />
+        <ClipBelow y={crate.y + 30 + off}>
           {/* head A faces right, head B mirrored */}
-          <Rig x={635} y={FLOOR + 310 + headA * 470} px={LEG[0]} py={LEG[1]} s={S_FL} rot={-4}>
+          <Rig x={635} y={FLOOR + 310 + headA * 470 + off} px={LEG[0]} py={LEG[1]} s={S_FL} rot={-4}>
             <Sprite name="fl_dead1" />
             <Halo t={t} />
           </Rig>
-          <Rig x={1085} y={FLOOR + 345 + headB * 480} px={LEG[0]} py={LEG[1]} s={S_FL} rot={5} flip>
+          <Rig x={1085} y={FLOOR + 345 + headB * 480 + off} px={LEG[0]} py={LEG[1]} s={S_FL} rot={5} flip>
             <Sprite name="fl_dead1" />
             <Halo t={t + 0.4} />
           </Rig>
         </ClipBelow>
-        <Crate {...crate} stamp={stamp} />
+        <div style={{position: 'absolute', left: 0, top: 0, transformOrigin: `${crate.x + crate.w / 2}px ${FLOOR}px`, transform: `translateY(${off}px) scale(${2 - crateSq}, ${crateSq})`}}>
+          <Crate {...crate} stamp={stamp} />
+        </div>
+        <Puffs x={crate.x + crate.w / 2} y={FLOOR} t={t} t0={CRATE_LAND} spread={240} n={6} />
       </Layer>
     </>
   );
@@ -476,8 +532,8 @@ const Scene3: React.FC<{t: number}> = ({t}) => {
     [
       {t: T.cut2, x: 500, y: 1265, z: -60},
       {t: 10.75, x: 520, y: 1275, z: 0, e: (u) => u},
-      {t: 11.5, x: 780, y: 1350, z: 440},
-      {t: 13.85, x: 795, y: 1345, z: 470, e: (u) => u},
+      {t: 11.5, x: 800, y: 1420, z: 430},
+      {t: 13.85, x: 810, y: 1415, z: 455, e: (u) => u},
       {t: 14.4, x: 520, y: 1260, z: -80},
     ],
     t,
@@ -496,9 +552,13 @@ const Scene3: React.FC<{t: number}> = ({t}) => {
   const footRing = appear(t, T.foot, 10.9);
   const lineU = eio(seg(t, 9.62, 10.3)) * out(t, 10.9, 0.25);
   const dotS = appear(t, T.body, 10.9);
-  const jointRing = appear(t, T.joints, 12.3);
-  const lockS = appear(t, 11.72, 13.95);
+  const cardS = appear(t, T.joints - 0.05, 13.95);
+  const lockS = appear(t, 11.62, 13.95);
   const lockClosed = eout(seg(t, T.firm - 0.06, T.firm));
+  const lock2S = appear(t, 11.74, 13.95);
+  const lock2Closed = eout(seg(t, T.firm + 0.04, T.firm + 0.1));
+  const topJ = [joint[0] + (XR_TOP[0] - XR_MID[0]) * XR_S, joint[1] + (XR_TOP[1] - XR_MID[1]) * XR_S];
+  const sciP = poseAt(t, [[-99, 'sci_pointer'], [10.85, 'sci'], [landT + 0.03, 'sci_amazed']]);
   const monS = appear(t, 12.42, 13.95);
   const breathe = 1 + 0.009 * Math.sin(t * 2 * Math.PI * 0.6);
   const sciHop = Math.max(0, Math.sin(clamp((t - landT) / 0.3) * Math.PI)) * 40;
@@ -510,10 +570,8 @@ const Scene3: React.FC<{t: number}> = ({t}) => {
       </Layer>
       <Layer cam={cam} z={1000}>
         <Shadow x={sciX} y={FLOOR} w={340} />
-        <Rig x={sciX} y={FLOOR - sciHop} px={SCI.feet[0]} py={SCI.feet[1]} s={S_SCI} sy={breathe}>
-          <Sprite name="sci" />
-        </Rig>
-        <SweatDrop x={sciX + 95} y={FLOOR - 640} t={t} t0={landT + 0.02} life={0.9} />
+        <SciPose x={sciX} y={FLOOR - sciHop} pose={sciP.pose} sx={sciP.sx} sy={sciP.sy * breathe} />
+        <SweatDrop x={sciX + 110} y={FLOOR - 650} t={t} t0={landT + 0.12} life={0.9} />
         <Shadow x={legX + 10} y={FLOOR} w={lerp(two ? 340 : 300, 90, fallen)} o={1 - fallen * 0.7} />
         <Ring x={legX + 25} y={FLOOR - 6} rx={120} ry={34} s={footRing} />
         <Rig x={wx} y={wy} px={piv[0]} py={piv[1]} s={S_FL} rot={rot} sx={sq.sx} sy={sq.sy}>
@@ -538,9 +596,10 @@ const Scene3: React.FC<{t: number}> = ({t}) => {
             </g>
           </svg>
         ) : null}
-        <Ring x={joint[0]} y={joint[1]} rx={52} ry={52} s={jointRing} color="#FFFFFF" />
-        <Padlock x={joint[0] + 4} y={joint[1] + 18} s={lockS} closed={lockClosed} />
-        <Monitor x={joint[0] + 85} y={joint[1] - 250} s={monS} t={t} t0={12.42} />
+        <XrayCard jx={joint[0]} jy={joint[1]} s={cardS} />
+        <Padlock x={joint[0] + 2} y={joint[1] + 16} s={lockS * 0.8} closed={lockClosed} />
+        <Padlock x={topJ[0] + 2} y={topJ[1] + 16} s={lock2S * 0.8} closed={lock2Closed} />
+        <Monitor x={joint[0] + 150} y={joint[1] - 250} s={monS} t={t} t0={12.42} />
         <Puffs x={legX + 640} y={FLOOR} t={t} t0={landT} dir={1} spread={300} />
       </Layer>
     </>
@@ -550,12 +609,36 @@ const Scene3: React.FC<{t: number}> = ({t}) => {
 // SCENE 5 + 6: living flamingo in the lagoon sways, dozes off, sways less; researcher tries one leg
 const LAGOON_BG = {cx: 700, cy: 202, w: 6000};
 
+// distant flock (mid-ground layer), standing in the water
+const FLK = (meta as any).flock;
+const FLK_M = (meta as any)._flock;
+const FLK_S = 600 / (FLK_M.feet_y - FLK_M.top);
+const FLK_X = 1000;
+const FLK_WATER = 1600;
+const Flock: React.FC<{t: number}> = ({t}) => {
+  const w = FLK.w * FLK_S;
+  const h = FLK.h * FLK_S;
+  const bob = Math.sin(t * 2 * Math.PI * 0.3) * 3;
+  const top = FLK_WATER + 22 - FLK_M.feet_y * FLK_S + bob;
+  return (
+    <>
+      <ClipBelow y={FLK_WATER}>
+        <Img src={staticFile('flamingo/sprites/flock.png')} style={{position: 'absolute', left: FLK_X - w / 2, top, width: w, height: h}} />
+      </ClipBelow>
+      {[0.09, 0.29, 0.49, 0.69, 0.88].map((f, i) => (
+        <Ripples key={i} x={FLK_X - w / 2 + f * w} y={FLK_WATER} t={t} w={30} seed={i * 0.37} />
+      ))}
+    </>
+  );
+};
+
 const Scene5: React.FC<{t: number}> = ({t}) => {
   const legX = 540;
-  const sciX = 1320;
+  const sciX0 = 1320;
   const c = camAt(
     [
-      {t: T.cut3, x: 540, y: 1240, z: 120},
+      {t: T.cut3, x: 600, y: 1180, z: -380},
+      {t: 17.9, x: 540, y: 1240, z: 120},
       {t: 19.95, x: 545, y: 1225, z: 195, e: (u) => u},
       {t: 21.0, x: 935, y: 1300, z: -270},
       {t: 23.7, x: 925, y: 1300, z: -245, e: (u) => u},
@@ -580,10 +663,16 @@ const Scene5: React.FC<{t: number}> = ({t}) => {
     : wobAmp * Math.sin(t * 2 * Math.PI * 0.95) + 2.2 * Math.sin(t * 2 * Math.PI * 2.4 + 1);
   const sciBreathe = 1 + 0.009 * Math.sin(t * 2 * Math.PI * 0.6);
   const zHead = flW(legX, [380, 210]);
+  const enter = eout(seg(t, 20.12, 20.9));
+  const sciX = lerp(1850, sciX0, enter);
+  const wade = Math.abs(Math.sin(enter * Math.PI * 3)) * 26 * (1 - enter);
   return (
     <>
       <Layer cam={cam} z={BG_Z} blur={1.8}>
         <Plate name="bg_lagoon" {...LAGOON_BG} />
+      </Layer>
+      <Layer cam={cam} z={2000} blur={1}>
+        <Flock t={t} />
       </Layer>
       <Layer cam={cam} z={1000}>
         <Ripples x={legX + 4} y={WATER} t={t} w={46} />
@@ -598,10 +687,7 @@ const Scene5: React.FC<{t: number}> = ({t}) => {
         {/* researcher */}
         <Ripples x={sciX + 8} y={WATER} t={t} w={70} seed={0.7} />
         <ClipBelow y={WATER}>
-          <Rig x={sciX} y={FLOOR} px={SCI.feet[0]} py={SCI.feet[1]} s={S_SCI} rot={sciRot} sx={sciSq.sx} sy={sciSq.sy * sciBreathe}>
-            <Sprite name="sci_oneleg" show={!sciTwo} />
-            <Sprite name="sci" show={sciTwo} />
-          </Rig>
+          <SciPose x={sciX} y={FLOOR - wade} pose={sciTwo ? 'sci' : 'sci_oneleg'} rot={sciRot} sx={sciSq.sx} sy={sciSq.sy * sciBreathe} />
         </ClipBelow>
         <SweatDrop x={sciX + 120} y={FLOOR - 640} t={t} t0={21.55} life={0.9} />
         <SweatDrop x={sciX - 100} y={FLOOR - 620} t={t} t0={22.55} life={0.9} />
@@ -619,6 +705,10 @@ const SFX: {f: string; at: number; db: number}[] = [
   {f: 'pop', at: T.two1, db: -19},
   {f: 'whoosh', at: FALL1.start + 0.15, db: -25},
   {f: 'thud', at: FALL1.start + FALL1.dur - 0.02, db: -11},
+  {f: 'whoosh', at: CRATE_DROP + 0.12, db: -26},
+  {f: 'thud', at: CRATE_LAND - 0.02, db: -15},
+  {f: 'pop', at: CRATE_LAND + 0.05, db: -24},
+  {f: 'pop', at: 7.0, db: -24},
   {f: 'pop', at: T.twoB, db: -16},
   {f: 'pop', at: T.flam, db: -16},
   {f: 'thud', at: T.zoo - 0.02, db: -24},
@@ -626,7 +716,9 @@ const SFX: {f: string; at: number; db: number}[] = [
   {f: 'pop', at: T.foot, db: -23},
   {f: 'pop', at: T.body, db: -21},
   {f: 'whoosh', at: 10.82, db: -28},
+  {f: 'pop', at: T.joints - 0.05, db: -20},
   {f: 'click', at: T.firm - 0.01, db: -13},
+  {f: 'click', at: T.firm + 0.09, db: -16},
   {f: 'pop', at: 12.42, db: -21},
   {f: 'whoosh', at: 13.92, db: -29},
   {f: 'pop', at: T.two2, db: -18},
@@ -634,6 +726,7 @@ const SFX: {f: string; at: number; db: number}[] = [
   {f: 'whoosh', at: FALL2.start + 0.12, db: -25},
   {f: 'thud', at: FALL2.start + FALL2.dur - 0.02, db: -11},
   {f: 'whoosh', at: T.cut3 - 0.08, db: -31},
+  {f: 'whoosh', at: T.cut3 + 0.15, db: -30},
   {f: 'snore', at: 19.32, db: -23},
   {f: 'whoosh', at: 20.12, db: -28},
   {f: 'wobble', at: 21.1, db: -26},
