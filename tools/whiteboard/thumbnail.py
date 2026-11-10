@@ -37,8 +37,20 @@ def _over(rgb, a, layer):
     a[cy0:cy1, cx0:cx1] = out_a
 
 
-def historic_flag_rgba(w, wave=0.07, seed=0):
-    """1933-45 German flag in marker style (red field, white disc, black hooked cross), waving."""
+DE_BLACK, DE_RED, DE_GOLD = (24, 24, 26), (214, 32, 38), (252, 200, 24)
+FIELD_GREY = (118, 126, 104)
+
+
+def _cross_polys(cx, cy, size, bar):
+    """Plus-shaped cross polygon (Balkenkreuz arms)."""
+    s, b = size / 2, bar / 2
+    return np.array([[cx - b, cy - s], [cx + b, cy - s], [cx + b, cy - b], [cx + s, cy - b], [cx + s, cy + b],
+                     [cx + b, cy + b], [cx + b, cy + s], [cx - b, cy + s], [cx - b, cy + b], [cx - s, cy + b],
+                     [cx - s, cy - b], [cx - b, cy - b]], float)
+
+
+def historic_flag_rgba(w, wave=0.07, seed=0, kind="nazi"):
+    """Waving marker-style flag. kind: 'nazi' (1933-45 flag), 'de' (black-red-gold), 'cross' (Balkenkreuz)."""
     h = int(w * 0.62)
     pad = int(h * 0.25)
     W_, H_ = w + 2 * pad, h + 2 * pad
@@ -47,18 +59,34 @@ def historic_flag_rgba(w, wave=0.07, seed=0):
     x0, y0 = pad, pad
     m = np.zeros((H_, W_), np.uint8)
     cv2.rectangle(m, (x0, y0), (x0 + w, y0 + h), 1, -1)
-    rgb[m > 0] = FLAG_RED
     a[m > 0] = 1.0
-    _over(rgb, a, wb.hatch_layer(m.astype(bool), 0, 0, FLAG_RED, spacing=9, seed=seed))
-    cx, cy, r = x0 + w / 2, y0 + h / 2, h * 0.36
-    m = np.zeros((H_, W_), np.uint8)
-    cv2.circle(m, (int(cx), int(cy)), int(r), 1, -1)
-    _over(rgb, a, wb.hatch_layer(m.astype(bool), 0, 0, (250, 249, 244), spacing=7, seed=seed + 1, shade=0.04))
-    L, th = h * 0.21, h * 0.075
-    arms = [[(0, 0), (0, -L), (L, -L)], [(0, 0), (L, 0), (L, L)], [(0, 0), (0, L), (-L, L)], [(0, 0), (-L, 0), (-L, -L)]]
-    c45, s45 = math.cos(math.pi / 4), math.sin(math.pi / 4)
-    paths = [np.array([[cx + px * c45 - py * s45, cy + px * s45 + py * c45] for px, py in arm]) for arm in arms]
-    _over(rgb, a, wb.stroke_layer(paths, INK, th, wobble=0.4, seed=seed + 2, tex=0.05))
+    cx, cy = x0 + w / 2, y0 + h / 2
+    if kind == "de":
+        rgb[m > 0] = DE_RED
+        for i, col in enumerate((DE_BLACK, DE_RED, DE_GOLD)):
+            mb = np.zeros((H_, W_), np.uint8)
+            cv2.rectangle(mb, (x0, int(y0 + i * h / 3)), (x0 + w, int(y0 + (i + 1) * h / 3)), 1, -1)
+            _over(rgb, a, wb.hatch_layer(mb.astype(bool), 0, 0, col, spacing=9, seed=seed + i))
+    elif kind == "cross":
+        rgb[m > 0] = FIELD_GREY
+        _over(rgb, a, wb.hatch_layer(m.astype(bool), 0, 0, FIELD_GREY, spacing=9, seed=seed))
+        for poly, col, sd in [(_cross_polys(cx, cy, h * 0.78, h * 0.30), (250, 249, 244), 1),
+                              (_cross_polys(cx, cy, h * 0.66, h * 0.16), DE_BLACK, 2)]:
+            mm, mx, my = wb.poly_mask([poly])
+            _over(rgb, a, wb.hatch_layer(mm, mx, my, col, spacing=7, seed=seed + sd, shade=0.04))
+    else:
+        rgb[m > 0] = FLAG_RED
+        _over(rgb, a, wb.hatch_layer(m.astype(bool), 0, 0, FLAG_RED, spacing=9, seed=seed))
+        r = h * 0.36
+        m = np.zeros((H_, W_), np.uint8)
+        cv2.circle(m, (int(cx), int(cy)), int(r), 1, -1)
+        _over(rgb, a, wb.hatch_layer(m.astype(bool), 0, 0, (250, 249, 244), spacing=7, seed=seed + 1, shade=0.04))
+        L, th = h * 0.21, h * 0.075
+        arms = [[(0, 0), (0, -L), (L, -L)], [(0, 0), (L, 0), (L, L)], [(0, 0), (0, L), (-L, L)],
+                [(0, 0), (-L, 0), (-L, -L)]]
+        c45, s45 = math.cos(math.pi / 4), math.sin(math.pi / 4)
+        paths = [np.array([[cx + px * c45 - py * s45, cy + px * s45 + py * c45] for px, py in arm]) for arm in arms]
+        _over(rgb, a, wb.stroke_layer(paths, INK, th, wobble=0.4, seed=seed + 2, tex=0.05))
     rect = np.array([[x0, y0], [x0 + w, y0], [x0 + w, y0 + h], [x0, y0 + h], [x0, y0]], float)
     _over(rgb, a, wb.stroke_layer([rect], INK, max(4, w * 0.012), wobble=0.8, seed=seed + 3))
     # wave: fixed at the pole (left), growing towards the free end; soft fold shading
@@ -109,11 +137,22 @@ def realistic_flag_rgba(w, seed=0):
     return np.clip(rgb, 0, 255), a, (pad, pad, w, h)
 
 
-def flag_decal(w, ss=6):
-    """Tiny flag sticker (for helmets): red field, white disc, black hooked cross, black rim."""
+def flag_decal(w, ss=6, kind="nazi"):
+    """Tiny flag sticker (for helmets), same kinds as historic_flag_rgba."""
     h = int(round(w * 0.62))
     W_, H_ = w * ss, h * ss
     img = np.zeros((H_, W_, 4), np.uint8)
+    if kind in ("de", "cross"):
+        if kind == "de":
+            for i, col in enumerate((DE_BLACK, DE_RED, DE_GOLD)):
+                cv2.rectangle(img, (0, int(i * H_ / 3)), (W_ - 1, int((i + 1) * H_ / 3)), col + (255,), -1)
+        else:
+            cv2.rectangle(img, (0, 0), (W_ - 1, H_ - 1), FIELD_GREY + (255,), -1)
+            for poly, col in [(_cross_polys(W_ / 2, H_ / 2, H_ * 0.82, H_ * 0.32), (250, 249, 244)),
+                              (_cross_polys(W_ / 2, H_ / 2, H_ * 0.68, H_ * 0.17), DE_BLACK)]:
+                cv2.fillPoly(img, [poly.astype(np.int32)], col + (255,), cv2.LINE_AA)
+        cv2.rectangle(img, (0, 0), (W_ - 1, H_ - 1), (20, 20, 22, 255), max(2, int(H_ * 0.07)))
+        return Image.fromarray(cv2.resize(img, (w, h), interpolation=cv2.INTER_AREA), "RGBA")
     cv2.rectangle(img, (0, 0), (W_ - 1, H_ - 1), (204, 28, 34, 255), -1)
     cx, cy, r = W_ / 2, H_ / 2, H_ * 0.36
     cv2.circle(img, (int(cx), int(cy)), int(r), (250, 249, 244, 255), -1, cv2.LINE_AA)
@@ -130,11 +169,11 @@ def flag_decal(w, ss=6):
 ARMY_A_HELMETS = [(214, 108, 38, -6), (348, 126, 36, 4), (447, 136, 34, -10), (544, 136, 33, -4), (657, 120, 37, 2)]
 
 
-def add_helmet_decals(src, out, spots=ARMY_A_HELMETS):
+def add_helmet_decals(src, out, spots=ARMY_A_HELMETS, kind="nazi"):
     im = Image.open(src).convert("RGBA")
     base = im.copy()
     for cx, cy, w, rot in spots:
-        d = flag_decal(w).rotate(rot, resample=Image.BICUBIC, expand=True)
+        d = flag_decal(w, kind=kind).rotate(rot, resample=Image.BICUBIC, expand=True)
         base.alpha_composite(d, (int(cx - d.width / 2), int(cy - d.height / 2)))
     arr = np.asarray(base).copy()
     arr[..., 3] = np.minimum(arr[..., 3], np.asarray(im.split()[3]))
@@ -259,7 +298,7 @@ TITLE_STYLES = {"box": title_box, "stamp": title_stamp, "band": title_band,
                 "simple": title_simple, "simple_wide": title_simple_wide}
 
 
-def whiteboard(army_path, out, text1, text2, style="marker"):
+def whiteboard(army_path, out, text1, text2, style="marker", flag="nazi"):
     canvas = wb.paper_background(seed=7).astype(np.float32)
     # flags carried above the column (behind the soldiers)
     # the column of soldiers (built first to know its width; drawn after the flags)
@@ -273,7 +312,7 @@ def whiteboard(army_path, out, text1, text2, style="marker"):
         px, fw = int(px), int(min(fw, ax1 - 12 - px))
         pole = wb.stroke_layer([np.array([[px, top - 10], [px + 4, 930]])], (110, 72, 40), 11, seed=40 + i)
         wb.composite(canvas, pole, pole.a)
-        frgb, fa, (fx0, fy0, fw_, fh) = historic_flag_rgba(fw, wave=0.05, seed=11 + i)
+        frgb, fa, (fx0, fy0, fw_, fh) = historic_flag_rgba(fw, wave=0.05, seed=11 + i, kind=flag)
         place(canvas, frgb, fa, px + 3 - fx0, top - fy0)
     wb.composite(canvas, army, army.a)
     if style in TITLE_STYLES:
@@ -349,9 +388,10 @@ if __name__ == "__main__":
     ap.add_argument("--text1", default="FATAL")
     ap.add_argument("--text2", default="BET")
     ap.add_argument("--style", default="marker", choices=["marker"] + list(TITLE_STYLES))
+    ap.add_argument("--flag", default="nazi", choices=["nazi", "de", "cross"])
     a = ap.parse_args()
     if a.kind == "whiteboard":
-        whiteboard(a.src, a.out, a.text1, a.text2, a.style)
+        whiteboard(a.src, a.out, a.text1, a.text2, a.style, a.flag)
     else:
         realistic(a.src, a.out, a.text1, a.text2)
 
