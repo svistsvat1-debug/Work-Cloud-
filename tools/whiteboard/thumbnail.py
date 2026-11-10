@@ -354,3 +354,61 @@ if __name__ == "__main__":
         whiteboard(a.src, a.out, a.text1, a.text2, a.style)
     else:
         realistic(a.src, a.out, a.text1, a.text2)
+
+
+# ---------------------------------------------------------------- channel avatar (800x800, shown as a circle)
+def _key_polys(cx, cy, L):
+    """Old-fashioned key: ring bow (left), shaft, two teeth (right). Returns (outer polys, hole circle)."""
+    r_out, r_in = 0.19 * L, 0.085 * L
+    bx = cx - L / 2 + r_out
+    t = np.linspace(0, 2 * np.pi, 60, endpoint=False)
+    bow = np.stack([bx + r_out * np.cos(t), cy + r_out * np.sin(t)], 1)
+    hole = (bx, cy, r_in)
+    sh = 0.075 * L
+    shaft = wb.rect_poly(bx + r_out * 0.85, cy - sh / 2, cx + L / 2, cy + sh / 2)
+    x_end = cx + L / 2
+    t1 = wb.rect_poly(x_end - 0.13 * L, cy + sh / 2 - 2, x_end - 0.04 * L, cy + sh / 2 + 0.13 * L)
+    t2 = wb.rect_poly(x_end - 0.27 * L, cy + sh / 2 - 2, x_end - 0.19 * L, cy + sh / 2 + 0.09 * L)
+    return [bow, shaft, t1, t2], hole
+
+
+def avatar(out, text="WW2", variant="a"):
+    S = 800
+    paper = wb.paper_background(seed=9)[:S, :S].copy()
+    canvas = paper.astype(np.float32)
+    polys, (hx, hy, hr) = _key_polys(400, 565 if variant == "a" else 400, 440 if variant == "a" else 620)
+    m, mx, my = wb.poly_mask(polys)
+    cv2.circle(m.view(np.uint8), (int(hx - mx), int(hy - my)), int(hr), 0, -1)
+    fill = wb.hatch_layer(m.astype(bool), mx, my, YELLOW, spacing=9, seed=21)
+    wb.composite(canvas, fill, fill.a)
+    t = np.linspace(0, 2 * np.pi, 60)
+    outline = [np.vstack([p, p[:1]]) for p in polys] + [np.stack([hx + hr * np.cos(t), hy + hr * np.sin(t)], 1)]
+    ol = wb.stroke_layer(outline, INK, 9, wobble=0.6, seed=22)
+    wb.composite(canvas, ol, ol.a)
+    ring = wb.circle_layer(400, 400, 360, 360, color=RED, width=22, seed=23)
+    wb.composite(canvas, ring, ring.a)
+    im = Image.fromarray(np.clip(canvas, 0, 255).astype(np.uint8)).convert("RGBA")
+    f = _fit("Anton-Regular.ttf", text, 330, 470 if variant == "a" else 430, stroke=0)
+    if variant == "a":
+        # last character in red as an accent (WW + 2)
+        head, tail = text[:-1], text[-1:]
+        ih = _text_img(head, f, (20, 20, 22, 255), pad=0)
+        it = _text_img(tail, f, (226, 36, 44, 255), pad=0)
+        gap = int(f.size * 0.03)
+        row = Image.new("RGBA", (ih.width + gap + it.width, max(ih.height, it.height)), (0, 0, 0, 0))
+        row.alpha_composite(ih, (0, row.height - ih.height))
+        row.alpha_composite(it, (ih.width + gap, row.height - it.height))
+        _paste(im, row, 400, 320, anchor="mm")
+    else:
+        _paste(im, _shadowed(_text_img(text, f, (255, 255, 255, 255), stroke=14, stroke_fill=(20, 20, 22, 255),
+                                       pad=0), (10, 10), (226, 36, 44, 255)), 400, 300, anchor="mm")
+    im = im.convert("RGB")
+    im.save(out)
+    # circle previews at YouTube display sizes, to check legibility
+    for size in (176, 98):
+        sm = im.resize((size, size), Image.LANCZOS)
+        mask = Image.new("L", (size, size), 0)
+        ImageDraw.Draw(mask).ellipse([0, 0, size - 1, size - 1], fill=255)
+        bg = Image.new("RGB", (size, size), (15, 15, 15))
+        bg.paste(sm, (0, 0), mask)
+        bg.save(os.path.splitext(out)[0] + f"_circle{size}.png")
