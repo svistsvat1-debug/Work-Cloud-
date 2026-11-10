@@ -1,9 +1,7 @@
 import React from 'react';
 import {AbsoluteFill, useCurrentFrame} from 'remotion';
 import {At, Cam, Layer, camAt, shakeAt} from './camera';
-import {Mosquito, MosquitoProps} from './art/Mosquito';
-import {DropFace, Raindrop} from './art/Raindrop';
-import {Bus, Guy, ScaleArt, SCALE, scaleEnds} from './art/Characters';
+import {BusSprite, DropExpr, DropSprite, GuyPose, GuySprite, MosqPose, MosqSprite, ScaleBack, ScaleFront, scaleGeom} from './art/Sprites';
 import {Clouds, GroundBand, Hills, Puddle, RAIN_LAYERS, RainField, Sky, Buildings, Road} from './art/Scenery';
 import {Badge, ForceArrow, ImpactSpray, ImpactStar, SpeedLines, Splash} from './art/Effects';
 import {RIDE, SPLASH_T, T, rideDropY, simTime, timeScale} from './timing';
@@ -25,6 +23,14 @@ import {
 } from './util';
 
 const smooth = (t: number, a: number, b: number) => easeInOutCubic(prog(t, a, b));
+
+/** Pose / expression schedules: [start time, value]. Swaps get a small damped pop (never a cross-fade). */
+type Sched<V> = [number, V][];
+const pick = <V,>(s: Sched<V>, t: number) => {
+  let i = 0;
+  for (let j = 0; j < s.length; j++) if (t >= s[j][0]) i = j;
+  return {v: s[i][1], pop: 1 + 0.06 * wobble(t - s[i][0], 4.5, 9)};
+};
 
 /* ======================================================================= shared rainy world */
 const FAR_CAM: Cam = {x: 540, y: 860, z: 120};
@@ -60,8 +66,8 @@ const RainFront: React.FC<{cam: Cam; sim: number; speed: number}> = ({cam, sim, 
 );
 
 /* ======================================================================= Scene A: premise (frame 0) */
-const FRAME0_DROP_FACE: DropFace = {eyes: 'squint', brows: -1, mouth: 'smirk', look: {x: 0.15, y: 0.9}};
-const FRAME0_MOSQ: Partial<MosquitoProps> = {eyes: 'open', look: {x: -0.2, y: -1}, brows: 0.8, mouth: 'worry'};
+const FRAME0_DROP: DropExpr = 'D1';
+const FRAME0_MOSQ: MosqPose = 'M1';
 const DROP_A_Y = (t: number) => 520 + 32 * t;
 
 const SceneA: React.FC<{t: number}> = ({t}) => {
@@ -75,14 +81,9 @@ const SceneA: React.FC<{t: number}> = ({t}) => {
   const sim = simTime(t);
   const bob = sway(t, 10, 1.1);
   const killed = t >= T.kill;
-  const toCam = t >= T.mosq1 + 0.1;
-  const mosq: Partial<MosquitoProps> = toCam
-    ? {eyes: 'wide', look: {x: 0.35, y: 0.25}, brows: 1, mouth: 'gulp'}
-    : killed
-      ? {...FRAME0_MOSQ, mouth: 'gulp', brows: 1}
-      : FRAME0_MOSQ;
+  const mosq = pick<MosqPose>([[-10, FRAME0_MOSQ], [T.kill, 'M2']], t);
   const sweat = popIn(t, T.kill + 0.05, 0.3);
-  const face: DropFace = killed ? {eyes: 'squint', brows: -1.25, mouth: 'grin', look: {x: 0.15, y: 0.95}} : FRAME0_DROP_FACE;
+  const face = pick<DropExpr>([[-10, FRAME0_DROP], [T.kill, 'D2']], t);
   const inhale = killed ? 0.05 * wobble(t - T.kill, 2.5, 4) : 0;
   const jig = 0.015 * Math.sin(t * 9);
   return (
@@ -90,11 +91,11 @@ const SceneA: React.FC<{t: number}> = ({t}) => {
       <RainWorldBack cam={cam} />
       <RainBack cam={cam} sim={sim} speed={1} />
       <Layer cam={cam} z={1000}>
-        <At x={RIDE.dropX} y={DROP_A_Y(t)} sx={1 + jig - inhale * 0.6} sy={1 - jig + inhale}>
-          <Raindrop R={RIDE.R} face={face} />
+        <At x={RIDE.dropX} y={DROP_A_Y(t)} sx={(1 + jig - inhale * 0.6) * face.pop} sy={(1 - jig + inhale) * face.pop}>
+          <DropSprite expr={face.v} R={RIDE.R} />
         </At>
-        <At x={RIDE.M0.x} y={RIDE.M0.y + bob}>
-          <Mosquito t={sim} {...mosq} sweat={sweat} sweatSlide={clamp((t - T.kill) / 1.4)} />
+        <At x={RIDE.M0.x} y={RIDE.M0.y + bob} sx={mosq.pop} sy={mosq.pop}>
+          <MosqSprite pose={mosq.v} t={sim} sweat={sweat} sweatSlide={clamp((t - T.kill) / 1.4)} />
         </At>
       </Layer>
       <RainFront cam={cam} sim={sim} speed={1} />
@@ -136,8 +137,8 @@ const SLOTS: Slot[] = (() => {
 const SceneB: React.FC<{t: number}> = ({t}) => {
   const cam0 = camAt(
     [
-      {t: T.cutScale, x: 560, y: 1470, z: -10},
-      {t: T.cutBus, x: 560, y: 1450, z: 40, ease: (u) => u},
+      {t: T.cutScale, x: 545, y: 1500, z: -30},
+      {t: T.cutBus, x: 545, y: 1490, z: 10, ease: (u) => u},
     ],
     t,
   );
@@ -147,39 +148,28 @@ const SceneB: React.FC<{t: number}> = ({t}) => {
   const land = T.dropLand;
   const balance = easeInOutCubic(prog(t, T.fifty + 0.3, T.one + 0.05));
   const angle = (t >= land ? -24 * springTo(t - land, 1.6, 4.2) : 0) + 24 * balance + 2.2 * wobble(t - T.one - 0.05, 2.4, 4);
-  const ends = scaleEnds(angle);
-  const pivotBase = {x: SB.base.x, y: SB.base.y};
-  const L = {x: pivotBase.x + ends.L.x, y: pivotBase.y + ends.L.y + SCALE.hang};
-  const Rp = {x: pivotBase.x + ends.R.x, y: pivotBase.y + ends.R.y + SCALE.hang};
+  const geo = scaleGeom(angle);
+  const L = {x: SB.base.x + geo.rimL.x, y: SB.base.y + geo.rimL.y};
+  const Rp = {x: SB.base.x + geo.rimR.x, y: SB.base.y + geo.rimR.y};
 
   // the drop falling into the left pan
   const g = 6400;
-  const dropRestY = L.y + 28 - SB.dropR;
+  const dropRestY = L.y + 26 - SB.dropR;
   const dt = land - t;
   const dropY = t < land ? dropRestY - 0.5 * g * dt * dt : dropRestY;
   const dsq = t >= land ? 0.28 * wobble(t - land, 3, 6) : 0;
-  const dropFace: DropFace =
-    t < land
-      ? {eyes: 'open', brows: -0.6, mouth: 'grit', look: {x: 0, y: 0.8}}
-      : t < T.one
-        ? {eyes: 'squint', brows: -0.9, mouth: 'smirk', look: {x: 0.9, y: 0.1}}
-        : {eyes: 'wide', brows: 0.8, mouth: 'o', look: {x: 0.9, y: -0.3}};
+  const dropFace = pick<DropExpr>([[-10, 'D2'], [land, 'D1'], [T.one, 'D4']], t);
 
   // the hero mosquito standing on the right pan, flicked up when the beam slams
   const hopU = prog(t, land, land + 0.62);
   const hop = t >= land && hopU < 1 ? 4 * hopU * (1 - hopU) * 230 : 0;
   const flip = t >= land ? 360 * easeInOutCubic(hopU) : 0;
-  const heroY = Rp.y + 2 - 214 * SB.mScale - hop;
+  const heroY = Rp.y + 12 - 228 * SB.mScale - hop;
   const heroX = Rp.x - 56;
   const inAir = t >= land && hopU < 1;
   const afterHop = t >= land + 0.62;
-  const hero: Partial<MosquitoProps> = inAir
-    ? {eyes: 'squeeze', mouth: 'o', brows: 1}
-    : afterHop
-      ? t >= T.one
-        ? {eyes: 'happy', mouth: 'grin', brows: 0}
-        : {eyes: 'wide', mouth: 'worry', brows: 1, look: {x: -1, y: -0.2}}
-      : {eyes: 'open', mouth: 'smile', brows: 0, look: {x: -1, y: 0}};
+  const hero = pick<MosqPose>([[-10, 'M1'], [land, 'M3'], [land + 0.62, 'M2'], [T.one, 'M4']], t);
+  void inAir;
 
   const badgeS = popIn(t, T.fifty, 0.3);
   return (
@@ -187,9 +177,12 @@ const SceneB: React.FC<{t: number}> = ({t}) => {
       <RainWorldBack cam={cam} />
       <RainBack cam={cam} sim={sim} speed={1} />
       <Layer cam={cam} z={1000} shake={sh}>
-        {/* contents first: the pan bowls are drawn over them */}
-        <At x={L.x} y={dropY} sx={1 + dsq} sy={1 - dsq}>
-          <Raindrop R={SB.dropR} face={dropFace} />
+        {/* stand, beam, strings and rims; then the pan contents; then the bowls' front halves */}
+        <At x={SB.base.x} y={SB.base.y}>
+          <ScaleBack angle={angle} />
+        </At>
+        <At x={L.x} y={dropY} sx={(1 + dsq) * dropFace.pop} sy={(1 - dsq) * dropFace.pop}>
+          <DropSprite expr={dropFace.v} R={SB.dropR} />
         </At>
         {SLOTS.map((s, i) => {
           if (t < s.land - 0.42) return null;
@@ -204,24 +197,15 @@ const SceneB: React.FC<{t: number}> = ({t}) => {
           const sq = t >= s.land ? 0.22 * wobble(t - s.land, 4, 9) : 0;
           return (
             <At key={i} x={x} y={y} rot={u < 1 ? -20 : s.rot} sx={SB.mScale * s.flip * (1 + sq)} sy={SB.mScale * (1 - sq)}>
-              <Mosquito
-                t={sim + i * 0.013}
-                mini
-                eyes={u < 1 ? 'open' : rand(i, 9) > 0.7 ? 'happy' : 'open'}
-                look={{x: rand(i, 11) - 0.5, y: rand(i, 12) - 0.5}}
-                flapAmp={u < 1 ? 26 : 4}
-                mouth="smile"
-              />
+              <MosqSprite t={sim + i * 0.013} pose={rand(i, 9) > 0.7 ? 'M4' : 'M1'} full={u >= 1} flapAmp={14} />
             </At>
           );
         })}
-        <At x={heroX} y={heroY} rot={flip}>
-          <div style={{transform: `scale(${SB.mScale})`}}>
-            <Mosquito t={sim} {...hero} flapAmp={inAir ? 30 : 6} sweat={afterHop && t < T.one ? 1 : 0} sweatSlide={clamp((t - land - 0.62) / 1.2)} />
-          </div>
+        <At x={heroX} y={heroY} rot={flip} sx={SB.mScale * hero.pop} sy={SB.mScale * hero.pop}>
+          <MosqSprite t={sim} pose={hero.v} flapAmp={inAir ? 16 : 4} sweat={afterHop && t < T.one ? 1 : 0} sweatSlide={clamp((t - land - 0.62) / 1.2)} />
         </At>
         <At x={SB.base.x} y={SB.base.y}>
-          <ScaleArt angle={angle} />
+          <ScaleFront angle={angle} />
         </At>
         <At x={Rp.x - 70} y={Rp.y - 540 + 10 * Math.sin(t * 5)}>
           <Badge text="×50" s={badgeS} />
@@ -255,18 +239,13 @@ const SceneC: React.FC<{t: number}> = ({t}) => {
   const busBounce = 6 * Math.abs(Math.sin(t * 14));
 
   // guy
-  const point = smooth(t, T.you - 0.05, T.you + 0.15) * (1 - smooth(t, T.thats - 0.05, T.thats + 0.15));
-  const scared = t >= T.bus ? easeOutCubic(prog(t, T.bus, T.bus + 0.16)) : 0;
   const jumpU = prog(t, T.bus, T.bus + 0.45);
   const jump = t >= T.bus && jumpU < 1 ? 4 * jumpU * (1 - jumpU) * 70 : 0;
   const antic = t >= T.bus - 0.08 && t < T.bus ? 1 : 0;
   const breathe = 1 + 0.009 * Math.sin(2 * Math.PI * 0.6 * t);
   const tremble = t >= T.bus ? 2 * Math.sin(t * 47) : 0;
-  let guy: React.ComponentProps<typeof Guy> = {mouth: 'smile', eyes: 'dot'};
-  if (t >= T.you - 0.05 && t < T.thats) guy = {mouth: 'oh', eyes: 'dot', brows: 0.7, point};
-  if (t >= T.thats && t < T.hit) guy = {mouth: 'smile', eyes: 'dot', brows: 0, point, look: {x: 0.2, y: 0}};
-  if (t >= T.hit && t < T.bus) guy = {mouth: 'flat', eyes: 'wide', brows: 1, sweat: popIn(t, T.hit + 0.1), look: {x: -0.3, y: 0}};
-  if (t >= T.bus) guy = {mouth: 'open', eyes: 'squeeze', brows: 1.2, scared, sweat: 1, sweatSlide: clamp((t - T.bus) / 0.8)};
+  const guy = pick<GuyPose>([[-10, 'G1'], [T.you - 0.05, 'G2'], [T.thats, 'G1'], [T.bus, 'G3']], t);
+  const guySweat = t >= T.hit && t < T.bus ? popIn(t, T.hit + 0.1) : 0;
 
   const sy = antic ? 0.93 : 1 + (jumpU < 1 && t >= T.bus ? 0.05 * Math.sin(jumpU * Math.PI) : 0);
   return (
@@ -279,13 +258,13 @@ const SceneC: React.FC<{t: number}> = ({t}) => {
       <RainField cam={cam} simT={sim} speed={1} spec={RAIN_LAYERS[0]} />
       <Layer cam={cam} z={busZ} minDepth={120} shake={sh}>
         <At x={busX} y={SC.groundY - busBounce}>
-          <Bus look={{x: 0, y: 0.6}} anger={1} mouth={t >= T.bus + 0.2 ? 'open' : 'grin'} />
+          <BusSprite />
         </At>
       </Layer>
       <RainField cam={cam} simT={sim} speed={1} spec={RAIN_LAYERS[1]} />
       <Layer cam={cam} z={1000} shake={sh}>
-        <At x={SC.guyX + tremble} y={SC.groundY - jump} sx={antic ? 1.05 : 1} sy={sy * breathe}>
-          <Guy {...guy} />
+        <At x={SC.guyX + tremble} y={SC.groundY - jump} sx={(antic ? 1.05 : 1) * guy.pop} sy={sy * breathe * guy.pop}>
+          <GuySprite pose={guy.v} sweat={guySweat} sweatSlide={clamp((t - T.hit) / 0.6)} />
         </At>
       </Layer>
       <RainFront cam={cam} sim={sim} speed={1} />
@@ -294,7 +273,7 @@ const SceneC: React.FC<{t: number}> = ({t}) => {
 };
 
 /* ======================================================================= Scene D: the ride */
-const ATTACH = {x: 22, y: RIDE.R + 62};
+const ATTACH = {x: -60, y: RIDE.R + 80};
 const P = RIDE;
 const mosqRideY = (t: number) => rideDropY(t) + ATTACH.y;
 const SLIDE_END = T.slides + 0.75;
@@ -364,34 +343,36 @@ const SceneD: React.FC<{t: number}> = ({t}) => {
   const sinkU = prog(t, SPLASH_T - 0.02, SPLASH_T + 0.1);
   const dropSY = (1 - imp) * (1 - 0.7 * sinkU);
   const dropSX = (1 + imp) * (1 + 0.35 * sinkU);
-  let dface: DropFace = {eyes: 'open', brows: -1.1, mouth: 'grit', look: {x: 0.1, y: 0.9}};
-  if (t >= T.hits) dface = {eyes: 'open', brows: 0, mouth: 'flat', look: {x: -0.2, y: 0.4}};
-  if (t >= T.rides) dface = {eyes: 'squint', brows: -0.7, mouth: 'flat', look: {x: 0.6, y: 1}};
-  if (t >= T.slides + 0.1) dface = {eyes: 'wide', brows: 1, mouth: 'o', look: {x: 1, y: 0.2}};
+  const dface = pick<DropExpr>([[-10, 'D2'], [T.hits, 'D3'], [T.slides + 0.1, 'D4']], t);
 
   // the next drop arriving for the loop
   const nextU = prog(t, 21.55, T.END);
   const nextY = lerp(-560, DROP_A_Y(0), easeOutCubic(nextU)) - 32 * (1 - nextU) * 0;
 
   // mosquito face
-  let mf: Partial<MosquitoProps> = {eyes: 'happy', mouth: 'smile', brows: 0};
-  if (t >= T.drop + 0.15) mf = {eyes: 'open', look: {x: -0.1, y: -1}, brows: 0.6, mouth: 'smile'};
-  if (t >= T.barely) mf = {eyes: 'wide', look: {x: -0.1, y: -1}, brows: 1, mouth: 'worry'};
-  if (t >= T.when) mf = {eyes: 'squeeze', brows: 1, mouth: 'o'};
-  if (t >= T.hits + 0.55) mf = {eyes: 'open', look: {x: Math.sin((t - T.hits) * 5), y: 0}, brows: 0.6, mouth: 'flat'};
-  if (t >= T.doesnt + 0.05) mf = {eyes: 'wide', look: {x: -1, y: -0.6}, brows: 1.1, mouth: 'worry'};
-  if (t >= T.almost + 0.2) mf = {eyes: 'open', look: {x: -0.9, y: -0.3}, brows: -0.2, mouth: 'flat'};
-  if (t >= T.bug) mf = {eyes: 'happy', brows: 0, mouth: 'grin'};
-  if (t >= T.rides) mf = {eyes: 'open', look: {x: 1, y: 0.3}, brows: -0.2, mouth: 'grin'};
-  if (t >= T.moment) mf = {eyes: 'wide', look: {x: 0.2, y: 1}, brows: 1.1, mouth: 'o'};
-  if (t >= T.slides) mf = {eyes: 'squeeze', brows: 1, mouth: 'grin'};
-  if (t >= T.slides + 0.62) mf = {eyes: 'open', look: {x: -0.9, y: 0.8}, brows: 0.3, mouth: 'smile'};
-  if (t >= T.keeps) mf = {eyes: 'happy', brows: 0, mouth: 'grin'};
-  if (t >= 22.05) mf = {...FRAME0_MOSQ};
-  const spread = smooth(t, T.rides - 0.1, T.rides + 0.25) * (1 - smooth(t, T.slides + 0.3, T.slides + 0.8));
+  const mf = pick<MosqPose>(
+    [
+      [-10, 'M4'],
+      [T.drop + 0.15, 'M1'],
+      [T.barely, 'M2'],
+      [T.when, 'M3'],
+      [T.hits + 0.55, 'M1'],
+      [T.doesnt + 0.05, 'M2'],
+      [T.almost + 0.2, 'M1'],
+      [T.bug, 'M4'],
+      [T.rides, 'M5'],
+      [T.moment, 'M2'],
+      [T.slides, 'M3'],
+      [T.slides + 0.62, 'M1'],
+      [T.keeps, 'M4'],
+      [22.05, FRAME0_MOSQ],
+    ],
+    t,
+  );
   const sweat = t >= T.slows && t < T.hits ? popIn(t, T.slows, 0.25) : t >= T.moment && t < T.slides + 0.6 ? popIn(t, T.moment, 0.25) : 0;
   const sweatSlide = t < T.hits ? prog(t, T.slows, T.hits) : prog(t, T.moment, T.slides + 0.6);
   const msq = hitAge >= 0 && hitAge < 1.2 ? 0.2 * wobble(hitAge, 2.4, 4) : 0;
+  const riding = t >= T.hits - 0.02 && t < T.slides + 0.25; // wings tucked behind the drop while stuck to it
 
   // force arrow
   const arrowIn = popIn(t, T.doesnt, 0.3);
@@ -407,7 +388,7 @@ const SceneD: React.FC<{t: number}> = ({t}) => {
       <Layer cam={cam} z={1000} shake={sh}>
         {t >= 21.55 && (
           <At x={P.dropX} y={nextY}>
-            <Raindrop R={P.R} face={FRAME0_DROP_FACE} />
+            <DropSprite expr={FRAME0_DROP} R={P.R} />
           </At>
         )}
         {t >= T.drop && t < T.hits + 0.05 && (
@@ -415,24 +396,21 @@ const SceneD: React.FC<{t: number}> = ({t}) => {
             <SpeedLines t={t} w={340} h={520} alpha={1 - prog(t, T.hits - 0.1, T.hits + 0.05)} seed={3} />
           </At>
         )}
+        {riding && (
+          <At x={m.x} y={m.y} rot={m.rot} sx={(1 + msq * 0.5) * mf.pop} sy={(1 - msq) * mf.pop}>
+            <MosqSprite t={sim} pose={mf.v} part="wings" flapAmp={5} />
+          </At>
+        )}
         {showRideDrop && (
-          <At x={P.dropX} y={dropY + P.R * (1 - dropSY)} sx={dropSX} sy={dropSY}>
-            <Raindrop R={P.R} face={dface} />
+          <At x={P.dropX} y={dropY + P.R * (1 - dropSY)} sx={dropSX * dface.pop} sy={dropSY * dface.pop}>
+            <DropSprite expr={dface.v} R={P.R} />
           </At>
         )}
         <At x={P.dropX} y={P.puddleY - 6}>
           <Splash age={t - SPLASH_T} scale={1.7} />
         </At>
-        <At x={m.x} y={m.y} rot={m.rot} sx={1 + msq * 0.5} sy={1 - msq}>
-          <Mosquito
-            t={sim}
-            {...mf}
-            spread={spread}
-            sweat={sweat}
-            sweatSlide={sweatSlide}
-            flapHz={14}
-            flapAmp={t >= T.hits && t < T.slides ? 10 : 26}
-          />
+        <At x={m.x} y={m.y} rot={m.rot} sx={(1 + msq * 0.5) * mf.pop} sy={(1 - msq) * mf.pop}>
+          <MosqSprite t={sim} pose={mf.v} sweat={sweat} sweatSlide={sweatSlide} part={riding ? 'body' : 'all'} flapAmp={11} />
         </At>
         <At x={m.x - 30} y={m.y - 90}>
           <ImpactStar s={hitAge >= 0 && hitAge < 0.3 ? popIn(t, T.hits, 0.08) * (1 - prog(t, T.hits + 0.12, T.hits + 0.3)) : 0} rot={hitAge * 40} />
