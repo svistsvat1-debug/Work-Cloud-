@@ -107,6 +107,8 @@
 
 ## Пакет для публікації (YouTube Shorts / TikTok / Reels)
 
+Повна версія (YouTube, TikTok, Reels, налаштування, факти) — `publish-package.md`.
+
 **Назва (основна):** Why Doesn't Rain Kill Mosquitoes?🤨
 
 Альтернативи для A/B:
