@@ -5,10 +5,18 @@ description: Озвучка тексту через ElevenLabs (акаунт к�
 
 # Озвучка через ElevenLabs
 
-## Доступ
-- API-ключ ElevenLabs збережений як network secret середовища для хоста `api.elevenlabs.io` (header `xi-api-key`).
-- Проксі підставляє ключ автоматично: **не додавай header з ключем і не шукай змінну середовища**. Просто роби `curl https://api.elevenlabs.io/...`.
-- Якщо API відповідає 401/403 або "no rule allows host" → скажи користувачу, що ключ не підключений у цьому середовищі, і запропонуй підключити заново (новий ключ в ElevenLabs → Developers → API Keys).
+## Доступ (працює і в хмарі, і локально на ПК)
+- **Хмарна сесія (claude.ai/code):** ключ збережений як network secret середовища для `api.elevenlabs.io`; проксі підставляє його сам, змінної середовища немає.
+- **Локально на ПК:** ключ лежить у змінній середовища `ELEVENLABS_API_KEY` на комп'ютері користувача.
+- Тому в кожному запиті використовуй такий header (у хмарі змінна порожня → проксі підставить справжній ключ):
+  ```bash
+  KEY="${ELEVENLABS_API_KEY:-proxy-injected}"
+  curl -sS https://api.elevenlabs.io/v1/user/subscription -H "xi-api-key: $KEY"
+  ```
+- Ніколи не виводь значення ключа в чат чи логи.
+- Якщо API відповідає 401/403 або "no rule allows host":
+  - локально → скажи, що не задана або неправильна змінна `ELEVENLABS_API_KEY` (інструкція — `docs/ELEVENLABS_SETUP.md`);
+  - у хмарі → ключ не підключений у цьому середовищі, запропонуй підключити заново.
 - Акаунт: тариф Free, 10 000 кредитів на місяць (станом на 2026-11-10).
 
 ## Голоси акаунта
@@ -20,19 +28,20 @@ description: Озвучка тексту через ElevenLabs (акаунт к�
 | Alena — Calm, Smooth and Natural | `BEprpS2vpgM32yNJpTXq` | uk |
 | Declan Sage — Wise, Deliberate, Captivating | `kqVT88a5QfII1HNAEPTJ` | en |
 
-Актуальний список: `curl -sS https://api.elevenlabs.io/v1/voices`.
+Актуальний список: `curl -sS https://api.elevenlabs.io/v1/voices -H "xi-api-key: $KEY"`.
 
 ## Порядок роботи
 1. Візьми текст від користувача. Якщо тексту немає — запитай.
 2. Голос: якщо користувач не назвав — запитай один раз, запропонувавши українські голоси з таблиці. Default voice поки не обраний [MISSING].
 3. Перевір залишок кредитів, якщо текст довгий (> 2000 символів):
-   `curl -sS https://api.elevenlabs.io/v1/user/subscription` → `character_limit - character_count`.
+   `curl -sS https://api.elevenlabs.io/v1/user/subscription -H "xi-api-key: $KEY"` → `character_limit - character_count`.
    Якщо не вистачає — скажи про це до генерації.
 4. Згенеруй аудіо:
    ```bash
    mkdir -p docs/audio
+   KEY="${ELEVENLABS_API_KEY:-proxy-injected}"
    curl -sS -X POST "https://api.elevenlabs.io/v1/text-to-speech/<VOICE_ID>?output_format=mp3_44100_128" \
-     -H "Content-Type: application/json" \
+     -H "xi-api-key: $KEY" -H "Content-Type: application/json" \
      -d @payload.json -o "docs/audio/<коротка-назва>.mp3"
    ```
    `payload.json` (пиши у scratchpad, через python/json, щоб не ламати лапки й кирилицю):
