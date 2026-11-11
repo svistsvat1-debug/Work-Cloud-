@@ -161,6 +161,31 @@ const Helmet: React.FC = () => {
   );
 };
 
+/** German M35 Stahlhelm, front view, field grey, NO insignia. */
+const Stahlhelm: React.FC = () => {
+  const id = uid();
+  const dome = 'M-122,-38 C-128,-186 128,-186 122,-38 Z';
+  return (
+    <g>
+      <defs>
+        <linearGradient id={`sg${id}`} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#8d9283" />
+          <stop offset="0.55" stopColor="#666b5e" />
+          <stop offset="1" stopColor="#43473d" />
+        </linearGradient>
+      </defs>
+      <path d="M-106,-30 Q-112,60 -64,108 M106,-30 Q112,60 64,108" fill="none" stroke="#2e2a24" strokeWidth={8} strokeLinecap="round" />
+      {/* flared skirt over the ears and neck */}
+      <path d="M-124,-70 L-160,30 Q-120,8 -96,-20 L96,-20 Q120,8 160,30 L124,-70 Z" fill={`url(#sg${id})`} stroke={INK} strokeWidth={5} strokeLinejoin="round" />
+      <path d={dome} fill={`url(#sg${id})`} stroke={INK} strokeWidth={5} />
+      <path d="M-126,-44 Q0,-20 126,-44" fill="none" stroke={INK} strokeWidth={6} />
+      <circle cx={-92} cy={-70} r={5} fill="#3a3d33" stroke={INK} strokeWidth={2} />
+      <circle cx={92} cy={-70} r={5} fill="#3a3d33" stroke={INK} strokeWidth={2} />
+      <path d="M-80,-120 Q-40,-160 20,-158" fill="none" stroke="#c4c8b8" strokeWidth={10} strokeLinecap="round" opacity={0.5} />
+    </g>
+  );
+};
+
 /** Field jacket shoulders with collar, sling and shading. */
 const Jacket: React.FC<{color?: string; dark?: string; light?: string; sling?: boolean; tie?: boolean}> = ({color = OLIVE, dark = OLIVE_D, light = OLIVE_L, sling = true, tie}) => {
   const id = uid();
@@ -204,7 +229,7 @@ const Jacket: React.FC<{color?: string; dark?: string; light?: string; sling?: b
 };
 
 /** Front-line rifleman bust. (x,y) = face centre; s = scale (face ~240px tall at s=1). */
-export const RealRifleman: React.FC<{x: number; y: number; s?: number; mood?: Mood; look?: [number, number]; light?: 'left' | 'right'; flip?: boolean}> = ({
+export const RealRifleman: React.FC<{x: number; y: number; s?: number; mood?: Mood; look?: [number, number]; light?: 'left' | 'right'; flip?: boolean; army?: 'us' | 'de'}> = ({
   x,
   y,
   s = 1,
@@ -212,11 +237,19 @@ export const RealRifleman: React.FC<{x: number; y: number; s?: number; mood?: Mo
   look = [0.6, 0],
   light = 'left',
   flip,
+  army = 'us',
 }) => (
   <g transform={`translate(${x},${y}) scale(${flip ? -s : s},${s})`}>
-    <Jacket />
+    {army === 'de' ? <Jacket color="#5e6656" dark="#3f4639" light="#7c8473" /> : <Jacket />}
+    {army === 'de' && (
+      <g>
+        {/* dark collar with plain grey bars (no eagle, no runes) */}
+        <path d="M-66,156 L-6,244 L-32,256 L-100,176 Z M66,156 L6,244 L32,256 L100,176 Z" fill="#2f3a2c" stroke={INK} strokeWidth={4} strokeLinejoin="round" />
+        <path d="M-74,186 L-50,214 M-66,178 L-42,206 M74,186 L50,214 M66,178 L42,206" stroke="#b9bcae" strokeWidth={4} strokeLinecap="round" />
+      </g>
+    )}
     <Head mood={mood} look={look} dirt stubble light={light} />
-    <Helmet />
+    {army === 'de' ? <Stahlhelm /> : <Helmet />}
     {mood !== 'smug' && <path d="M106,-18 q16,26 0,40 q-16,-14 0,-40 Z" fill="#bfe6ff" stroke={INK} strokeWidth={3} />}
   </g>
 );
