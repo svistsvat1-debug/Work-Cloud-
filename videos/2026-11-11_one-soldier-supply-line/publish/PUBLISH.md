@@ -1,7 +1,7 @@
 # Publishing package v2 — video #1
 
 Files in this folder: `title.txt`, `titles_ab_test.txt`, `description.txt`, `tags.txt`, `pinned_comment.txt`,
-`thumbnail_A_same-army.png`, `thumbnail_B_all-for-him.png`, `thumbnail_C_5958-trucks.png` (1280×720, < 1 MB each).
+`thumbnail_A_same-army.png`, `thumbnail_B_all-for-him.png`, `thumbnail_C_5958-trucks.png` (v3: semi-realistic shaded illustration, 1280×720, < 2 MB; code-drawn, no AI images). Earlier cartoon versions: `v2_cartoon/`.
 Video file: `final/video.mp4` (GitHub branch `media/video-01`). Captions: `final/captions.srt`.
 
 ## What changed vs v1 and why
