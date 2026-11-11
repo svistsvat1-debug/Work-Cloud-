@@ -25,6 +25,14 @@ Applies to all future videos unless a decision below says otherwise.
   ⚠ The thumbnail of "The Day Hitler Lost WW2" shows swastika flags and armbands — replace it (ad-suitability / reach risk, and it breaks our own rule).
 - No gore. Facts verified. Captions only as .srt.
 
-## Open decisions
-1. Illustrations: code-drawn sketch style (current rule) vs generated/provided images like on the channel.
-2. Thumbnails: channel format (big condensed text + illustration) vs the character thumbnails tested for video #1.
+## Decisions (2026-11-11)
+1. **Illustrations: code-drawn, sketch style.** No AI images (rule stays). Engine moves from flat cartoon icons to pen-and-ink sketches: variable line weight, cross-hatching for shadows, muted colour wash, small accent colours.
+2. **Thumbnails: channel format is the standard.** Huge bold condensed text on the left (black + red, max 4 words), one detailed sketch illustration on the right, paper background. Still: max 3 objects, must not repeat the title, no Nazi symbols.
+
+## Engine to-do before video #2
+- Sketch renderer: hatching fills + colour wash for icons and figures (replace scribble fills).
+- Game UI components: QuestPath (N questions), QuestionCard (k/N + dots), ClueStamp, AnswerHeader, MainQuestComplete stamp.
+- RichText: inline red/blue/green keyword colouring.
+- Calendar page component with big red date.
+- Map theme "parchment" (beige land, white sea, red/blue arrows, red date tag).
+- Thumbnail template: condensed font (Anton / Bebas Neue, Google Fonts, bundled locally) + illustration slot.
