@@ -6,6 +6,7 @@ import {SCENES} from './videos/one-soldier/scenes';
 import {Thumbnail} from './videos/one-soldier/Thumbnail';
 import {ThumbA, ThumbB, ThumbC} from './videos/one-soldier/ThumbsV2';
 import {ThumbA3, ThumbB3, ThumbC3} from './videos/one-soldier/ThumbsV3';
+import {ThumbChannelA} from './videos/one-soldier/ThumbChannel';
 
 const FPS = 30;
 
@@ -29,5 +30,6 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="ThumbA3" component={ThumbA3} durationInFrames={1} fps={FPS} width={1280} height={720} />
     <Composition id="ThumbB3" component={ThumbB3} durationInFrames={1} fps={FPS} width={1280} height={720} />
     <Composition id="ThumbC3" component={ThumbC3} durationInFrames={1} fps={FPS} width={1280} height={720} />
+    <Composition id="ThumbChannelA" component={ThumbChannelA} durationInFrames={1} fps={FPS} width={1280} height={720} />
   </>
 );

@@ -8,6 +8,7 @@
     "render": "node render.mjs"
   },
   "dependencies": {
+    "@fontsource/anton": "^5.1.1",
     "@fontsource/caveat-brush": "5.1.1",
     "@fontsource/permanent-marker": "5.1.1",
     "@remotion/bundler": "4.0.538",

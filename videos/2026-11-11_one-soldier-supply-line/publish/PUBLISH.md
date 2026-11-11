@@ -21,7 +21,13 @@ Video file: `final/video.mp4` (GitHub branch `media/video-01`). Captions: `final
 
 All titles ≤ 60 characters (53 / 59 / 54), all with a curiosity gap, all factually true. The final answer (1 : 7 / 1 : 18) is not in any title or thumbnail.
 
+## MAIN thumbnail (channel format, 2026-11-11)
+`thumbnail_MAIN_hidden-army.png` — "THE HIDDEN ARMY": huge Anton text left (black + red), pen-and-ink sketch right:
+a worried rifleman looking at a faint pencil queue of support troops (cook, clerk, mechanic, supply) behind him.
+Objects: text, rifleman, the queue = 3. Words: 3. Does not repeat the title; true to the video's thesis. No Nazi symbols, no gore.
+
 ## A/B test plan (YouTube Studio → Test & Compare, up to 3 variants)
+Thumbnail test: **MAIN (hidden army)** vs **v3 A (same army)** vs **v3 B (all for him)** — three clearly different concepts.
 1. Publish with **Title A + Thumbnail A**.
 2. Immediately start **Thumbnail test: A / B / C** (YouTube advises clearly different variants — these are).
 3. When it finishes, keep the winner and run **Title test: A / B / C** from `titles_ab_test.txt`.
