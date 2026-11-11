@@ -734,6 +734,44 @@ const SFX: {f: string; at: number; db: number}[] = [
   {f: 'snore', at: 23.95, db: -25},
 ];
 
+// Thumbnail (Shorts cover, 1080x1920): frame-0 premise + a short hook in big letters
+export const FlamingoThumb: React.FC = () => {
+  const legX = 600;
+  const cam = {x: 590, y: 985, z: 125};
+  const [wx, wy] = flW(legX, LEG);
+  const txt = (y: number, size: number, fill: string, text: string, rot = -3) => (
+    <text
+      x={540} y={y} textAnchor="middle" fontFamily={FONT} fontWeight={800} fontSize={size} fill={fill}
+      stroke={INK} strokeWidth={size * 0.16} paintOrder="stroke" strokeLinejoin="round" letterSpacing={2}
+      transform={`rotate(${rot} 540 ${y})`}
+    >
+      {text}
+    </text>
+  );
+  return (
+    <AbsoluteFill style={{background: '#BFE3D0'}}>
+      <Layer cam={cam} z={BG_Z} blur={3}>
+        <Plate name="bg_lab" {...LAB_BG} />
+      </Layer>
+      <Layer cam={cam} z={1000}>
+        <Shadow x={legX + 10} y={FLOOR} w={320} />
+        <Ring x={legX + 25} y={FLOOR - 6} rx={130} ry={38} s={1} />
+        <Rig x={wx} y={wy} px={LEG[0]} py={LEG[1]} s={S_FL}>
+          <Sprite name="fl_dead1" />
+          <Halo t={0.12} />
+        </Rig>
+      </Layer>
+      <AbsoluteFill>
+        <svg width={1080} height={1920} style={{position: 'absolute', left: 0, top: 0}}>
+          {txt(230, 190, '#FFFFFF', 'DEAD...')}
+          {txt(370, 118, '#FFE45C', 'BUT STILL')}
+          {txt(490, 118, '#FFE45C', 'STANDING?')}
+        </svg>
+      </AbsoluteFill>
+    </AbsoluteFill>
+  );
+};
+
 export const FlamingoShort: React.FC = () => {
   const frame = useCurrentFrame();
   const t = frame / FPS;

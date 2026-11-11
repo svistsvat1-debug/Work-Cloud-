@@ -1,6 +1,6 @@
 import React from 'react';
-import {Composition} from 'remotion';
-import {FlamingoShort, DURATION, FPS} from './flamingo/FlamingoShort';
+import {Composition, Still} from 'remotion';
+import {FlamingoShort, FlamingoThumb, DURATION, FPS} from './flamingo/FlamingoShort';
 
 export const RemotionRoot: React.FC = () => (
   <>
@@ -12,5 +12,6 @@ export const RemotionRoot: React.FC = () => (
       width={1080}
       height={1920}
     />
+    <Still id="FlamingoThumb" component={FlamingoThumb} width={1080} height={1920} />
   </>
 );

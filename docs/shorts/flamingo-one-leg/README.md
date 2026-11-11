@@ -49,7 +49,7 @@ flamingo, flamingos, why do flamingos stand on one leg, flamingo one leg, flamin
 | Altered or synthetic content | No — це очевидна 2D-анімація, голос не імітує реальну людину; за правилами YouTube позначка не обов'язкова (можна поставити добровільно) |
 | Мова відео | English |
 | Субтитри | завантажити `captions_en.srt` (English) |
-| Обкладинка | у Shorts — вибрати кадр 0 (фламінго з хрестиками на одній нозі) |
+| Обкладинка | `thumbnail-1080x1920.jpg` (напис «DEAD... BUT STILL STANDING?»). Завантажити: YouTube Studio на комп'ютері → Content → олівець біля відео → Thumbnail → Upload thumbnail. Якщо кнопки Upload немає (функцію видають поступово, з липня 2026), вибрати кадр 0 відео — там той самий фламінго на одній нозі, без напису |
 | Коментарі | увімкнені |
 | Ліцензія | Standard YouTube License, remix allowed |
 | Плейлист | [MISSING] — назва плейлиста для серії science-shorts |
