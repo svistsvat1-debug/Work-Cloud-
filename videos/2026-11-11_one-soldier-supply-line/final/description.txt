@@ -1,0 +1,32 @@
+In 1944, one American rifleman walks toward the enemy across a field in Normandy. Behind him stands a line of people no war movie ever shows: farmers, factory workers, shipbuilders, merchant sailors, truck drivers, mail clerks, medics and surgeons.
+
+How long was that line? We follow his breakfast, his bullets, his gasoline and his letters from home back across the Atlantic, through the Liberty ships, the Red Ball Express and V-Mail. Then we do the math with the U.S. Army's own numbers.
+
+Chapters:
+0:00 Intro: one soldier, one field
+0:18 Quest 1: Breakfast
+1:24 Quest 2: The Ocean
+2:33 Quest 3: The Last Miles (Red Ball Express)
+4:05 Quest 4: Mail Call (V-Mail)
+5:05 Quest 5: The Chain (wounded)
+6:00 Quest 6: The Division Slice
+6:36 Quest 7: The Rifleman Shortage
+7:37 The Answer
+9:33 Next: Germany's horses
+
+Sources and notes:
+- K ration (2,830 kcal per day): U.S. Army Quartermaster data, summarized on Wikipedia "K-ration"
+- Liberty ships (2,710 built) and the SS Robert E. Peary record
+- Red Ball Express, 29 August 1944 (5,958 vehicles, 12,342 tons): HistoryNet, https://historynet.com/red-ball-express/
+- V-Mail (37 mail bags to 1): Smithsonian National Postal Museum, https://postalmuseum.si.edu/exhibition/victory-mail-introducing-v-mail/how-did-v-mail-stack-up
+- Third Army fuel halt on the Meuse, 31 August 1944: H. M. Cole, The Lorraine Campaign (U.S. Army Center of Military History)
+- Black volunteer infantry platoons, 1944-45: The National WWII Museum, https://www.nationalww2museum.org/war/articles/black-volunteer-infantry-platoons-world-war-ii
+- 1944 infantry division (14,253 men) and rifle company (193 men): War Department tables of organization
+- Division slice in Europe, 30 June 1945 (35,480): Coakley & Leighton, Global Logistics and Strategy 1943-1945, p. 840
+- U.S. Army strength 1945 (8,267,958) and 89 divisions: The National WWII Museum; R. Citino, "The 90 Division Gamble", HistoryNet
+- Infantry share of Army ground-combat deaths (142,962 of 191,701): Modern War Institute at West Point, https://mwi.usma.edu/build-infantry-future-look-first-past/
+The ratios "almost 7" and "about 18" are our own calculations from the figures above.
+
+All visuals are hand-drawn style animation made with code. Music is an original score composed for this video. Educational content.
+
+#WW2 #History #Logistics

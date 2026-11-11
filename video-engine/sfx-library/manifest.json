@@ -1,0 +1,26 @@
+{
+ "note": "ElevenLabs sound-generation. base = reusable library (generated once, video #1). new = unique per-video SFX (max 5 per video).",
+ "items": [
+  {"id":"marker_squeak_short","kind":"base","dur":0.6,"prompt":"short squeak of a dry-erase marker drawing a quick line on a whiteboard, close up, clean, no background"},
+  {"id":"marker_squeak_long","kind":"base","dur":1.6,"prompt":"dry-erase marker drawing a long continuous line on a whiteboard, squeaky felt tip, close up, clean room"},
+  {"id":"marker_tap","kind":"base","dur":0.5,"prompt":"single soft tap of a marker tip on a whiteboard, dot, short and clean"},
+  {"id":"pop","kind":"base","dur":0.5,"prompt":"soft cartoon pop, light bubbly UI pop sound, short, clean"},
+  {"id":"soft_whoosh","kind":"base","dur":0.8,"prompt":"soft airy whoosh transition, gentle swipe, short, no music"},
+  {"id":"board_erase","kind":"base","dur":1.2,"prompt":"whiteboard eraser wiping across a board, felt eraser swipe, quick"},
+  {"id":"distant_artillery_boom","kind":"base","dur":2.5,"prompt":"distant artillery boom rolling across countryside, muffled, far away, low rumble, single shot"},
+  {"id":"impact","kind":"base","dur":0.8,"prompt":"deep cinematic hit, short low thud impact for documentary graphics, clean"},
+  {"id":"tension_riser","kind":"base","dur":3.0,"prompt":"subtle cinematic tension riser, low strings swelling up, documentary, no drums, ends abruptly"},
+  {"id":"typewriter","kind":"base","dur":2.0,"prompt":"vintage 1940s typewriter typing a few keys and a bell ding, close up"},
+  {"id":"telegraph_beeps","kind":"base","dur":2.0,"prompt":"old telegraph morse code beeps, short sequence, 1940s radio operator, clean"},
+  {"id":"radio_static","kind":"base","dur":2.0,"prompt":"vintage military radio static crackle, short burst of white noise and tuning, 1940s"},
+  {"id":"paper_unfold","kind":"base","dur":1.2,"prompt":"unfolding an old paper map, crisp paper rustle, close up"},
+  {"id":"tick_tock","kind":"base","dur":2.0,"prompt":"mechanical clock ticking, four clear ticks, close up, clean"},
+  {"id":"counter_roll","kind":"base","dur":1.2,"prompt":"mechanical number counter rolling fast, clicking odometer digits spinning then stopping"},
+  {"id":"reveal_ding","kind":"base","dur":1.2,"prompt":"soft bright reveal ding, single bell chime, documentary infographic, clean, gentle"},
+  {"id":"shipyard_rivet","kind":"new","dur":2.0,"prompt":"1940s shipyard riveting hammer bursts on steel hull, metallic clanging, industrial, short","reason":"Liberty ship assembly-line scene (sc. 12-13); no library sound conveys mass ship building"},
+  {"id":"ship_horn","kind":"new","dur":2.5,"prompt":"deep steam ship horn blast from a cargo ship in a harbor, single long blast, distant seagulls","reason":"ship reaches the coast (sc. 16), marks the end of the ocean quest"},
+  {"id":"truck_convoy","kind":"new","dur":3.0,"prompt":"convoy of old 1940s army trucks driving past on a road, diesel engines rumbling, gear changes","reason":"Red Ball Express convoy (sc. 18, 23), the central image of Quest 3"},
+  {"id":"tank_sputter_stall","kind":"new","dur":2.5,"prompt":"heavy tank engine sputtering and coughing then stalling to silence, out of fuel","reason":"Patton's tanks run out of fuel (sc. 24), the key twist of Quest 3"},
+  {"id":"camera_shutter","kind":"new","dur":0.6,"prompt":"vintage mechanical camera shutter click with film advance, single shot","reason":"letters photographed onto microfilm (V-mail, sc. 28)"}
+ ]
+}

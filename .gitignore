@@ -8,3 +8,11 @@
 *.sf2
 node_modules/
 __pycache__/
+# generated textures (python3 video-engine/tools/gen_textures.py)
+video-engine/public/*.png
+# per-video work dirs: audio/video intermediates
+videos/*/work/music/
+*.f32
+# keep the small, reusable SFX library in git (regenerating costs ElevenLabs credits)
+!video-engine/sfx-library/*.mp3
+*.log

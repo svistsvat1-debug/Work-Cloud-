@@ -1,0 +1,41 @@
+{
+ "voice_lufs_in": -20.25,
+ "voice_lufs_out": -14.0,
+ "mix_music_lufs": -13.98,
+ "mix_nomusic_lufs": -13.98,
+ "music_under_voice_while_speaking_db": 26.9,
+ "music_under_voice_in_pauses_db": 24.7,
+ "sfx_under_voice_db": 16.9,
+ "peak_dbfs_mix_music": -1.0,
+ "sfx_used": [
+  "board_erase",
+  "camera_shutter",
+  "counter_roll",
+  "distant_artillery_boom",
+  "impact",
+  "marker_squeak_long",
+  "marker_squeak_short",
+  "marker_tap",
+  "paper_unfold",
+  "pop",
+  "radio_static",
+  "reveal_ding",
+  "ship_horn",
+  "shipyard_rivet",
+  "soft_whoosh",
+  "tank_sputter_stall",
+  "telegraph_beeps",
+  "tension_riser",
+  "tick_tock",
+  "truck_convoy",
+  "typewriter"
+ ],
+ "sfx_new_used": [
+  "camera_shutter",
+  "ship_horn",
+  "shipyard_rivet",
+  "tank_sputter_stall",
+  "truck_convoy"
+ ],
+ "cues": 148
+}
