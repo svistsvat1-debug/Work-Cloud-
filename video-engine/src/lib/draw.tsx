@@ -61,7 +61,7 @@ export const ell = (cx: number, cy: number, rx: number, ry = rx) => {
 export const rect = (x: number, y: number, w: number, h: number) => `M${x},${y} L${x + w},${y} L${x + w},${y + h} L${x},${y + h} Z`;
 
 // ---------- ink stroke that draws on ----------
-export const Ink: React.FC<{ d: string; at: number; dur?: number; color?: string; w?: number; ns?: boolean; dash?: string; opacity?: number }> = ({ d, at, dur = 0.8, color = C.ink, w = 5, ns = true, dash, opacity = 1 }) => {
+export const Ink: React.FC<{ d: string; at: number; dur?: number; color?: string; w?: number; ns?: boolean; dash?: string; opacity?: number }> = ({ d, at, dur = 0.8, color = C.ink, w = 6, ns = true, dash, opacity = 1 }) => {
   const t = useT();
   const k = prog(t, at, dur);
   if (k <= 0) return null;
@@ -75,30 +75,60 @@ export const Ink: React.FC<{ d: string; at: number; dur?: number; color?: string
   );
 };
 
-// ---------- marker scribble fill (zigzag strokes clipped to a shape) ----------
-export const Scribble: React.FC<{ clip: string; at: number; dur?: number; color: string; gap?: number; sw?: number; seed?: number; tint?: number }> = ({ clip, at, dur = 0.6, color, gap, sw, seed = 1, tint = 0.3 }) => {
+// ---------- dense marker colouring (Golpo-like): a solid, saturated fill that is "painted in" with
+// thick marker strokes, plus darker/lighter streaks and a few white highlights for the marker texture ----------
+const hex = (c: string) => [parseInt(c.slice(1, 3), 16), parseInt(c.slice(3, 5), 16), parseInt(c.slice(5, 7), 16)];
+export const mix = (c: string, m: string, k: number) => {
+  if (!c.startsWith('#') || c.length < 7) return c;
+  const a = hex(c), b = hex(m);
+  return '#' + a.map((v, i) => Math.round(v + (b[i] - v) * k).toString(16).padStart(2, '0')).join('');
+};
+const zigzag = (x: number, y: number, w: number, h: number, g: number, s: number, seed: number, slant: number) => {
+  const pts: string[] = [];
+  const n = Math.ceil((w + h * Math.abs(slant)) / g) + 3;
+  const x0 = x - (slant > 0 ? h * slant : 0) - g;
+  for (let i = 0; i <= n; i++) {
+    const jx = (rnd(seed * 31 + i) - 0.5) * g * 0.45;
+    const xx = x0 + i * g + jx;
+    pts.push(i % 2 === 0 ? `${xx.toFixed(1)},${(y + h + s).toFixed(1)}` : `${(xx + h * slant).toFixed(1)},${(y - s).toFixed(1)}`);
+  }
+  return 'M' + pts.join(' L');
+};
+export const Scribble: React.FC<{ clip: string; at: number; dur?: number; color: string; gap?: number; sw?: number; seed?: number; tint?: number; flat?: boolean }> = ({ clip, at, dur = 0.8, color, gap, seed = 1, flat }) => {
   const t = useT();
-  const id = 'c' + useId().replace(/[^a-zA-Z0-9]/g, '');
+  const uid = useId().replace(/[^a-zA-Z0-9]/g, '');
   const k = prog(t, at, dur);
   if (k <= 0) return null;
   const [x, y, w, h] = bbox(clip);
-  const g = gap ?? Math.max(5, Math.min(w, h) / 9);
-  const s = sw ?? g * 1.35;
-  const pts: string[] = [];
-  const n = Math.ceil((w + h * 0.35) / g) + 2;
-  for (let i = 0; i <= n; i++) {
-    const jx = (rnd(seed * 31 + i) - 0.5) * g * 0.5;
-    const xx = x - h * 0.3 + i * g + jx;
-    pts.push(i % 2 === 0 ? `${xx},${y + h + s}` : `${xx + h * 0.3},${y - s}`);
-  }
-  const zig = 'M' + pts.join(' L');
+  const g = gap ?? Math.max(4, Math.min(w, h) / 7);
+  const slant = 0.25 + rnd(seed * 3.1) * 0.35;
+  const paint = zigzag(x, y, w, h, g, g * 1.6, seed, slant);
+  const dark = mix(color, '#000000', 0.22), light = mix(color, '#FFFFFF', 0.35);
+  const tex1 = zigzag(x, y, w, h, g * 0.85, g * 0.5, seed + 5, -slant * 0.8);
+  const tex2 = zigzag(x + g * 0.4, y, w, h, g * 1.3, g * 0.5, seed + 9, slant * 1.4);
+  const done = k >= 1;
+  const body = (
+    <>
+      <path d={clip} fill={color} />
+      {!flat && <path d={tex1} stroke={dark} strokeWidth={g * 0.32} fill="none" strokeLinecap="round" strokeLinejoin="round" opacity={0.28} />}
+      {!flat && <path d={tex2} stroke={light} strokeWidth={g * 0.26} fill="none" strokeLinecap="round" strokeLinejoin="round" opacity={0.3} />}
+      {!flat && w > 30 && h > 30 && [0, 1, 2].map((i) => {
+        const hx = x + w * (0.18 + 0.22 * i + rnd(seed + i) * 0.08), hy = y + h * (0.2 + rnd(seed * 2 + i) * 0.25);
+        return <path key={i} d={`M${hx},${hy} L${hx + g * 0.9},${hy - g * 0.35}`} stroke="#FFFFFF" strokeWidth={Math.max(1.5, g * 0.22)} strokeLinecap="round" opacity={0.75} />;
+      })}
+    </>
+  );
   return (
     <g>
-      <defs><clipPath id={id}><path d={clip} /></clipPath></defs>
-      <g clipPath={`url(#${id})`}>
-        <path d={clip} fill={color} opacity={tint * k} />
-        <path d={zig} pathLength={1} strokeDasharray="1 2" strokeDashoffset={1 - k} stroke={color} strokeWidth={s} fill="none" strokeLinecap="round" strokeLinejoin="round" opacity={0.92} />
-      </g>
+      <defs>
+        <clipPath id={'c' + uid}><path d={clip} /></clipPath>
+        {!done && (
+          <mask id={'m' + uid} maskUnits="userSpaceOnUse" x={x - 2 * g} y={y - 2 * g} width={w + 4 * g} height={h + 4 * g}>
+            <path d={paint} pathLength={1} strokeDasharray="1 2" strokeDashoffset={1 - k} stroke="#FFFFFF" strokeWidth={g * 2.3} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+          </mask>
+        )}
+      </defs>
+      <g clipPath={`url(#c${uid})`} mask={done ? undefined : `url(#m${uid})`}>{body}</g>
     </g>
   );
 };
@@ -109,12 +139,13 @@ export type Def = { lines: string[]; fills?: [string, string][]; dots?: string[]
 export const Sketch: React.FC<{ def: Def; x: number; y: number; s?: number; at: number; dur?: number; rot?: number; flip?: boolean; opacity?: number; lw?: number; noFill?: boolean }> = ({ def, x, y, s = 1, at, dur = 0.9, rot = 0, flip, opacity = 1, lw, noFill }) => {
   const t = useT();
   if (t < at) return null;
-  const fillAt = at + dur * 0.55;
+  const fillAt = at + dur * 0.9;
+  const W = lw ?? def.w ?? Math.max(5, Math.min(8, 4.5 + s * 2.2));
   return (
     <g transform={`translate(${x},${y}) rotate(${rot}) scale(${flip ? -s : s},${s}) translate(-100,-100)`} opacity={opacity}>
-      {!noFill && (def.fills || []).map(([d, c], i) => <Scribble key={'f' + i} clip={d} at={fillAt + i * 0.08} dur={0.55} color={c} seed={i + 3} />)}
+      {!noFill && (def.fills || []).map(([d, c], i) => <Scribble key={'f' + i} clip={d} at={fillAt + i * 0.12} dur={0.75} color={c} seed={i + 3} />)}
       {(def.dots || []).map((d, i) => <path key={'d' + i} d={d} fill={C.ink} opacity={prog(t, at + dur * 0.5, 0.2)} />)}
-      {def.lines.map((d, i) => <Ink key={'l' + i} d={jit(d, 1.6)} at={at + (i / Math.max(def.lines.length, 1)) * dur * 0.35} dur={dur * 0.7} w={lw ?? def.w ?? 5} />)}
+      {def.lines.map((d, i) => <Ink key={'l' + i} d={jit(d, 1.6)} at={at + (i / Math.max(def.lines.length, 1)) * dur * 0.3} dur={dur * 0.65} w={W} />)}
     </g>
   );
 };

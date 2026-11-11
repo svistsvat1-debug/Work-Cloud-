@@ -3,7 +3,7 @@
 // Coordinates are in a 1920x1080 board. Times in seconds.
 // SAFETY: no national/party symbols anywhere. Soviet soldiers wear a plain olive cap (no star).
 
-const RED = '#E8322B', INK = '#1A1A1A', GREEN = '#3BA55C', BLUE = '#1E88E5', KHAKI = '#C2B280', GREY = '#9AA3AA';
+const RED = '#E8322B', INK = '#1A1A1A', GREEN = '#3BA55C', BLUE = '#1E88E5', KHAKI = '#D4B46A', GREY = '#9AA3AA';
 
 export function buildBoards(T, MAPS) {
   const sc = (i) => T.scenes[i - 1];

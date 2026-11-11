@@ -26,6 +26,10 @@ ffmpeg -i out/picture.mp4 -i out/mix.wav -map 0:v -map 1:a -c:v libx264 -profile
 node tools/thumb.mjs thumbnail.png
 ```
 
+## Style (Golpo-like marker)
+- Thick black outline draws on FIRST, then the shape is coloured in with dense, saturated marker strokes (mask of thick zigzag strokes), plus darker/lighter streaks and small white highlights.
+- Characters are built from filled shapes (sleeves, trousers, boots, hands), never stick limbs.
+
 ## Library
 - `src/lib/draw.tsx` — draw-on ink, scribble fill, hand-lettered text with red underline, bursts, arrows, crosses, checks.
 - `src/lib/icons.ts` — parametric icons (spade, boot, kitchen, gun, truck, tin, cup, capsule, triangle letter, house, map pieces…).
