@@ -72,3 +72,24 @@ Video #2 (moon-trash, 2026-11-11):
 - MIX: Remotion's mix peaked at -8.65 dBFS again; MIX_DB = +4.6 applied in code to the voice and every cue (no re-mux).
 - TIMING: 68 words / 368 characters came out 23.5 s with Mark on eleven_v4 (video 1: 69 words in 20.6 s); plan ~24 s.
 - Sound Effects v2 again billed ~3.3 credits/s (7 sounds = 26 credits); whole video 1251 credits.
+
+Video #3 (lava-fire-hose, 2026-11-11):
+- GOOD: the locked STYLE_CHAR block again gave 7 matching character pictures with zero redos (hero first, then a batch of 11).
+  Objects (ship, house, boats) and both plates also passed on the first try. 12 pictures + voice + 8 sfx = 1321 credits.
+- GOOD: a code-drawn "living lava" character (flat orange blob, no outline, crust spots, hot streaks, Eye faces, a mouth)
+  can act through a whole video, and turning it to rock = a rock-coloured copy of the same path revealed by a growing clip
+  rect with a glowing seam. Small wooden signs (HAWAII 1986 / ICELAND 1973) and a flipping calendar carry facts cheaply.
+- GLITCH: texture details animated with `(t * speed) % range` jump back at the wrap (pop scan flagged it). Always give
+  looping details a life envelope (size = sin(pi * phase)) so they shrink away instead of teleporting.
+- GLITCH: anything drawn as a long thin vertical shape (a lava river straight down a volcano, a narrow lava band) reads as
+  a pole / horn. Keep rivers short, tapered and following a slope; make floods wide and low.
+- GLITCH: the palette normaliser assigned pixels to the LAST palette colour within distance 40, so the white fill
+  (#FEFDFD) was turned into the shade colour (#EDEBEB): characters looked grey. Fixed: nearest palette colour wins
+  (video #1 sprites were made with the old code).
+- GLITCH: a storm darkening div placed under the code-drawn water laps left the laps bright: put full-scene colour
+  overlays above every layer of the world.
+- FIX in the improvement pass: frame 0 pushed in (k 1.12 -> 1.27) so the guy and the lava face are both big; looping
+  lava textures got life envelopes; the lava face in the close-up moved fully into frame.
+- The Remotion mix peaked at -7.3 dBFS (preview): raised the final audio by +3.3 dB in a re-mux (video copied).
+- Water wide shots: a 2:3 harbour plate leaves the lower third as empty sea. Fill it with nearer (lower, bigger) floating
+  objects and a few light wave squiggles.
