@@ -89,8 +89,8 @@ const Head: React.FC<{mood: Mood; look: [number, number]; dirt?: boolean; stubbl
   return (
     <g>
       {/* neck */}
-      <path d="M-54,70 L-58,168 L58,168 L54,70 Z" fill={SKIN} stroke={INK} strokeWidth={4} />
-      <path d="M-56,96 Q0,140 56,96 L58,168 L-58,168 Z" fill={SKIN_SH} opacity={0.75} />
+      <path d="M-54,70 L-58,150 L58,150 L54,70 Z" fill={SKIN} stroke={INK} strokeWidth={4} />
+      <path d="M-56,96 Q0,136 56,96 L58,150 L-58,150 Z" fill={SKIN_SH} opacity={0.75} />
       {/* ears */}
       <ellipse cx={-98} cy={4} rx={15} ry={27} fill={SKIN} stroke={INK} strokeWidth={4} />
       <ellipse cx={98} cy={4} rx={15} ry={27} fill={SKIN} stroke={INK} strokeWidth={4} />
@@ -189,7 +189,7 @@ const Stahlhelm: React.FC = () => {
 /** Field jacket shoulders with collar, sling and shading. */
 const Jacket: React.FC<{color?: string; dark?: string; light?: string; sling?: boolean; tie?: boolean}> = ({color = OLIVE, dark = OLIVE_D, light = OLIVE_L, sling = true, tie}) => {
   const id = uid();
-  const body = 'M-260,470 C-255,280 -175,178 -64,158 L64,158 C175,178 255,280 260,470 Z';
+  const body = 'M-260,470 C-255,270 -175,160 -62,140 L62,140 C175,160 255,270 260,470 Z';
   return (
     <g>
       <defs>
@@ -211,11 +211,11 @@ const Jacket: React.FC<{color?: string; dark?: string; light?: string; sling?: b
       </g>
       {tie ? (
         <g>
-          <path d="M-64,158 L0,232 L64,158 L40,152 L0,196 L-40,152 Z" fill="#efe4c8" stroke={INK} strokeWidth={4} strokeLinejoin="round" />
-          <path d="M-12,196 L12,196 L22,320 L0,346 L-22,320 Z" fill="#6b5536" stroke={INK} strokeWidth={4} strokeLinejoin="round" />
+          <path d="M-62,140 L0,214 L62,140 L40,134 L0,178 L-40,134 Z" fill="#efe4c8" stroke={INK} strokeWidth={4} strokeLinejoin="round" />
+          <path d="M-12,178 L12,178 L22,302 L0,328 L-22,302 Z" fill="#6b5536" stroke={INK} strokeWidth={4} strokeLinejoin="round" />
         </g>
       ) : (
-        <path d="M-66,156 L-6,244 L-32,256 L-100,176 Z M66,156 L6,244 L32,256 L100,176 Z" fill={dark} stroke={INK} strokeWidth={4} strokeLinejoin="round" />
+        <path d="M-64,138 L-6,226 L-32,238 L-100,158 Z M64,138 L6,226 L32,238 L100,158 Z" fill={dark} stroke={INK} strokeWidth={4} strokeLinejoin="round" />
       )}
       {sling && (
         <g>

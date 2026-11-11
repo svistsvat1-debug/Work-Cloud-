@@ -27,7 +27,7 @@ a worried rifleman looking at a faint pencil queue of support troops (cook, cler
 Objects: text, rifleman, the queue = 3. Words: 3. Does not repeat the title; true to the video's thesis. No Nazi symbols, no gore.
 
 ## A/B test plan (YouTube Studio → Test & Compare, up to 3 variants)
-Thumbnail test: **MAIN (hidden army)** vs **v3 A (same army)** vs **v3 B (all for him)** — three clearly different concepts.
+Thumbnail test: **MAIN (hidden army)** vs **A4 (same army, clickbait: night front line vs cosy office, red circle on the coffee)** vs **v3 B (all for him)** — three clearly different concepts.
 1. Publish with **Title A + Thumbnail A**.
 2. Immediately start **Thumbnail test: A / B / C** (YouTube advises clearly different variants — these are).
 3. When it finishes, keep the winner and run **Title test: A / B / C** from `titles_ab_test.txt`.
