@@ -50,3 +50,5 @@ Video #1 (ocean-trench, 2026-11-11):
   hold was static -> a code-drawn snail crawls past and overtakes the plate; Zzz letters were too small in the wide shot.
 - Sound Effects v2 was billed ~3.3 credits per second (the estimate said ~11): plan more for pictures next time.
   The "builds up" rumble came out flat: shape it with dB keys instead.
+- The Remotion mix peaked at only -8.6 dBFS (voice at 0 dB + sfx at the listed levels): the final file got +4.6 dB on the
+  mixed audio (re-muxed, video copied) to reach -4 dBFS. Next time check the mix peak on the 0.5x preview.
