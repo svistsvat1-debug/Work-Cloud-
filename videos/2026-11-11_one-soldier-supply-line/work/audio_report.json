@@ -1,12 +1,12 @@
 {
  "voice_lufs_in": -20.25,
- "voice_lufs_out": -14.0,
- "mix_music_lufs": -13.98,
- "mix_nomusic_lufs": -13.98,
+ "voice_lufs_out_stereo": -14.0,
+ "mix_music_lufs_stereo": -13.98,
+ "mix_nomusic_lufs_stereo": -13.97,
  "music_under_voice_while_speaking_db": 26.9,
  "music_under_voice_in_pauses_db": 24.7,
- "sfx_under_voice_db": 16.9,
- "peak_dbfs_mix_music": -1.0,
+ "sfx_under_voice_db": 16.7,
+ "peak_dbfs_mix_music": -1.64,
  "sfx_used": [
   "board_erase",
   "camera_shutter",

@@ -347,6 +347,8 @@ const S16 = () => {
             <Icon def={I.cargo} x={coast[0] - 150} y={coast[1] - 40} s={0.5} mode="pop" at={0.3} />
             <Label text="< 1 week to build" x={coast[0] - 150} y={coast[1] - 150} at={k('week')} size={46} />
             <Check x={coast[0] - 150} y={coast[1] + 60} at={k('solved')} />
+            <MText text="problem solved?" x={1450} y={250} at={k('problem')} size={62} font="title" anchor="middle" underline="red" />
+            <Burst x={coast[0]} y={coast[1] + 105} rx={130} ry={45} at={k('coast')} n={10} />
             <Label text="the coast" x={coast[0]} y={coast[1] + 120} at={k('coast')} size={48} underline="red" />
             <Fig x={front[0]} y={front[1] + 40} s={0.7} mode="pop" at={k('summer')} />
             <Arrow from={[coast[0] + 40, coast[1] + 30]} to={[front[0] - 50, front[1]]} at={k('nowhere')} dash />
@@ -965,6 +967,9 @@ const S42 = () => {
   return (
     <g>
       <Title text="Quest 7: The Shortage" />
+      <Label text="a problem nobody expected" x={1400} y={140} at={k('problem')} size={50} color={C.red} rot={-3} />
+      <Icon def={I.calendar} x={1700} y={330} s={0.6} mode="pop" at={k('late')} />
+      <MText text="late 1944" x={1700} y={365} at={k('late') + 0.2} size={30} font="title" anchor="middle" />
       <Label text="biggest army in U.S. history" x={960} y={260} at={k('biggest')} size={52} />
       <Burst x={960} y={400} rx={430} ry={115} at={k('eight') + 1.3} />
       <Counter x={960} y={450} at={k('eight')} to={8000000} prefix="~" size={140} dur={1.2} step={100000} />

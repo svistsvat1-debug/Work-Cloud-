@@ -1,0 +1,53 @@
+{
+ "duration_s": 589.03,
+ "duration_ok_8_15min": true,
+ "video": "h264 1920x1080 yuv420p 30/1",
+ "audio": "aac 48000 Hz 2ch",
+ "subtitle_streams_in_mp4": 0,
+ "static_over_6s": [],
+ "static_open_at_end": false,
+ "loudness_video.mp4": {
+  "I_LUFS": -13.9,
+  "TP_dBFS": -1.6
+ },
+ "loudness_video_nomusic.mp4": {
+  "I_LUFS": -13.9,
+  "TP_dBFS": -1.7
+ },
+ "captions": {
+  "cues": 196,
+  "rule_violations": 0
+ },
+ "spotcheck": [
+  {
+   "scene": 29,
+   "word": "printed",
+   "t": 278.12,
+   "file": "scene29_printed_278.12s.png"
+  },
+  {
+   "scene": 36,
+   "word": "group",
+   "t": 349.32,
+   "file": "scene36_group_349.32s.png"
+  },
+  {
+   "scene": 50,
+   "word": "five",
+   "t": 490.34,
+   "file": "scene50_five_490.34s.png"
+  },
+  {
+   "scene": 55,
+   "word": "system",
+   "t": 549.06,
+   "file": "scene55_system_549.06s.png"
+  },
+  {
+   "scene": 56,
+   "word": "four",
+   "t": 554.56,
+   "file": "scene56_four_554.56s.png"
+  }
+ ]
+}

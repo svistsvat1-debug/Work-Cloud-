@@ -170,9 +170,13 @@ def main():
             x = np.where(np.abs(x) > lim * 0.9, np.sign(x) * (lim * 0.9 + (lim * 0.1) * np.tanh((np.abs(x) - lim * 0.9) / (lim * 0.1))), x)
         return x
 
+    st = lambda x: np.stack([x, x], axis=1).astype(np.float32)
+    # deliverables are stereo (dual mono): BS.1770 sums both channels (+3 dB vs mono),
+    # so trim everything so the STEREO voice measures -14 LUFS
+    st_gain = 10 ** ((-14.0 - meter.integrated_loudness(st(voice).astype(np.float64))) / 20)
+    voice, sfx, music = voice * st_gain, sfx * st_gain, music * st_gain
     mix_nm = finish(voice + sfx)
     mix_m = finish(voice + sfx + music)
-    st = lambda x: np.stack([x, x], axis=1).astype(np.float32)
     sf.write(work / "voice_norm.wav", st(voice), SR, subtype="PCM_24")
     sf.write(work / "music.wav", st(music), SR, subtype="PCM_24")
     sf.write(work / "mix_nomusic.wav", st(mix_nm), SR, subtype="PCM_24")
@@ -187,9 +191,9 @@ def main():
     sfx_mask = np.abs(sfx) > 1e-4
     rep = {
         "voice_lufs_in": round(lufs_in, 2),
-        "voice_lufs_out": round(meter.integrated_loudness(voice), 2),
-        "mix_music_lufs": round(meter.integrated_loudness(mix_m), 2),
-        "mix_nomusic_lufs": round(meter.integrated_loudness(mix_nm), 2),
+        "voice_lufs_out_stereo": round(meter.integrated_loudness(st(voice).astype(np.float64)), 2),
+        "mix_music_lufs_stereo": round(meter.integrated_loudness(st(mix_m).astype(np.float64)), 2),
+        "mix_nomusic_lufs_stereo": round(meter.integrated_loudness(st(mix_nm).astype(np.float64)), 2),
         "music_under_voice_while_speaking_db": round(lvl(voice, act_s) - lvl(music, act_s), 1),
         "music_under_voice_in_pauses_db": round(lvl(voice, act_s) - lvl(music, pause), 1),
         "sfx_under_voice_db": round(lvl(voice, act_s) - lvl(sfx, sfx_mask), 1),
