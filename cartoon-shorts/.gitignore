@@ -8,3 +8,8 @@ studio/out/
 studio/images/*/vo.wav
 studio/images/*/qa/stills/
 **/keyed/
+studio/images/*/qa/stills*/
+studio/images/*/qa/pv/
+studio/images/*/qa/loop/
+studio/images/*/qa/cover/
+**/__pycache__/
