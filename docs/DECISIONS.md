@@ -16,4 +16,6 @@
 
 ## Записи
 
+- 2026-11-11 · Чернетка системи генерації long-form відео (`docs/video/video-prompt-system-DRAFT.md`): whiteboard-маркер стиль, 8–15 хв, 1080p, без вшитих субтитрів, Kokoro (`am_puck`), SFX через ElevenLabs, уся графіка кодом · на погодженні.
+
 - 2026-10-01 · Зафіксовано MASTER CONTEXT як базу роботи (`docs/MASTER_CONTEXT.md`) · щоб AI працював за одними правилами на всіх пристроях.
