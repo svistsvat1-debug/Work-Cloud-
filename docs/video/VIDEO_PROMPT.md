@@ -1,4 +1,4 @@
-# VIDEO PROMPT — WWII Whiteboard long-form (v1.1)
+# VIDEO PROMPT — WWII Whiteboard long-form (v1.2)
 
 > Як користуватися: скопіюй усе між `=== PROMPT START ===` і `=== PROMPT END ===`, встав у нову сесію Claude Code у цьому репозиторії й заповни блок INPUT.
 > Фаза A закінчується сценарієм і зупинкою. Ти перевіряєш, озвучуєш, кидаєш файл і пишеш «продовжуй». Тоді йде Фаза B до готового відео.
@@ -15,7 +15,7 @@ MY NOTES: [мої ідеї / кути подачі / що НЕ робити — 
 SCREENSHOTS: [опційно: аватарка, назва, мініатюра конкурента]
 
 HARD RULES (never break)
-1. ORIGINAL, NOT A COPY. Use competitors only as insight. Never reuse their title, their script, or the same topic with the same angle.
+1. INSPIRED, NEVER COPIED. Copy the FORMULA, never the content. Same formula + a different subject = inspiration. Same subject + same angle, or a copied title/thumbnail/script = forbidden. A channel that already owns a format leaves no room for a second copy of it.
 2. FREE RESEARCH ONLY. Transcript and metadata come from yt-dlp. Never use ElevenLabs transcription or any paid or credit-spending tool for research.
 3. HISTORICAL ACCURACY. Every date, number, name and claim must be real. If unsure, mark it [VERIFY] in the script and list it for me with a source. Never invent quotes.
 4. THE VOICE-OVER IS MINE. You do NOT generate the voice. I record it myself with Kokoro, voice am_puck.
@@ -32,7 +32,7 @@ WWII CONTENT SAFETY (advertiser-friendly)
 - Atrocities are covered factually and respectfully, without sensational wording.
 
 TECH SPEC
-- Length: target 10–12 min. Hard minimum 8:00, hard maximum 15:00.
+- Length: target 10–12 min. Hard minimum 8:00, hard maximum 15:00. If competitors make shorter videos on the topic, beat them with depth (more quests, better stakes), but never go over 15:00.
 - Script size: target ~1550–1900 words (Kokoro am_puck ≈ 150–160 wpm). Minimum ~1250, maximum ~2300.
 - Render: 1920x1080, 30 fps, H.264 (yuv420p, CRF 18), AAC 48 kHz.
 - Audio: my voice normalized to -14 LUFS. SFX 12–18 dB under the voice. Music 25–30 dB under the voice, with ducking.
@@ -46,11 +46,19 @@ PHASE A — Research -> Idea -> Packaging -> Script (then STOP)
 A1. COMPETITOR DIAGNOSIS (free tools only)
 - Metadata: yt-dlp --skip-download -j <URL> -> title, views, upload date, duration, channel, subscribers, thumbnail URL. Download the thumbnail and look at it.
 - Transcript: yt-dlp --skip-download --write-auto-subs --sub-langs en --sub-format vtt <URL>, then clean it to plain text.
-- Channel context: yt-dlp --flat-playlist -j <channel>/videos (latest ~30 videos) -> median views. OUTLIER SCORE = video views / channel median.
+- Channel context: yt-dlp --flat-playlist -j <channel>/videos (latest ~50 videos) -> median views. OUTLIER SCORE = video views / channel median.
+- FORMULA EXTRACTION (study the whole channel, not only one video):
+  1. PROOF: does the channel really get views, and are they FRESH (big views on videos from the last ~12 months)? Old success only = an old trend; say so.
+  2. TOP 10: sort the channel's videos by views. Download the top-10 thumbnails (https://i.ytimg.com/vi/<id>/hqdefault.jpg), put them on one contact sheet and look at them together.
+  3. THUMBNAIL PATTERN: what repeats on almost every thumbnail (the same kind of face or character, the same object, the same 1–2 words of text, the same composition)? Name the click tactic.
+  4. TITLE PATTERN: which word or structure repeats in the titles (a community, an army, a country, "How X did Y without Z", "20 things...")? This reveals the channel's real sub-niche.
+  5. LENGTH PATTERN: typical video lengths.
+  6. Write a FORMULA CARD: "<format> about <sub-niche>, thumbnail = <recurring element> + <text style>, title shape = <shape>, length = <range>".
 - If yt-dlp is blocked, ask me for screenshots or the pasted transcript. Never switch to paid tools.
 - If TOPIC = "find an idea yourself": search the WWII niche with yt-dlp ("ytsearch30:<query>"), look for small channels with outlier videos (high views vs. subscribers) from the last 12 months, and use them as the competitor input.
 Report:
 - NUMBERS: views, age, subscribers, outlier score. A small channel with a big video is the strongest signal.
+- FORMULA CARD (from the extraction above).
 - PACKAGING: title formula. Thumbnail objects (count them). Does the thumbnail repeat the title?
 - STRUCTURE: hook (first 20 s), stakes, quests, and where the answer is revealed.
 - WEAK SPOTS: "and then... and then" lists, the answer given too early, dead minutes.
@@ -59,16 +67,25 @@ Report:
 A2. IDEA — 3 options
 Each option uses one of these formulas:
 - NEXT EPISODE: continue what the viewer just watched (e.g. "D-Day landings" -> "What happened to the D-Day beaches after the battle").
-- FORMULA TRANSFER: a format that works for one army, country, battle or weapon, applied to another one.
+- FORMULA TRANSFER (main method): keep the FORMULA CARD, swap the subject for one that is not taken yet. WWII swap axes: country/army (US -> Soviet, Japanese, Italian, Finnish, Polish...), branch (infantry -> navy, air force, tank crews, partisans), front or theater, year, or the home front (civilians, factories, children, women at war).
 - FORMAT SWITCH: a topic usually told with archive footage, retold as whiteboard animation.
 - TREND x WWII: a current trend or anniversary connected to WWII.
 Strong WWII angles: costs and prices, logistics and food, everyday soldier life, weapons explained simply, "what if", little-known stories, numbers that shock.
-For each option give: a one-line premise, the formula used, why people will click, and why it is NOT a copy.
+UNTAPPED SUB-NICHE CHECK (mandatory for every option):
+- Search the new subject with yt-dlp ("ytsearch30:<subject phrased in the formula>").
+- RED: a big channel already owns this exact formula + subject -> drop the option or change the axis.
+- GREEN: only small channels exist, and some have outlier videos (e.g. a few hundred to a few thousand subscribers, a video at 10x+ their median, published recently) -> demand is proven and the space is still open. This is the best signal.
+- YELLOW: nobody covers it -> possible, but demand is unproven; say so.
+- Report the evidence (channel, subscribers, video, views, age, outlier score).
+For each option give: a one-line premise, the formula used, the swap axis, the sub-niche check result with evidence, why people will click, and why it is NOT a copy.
 If one of our previous videos outperformed the rest (check docs/video/competitors.md), at least one option must continue that topic.
 Recommend one option.
 
 A3. PACKAGING — for the recommended idea
 - 5 TITLES, each <= 60 characters, each with a curiosity gap (question, number, or "What if...").
+  - TITLE-SHAPE TRANSFER: take the SHAPE of a proven competitor title (number + type of thing + mystery), swap the subject and change the ending. Example of the method: "20 Foods the Amish Store That Never Spoil" -> "20 British Foods That No Longer Exist". Never copy the words.
+  - For each title, name which proven title shape it uses (with its views) or mark it as new.
+- THUMBNAIL TACTIC TRANSFER: reuse the competitor's click tactic from the FORMULA CARD (e.g. a recurring face type), but adapt it logically to our subject and story (e.g. for a nostalgia topic: a young child next to an old man, a "then vs now" contrast). Redraw it in our marker-whiteboard style; never copy their image.
 - 3 THUMBNAIL CONCEPTS:
   - Max 3 objects. A group of numbers or prices counts as 1 object.
   - The thumbnail must NOT repeat the title. It shows one surprising detail the title doesn't say (a price, a number, an object, a before/after), so the viewer is shocked twice: once by the thumbnail, once by the title.
