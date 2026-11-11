@@ -46,7 +46,12 @@ if (mode === 'video') {
     console.log('still', f);
   }
 } else if (mode === 'thumb') {
-  const comp = await selectComposition({...common, id: 'OneSoldierThumb'});
-  await renderStill({...common, composition: comp, frame: 0, output: args[0]});
-  console.log('thumb', args[0]);
+  // thumb <out.png> [compositionId ...] -> one PNG per id (suffix _<id> when several)
+  const ids = args.slice(1).length ? args.slice(1) : ['OneSoldierThumb'];
+  for (const id of ids) {
+    const comp = await selectComposition({...common, id});
+    const out = ids.length > 1 ? args[0].replace(/\.png$/, `_${id}.png`) : args[0];
+    await renderStill({...common, composition: comp, frame: 0, output: out});
+    console.log('thumb', out);
+  }
 }

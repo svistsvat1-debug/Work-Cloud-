@@ -4,6 +4,7 @@ import {VideoFromTimeline} from './components/VideoFromTimeline';
 import timeline from './videos/one-soldier/timeline.json';
 import {SCENES} from './videos/one-soldier/scenes';
 import {Thumbnail} from './videos/one-soldier/Thumbnail';
+import {ThumbA, ThumbB, ThumbC} from './videos/one-soldier/ThumbsV2';
 
 const FPS = 30;
 
@@ -21,5 +22,8 @@ export const RemotionRoot: React.FC = () => (
       height={1080}
     />
     <Composition id="OneSoldierThumb" component={Thumbnail} durationInFrames={1} fps={FPS} width={1280} height={720} />
+    <Composition id="ThumbA" component={ThumbA} durationInFrames={1} fps={FPS} width={1280} height={720} />
+    <Composition id="ThumbB" component={ThumbB} durationInFrames={1} fps={FPS} width={1280} height={720} />
+    <Composition id="ThumbC" component={ThumbC} durationInFrames={1} fps={FPS} width={1280} height={720} />
   </>
 );
