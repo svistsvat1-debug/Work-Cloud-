@@ -24,7 +24,7 @@ Morris, Leeman & Tera (1990), Nature - The subducted component in island arc lav
 
 #marianatrench #science #shorts #geology #ocean
 
-## Tags (comma separated, 427 characters)
+## Tags (comma separated, 385 characters)
 ocean trench, mariana trench, deepest ocean trench, trash in the ocean, why don't we, what if, plate tectonics, tectonic plates, subduction, subduction zone, seafloor, volcano, magma, garbage, trash, waste disposal, geology, earth science, science explained, science shorts, animated science, cartoon, 2d animation, fun facts, how the earth works, fingernails, island volcano, deep sea
 
 ## Pinned comment
