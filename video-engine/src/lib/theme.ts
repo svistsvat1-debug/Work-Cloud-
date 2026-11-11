@@ -1,0 +1,21 @@
+export const C = {
+  paper: '#FAF8F3',
+  ink: '#1A1A1A',
+  red: '#E8322B',
+  orange: '#F58A1F',
+  yellow: '#FFC93C',
+  blue: '#1E88E5',
+  green: '#3BA55C',
+  olive: '#6B7B3A',
+  khaki: '#C2B280',
+  steel: '#6E7B85',
+  skin: '#F2C9A0',
+  brown: '#8B5A2B',
+  earth: '#A47148',
+  dark: '#3A3A3A',
+  night: '#1F2F55',
+  grey: '#9AA3AA',
+  cream: '#F3E6C4',
+  wood: '#B07D48',
+};
+export const F = { pm: 'Permanent Marker', cb: 'Caveat Brush' };
