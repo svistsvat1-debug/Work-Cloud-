@@ -1,0 +1,10 @@
+studio/node_modules/
+studio/.bundle*/
+studio/out/
+*/raw/
+**/raw/
+**/sfx_raw/
+*.mp4
+studio/images/*/vo.wav
+studio/images/*/qa/stills/
+**/keyed/
