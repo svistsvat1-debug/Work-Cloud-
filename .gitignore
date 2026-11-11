@@ -1,0 +1,10 @@
+# Video pipeline: never commit large binaries
+*.mp4
+*.mov
+*.wav
+*.mp3
+*.m4a
+*.flac
+*.sf2
+node_modules/
+__pycache__/

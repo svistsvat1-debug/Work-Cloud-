@@ -16,4 +16,5 @@
 
 ## Записи
 
+- 2026-11-11 · Запущено pipeline для faceless WWII YouTube-каналу (англ.): папки `videos/<date>_<slug>/phase-a|final`, движок `video-engine/`. Відео #1 (Фаза A): тема "The Line Behind One Soldier" (NEXT EPISODE до outlier Ink Story ×32) · чекає на перевірку й озвучку.
 - 2026-10-01 · Зафіксовано MASTER CONTEXT як базу роботи (`docs/MASTER_CONTEXT.md`) · щоб AI працював за одними правилами на всіх пристроях.
