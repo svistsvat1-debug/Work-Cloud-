@@ -18,7 +18,7 @@ There are no direct quotes in the script, so no quote needs checking.
 | 11 | 20 | 29 Aug 1944: 5,958 vehicles carried 12,342 tons | ✅ | historynet.com/red-ball-express (132 companies, 5,958 vehicles, 12,342 t); Wikipedia rounds to ~12,500 t |
 | 12 | 21 | About 3 of 4 Red Ball drivers were Black soldiers, segregated army | ✅ | DVIDS "African Americans gain fame as WWII Red Ball Express drivers"; HistoryNet |
 | 13 | 22–23 | Trucks broke down massively; trucks burned a large share of the fuel they carried | ⚠️ no % in the VO | Ruppenthal Vol. I, ch. on Red Ball; Wikipedia "Red Ball Express" |
-| 14 | 24 | End of Aug 1944: Patton's Third Army stopped near the Meuse for lack of fuel | ❓ the date/place wording needs a check (some sources put the halt "outside Metz" later) | Ruppenthal Vol. I; Blumenson, *Breakout and Pursuit* (CMH), ch. on the pursuit |
+| 14 | 24 | End of Aug 1944: Patton's Third Army stopped near the Meuse for lack of fuel | ✅ 31 Aug: crossed the Meuse at Verdun and Commercy; of 17 tanks sent to Verdun only 3 arrived, the rest ran dry; ~32,000 gal received on 30 Aug, under 1/10 of need | Cole, *The Lorraine Campaign* (CMH), ch. 1–3 (ibiblio.org/hyperwar/USA/USA-E-Lorraine); Blumenson, *Breakout and Pursuit*, "Patton's Advance to the Meuse" |
 | 15 | 29 | V-mail: 37 mail bags (150,000 one-page letters) → 1 sack of film | ✅ | Smithsonian National Postal Museum, "How did V-Mail stack up?" (postalmuseum.si.edu) |
 | 16 | 39 | 1944 US infantry division = a little over 14,000 men (TO&E 14,253) | ✅ | battleorder.org; ccnmtl.columbia.edu "Comparative strengths…" |
 | 17 | 42 | Army ~8 million by late 1944 (8,267,958 in 1945) | ⚠️ peak quoted as 8.16–8.3 M depending on month | National WWII Museum "US Military Numbers"; Wikipedia "United States Army during WWII" |
@@ -32,10 +32,8 @@ There are no direct quotes in the script, so no quote needs checking.
 | 25 | 51 | 35,480 / 5,211 ≈ 6.8 → "almost seven" | ✅ (our calculation) | — |
 | 26 | 53 | Whole Army / 89 divisions = over 90,000 each | ✅ (8,267,958 / 89 ≈ 92,900; Wikipedia's worldwide slice ≈ 90,200) | Citino (89 divisions); National WWII Museum (Army 8,267,958); House Armed Services hearings 1965, p. 356 |
 | 27 | 54 | ≈ 92,900 / 5,211 ≈ 17.8 → "about eighteen" | ✅ (our calculation; note: Army total includes the Army Air Forces, so the VO says "in uniform", not "in the infantry chain") | — |
-| 28 | 56 | Infantry ≈ 1 in 7 (14%) of Americans overseas, ≈ 7 in 10 (70%) of casualties | ⚠️ widely cited, but the base varies (overseas troops vs. all forces; ETO divisions) | Ken Burns, *The War* (PBS); MWI West Point "Build the infantry of the future…"; worldwar2inreview.blogspot.com (Maj. Gen. A. H. Smith Jr.) |
+| 28 | 56 | Infantrymen a small part of the Army, but about 3 of every 4 Army ground-combat deaths | ✅ 142,962 of 191,701 ≈ 74.6%. The shaky "14% / 70%" figure was REMOVED from the VO | MWI West Point, "Build the infantry of the future? Look first at the past" (mwi.usma.edu), citing Army casualty data |
 | 29 | 58 | Germany invaded the USSR with hundreds of thousands of horses | ✅ (≈600,000–750,000) | R. L. DiNardo, *Mechanized Juggernaut or Military Anachronism?* |
 
-## What I need from you
-1. **#14 (Patton / Meuse):** the wording "near the Meuse river at the end of August" is the most commonly told version, but I could not confirm it with a primary source in this session. Options: keep it, or change to the safer "In early September, Patton's tanks stopped in eastern France. Not because of the Germans. Because the fuel ran out."
-2. **#28 (14% / 70%):** this is the emotional climax. It's a widely used figure, but the base varies by source. A safer alternative: "Infantrymen were a small minority of the Army. Yet they took the great majority of its casualties."
-3. Everything ⚠️ is worded in the VO so it stays true even under the strictest reading.
+## Status after the 2026-11-11 update
+Both open questions are closed. #14 is confirmed with official CMH sources. #28 was rewritten onto the better-sourced figure (3 of 4 ground-combat deaths). No ❓ items remain; ⚠️ items are worded so they stay true.

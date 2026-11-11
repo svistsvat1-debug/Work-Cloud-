@@ -1,7 +1,7 @@
 # script_scenes.md
 
 Timings are estimates at 155 wpm. Phase B replaces them with real timings from the voice file.
-Total: 58 scenes, 1587 words, est. 10:14 at 155 wpm.
+Total: 58 scenes, 1592 words, est. 10:16 at 155 wpm.
 
 
 ## HOOK
@@ -151,7 +151,7 @@ SFX: truck convoy rumble (NEW, reuse) | counter roll (lib)
 MUSIC MOOD: tension
 
 [SCENE 24 | ~4:02–4:15]
-VO: "Gasoline. And even this was not enough. At the end of August, General Patton's tanks ground to a halt near the Meuse river. Not because of the Germans. Because the fuel ran out. [VERIFY: Third Army halted for lack of fuel on the Meuse, ~31 Aug–early Sep 1944]"
+VO: "Gasoline. And even this was not enough. At the end of August, General Patton's tanks ground to a halt near the Meuse river. Not because of the Germans. Because the fuel ran out. [VERIFY: 31 Aug 1944: Third Army crossed the Meuse at Verdun and Commercy; tanks ran dry (of 17 tanks sent to Verdun only 3 arrived) — CMH Lorraine Campaign ch. 1–3; Third Army received ~32,000 gal on 30 Aug, <1/10 of need]"
 VISUAL: tank draws on the map at the Meuse -> fuel gauge needle drops to E -> tank stops, red text 'OUT OF FUEL'
 SFX: tank engine sputter and stall (NEW)
 MUSIC MOOD: tension
@@ -352,13 +352,13 @@ VISUAL: check marks pop next to ration box, ammo crate, envelope -> scale tips, 
 SFX: pop x3 (lib)
 MUSIC MOOD: reveal
 
-[SCENE 56 | ~9:38–9:50]
-VO: "Infantrymen were only about one in seven Americans overseas. Yet they took about seven of every ten casualties. A tiny tip on a giant spear, taking almost every hit. [VERIFY: infantry ≈14% of US troops overseas but ≈70% of casualties — widely cited (Ken Burns 'The War'); base varies by source]"
-VISUAL: two pie charts side by side: 'share of troops ~14%' vs 'share of casualties ~70%' (empty helmet icons, no gore) -> spear doodle with a red tip
+[SCENE 56 | ~9:38–9:51]
+VO: "Infantrymen were only a small part of the Army. Yet of every four Army soldiers killed in ground combat, about three were infantrymen. A tiny tip on a giant spear, taking almost every hit. [VERIFY: 142,962 of 191,701 Army ground battle deaths were infantrymen ≈ 75% (MWI West Point, citing Army casualty data)]"
+VISUAL: left: Army crowd block with a small red infantry slice -> right: 4 empty-helmet icons, 3 of them turn red, label '3 of 4' (no gore) -> spear doodle with a red tip
 SFX: marker squeak short (lib) | distant artillery boom (lib)
 MUSIC MOOD: reveal
 
-[SCENE 57 | ~9:50–10:03]
+[SCENE 57 | ~9:51–10:05]
 VO: "So the next time you watch a war movie, remember the line behind the soldier. Seventeen people working so one man could cross that field. And one man, carrying the war for all of them."
 VISUAL: return to the opening field: the soldier stands at the hedge, the long line of figures behind him slowly fades to warm white -> soldier remains
 SFX: none (music swell only)
@@ -366,7 +366,7 @@ MUSIC MOOD: calm
 
 ## OUTRO
 
-[SCENE 58 | ~10:03–10:14]
+[SCENE 58 | ~10:05–10:16]
 VO: "Germany built its army very differently. It invaded the Soviet Union with hundreds of thousands of horses. Why? That is the next video. Subscribe so you don't miss it. [VERIFY: German army invaded USSR with roughly 600,000–750,000 horses]"
 VISUAL: board wipe -> horse doodle draws on next to a tank with a 'GERMANY' label (Balkenkreuz only) -> red '?' -> end card space
 SFX: board erase (lib) | pop (lib)
