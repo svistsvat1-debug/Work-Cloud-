@@ -1,0 +1,5 @@
+# video binaries stay out of git (deliver via chat / phone)
+videos/**/final/*.mp4
+videos/**/final/*.png
+videos/**/final/*.jpg
+videos/**/*.wav
