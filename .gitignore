@@ -16,3 +16,6 @@ videos/*/work/music/
 # keep the small, reusable SFX library in git (regenerating costs ElevenLabs credits)
 !video-engine/sfx-library/*.mp3
 *.log
+videos/*/work/chk/
+videos/*/work/spotcheck/
+videos/*/work/parts.txt
