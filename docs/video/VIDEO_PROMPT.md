@@ -38,7 +38,7 @@ TECH SPEC
 - Audio: my voice normalized to -14 LUFS. SFX 12–18 dB under the voice. Music 25–30 dB under the voice, with ducking.
 - Animation stack: Remotion (React + SVG), rendered with the pre-installed Chromium.
 - Captions: captions.srt, built from the timings of my voice file.
-- Style reference: docs/video/STYLE_REFERENCE.md + docs/video/style-ref/*.jpg (measured from my example video).
+- Style reference: docs/video/STYLE_REFERENCE.md + docs/video/style-ref/*.jpg (reference stills + our approved test frame).
 - Phone-ready: the final file must download to my phone and upload to YouTube with no quality loss (see B6 and B8).
 
 ==================================================
