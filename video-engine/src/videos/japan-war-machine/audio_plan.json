@@ -1,0 +1,40 @@
+{
+  "note": "Ambience bed per scene (code-synthesized, tools/ambience.py) and one accent SFX per listed shot (sfx-library). Beds are listed in script_scenes.md as 'bed'; accents as '(lib)'. Stems marked NEW need approval before generating.",
+  "ambience": {
+    "1": "night", "2": "harbor", "3": "wind", "4": "rain", "5": "sea", "6": "wind", "7": "harbor", "8": "sea",
+    "9": "harbor", "10": "room", "11": "sea", "12": "wind_snow", "13": "night", "14": "sea", "15": "sea",
+    "16": "underwater", "17": "sea", "18": "harbor", "19": "wind", "20": "night", "21": "wind", "22": "underwater",
+    "23": "room", "24": "night", "25": "sea", "26": "wind", "27": "room", "28": "sea", "29": "night"
+  },
+  "sfx": {
+    "01_4": "ship_engine_small",
+    "01_5": "whoosh_soft",
+    "03_2": "paper_unfold",
+    "04_6": "fire_crackle",
+    "06_1": "typewriter",
+    "07_3": "ship_horn",
+    "10_1": "tick_tock",
+    "10_5": "paper_unfold",
+    "15_1": "ship_engine_small",
+    "15_2": "paper_unfold",
+    "15_4": "artillery_distant",
+    "16_2": "riser_tension",
+    "17_2": "plane_flyby",
+    "19_2": "paper_unfold",
+    "20_1": "artillery_distant",
+    "20_2": "ship_horn",
+    "21_1": "marching_column",
+    "22_2": "riser_tension",
+    "23_1": "tick_tock",
+    "24_1": "ship_engine_small",
+    "25_1": "impact_soft",
+    "27_2": "typewriter",
+    "29_3": "whoosh_soft"
+  },
+  "sfx_gain_db": {"artillery_distant": -6, "impact_soft": -4, "tick_tock": -5, "riser_tension": -3, "ship_horn": -3, "fire_crackle": -4},
+  "new_sfx_pending_approval": {
+    "ship_engine_small": "small wooden minesweeper diesel engine chugging, distant, at night (3 uses: 01_4, 15_1, 24_1)",
+    "plane_flyby": "distant four-engine propeller bomber passing overhead at night (17_2); base-library item",
+    "marching_column": "soft marching column of recruits on gravel (21_1); base-library item"
+  }
+}
