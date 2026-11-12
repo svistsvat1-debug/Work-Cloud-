@@ -117,6 +117,9 @@ Video #4 (doomsday-2026, 2026-11-12):
 - TIMING: 69 words / 404 characters with three numbers ("1960", "13th", "2026") took 28.3 s with Mark (numbers are read as
   words). With years in the script, plan 60-65 words.
 - MIX: MIX_DB +4.0 in code gave a -3.7 dBFS peak on the preview: no re-mux needed.
+- GLITCH caught on the final file: the loop frame replayed story time 0, so its idle motion (tremble, breathing) froze too ->
+  the last 0.5 s were static. Drive idle motion by real time and story beats by story time. Also check that text fits its
+  box at full size (the DOOMSDAY stamp text was wider than its frame).
 - RENDER here: 4 cores (CONC=4 max), CHROME=/opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/
   chrome-headless-shell, gl swangle (no GPU); full 29 s render ~7-10 min.
 
