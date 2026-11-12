@@ -100,11 +100,12 @@ export const useTyped = (text: string, at = 0.2, dur = 1.2) => {
 };
 
 /** chapter / title card: stencil text on textured dark paper with a faint emblem drawn by `bg` */
-export const TitleCard: React.FC<{title: string; sub?: string; bg?: React.ReactNode; palette?: [string, string]}> = ({
+export const TitleCard: React.FC<{title: string; sub?: string; bg?: React.ReactNode; palette?: [string, string]; size?: number}> = ({
   title,
   sub,
   bg,
   palette = ['#1c1a20', '#2c2526'],
+  size = 118,
 }) => {
   const {t} = useShot();
   const o = smooth(clamp((t - 0.15) / 0.6));
@@ -121,7 +122,7 @@ export const TitleCard: React.FC<{title: string; sub?: string; bg?: React.ReactN
           y={H / 2 + 30}
           textAnchor="middle"
           fontFamily={FONT_STENCIL}
-          fontSize={118}
+          fontSize={size}
           letterSpacing={sp}
           fill="#e9dcc0"
           opacity={o}
