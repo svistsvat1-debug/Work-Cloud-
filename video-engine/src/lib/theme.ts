@@ -17,6 +17,10 @@ export const C = {
   skinMid: '#C98E62',
   skinDark: '#7B4B2A',
   paper: '#F1E7CF',
+  wood: '#A0703C',
+  darkolive: '#4E5A2A',
+  sea: '#3A8FD8',
+  land: '#D9CC9A',
 };
 
 export const FONT_TITLE = 'PermanentMarker';

@@ -4,11 +4,22 @@ import {Mini, Person} from '../components/people';
 import {Burst, Circle, Fade, Label, Line, MText, Pop, Stroke} from '../components/primitives';
 import {Bag, Envelope, Folder, Pot, Stop, Tank, Truck} from '../components/props';
 import {markerPath, Pt, seedOf} from '../lib/sketch';
+import {MarkerFill} from '../components/marker';
 import {C} from '../lib/theme';
 import {prog, useCue} from '../lib/timing';
 
 const PCX = 620, PCY = 650, PR = 290;
 type Slice = {from: number; to: number; color: string; at: number; label: string; lx: number; ly: number};
+
+const wedgePts = (a0: number, a1: number, r = PR): Pt[] => {
+  const pts: Pt[] = [[PCX, PCY]];
+  const n = Math.max(4, Math.ceil((a1 - a0) * 40));
+  for (let i = 0; i <= n; i++) {
+    const a = -Math.PI / 2 + (a0 + ((a1 - a0) * i) / n) * Math.PI * 2;
+    pts.push([PCX + Math.cos(a) * r, PCY + Math.sin(a) * r]);
+  }
+  return pts;
+};
 
 const wedge = (a0: number, a1: number, r = PR): string => {
   const pts: Pt[] = [[PCX, PCY]];
@@ -38,7 +49,8 @@ const Pie: React.FC<{at: number; slices: Slice[]; dim?: number; highlight?: numb
         const faded = dim > 0 && i !== highlight ? 1 - 0.8 * dim : 1;
         return (
           <g key={i} opacity={faded}>
-            <path d={wedge(s.from, s.from + (s.to - s.from) * p)} fill={s.color} stroke={C.ink} strokeWidth={5} strokeLinejoin="round" />
+            <MarkerFill pts={wedgePts(s.from, s.from + (s.to - s.from) * p)} color={s.color} at={-999} dur={1} shade={0} />
+            <path d={wedge(s.from, s.from + (s.to - s.from) * p)} fill="none" stroke={C.ink} strokeWidth={5} strokeLinejoin="round" />
             <text x={s.lx} y={s.ly} fontFamily="PermanentMarker" fontSize={54} textAnchor="middle" fill={C.ink} opacity={prog(f, s.at + 10, 6)}>
               {s.label}
             </text>

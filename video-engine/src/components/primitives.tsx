@@ -3,6 +3,7 @@ import {useCurrentFrame} from 'remotion';
 import {bbox, hatch, markerPath, poly, Pt, seedOf} from '../lib/sketch';
 import {C, FONT_LABEL, FONT_TITLE} from '../lib/theme';
 import {lin, popScale, prog} from '../lib/timing';
+import {MarkerFill, useScale} from './marker';
 
 // ---------- text measuring (fonts are loaded before the first frame) ----------
 let ctx: CanvasRenderingContext2D | null = null;
@@ -23,8 +24,10 @@ export const Stroke: React.FC<{
   w?: number;
   opacity?: number;
   dash?: string;
-}> = ({d, at, dur = 18, color = C.ink, w = 5, opacity = 1, dash}) => {
+}> = ({d, at, dur = 18, color = C.ink, w: w0 = 5, opacity = 1, dash}) => {
   const f = useCurrentFrame();
+  const sc = useScale();
+  const w = w0 * 1.15 * Math.pow(1 / Math.max(0.15, sc), 0.55);
   const p = prog(f, at, dur);
   if (p <= 0) return null;
   if (dash) {
@@ -86,7 +89,9 @@ export type Part = {
   d?: string; // raw path (no wobble)
   closed?: boolean;
   fill?: string;
-  solid?: boolean; // flat fill instead of scribble
+  solid?: boolean; // quick fill (small/simple areas)
+  flat?: boolean; // plain colour, no marker texture
+  shade?: number; // shade band width override
   w?: number;
   color?: string;
   amp?: number;
@@ -117,10 +122,10 @@ export const Drawing: React.FC<{parts: Part[]; at: number; dur?: number; fillDur
     <g>
       {parts.map((p, i) =>
         p.fill && p.pts ? (
-          p.solid ? (
+          p.flat ? (
             <path key={`f${i}`} d={poly(p.pts)} fill={p.fill} opacity={prog(f, fStart, fillDur)} />
           ) : (
-            <Fill key={`f${i}`} pts={p.pts} color={p.fill} at={fStart} dur={fillDur} gap={p.gap ?? 10} angle={p.angle ?? -32} seed={seed * 7 + i} />
+            <MarkerFill key={`f${i}`} pts={p.pts} color={p.fill} at={fStart + (p.solid ? 0 : i * 0.6)} dur={p.solid ? Math.max(5, fillDur * 0.6) : fillDur} seed={seed * 7 + i} shade={p.shade} />
           )
         ) : null,
       )}

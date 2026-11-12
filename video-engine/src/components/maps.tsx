@@ -4,6 +4,7 @@ import {markerPath, Pt, seedOf} from '../lib/sketch';
 import {C, FONT_LABEL} from '../lib/theme';
 import {popScale, prog} from '../lib/timing';
 import {Drawing, Stroke} from './primitives';
+import {MarkerFill} from './marker';
 
 export type LL = [number, number]; // lon, lat
 
@@ -34,8 +35,8 @@ export const makeProj = (lonMin: number, latMax: number, ky: number, x0: number,
   return ([lon, lat]) => [x0 + (lon - lonMin) * kx, y0 + (latMax - lat) * ky];
 };
 
-export const Land: React.FC<{outline: LL[]; proj: Proj; at: number; dur?: number; fill?: string; seed?: number}> = ({outline, proj, at, dur = 30, fill = '#EFE5CC', seed = 3}) => {
-  const parts = useMemo(() => [{pts: outline.map(proj), closed: true, fill, solid: true, amp: 1.5}], [outline, proj, fill]);
+export const Land: React.FC<{outline: LL[]; proj: Proj; at: number; dur?: number; fill?: string; seed?: number}> = ({outline, proj, at, dur = 30, fill = C.land, seed = 3}) => {
+  const parts = useMemo(() => [{pts: outline.map(proj), closed: true, fill, amp: 1.5, w: 6}], [outline, proj, fill]);
   return <Drawing parts={parts} at={at} dur={dur} fillDur={10} seed={seed} />;
 };
 
@@ -58,4 +59,13 @@ export const Dot: React.FC<{p: Pt; at: number; label?: string; color?: string; d
 export const Path: React.FC<{lls: LL[]; proj: Proj; at: number; dur?: number; color?: string; w?: number; dash?: boolean}> = ({lls, proj, at, dur = 20, color = C.blue, w = 7}) => {
   const d = useMemo(() => markerPath(lls.map(proj), false, seedOf('path', lls[0][0], lls[0][1]), 1.2), [lls, proj]);
   return <Stroke d={d} at={at} dur={dur} color={color} w={w} />;
+};
+
+// Sea areas (their inland edges are hidden under the land drawn on top)
+export const FRANCE_SEA: LL[] = [[-5.2, 51.0], [-3.6, 51.25], [-1.8, 51.1], [0.0, 51.05], [1.4, 51.35], [2.4, 51.3], [2.6, 51.12], [1.7, 50.6], [0.5, 49.9], [-0.5, 49.2], [-0.5, 44.2], [-1.2, 43.35], [-2.2, 43.5], [-3.1, 44.3], [-3.9, 45.4], [-4.9, 46.6], [-5.5, 47.6], [-5.75, 48.6], [-5.6, 49.6]];
+export const BRITAIN_SEA: LL[] = [[-5.6, 59.1], [-3.0, 59.15], [-1.2, 58.2], [-0.9, 56.8], [0.4, 55.2], [1.2, 53.9], [2.2, 52.9], [2.3, 51.6], [1.6, 50.8], [0.0, 50.35], [-2.5, 50.1], [-4.8, 49.65], [-6.3, 49.85], [-6.0, 51.2], [-5.6, 52.3], [-5.3, 53.4], [-5.6, 54.6], [-6.6, 55.4], [-7.1, 56.6], [-6.8, 57.8]];
+
+export const Sea: React.FC<{lls: LL[]; proj: Proj; at: number; dur?: number}> = ({lls, proj, at, dur = 22}) => {
+  const pts = useMemo(() => lls.map(proj), [lls, proj]);
+  return <MarkerFill pts={pts} color={C.sea} at={at} dur={dur} shade={0} />;
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import {useCurrentFrame} from 'remotion';
-import {BRITAIN, Dot, FRANCE, Land, makeProj, Path} from '../components/maps';
+import {BRITAIN, BRITAIN_SEA, Dot, FRANCE, FRANCE_SEA, Land, makeProj, Path, Sea} from '../components/maps';
 import {Bubble, Mini, Person} from '../components/people';
 import {Arrow, Burst, Circle, Counter, Fade, Label, Line, MText, Pop, RedX, Title} from '../components/primitives';
 import {Calendar, Camera, Clock, Envelope, Explosion, FilmReel, Gauge, Jerrycan, Magnifier, MailSack, RedBall, SackPile, Scale, Sign, Speedo, Stop, Sun, Tank, Truck, Warehouse} from '../components/props';
@@ -18,6 +18,7 @@ export const S09: React.FC = () => {
   return (
     <g>
       <Title text="Mission 2: Fuel" at={cue('Mission')} />
+      <Sea lls={FRANCE_SEA} proj={FR} at={cue('August') - 12} />
       <Land outline={FRANCE} proj={FR} at={cue('August') - 6} dur={34} />
       <Label text="FRANCE" x={FR([2.6, 46.6])[0]} y={FR([2.6, 46.6])[1]} at={cue('France')} size={70} color={C.steel} />
       <MText text="AUG 1944" x={1500} y={260} at={cue('August')} size={70} anchor="middle" underline />
@@ -87,6 +88,7 @@ export const S11: React.FC = () => {
     <g>
       <Title text="Mission 2: Fuel" at={-200} />
       <Fade out={cue('So') - 2}>
+        <Sea lls={FRANCE_SEA} proj={FR} at={-200} />
         <Land outline={FRANCE} proj={FR} at={-200} />
         {rails.map((r, i) => (
           <Path key={i} lls={r} proj={FR} at={cue('railways') + i * 4} color={C.ink} w={8} />
@@ -281,6 +283,7 @@ export const S19: React.FC = () => {
     <g>
       <Title text="Mission 3: Mail" at={-200} />
       <MText text="1945" x={620} y={240} at={cue('early')} size={84} anchor="middle" underline />
+      <Sea lls={BRITAIN_SEA} proj={GB} at={cue('problem') - 16} />
       <Land outline={BRITAIN} proj={GB} at={cue('problem') - 10} dur={26} />
       <Dot p={GB([-1.89, 52.49])} at={cue('Birmingham')} label="Birmingham" dx={24} dy={-22} size={52} />
       <Warehouse x={1220} y={700} at={cue('warehouses') - 6} s={1.3} />

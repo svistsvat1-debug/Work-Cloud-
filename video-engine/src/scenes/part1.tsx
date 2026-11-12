@@ -11,7 +11,7 @@ const Hero: React.FC<{at: number; look?: number; expr?: 'worried' | 'neutral' | 
   <g>
     <Hedgerow x={960} y={700} at={at - 30} width={1840} />
     <Foxhole x={960} y={960} at={at - 10} s={1.7} />
-    <Person x={960} y={1000} at={at} pose="bust" hold="rifle" expr={expr} s={2.1} look={look} />
+    <Person x={960} y={1070} at={at} pose="bust" hold="rifle" expr={expr} s={2.1} look={look} />
   </g>
 );
 
@@ -23,7 +23,7 @@ export const S01: React.FC = () => {
       <MText text="JULY 1944" x={70} y={112} at={cue('July')} size={70} underline cps={14} />
       <Label text="Normandy" x={76} y={190} at={cue('Normandy')} size={60} anchor="start" />
       <Hero at={cue('rifleman')} />
-      <Arrow from={[1800, 330]} to={[1110, 520]} at={cue('tip')} dur={14} w={12} head={38} />
+      <Arrow from={[1800, 380]} to={[1120, 560]} at={cue('tip')} dur={14} w={12} head={38} />
       <MText text="TIP OF THE SPEAR" x={1480} y={250} at={cue('spear') - 2} size={64} color={C.red} anchor="middle" cps={34} />
     </g>
   );

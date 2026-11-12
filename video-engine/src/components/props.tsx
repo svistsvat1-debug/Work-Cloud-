@@ -4,11 +4,14 @@ import {circPts, ellPts, markerPath, Pt, rectPts, roundRectPts, seedOf, starPts}
 import {C, FONT_LABEL, FONT_TITLE} from '../lib/theme';
 import {popScale, prog} from '../lib/timing';
 import {Drawing, Part, Stroke} from './primitives';
+import {Scaled} from './marker';
 
 type IP = {x: number; y: number; at: number; s?: number; dur?: number; seed?: number; rot?: number};
 
 const G: React.FC<{x: number; y: number; s?: number; rot?: number; children: React.ReactNode}> = ({x, y, s = 1, rot = 0, children}) => (
-  <g transform={`translate(${x},${y}) rotate(${rot}) scale(${s})`}>{children}</g>
+  <g transform={`translate(${x},${y}) rotate(${rot}) scale(${s})`}>
+    <Scaled s={s}>{children}</Scaled>
+  </g>
 );
 
 const mk = (parts: Part[], defDur = 20, extra?: (p: IP & {f: number}) => React.ReactNode) => {
@@ -34,25 +37,37 @@ const txt = (t: string, x: number, y: number, size: number, opacity: number, col
 // ---------------- terrain ----------------
 export const Foxhole = mk(
   [
-    {pts: [[-260, 0], [-170, -40], [-60, -52], [60, -52], [170, -40], [260, 0]], closed: true, fill: C.mud, gap: 12},
-    {pts: ellPts(0, -36, 130, 26, 20), closed: true, fill: '#3E2C1E', solid: true},
+    {pts: [[-270, 0], [-200, -34], [-120, -50], [-40, -56], [60, -56], [150, -48], [210, -34], [270, 0]], closed: true, fill: C.mud},
+    {pts: ellPts(0, -40, 134, 26, 22), closed: true, fill: '#3E2C1E', solid: true},
+    {pts: roundRectPts(-250, -40, 70, 30, 12), closed: true, fill: C.khaki, solid: true},
+    {pts: roundRectPts(-190, -52, 70, 30, 12), closed: true, fill: C.khaki, solid: true},
+    {pts: roundRectPts(130, -52, 70, 30, 12), closed: true, fill: C.khaki, solid: true},
+    {pts: roundRectPts(190, -40, 70, 30, 12), closed: true, fill: C.khaki, solid: true},
   ],
-  16,
+  18,
 );
 
 export const Hedgerow: React.FC<IP & {width?: number}> = ({x, y, at, width = 1500, dur = 26}) => {
-  const pts = useMemo(() => {
+  const {pts, leaves} = useMemo(() => {
     const out: Pt[] = [];
-    const n = Math.round(width / 70);
+    const n = Math.round(width / 120);
+    const leaves: Pt[][] = [];
     for (let i = 0; i <= n; i++) {
-      const xx = -width / 2 + (width * i) / n;
-      out.push([xx, -40 - (i % 2 === 0 ? 28 : 6) - ((i * 37) % 17)]);
+      const cx = -width / 2 + (width * i) / n;
+      const r = 62 + ((i * 37) % 23);
+      const cy = -54 - ((i * 53) % 19);
+      for (let k = 0; k <= 6; k++) {
+        const a = Math.PI + (Math.PI * k) / 6;
+        out.push([cx + Math.cos(a) * r * 0.62, cy + Math.sin(a) * r * 0.75]);
+      }
+      if (i % 2 === 0) leaves.push([[cx - 14, cy - 20], [cx - 2, cy - 34], [cx + 12, cy - 22]]);
     }
-    return [...out, [width / 2, 0], [-width / 2, 0]] as Pt[];
+    return {pts: [...out, [width / 2, 0], [-width / 2, 0]] as Pt[], leaves};
   }, [width]);
+  const parts = useMemo<Part[]>(() => [{pts, closed: true, fill: C.green}, ...leaves.map((l) => ({pts: l, w: 3, color: '#2E6B3A'} as Part))], [pts, leaves]);
   return (
     <G x={x} y={y}>
-      <Drawing parts={[{pts, closed: true, fill: C.green, gap: 13}]} at={at} dur={dur} seed={11} />
+      <Drawing parts={parts} at={at} dur={dur} seed={11} />
     </G>
   );
 };
@@ -122,13 +137,30 @@ export const CrateGrid: React.FC<IP & {cols: number; rows: number; size?: number
 
 // ---------------- vehicles ----------------
 const truckParts: Part[] = [
-  {pts: [[-200, -40], [60, -40], [60, -170], [-200, -170]], closed: true, fill: C.olive, gap: 12},
-  {pts: [[-200, -170], [-190, -200], [50, -200], [60, -170]], closed: true, fill: C.khaki, gap: 9},
-  {pts: [[60, -40], [60, -140], [140, -140], [170, -95], [200, -90], [200, -40]], closed: true, fill: C.olive, gap: 10},
-  {pts: [[78, -132], [128, -132], [150, -100], [78, -100]], closed: true, fill: '#BFE3F5', solid: true},
-  {pts: circPts(-140, -38, 34, 16), closed: true, fill: C.ink, solid: true},
-  {pts: circPts(-60, -38, 34, 16), closed: true, fill: C.ink, solid: true},
-  {pts: circPts(140, -38, 34, 16), closed: true, fill: C.ink, solid: true},
+  // cargo bed + canvas cover with bows
+  {pts: [[-230, -60], [40, -60], [40, -120], [-230, -120]], closed: true, fill: C.olive},
+  {pts: [[-236, -120], [-236, -210], [-220, -228], [30, -228], [46, -210], [46, -120]], closed: true, fill: C.khaki},
+  {pts: [[-170, -226], [-172, -122]], w: 3},
+  {pts: [[-105, -228], [-106, -122]], w: 3},
+  {pts: [[-40, -228], [-40, -122]], w: 3},
+  {pts: [[-230, -92], [40, -92]], w: 3},
+  // cab
+  {pts: [[46, -60], [46, -176], [118, -176], [140, -130], [140, -60]], closed: true, fill: C.olive},
+  {pts: [[60, -166], [110, -166], [126, -132], [60, -132]], closed: true, fill: '#BFE3F5', solid: true},
+  {pts: [[56, -120], [130, -120], [130, -72], [56, -72]], closed: true},
+  // hood + grille + bumper
+  {pts: [[140, -130], [250, -122], [262, -112], [262, -62], [140, -62]], closed: true, fill: C.olive},
+  {pts: [[248, -116], [262, -116], [262, -68], [248, -68]], closed: true, fill: '#4E5A2A', solid: true},
+  {pts: [[240, -60], [278, -60], [278, -48], [240, -48]], closed: true, fill: C.steel, solid: true},
+  {pts: circPts(250, -134, 12, 10), closed: true, fill: C.yellow, solid: true},
+  // chassis + fenders
+  {pts: [[-236, -48], [270, -48]], w: 8},
+  {pts: [[160, -62], [176, -94], [234, -94], [250, -62]], w: 6},
+  // wheels
+  ...[-178, -88, 205].flatMap((cx) => [
+    {pts: circPts(cx, -40, 40, 18), closed: true, fill: C.ink, solid: true} as Part,
+    {pts: circPts(cx, -40, 17, 12), closed: true, fill: C.olive, solid: true} as Part,
+  ]),
 ];
 export const Truck: React.FC<IP & {star?: boolean; label?: string; shake?: boolean}> = ({x, y, at, s = 1, dur = 22, star = true, label, shake = false}) => {
   const f = useCurrentFrame();
@@ -138,8 +170,8 @@ export const Truck: React.FC<IP & {star?: boolean; label?: string; shake?: boole
   return (
     <G x={x} y={y + sy} s={s}>
       <Drawing parts={truckParts} at={at} dur={dur} seed={41} />
-      {star ? <path d={starPath(110, -70, 16)} fill={C.white} stroke={C.ink} strokeWidth={2} opacity={o} /> : null}
-      {label ? txt(label, -70, -95, 34, o, C.ink, FONT_TITLE) : null}
+      {star ? <path d={starPath(93, -96, 17)} fill={C.white} stroke={C.ink} strokeWidth={2} opacity={o} /> : null}
+      {label ? txt(label, -95, -158, 36, o, C.ink, FONT_TITLE) : null}
     </G>
   );
 };
@@ -150,15 +182,25 @@ export const starPath = (cx: number, cy: number, r: number) => {
 };
 
 const tankParts: Part[] = [
-  {pts: roundRectPts(-210, -70, 420, 74, 34), closed: true, fill: '#4A4A3A', gap: 10},
-  {pts: [[-190, -70], [-160, -130], [170, -130], [200, -70]], closed: true, fill: C.olive, gap: 11},
-  {pts: [[-90, -130], [-70, -190], [70, -190], [90, -130]], closed: true, fill: C.olive, gap: 10},
-  {pts: [[70, -165], [290, -165]], w: 12},
-  ...[-150, -80, -10, 60, 130].map((cx) => ({pts: circPts(cx, -33, 22, 12), closed: true} as Part)),
+  // track band + wheels
+  {pts: roundRectPts(-228, -78, 456, 82, 40), closed: true, fill: '#4A4A3A'},
+  ...[-150, -95, -30, 25, 90, 145].map((cx) => ({pts: circPts(cx, -30, 24, 12), closed: true, fill: C.steel, solid: true} as Part)),
+  {pts: circPts(-196, -40, 26, 12), closed: true, fill: C.steel, solid: true},
+  {pts: circPts(196, -40, 26, 12), closed: true, fill: C.steel, solid: true},
+  ...[-122, 0, 118].map((cx) => ({pts: [[cx - 46, -62], [cx + 46, -62], [cx + 36, -46], [cx - 36, -46]], closed: true, fill: C.olive, solid: true} as Part)),
+  // hull with sloped front
+  {pts: [[-214, -78], [-200, -132], [120, -136], [214, -90], [214, -78]], closed: true, fill: C.olive},
+  {pts: [[-200, -110], [180, -110]], w: 3},
+  // turret, mantlet, gun, hatch
+  {pts: [[-110, -136], [-96, -192], [-40, -214], [60, -214], [96, -190], [104, -136]], closed: true, fill: C.olive},
+  {pts: roundRectPts(96, -196, 40, 44, 12), closed: true, fill: '#4E5A2A', solid: true},
+  {pts: [[136, -176], [330, -176], [330, -166], [136, -166]], closed: true, fill: '#4E5A2A', solid: true},
+  {pts: ellPts(-20, -216, 34, 10, 12), closed: true, fill: '#4E5A2A', solid: true},
+  {pts: [[-60, -214], [-70, -250]], w: 4},
 ];
 export const Tank: React.FC<IP & {side?: 'us' | 'de'}> = ({x, y, at, s = 1, dur = 24, side = 'us'}) => {
   const f = useCurrentFrame();
-  const parts = useMemo<Part[]>(() => (side === 'us' ? tankParts : tankParts.map((p) => (p.fill === C.olive ? {...p, fill: C.steel} : p))), [side]);
+  const parts = useMemo<Part[]>(() => (side === 'us' ? tankParts : tankParts.map((p) => (p.fill === C.olive || p.fill === '#4E5A2A' ? {...p, fill: '#7C8471'} : p))), [side]);
   if (f < at) return null;
   const o = prog(f, at + dur, 6);
   return (
@@ -166,12 +208,12 @@ export const Tank: React.FC<IP & {side?: 'us' | 'de'}> = ({x, y, at, s = 1, dur 
       <Drawing parts={parts} at={at} dur={dur} seed={side === 'us' ? 51 : 52} />
       {side === 'us' ? (
         <g opacity={o}>
-          <circle cx={0} cy={-100} r={22} fill="none" stroke={C.white} strokeWidth={4} />
-          <path d={starPath(0, -100, 20)} fill={C.white} />
+          <circle cx={0} cy={-172} r={24} fill="none" stroke={C.white} strokeWidth={4} />
+          <path d={starPath(0, -172, 22)} fill={C.white} />
         </g>
       ) : (
         <g opacity={o}>
-          <Balkenkreuz x={0} y={-100} s={0.8} />
+          <Balkenkreuz x={-20} y={-172} s={0.8} />
         </g>
       )}
     </G>
@@ -547,28 +589,37 @@ export const Wall: React.FC<IP & {crackAt: number; label?: string}> = ({x, y, at
 export const HorseWagon: React.FC<IP & {gun?: boolean}> = ({x, y, at, s = 1, gun = true, dur = 26}) => {
   const f = useCurrentFrame();
   const horse = useMemo<Part[]>(() => [
-    {pts: ellPts(0, -120, 95, 45, 20), closed: true, fill: '#8A6A4A', gap: 10},
-    {pts: [[70, -140], [110, -210], [150, -220], [160, -196], [120, -170], [96, -120]], closed: true, fill: '#8A6A4A', gap: 9},
-    {pts: [[-60, -90], [-66, 0]], w: 8},
-    {pts: [[-30, -86], [-24, 0]], w: 8},
-    {pts: [[40, -86], [34, 0]], w: 8},
-    {pts: [[70, -92], [78, 0]], w: 8},
-    {pts: [[-94, -130], [-130, -70]], w: 7},
+    // tail, far legs, body, neck+head, near legs, mane
+    {pts: [[-96, -150], [-128, -120], [-136, -70], [-118, -86], [-104, -126]], closed: true, fill: '#5B4636', solid: true},
+    {pts: [[-58, -96], [-50, -96], [-46, -6], [-58, -6]], closed: true, fill: '#6E5238', solid: true},
+    {pts: [[52, -96], [62, -96], [64, -6], [52, -6]], closed: true, fill: '#6E5238', solid: true},
+    {pts: [[-104, -150], [-80, -176], [0, -180], [60, -172], [98, -150], [96, -108], [60, -88], [-60, -88], [-100, -110]], closed: true, fill: '#8A6A4A'},
+    {pts: [[58, -168], [92, -224], [120, -262], [150, -268], [176, -236], [168, -220], [138, -222], [110, -170], [98, -150]], closed: true, fill: '#8A6A4A'},
+    {pts: [[-82, -100], [-74, -100], [-70, -4], [-84, -4]], closed: true, fill: '#8A6A4A', solid: true},
+    {pts: [[30, -100], [40, -100], [44, -4], [30, -4]], closed: true, fill: '#8A6A4A', solid: true},
+    ...[[-84, -4], [-58, -6], [30, -4], [52, -6]].map(([hx, hy]) => ({pts: rectPts(hx - 2, hy - 2, 18, 8), closed: true, fill: C.ink, solid: true} as Part)),
+    {pts: [[64, -170], [96, -226], [124, -264], [112, -230], [86, -186]], closed: true, fill: '#5B4636', solid: true},
+    {pts: [[138, -252], [146, -246]], w: 5},
+    {pts: [[40, -150], [-10, -130], [-60, -140]], w: 5, color: '#5B4636'},
   ], []);
   const wagon = useMemo<Part[]>(() => [
-    {pts: rectPts(-480, -150, 300, 90), closed: true, fill: C.steel, gap: 11},
-    {pts: [[-180, -110], [-60, -110]], w: 6},
-    {pts: circPts(-430, -50, 46, 16), closed: true},
-    {pts: circPts(-230, -50, 46, 16), closed: true},
-    ...(gun ? [{pts: [[-420, -150], [-300, -200]], w: 14} as Part] : []),
+    {pts: [[-500, -170], [-200, -170], [-190, -80], [-490, -80]], closed: true, fill: '#7C8471'},
+    {pts: [[-500, -140], [-196, -140]], w: 3},
+    {pts: [[-195, -110], [-90, -120]], w: 7, color: '#5B4636'},
+    ...[-440, -250].flatMap((cx) => [
+      {pts: circPts(cx, -56, 52, 18), closed: true, fill: C.wood} as Part,
+      {pts: circPts(cx, -56, 12, 10), closed: true, fill: C.ink, solid: true} as Part,
+      ...[0, 1, 2, 3].map((k) => ({pts: [[cx + Math.cos((k * Math.PI) / 4) * 48, -56 + Math.sin((k * Math.PI) / 4) * 48], [cx - Math.cos((k * Math.PI) / 4) * 48, -56 - Math.sin((k * Math.PI) / 4) * 48]], w: 3} as Part)),
+    ]),
+    ...(gun ? [{pts: [[-430, -176], [-300, -226], [-296, -214], [-424, -164]], closed: true, fill: '#4A4A3A', solid: true} as Part] : []),
   ], [gun]);
   if (f < at) return null;
   const walk = Math.sin(f / 5) * 2;
   return (
     <G x={x} y={y + walk} s={s}>
       <Drawing parts={wagon} at={at} dur={dur * 0.5} seed={181} />
-      <Drawing parts={horse} at={at + dur * 0.4} dur={dur * 0.6} seed={182} />
-      <circle cx={130} cy={-200} r={5} fill={C.ink} opacity={prog(f, at + dur, 4)} />
+      <Drawing parts={horse} at={at + dur * 0.35} dur={dur * 0.65} seed={182} />
+      <circle cx={140} cy={-246} r={5} fill={C.ink} opacity={prog(f, at + dur, 4)} />
     </G>
   );
 };
