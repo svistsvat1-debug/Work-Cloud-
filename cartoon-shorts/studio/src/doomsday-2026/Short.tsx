@@ -164,8 +164,8 @@ const PageText: React.FC<{t: number; stamp: number}> = ({t, stamp}) => {
       </g>
       {stamp > 0 ? (
         <g transform={`translate(${cx} ${PAGE[1] + 468}) rotate(-8) scale(${st})`} opacity={0.94}>
-          <rect x={-282} y={-78} width={564} height={146} rx={22} fill="rgba(255,255,255,0.35)" stroke={STAMP} strokeWidth={16} />
-          <text x={0} y={34} fontSize={96} fill={STAMP} letterSpacing={1}>
+          <rect x={-296} y={-74} width={592} height={140} rx={22} fill="rgba(255,255,255,0.35)" stroke={STAMP} strokeWidth={16} />
+          <text x={0} y={30} fontSize={82} fill={STAMP} letterSpacing={1}>
             DOOMSDAY
           </text>
         </g>
@@ -550,13 +550,14 @@ const Chart: React.FC<{t: number}> = ({t}) => {
 
 // ---------- the guy in the lab ----------
 type HeroState = {pose: PoseName; sx: number; sy: number; fx: number; fy: number};
-const heroLab = (t: number): HeroState => {
+// t = story time (the loop frame replays t = 0), ta = real time for idle motion (tremble, breathing)
+const heroLab = (t: number, ta: number): HeroState => {
   const y = LAB.hero.y;
   const x = t >= T.cutD ? FAM.heroX : LAB.hero.x;
-  const breathe = 1 + 0.009 * Math.sin(2 * Math.PI * 0.6 * t);
+  const breathe = 1 + 0.009 * Math.sin(2 * Math.PI * 0.6 * ta);
   if (t < T.cutC) {
     const flinch = bump(t, T.stamp, 0.26);
-    return {pose: 'calendar', sx: 1 + 0.05 * flinch, sy: breathe - 0.07 * flinch, fx: x + 2 * Math.sin(2 * Math.PI * 9 * t), fy: y};
+    return {pose: 'calendar', sx: 1 + 0.05 * flinch, sy: breathe - 0.07 * flinch, fx: x + 2 * Math.sin(2 * Math.PI * 9 * ta), fy: y};
   }
   if (t < 22.3) return {pose: 'panic', sx: 1, sy: breathe, fx: x + 2 * Math.sin(2 * Math.PI * 8 * t), fy: y};
   if (t < 24.2) {
@@ -615,7 +616,7 @@ const CureCard: React.FC<{t: number}> = ({t}) => {
 
 // ---------- the lab scene (phases A, C, D and the loop frame) ----------
 export const LabScene: React.FC<{t: number; tl: number; cam: Cam; cover?: boolean}> = ({t, tl, cam, cover = false}) => {
-  const hs = heroLab(tl);
+  const hs = heroLab(tl, t);
   const showClones = tl >= 7.8 && tl < T.cutD + 0.7;
   const clones = showClones ? [...CLONES, ...(tl >= T.cutC ? CLONES_C : [])].sort((a, b) => a.fy - b.fy) : [];
   const puffs: Puff[] = tl >= T.cutD ? [...CLONES, ...CLONES_C].flatMap((c) => clonePuffs(tl, c, LAB.hr * depthScale(c.fy) * 0.55)) : [];
