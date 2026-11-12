@@ -102,7 +102,7 @@ export const Layer: React.FC<{depth: number; children: React.ReactNode; opacity?
 };
 
 // ---------- film overlay ----------
-export const FilmOverlay: React.FC<{grain?: number; paper?: number; vignette?: number}> = ({grain = 0.085, paper = 0.16, vignette = 0.55}) => {
+export const FilmOverlay: React.FC<{grain?: number; paper?: number; vignette?: number}> = ({grain = 0.032, paper = 0.16, vignette = 0.55}) => {
   const f = useCurrentFrame();
   const g = f % 8;
   // shift grain a little each frame so even repeats never look static
