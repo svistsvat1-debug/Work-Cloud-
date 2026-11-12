@@ -1,0 +1,9 @@
+node_modules/
+out/
+build/
+public/grain/
+public/paper.png
+public/audio/
+*.mp4
+*.wav
+sfx-library/*.wav
