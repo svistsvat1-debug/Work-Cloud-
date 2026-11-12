@@ -1,4 +1,4 @@
-# VIDEO PROMPT — WWII Cinematic 2D long-form (v1.5)
+# VIDEO PROMPT — WWII Cinematic 2D long-form (v1.6)
 
 > Як користуватися: скопіюй усе між `=== PROMPT START ===` і `=== PROMPT END ===`, встав у нову сесію Claude Code у цьому репозиторії й заповни блок INPUT.
 > Фаза A закінчується сценарієм і зупинкою. Ти перевіряєш, озвучуєш, кидаєш файл і пишеш «продовжуй». Тоді йде Фаза B до готового відео.
@@ -32,8 +32,8 @@ WWII CONTENT SAFETY (advertiser-friendly)
 - Atrocities are covered factually and respectfully, without sensational wording.
 
 TECH SPEC
-- Length: target 10–12 min. Hard minimum 8:00, hard maximum 15:00. If competitors make shorter videos on the topic, beat them with depth (more quests, better stakes), but never go over 15:00.
-- Script size: target ~1550–1900 words (Kokoro am_puck ≈ 150–160 wpm). Minimum ~1250, maximum ~2300.
+- Length: target 6:00–7:00. Hard minimum 5:30, hard maximum 8:00. If competitors make longer videos on the topic, beat them with density (no filler, every sentence earns its place), not with length.
+- Script size: target ~950–1100 words (Kokoro am_puck ≈ 150–160 wpm). Minimum ~850, maximum ~1250.
 - Render: 1920x1080, 30 fps, H.264 (yuv420p, CRF 18), AAC 48 kHz.
 - Audio: my voice normalized to -14 LUFS. SFX 12–18 dB under the voice. Music 25–30 dB under the voice, with ducking.
 - Animation stack: Remotion (React + SVG), rendered with the pre-installed Chromium.
@@ -98,8 +98,8 @@ A3. PACKAGING — for the recommended idea
 
 A4. SCRIPT — "the video is a game"
 - HOOK (tutorial), 0:00–0:20: stakes plus a problem or promise. This is the third shock after the thumbnail and the title. No "hi guys", no "subscribe".
-- QUESTS 1..N, from 0:20 until about 1:30 before the end: 5–8 quests. Each one: mini-problem -> twist -> partial answer that opens the next question.
-- FINAL BOSS, the last ~1:30: the real answer to the title. ONLY here, never earlier.
+- QUESTS 1..N, from 0:20 until about 1:00 before the end: 4–6 quests. Each one: mini-problem -> twist -> partial answer that opens the next question.
+- FINAL BOSS, the last ~1:00: the real answer to the title. ONLY here, never earlier.
 - OUTRO, 10–15 s: a bridge to a follow-up video on the same topic, plus a one-sentence CTA.
 Writing rules:
 - Sentences connect with BUT / SO / BECAUSE / THEREFORE, never "and then". Re-check every paragraph for a "list of events".
@@ -138,7 +138,7 @@ If I edited the script, my version is the source of truth.
 B2. TIMINGS FROM MY VOICE FILE (free, local)
 - Run local faster-whisper (CPU, model small.en or base.en) with word timestamps. NOT ElevenLabs.
 - Align the words to script_scenes.md to get the start and end of each scene and sentence.
-- If the length is under 8:00 or over 15:00, stop and tell me.
+- If the length is under 5:30 or over 8:00, stop and tell me.
 - Build captions.srt: max 2 lines, max 42 characters per line, 1–6 s per cue.
 
 B3. VISUAL STYLE — "Cinematic 2D War Animation"
@@ -160,7 +160,7 @@ MOTION (calm, slower than the reference)
 - No fast action, no camera shake, no hard flashes (a soft explosion glow is fine). No frozen frames, ever.
 
 SHOT GRAMMAR (the most important rule)
-- 1 SENTENCE OF VOICE ≈ 1 SHOT (4–8 s). A new shot starts on the pause between two sentences. Expect ~100–140 shots in a 10–12 min video.
+- 1 SENTENCE OF VOICE ≈ 1 SHOT (4–8 s). A new shot starts on the pause between two sentences. Expect ~60–85 shots in a 6–7 min video.
 - Transitions: a straight cut by default; a fade through black (0.5–0.8 s) between quests/chapters; an occasional match cut (sun -> wheel, map -> landscape).
 - Each quest opens with a WIDE establishing shot, then medium and close shots, then returns to a wide shot.
 - COLD OPEN: the hook plays over 2–4 strong cinematic shots, then a 2–3 s title card with the video's key phrase.
@@ -198,15 +198,21 @@ B5. BACKGROUND MUSIC (always on)
 - Mix check: listen at the loudest music moment. If the music is noticeable over the voice, lower it. The voice always wins.
 
 B6. RENDER (phone-ready master, no quality loss)
-- Remotion renders the picture, then ffmpeg makes the final master in ONE encode (never re-encode the final file again):
-  ffmpeg ... -c:v libx264 -profile:v high -level 4.2 -pix_fmt yuv420p -r 30 -crf 18 -preset slow -g 15 -bf 2 -c:a aac -b:a 320k -ar 48000 -ac 2 -movflags +faststart -tag:v avc1 video.mp4
+- Remotion renders a LOSSLESS MASTER first (PNG sequence or FFV1/ProRes intermediate, kept until delivery). The final video.mp4 is always ONE encode straight from that master; never re-encode an already-compressed file.
+- Encode A (default, quality-based):
+  ffmpeg ... -c:v libx264 -profile:v high -level 4.2 -pix_fmt yuv420p -r 30 -crf 18 -preset slow -tune animation -g 15 -bf 2 -c:a aac -b:a 320k -ar 48000 -ac 2 -movflags +faststart -tag:v avc1 video.mp4
+- SIZE CAP: the final video.mp4 must be <= 400 MB. If Encode A is bigger, discard it and do Encode B from the master: 2-pass x264 at a bitrate that lands at ~390 MB:
+  video_kbps = (390 * 8 * 1024 / duration_seconds) - 320   (same flags as A, but -b:v <video_kbps>k -pass 1/2 instead of -crf)
+  Never go below 6000 kbps video; if the cap would force that, stop and tell me.
+- VISUALLY LOSSLESS CHECK: compare video.mp4 with the master using ffmpeg's psnr and ssim filters. Pass = PSNR average >= 42 dB AND SSIM All >= 0.97. (Random film grain cannot be reproduced exactly by any codec, so SSIM tops out around 0.975 even when the difference is invisible; PSNR is the main gate.) If it fails, lower CRF / raise bitrate (within the 400 MB cap) and re-encode from the master.
+- Measured on our 2D test clip: CRF 18 = PSNR 45.6 dB, SSIM 0.974, ~145 MB per 7 min; CRF 16 = ~390 MB per 7 min with no visible gain. So CRF 18 is the default sweet spot.
 - Why: H.264 High + yuv420p + AAC + faststart plays and saves natively on iPhone and Android, and matches YouTube's recommended upload format (1080p30, SDR, AAC-LC 48 kHz), so nothing has to be converted on the phone.
 - Voice at -14 LUFS, true peak <= -1 dBTP.
 - Thumbnail: 1280x720 PNG, under 2 MB, built from the same asset library and style. Also export thumbnail.jpg (quality 95) because some phone gallery apps handle JPG better.
-- Report the final file size. Moving 2D with grain compresses worse than a static picture; expect roughly 300–600 MB for 10–12 min (our 4-second test clip was 2.2 MB). Never raise CRF above 20 to shrink the file without asking me.
+- Report the final file size, bitrate, and the PSNR/SSIM values. Expect roughly 130–250 MB for 6–7 min at CRF 18; grain is what inflates size, so keep it mild.
 
 B7. QA BEFORE DELIVERY (show me the checklist)
-[ ] Length 8:00–15:00 (target 10–12)
+[ ] Length 5:30–8:00 (target 6:00–7:00)
 [ ] No burned-in subtitles, no watermark
 [ ] No swastikas or Nazi symbols, no gore (video AND thumbnail)
 [ ] Hook <= 20 s, no greetings
@@ -219,12 +225,13 @@ B7. QA BEFORE DELIVERY (show me the checklist)
 [ ] New SFX <= 5
 [ ] Music on, barely audible under the voice, ducking works
 [ ] ffprobe check: 1920x1080, 30 fps, h264 High, yuv420p, aac 48 kHz stereo, faststart (moov atom at the start), duration matches the voice
+[ ] video.mp4 <= 400 MB AND PSNR >= 42 dB / SSIM >= 0.97 vs the lossless master
 [ ] All [VERIFY] items resolved or reported to me
 
 B8. DELIVERABLES
 Save to videos/<YYYY-MM-DD>_<slug>/final/:
 video.mp4, thumbnail.png, thumbnail.jpg, captions.srt, title.txt, description.txt (with chapter timestamps from the scene timings), tags.txt.
 Do not commit large binaries (.mp4, .wav) to git. Commit only text files and code.
-PHONE DELIVERY: send me video.mp4, thumbnail.png and captions.srt as files in this chat (the original file, not a preview). If the video is too large to send, tell me the exact size and stop; do not shrink it on your own. Then remind me in Ukrainian, in 3 short lines: download the original file from the chat; save it to Files (iPhone) or Downloads (Android); upload it via the YouTube or YouTube Studio app, and never pass it through Telegram, WhatsApp or Instagram, because they recompress video.
+PHONE DELIVERY: send me video.mp4, thumbnail.png and captions.srt as files in this chat (the original file, not a preview). The file is already <= 400 MB (see B6); if sending still fails, tell me the exact size and the error and stop; do not shrink it further on your own. Then remind me in Ukrainian, in 3 short lines: download the original file from the chat; save it to Files (iPhone) or Downloads (Android); upload it via the YouTube or YouTube Studio app, and never pass it through Telegram, WhatsApp or Instagram, because they recompress video.
 Finally, add one row to docs/video/competitors.md: date, our title, competitor URL, idea formula. I will fill in the views later.
 === PROMPT END ===
