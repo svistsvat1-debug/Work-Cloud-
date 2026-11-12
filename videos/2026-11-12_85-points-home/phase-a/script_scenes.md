@@ -425,7 +425,7 @@ SFX: marker squeak long (lib) | soft whoosh (lib)
 MUSIC MOOD: neutral
 
 [SCENE 67 | ~8:57–9:06]
-VO: "The Army also tried to make staying more attractive. Occupation troops could buy a seventeen-day tour of Europe for twenty-five to thirty-five dollars."
+VO: "It also tried to make staying more attractive. Occupation troops could buy a seventeen-day tour of Europe for twenty-five to thirty-five dollars."
 VISUAL: price tag '$25-35' pops on a suitcase with a '17 DAYS' sticker -> tiny map of Europe with a dotted travel loop
 SFX: pop (lib) | soft whoosh (lib)
 MUSIC MOOD: neutral
