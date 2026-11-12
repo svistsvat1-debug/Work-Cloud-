@@ -285,10 +285,12 @@ export const NameList: React.FC<{x: number; y: number; rows?: number}> = ({x, y,
           <rect x={-230} y={-350 + i * 54} width={200 + rnd(`nl${i}`) * 260} height={14} fill="#2a241c" opacity={0.45} />
         </g>
       ))}
-      {/* finger */}
-      <g transform={`translate(${-150} ${-330 + k * (rows - 2) * 54})`} fill="#9a6e52">
-        <path d="M0 0 Q-6 -10 6 -14 L120 -24 Q140 -10 120 6 L10 12 Q-2 10 0 0Z" />
-        <path d="M110 -30 L260 -50 L270 30 L120 14Z" />
+      {/* pencil tracing down the list */}
+      <g transform={`translate(${-60} ${-330 + k * (rows - 2) * 54}) rotate(-35)`}>
+        <path d="M0 0 L-14 -40 L14 -40Z" fill="#e2c49a" />
+        <path d="M-4 -12 L4 -12 L0 0Z" fill="#2a241c" />
+        <rect x={-14} y={-300} width={28} height={260} fill="#c99a2e" />
+        <rect x={-14} y={-330} width={28} height={30} fill="#b25a4a" />
       </g>
     </g>
   );
