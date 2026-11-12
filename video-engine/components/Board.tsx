@@ -2,7 +2,8 @@ import React from 'react';
 import {AbsoluteFill, Img, staticFile, useCurrentFrame} from 'remotion';
 import {C, FPS, W, H} from './theme';
 import {clamp01, easeInOut, outAlpha, pop, PathDraw} from './draw';
-import {MText} from './text';
+import {MText, measure} from './text';
+import {ACC_DUR, Accent} from './motion';
 import {GI} from './GI';
 import {Ship} from './Ship';
 import {GeoMap} from './GeoMap';
@@ -11,6 +12,51 @@ import {BoardBuilt, El, drawDur} from './types';
 import {hashStr, wobble, toPath, ellipse, rect} from './rough';
 
 const fr = (s: number) => Math.round(s * FPS);
+
+// visual centre of an element, for pulse / wiggle accents
+function pivotOf(e: El): [number, number] {
+  const hor = (x: number, wd: number, anchor: string) => (anchor === 'start' ? x + wd / 2 : anchor === 'end' ? x - wd / 2 : x);
+  if (e.k === 'text') {
+    const size = e.size ?? 48;
+    const lines = String(e.text).split('\n');
+    const wd = Math.max(...lines.map((l) => measure(l, size, e.font ?? 'label')));
+    return [hor(e.x, wd, e.anchor ?? 'middle'), e.y - size * 0.35 + ((lines.length - 1) * size * 1.12) / 2];
+  }
+  if (e.k === 'counter') {
+    const size = e.size ?? 110;
+    const wd = measure(`${e.prefix ?? ''}${e.to}${e.suffix ?? ''}`, size, e.font ?? 'title');
+    return [hor(e.x, wd, e.anchor ?? 'middle'), e.y - size * 0.35];
+  }
+  return [e.x ?? 0, e.y ?? 0];
+}
+
+// automatic accents (MOTION RULE): returns an SVG transform and, for 'ul', the underline progress
+function accentState(e: El, f: number): {tf: string; ul?: number} {
+  let tf = '';
+  let ul: number | undefined;
+  for (const a of (e.acc || []) as Accent[]) {
+    const a0 = fr(a.t);
+    if (a.type === 'ul') {
+      if (f >= a0) ul = clamp01((f - a0) / 10);
+      continue;
+    }
+    const u = (f - a0) / fr(ACC_DUR);
+    if (u < 0 || u > 1) continue;
+    const env = Math.sin(Math.PI * u);
+    if (a.type === 'hop') {
+      tf = `translate(0 ${(-16 * (e.s ?? 1) * env).toFixed(2)})`;
+      continue;
+    }
+    const [px, py] = pivotOf(e);
+    if (a.type === 'pulse') {
+      const sc = 1 + (e.k === 'card' || e.k === 'cal' ? 0.06 : 0.1) * env;
+      tf = `translate(${px} ${py}) scale(${sc.toFixed(4)}) translate(${-px} ${-py})`;
+    } else if (a.type === 'wiggle') {
+      tf = `rotate(${(5 * Math.sin(u * Math.PI * 4) * (1 - u)).toFixed(3)} ${px} ${py})`;
+    }
+  }
+  return {tf, ul};
+}
 
 function moodAt(e: El, f: number) {
   let m = e.mood;
@@ -77,6 +123,7 @@ export const ElView: React.FC<{e: El; f: number; seed: number}> = ({e, f, seed})
   if (outF !== undefined && f > outF + 10) return null;
   const a = outAlpha(f, outF);
   const p = clamp01((f - inF) / dF);
+  const acc = accentState(e, f);
   let node: React.ReactNode = null;
   switch (e.k) {
     case 'title':
@@ -84,7 +131,7 @@ export const ElView: React.FC<{e: El; f: number; seed: number}> = ({e, f, seed})
       break;
     case 'text':
       node = (
-        <MText text={e.text} x={e.x} y={e.y} size={e.size ?? 48} font={e.font ?? 'label'} color={e.color} anchor={e.anchor ?? 'middle'} p={p} ul={e.ul ? clamp01((f - inF - dF) / 10) : undefined} seed={seed} rot={e.rot} />
+        <MText text={e.text} x={e.x} y={e.y} size={e.size ?? 48} font={e.font ?? 'label'} color={e.color} anchor={e.anchor ?? 'middle'} p={p} ul={e.ul ? clamp01((f - inF - dF) / 10) : acc.ul} seed={seed} rot={e.rot} />
       );
       break;
     case 'gi':
@@ -174,6 +221,7 @@ export const ElView: React.FC<{e: El; f: number; seed: number}> = ({e, f, seed})
     const m = easeInOut(clamp01((f - fr(t0)) / Math.max(1, fr(d))));
     tr = `translate(${dx * m} ${dy * m})`;
   }
+  if (acc.tf) tr = `${tr} ${acc.tf}`.trim();
   return (
     <g opacity={a} transform={tr || undefined}>
       {node}
@@ -187,7 +235,12 @@ export const BoardView: React.FC<{b: BoardBuilt; f: number}> = ({b, f}) => {
   const s0 = fr(b.start);
   const s1 = fr(b.end);
   const prog = clamp01((f - s0) / Math.max(1, s1 - s0));
-  const z = 1 + (b.zoom ?? 0.03) * prog;
+  let punch = 0; // camera punch-in accents (MOTION RULE fallback)
+  for (const t of b.cam || []) {
+    const u = (f - fr(t)) / fr(ACC_DUR + 0.1);
+    if (u >= 0 && u <= 1) punch = Math.max(punch, Math.sin(Math.PI * u));
+  }
+  const z = 1 + (b.zoom ?? 0.03) * prog + 0.02 * punch;
   return (
     <g transform={`translate(${W / 2} ${H / 2}) scale(${z}) translate(${-W / 2 - 8 * prog} ${-H / 2})`}>
       {b.els.map((e, i) => (

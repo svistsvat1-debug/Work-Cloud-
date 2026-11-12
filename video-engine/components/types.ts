@@ -1,4 +1,5 @@
 // Board/element descriptors: plain data, usable in the browser (render) and in Node (sfx cues, QA).
+import {addAccents} from './motion';
 export type El = {
   k: string; // kind
   at: number; // seconds: when it starts drawing
@@ -20,7 +21,7 @@ export type Scene = {n: number; text: string; start: number; end: number; vo_sta
 
 export type Timing = {audio_dur: number; scenes: Scene[]};
 
-export type BoardBuilt = BoardDef & {start: number; end: number; idx: number};
+export type BoardBuilt = BoardDef & {start: number; end: number; idx: number; cam?: number[]};
 
 export const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
 
@@ -53,8 +54,11 @@ export function makeK(T: Timing) {
 }
 export type K = ReturnType<typeof makeK>;
 
-export function buildBoards(defs: BoardDef[], T: Timing): BoardBuilt[] {
-  return defs.map((d, idx) => ({...d, idx, start: T.scenes[d.from - 1].start, end: T.scenes[d.to - 1].end}));
+// boards with timing; accents=true adds automatic accents in idle stretches (MOTION RULE, see motion.ts).
+// Off by default: points85 was delivered without them.
+export function buildBoards(defs: BoardDef[], T: Timing, accents = false): BoardBuilt[] {
+  const raw = defs.map((d, idx) => ({...d, idx, start: T.scenes[d.from - 1].start, end: T.scenes[d.to - 1].end}));
+  return accents ? raw.map((b) => addAccents(b, T, drawDur)) : raw;
 }
 
 // default draw durations (s)
