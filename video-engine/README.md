@@ -1,5 +1,7 @@
 # video-engine — marker-whiteboard WWII videos (Remotion + SVG)
 
+Approved visual style (2026-11-12): see `../docs/video/STYLE.md` — follow it for every video.
+
 Pipeline for one video (Phase B):
 1. `tools/align.py` — faster-whisper word timestamps -> script scenes -> `src/data/timeline.json`
 2. `tools/captions.py` — captions.srt (≤2 lines, ≤42 chars, 1–6 s)
