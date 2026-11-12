@@ -25,3 +25,7 @@ The owner's own list of channels and videos in the niche (filled in by hand).
 | https://www.youtube.com/watch?v=wGrkTgotX9Y (Brut America, DART crash Short) | 23M | [MISSING] | ~2022 (search listing: 4 years ago) | proven demand for the DART asteroid crash; Hera arrived at the asteroid in Nov 2026 |
 | https://www.youtube.com/watch?v=pl0Lvs4x9Uo (META PCs, "Will Your PC Be Safe In 2038?!") | 8.1M | [MISSING] | [MISSING] | proven demand for the 2038 clock bug (end-of-the-world-dates theme) |
 | https://www.youtube.com/watch?v=k3wv3AEbWZo (Danno Cal Drawings, "WHY WE CANT USE LIGHTNING FOR ENERGY") | 1.66M | [MISSING] | ~2024 (search listing: 2 years ago) | a drawn cartoon Short already covers the lightning question |
+| https://youtube.com/shorts/BmE0pt43VEU (The Unindexed, "How Did Ancient Humans Sleep Without AC?") | 35K (781 likes) | [MISSING] | 2026-10-17 | owner's reference for video #6: the 'ancient people vs heat' theme |
+| https://www.youtube.com/watch?v=tnJms_3Gbuk ("Ancient Ice-Making Machines Found In Persian Desert, The Yakhchal") | 1.83M | [MISSING] | [MISSING] | proven demand for the yakhchal / ice-in-the-desert question (long form) |
+| https://www.youtube.com/watch?v=P5lu-dq7agI ("How people kept stuff cold before refrigerators") | 1.62M | [MISSING] | [MISSING] | 'before fridges' question at scale |
+| https://www.youtube.com/watch?v=6HVYHNTDOFs ("Why Cold Drinks Were Deadly Before 1914") | 12.3M | [MISSING] | [MISSING] | huge demand for 'cold before refrigeration' stories |
