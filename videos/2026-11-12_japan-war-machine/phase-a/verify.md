@@ -1,0 +1,37 @@
+# verify.md — факти для перевірки
+
+Статус: ✅ підтверджено щонайменше одним надійним джерелом · ⚠️ підтверджено частково / одне слабке джерело · ❓ не знайшов прямого підтвердження (формулювання в сценарії обережне).
+Перевірка безкоштовна: веб-пошук + відкриті сторінки. Платні інструменти не використовувались.
+
+| ID | Твердження в сценарії | Статус | Джерело / коментар |
+|---|---|---|---|
+| V1 | У серпні 1945 Японія мала тисячі схованих літаків, збережених для «останньої битви» проти вторгнення | ⚠️ | Загальновідомий план оборони островів (Ketsu-Go). Точне число в сценарії не назване — лише «thousands». Перевір: https://en.wikipedia.org/wiki/Operation_Ketsugō |
+| V2 | Наземним екіпажам наказали зняти пропелери з літаків | ❓ | Масові фото літаків без пропелерів існують, але офіційного наказу я не знайшов. Якщо сумніваєшся — заміни на «ordered to ground every aircraft». Джерело для старту: https://www.j-aircraft.com/research/jas_jottings/end_of_the_jaaf_and_jnaf.htm |
+| V3 | Розвідка відібрала ~4 зразки кожного нового типу; решту знищили, роботи тривали до 1947 | ✅ | j-aircraft.com: «four examples of every Japanese aircraft type never previously tested… took until well into 1947». https://www.j-aircraft.com/research/jas_jottings/end_of_the_jaaf_and_jnaf.htm |
+| V4 | Понад 6 млн японців опинились за кордоном; приблизно половина — військові, половина — цивільні | ✅ | LSE working paper (Nishizaki): «more than six million people — three million civilians and three million demobilised soldiers». https://www.lse.ac.uk/asset-library/information/wp299.pdf ; https://nippon.com/en/japan-topics/g02255 |
+| V5 | Авіаносець Katsuragi не воював з авіагрупою, став транспортом репатріації (зокрема з Рабаула), розібраний з кінця 1946 | ✅ | Wikipedia: «never used with aircraft… used as a repatriation transport… scrapping began in late 1946»; Pacific Wrecks — фото репатріації з Рабаула. https://en.wikipedia.org/wiki/Japanese_aircraft_carrier_Katsuragi ; https://pacificwrecks.com/ship/ijn/katsuragi.html |
+| V6 | Hosho — один з перших у світі кораблів, спроєктованих як авіаносець «з кіля»; після війни перевозила людей | ✅/⚠️ | Wikipedia: перший спеціально спроєктований авіаносець, введений у стрій; використовувалась для репатріації. https://en.wikipedia.org/wiki/Japanese_aircraft_carrier_Hōshō |
+| V7 | Есмінці й менші кораблі розділили на 4 рівні групи; США, Британія, Китай і СРСР тягнули жереб; Китай просив особливих умов через втрату флоту | ✅ | FRUS 1947, Vol. VI, doc. 303 (Держдеп США). https://history.state.gov/historicaldocuments/frus1947v06/d303 |
+| V8 | Yukikaze пережила всі великі битви; з 82 довоєнних есмінців вижили лише 3; 6 липня 1947 передана Китаю, перейменована Tan Yang (Dan Yang) | ✅ | Wikipedia (Yukikaze): «Yukikaze, Ushio and Hibiki were the only ships to survive among the 82…»; 6 July 1947. https://en.wikipedia.org/wiki/Japanese_destroyer_Yukikaze_(1939) |
+| V9 | Hibiki передана СРСР у 1947, перейменована «Верный» (Verniy = faithful) | ✅ | Wikipedia (Hibiki): передача квітень–липень 1947, назва Verniy. https://en.wikipedia.org/wiki/Japanese_destroyer_Hibiki_(1932) |
+| V10 | Більшість кораблів, що дісталися США і Британії, просто порізали на брухт | ⚠️ | Звучить в оглядах, але конкретного списку я не відкривав. Формулювання «most of them» — перевір у FRUS 1947 або залиш як є з м'якшим «many of them». |
+| V11 | Nagato — флагман Об'єднаного флоту; Ямамото командував з її борту на початку війни на Тихому океані; останній японський лінкор на плаву | ✅/⚠️ | Wikipedia (Nagato); The Diplomat «Imperial Japan's Last Floating Battleship». https://en.wikipedia.org/wiki/Japanese_battleship_Nagato ; https://thediplomat.com/2015/08/imperial-japans-last-floating-battleship |
+| V12 | 1 липня 1946 — перший (повітряний) вибух, Nagato майже ціла; другий (підводний) через ~3 тижні (25.07); вночі 29→30 липня перевернулась і затонула; лежить догори дном | ✅ | US Navy: «Nagato sunk by Test Baker at Bikini, 29 July 1946». https://www.history.navy.mil/research/library/online-reading-room/title-list-alphabetically/o/operation-crossroads/disposition-of-target-vessels.html ; https://bikiniatoll.com/nagatolog.html |
+| V13 | Японія виставила десятки тисяч мін біля своїх гаваней; американські бомбардувальники скинули ще тисячі | ⚠️ | koreanmedals.com: на початок окупації 55 347 японських і 6 546 союзницьких мін. Сайт не академічний; у сценарії тільки «tens of thousands / thousands». https://koreanmedals.com/?p=9601 |
+| V14 | Багато екіпажів тральщиків — колишні моряки Імперського флоту | ⚠️ | Asia-Pacific Journal (Morris-Suzuki), примітка 58: кораблі Другої ескадри «built for the Imperial Japanese Navy». Про екіпажі — логічно, але прямої цитати немає. https://apjjf.org/?p=8880 |
+| V15 | Нова конституція набула чинності у травні 1947; стаття 9 — відмова від війни і від сухопутних, морських, повітряних сил | ✅ | Загальновідомо: набула чинності 3 травня 1947. https://en.wikipedia.org/wiki/Article_9_of_the_Japanese_Constitution |
+| V16 | За кілька тижнів після початку війни в Кореї створили National Police Reserve на 75 000 осіб, озброєну й організовану як армія | ⚠️ | Пошук не дав прямого результату; загальновідомо (серпень 1950, 75 000). Перевір: https://en.wikipedia.org/wiki/National_Police_Reserve |
+| V17 | В американців не вистачало тральщиків, щоб вчасно очистити Вонсан | ⚠️ | US Navy H-Gram 055 (сторінка тимчасово недоступна — 503). https://www.history.navy.mil/about-us/leadership/director/directors-corner/h-grams/h-gram-055/h-055-1.html |
+| V18 | 2 жовтня 1950 Берк попросив Окубо (Maritime Safety Agency); Окубо спершу відмовив через конституцію; Йосіда дозволив; 6 жовтня 16 тральщиків і ~1 200 людей вийшли з Сімоносекі; кораблі будувались для Імперського флоту | ✅ | koreanmedals.com (на основі Japan Times / Morris-Suzuki) + Asia-Pacific Journal. https://koreanmedals.com/?p=9601 ; https://apjjf.org/?p=8880 |
+| V19 | Тральщик MS-14 підірвався біля Вонсана і затонув: 1 загиблий, 18 поранених | ⚠️ | koreanmedals.com + Pacific Wrecks («JMS 14»). Ім'я загиблого не знайшов — тому в сценарії його немає. Найкраще джерело — PDF статті Asia-Pacific Journal (мені доступ заблоковано). |
+| V20 | Через місяць армійський буксир США з японським екіпажем (LT-636) підірвався: загинули 22 з 27 | ⚠️ | koreanmedals.com. Одне джерело. |
+| V21 | Поки тралили міни, південнокорейські війська вже взяли Вонсан з суші; висадка прийшла на захищений пляж | ✅ | Asia-Pacific Journal, прим. 69; H-Gram 055 («Wonsan had been in the hands of South Korean forces»). |
+| V22 | Операцію тримали в таємниці 29 років; медалей не давали | ⚠️ | koreanmedals.com (посилається на Japan Times). |
+| V23 | 1954 — створено Морські сили самооборони, тральні екіпажі увійшли до них | ⚠️ | Дата 1 липня 1954 — загальновідомо. Те, що тральні підрозділи MSA перейшли в JMSDF — логічно, прямої цитати не відкривав. https://en.wikipedia.org/wiki/Japan_Maritime_Self-Defense_Force |
+| V24 | (Аутро) Італійські лінкори теж поділили; один вибухнув у радянській гавані через 10 років після війни | ⚠️ | Giulio Cesare → «Новоросійськ», вибух у Севастополі 29.10.1955. Перевірити перед наступним відео. https://en.wikipedia.org/wiki/Italian_battleship_Giulio_Cesare |
+
+## Що я свідомо НЕ вписав у сценарій (недостатньо джерел)
+- Точну кількість знищених японських літаків (джерела кажуть «невідомо»).
+- Ім'я загиблого на MS-14.
+- Цифру «6,6 млн» репатріантів (у джерелах «понад 6 млн»).
+- Наказ про зняття пропелерів як офіційний документ (див. V2).
