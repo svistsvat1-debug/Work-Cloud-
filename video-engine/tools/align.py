@@ -38,8 +38,14 @@ if cache.exists():
 else:
     from faster_whisper import WhisperModel
 
+    import subprocess
+    import numpy as np
+
+    # decode with ffmpeg (avoids PyAV version issues): 16 kHz mono float32
+    pcm = subprocess.run(['ffmpeg', '-loglevel', 'error', '-i', str(voice), '-ac', '1', '-ar', '16000', '-f', 'f32le', '-'], capture_output=True, check=True).stdout
+    audio = np.frombuffer(pcm, np.float32)
     model = WhisperModel(model_name, device='cpu', compute_type='int8')
-    segs, info = model.transcribe(str(voice), word_timestamps=True, language='en', beam_size=5, vad_filter=False,
+    segs, info = model.transcribe(audio, word_timestamps=True, language='en', beam_size=5, vad_filter=False,
                                   initial_prompt=' '.join(sentences[:3]))
     rec = []
     for s in segs:
