@@ -1,0 +1,4 @@
+# large media never goes to git
+*.mp4
+*.wav
+*.mov
