@@ -93,3 +93,30 @@ Video #3 (lava-fire-hose, 2026-11-11):
 - The Remotion mix peaked at -7.3 dBFS (preview): raised the final audio by +3.3 dB in a re-mux (video copied).
 - Water wide shots: a 2:3 harbour plate leaves the lower third as empty sea. Fill it with nearer (lower, bigger) floating
   objects and a few light wave squiggles.
+
+Video #4 (doomsday-2026, 2026-11-12):
+- GOOD: the locked STYLE_CHAR block (text only) again matched every character picture on the first try: hero + 6 poses
+  (incl. a LOW 3:2 pair sheet of two kid versions) + earth, computer and 2 plates = 11 pictures, 0 redos, 1247.5 credits.
+- GOOD: free crowds = code clones of the pose sprites (mirrored, depth-scaled rows on the floor, sorted by feet y). A
+  "multiplying" beat = pop times by doubling generations (1, 2, 4, 8, 16...) + pop sounds with rising pitch
+  (shared Cue now takes `rate`). Clones leave in a cascade of white outlined puffs.
+- GOOD: a machine with a face: its tape reels became eyes (pupil, lids, brows in code); switching between "spinning reels"
+  and "eyes" is hidden by a blink. A small "1960" tag on it anchors the year visually.
+- GOOD: the wall and floor are extended in code (flat colours + plank lines) so the camera can tilt above the plate (the chalk
+  curve shooting up to infinity) or below it. Chalk = light stroke over a dark ink underlay, so it reads on the board AND on
+  the wall.
+- GOOD loop: in the last 0.55 s the computer prints the next DOOMSDAY page and the video hard-cuts to the frame-0 state.
+- GLITCH: "Close-up" prompt again came out (almost) full body; usable because the frame edge crops it. Keep the lesson.
+- GLITCH: the inscribed-disc head measure fails when a held object covers the body (the calendar page): take the head width
+  above the hands instead (x 0.92). Automatic small-feature detection (the paper slot) picked a panel edge: read small
+  features off a marked-up sheet (qa/measure.png).
+- FIX in the improvement pass: the cure card was cut by the frame edge and covered the computer's eyes -> smaller and higher;
+  "In 1960" had no visual -> "1960" tag on the computer; the couple overlapped into one blob -> more spacing. From the
+  first contact sheet: the DOOMSDAY stamp hid the "13" -> moved lower; close-up neighbours were hidden behind the guy ->
+  moved in front, pressing on his cheeks; people on the Earth were too tiny -> 38 % bigger; the infinity shot recentred.
+- TIMING: 69 words / 404 characters with three numbers ("1960", "13th", "2026") took 28.3 s with Mark (numbers are read as
+  words). With years in the script, plan 60-65 words.
+- MIX: MIX_DB +4.0 in code gave a -3.7 dBFS peak on the preview: no re-mux needed.
+- RENDER here: 4 cores (CONC=4 max), CHROME=/opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/
+  chrome-headless-shell, gl swangle (no GPU); full 29 s render ~7-10 min.
+
