@@ -12,6 +12,9 @@ import {DURATION as LAVA_DURATION, FPS as LAVA_FPS} from './lava-fire-hose/scene
 import {Doomsday2026Short} from './doomsday-2026/Short';
 import {Doomsday2026Cover} from './doomsday-2026/Cover';
 import {DURATION as DOOM_DURATION, FPS as DOOM_FPS} from './doomsday-2026/scene';
+import {NukeGasFireShort} from './nuke-gas-fire/Short';
+import {NukeGasFireCover} from './nuke-gas-fire/Cover';
+import {DURATION as NUKE_DURATION, FPS as NUKE_FPS} from './nuke-gas-fire/scene';
 
 // One composition per Short (+ its cover still).
 export const RemotionRoot: React.FC = () => {
@@ -25,6 +28,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="LavaFireHoseCover" component={LavaFireHoseCover} width={1080} height={1920} />
       <Composition id="Doomsday2026" component={Doomsday2026Short} durationInFrames={Math.round(DOOM_DURATION * DOOM_FPS)} fps={DOOM_FPS} width={1080} height={1920} />
       <Still id="Doomsday2026Cover" component={Doomsday2026Cover} width={1080} height={1920} />
+      <Composition id="NukeGasFire" component={NukeGasFireShort} durationInFrames={Math.round(NUKE_DURATION * NUKE_FPS)} fps={NUKE_FPS} width={1080} height={1920} />
+      <Still id="NukeGasFireCover" component={NukeGasFireCover} width={1080} height={1920} />
     </>
   );
 };

@@ -123,3 +123,32 @@ Video #4 (doomsday-2026, 2026-11-12):
 - RENDER here: 4 cores (CONC=4 max), CHROME=/opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/
   chrome-headless-shell, gl swangle (no GPU); full 29 s render ~7-10 min.
 
+
+Video #5 (nuke-gas-fire, 2026-11-12):
+- GOOD: the locked STYLE_CHAR block (text only) again matched every character picture on the first try: hero + 5 poses,
+  plus bomb, rig, props sheet and 2 plates = 11 pictures, 0 redos, 1251.1 credits (pictures 852.8, voice 375, sfx 23.3).
+- GOOD: a code-drawn flame character: 5 stacked flat layers (deep edge #E2501E, #FF6A2B, #FFA445, #FFC867, #FFF1BF), no
+  outline, outline points from a width profile sqrt(u)*(1-u)^1.25 with travelling sine ripples + sway; two side tongues;
+  Eye faces placed at ~50 % height so held props (the marshmallow) do not cover them. It can be squashed into a pipe by a
+  cork, burst back with easeOutBack, and die by shrinking with a "> <" face into a smoke puff + smoke ring.
+- GOOD: a school-diagram cut-away: the desert plate above a front-edge line G, a separate "underground layers" plate
+  below it (bands measured in prep), pipes / gas bubbles / cracks / a slant hole / a depth gauge in code. The camera can
+  pull back from the surface into it in one move. Keep every surface shot's view bottom above G (check at every key).
+- GOOD: a 3:2 "set piece" picture (wreck) split in prep at the emptiest columns into derrick / well / beams gives free
+  layout control; a 3-object LOW props sheet split the same way (cork + two wellheads).
+- GOOD: an everyday analogy in the script ("like stepping on a hose") gets its own short cut-away gag: it reads at once.
+- GLITCH: the camera left the 1536-wide plates (a blue strip on the side). Clamp camera x to 540/k .. 1536 - 540/k.
+- GLITCH: a text label switched its content at the START of its flip squash (pop scan flagged it): switch on the
+  squashed frame (the middle of the flip).
+- GLITCH: an underground set piece that straddles G (the slant-hole entry, and the ROUND line cap of the hole) showed in
+  the last frame but not in frame 0 (a loop mismatch): clip everything underground to y >= G and hide anything that is
+  not in frame 0 before the final glide back to the frame-0 camera.
+- GLITCH: an idle tremble was switched on with a step (a 0/1 condition): ramp every idle motion in with prog(). (The
+  pop-scan flag at that moment was the landing of the jump itself, which is intended.)
+- FIX in the improvement pass: the cork beat (5.3-7.5 s) was a wide frame with empty sky and a static cork -> close
+  framing (k 1.5) + gas puffs hissing out around the cork with rising pressure; the blast cavity with squeeze marks on
+  both sides read as a striped ball -> marks only on the pipe side, a hot core inside the cavity; the payoff ("fire out
+  in twenty-three seconds") was small -> camera pushes in (k 1.38) on the dying flame, a bigger stopwatch, then glides
+  back to the frame-0 framing for the loop.
+- MIX: MIX_DB +4 gave a -2.8 dBFS peak on the preview (this voice take is louder); +3 dB used for the final.
+- TIMING: 69 words / 375 characters with one spelled-out number took 24.2 s with Mark.
