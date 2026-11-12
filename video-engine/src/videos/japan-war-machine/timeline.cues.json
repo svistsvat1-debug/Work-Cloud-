@@ -1,0 +1,1446 @@
+{
+ "scenes": [
+  {
+   "scene": 1,
+   "label": "COLD OPEN",
+   "title": "Hook",
+   "mood": "tension",
+   "start": 0.0,
+   "end": 23.85241935483871,
+   "fade": true
+  },
+  {
+   "scene": 2,
+   "label": "QUEST 1 \u00b7 SCENE 02",
+   "title": "The surrender",
+   "mood": "neutral",
+   "start": 23.85241935483871,
+   "end": 36.9024193548387,
+   "fade": false
+  },
+  {
+   "scene": 3,
+   "label": "QUEST 1 \u00b7 SCENE 03",
+   "title": "The last-battle planes",
+   "mood": "tension",
+   "start": 36.9024193548387,
+   "end": 77.28790322580645,
+   "fade": false
+  },
+  {
+   "scene": 4,
+   "label": "QUEST 1 \u00b7 SCENE 04",
+   "title": "Four of each",
+   "mood": "neutral",
+   "start": 77.28790322580645,
+   "end": 108.77016129032256,
+   "fade": true
+  },
+  {
+   "scene": 5,
+   "label": "QUEST 2 \u00b7 SCENE 05",
+   "title": "The bridge",
+   "mood": "tension",
+   "start": 108.77016129032256,
+   "end": 115.66370967741933,
+   "fade": false
+  },
+  {
+   "scene": 6,
+   "label": "QUEST 2 \u00b7 SCENE 06",
+   "title": "Six million stranded",
+   "mood": "tension",
+   "start": 115.66370967741933,
+   "end": 141.02661290322578,
+   "fade": false
+  },
+  {
+   "scene": 7,
+   "label": "QUEST 2 \u00b7 SCENE 07",
+   "title": "Warships into ferries",
+   "mood": "neutral",
+   "start": 141.02661290322578,
+   "end": 152.14112903225805,
+   "fade": false
+  },
+  {
+   "scene": 8,
+   "label": "QUEST 2 \u00b7 SCENE 08",
+   "title": "Katsuragi and Hosho",
+   "mood": "neutral",
+   "start": 152.14112903225805,
+   "end": 188.6556451612903,
+   "fade": false
+  },
+  {
+   "scene": 9,
+   "label": "QUEST 2 \u00b7 SCENE 09",
+   "title": "The end of the ferries",
+   "mood": "tension",
+   "start": 188.6556451612903,
+   "end": 204.0282258064516,
+   "fade": true
+  },
+  {
+   "scene": 10,
+   "label": "QUEST 3 \u00b7 SCENE 10",
+   "title": "The lottery",
+   "mood": "tension",
+   "start": 204.0282258064516,
+   "end": 229.39112903225805,
+   "fade": false
+  },
+  {
+   "scene": 11,
+   "label": "QUEST 3 \u00b7 SCENE 11",
+   "title": "Yukikaze",
+   "mood": "reveal",
+   "start": 229.39112903225805,
+   "end": 259.36209677419356,
+   "fade": false
+  },
+  {
+   "scene": 12,
+   "label": "QUEST 3 \u00b7 SCENE 12",
+   "title": "Hibiki becomes Verniy",
+   "mood": "neutral",
+   "start": 259.36209677419356,
+   "end": 280.85403225806454,
+   "fade": false
+  },
+  {
+   "scene": 13,
+   "label": "QUEST 3 \u00b7 SCENE 13",
+   "title": "Too famous to give away",
+   "mood": "tension",
+   "start": 280.85403225806454,
+   "end": 288.52177419354837,
+   "fade": true
+  },
+  {
+   "scene": 14,
+   "label": "QUEST 4 \u00b7 SCENE 14",
+   "title": "Nagato",
+   "mood": "neutral",
+   "start": 288.52177419354837,
+   "end": 306.9911290322581,
+   "fade": false
+  },
+  {
+   "scene": 15,
+   "label": "QUEST 4 \u00b7 SCENE 15",
+   "title": "Bikini",
+   "mood": "tension",
+   "start": 306.9911290322581,
+   "end": 346.5282258064516,
+   "fade": false
+  },
+  {
+   "scene": 16,
+   "label": "QUEST 4 \u00b7 SCENE 16",
+   "title": "The last piece",
+   "mood": "tension",
+   "start": 346.5282258064516,
+   "end": 357.2927419354839,
+   "fade": true
+  },
+  {
+   "scene": 17,
+   "label": "QUEST 5 \u00b7 SCENE 17",
+   "title": "The mines",
+   "mood": "tension",
+   "start": 357.2927419354839,
+   "end": 376.88629032258063,
+   "fade": false
+  },
+  {
+   "scene": 18,
+   "label": "QUEST 5 \u00b7 SCENE 18",
+   "title": "The sweepers",
+   "mood": "neutral",
+   "start": 376.88629032258063,
+   "end": 414.525,
+   "fade": true
+  },
+  {
+   "scene": 19,
+   "label": "QUEST 6 \u00b7 SCENE 19",
+   "title": "A country with no army",
+   "mood": "neutral",
+   "start": 414.525,
+   "end": 434.1185483870968,
+   "fade": false
+  },
+  {
+   "scene": 20,
+   "label": "QUEST 6 \u00b7 SCENE 20",
+   "title": "Korea",
+   "mood": "tension",
+   "start": 434.1185483870968,
+   "end": 446.39435483870966,
+   "fade": false
+  },
+  {
+   "scene": 21,
+   "label": "QUEST 6 \u00b7 SCENE 21",
+   "title": "The police that wasn't",
+   "mood": "neutral",
+   "start": 446.39435483870966,
+   "end": 466.375,
+   "fade": true
+  },
+  {
+   "scene": 22,
+   "label": "QUEST 7 \u00b7 SCENE 22",
+   "title": "Wonsan",
+   "mood": "tension",
+   "start": 466.375,
+   "end": 482.52177419354837,
+   "fade": false
+  },
+  {
+   "scene": 23,
+   "label": "QUEST 7 \u00b7 SCENE 23",
+   "title": "The request",
+   "mood": "tension",
+   "start": 482.52177419354837,
+   "end": 504.7879032258064,
+   "fade": false
+  },
+  {
+   "scene": 24,
+   "label": "QUEST 7 \u00b7 SCENE 24",
+   "title": "Shimonoseki",
+   "mood": "tension",
+   "start": 504.7879032258064,
+   "end": 526.7040322580644,
+   "fade": false
+  },
+  {
+   "scene": 25,
+   "label": "QUEST 7 \u00b7 SCENE 25",
+   "title": "M S fourteen",
+   "mood": "tension",
+   "start": 526.7040322580644,
+   "end": 543.200806451613,
+   "fade": true
+  },
+  {
+   "scene": 26,
+   "label": "FINAL BOSS \u00b7 SCENE 26",
+   "title": "The bitter twist",
+   "mood": "reveal",
+   "start": 543.200806451613,
+   "end": 561.2459677419354,
+   "fade": false
+  },
+  {
+   "scene": 27,
+   "label": "FINAL BOSS \u00b7 SCENE 27",
+   "title": "Top secret",
+   "mood": "reveal",
+   "start": 561.2459677419354,
+   "end": 570.0749999999998,
+   "fade": false
+  },
+  {
+   "scene": 28,
+   "label": "FINAL BOSS \u00b7 SCENE 28",
+   "title": "The answer",
+   "mood": "reveal",
+   "start": 570.0749999999998,
+   "end": 613.4830645161289,
+   "fade": true
+  },
+  {
+   "scene": 29,
+   "label": "OUTRO \u00b7 SCENE 29",
+   "title": "Next episode bridge",
+   "mood": "calm",
+   "start": 613.4830645161289,
+   "end": 636.5629032258065,
+   "fade": false
+  }
+ ],
+ "shots": [
+  {
+   "id": "01_1",
+   "start": 0.0,
+   "end": 5.0330645161290315,
+   "voStart": 0.6,
+   "voEnd": 4.858064516129032,
+   "sfx": "wind (field) bed, low",
+   "text": "In August nineteen forty-five, Japan still had thousands of hidden warplanes."
+  },
+  {
+   "id": "01_2",
+   "start": 5.0330645161290315,
+   "end": 9.254032258064516,
+   "voStart": 5.208064516129031,
+   "voEnd": 9.079032258064515,
+   "sfx": null,
+   "text": "It still had warships, sailors, and harbors full of mines."
+  },
+  {
+   "id": "01_3",
+   "start": 9.254032258064516,
+   "end": 13.08790322580645,
+   "voStart": 9.429032258064515,
+   "voEnd": 12.912903225806451,
+   "sfx": null,
+   "text": "Two years later, almost all of it was gone."
+  },
+  {
+   "id": "01_4",
+   "start": 13.08790322580645,
+   "end": 20.405645161290323,
+   "voStart": 13.26290322580645,
+   "voEnd": 20.230645161290322,
+   "sfx": "distant ship engine (lib)",
+   "text": "But in nineteen fifty, a few of its old ships slipped out in secret, heading for a war."
+  },
+  {
+   "id": "01_5",
+   "start": 20.405645161290323,
+   "end": 23.85241935483871,
+   "voStart": 20.58064516129032,
+   "voEnd": 23.677419354838708,
+   "sfx": "soft whoosh (lib)",
+   "text": "So what really happened to Japan's war machine?"
+  },
+  {
+   "id": "02_1",
+   "start": 23.85241935483871,
+   "end": 30.78306451612903,
+   "voStart": 24.027419354838706,
+   "voEnd": 30.60806451612903,
+   "sfx": null,
+   "text": "On September second, nineteen forty-five, Japan signed the surrender aboard the battleship USS Missouri in Tokyo Bay."
+  },
+  {
+   "id": "02_2",
+   "start": 30.78306451612903,
+   "end": 33.45564516129032,
+   "voStart": 30.958064516129028,
+   "voEnd": 33.280645161290316,
+   "sfx": null,
+   "text": "The Allies' first demand was simple."
+  },
+  {
+   "id": "02_3",
+   "start": 33.45564516129032,
+   "end": 36.9024193548387,
+   "voStart": 33.63064516129032,
+   "voEnd": 36.7274193548387,
+   "sfx": null,
+   "text": "Nothing Japanese would ever fly into battle again."
+  },
+  {
+   "id": "03_1",
+   "start": 36.9024193548387,
+   "end": 41.897580645161284,
+   "voStart": 37.0774193548387,
+   "voEnd": 41.72258064516129,
+   "sfx": "wind (field) bed",
+   "text": "Japan's leaders had been saving those hidden planes for one final battle."
+  },
+  {
+   "id": "03_2",
+   "start": 41.897580645161284,
+   "end": 45.34435483870966,
+   "voStart": 42.07258064516128,
+   "voEnd": 45.169354838709666,
+   "sfx": "paper/map unfold (lib)",
+   "text": "They expected an invasion of the home islands."
+  },
+  {
+   "id": "03_3",
+   "start": 45.34435483870966,
+   "end": 51.113709677419344,
+   "voStart": 45.51935483870967,
+   "voEnd": 50.93870967741935,
+   "sfx": null,
+   "text": "Many of the planes were meant to be flown straight into the invasion fleet."
+  },
+  {
+   "id": "03_4",
+   "start": 51.113709677419344,
+   "end": 57.27016129032256,
+   "voStart": 51.28870967741934,
+   "voEnd": 57.095161290322565,
+   "sfx": null,
+   "text": "Across Japan, ground crews were now ordered to take the propellers off their own aircraft."
+  },
+  {
+   "id": "03_5",
+   "start": 57.27016129032256,
+   "end": 64.975,
+   "voStart": 57.44516129032257,
+   "voEnd": 64.79999999999998,
+   "sfx": null,
+   "text": "Fighters that had been fueled for that last battle sat on the grass like birds with their wings clipped."
+  },
+  {
+   "id": "03_6",
+   "start": 64.975,
+   "end": 71.51854838709676,
+   "voStart": 65.14999999999999,
+   "voEnd": 71.34354838709676,
+   "sfx": null,
+   "text": "Many of the young pilots had trained for missions they were never meant to return from."
+  },
+  {
+   "id": "03_7",
+   "start": 71.51854838709676,
+   "end": 77.28790322580645,
+   "voStart": 71.69354838709677,
+   "voEnd": 77.11290322580645,
+   "sfx": null,
+   "text": "Now they watched the planes they would have died in being dragged into piles."
+  },
+  {
+   "id": "04_1",
+   "start": 77.28790322580645,
+   "end": 81.12177419354838,
+   "voStart": 77.46290322580644,
+   "voEnd": 80.94677419354838,
+   "sfx": "light rain bed",
+   "text": "But the Americans did not destroy everything at once."
+  },
+  {
+   "id": "04_2",
+   "start": 81.12177419354838,
+   "end": 85.34274193548386,
+   "voStart": 81.29677419354837,
+   "voEnd": 85.16774193548386,
+   "sfx": null,
+   "text": "They wanted to know exactly how these machines were built."
+  },
+  {
+   "id": "04_3",
+   "start": 85.34274193548386,
+   "end": 90.72499999999998,
+   "voStart": 85.51774193548385,
+   "voEnd": 90.54999999999998,
+   "sfx": null,
+   "text": "So intelligence teams picked out about four examples of each new aircraft type."
+  },
+  {
+   "id": "04_4",
+   "start": 90.72499999999998,
+   "end": 96.8814516129032,
+   "voStart": 90.89999999999998,
+   "voEnd": 96.70645161290321,
+   "sfx": null,
+   "text": "Those planes were crated, loaded onto ships, and sent across the Pacific to be tested."
+  },
+  {
+   "id": "04_5",
+   "start": 96.8814516129032,
+   "end": 101.10241935483869,
+   "voStart": 97.0564516129032,
+   "voEnd": 100.92741935483869,
+   "sfx": null,
+   "text": "A few of them still sit in American museums today."
+  },
+  {
+   "id": "04_6",
+   "start": 101.10241935483869,
+   "end": 105.32338709677417,
+   "voStart": 101.27741935483868,
+   "voEnd": 105.14838709677417,
+   "sfx": "distant crackle (lib fire)",
+   "text": "The rest were burned, crushed, or cut up for scrap."
+  },
+  {
+   "id": "04_7",
+   "start": 105.32338709677417,
+   "end": 108.77016129032256,
+   "voStart": 105.49838709677417,
+   "voEnd": 108.59516129032255,
+   "sfx": null,
+   "text": "The work dragged on well into nineteen forty-seven."
+  },
+  {
+   "id": "05_1",
+   "start": 108.77016129032256,
+   "end": 111.44274193548385,
+   "voStart": 108.94516129032256,
+   "voEnd": 111.26774193548385,
+   "sfx": null,
+   "text": "Planes were easy to destroy, though."
+  },
+  {
+   "id": "05_2",
+   "start": 111.44274193548385,
+   "end": 115.66370967741933,
+   "voStart": 111.61774193548385,
+   "voEnd": 115.48870967741934,
+   "sfx": null,
+   "text": "Ships were a different problem, because Japan desperately needed them."
+  },
+  {
+   "id": "06_1",
+   "start": 115.66370967741933,
+   "end": 121.43306451612901,
+   "voStart": 115.83870967741933,
+   "voEnd": 121.25806451612901,
+   "sfx": "typewriter (lib)",
+   "text": "When the war ended, more than six million Japanese were stranded far from home."
+  },
+  {
+   "id": "06_2",
+   "start": 121.43306451612901,
+   "end": 125.65403225806449,
+   "voStart": 121.608064516129,
+   "voEnd": 125.47903225806449,
+   "sfx": null,
+   "text": "About half were soldiers, and the other half were civilians."
+  },
+  {
+   "id": "06_3",
+   "start": 125.65403225806449,
+   "end": 131.8104838709677,
+   "voStart": 125.82903225806449,
+   "voEnd": 131.6354838709677,
+   "sfx": null,
+   "text": "They were scattered from the cold plains of Manchuria to the jungles of New Guinea."
+  },
+  {
+   "id": "06_4",
+   "start": 131.8104838709677,
+   "end": 134.87016129032253,
+   "voStart": 131.9854838709677,
+   "voEnd": 134.69516129032255,
+   "sfx": "waves (lib ship bed, low)",
+   "text": "Many of them were sick and hungry."
+  },
+  {
+   "id": "06_5",
+   "start": 134.87016129032253,
+   "end": 141.02661290322578,
+   "voStart": 135.04516129032254,
+   "voEnd": 140.85161290322577,
+   "sfx": null,
+   "text": "They waited on beaches and in camps with nothing but a name on a list."
+  },
+  {
+   "id": "07_1",
+   "start": 141.02661290322578,
+   "end": 144.8604838709677,
+   "voStart": 141.20161290322577,
+   "voEnd": 144.6854838709677,
+   "sfx": null,
+   "text": "So the defeated navy was given one last mission."
+  },
+  {
+   "id": "07_2",
+   "start": 144.8604838709677,
+   "end": 149.85564516129028,
+   "voStart": 145.0354838709677,
+   "voEnd": 149.6806451612903,
+   "sfx": null,
+   "text": "Its surviving warships were stripped of their guns and turned into ferries."
+  },
+  {
+   "id": "07_3",
+   "start": 149.85564516129028,
+   "end": 152.14112903225805,
+   "voStart": 150.0306451612903,
+   "voEnd": 151.96612903225804,
+   "sfx": "ship horn (lib), distant",
+   "text": "Even aircraft carriers joined in."
+  },
+  {
+   "id": "08_1",
+   "start": 152.14112903225805,
+   "end": 156.3620967741935,
+   "voStart": 152.31612903225803,
+   "voEnd": 156.18709677419352,
+   "sfx": null,
+   "text": "The carrier Katsuragi had been finished too late to fight."
+  },
+  {
+   "id": "08_2",
+   "start": 156.3620967741935,
+   "end": 159.80887096774188,
+   "voStart": 156.53709677419351,
+   "voEnd": 159.6338709677419,
+   "sfx": null,
+   "text": "She never sent a single squadron into battle."
+  },
+  {
+   "id": "08_3",
+   "start": 159.80887096774188,
+   "end": 165.96532258064514,
+   "voStart": 159.9838709677419,
+   "voEnd": 165.79032258064512,
+   "sfx": null,
+   "text": "Now her empty hangars were filled with exhausted men coming home from places like Rabaul."
+  },
+  {
+   "id": "08_4",
+   "start": 165.96532258064514,
+   "end": 169.79919354838705,
+   "voStart": 166.14032258064512,
+   "voEnd": 169.62419354838704,
+   "sfx": null,
+   "text": "The old carrier Hosho became a passenger ship too."
+  },
+  {
+   "id": "08_5",
+   "start": 169.79919354838705,
+   "end": 177.11693548387092,
+   "voStart": 169.97419354838706,
+   "voEnd": 176.94193548387094,
+   "sfx": null,
+   "text": "She was one of the first ships in the world designed as a carrier from the keel up."
+  },
+  {
+   "id": "08_6",
+   "start": 177.11693548387092,
+   "end": 184.82177419354835,
+   "voStart": 177.29193548387093,
+   "voEnd": 184.64677419354834,
+   "sfx": "wind (field) low",
+   "text": "For a soldier who had not seen Japan in years, the first view of home came from a warship."
+  },
+  {
+   "id": "08_7",
+   "start": 184.82177419354835,
+   "end": 188.6556451612903,
+   "voStart": 184.99677419354836,
+   "voEnd": 188.48064516129028,
+   "sfx": null,
+   "text": "It was a warship that had lost its war."
+  },
+  {
+   "id": "09_1",
+   "start": 188.6556451612903,
+   "end": 191.71532258064514,
+   "voStart": 188.8306451612903,
+   "voEnd": 191.54032258064515,
+   "sfx": null,
+   "text": "But this mission could not last forever."
+  },
+  {
+   "id": "09_2",
+   "start": 191.71532258064514,
+   "end": 197.09758064516126,
+   "voStart": 191.89032258064515,
+   "voEnd": 196.92258064516128,
+   "sfx": null,
+   "text": "By the end of nineteen forty-six, Katsuragi was being cut up for scrap."
+  },
+  {
+   "id": "09_3",
+   "start": 197.09758064516126,
+   "end": 204.0282258064516,
+   "voStart": 197.27258064516127,
+   "voEnd": 203.8532258064516,
+   "sfx": null,
+   "text": "Once the ferries were no longer needed, the winners had to decide who would keep the rest."
+  },
+  {
+   "id": "10_1",
+   "start": 204.0282258064516,
+   "end": 210.18467741935484,
+   "voStart": 204.2032258064516,
+   "voEnd": 210.00967741935483,
+   "sfx": "clock tick (lib), quiet",
+   "text": "Four Allied powers wanted a share: the United States, Britain, China, and the Soviet Union."
+  },
+  {
+   "id": "10_2",
+   "start": 210.18467741935484,
+   "end": 215.9540322580645,
+   "voStart": 210.35967741935482,
+   "voEnd": 215.7790322580645,
+   "sfx": null,
+   "text": "China asked for special treatment, because its own navy had been almost wiped out."
+  },
+  {
+   "id": "10_3",
+   "start": 215.9540322580645,
+   "end": 219.40080645161288,
+   "voStart": 216.1290322580645,
+   "voEnd": 219.2258064516129,
+   "sfx": null,
+   "text": "The solution sounds almost like a game show."
+  },
+  {
+   "id": "10_4",
+   "start": 219.40080645161288,
+   "end": 224.39596774193546,
+   "voStart": 219.5758064516129,
+   "voEnd": 224.22096774193548,
+   "sfx": null,
+   "text": "The remaining destroyers and smaller warships were split into four equal groups."
+  },
+  {
+   "id": "10_5",
+   "start": 224.39596774193546,
+   "end": 229.39112903225805,
+   "voStart": 224.57096774193548,
+   "voEnd": 229.21612903225807,
+   "sfx": "paper rustle (lib map)",
+   "text": "Each country then drew lots to see which group it would receive."
+  },
+  {
+   "id": "11_1",
+   "start": 229.39112903225805,
+   "end": 232.83790322580643,
+   "voStart": 229.56612903225806,
+   "voEnd": 232.66290322580645,
+   "sfx": null,
+   "text": "One of those ships was the destroyer Yukikaze."
+  },
+  {
+   "id": "11_2",
+   "start": 232.83790322580643,
+   "end": 238.22016129032255,
+   "voStart": 233.01290322580644,
+   "voEnd": 238.04516129032257,
+   "sfx": null,
+   "text": "She had fought in some of the biggest naval battles of the war."
+  },
+  {
+   "id": "11_3",
+   "start": 238.22016129032255,
+   "end": 241.2798387096774,
+   "voStart": 238.39516129032256,
+   "voEnd": 241.1048387096774,
+   "sfx": null,
+   "text": "Somehow, she survived every one of them."
+  },
+  {
+   "id": "11_4",
+   "start": 241.2798387096774,
+   "end": 248.21048387096772,
+   "voStart": 241.4548387096774,
+   "voEnd": 248.03548387096774,
+   "sfx": null,
+   "text": "Out of eighty-two Japanese destroyers built before the war, she was one of only three still afloat."
+  },
+  {
+   "id": "11_5",
+   "start": 248.21048387096772,
+   "end": 255.14112903225805,
+   "voStart": 248.38548387096773,
+   "voEnd": 254.96612903225807,
+   "sfx": null,
+   "text": "In July nineteen forty-seven, she was handed over to China and given a new name, Tan Yang."
+  },
+  {
+   "id": "11_6",
+   "start": 255.14112903225805,
+   "end": 259.36209677419356,
+   "voStart": 255.31612903225806,
+   "voEnd": 259.18709677419355,
+   "sfx": null,
+   "text": "Her old enemy now flew its flag over her deck."
+  },
+  {
+   "id": "12_1",
+   "start": 259.36209677419356,
+   "end": 263.58306451612907,
+   "voStart": 259.53709677419357,
+   "voEnd": 263.40806451612906,
+   "sfx": "wind (snow) bed",
+   "text": "Another survivor, the destroyer Hibiki, went to the Soviet Union."
+  },
+  {
+   "id": "12_2",
+   "start": 263.58306451612907,
+   "end": 267.0298387096775,
+   "voStart": 263.7580645161291,
+   "voEnd": 266.8548387096775,
+   "sfx": null,
+   "text": "The Soviets renamed her Verniy, which means faithful."
+  },
+  {
+   "id": "12_3",
+   "start": 267.0298387096775,
+   "end": 270.4766129032258,
+   "voStart": 267.20483870967746,
+   "voEnd": 270.3016129032259,
+   "sfx": null,
+   "text": "She was faithful to a new owner now."
+  },
+  {
+   "id": "12_4",
+   "start": 270.4766129032258,
+   "end": 276.2459677419355,
+   "voStart": 270.65161290322584,
+   "voEnd": 276.07096774193553,
+   "sfx": null,
+   "text": "Most of the ships that went to America and Britain had a shorter future."
+  },
+  {
+   "id": "12_5",
+   "start": 276.2459677419355,
+   "end": 280.85403225806454,
+   "voStart": 276.4209677419355,
+   "voEnd": 280.6790322580645,
+   "sfx": null,
+   "text": "They were not needed, so most of them were simply scrapped."
+  },
+  {
+   "id": "13_1",
+   "start": 280.85403225806454,
+   "end": 284.6879032258065,
+   "voStart": 281.02903225806455,
+   "voEnd": 284.5129032258065,
+   "sfx": null,
+   "text": "But some ships were too famous to give away."
+  },
+  {
+   "id": "13_2",
+   "start": 284.6879032258065,
+   "end": 288.52177419354837,
+   "voStart": 284.86290322580646,
+   "voEnd": 288.3467741935484,
+   "sfx": null,
+   "text": "For those, the Americans had a very different plan."
+  },
+  {
+   "id": "14_1",
+   "start": 288.52177419354837,
+   "end": 295.06532258064516,
+   "voStart": 288.6967741935484,
+   "voEnd": 294.89032258064515,
+   "sfx": null,
+   "text": "The battleship Nagato had once been the flagship of the Combined Fleet, Japan's main battle fleet."
+  },
+  {
+   "id": "14_2",
+   "start": 295.06532258064516,
+   "end": 301.2217741935484,
+   "voStart": 295.24032258064517,
+   "voEnd": 301.0467741935484,
+   "sfx": null,
+   "text": "Admiral Yamamoto had commanded from her decks in the first days of the Pacific war."
+  },
+  {
+   "id": "14_3",
+   "start": 301.2217741935484,
+   "end": 306.9911290322581,
+   "voStart": 301.39677419354837,
+   "voEnd": 306.81612903225806,
+   "sfx": null,
+   "text": "By the end of the war, she was the last Japanese battleship still afloat."
+  },
+  {
+   "id": "15_1",
+   "start": 306.9911290322581,
+   "end": 311.9862903225806,
+   "voStart": 307.166129032258,
+   "voEnd": 311.8112903225806,
+   "sfx": "distant ship engine (lib)",
+   "text": "An American crew took her over and sailed her across the Pacific."
+  },
+  {
+   "id": "15_2",
+   "start": 311.9862903225806,
+   "end": 316.59435483870965,
+   "voStart": 312.1612903225806,
+   "voEnd": 316.41935483870964,
+   "sfx": "paper/map unfold (lib)",
+   "text": "Her destination was a tiny ring of islands called Bikini Atoll."
+  },
+  {
+   "id": "15_3",
+   "start": 316.59435483870965,
+   "end": 320.42822580645156,
+   "voStart": 316.76935483870966,
+   "voEnd": 320.2532258064516,
+   "sfx": null,
+   "text": "There, she became a target for atomic bomb tests."
+  },
+  {
+   "id": "15_4",
+   "start": 320.42822580645156,
+   "end": 326.97177419354836,
+   "voStart": 320.6032258064516,
+   "voEnd": 326.79677419354834,
+   "sfx": "low distant rumble (lib artillery, very soft)",
+   "text": "On July first, nineteen forty-six, the first bomb exploded in the air above the anchored fleet."
+  },
+  {
+   "id": "15_5",
+   "start": 326.97177419354836,
+   "end": 329.2572580645161,
+   "voStart": 327.14677419354837,
+   "voEnd": 329.0822580645161,
+   "sfx": null,
+   "text": "Nagato survived with little damage."
+  },
+  {
+   "id": "15_6",
+   "start": 329.2572580645161,
+   "end": 332.70403225806456,
+   "voStart": 329.43225806451613,
+   "voEnd": 332.52903225806455,
+   "sfx": null,
+   "text": "Three weeks later, a second bomb exploded underwater."
+  },
+  {
+   "id": "15_7",
+   "start": 332.70403225806456,
+   "end": 336.5379032258064,
+   "voStart": 332.8790322580645,
+   "voEnd": 336.36290322580646,
+   "sfx": null,
+   "text": "The old battleship stayed afloat for four more days."
+  },
+  {
+   "id": "15_8",
+   "start": 336.5379032258064,
+   "end": 341.92016129032254,
+   "voStart": 336.71290322580643,
+   "voEnd": 341.7451612903226,
+   "sfx": null,
+   "text": "Then, on the night of July twenty-ninth, she slowly rolled over and sank."
+  },
+  {
+   "id": "15_9",
+   "start": 341.92016129032254,
+   "end": 346.5282258064516,
+   "voStart": 342.09516129032255,
+   "voEnd": 346.3532258064516,
+   "sfx": null,
+   "text": "Today she lies upside down on the bottom of the lagoon."
+  },
+  {
+   "id": "16_1",
+   "start": 346.5282258064516,
+   "end": 351.13629032258063,
+   "voStart": 346.7032258064516,
+   "voEnd": 350.9612903225806,
+   "sfx": null,
+   "text": "So the planes were burned, and the big ships were gone."
+  },
+  {
+   "id": "16_2",
+   "start": 351.13629032258063,
+   "end": 357.2927419354839,
+   "voStart": 351.31129032258065,
+   "voEnd": 357.1177419354839,
+   "sfx": "tension riser (lib), soft",
+   "text": "But one part of the war machine was still out there, waiting in the water."
+  },
+  {
+   "id": "17_1",
+   "start": 357.2927419354839,
+   "end": 363.8362903225807,
+   "voStart": 357.4677419354839,
+   "voEnd": 363.66129032258067,
+   "sfx": null,
+   "text": "During the war, Japan had laid tens of thousands of mines to protect its own harbors."
+  },
+  {
+   "id": "17_2",
+   "start": 363.8362903225807,
+   "end": 367.67016129032265,
+   "voStart": 364.0112903225807,
+   "voEnd": 367.49516129032264,
+   "sfx": "plane fly-by (lib), distant",
+   "text": "American bombers dropped thousands more to strangle Japan's shipping."
+  },
+  {
+   "id": "17_3",
+   "start": 367.67016129032265,
+   "end": 371.5040322580645,
+   "voStart": 367.8451612903226,
+   "voEnd": 371.32903225806456,
+   "sfx": null,
+   "text": "The mines did not know the war was over."
+  },
+  {
+   "id": "17_4",
+   "start": 371.5040322580645,
+   "end": 376.88629032258063,
+   "voStart": 371.6790322580645,
+   "voEnd": 376.7112903225807,
+   "sfx": null,
+   "text": "Fishing boats, ferries and cargo ships kept hitting them, and people kept dying."
+  },
+  {
+   "id": "18_1",
+   "start": 376.88629032258063,
+   "end": 379.55887096774194,
+   "voStart": 377.06129032258065,
+   "voEnd": 379.3838709677419,
+   "sfx": "wind (field) bed",
+   "text": "Somebody had to clear the water."
+  },
+  {
+   "id": "18_2",
+   "start": 379.55887096774194,
+   "end": 385.32822580645166,
+   "voStart": 379.73387096774195,
+   "voEnd": 385.15322580645164,
+   "sfx": null,
+   "text": "Therefore the Allies kept one small piece of the Japanese navy alive: its minesweepers."
+  },
+  {
+   "id": "18_3",
+   "start": 385.32822580645166,
+   "end": 391.48467741935485,
+   "voStart": 385.5032258064516,
+   "voEnd": 391.30967741935484,
+   "sfx": null,
+   "text": "Many of the crews were the same men who had served in the Imperial Navy."
+  },
+  {
+   "id": "18_4",
+   "start": 391.48467741935485,
+   "end": 396.09274193548384,
+   "voStart": 391.6596774193548,
+   "voEnd": 395.91774193548383,
+   "sfx": null,
+   "text": "They went out day after day, dragging cables through cold water."
+  },
+  {
+   "id": "18_5",
+   "start": 396.09274193548384,
+   "end": 401.86209677419356,
+   "voStart": 396.26774193548385,
+   "voEnd": 401.68709677419355,
+   "sfx": null,
+   "text": "Every sailor knew the next mine could go off right under his own hull."
+  },
+  {
+   "id": "18_6",
+   "start": 401.86209677419356,
+   "end": 405.3088709677419,
+   "voStart": 402.0370967741935,
+   "voEnd": 405.1338709677419,
+   "sfx": null,
+   "text": "Their work was slow, dangerous, and almost invisible."
+  },
+  {
+   "id": "18_7",
+   "start": 405.3088709677419,
+   "end": 410.691129032258,
+   "voStart": 405.4838709677419,
+   "voEnd": 410.51612903225805,
+   "sfx": null,
+   "text": "It was the only part of Japan's war machine that never stopped working."
+  },
+  {
+   "id": "18_8",
+   "start": 410.691129032258,
+   "end": 414.525,
+   "voStart": 410.866129032258,
+   "voEnd": 414.34999999999997,
+   "sfx": null,
+   "text": "But soon, Japan would face a much bigger question."
+  },
+  {
+   "id": "19_1",
+   "start": 414.525,
+   "end": 418.74596774193543,
+   "voStart": 414.69999999999993,
+   "voEnd": 418.5709677419354,
+   "sfx": null,
+   "text": "In May nineteen forty-seven, Japan's new constitution came into force."
+  },
+  {
+   "id": "19_2",
+   "start": 418.74596774193543,
+   "end": 422.96693548387094,
+   "voStart": 418.92096774193544,
+   "voEnd": 422.79193548387093,
+   "sfx": "paper rustle (lib)",
+   "text": "Its ninth article said that Japan gave up war forever."
+  },
+  {
+   "id": "19_3",
+   "start": 422.96693548387094,
+   "end": 428.3491935483871,
+   "voStart": 423.14193548387095,
+   "voEnd": 428.1741935483871,
+   "sfx": null,
+   "text": "It also said that Japan would never keep land, sea, or air forces."
+  },
+  {
+   "id": "19_4",
+   "start": 428.3491935483871,
+   "end": 434.1185483870968,
+   "voStart": 428.5241935483871,
+   "voEnd": 433.94354838709677,
+   "sfx": null,
+   "text": "For the first time in its modern history, Japan had no military at all."
+  },
+  {
+   "id": "20_1",
+   "start": 434.1185483870968,
+   "end": 438.72661290322577,
+   "voStart": 434.29354838709673,
+   "voEnd": 438.55161290322576,
+   "sfx": "distant artillery (lib), very low",
+   "text": "Then, on June twenty-fifth, nineteen fifty, North Korea invaded South Korea."
+  },
+  {
+   "id": "20_2",
+   "start": 438.72661290322577,
+   "end": 443.72177419354836,
+   "voStart": 438.9016129032258,
+   "voEnd": 443.54677419354834,
+   "sfx": "ship horn (lib), distant",
+   "text": "The American troops guarding Japan were rushed across the sea to fight."
+  },
+  {
+   "id": "20_3",
+   "start": 443.72177419354836,
+   "end": 446.39435483870966,
+   "voStart": 443.89677419354837,
+   "voEnd": 446.21935483870965,
+   "sfx": null,
+   "text": "Suddenly, Japan itself was almost undefended."
+  },
+  {
+   "id": "21_1",
+   "start": 446.39435483870966,
+   "end": 453.7120967741935,
+   "voStart": 446.56935483870967,
+   "voEnd": 453.5370967741935,
+   "sfx": "marching column (lib), soft",
+   "text": "Within weeks, the occupation authorities ordered a new force called the National Police Reserve, with seventy-five thousand men."
+  },
+  {
+   "id": "21_2",
+   "start": 453.7120967741935,
+   "end": 460.2556451612903,
+   "voStart": 453.88709677419354,
+   "voEnd": 460.0806451612903,
+   "sfx": null,
+   "text": "It was called a police force, but it was armed and organized much like an army."
+  },
+  {
+   "id": "21_3",
+   "start": 460.2556451612903,
+   "end": 464.0895161290323,
+   "voStart": 460.43064516129033,
+   "voEnd": 463.9145161290323,
+   "sfx": null,
+   "text": "On land, Japan now had an answer of sorts."
+  },
+  {
+   "id": "21_4",
+   "start": 464.0895161290323,
+   "end": 466.375,
+   "voStart": 464.26451612903224,
+   "voEnd": 466.2,
+   "sfx": null,
+   "text": "The sea was another story."
+  },
+  {
+   "id": "22_1",
+   "start": 466.375,
+   "end": 474.07983870967746,
+   "voStart": 466.55,
+   "voEnd": 473.90483870967745,
+   "sfx": null,
+   "text": "In October nineteen fifty, United Nations forces planned a landing at Wonsan, a port on North Korea's east coast."
+  },
+  {
+   "id": "22_2",
+   "start": 474.07983870967746,
+   "end": 477.5266129032258,
+   "voStart": 474.2548387096774,
+   "voEnd": 477.3516129032258,
+   "sfx": "tension riser (lib), soft",
+   "text": "But the harbor was full of Soviet-made mines."
+  },
+  {
+   "id": "22_3",
+   "start": 477.5266129032258,
+   "end": 482.52177419354837,
+   "voStart": 477.7016129032258,
+   "voEnd": 482.34677419354836,
+   "sfx": null,
+   "text": "The Americans did not have enough minesweepers to clear them in time."
+  },
+  {
+   "id": "23_1",
+   "start": 482.52177419354837,
+   "end": 487.51693548387095,
+   "voStart": 482.6967741935484,
+   "voEnd": 487.34193548387094,
+   "sfx": "clock tick (lib)",
+   "text": "So on October second, Rear Admiral Arleigh Burke made a quiet request."
+  },
+  {
+   "id": "23_2",
+   "start": 487.51693548387095,
+   "end": 494.4475806451613,
+   "voStart": 487.69193548387096,
+   "voEnd": 494.27258064516127,
+   "sfx": null,
+   "text": "He asked Takeo Okubo, the head of Japan's new Maritime Safety Agency, to send minesweepers to Korea."
+  },
+  {
+   "id": "23_3",
+   "start": 494.4475806451613,
+   "end": 499.44274193548387,
+   "voStart": 494.6225806451613,
+   "voEnd": 499.26774193548385,
+   "sfx": null,
+   "text": "Okubo refused at first, because the new constitution seemed to forbid it."
+  },
+  {
+   "id": "23_4",
+   "start": 499.44274193548387,
+   "end": 503.2766129032258,
+   "voStart": 499.6177419354839,
+   "voEnd": 503.1016129032258,
+   "sfx": null,
+   "text": "He took the question to Prime Minister Shigeru Yoshida."
+  },
+  {
+   "id": "23_5",
+   "start": 503.2766129032258,
+   "end": 504.7879032258064,
+   "voStart": 503.4516129032258,
+   "voEnd": 504.61290322580646,
+   "sfx": null,
+   "text": "Yoshida said yes."
+  },
+  {
+   "id": "24_1",
+   "start": 504.7879032258064,
+   "end": 512.1056451612903,
+   "voStart": 504.96290322580643,
+   "voEnd": 511.9306451612903,
+   "sfx": "distant ship engine (lib)",
+   "text": "On October sixth, sixteen Japanese minesweepers carrying about twelve hundred men left the port of Shimonoseki for Korea."
+  },
+  {
+   "id": "24_2",
+   "start": 512.1056451612903,
+   "end": 518.2620967741934,
+   "voStart": 512.2806451612903,
+   "voEnd": 518.0870967741935,
+   "sfx": null,
+   "text": "Many of these small ships had been built for the Imperial Navy during the war."
+  },
+  {
+   "id": "24_3",
+   "start": 518.2620967741934,
+   "end": 522.0959677419355,
+   "voStart": 518.4370967741935,
+   "voEnd": 521.9209677419354,
+   "sfx": null,
+   "text": "Five years earlier, these sailors had been America's enemy."
+  },
+  {
+   "id": "24_4",
+   "start": 522.0959677419355,
+   "end": 526.7040322580644,
+   "voStart": 522.2709677419355,
+   "voEnd": 526.5290322580645,
+   "sfx": null,
+   "text": "Now they were sweeping mines in front of an American fleet."
+  },
+  {
+   "id": "25_1",
+   "start": 526.7040322580644,
+   "end": 531.3120967741936,
+   "voStart": 526.8790322580645,
+   "voEnd": 531.1370967741935,
+   "sfx": "single soft boom (lib), well under the voice",
+   "text": "Off Wonsan, minesweeper M S fourteen struck a mine and sank."
+  },
+  {
+   "id": "25_2",
+   "start": 531.3120967741936,
+   "end": 534.758870967742,
+   "voStart": 531.4870967741936,
+   "voEnd": 534.583870967742,
+   "sfx": null,
+   "text": "One man was killed, and eighteen were injured."
+  },
+  {
+   "id": "25_3",
+   "start": 534.758870967742,
+   "end": 540.5282258064517,
+   "voStart": 534.933870967742,
+   "voEnd": 540.3532258064516,
+   "sfx": null,
+   "text": "A month later, an American army tugboat with a Japanese crew hit another mine."
+  },
+  {
+   "id": "25_4",
+   "start": 540.5282258064517,
+   "end": 543.200806451613,
+   "voStart": 540.7032258064517,
+   "voEnd": 543.025806451613,
+   "sfx": null,
+   "text": "Twenty-two of its twenty-seven crewmen died."
+  },
+  {
+   "id": "26_1",
+   "start": 543.200806451613,
+   "end": 545.4862903225805,
+   "voStart": 543.3758064516129,
+   "voEnd": 545.3112903225806,
+   "sfx": null,
+   "text": "There was a bitter twist."
+  },
+  {
+   "id": "26_2",
+   "start": 545.4862903225805,
+   "end": 551.6427419354839,
+   "voStart": 545.6612903225806,
+   "voEnd": 551.4677419354838,
+   "sfx": null,
+   "text": "While the mines were being cleared, South Korean troops had already taken Wonsan by land."
+  },
+  {
+   "id": "26_3",
+   "start": 551.6427419354839,
+   "end": 556.2508064516128,
+   "voStart": 551.8177419354838,
+   "voEnd": 556.0758064516128,
+   "sfx": null,
+   "text": "When the American landing finally came, the beach was already secure."
+  },
+  {
+   "id": "26_4",
+   "start": 556.2508064516128,
+   "end": 561.2459677419354,
+   "voStart": 556.4258064516129,
+   "voEnd": 561.0709677419354,
+   "sfx": null,
+   "text": "But the men who died clearing the way did not come back."
+  },
+  {
+   "id": "27_1",
+   "start": 561.2459677419354,
+   "end": 563.9185483870967,
+   "voStart": 561.4209677419354,
+   "voEnd": 563.7435483870968,
+   "sfx": null,
+   "text": "Their families were told almost nothing."
+  },
+  {
+   "id": "27_2",
+   "start": 563.9185483870967,
+   "end": 570.0749999999998,
+   "voStart": 564.0935483870967,
+   "voEnd": 569.8999999999999,
+   "sfx": "typewriter (lib), 2 keystrokes",
+   "text": "The whole operation stayed top secret for twenty-nine years, and no medals were ever given."
+  },
+  {
+   "id": "28_1",
+   "start": 570.0749999999998,
+   "end": 573.5217741935483,
+   "voStart": 570.2499999999999,
+   "voEnd": 573.3467741935483,
+   "sfx": null,
+   "text": "So what really happened to Japan's war machine?"
+  },
+  {
+   "id": "28_2",
+   "start": 573.5217741935483,
+   "end": 577.3556451612903,
+   "voStart": 573.6967741935483,
+   "voEnd": 577.1806451612903,
+   "sfx": null,
+   "text": "Its planes were stripped of their propellers and burned."
+  },
+  {
+   "id": "28_3",
+   "start": 577.3556451612903,
+   "end": 580.4153225806451,
+   "voStart": 577.5306451612903,
+   "voEnd": 580.2403225806452,
+   "sfx": null,
+   "text": "Its warships carried millions of people home."
+  },
+  {
+   "id": "28_4",
+   "start": 580.4153225806451,
+   "end": 585.4104838709677,
+   "voStart": 580.5903225806451,
+   "voEnd": 585.2354838709676,
+   "sfx": null,
+   "text": "After that, they were raffled off, scrapped, or sunk by atomic bombs."
+  },
+  {
+   "id": "28_5",
+   "start": 585.4104838709677,
+   "end": 590.7927419354837,
+   "voStart": 585.5854838709677,
+   "voEnd": 590.6177419354838,
+   "sfx": null,
+   "text": "But its smallest ships, and the men who sailed them, never really stopped."
+  },
+  {
+   "id": "28_6",
+   "start": 590.7927419354837,
+   "end": 598.1104838709678,
+   "voStart": 590.9677419354838,
+   "voEnd": 597.9354838709677,
+   "sfx": null,
+   "text": "Five years after the surrender, they were back in a war zone, sweeping mines for their former enemy."
+  },
+  {
+   "id": "28_7",
+   "start": 598.1104838709678,
+   "end": 605.041129032258,
+   "voStart": 598.2854838709677,
+   "voEnd": 604.8661290322581,
+   "sfx": null,
+   "text": "In nineteen fifty-four, Japan created its Maritime Self-Defense Force, and the minesweeping crews became part of it."
+  },
+  {
+   "id": "28_8",
+   "start": 605.041129032258,
+   "end": 609.2620967741934,
+   "voStart": 605.216129032258,
+   "voEnd": 609.0870967741935,
+   "sfx": null,
+   "text": "The war machine had been taken apart, piece by piece."
+  },
+  {
+   "id": "28_9",
+   "start": 609.2620967741934,
+   "end": 613.4830645161289,
+   "voStart": 609.4370967741935,
+   "voEnd": 613.308064516129,
+   "sfx": null,
+   "text": "But a few of its pieces had simply been waiting."
+  },
+  {
+   "id": "29_1",
+   "start": 613.4830645161289,
+   "end": 618.4782258064515,
+   "voStart": 613.658064516129,
+   "voEnd": 618.3032258064516,
+   "sfx": null,
+   "text": "Japan was not the only defeated navy that the winners divided up."
+  },
+  {
+   "id": "29_2",
+   "start": 618.4782258064515,
+   "end": 626.5701612903226,
+   "voStart": 618.6532258064516,
+   "voEnd": 626.3951612903226,
+   "sfx": null,
+   "text": "Italy's battleships were handed out too, and one of them exploded in a Soviet harbor ten years after the war."
+  },
+  {
+   "id": "29_3",
+   "start": 626.5701612903226,
+   "end": 636.5629032258065,
+   "voStart": 626.7451612903226,
+   "voEnd": 633.7129032258065,
+   "sfx": "soft whoosh (lib)",
+   "text": "That mystery is our next story, so subscribe if you want to find out what really sank her."
+  }
+ ]
+}
