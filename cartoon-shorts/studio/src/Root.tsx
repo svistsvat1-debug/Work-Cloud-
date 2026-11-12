@@ -15,6 +15,9 @@ import {DURATION as DOOM_DURATION, FPS as DOOM_FPS} from './doomsday-2026/scene'
 import {NukeGasFireShort} from './nuke-gas-fire/Short';
 import {NukeGasFireCover} from './nuke-gas-fire/Cover';
 import {DURATION as NUKE_DURATION, FPS as NUKE_FPS} from './nuke-gas-fire/scene';
+import {DesertIceShort} from './desert-ice/Short';
+import {DesertIceCover} from './desert-ice/Cover';
+import {DURATION as ICE_DURATION, FPS as ICE_FPS} from './desert-ice/scene';
 
 // One composition per Short (+ its cover still).
 export const RemotionRoot: React.FC = () => {
@@ -30,6 +33,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="Doomsday2026Cover" component={Doomsday2026Cover} width={1080} height={1920} />
       <Composition id="NukeGasFire" component={NukeGasFireShort} durationInFrames={Math.round(NUKE_DURATION * NUKE_FPS)} fps={NUKE_FPS} width={1080} height={1920} />
       <Still id="NukeGasFireCover" component={NukeGasFireCover} width={1080} height={1920} />
+      <Composition id="DesertIce" component={DesertIceShort} durationInFrames={Math.round(ICE_DURATION * ICE_FPS)} fps={ICE_FPS} width={1080} height={1920} />
+      <Still id="DesertIceCover" component={DesertIceCover} width={1080} height={1920} />
     </>
   );
 };
