@@ -29,7 +29,7 @@ export const MapView: React.FC<{bbox: [number, number, number, number]; style?: 
   const u = useUid();
   const proj = useMemo(() => {
     const [w, s, e, n] = bbox;
-    const box = {type: 'Feature', geometry: {type: 'Polygon', coordinates: [[[w, s], [e, s], [e, n], [w, n], [w, s]]]}} as any;
+    const box = {type: 'Feature', geometry: {type: 'Polygon', coordinates: [[[w, s], [w, n], [e, n], [e, s], [w, s]]]}} as any;
     return geoMercator().fitExtent([[pad, pad], [W - pad, H - pad]], box);
   }, [bbox, pad]);
   const path = useMemo(() => geoPath(proj), [proj]);
