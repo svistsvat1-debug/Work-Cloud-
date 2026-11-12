@@ -1,0 +1,30 @@
+The war in Europe ended on May 8, 1945. Millions of American soldiers expected to go home. Instead, the Army handed them a number: 85.
+
+In this animated WW2 documentary, you play the game they played. Count the points of three typical soldiers (a father, a young combat veteran and a teenage replacement) and see who really made it home, who was lined up for the invasion of Japan, and why winning the war ended with soldiers protesting under the slogan "No boats, no votes".
+
+Chapters
+0:00 The war is over. So why can't you leave?
+0:15 Millions of men, not enough ships
+1:19 The 4 rules of the point system
+2:21 The game: 3 soldiers, 3 scores
+3:41 The war wasn't over: Japan
+5:17 The cigarette camps and the ship bottleneck
+6:35 August 1945 changes the math
+7:59 No boats, no votes: the soldiers protest
+9:24 Final count: would you make it home?
+10:51 What comes next
+
+How many points would you have had? Tell us your score in the comments.
+
+The three soldiers in this video are typical cases built from the real rules of the Adjusted Service Rating Score, not real individuals. Quotes are taken from the sources below.
+
+Sources
+- National WWII Museum, "The Points Were All That Mattered: The US Army's Demobilization After World War II"
+- National WWII Museum, "Camp Lucky Strike: RAMP Camp No. 1"
+- Operation Magic Carpet, Adjusted Service Rating Score, Cigarette Camp, Operation Downfall, Demobilization of US Armed Forces after WWII (encyclopedia summaries)
+- 86th Infantry Division unit history (LoneSentry)
+- Stars and Stripes (2021) and History.com on the 1946 soldier demonstrations
+
+Visuals: hand-drawn whiteboard animation made in code. Music: original score composed for this video (FluidR3_GM soundfont, MIT license).
+
+#ww2 #worldwar2 #history

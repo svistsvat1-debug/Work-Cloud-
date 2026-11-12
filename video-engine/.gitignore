@@ -1,0 +1,9 @@
+node_modules/
+out/
+*.mp4
+*.wav
+*.mp3
+*.mid
+# generated assets (rebuild with: python3 scripts/setup_assets.py)
+public/paper.png
+public/fonts/*.woff2
