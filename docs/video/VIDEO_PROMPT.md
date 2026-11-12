@@ -1,4 +1,4 @@
-# VIDEO PROMPT — WWII Whiteboard long-form (v1.3)
+# VIDEO PROMPT — WWII Whiteboard long-form (v1.4)
 
 > Як користуватися: скопіюй усе між `=== PROMPT START ===` і `=== PROMPT END ===`, встав у нову сесію Claude Code у цьому репозиторії й заповни блок INPUT.
 > Фаза A закінчується сценарієм і зупинкою. Ти перевіряєш, озвучуєш, кидаєш файл і пишеш «продовжуй». Тоді йде Фаза B до готового відео.
@@ -38,6 +38,7 @@ TECH SPEC
 - Audio: my voice normalized to -14 LUFS. SFX 12–18 dB under the voice. Music 25–30 dB under the voice, with ducking.
 - Animation stack: Remotion (React + SVG), rendered with the pre-installed Chromium.
 - Captions: captions.srt, built from the timings of my voice file.
+- Style reference: docs/video/STYLE_REFERENCE.md + docs/video/style-ref/*.jpg (measured from my example video).
 - Phone-ready: the final file must download to my phone and upload to YouTube with no quality loss (see B6 and B8).
 
 ==================================================
@@ -104,16 +105,21 @@ Writing rules:
 - Sentences connect with BUT / SO / BECAUSE / THEREFORE, never "and then". Re-check every paragraph for a "list of events".
 - Every 60–90 s, add a new question or stake ("But there was a problem...").
 - Human stakes: show what this meant for real people (a soldier, a pilot, a family), not only dates.
+- BEAT RULE: one sentence = one fact = one visual beat. Sentences of 10–20 words (about 4–7 s each). A scene = 1–3 sentences.
 - Short spoken sentences (max 20 words). No parentheses, no abbreviations the TTS will misread. Write numbers the way they are spoken ("nineteen forty-four", "three hundred billion dollars"). Write unit names on first use ("Panzer Four", "the Luftwaffe, the German air force").
 - Facts to double-check are marked [VERIFY].
 Script files:
 - script_voice.txt: clean text only, ready to paste into Kokoro. One paragraph per scene, no tags.
-- script_scenes.md: the same text split into scenes, in this format:
-    [SCENE 07 | ~0:58–1:14]
-    VO: "One helmet cost the army sixteen dollars. A single tank? Forty thousand."
-    VISUAL: title "The Price of One Soldier" (top-left, red underline) -> helmet draws on, price tag pops -> tank draws on right side, price tag pops
-    SFX: marker squeak (lib) | pop x2 (lib)
-    MUSIC MOOD: tension
+- script_scenes.md: the same text split into scenes and beats (one beat per sentence), in this format:
+    [SCENE 07 | ~0:58–1:12 | MUSIC MOOD: tension]
+    B1 VO: "Every American soldier carried a steel helmet into battle."
+       VISUAL: title "The Price of a Soldier" writes on, top-left, red underline per word
+    B2 VO: "That single helmet cost the army about [VERIFY] dollars."
+       VISUAL: helmet REVEALS center (outline -> olive scribble fill) | label "<- $[VERIFY]" in red
+    B3 VO: "But a tank cost thousands of times more."
+       VISUAL: tank REVEALS right side, smaller, yellow rays
+       SFX: none
+    -> HARD CUT
 
 A5. DELIVER AND STOP
 Save everything to videos/<YYYY-MM-DD>_<slug>/phase-a/:
@@ -135,26 +141,60 @@ B2. TIMINGS FROM MY VOICE FILE (free, local)
 - If the length is under 8:00 or over 15:00, stop and tell me.
 - Build captions.srt: max 2 lines, max 42 characters per line, 1–6 s per cue.
 
-B3. VISUAL STYLE — "Marker Whiteboard"
-- Background: warm white board #FAF8F3 with a faint paper texture. No frames, no UI, no watermark.
-- Lines: thick black marker outline (#1A1A1A, 3–6 px), slightly wobbly and hand-drawn (noise/jitter on the paths).
-- Fill: visible marker scribble strokes, not flat fills. Palette: red #E8322B, orange #F58A1F, yellow #FFC93C, blue #1E88E5, green #3BA55C, plus WWII muted tones (olive #6B7B3A, khaki #C2B280, steel grey #6E7B85) for uniforms and vehicles.
-- Text: hand-lettered bold marker font (Permanent Marker for titles, Caveat Brush for labels; Google Fonts, bundled locally). Black, with a RED marker underline.
-- Accents: yellow "burst" dashes around key numbers (= 1944 =), red arrows with labels (<- 0.2%), front lines and attack arrows drawn on maps.
-- Animation grammar:
-  1. The object DRAWS ON along its outline (0.6–1.5 s).
-  2. A SCRIBBLE-FILL colors it in (0.5–1 s).
-  3. Text writes on letter by letter, then the underline sweeps after it.
-  4. Bursts and arrows pop in with a small overshoot.
-  5. Scene change: a quick board wipe or erase, or the camera slides to empty board space.
-  6. Maps: country outlines draw on, territory fills spread like ink, arrows advance along the path.
-- Layout: scene title top-left, main object in the center, helper object on the right. MAX 3 main objects on screen.
-- Pacing: something new happens every 3–6 s; a new scene every 10–25 s. No static frame longer than 6 s. Key VO words trigger their visual on the exact word timestamp.
-- Reusable library in video-engine/components/, all parametric: Europe/World maps with country outlines, front-line arrows, tank, plane, ship, submarine, rifle, helmet, soldier stick figure, factory, ration/food, money/price tag, calendar/date, clock, thermometer, explosion puff (cartoon, no gore). Reuse across videos; add new components only when needed.
+B3. VISUAL STYLE — "Marker Explainer" (measured from my reference video)
+FIRST open docs/video/STYLE_REFERENCE.md and every image in docs/video/style-ref/ and look at them. Match that look. Ignore the "golpo" watermark and the caption bar in those frames; they are NOT part of the style.
+
+CANVAS AND CAMERA
+- Flat warm-white board #FAF8F3. No paper texture, no vignette, no frame, no UI.
+- STATIC CAMERA: no zoom, no pan, no shake, no parallax. Ever.
+- No hand, pen or marker sprite on screen.
+
+ILLUSTRATION LOOK (every drawable)
+- Finished, richly colored marker illustration: bold black outline #111111 (6–9 px at 1080p), slightly wobbly hand-drawn edge.
+- Fills show visible directional marker strokes, slight color variation inside one region, and thin white "paper" streaks as highlights. Never flat vector fills, never gradients.
+- Simple iconic shapes, readable in 1 second. No photorealism, no 3D.
+- WWII people: simple bold-outline figures in the same marker style, serious and respectful (no chibi faces, no gore).
+
+PALETTE (measured)
+- Ink/outline/text #111111. ACCENT #1 red #F0281E: underlines, arrows, labels, key numbers.
+- Hot fills #F5541A, #F5781E, #F9A825. Yellow #FFCC1A only for rays and sparks.
+- Secondary accent sky blue #1EA0F0 (units, second keyword). Navy/ocean #1673B8. Green #2E9E4A.
+- WWII muted fills for uniforms and vehicles: olive #6B7B3A, khaki #C2B280, steel grey #6E7B85.
+
+THE REVEAL TECHNIQUE (core of the style; build it once as a reusable component)
+- Each object is a full layered SVG illustration that gets REVEALED in drawing order:
+  1. OUTLINE draws on as one continuous line (stroke-dashoffset), 0.4–0.8 s.
+  2. COLOR FILL is revealed region by region (e.g. ocean, then land, then each layer) through a mask made of thick zigzag scribble strokes that sweep in one direction (top->bottom or left->right), animated with stroke-dashoffset inside the mask. 0.3–0.8 s per region.
+  3. DETAILS last: small parts, label, arrow, 0.3–0.5 s.
+- A main object takes ~3–5 s in total and finishes before its sentence ends. Then it HOLDS still.
+
+TEXT
+- Hand-lettered heavy marker font (Permanent Marker or a similar heavy brush-marker font; bundle it locally). Black, baseline tilted slightly upward (-2° to -3°).
+- Writes on letter by letter at 10–13 letters per second.
+- RED underline under EACH WORD separately, slightly wavy and a bit shorter than the word, drawn right after that word is written.
+- Scene title: top-left (x 2–22%, y 4–20%), 1–2 lines, letter height ~5–6% of frame height.
+- Labels: thinner red handwriting with a red hand-drawn arrow pointing at the detail (e.g. "<- 0.2%").
+- NUMBER CARD (for the key shocking numbers): its own scene, number top-center, digits red, unit blue, red underline, 3 yellow dashes fanning out on each side. Order: dashes first -> digits write on -> underline.
+
+SCENE GRAMMAR (the most important rule)
+- 1 SENTENCE OF VOICE = 1 VISUAL BEAT. Each beat starts 0–0.3 s after its sentence starts (use the word timestamps).
+- A scene = 1–3 sentences (8–15 s). Elements ACCUMULATE inside a scene; nothing is erased:
+  beat 1: scene title (top-left) -> beat 2: main object (center, ~55–75% of frame height) -> beat 3: label/arrow on the main object -> beat 4: helper object on the right (x 75–85%, smaller, with yellow rays).
+- Max 4 elements per scene. At the end of a scene the board is still 70–90% empty.
+- New scene = HARD CUT to an empty board, placed in the pause between two sentences. No wipes, no fades, no erase animation.
+- Holds: after a beat finishes drawing, a still frame of 2–7 s is correct for this style. Never hold longer than 7 s (except the intro card during the hook).
+
+INTRO CARD (first 5–15 s, under the hook)
+- Same art as the thumbnail: 2–3 lines of big stacked text in mixed colors (red / black / blue), the key word biggest, yellow rays near the first word, a red double underline under the last word, and the hero object on the right half with red/orange action rays. Then hard cut to scene 1.
+
+REUSABLE LIBRARY
+- video-engine/components/: the Reveal component (outline + scribble-mask fill + details), WriteOnText (+ per-word underline), Arrow+Label, NumberCard, Rays, IntroCard.
+- video-engine/illustrations/: parametric WWII drawables, all in the same look: Europe/World maps with country outlines (outlines draw on, territory fills spread by scribble-mask, front-line arrows advance along a path), tank, plane, ship, submarine, rifle, helmet, soldier figure, factory, ration/food, money/price tag, calendar/date, clock, thermometer, explosion puff (cartoon, no gore). Reuse them; add new ones only when needed.
 
 B4. SFX (ElevenLabs, budget-limited)
 - LIBRARY FIRST: video-engine/sfx-library/. On the very first video, generate ~15–20 base SFX once: marker squeak short/long, marker tap, pop, soft whoosh, board erase, distant artillery boom, impact, tension riser, typewriter, telegraph/morse beeps, radio static, paper/map unfold, tick-tock, counter roll, reveal ding. Reuse them forever.
 - MAX 5 NEW SFX PER VIDEO, only for unique moments. Before generating, list them for me with a one-line reason each.
+- The reference style is calm: SFX are RARE and SUBTLE. Max 1 SFX per beat, most beats have none. Use them on scene starts (soft marker squeak), number cards (pop) and big reveals (impact). Never a constant marker-scratch loop.
 - Mix: SFX 12–18 dB under the voice, never on top of a key word.
 
 B5. BACKGROUND MUSIC (always on)
@@ -180,7 +220,8 @@ B7. QA BEFORE DELIVERY (show me the checklist)
 [ ] Title answer appears only in the final block
 [ ] No "and then" lists in the script
 [ ] Thumbnail != title, max 3 objects
-[ ] No static frame > 6 s (automatic check across the scene timeline)
+[ ] No hold > 7 s, except the intro card (automatic check across the beat timeline)
+[ ] Style match: static camera, hard cuts only, no hand sprite, per-word red underlines, board 70–90% empty at scene end (compare 3 frames side by side with docs/video/style-ref/)
 [ ] Visuals hit their VO keywords (spot-check 5 random scenes: export a frame + timestamp)
 [ ] New SFX <= 5
 [ ] Music on, barely audible under the voice, ducking works
