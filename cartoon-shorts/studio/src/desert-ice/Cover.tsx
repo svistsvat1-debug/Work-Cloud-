@@ -16,15 +16,15 @@ export const DesertIceCover: React.FC = () => {
   };
   return (
     <AbsoluteFill>
-      <Scene t={0.9} tr={0.9} cam={{ x: 820, y: 1500, k: 1.38 }} cover />
-      <AbsoluteFill style={{ alignItems: "center", top: 140, left: -40 }}>
-        <div style={{ ...txt, fontSize: 158, transform: "rotate(-4deg)" }}>
+      <Scene t={0.9} tr={0.9} cam={{ x: 790, y: 1360, k: 1.6 }} cover />
+      <AbsoluteFill style={{ alignItems: "center", top: 110, left: -60 }}>
+        <div style={{ ...txt, fontSize: 150, transform: "rotate(-4deg)" }}>
           FROZEN
         </div>
         <div
           style={{
             ...txt,
-            fontSize: 132,
+            fontSize: 112,
             color: "#8FD8FF",
             transform: "rotate(-4deg)",
             marginTop: 8,

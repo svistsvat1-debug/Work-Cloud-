@@ -152,3 +152,29 @@ Video #5 (nuke-gas-fire, 2026-11-12):
   back to the frame-0 framing for the loop.
 - MIX: MIX_DB +4 gave a -2.8 dBFS peak on the preview (this voice take is louder); +3 dB used for the final.
 - TIMING: 69 words / 375 characters with one spelled-out number took 24.2 s with Mark.
+
+Video #6 (desert-ice, 2026-11-12):
+- GOOD: the locked STYLE_CHAR block (text only) again matched every character picture on the first try: hero + 5 poses
+  (incl. a 'head and chest only' close-up that finally came out as a real close-up) + dome, pool, props sheet, plate =
+  10 pictures, 0 redos, 1166.5 credits (pictures 772.2, voice 370, sfx 24.3).
+- GOOD: four 'sets' on ONE plate swapped on hard cuts (day desert / night close-up / pool / dome): every object is shown
+  only in its set, so one 2:3 plate carried a 25 s story. Night = a multiply overlay: strong (0.55) on the plate +
+  environment, weak (0.3) on the characters, stars / the sky's face / heat squiggles drawn ABOVE both overlays (so they
+  glow). Full-strength night on the characters turned them muddy purple.
+- GOOD: abstract physics as a character: the night sky gets eyes + a puckered 'o' mouth and slurps orange heat squiggles
+  (wavy line, black underlay) out of the water, accelerating (easeIn) into the mouth. A tear-off calendar card
+  (WINTER / SPRING / SUMMER, flipped by scaleY through 0, word switched on the flat frame) carries the seasons cheaply.
+- GOOD: an 'x-ray' cut-away panel (wall band | ice inside | wall band) + a yellow double arrow + a '2 m' tag reads the
+  'walls two meters thick' fact in one glance; keep it clear of the object's face (moved the face up).
+- GLITCH: the inscribed-disc head measure failed again when both arms cross the head (carry pose): read the head off a
+  gridded crop (qa/carry_head.png). Bluish 'ice' detection must use a strong threshold (b - r > 40) or anti-aliased
+  outline pixels make the box span the whole sprite. A pour pose's water stream reaches the bottom rows: measure feet
+  only left of the stream.
+- GLITCH: a calendar at the top-left covered the sky's left eye, and at the top-right it later covered the wink: give
+  screen-space UI its own corner per set and pop it out before the payoff gag.
+- FIX in the improvement pass: the night pool shot was dark with an empty grey lower third -> lighter night (0.66 -> 0.55)
+  and the camera tilted up (more sky with the face, less ground); the runner entered half out of frame on the 'But' cut
+  -> starts in frame and leaves little puddles on the sand; the last frame cut the dome through one eye -> final camera
+  moved left so only the dome's edge shows.
+- MIX: MIX_DB +3.5 gave a -4.3 dBFS peak on the preview: no re-mux needed.
+- TIMING: 70 words / 370 characters, no numbers in digits, took 24.6 s with Mark.

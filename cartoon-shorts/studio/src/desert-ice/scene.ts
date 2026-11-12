@@ -112,20 +112,20 @@ export const CAM: CamKey[] = [
   { t: T.but1, x: 790, y: 1470, k: 1.4 },
   { t: T.but1 + 0.001, x: 760, y: 1110, k: 1.5, ease: "cut" },
   { t: T.wide, x: 760, y: 1095, k: 1.56 },
-  { t: T.wide + 0.001, x: 768, y: 1250, k: 1.0, ease: "cut" },
-  { t: 11.45, x: 768, y: 1262, k: 1.01 },
-  { t: 12.25, x: 620, y: 1390, k: 1.16 }, // in on the pour
-  { t: 13.75, x: 625, y: 1385, k: 1.17 },
-  { t: 14.55, x: 768, y: 1290, k: 1.0 }, // out for the whole pool freezing + the slide
-  { t: T.but2, x: 790, y: 1290, k: 1.0 },
+  { t: T.wide + 0.001, x: 768, y: 1150, k: 1.0, ease: "cut" },
+  { t: 11.45, x: 768, y: 1160, k: 1.01 },
+  { t: 12.25, x: 620, y: 1330, k: 1.16 }, // in on the pour
+  { t: 13.75, x: 625, y: 1325, k: 1.17 },
+  { t: 14.55, x: 768, y: 1190, k: 1.0 }, // out for the whole pool freezing + the slide
+  { t: T.but2, x: 790, y: 1190, k: 1.0 },
   { t: T.but2 + 0.001, x: 640, y: 1340, k: 1.05, ease: "cut" },
   { t: 18.0, x: 860, y: 1330, k: 1.05 }, // follow the run to the door
   { t: 18.9, x: 960, y: 1300, k: 1.0 },
   { t: 20.3, x: 965, y: 1300, k: 1.02 },
   { t: 21.0, x: 870, y: 1360, k: 1.02 },
   { t: 22.7, x: 870, y: 1360, k: 1.04 },
-  { t: 23.5, x: 660, y: 1450, k: 1.3 }, // in on the guy catching the cube (frame-0 size for the loop)
-  { t: DURATION, x: 655, y: 1452, k: 1.31 },
+  { t: 23.5, x: 560, y: 1450, k: 1.3 }, // in on the guy catching the cube (frame-0 size for the loop)
+  { t: DURATION, x: 556, y: 1452, k: 1.31 },
 ];
 
 export type PoseName = "hero" | "shrug" | "pour" | "slide" | "carry";

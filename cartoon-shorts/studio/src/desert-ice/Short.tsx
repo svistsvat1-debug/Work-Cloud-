@@ -263,7 +263,7 @@ const guyAt = (t: number, tr: number): GuyState | null => {
   const tRel = 18.0;
   if (t < tRel) {
     const u = prog(t, T.but2, tRel);
-    const x = lerp(160, W.guyE.x, easeOutCubic(u * 0.85 + 0.15 * u * u));
+    const x = lerp(380, W.guyE.x, easeOutCubic(u * 0.85 + 0.15 * u * u));
     const hop = Math.abs(Math.sin(2 * Math.PI * 2.6 * (t - T.but2)));
     return {
       pose: "carry",
@@ -965,6 +965,16 @@ export const Scene: React.FC<{
 
   // block in the guy's hands drips while he runs (set D)
   const drips: React.ReactNode[] = [];
+  if (set === "D" && t < 18.6) {
+    // little puddles left on the sand behind the runner
+    for (let i = 0; i < 5; i++) {
+      const tp = T.ice2 + 0.25 + i * 0.38;
+      const u = easeOutCubic(prog(t, tp, tp + 0.25));
+      if (u <= 0) continue;
+      const x = lerp(380, W.guyE.x, Math.min(1, (tp - T.but2) / (18.0 - T.but2))) + 60;
+      drips.push(<ellipse key={`p${i}`} cx={x} cy={W.groundD - 4} rx={26 * u} ry={8 * u} fill={WATER_LITE} stroke="#000" strokeWidth={4} />);
+    }
+  }
   if (set === "D" && t < tRel && g) {
     const ic = iceIn("carry", g.fx, g.fy, HR);
     for (let i = 0; i < 7; i++) {
@@ -1107,7 +1117,7 @@ export const Scene: React.FC<{
           style={{
             backgroundColor: NIGHT,
             mixBlendMode: "multiply",
-            opacity: 0.66 * night,
+            opacity: 0.55 * night,
           }}
         />
       ) : null}
