@@ -24,6 +24,9 @@ import {DURATION as TE_DURATION, FPS as TE_FPS} from './turkey-eggs/scene';
 import {NuclearWarningShort} from './nuclear-warning/Short';
 import {NuclearWarningCover} from './nuclear-warning/Cover';
 import {DURATION as NW_DURATION, FPS as NW_FPS} from './nuclear-warning/scene';
+import {KingfisherTrainShort} from './kingfisher-train/Short';
+import {KingfisherTrainCover} from './kingfisher-train/Cover';
+import {DURATION as KF_DURATION, FPS as KF_FPS} from './kingfisher-train/scene';
 import {TsunamiWallShort} from './tsunami-wall/Short';
 import {TsunamiWallCover} from './tsunami-wall/Cover';
 import {DURATION as TW_DURATION, FPS as TW_FPS} from './tsunami-wall/scene';
@@ -55,6 +58,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="TsunamiWallCover" component={TsunamiWallCover} width={1080} height={1920} />
       <Composition id="EagleZap" component={EagleZapShort} durationInFrames={Math.round(EZ_DURATION * EZ_FPS)} fps={EZ_FPS} width={1080} height={1920} />
       <Still id="EagleZapCover" component={EagleZapCover} width={1080} height={1920} />
+      <Composition id="KingfisherTrain" component={KingfisherTrainShort} durationInFrames={Math.round(KF_DURATION * KF_FPS)} fps={KF_FPS} width={1080} height={1920} />
+      <Still id="KingfisherTrainCover" component={KingfisherTrainCover} width={1080} height={1920} />
     </>
   );
 };

@@ -283,3 +283,28 @@ Video #10 (eagle-zap, 2026-11-13) - made WITHOUT new pictures:
 - GLITCH: a waist-up close-up cut at the chest must reach below the frame edge (bottom = head_y + (h - head_cy) * s);
   smoke puffs must not rise over the face that carries the payoff (check the LAST frame).
 - MIX: MIX_DB 4.0 gave -3.7 dBFS; no re-mux. TIMING: 48 words / 245 characters took 15.0 s with Mark (3.2 words/s).
+Video #11 (kingfisher-train, 2026-11-13) - all pictures LOW 1K again:
+- GOOD: LOW held up a second time: 7 pictures (hero, guy pair, two trains, kingfisher pair on magenta, hill with two tunnel
+  portals on magenta, plate), 0 redos, 593.65 credits in all (voice 250, pictures 328.7, 3 sfx 15). Vehicles and animals
+  in 'side view, facing RIGHT, flat outlines' came out clean; a 'front car whose LEFT end is cut off straight' train
+  sprite lets code build more cars (crop the body, close the end with the mirrored left end).
+- GOOD: a set piece with holes (tunnel portals) hides things naturally: draw the train BEHIND the hill sprite and it
+  disappears into one portal and comes out of the other with no clipping code. Size the hill so the opening is a bit
+  taller than the train.
+- GOOD: abstract physics as a character again: a puff-cluster 'air pillow' with '> <' eyes squeezed between the nose and
+  the portal (its width = the gap) reads 'shoving air' at once; the hill with a code face puffs its cheeks, sweats and
+  BOOMs; a calm smiling hill + 'shhh' sells 'quietly'. A big white poof cloud hides a sprite swap (old nose -> beak).
+- GOOD: a cut-away pond (water body behind, semi-transparent light-blue overlay in front of the bird and the fish) makes
+  'dives with barely a splash' readable: tiny ripples + two droplets + a small 'plip' label.
+- GLITCH: thick white shock-ring arcs around a portal read as a white stalk / banana. Radial blast lines (short thick
+  strokes moving out and thinning) read as an explosion.
+- GLITCH: side-view subjects in a 9:16 frame: the first framing left 40 % empty soil and 45 % sky. Put the ground line at
+  ~75-78 % of the frame height (cam.y = G - (0.77*1920 - 960)/k) and fill the sky with something on topic (a Japanese
+  flag that hops on 'Japan'); keep the right-hand pose's arm (thumbs up) inside the frame at the end.
+- FIX in the improvement pass: cameras pushed in (frame 0 k 2.35, follow 1.8, shot D 2.3), guy HEAD 43 -> 48, bird 0.11
+  -> 0.135; the old train now brakes hard so the air pillow is visible for ~1 s; flag added to frame 0 + last frame; blast
+  lines instead of rings; the cover hides the flag (rule of three).
+- TIMING: 47 words / 250 characters, no digits, took 15.6 s with Mark (~3.0 words/s); Scribe's sentence-end words were
+  0.2-0.4 s late vs the loudness envelope (trust RMS pauses).
+- MIX: MIX_DB 4.0 gave -3.4 dBFS (boom at -7 in a pause): no re-mux. Sound Effects v2 billed 3.3 credits/s again.
+- RENDER: full 16.3 s render ~1.6 min (CONC 4, swangle).
