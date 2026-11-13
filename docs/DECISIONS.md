@@ -20,3 +20,4 @@
 
 - 2026-11-13 — WWII-канал (whiteboard-відео) = **WARBOARD** https://www.youtube.com/@warboard111 (ID UCsFHLYIlQO9I9lcf41HUVXA). WhyZap (@whyzap1) — окремий канал наукових Shorts. Обкладинки whiteboard-відео: стиль Paint Explainer, шаблон у docs/video/THUMBNAIL_STYLE.md.
 - 2026-11-13 · Обкладинки WWII: щоразу інший макет із каталогу Paint Explainer (L1–L8 у docs/video/THUMBNAIL_STYLE.md), без референсів, 1 генерація medium · рішення власника, щоб канал не виглядав однотипно.
+- 2026-11-13 · Нова аватарка + банер WARBOARD у стилі Paint Explainer (docs/video/channel-art/) · безпечні зони YouTube перевірені на TV/desktop/tablet/phone.
