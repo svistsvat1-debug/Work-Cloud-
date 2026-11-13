@@ -16,6 +16,8 @@
 
 ## Записи
 
+- 2026-11-13 · Фінальний промпт для whiteboard-відео v2.0 (`docs/video/VIDEO_PROMPT_WHITEBOARD.md`): тривалість до 10 хв (ціль 8:00–9:30, мін. 6:00), обкладинка ElevenLabs GPT Image 2.5 (16:9, 1K, medium, 1 шт.) у стилі за мотивами The Paint Explainer, кодування CRF 18 (~55 МБ/10 хв, PSNR 60 dB), ліміт 400 МБ. Загальний промпт з двома стилями (`VIDEO_PROMPT.md` v1.7) лишається як запасний.
+
 - 2026-11-13 · Промпт v1.7: два стилі відео на вибір (`VIDEO STYLE: cinematic | whiteboard`); обкладинка — єдине AI-зображення: ElevenLabs `gpt-image-2.5-sunburst`, 16:9, 1K, medium, рівно 1 генерація, робиться у фазі A; стиль обкладинок cinematic = як на моєму каналі WhyZap (реалістичний, стиль-картка в `docs/video/THUMBNAIL_STYLE.md` — поки [MISSING]), whiteboard = натхнення The Paint Explainer.
 
 - 2026-11-12 · Промпт v1.6: стиль остаточно — Cinematic 2D War; тривалість 6–7 хв (мін. 5:30, макс. 8:00, ~950–1100 слів); фінальний файл ≤ 400 МБ без видимої втрати (CRF 18 з lossless-майстра, якщо більше — 2-pass під 390 МБ; контроль PSNR ≥ 42 dB).
