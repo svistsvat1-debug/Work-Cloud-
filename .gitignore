@@ -1,0 +1,10 @@
+# video media (never commit large binaries)
+videos/*/work/frames/
+videos/**/*.wav
+videos/**/*.mp3
+videos/**/*.mp4
+videos/**/*.mov
+videos/**/*.f32
+videos/**/*.mid
+video-engine/node_modules/
+video-engine/out/
