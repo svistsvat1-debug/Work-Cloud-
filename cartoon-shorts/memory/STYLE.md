@@ -228,3 +228,31 @@ Video #8 (turkey-eggs, 2026-11-13):
 - TIMING: 52 words / 275 characters, no digits, took 16.96 s with Mark (~3.07 words/s).
 - OUTAGE: the ElevenLabs connector returned 503 / timed out for ~35 min mid-run. Adding a node is free but a timed-out add
   may still have been created: read the flow (creative_get_flow) before re-adding or running anything.
+
+Video #9 (tsunami-wall, 2026-11-13) - first video made with ALL pictures LOW 1K (R8):
+- GOOD: LOW held up. The locked STYLE_CHAR block (text only) gave a clean hero on the first try, and a guy pair (panic run /
+  laughing + pointing) and a mayor pair (hard hat + sash: pointing up / smug arms crossed) matched it; the wave (3:2, magenta
+  key), a 3-house sheet and the plate also passed the sheet check: 6 pictures, 0 redos, 541.36 credits in all (voice 248,
+  pictures 281.7, 2 sfx 11.7). Adding "Bold clean thick outlines, big simple shapes, few details." to every prompt kept the
+  LOW lines clean; at <= 1.3x native nothing looked rough. A 3:2 pair sheet gives two full poses for the price of one.
+- GOOD: a side-view 'school diagram' coast (sea | concrete wall | town on one ground line) makes heights readable at once:
+  walls drawn in code grow out of the ground with a ruler that counts metres ("0 m" -> "10 m"), a ghost copy of the wave
+  sprite (CSS grayscale + brightness + 50 % opacity) with a "1896" label and a dashed line to the wall top shows "as high
+  as". The plate is mirrored left and right (scaleX(-1) copies) so the camera can pan past its edges with no seam.
+- GOOD: comedy without new pictures: a small wave with a code face swells to full size on the key word (uniform scale about
+  its right base corner); it literally jumps the wall; houses get code eyes (wide when the wave comes, "> <" while floating
+  away, open and blinking at the payoff); the mayor rides his own rising wall up; a code fish lands on his hard hat.
+- GLITCH: a foreground layer (depth 0.7) with its own grass hill made the characters look like they stood inside the soil
+  of the cut-away (two ground lines that never line up while the camera moves). In a side-view diagram keep every
+  character on the diagram's own ground line, in the same plane, and make them a bit bigger than 'real' instead.
+- GLITCH: a side view in a 9:16 frame is a wide strip: wide shots leave big empty sky + soil. Centre the camera on the
+  content band (cam.y ~ ground - 0.45 x content height), put the 2011 card in the sky, and keep wide holds short.
+- GLITCH: the wave's face was first drawn in the middle of its body = off-screen whenever the wave filled the left of the
+  frame; put faces on the part of an object nearest the action (the curl side). Measure on a gridded crop (qa/wave_grid.png).
+- FIX in the improvement pass: frame 0 bigger (k 1.3, small wave at 0.5 scale) so the wave's face and the guy read like a
+  thumbnail; the flood hold got houses with "> <" eyes; the payoff got the fish on the hat; the pull-back after
+  "tsunamis" eased out (fast start) so the swollen wave's face is not cut off for a second.
+- LOOP: two sets (Taro / Fudai) cannot loop exactly; the last frame (smug mayor + houses) only loops by idea.
+- MIX: MIX_DB 4.0 gave -3.4 dBFS on the preview (grind at -19 was the peak): grind -> -21, final -3.47 dBFS.
+- TIMING: 47 words / 248 characters with one year in digits ("2011") took 16.88 s with Mark (~2.8 words/s).
+- Sound Effects v2 billed 3.3 credits/s again (estimate 38.5, actual 11.7).
