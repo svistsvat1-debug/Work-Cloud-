@@ -18,6 +18,9 @@ import {DURATION as NUKE_DURATION, FPS as NUKE_FPS} from './nuke-gas-fire/scene'
 import {DesertIceShort} from './desert-ice/Short';
 import {DesertIceCover} from './desert-ice/Cover';
 import {DURATION as ICE_DURATION, FPS as ICE_FPS} from './desert-ice/scene';
+import {NuclearWarningShort} from './nuclear-warning/Short';
+import {NuclearWarningCover} from './nuclear-warning/Cover';
+import {DURATION as NW_DURATION, FPS as NW_FPS} from './nuclear-warning/scene';
 
 // One composition per Short (+ its cover still).
 export const RemotionRoot: React.FC = () => {
@@ -35,6 +38,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="NukeGasFireCover" component={NukeGasFireCover} width={1080} height={1920} />
       <Composition id="DesertIce" component={DesertIceShort} durationInFrames={Math.round(ICE_DURATION * ICE_FPS)} fps={ICE_FPS} width={1080} height={1920} />
       <Still id="DesertIceCover" component={DesertIceCover} width={1080} height={1920} />
+      <Composition id="NuclearWarning" component={NuclearWarningShort} durationInFrames={Math.round(NW_DURATION * NW_FPS)} fps={NW_FPS} width={1080} height={1920} />
+      <Still id="NuclearWarningCover" component={NuclearWarningCover} width={1080} height={1920} />
     </>
   );
 };

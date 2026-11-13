@@ -178,3 +178,31 @@ Video #6 (desert-ice, 2026-11-12):
   moved left so only the dome's edge shows.
 - MIX: MIX_DB +3.5 gave a -4.3 dBFS peak on the preview: no re-mux needed.
 - TIMING: 70 words / 370 characters, no numbers in digits, took 24.6 s with Mark.
+
+Video #7 (nuclear-warning, 2026-11-13):
+- OWNER'S PREFERENCE: split pictures by importance, about 5 MEDIUM + 6 LOW (asked on approval). MEDIUM went to the hero
+  pair sheet, the close-up, the payoff pose, the payoff object pair (cat) and the background; LOW to secondary poses
+  (skull sign, robber, researcher), set pieces (tomb) and the props sheet. The locked STYLE_CHAR block matched on LOW too:
+  the LOW character poses were clean enough at <= 0.5x native, 0 redos. Spend 1066 credits.
+- BLOCKED: an image prompt with "nuclear waste" + "radiation trefoil" was refused by the content filter ("may violate our
+  Terms of Service"). Avoid those words in picture prompts (say "yellow metal drum with a black three-blade fan symbol") or
+  draw such objects in code: the code barrel (rounded rect, rings, lid, trefoil, oozing goo with life-envelope drips, Eye
+  faces) matched the style and was easier to animate.
+- GOOD: a hero PAIR sheet (mallet up / mallet down from one drawing, one shared scale, feet on one baseline) gives a hammer
+  strike with clean squash swaps; the 'down' mallet head is placed to hit the sign post.
+- GOOD: the school-diagram ground cut-away (grass edge at G, three wavy soil bands, rocks, a shaft) lets one camera move
+  follow an object underground; radiation = lime arcs radiating from the lid (thickness life envelope). Arcs that MOVE UP
+  read as eyebrows - keep them centred on the source.
+- GOOD: a LOW pair sheet on magenta with a glow edge leaves a pink halo after keying: cut everything outside the closed black
+  outline (fill the outline from outside, keep thin dark strokes like whiskers) and add the glow in code (CSS drop-shadow).
+- GOOD: head measuring = rays from a seed centre to the silhouette edge inside a chosen angle range + least-squares circle
+  fit (heads2.py); robust to glasses, masks, raised arms and held signs (the inscribed-disc and Hough methods both failed).
+- GOOD: on-screen text drawn on a generated prop (Beowulf lines on the scroll) with FreeSerif Bold Italic (public/fonts,
+  GNU FreeFont licence), revealed line by line; flipping it upside down is a free gag.
+- FIX in the improvement pass: the legend tablet's pictograms were too small in the wide shot -> push in on tablet + cat
+  (k 1.25); the thought bubble vanished in one frame (pop scan) -> shrink it out; frame 0 pushed in to k 1.06 with the
+  guy, the sign and the barrel all inside the frame with margins.
+- MIX: MIX_DB 3.5 gave -4.6 dBFS on the preview -> 4.0 for the final.
+- TIMING: 68 words / 396 characters, no digits, took 24.2 s with Mark.
+- RENDER: rendering a still (bundling) while a full render runs slows the render a lot; use a separate BUNDLE_DIR for
+  the cover so the running render's bundle is not overwritten.
