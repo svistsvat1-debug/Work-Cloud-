@@ -104,3 +104,9 @@
 - Спрацювали фрази: «two head-and-shoulders busts of the SAME young soldier side by side», «plain pure white background, nothing else», «plain black bold hand-lettered comic ALL-CAPS font, no outline, no banner», «The bottom-right corner shows only plain uniform shoulder».
 - На 320×180 читається відмінно: великі обличчя на білому.
 - **Шаблон для наступних відео:** [стан А] vs [стан Б] однієї людини; підписи — числа або 1–2 слова, які показують різницю.
+
+### Army behind the rifleman v2: «ONLY 14% / 86%» (2026-11-13) ✅
+`videos/2026-11-11_army-behind-the-rifleman/thumbnail-v2/thumbnail.png`, 1 генерація без референсу, 63 кредити.
+- Варіант формату «дві різні людини»: нажаханий піхотинець (шолом, бруд, гвинтівка) проти спокійного тиловика (пілотка, кава, планшет). Контраст емоцій пояснює число без жодного слова.
+- Факт: ~14 % Першої армії США до D-Day були піхотою (James Holland, HistoryNet 2020); 86 % — усі інші роди військ (не лише тил). Текст не каже «support», тож усе коректно.
+- Дрібне: у правий нижній кут потрапив планшет. Якщо кут критичний, писати «nothing in the bottom-right 20% of the frame except the shoulder».
