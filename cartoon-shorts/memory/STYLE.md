@@ -206,3 +206,25 @@ Video #7 (nuclear-warning, 2026-11-13):
 - TIMING: 68 words / 396 characters, no digits, took 24.2 s with Mark.
 - RENDER: rendering a still (bundling) while a full render runs slows the render a lot; use a separate BUNDLE_DIR for
   the cover so the running render's bundle is not overwritten.
+
+Video #8 (turkey-eggs, 2026-11-13):
+- GOOD: the locked STYLE_CHAR block (text only) again matched all 4 character pictures on the first try (hero, yum, shrug,
+  shock close-up - which finally came out as a real head-and-chest close-up); animals (turkey, turkey pair, hen pair on a
+  BLUE key, poult pair) and props (nest + grain sheet, roast on magenta) too: 11 pictures, 0 redos, 1084.2 credits.
+- GOOD: a 20 s Short works with 52 words (16.96 s voice): one beat per line, 7 shots, still room for a gag per beat.
+- GOOD: ordinary objects with code faces carry the story (eggs notice the hungry guy, look up at the price tag, sweat).
+  A FAIL gag beats a success gag: the turkey strains and only one feather drifts into the nest; big "6" vs red "2" labels
+  make "a third as many" readable in one glance. A tear-off day card + a final "SUN" with no egg shows "almost every day".
+- GOOD: payoff = push in to k 2.1 on the hatched chick + thought bubble (roast dinner) + swap to the scared pair half on
+  "Thanksgiving", then glide back to the frame-0 framing so the last frame loops.
+- GLITCH: things on the same ground line overlapped after re-spacing the set (the hen's egg pile slid behind the nest).
+  After any layout change, re-render the shots of every set piece, not just frame 0.
+- GLITCH: eggs drawn in code behind a nest sprite were mostly hidden by its rim; raise them ~25 world px above the
+  nest's anchor so ~2/3 of the egg shows.
+- FIX in the improvement pass: frame 0 too wide (characters ~23 % of the frame height) -> k 1.1 with the guy and the turkey
+  moved closer; the hen shot was cluttered by half a turkey at the edge -> tighter k 1.6 on the hen; the strain beat had no
+  payoff -> a feather drifts into the nest instead of an egg; fork clink on "dinners".
+- MIX: MIX_DB 4.0 gave -3.8 dBFS on the preview: no re-mux needed.
+- TIMING: 52 words / 275 characters, no digits, took 16.96 s with Mark (~3.07 words/s).
+- OUTAGE: the ElevenLabs connector returned 503 / timed out for ~35 min mid-run. Adding a node is free but a timed-out add
+  may still have been created: read the flow (creative_get_flow) before re-adding or running anything.

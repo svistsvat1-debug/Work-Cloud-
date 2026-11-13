@@ -3,6 +3,7 @@ import {rnd} from '../shared/anim';
 
 // Code-drawn props for turkey-eggs (flat fills, black outlines like the pictures).
 const INK = '#000';
+export const FONT = 'TurkeyInter';
 
 // Egg standing on its bottom point (x, y). w = width. turkey = speckled cream, else plain white.
 // crack 0..1 reveals a zig-zag crack around the middle; wobble in degrees.
@@ -115,7 +116,7 @@ export const PriceTag: React.FC<{x: number; y: number; w: number; text: string; 
           x={0}
           y={h * 0.82}
           textAnchor="middle"
-          fontFamily="Inter, Arial Black, sans-serif"
+          fontFamily={FONT}
           fontWeight={900}
           fontSize={h * 0.55}
           fill="#2E9B3E"
@@ -140,7 +141,7 @@ export const DayCard: React.FC<{x: number; y: number; w: number; text: string; f
       <rect x={-w / 2} y={-h / 2} width={w} height={h} rx={w * 0.08} fill="#fff" stroke={INK} strokeWidth={sw} />
       <g transform={`scale(1 ${flip})`}>
         <rect x={-w / 2} y={-h / 2} width={w} height={h * 0.32} rx={w * 0.08} fill="#E2453C" stroke={INK} strokeWidth={sw} />
-        <text x={0} y={h * 0.28} textAnchor="middle" fontFamily="Inter, Arial Black, sans-serif" fontWeight={900} fontSize={h * 0.4} fill="#111">
+        <text x={0} y={h * 0.28} textAnchor="middle" fontFamily={FONT} fontWeight={900} fontSize={h * 0.4} fill="#111">
           {text}
         </text>
       </g>
@@ -217,7 +218,7 @@ export const Mark: React.FC<{x: number; y: number; size: number; s: number; text
         x={0}
         y={size * 0.35}
         textAnchor="middle"
-        fontFamily="Inter, Arial Black, sans-serif"
+        fontFamily={FONT}
         fontWeight={900}
         fontSize={size}
         fill={fill}
