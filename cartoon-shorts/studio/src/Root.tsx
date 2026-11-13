@@ -27,6 +27,9 @@ import {DURATION as NW_DURATION, FPS as NW_FPS} from './nuclear-warning/scene';
 import {TsunamiWallShort} from './tsunami-wall/Short';
 import {TsunamiWallCover} from './tsunami-wall/Cover';
 import {DURATION as TW_DURATION, FPS as TW_FPS} from './tsunami-wall/scene';
+import {EagleZapShort} from './eagle-zap/Short';
+import {EagleZapCover} from './eagle-zap/Cover';
+import {DURATION as EZ_DURATION, FPS as EZ_FPS} from './eagle-zap/scene';
 
 // One composition per Short (+ its cover still).
 export const RemotionRoot: React.FC = () => {
@@ -50,6 +53,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="TurkeyEggsCover" component={TurkeyEggsCover} width={1080} height={1920} />
       <Composition id="TsunamiWall" component={TsunamiWallShort} durationInFrames={Math.round(TW_DURATION * TW_FPS)} fps={TW_FPS} width={1080} height={1920} />
       <Still id="TsunamiWallCover" component={TsunamiWallCover} width={1080} height={1920} />
+      <Composition id="EagleZap" component={EagleZapShort} durationInFrames={Math.round(EZ_DURATION * EZ_FPS)} fps={EZ_FPS} width={1080} height={1920} />
+      <Still id="EagleZapCover" component={EagleZapCover} width={1080} height={1920} />
     </>
   );
 };

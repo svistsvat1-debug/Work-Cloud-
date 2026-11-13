@@ -256,3 +256,30 @@ Video #9 (tsunami-wall, 2026-11-13) - first video made with ALL pictures LOW 1K 
 - MIX: MIX_DB 4.0 gave -3.4 dBFS on the preview (grind at -19 was the peak): grind -> -21, final -3.47 dBFS.
 - TIMING: 47 words / 248 characters with one year in digits ("2011") took 16.88 s with Mark (~2.8 words/s).
 - Sound Effects v2 billed 3.3 credits/s again (estimate 38.5, actual 11.7).
+
+Video #10 (eagle-zap, 2026-11-13) - made WITHOUT new pictures:
+- BLOCKED: the ElevenLabs MCP tools (creative_*) never loaded in this session although the connector showed "connected".
+  The REST API through the session proxy works for voice (/v1/text-to-speech/{voice}/with-timestamps: 245 chars = 108
+  credits, cheaper than Flows), Scribe (/v1/speech-to-text: 5) and Sound Effects (/v1/sound-generation: 4.5 s = 50), but
+  /v1/flows/image answers "This endpoint requires a Pro plan or above" on this Creator account. Credits can be read as the
+  delta of /v1/user/subscription character_count (it updates a few seconds late); /v1/history shows per-request cost.
+- FALLBACK that worked: reuse finished ElevenLabs cut-outs from earlier videos (never fed into a generation) - pick poses
+  with the same head/height ratio (r/h ~0.21: doomsday 'happy' + nuke-gas-fire 'shock'); close-ups (lava 'shock_cu', moon
+  'shocked_cu') in screen space with the head radius equalised; turkey-eggs farm plate. New characters drawn in code.
+- GOOD: code-drawn animals in the house style (thick black outline, flat fill + one lighter shade, scalloped feathers) sit
+  well next to the AI cut-outs. A code eagle can do what pictures cannot: wings open/close/droop continuously (wing group
+  rotated about the shoulder, folded = rotated 96 deg and scaled 0.48), flap in flight, x-ray skeleton flicker, sooty +
+  frizzy (spike triangles behind the outline) + spiral eyes after the zap.
+- GOOD: two parallel wires seen from the front read best like RAILS: vanishing point ABOVE the scene (horizon high, field
+  below), far poles = the same drawing scaled about the VP, their crossarms stacked like rungs. A VP below the pole made the
+  wires look like guy-wires, and an off-centre VP made one wire almost vertical.
+- GOOD: electricity as little yellow bolt critters with two dot eyes running along a wire; one stops, looks up, a "?" pops,
+  it runs on = "no reason to go through the bird" in one glance. Bolt = jagged polyline re-randomised 20x/s (black under,
+  yellow, white core).
+- FIX in the improvement pass: the wire close-up had 60 % empty sky below -> the guy's 'happy' pose in screen space at the
+  bottom pointing up at the sparrow; the build-up to the zap was wide -> push-in to k 1.18 then pull back on the flash;
+  eagle circle -> dive started from a different point (pop at 2.85 s) and tilt jumped at the path joint -> continuous path
+  + eased tilt; sparrows flipped instantly -> facing averaged over 0.12 s (squash through 0.22).
+- GLITCH: a waist-up close-up cut at the chest must reach below the frame edge (bottom = head_y + (h - head_cy) * s);
+  smoke puffs must not rise over the face that carries the payoff (check the LAST frame).
+- MIX: MIX_DB 4.0 gave -3.7 dBFS; no re-mux. TIMING: 48 words / 245 characters took 15.0 s with Mark (3.2 words/s).

@@ -1,0 +1,3 @@
+// reused cut-outs (made with ElevenLabs GPT Image in earlier videos) + their measured data
+// happy: doomsday-2026, scared: nuke-gas-fire/shock, shock_cu: lava-fire-hose, cheeks_cu: moon-trash/shocked_cu, bg: turkey-eggs
+export const SPR = {"happy": {"w": 867, "h": 1254, "head": [559, 302, 273.8155517578125], "feet": [516.5, 1241]}, "scared": {"w": 910, "h": 986, "head": [458, 254, 211.7054443359375], "feet": [589.5, 973]}, "shock_cu": {"w": 993, "h": 1270, "head": [496, 485, 453.9613037109375], "feet": [491.5, 1269]}, "cheeks_cu": {"w": 889, "h": 1237, "head": [444, 325, 301.0], "feet": [444.1, 1223]}, "bg": {"w": 1024, "h": 1536, "horizon": 586, "grassTop": 587, "sky": [144, 208, 244], "grass": [142, 203, 92]}} as const;
