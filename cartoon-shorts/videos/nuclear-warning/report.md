@@ -104,4 +104,4 @@ ElevenLabs, «Mark - Natural Conversations» (UgBBYS2sOqTuMpoF3BR0), eleven_v4, 
 - Перегляди YouTube Shorts для картки ідеї перевірити не вдалося: у vidIQ 3 кредити, YouTube блокує автоматичний доступ.
 
 ## Git
-Див. наступний рядок; він дописаний після push.
+Коміт 09d1fa6 запушено в гілку `claude/bold-allen-kjb3gx` і в `main` (97fee44..09d1fa6). Змінено лише `cartoon-shorts/`. MP4, raw-картинки й bundle не комітились (.gitignore).
