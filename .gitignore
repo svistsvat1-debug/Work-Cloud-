@@ -9,3 +9,4 @@ videos/**/*.mid
 video-engine/node_modules/
 video-engine/out/
 videos/*/work/render.log
+videos/*/work/qa/
