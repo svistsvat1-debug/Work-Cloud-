@@ -97,21 +97,21 @@ THUMBNAIL RULES
 - THUMBNAIL TACTIC TRANSFER: reuse the competitor's click tactic from the FORMULA CARD (e.g. a recurring face type), adapted logically to our subject. Never copy their image.
 - Keep the bottom-right corner free of key elements (YouTube puts the duration there).
 - Follow the WWII safety rules.
-THUMBNAIL STYLE — INSPIRED BY "THE PAINT EXPLAINER" (@ThePaintExplainer)
-- Take the style, never their characters, images or compositions.
-- Hand-drawn digital comic illustration: thick black ink outlines, rough textured shading and crosshatching, saturated but slightly grimy colors.
-- ONE character with a huge exaggerated facial expression (panic, shock, disbelief) caught in a dramatic, tense situation that hints at the story.
-- Big bold white ALL-CAPS hand-lettered text with a thick black outline, usually on a banner strip across the top (e.g. a brown or dark strip).
+THUMBNAIL STYLE — INSPIRED BY "THE PAINT EXPLAINER" (@ThePaintExplainer)  [owner rule, updated 2026-11-13]
+- Take their STYLE and LAYOUTS, never their characters, images or exact compositions.
+- Base look (from their real thumbnails): clean digital cartoon illustration, bold clean black outlines, flat cel-shaded colors with soft simple shading; faces with huge bulging round eyes, tiny pupils, open mouth (shock, panic, disbelief). Text: plain bold hand-lettered comic ALL-CAPS, black on light backgrounds / white on dark, no outline, no banner.
+- Match the WARBOARD avatar's character look (young soldier, round shocked eyes, open mouth), but do NOT feed the avatar or any image as a reference.
+- DO NOT use one template for every video. For EACH thumbnail pick the layout from the catalog in docs/video/THUMBNAIL_STYLE.md (L1 comparison busts, L2 dark + one light, L3 bust + big text block, L4 swarm on flat color, L5 single icon on black, L6 red/black radial burst, L7 2x2 collage, L8 spotlight in the dark) that best fits THIS story, and present it in our own way. Never repeat the layout of the previous two thumbnails (check the layout log in that file).
 - Their thumbnails are often grotesque; ours stay inside the WWII safety rules: tension and fear, never gore or blood.
-- CONSISTENCY: read docs/video/THUMBNAIL_STYLE.md first. If my channel already has thumbnails in this style, keep the same text treatment and character look. After generating, add what worked to that file.
-- 3 THUMBNAIL CONCEPTS (text only): for each, the 3 objects, the exact text, the layout, and which title it pairs with. Recommend 1 title + 1 thumbnail.
+- After generating, add the result and the layout code to the layout log in docs/video/THUMBNAIL_STYLE.md.
+- 3 THUMBNAIL CONCEPTS (text only), each with a DIFFERENT layout code: the 3 objects, the exact text, the layout, and which title it pairs with. Recommend 1 title + 1 thumbnail.
 THUMBNAIL GENERATION (ElevenLabs, GPT Image 2.5, exactly ONE image)
-- Model: gpt-image-2.5-sunburst. Parameters: aspect_ratio "16:9", resolution "1K", quality "medium". Exactly 1 generation.
+- Model: gpt-image-2.5-sunburst. Parameters: aspect_ratio "16:9", resolution "1K", quality "medium". Exactly 1 generation. NO reference images (a reference costs ~5x the credits).
 - Do NOT use creative_generate_image (it cannot set quality and defaults to 4 variations). Instead:
   1. creative_add_flow_node: node_type "image-generation", model_id "gpt-image-2.5-sunburst", model_parameters {"aspect_ratio":"16:9","resolution":"1K","quality":"medium"}, prompt = the thumbnail brief.
   2. creative_run_flow_nodes with estimate_only true -> tell me the credit cost in one line.
   3. creative_run_flow_nodes with generations_count 1 -> poll creative_get_flow_run_status until done -> download the image.
-- Prompt the model like an art director: scene -> subject -> key details -> constraints. Name the medium: "hand-drawn digital comic illustration, thick black ink outlines, textured crosshatch shading". Put the exact text in quotes in ALL CAPS with font, color, outline and position, and add "verbatim — no extra characters, no substitutions". Say "only these 3 objects, nothing else in the frame, no watermark, no logos, no swastikas, no blood".
+- Prompt the model like an art director: scene -> subject -> key details -> constraints. Name the medium: "clean digital cartoon illustration in the style of a popular explainer-channel thumbnail: bold clean black outlines, flat cel-shaded colors with simple soft shading", then describe the chosen layout (background, light, positions). Put the exact text in quotes in ALL CAPS with font, color, outline and position, and add "verbatim — no extra characters, no substitutions". Say "only these 3 objects, nothing else in the frame, no watermark, no logos, no swastikas, no blood".
 - Check the result: text spelled exactly right, max 3 objects, safety rules, readable at phone size (look at a 320x180 downscale). If something is wrong, show me and ASK before generating again; never re-run on your own, because every run spends credits.
 - Save thumbnail.png at exactly 1280x720 (Lanczos resize, under 2 MB) and thumbnail.jpg (quality 95) in phase-a/.
 
