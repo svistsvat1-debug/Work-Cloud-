@@ -49,7 +49,7 @@ Which part surprised you most: the navy split by drawing lots, or the secret 195
 ## 5. Налаштування в YouTube Studio
 | Поле | Значення |
 |---|---|
-| Thumbnail | `thumbnail.jpg` (1280×720) |
+| Thumbnail | `thumbnail_ai.jpg` (AI, варіант A, 1280×720); запасна — `thumbnail.jpg` (кодова) |
 | Audience | No, it's not made for kids |
 | Category | Education |
 | Video language | English |
