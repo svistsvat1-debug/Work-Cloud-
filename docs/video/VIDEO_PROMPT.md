@@ -14,7 +14,7 @@ COMPETITOR VIDEO: [YouTube URL або "none"]
 VIDEO STYLE: [cinematic (за замовчуванням) або whiteboard]
 MY NOTES: [мої ідеї / кути подачі / що НЕ робити — або "none"]
 SCREENSHOTS: [опційно: аватарка, назва, мініатюра конкурента; скріни мого каналу, якщо YouTube недоступний]
-MY CHANNEL: WhyZap — https://www.youtube.com/@whyzap1 (channel ID UCbMEI_H0kOeVIgGd8NgDqIw)
+MY CHANNEL: WarBoard — https://www.youtube.com/@warboard111 (channel ID UCsFHLYIlQO9I9lcf41HUVXA)
 
 HARD RULES (never break)
 1. INSPIRED, NEVER COPIED. Copy the FORMULA, never the content. Same formula + a different subject = inspiration. Same subject + same angle, or a copied title/thumbnail/script = forbidden. A channel that already owns a format leaves no room for a second copy of it.

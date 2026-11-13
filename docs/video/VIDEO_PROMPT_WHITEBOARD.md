@@ -1,4 +1,4 @@
-# VIDEO PROMPT — WWII Whiteboard (FINAL, v2.0)
+# VIDEO PROMPT — WWII Whiteboard (FINAL, v2.1)
 
 > Фінальний промпт лише для стилю «біла дошка». Скопіюй усе між `=== PROMPT START ===` і `=== PROMPT END ===`, встав у нову сесію Claude Code у цьому репозиторії (гілка з цими файлами) і заповни блок INPUT.
 > Фаза A: дослідження, ідея, назви, обкладинка, сценарій, потім зупинка. Ти перевіряєш, озвучуєш, кидаєш файл і пишеш «продовжуй». Фаза B: готове відео.
@@ -13,7 +13,7 @@ TOPIC: [тема або "find an idea yourself"]
 COMPETITOR VIDEO: [YouTube URL або "none"]
 MY NOTES: [мої ідеї / кути подачі / що НЕ робити — або "none"]
 SCREENSHOTS: [опційно: аватарка, назва, мініатюра конкурента; скріни мого каналу, якщо YouTube недоступний]
-MY CHANNEL: WhyZap — https://www.youtube.com/@whyzap1 (channel ID UCbMEI_H0kOeVIgGd8NgDqIw)
+MY CHANNEL: WarBoard — https://www.youtube.com/@warboard111 (channel ID UCsFHLYIlQO9I9lcf41HUVXA)
 
 HARD RULES (never break)
 1. INSPIRED, NEVER COPIED. Copy the FORMULA, never the content. Same formula + a different subject = inspiration. Same subject + same angle, or a copied title/thumbnail/script = forbidden. A channel that already owns a format leaves no room for a second copy of it.
@@ -103,7 +103,13 @@ THUMBNAIL STYLE — INSPIRED BY "THE PAINT EXPLAINER" (@ThePaintExplainer)
 - ONE character with a huge exaggerated facial expression (panic, shock, disbelief) caught in a dramatic, tense situation that hints at the story.
 - Big bold white ALL-CAPS hand-lettered text with a thick black outline, usually on a banner strip across the top (e.g. a brown or dark strip).
 - Their thumbnails are often grotesque; ours stay inside the WWII safety rules: tension and fear, never gore or blood.
-- CONSISTENCY: read docs/video/THUMBNAIL_STYLE.md first. If my channel already has thumbnails in this style, keep the same text treatment and character look. After generating, add what worked to that file.
+- MY CHANNEL'S PROVEN LAYOUT (keep it, so the channel stays recognizable; see docs/video/style-ref/my-channel-thumbnails.jpg and docs/video/THUMBNAIL_STYLE.md):
+  - LEFT: 2–3 stacked lines of huge bold condensed text (Anton/Impact-like), white or yellow with a thick black outline; one key word may be red.
+  - RIGHT: a WWII soldier in a helmet, large, with a strong reaction (shock, suspicion, disbelief) looking toward the proof object.
+  - PROOF OBJECT with red callouts: a red circle + red arrow pointing at it, a red strike-through on a number, or a red "?" on it.
+  - Exactly these 3 objects: text block + soldier + proof object.
+  -> Draw this layout in the Paint-Explainer comic style above. The Paint-Explainer top banner is an alternative layout; use it only if I ask.
+- CONSISTENCY: read docs/video/THUMBNAIL_STYLE.md first and re-check my channel's latest thumbnails (yt-dlp, free). If my newest thumbnails changed style, follow the newest. After generating, add what worked to that file.
 - 3 THUMBNAIL CONCEPTS (text only): for each, the 3 objects, the exact text, the layout, and which title it pairs with. Recommend 1 title + 1 thumbnail.
 THUMBNAIL GENERATION (ElevenLabs, GPT Image 2.5, exactly ONE image)
 - Model: gpt-image-2.5-sunburst. Parameters: aspect_ratio "16:9", resolution "1K", quality "medium". Exactly 1 generation.
