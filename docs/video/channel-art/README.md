@@ -14,4 +14,5 @@ Style: The Paint Explainer look (clean cartoon outlines, flat colors, bulging sh
 
 ## How it was made
 - Avatar: 1 generation, gpt-image-2.5-sunburst, 1:1, 1K, medium, no reference (~98 credits).
+- Banner v3 (final): the text group and the soldier are scaled separately (×0.822) so they fill the phone zone edge to edge (10 px margin): text left at x=517, soldier right edge at x=2043, both tops at y=518; the soldier's shoulders continue below the zone (TV/desktop only). Command: `video-engine/tools/banner_fill_safe.py raw.png out.png 410,380,2210,1040 439,496,1612,986 1612,424,2169,1005 10 1610,800,1578,1616`.
 - Banner: gpt-image-2.5-sunburst, 16:9, 2K, medium, no reference. The model ignores pixel sizes in the prompt (two attempts, ~85 credits each, both drew the content too big), so the content block is fitted into the phone safe area **by code**: `video-engine/tools/banner_fit_content.py raw.png out.png 410 380 2210 1040`, then `video-engine/tools/channel_art_check.py` exports and checks.
