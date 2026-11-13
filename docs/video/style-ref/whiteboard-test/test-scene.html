@@ -1,0 +1,160 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:"PM";src:url("https://cdn.jsdelivr.net/npm/@fontsource/permanent-marker@5.0.8/files/permanent-marker-latin-400-normal.woff2") format("woff2");}
+@font-face{font-family:"CB";src:url("https://cdn.jsdelivr.net/npm/@fontsource/caveat-brush@5.0.8/files/caveat-brush-latin-400-normal.woff2") format("woff2");}
+html,body{margin:0;background:#FAF8F3;width:1920px;height:1080px;overflow:hidden}
+svg{display:block}
+.pm{font-family:"PM";}
+.cb{font-family:"CB";}
+</style></head>
+<body>
+<svg id="svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+<defs>
+  <filter id="wobble" x="-5%" y="-5%" width="110%" height="110%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="4" result="t"/>
+    <feDisplacementMap in="SourceGraphic" in2="t" scale="5" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+  <filter id="wobbleS" x="-5%" y="-5%" width="110%" height="110%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="9" result="t"/>
+    <feDisplacementMap in="SourceGraphic" in2="t" scale="3" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+  <pattern id="hatchDark" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(32)">
+    <rect width="16" height="16" fill="none"/>
+    <line x1="0" y1="4" x2="16" y2="4" stroke="#3F4A1E" stroke-opacity="0.28" stroke-width="7"/>
+  </pattern>
+  <pattern id="hatchLight" width="22" height="22" patternUnits="userSpaceOnUse" patternTransform="rotate(-24)">
+    <line x1="0" y1="6" x2="22" y2="6" stroke="#9AAB5A" stroke-opacity="0.35" stroke-width="5"/>
+  </pattern>
+  <clipPath id="domeClip"><path id="domeShape" d="M700 645 C700 470 800 335 960 330 C1120 335 1220 470 1220 645 Z"/></clipPath>
+  <clipPath id="brimClip"><path id="brimShape" d="M672 640 C780 628 1140 628 1248 640 C1256 652 1252 670 1240 676 C1130 664 790 664 680 676 C668 670 664 652 672 640 Z"/></clipPath>
+  <mask id="domeMask" maskUnits="userSpaceOnUse"><path id="domeScrib" fill="none" stroke="#fff" stroke-width="96" stroke-linejoin="round" stroke-linecap="round"/></mask>
+  <mask id="brimMask" maskUnits="userSpaceOnUse"><path id="brimScrib" fill="none" stroke="#fff" stroke-width="70" stroke-linejoin="round" stroke-linecap="round"/></mask>
+  <clipPath id="cW1"><rect id="rW1" x="40" y="40" width="0" height="140"/></clipPath>
+  <clipPath id="cW2"><rect id="rW2" x="40" y="140" width="0" height="140"/></clipPath>
+  <clipPath id="cLab"><rect id="rLab" x="1400" y="220" width="0" height="120"/></clipPath>
+  <clipPath id="cNum"><rect id="rNum" x="0" y="100" width="0" height="260"/></clipPath>
+  <clipPath id="cSub"><rect id="rSub" x="0" y="360" width="0" height="120"/></clipPath>
+</defs>
+
+<!-- ================= SCENE 1 ================= -->
+<g id="scene1">
+  <g transform="rotate(-2.5 60 120)">
+    <g clip-path="url(#cW1)"><text id="w1" class="pm" x="60" y="128" font-size="80" fill="#111" stroke="#111" stroke-width="2.5" paint-order="stroke">Operation</text></g>
+    <path id="u1" fill="none" stroke="#F0281E" stroke-width="9" stroke-linecap="round" filter="url(#wobbleS)"/>
+    <g clip-path="url(#cW2)"><text id="w2" class="pm" x="70" y="236" font-size="80" fill="#111" stroke="#111" stroke-width="2.5" paint-order="stroke">Overlord</text></g>
+    <path id="u2" fill="none" stroke="#F0281E" stroke-width="9" stroke-linecap="round" filter="url(#wobbleS)"/>
+  </g>
+
+  <g id="helmet" transform="translate(960 600) scale(1.5) translate(-960 -500)">
+  <!-- helmet fill: dome -->
+  <g mask="url(#domeMask)">
+    <g clip-path="url(#domeClip)">
+      <rect x="680" y="320" width="560" height="340" fill="#6B7B3A"/>
+      <rect x="680" y="320" width="560" height="340" fill="url(#hatchDark)"/>
+      <rect x="680" y="320" width="560" height="340" fill="url(#hatchLight)"/>
+      <path d="M1100 420 C1160 470 1190 540 1196 640 L1240 640 L1240 330 Z" fill="#3F4A1E" opacity="0.35"/>
+      <g fill="none" stroke="#FAF8F3" stroke-linecap="round" opacity="0.75">
+        <path d="M790 520 C800 450 840 400 900 372" stroke-width="10"/>
+        <path d="M812 560 C818 500 846 455 880 430" stroke-width="5"/>
+        <path d="M770 600 C772 585 774 570 778 556" stroke-width="5"/>
+      </g>
+    </g>
+  </g>
+  <!-- helmet fill: brim -->
+  <g mask="url(#brimMask)">
+    <g clip-path="url(#brimClip)">
+      <rect x="660" y="620" width="600" height="70" fill="#55632C"/>
+      <rect x="660" y="620" width="600" height="70" fill="url(#hatchDark)"/>
+      <path d="M700 646 C820 640 1100 640 1220 646" stroke="#FAF8F3" stroke-width="4" opacity="0.5" fill="none"/>
+    </g>
+  </g>
+  <!-- outlines (draw-on) -->
+  <g fill="none" stroke="#111" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" filter="url(#wobble)">
+    <path id="oDome" d="M700 645 C700 470 800 335 960 330 C1120 335 1220 470 1220 645"/>
+    <path id="oBrim" d="M672 640 C780 628 1140 628 1248 640 C1256 652 1252 670 1240 676 C1130 664 790 664 680 676 C668 670 664 652 672 640"/>
+    <path id="oStrap" stroke-width="6" d="M790 676 C796 712 812 738 838 752 M1130 676 C1124 712 1108 738 1082 752"/>
+  </g>
+  </g>
+  <!-- arrow + label -->
+  <g fill="none" stroke="#F0281E" stroke-width="6" stroke-linecap="round" filter="url(#wobbleS)">
+    <path id="aBody" d="M1400 300 C1350 304 1290 330 1252 378"/>
+    <path id="aHead" d="M1272 346 L1250 381 L1290 374"/>
+  </g>
+  <g clip-path="url(#cLab)"><text id="lab" class="cb" x="1412" y="312" font-size="62" fill="#F0281E">June 6, 1944</text></g>
+</g>
+
+<!-- ================= SCENE 2 (number card) ================= -->
+<g id="scene2" style="display:none">
+  <g id="rays" stroke="#FFCC1A" stroke-width="12" stroke-linecap="round" fill="none"></g>
+  <g clip-path="url(#cNum)">
+    <text id="num" class="pm" x="960" y="290" font-size="190" text-anchor="middle"><tspan fill="#F0281E">156,000</tspan><tspan fill="#1EA0F0" font-size="120" dx="24">troops</tspan></text>
+  </g>
+  <path id="uNum" fill="none" stroke="#F0281E" stroke-width="12" stroke-linecap="round" filter="url(#wobbleS)"/>
+  <g clip-path="url(#cSub)"><text id="sub" class="cb" x="960" y="445" font-size="64" text-anchor="middle" fill="#111">landed in Normandy on a single day</text></g>
+</g>
+</svg>
+<script>
+const $=id=>document.getElementById(id);
+const clamp=(x)=>Math.max(0,Math.min(1,x));
+const ease=(x)=>{x=clamp(x);return x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2};
+const prog=(t,a,b)=>clamp((t-a)/(b-a));
+function zigH(x0,x1,y0,y1,step){let d=`M${x0} ${y0}`,y=y0,l=true;while(y<=y1){d+=` L${l?x1:x0} ${y+step/2}`;y+=step;l=!l;}return d;}
+function zigV(x0,x1,y0,y1,step){let d=`M${x0} ${y0}`,x=x0,u=true;while(x<=x1){d+=` L${x+step/2} ${u?y1:y0}`;x+=step;u=!u;}return d;}
+function wavy(x0,x1,y,amp){const n=6;let d=`M${x0} ${y}`;for(let i=1;i<=n;i++){const x=x0+(x1-x0)*i/n;d+=` Q${x-(x1-x0)/n/2} ${y+(i%2?amp:-amp)} ${x} ${y+(i%2?1:-1)*amp*0.3}`;}return d;}
+const draw={};
+function prep(id){const p=$(id);const L=p.getTotalLength();p.style.strokeDasharray=L;p.style.strokeDashoffset=L;draw[id]=L;}
+function setDraw(id,f){$(id).style.strokeDashoffset=draw[id]*(1-f);}
+let W={};
+function setup(){
+  $('domeScrib').setAttribute('d',zigH(640,1280,300,690,42));
+  $('brimScrib').setAttribute('d',zigV(650,1270,610,700,44));
+  const b1=$('w1').getBBox(), b2=$('w2').getBBox();
+  W.w1=b1; W.w2=b2;
+  $('u1').setAttribute('d',wavy(b1.x+6,b1.x+b1.width*0.93,b1.y+b1.height+4,3));
+  $('u2').setAttribute('d',wavy(b2.x+6,b2.x+b2.width*0.93,b2.y+b2.height+4,3));
+  const bl=$('lab').getBBox(); W.lab=bl;
+  const bn=$('num').getBBox(); W.num=bn;
+  $('uNum').setAttribute('d',wavy(bn.x+10,bn.x+bn.width-10,bn.y+bn.height+8,5));
+  const bs=$('sub').getBBox(); W.sub=bs;
+  // rays: 3 dashes fanning on each side of the number
+  let r='';const cy=bn.y+bn.height*0.5;const L=bn.x-30,R=bn.x+bn.width+30;
+  [[-34,-0.5],[0,0],[34,0.5]].forEach(([dy,s])=>{r+=`<path d="M${L} ${cy+dy} L${L-70} ${cy+dy+s*44}"/>`;r+=`<path d="M${R} ${cy+dy} L${R+70} ${cy+dy+s*44}"/>`;});
+  $('rays').innerHTML=r;
+  ['domeScrib','brimScrib','u1','u2','oDome','oBrim','oStrap','aBody','aHead','uNum'].forEach(prep);
+  $('rays').querySelectorAll('path').forEach(p=>{const L=p.getTotalLength();p.style.strokeDasharray=L;p.style.strokeDashoffset=L;p.dataset.L=L;});
+}
+// letters per second ~12 -> duration per word
+const writeDur=(txt)=>txt.length/12;
+window.setT=function(t){
+  const cut=8.2;
+  $('scene1').style.display=t<cut?'':'none';
+  $('scene2').style.display=t<cut?'none':'';
+  // title word 1 / underline / word 2 / underline
+  const a1=0.25,d1=writeDur('Operation'),a2=a1+d1+0.22,d2=writeDur('Overlord');
+  $('rW1').setAttribute('width',(W.w1.x-40+W.w1.width+20)*prog(t,a1,a1+d1));
+  setDraw('u1',ease(prog(t,a1+d1,a1+d1+0.2)));
+  $('rW2').setAttribute('width',(W.w2.x-40+W.w2.width+20)*prog(t,a2,a2+d2));
+  setDraw('u2',ease(prog(t,a2+d2,a2+d2+0.2)));
+  // helmet: outline -> scribble fill -> strap -> arrow -> label
+  const h=2.35;
+  setDraw('oDome',ease(prog(t,h,h+0.6)));
+  setDraw('oBrim',ease(prog(t,h+0.45,h+0.8)));
+  setDraw('domeScrib',prog(t,h+0.85,h+2.0));
+  setDraw('brimScrib',prog(t,h+2.0,h+2.4));
+  setDraw('oStrap',ease(prog(t,h+2.45,h+2.75)));
+  setDraw('aBody',ease(prog(t,h+2.85,h+3.15)));
+  setDraw('aHead',ease(prog(t,h+3.15,h+3.3)));
+  $('rLab').setAttribute('width',(W.lab.width+40)*prog(t,h+3.3,h+3.3+writeDur('June 6, 1944')));
+  // scene 2: rays -> digits -> unit -> underline -> sub line
+  const s=cut+0.15;
+  $('rays').querySelectorAll('path').forEach((p,i)=>{const f=ease(prog(t,s+i*0.03,s+0.25+i*0.03));p.style.strokeDashoffset=p.dataset.L*(1-f);});
+  $('rNum').setAttribute('x',W.num.x-10);
+  $('rNum').setAttribute('width',(W.num.width+20)*prog(t,s+0.3,s+0.3+writeDur('156,000troops')*0.9));
+  setDraw('uNum',ease(prog(t,s+1.45,s+1.75)));
+  $('rSub').setAttribute('x',W.sub.x-10);
+  $('rSub').setAttribute('width',(W.sub.width+20)*prog(t,s+2.2,s+2.2+writeDur('landed in Normandy on a single day')*0.8));
+};
+document.fonts.ready.then(()=>{setup();window.setT(0);window.READY=true;});
+</script>
+</body></html>

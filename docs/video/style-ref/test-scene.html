@@ -1,0 +1,182 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+html,body{margin:0;padding:0;background:#000;width:1920px;height:1080px;overflow:hidden}
+#stage{position:relative;width:1920px;height:1080px;overflow:hidden}
+.layer{position:absolute;inset:0;will-change:transform}
+svg{display:block}
+</style></head>
+<body><div id="stage">
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" style="position:absolute;width:0;height:0">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2B2F4A"/>
+      <stop offset="0.38" stop-color="#8E3B3A"/>
+      <stop offset="0.66" stop-color="#E0743A"/>
+      <stop offset="0.86" stop-color="#F6B66A"/>
+      <stop offset="1" stop-color="#F9D79A"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#FFE6B0" stop-opacity="0.95"/>
+      <stop offset="0.35" stop-color="#FFC27A" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#F08A45" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="hillFar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7A3D45"/><stop offset="1" stop-color="#5A2E3E"/>
+    </linearGradient>
+    <linearGradient id="hillMid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3E2A3C"/><stop offset="1" stop-color="#2A2034"/>
+    </linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1D1A2A"/><stop offset="1" stop-color="#121019"/>
+    </linearGradient>
+    <linearGradient id="smoke" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#3A2A35" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#6B4048" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="vig" cx="0.5" cy="0.5" r="0.75">
+      <stop offset="0.55" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.6"/>
+    </radialGradient>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3" result="n"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="table" tableValues="0 0.11"/></feComponentTransfer>
+    </filter>
+    <filter id="paper" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.004 0.02" numOctaves="3" seed="8"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="table" tableValues="0 0.10"/></feComponentTransfer>
+    </filter>
+    <filter id="soft"><feGaussianBlur stdDeviation="6"/></filter>
+  </defs>
+</svg>
+
+<!-- L0: sky + sun -->
+<div class="layer" id="L0"><svg width="1920" height="1080">
+  <rect width="1920" height="1080" fill="url(#sky)"/>
+  <circle cx="1240" cy="640" r="330" fill="url(#glow)"/>
+  <circle cx="1240" cy="640" r="128" fill="#FFF1CC"/>
+  <g fill="#F7C48A" opacity="0.55">
+    <path d="M150 300 q60-40 130-10 q50-30 110 5 q40 0 50 25 h-310z"/>
+    <path d="M1500 230 q50-30 110-5 q45-25 95 8 q35 2 40 22 h-260z"/>
+  </g>
+  <g fill="#2B2034" opacity="0.8">
+    <path d="M820 300 l14 8 l14-8 l-14 4z"/><path d="M880 270 l11 6 l11-6 l-11 3z"/><path d="M760 330 l9 5 l9-5 l-9 3z"/>
+  </g>
+</svg></div>
+
+<!-- L1: far ruined city + smoke -->
+<div class="layer" id="L1"><svg width="1920" height="1080">
+  <path fill="url(#smoke)" d="M560 720 C520 600 600 520 560 420 C540 340 620 280 600 180 L700 180 C690 300 640 360 660 450 C690 560 620 620 650 720z"/>
+  <path fill="url(#smoke)" d="M1560 720 C1530 640 1590 560 1570 480 C1555 410 1610 360 1600 300 L1660 300 C1660 380 1630 420 1645 500 C1665 590 1615 650 1630 720z" opacity="0.8"/>
+  <path fill="url(#hillFar)" d="M0 760 C300 700 520 735 760 712 C1020 690 1300 735 1560 705 C1720 690 1840 700 1920 712 V1080 H0z"/>
+  <g fill="#4A2A3C">
+    <path d="M420 760 v-70 h26 v-24 h18 v24 h20 v-40 l14 -16 l14 16 v40 h30 v70z"/>
+    <path d="M560 760 v-110 h40 v-30 l10 -12 l10 12 v30 h22 v40 l-8 10 l6 8 v52z"/>
+    <path d="M650 760 v-58 h36 l6 -14 l10 22 v50z"/>
+    <path d="M1500 760 v-88 h22 v-20 h26 v34 h18 v-56 l20 -22 l20 22 v130z"/>
+    <path d="M1660 760 v-60 h40 v-18 h16 v78z"/>
+  </g>
+</svg></div>
+
+<!-- L2: mid hill -->
+<div class="layer" id="L2"><svg width="1920" height="1080">
+  <path fill="url(#hillMid)" d="M0 820 C260 780 460 800 700 785 C980 765 1220 805 1480 790 C1700 778 1820 790 1920 800 V1080 H0z"/>
+  <!-- light rim on hill crest -->
+  <path fill="none" stroke="#E98A4F" stroke-opacity="0.35" stroke-width="3" d="M0 820 C260 780 460 800 700 785 C980 765 1220 805 1480 790 C1700 778 1820 790 1920 800"/>
+</svg></div>
+
+<!-- L3: tank + soldiers on ridge (silhouettes) -->
+<div class="layer" id="L3"><svg width="1920" height="1080">
+  <path fill="url(#ground)" d="M0 900 C300 860 620 880 900 868 C1200 856 1500 884 1920 870 V1080 H0z"/>
+  <g transform="translate(980 742)" fill="#14121C">
+    <!-- tank hull -->
+    <path d="M0 96 L30 60 L330 60 L372 96 L360 128 L14 128z"/>
+    <!-- tracks -->
+    <rect x="6" y="110" width="362" height="42" rx="21"/>
+    <!-- turret -->
+    <path d="M110 60 L128 18 L250 14 L276 36 L272 60z"/>
+    <!-- gun -->
+    <rect x="270" y="26" width="200" height="11" rx="3"/>
+    <rect x="462" y="22" width="22" height="19" rx="3"/>
+    <!-- hatch + commander -->
+    <rect x="170" y="2" width="44" height="14" rx="4"/>
+    <path d="M182 4 q10-30 22 0z"/>
+    <!-- antenna -->
+    <rect x="232" y="-70" width="3" height="86"/>
+  </g>
+  <!-- road wheels: light catch -->
+  <g fill="#2E2433">
+    <circle cx="1020" cy="873" r="11"/><circle cx="1066" cy="873" r="11"/><circle cx="1112" cy="873" r="11"/><circle cx="1158" cy="873" r="11"/><circle cx="1204" cy="873" r="11"/><circle cx="1250" cy="873" r="11"/><circle cx="1296" cy="873" r="11"/>
+  </g>
+  <!-- rim light on tank top -->
+  <path d="M1010 802 L1310 802" stroke="#F2A060" stroke-opacity="0.5" stroke-width="2"/>
+  <!-- soldiers walking -->
+  <g fill="#14121C"><g transform="translate(690 792) scale(1.15)">
+      <path d="M3 14 A13 12 0 0 1 29 14 L32 15 Q16 18 0 15z"/>
+      <rect x="11" y="14" width="10" height="11" rx="4"/>
+      <path d="M4 24 Q16 20 28 24 L31 54 L1 54z"/>
+      <path d="M-4 30 h10 v20 h-10z" opacity="0.9"/>
+      <path d="M10 52 l-6 44 h9 l7-40z"/><path d="M22 52 l10 44 h-9 l-8-38z"/>
+      <rect x="26" y="-8" width="3.5" height="58" rx="1" transform="rotate(-18 28 20)"/>
+    </g><g transform="translate(770 800) scale(1.08)">
+      <path d="M3 14 A13 12 0 0 1 29 14 L32 15 Q16 18 0 15z"/>
+      <rect x="11" y="14" width="10" height="11" rx="4"/>
+      <path d="M4 24 Q16 20 28 24 L31 54 L1 54z"/>
+      <path d="M-4 30 h10 v20 h-10z" opacity="0.9"/>
+      <path d="M10 52 l-2 44 h9 l2-40z"/><path d="M22 52 l3 44 h-9 l-3-40z"/>
+      <rect x="26" y="-8" width="3.5" height="58" rx="1" transform="rotate(-18 28 20)"/>
+    </g><g transform="translate(850 806) scale(1.0)">
+      <path d="M3 14 A13 12 0 0 1 29 14 L32 15 Q16 18 0 15z"/>
+      <rect x="11" y="14" width="10" height="11" rx="4"/>
+      <path d="M4 24 Q16 20 28 24 L31 54 L1 54z"/>
+      <path d="M-4 30 h10 v20 h-10z" opacity="0.9"/>
+      <path d="M10 52 l-6 44 h9 l7-40z"/><path d="M22 52 l10 44 h-9 l-8-38z"/>
+      <path d="M-6 22 h12 v26 h-12z"/>
+    </g></g>
+</svg></div>
+
+<!-- L4: foreground barbed wire + post (dark, close) -->
+<div class="layer" id="L4"><svg width="1920" height="1080">
+  <path fill="#0B0A10" d="M0 980 C400 940 800 990 1200 960 C1500 940 1750 975 1920 960 V1080 H0z"/>
+  <g stroke="#0B0A10" stroke-width="10" stroke-linecap="round">
+    <line x1="230" y1="1000" x2="250" y2="770"/>
+    <line x1="1700" y1="990" x2="1720" y2="800"/>
+  </g>
+  <g fill="none" stroke="#0B0A10" stroke-width="3">
+    <path d="M0 860 C120 850 180 830 248 806 C700 870 1300 890 1718 836 C1800 826 1860 830 1920 836"/>
+    <path d="M0 910 C140 905 190 880 244 860 C720 930 1290 930 1714 890 C1790 884 1860 888 1920 892"/>
+  </g>
+  <g fill="#0B0A10">
+    <path d="M300 812 l8 -12 l3 14 l10 -6 l-8 12 l-13-2z"/><path d="M520 836 l8 -12 l3 14 l10 -6 l-8 12 l-13-2z"/><path d="M820 852 l8 -12 l3 14 l10 -6 l-8 12 l-13-2z"/><path d="M1120 856 l8 -12 l3 14 l10 -6 l-8 12 l-13-2z"/><path d="M1460 848 l8 -12 l3 14 l10 -6 l-8 12 l-13-2z"/>
+    <path d="M420 884 l8 -12 l3 14 l10 -6 l-8 12 l-13-2z"/><path d="M700 902 l8 -12 l3 14 l10 -6 l-8 12 l-13-2z"/><path d="M1000 908 l8 -12 l3 14 l10 -6 l-8 12 l-13-2z"/><path d="M1320 902 l8 -12 l3 14 l10 -6 l-8 12 l-13-2z"/><path d="M1600 894 l8 -12 l3 14 l10 -6 l-8 12 l-13-2z"/>
+  </g>
+</svg></div>
+
+<!-- L5: texture, grain, vignette (fixed, not parallaxed) -->
+<div class="layer" id="L5"><svg width="1920" height="1080">
+  <rect width="1920" height="1080" filter="url(#paper)" style="mix-blend-mode:multiply"/>
+  <rect id="grainRect" width="1920" height="1080" filter="url(#grain)"/>
+  <rect width="1920" height="1080" fill="url(#vig)"/>
+</svg></div>
+</div>
+<script>
+// t in [0,1]: slow push-in + parallax (less dynamic, per user)
+window.setT = function(t){
+  const e = t*t*(3-2*t);
+  const base = 1 + 0.035*e;               // 3.5% push-in over the shot
+  const par = [0.2, 0.35, 0.55, 0.8, 1.15]; // depth factors
+  const ids = ['L0','L1','L2','L3','L4'];
+  ids.forEach((id,i)=>{
+    const s = 1 + (base-1)*par[i]*1.4;
+    const x = -18*e*par[i];
+    document.getElementById(id).style.transform = `translate(${x}px,0) scale(${s})`;
+    document.getElementById(id).style.transformOrigin = '62% 70%';
+  });
+  // re-seed grain every frame (film grain flicker)
+  document.querySelector('#grain feTurbulence').setAttribute('seed', String(Math.floor(t*997)%97+1));
+};
+window.setT(0);
+</script>
+</body></html>
