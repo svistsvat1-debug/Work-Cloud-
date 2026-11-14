@@ -1,5 +1,7 @@
 # IDEA_BANK
 
+
+OWNER RULE (2026-11-14): every script is told as a short STORY (<= 20 s), not as a list of facts - see the rule at the top of memory/STYLE.md.
 Candidate ideas not used yet. Status: new / used / rejected / in-card (sent in an idea card, waiting for approval).
 
 | idea | why it could work (evidence + link) | category | date found | status |
