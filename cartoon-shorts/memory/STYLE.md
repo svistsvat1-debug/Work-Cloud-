@@ -9,13 +9,15 @@ eyes = solid black vertical ovals, ~0.17 of the head width tall, ~0.09 wide; no 
 The prep normalises every character picture to exactly these colours (alpha 255 pixels within distance 40).
 
 ## OWNER RULE - SCRIPTS ARE STORIES (2026-11-14, read before writing ANY script)
-The owner asked: from now on the voiceover is NOT told as a list of facts but as a short STORY of at most 20 s.
+The owner asked: from now on the voiceover is NOT told as a list of facts but as a short STORY of at most 25 s (owner raised the cap from 20 s to 25 s on 2026-11-14 for the story format;
+  target 21-24 s). The full rule is R10 + STEP 1C "Story" in cartoon-shorts/PROMPT.md (the current prompt).
 - Open in a moment of time with someone who has a problem ("In 1930, a phone company needed this building gone."):
   who + when + what they want, and the stakes, in the first line (it still names what frame 0 shows).
 - Then the plan / obvious solution -> "But" the obstacle -> "So" the clever turn (a person decides / tries something)
-  -> the payoff as the story's ending, not as a stated fact. Past tense, narrated like telling a friend what happened.
+  -> the payoff as the story's ending, not as a stated fact. Past tense for real history, present tense for a what-if
+  ("so you throw it in..."), never mixed; narrated like telling a friend what happened.
 - Characters act and decide on screen (the channel guy plays the hero of the story: the architect, the engineer...).
-- Still real facts only, still 35-48 words / <= 290 characters, no invented quotes presented as real quotes
+- Still real facts only, now 48-60 words / <= 360 characters (speech <= 24 s), no invented quotes presented as real quotes
   (a narrated paraphrase like "the architect said: move it" is fine when the source says he proposed it).
 - In the idea card, write the voiceover in this story shape from the start.
 
