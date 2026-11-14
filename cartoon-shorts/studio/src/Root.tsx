@@ -49,6 +49,8 @@ import {CowEyesCover} from './cow-eyes/Cover';
 import {DURATION as CE_DURATION, FPS as CE_FPS} from './cow-eyes/scene';
 import {ShipwormTunnelShort} from './shipworm-tunnel/Short';
 import {ShipwormTunnelCover} from './shipworm-tunnel/Cover';
+import {BuzzardWingsShort, BW_DURATION, BW_FPS} from './buzzard-wings/Short';
+import {BuzzardWingsCover} from './buzzard-wings/Cover';
 import {DURATION as ST_DURATION, FPS as ST_FPS} from './shipworm-tunnel/scene';
 import {DURATION as EZ_DURATION, FPS as EZ_FPS} from './eagle-zap/scene';
 
@@ -90,6 +92,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="CowEyesCover" component={CowEyesCover} width={1080} height={1920} />
       <Composition id="ShipwormTunnel" component={ShipwormTunnelShort} durationInFrames={Math.round(ST_DURATION * ST_FPS)} fps={ST_FPS} width={1080} height={1920} />
       <Still id="ShipwormTunnelCover" component={ShipwormTunnelCover} width={1080} height={1920} />
+      <Composition id="BuzzardWings" component={BuzzardWingsShort} durationInFrames={Math.round(BW_DURATION * BW_FPS)} fps={BW_FPS} width={1080} height={1920} />
+      <Still id="BuzzardWingsCover" component={BuzzardWingsCover} width={1080} height={1920} />
     </>
   );
 };

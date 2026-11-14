@@ -455,3 +455,27 @@ Video #17 (shipworm-tunnel, 2026-11-14) - all pictures LOW 1K; STORY rule; TRIAL
 - TIMING: Liam (VCgLBmBjldJmfphyB8sZ, eleven_v4) read 58 words / 301 chars in 18.56 s (~3.1 words/s) - faster than Mark
   (~2.7). With Liam, a 21-24 s video needs ~65-70 words. Raw voice peak -0.5 dBFS; MIX_DB -3 gave a -6.5 dBFS mix -> -0.5.
 - COVER: the first cover (wide shot, k 1.25) made the shield tiny; a closer camera (k 1.85) on the guy + shield fills it.
+Video #18 (buzzard-wings, 2026-11-14) - all pictures LOW 1K; STORY rule; Liam voice; FIRST code music bed:
+- LIAM PACE: 70 words / 372 chars (no digits) took 23.36 s (~3.0 words/s; #17: 3.1). A 70-word story fills 24.0 s with a 0.5 s tail:
+  plan 65-68 words to keep a little room under the 25 s cap.
+- GOOD: LOW held up again: 7 pictures (hero looking up, hanging pair worried/straining, crash + rope-pull sheet, buzzard flat/twisted
+  pair on green, bat-wing glider + jet props sheet, biplane glider, dunes plate), 0 redos, 723.96 credits (voice 371.96, Scribe 0,
+  pictures 328.67, 4 new sfx 23.33). A "two DIFFERENT poses in one 3:2 sheet" (crash + pull) split cleanly like a pair sheet.
+- GOOD: an abstract force as a recurring character: a code wind cloud with a face (PuffCluster + Eye + cheeks) inhales (stretch,
+  "> <" eyes, puffed cheeks) and blows (round mouth + white streaks with ink underlay) in every shot = "a gust" reads at once and
+  ties the 4 shots together; it is also the loop link (frame 0 and the last frame both show it).
+- GOOD: a front-view wing that "twists" for 0 credits: slice the sprite into left tip / middle / right tip (3 overflow-hidden divs)
+  and rotate each tip about its inner edge; compute cable end points through the same transforms (rot helper) so code cables stay
+  attached. Curved white arrows (TwistArrow) at the tips explain the twist.
+- GOOD: a hanging character = pose sprite anchored at the measured fist point (topmost blobs), hung from the glider's bar point but
+  drawn OUTSIDE the rotating glider so it stays vertical (gravity) while the glider rolls.
+- GLITCH: code flaps on the jet (grey thin rects) were invisible in the first pass -> yellow, thicker panels + curved arrows.
+  Notes ("calm whistle") at r 12 were too small for a 1.2x wide shot -> r 20. Brothers' head tops peeked in at the bottom edge after
+  a push-in on the bird: check the frame edges of every push-in key (cam.y + 960/k).
+- POP SCAN: slow bobbing sprites (< 0.5 px/frame on the 0.5x preview) snap by 1 px every few frames and get flagged at diff ~1.2;
+  they are not visible pops. Only diff > 2 next to a swap or cut needs a look.
+- MUSIC (scripts/music.py, first use): F major, 111 BPM picked automatically to land the "but"s and the punchline near beats;
+  theme / uh-oh / build / theme back / final chord + glockenspiel ping; ducked -6 dB under words; bed RMS -23.5 dB under the voice
+  (peak -27 dBFS). The bed is rendered in VIDEO time (its own 0.1 s lead-in), so it plays from frame 0. Next: try more melody
+  variation in the build sections.
+- MIX: Liam raw peak ~-0.5 dBFS; MIX_DB -1.5 gave a -4.7 dBFS preview mix -> MIX_DB -0.8.

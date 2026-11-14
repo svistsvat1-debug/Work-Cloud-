@@ -1,0 +1,25 @@
+{
+  "duration": 24.0,
+  "start": 0.1,
+  "vo_at": 0.1,
+  "words": "images/buzzard-wings/words.json",
+  "voice": "public/buzzard-wings/vo/take1.mp3",
+  "key": "F",
+  "bpm": [96, 120],
+  "align": [5.54, 8.18, 13.06, 19.46, 22.86],
+  "sections": [
+    [0.0, 5.54, "theme"],
+    [5.54, 8.1, "uhoh"],
+    [8.1, 9.5, "build"],
+    [9.5, 13.06, "theme2"],
+    [13.06, 14.7, "uhoh"],
+    [14.7, 16.3, "build"],
+    [16.3, 19.4, "build"],
+    [19.4, 22.8, "theme"],
+    [22.8, 24.0, "final"]
+  ],
+  "stops": [[5.54, 0.45], [13.06, 0.32], [22.86, 0.25]],
+  "pings": [22.86],
+  "end_chord": 22.86,
+  "under_db": 24
+}
