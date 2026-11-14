@@ -31,3 +31,22 @@ Assumption: one new picture every 4–6 s (Paint-Explainer pacing) [VERIFY on th
 
 Plus: thumbnail 1 x MEDIUM = ~81; SFX: base library once 15 x ~1.5 s ≈ 75, then <= 5 new per video ≈ 25; music = 0 (code).
 Total per 8–10 min video ≈ 4,200–7,900 credits (base case ≈ 5,700). Money = credits x (plan price / plan credits) [VERIFY plan].
+
+## First full video in this style — "Every WW2 Army's Food Ranked" (2026-11-14)
+Code: `video-engine/src/FoodVideo.tsx` + `src/food/` (core.tsx = timing helpers + Board; scenesA/B/C.tsx = 76 scenes).
+Reusable kit: `video-engine/src/paint/Kit.tsx` — G/Sh/Tx (scale-aware 7 px lines), PopAt, Circle, Under, Arrow, Label, Check, XMark, Hit,
+Soldier (hats: us/jp/it/ru/de/uk/officer/sailor/afrika; faces: panic/grin/worry/serious/sad/disgust/smirk/shock/suspicious; face changes on cue via `faceAt`),
+food (Plate, Bowl, Sack, Fish, Plum, Packet, Can, Biscuit, Loaf, Crusts, Glass, Bottle, Crate, Mug, ChocBar, Potato, Cone, Turkey, Box, Cig, Jar),
+props (MoneyBag, Factory, Helmet, Calendar, Clock, Paper, Padlock, Bars, Kettle, Tooth, Donkey, OldMan, Horse),
+vehicles (Truck, CargoShip, Sub, Barge, Tug, FieldKitchen), scenery (Palm, Snow, Sea, Ground, Island, Blob), BarChart, TitleCard, along().
+
+Pipeline (all free, local):
+1. `tools/build_timing.py` — Kokoro SRT + ffmpeg silencedetect → sentence/word timings (`src/food-timing.json`). Sentence ends = start of the pause before the next sentence; scene cuts in the middle of that pause. (faster-whisper models were blocked by the network; Kokoro's own SRT is exact for its own audio.)
+2. Scenes use `b(i)` (beat start), `w(i,'word')` (word start) → names/numbers pop on their word.
+3. `tools/frames.mjs` — contact-sheet stills (1 per scene) before the full render: catches clipped text in 1 minute.
+4. `tools/render_frames.mjs` — lossless master as a PNG sequence (ProRes 4444 for 8 min ≈ 20 GB; PNG ≈ 10x smaller, same pixels).
+5. `tools/music_food.py` — mood-mapped underscore (neutral/tension/reveal/calm from MUSIC MOOD tags), 2 s crossfades. Use O(n) smoothing, never np.convolve with a 2 s kernel (hours).
+6. `tools/mix_food.py` — voice −14 LUFS, SFX ≈16 dB under the voice, music bed + sidechain ducking. Owner asked for the music a bit louder: final ≈ 20 dB under the voice (spec was 25–30).
+7. `tools/make_srt.py` — captions ≤ 2×42 chars, 1–6 s.
+
+Lessons: Bangers has no lowercase ("800 g" shows as "800 G"); keep labels ≥ 46 px at 1080p; one big stick figure per scene reads best; title cards need a small character in the corner so they don't feel empty.

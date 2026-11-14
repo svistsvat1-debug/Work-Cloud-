@@ -10,7 +10,7 @@ export const useFonts = () => {
       new FontFace('PatrickHand', `url(${staticFile('PatrickHand.woff2')}) format('woff2')`),
       new FontFace('Bangers', `url(${staticFile('Bangers.woff2')}) format('woff2')`),
     ];
-    Promise.all(faces.map((f) => f.load().then((ff) => document.fonts.add(ff))))
+    Promise.all(faces.map((f) => f.load().then((ff: FontFace) => (document.fonts as unknown as {add: (f: FontFace) => void}).add(ff))))
       .then(() => continueRender(handle))
       .catch(() => continueRender(handle));
   }, [handle]);
