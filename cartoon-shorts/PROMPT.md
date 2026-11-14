@@ -62,9 +62,12 @@ R9. BUDGET: AT MOST 900 ElevenLabs CREDITS PER VIDEO (hard cap, for everything: 
 effects + any redo). Never start a run that would take the total over 870 (30 kept as a margin, because estimates are
 estimates), and never go over 900, even if the result would be better. Every number below follows this cap.
 
-R10. STORY, NOT A LIST OF FACTS (hard rule for every script): the voiceover is told as a short story that people want
-to keep listening to, never as a list of facts read out. Someone (a doer) wants something, tries it, something goes
-wrong, and the ending of the story is the answer. Facts are the EVENTS of the story, not statements about the topic.
+R10. STORY, NOT A LIST OF FACTS AND NOT A BIOGRAPHY (hard rule for every script): the voiceover is told as a short
+story that people want to keep listening to, like a storyteller telling a tale, never as a list of facts read out and
+never as a biography or chronicle ("In 1788, scientist X discovered...", "he was born...", "after years of work he
+invented..."). The viewer is dropped into a scene where it is happening right now: someone (a doer) wants something,
+tries it, something goes wrong, and the ending of the story is the answer. Facts are the EVENTS of the story, not
+statements about the topic, and the people who discovered or invented something are not the subject of the video.
 All other script rules still hold (real facts only, the length cap, no hype words, no narrator phrases, no "!" lines).
 Details: STEP 1C "Story".
 
@@ -104,7 +107,7 @@ STEP 1 - IDEA, SCRIPT AND PACKAGING (phase 1; ends with the IDEA CARD and a STOP
 ---------------------------------------------------------------------------------------------------------------------
 Do not look for other ideas and do not propose other topics. Research only my idea: verify its central fact(s) with
 reliable sources (see "Facts" in 1C), find the surprising answer, the stakes and the clearest way to tell it as a
-story (who tried what, what went wrong, how it ended). If my idea is factually wrong or can't be supported, say so in
+story (whose problem it is, what they try, what goes wrong, how it ends; not the biography of whoever discovered it). If my idea is factually wrong or can't be supported, say so in
 the card and propose the closest true version of the SAME idea (not a new topic). Then write the script (1C), make the
 packaging (1D), send the card (1E) and STOP.
 
@@ -164,11 +167,21 @@ spaces (the voice budget), estimated at ~2.6 spoken words per second: the estima
 at most 24 s. If the story does not fit, cut a sentence, never cram.
 
 Story (R10) - how a fact becomes a story:
-- A DOER WITH A GOAL. The story is about someone who wants something concrete: "you" (in a what-if), the channel's
-  character, or a real person / crew / city from the sources (an engineer, a mayor, a phone company). The cartoon
-  character plays that doer on screen.
-- START INSIDE A MOMENT, not with a definition or a number: "So you drag a bag of trash all the way up a volcano." /
-  "In 1930, a phone company needed its old building gone." The first line still names what frame 0 shows.
+- A DOER WITH A GOAL. The story is about someone who has a problem RIGHT NOW and wants something concrete: "you" (in
+  a what-if), the animal or the object itself (a bird, a bee, a dam), the channel's character, or the people facing the
+  problem in the sources (a crew, a town, a company). The cartoon character plays that doer on screen (or reacts next
+  to it when the doer is an animal or an object).
+- NOT A BIOGRAPHY. Never tell who discovered or invented something and how their life went: no "was born", "studied",
+  "after years of work", "went down in history", no list of dates. If an inventor or a scientist is in the story, they
+  appear only as a character inside the scene, at the moment of the problem ("The train keeps booming in the tunnels.
+  So an engineer who watches birds..."), never as the subject. A name or a year is optional: at most one, only if it
+  makes the moment stronger, and never as the first words (dates and names can go into the description).
+- START INSIDE A MOMENT, like the first line of a tale, not with a definition, a date, a name or a number: "So you drag
+  a bag of trash all the way up a volcano." / "A tiny bird sits on four eggs. But one of them isn't hers." / "A phone
+  company wants its old building gone. But six hundred people are working inside it." The first line still names what
+  frame 0 shows.
+- THE VIEWER IS IN THE SCENE: tell what the doer sees, wants and is about to lose, so the viewer worries about them.
+  A small mystery or "what happens next?" pulls them to the end, and the facts answer it one event at a time.
 - EVENTS, NOT STATEMENTS. Every sentence is something that happens: someone does, tries, sees, decides, or something
   breaks, floats, cracks, comes back. A fact enters the story as an event or a consequence. Not "Lava is denser than
   trash", but "You throw it in... and it just floats." At most one sentence may explain WHY (the "because" line), and
@@ -177,8 +190,8 @@ Story (R10) - how a fact becomes a story:
   still be cooling"), never a row of statistics.
 - TIME MOVES FORWARD. Each sentence is a later moment caused by the one before it (but / so / because). If two
   sentences could swap places without breaking anything, it is a list: rewrite it.
-- ONE TENSE. Present tense for a what-if story ("you throw it"), past tense for real history ("they poured"). Never mix
-  inside one script.
+- TOLD AS IF IT IS HAPPENING NOW: present tense works best, also for real history ("the concrete starts to heat up").
+  Keep the main line of events in one tense; a short look back inside it is fine ("a cuckoo slipped it in").
 - THINGS YOU CAN SEE AND HEAR: concrete objects and actions the cartoon can show, not abstract words (impact,
   efficiency, process).
 - AN ENDING, NOT A CONCLUSION. The last sentence is what finally happens (the payoff + punchline), not a summary, a
@@ -188,11 +201,16 @@ Story (R10) - how a fact becomes a story:
 - STILL TRUE. The story dramatises only what the cartoon characters do. Every event the voice presents as real comes
   from the sources: no invented names, dates, dialogue or quotes presented as real (a narrated paraphrase such as "the
   architect said: move it" is fine only when the source says he proposed it).
-Example of the FORM only (not a fact source; facts of a real script still need sources):
+Examples of the FORM only (not a fact source; facts of a real script still need sources):
   LIST (wrong): "Lava is about 1,100 degrees. Trash would burn and release toxic smoke. Lava is also denser than trash.
   So we don't throw trash into volcanoes."
   STORY (right): "So you drag a bag of trash all the way up a volcano and throw it in. But it doesn't sink. Lava is way
   heavier than garbage, so the bag just sits on top, burns, and the toxic smoke drifts right back at you."
+  BIOGRAPHY (wrong): "In 1788, Edward Jenner described how cuckoo chicks push eggs out of the nest. Cuckoos are brood
+  parasites: they lay their eggs in other birds' nests, and the hosts raise the chicks."
+  STORY (right): "A tiny reed warbler sits on four eggs. But one of them isn't hers. A cuckoo slipped it in while she
+  was away. So it hatches first, and the blind, naked chick pushes every other egg out of the nest. And the warbler?
+  She feeds it until it's way bigger than she is."
 
 Shape (the story's arc):
 - 0-2 s HOOK = the story's opening moment: the doer + the thing + the goal, with the stakes or the promise clear at
@@ -207,7 +225,9 @@ Shape (the story's arc):
 Checks before the card:
 - Story check: (1) who is the doer and what do they want? (2) is every sentence something that happens? (3) can any
   two sentences swap places without breaking the story? (if yes, it is a list: rewrite) (4) does the last sentence end
-  the story (what finally happens) instead of summing it up? Write the answers in the card.
+  the story (what finally happens) instead of summing it up? (5) does it sound like a biography or a chronicle (starts
+  with a name or a year, "discovered", "invented", "was born", "after years of work")? (if yes, rewrite it as a scene)
+  Write the answers in the card.
 - Connector check: between every two sentences the link is "but", "so", "because", "which means" or "that's why"
   (said or clearly implied), never "and then". A run of "and then" is a list, and that is where viewers leave. Write
   the chain out in the card.

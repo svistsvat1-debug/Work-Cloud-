@@ -11,11 +11,14 @@ The prep normalises every character picture to exactly these colours (alpha 255 
 ## OWNER RULE - SCRIPTS ARE STORIES (2026-11-14, read before writing ANY script)
 The owner asked: from now on the voiceover is NOT told as a list of facts but as a short STORY of at most 25 s (owner raised the cap from 20 s to 25 s on 2026-11-14 for the story format;
   target 21-24 s). The full rule is R10 + STEP 1C "Story" in cartoon-shorts/PROMPT.md (the current prompt).
-- Open in a moment of time with someone who has a problem ("In 1930, a phone company needed this building gone."):
-  who + when + what they want, and the stakes, in the first line (it still names what frame 0 shows).
-- Then the plan / obvious solution -> "But" the obstacle -> "So" the clever turn (a person decides / tries something)
-  -> the payoff as the story's ending, not as a stated fact. Past tense for real history, present tense for a what-if
-  ("so you throw it in..."), never mixed; narrated like telling a friend what happened.
+- NOT A BIOGRAPHY OR CHRONICLE (owner, 2026-11-14): never "In 1788, X discovered...", "he was born", "after years of
+  work he invented". Drop the viewer into a scene happening right now, like the first line of a tale: someone (you, the
+  animal / object itself, a crew, a town) has a problem ("A tiny bird sits on four eggs. But one of them isn't hers.").
+  Inventors / scientists appear only as a character inside the scene at the moment of the problem; at most one name or
+  year, never as the first words.
+- Then the plan / obvious solution -> "But" the obstacle -> "So" the clever turn (someone decides / tries something)
+  -> the payoff as the story's ending, not as a stated fact. Present tense works best (also for history), one tense
+  for the main line of events; narrated like telling a friend what is happening.
 - Characters act and decide on screen (the channel guy plays the hero of the story: the architect, the engineer...).
 - Still real facts only, now 48-60 words / <= 360 characters (speech <= 24 s), no invented quotes presented as real quotes
   (a narrated paraphrase like "the architect said: move it" is fine when the source says he proposed it).
