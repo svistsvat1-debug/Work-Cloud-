@@ -71,6 +71,11 @@ statements about the topic, and the people who discovered or invented something 
 All other script rules still hold (real facts only, the length cap, no hype words, no narrator phrases, no "!" lines).
 Details: STEP 1C "Story".
 
+R11. VOICE, MUSIC, SOUND. The voice of every video is ElevenLabs "Liam - Viral Short-Form Storyteller" (voice_id
+VCgLBmBjldJmfphyB8sZ). Every video has quiet background music, and that music is made locally in code for 0 credits
+(STEP 2 section 10b): never ElevenLabs Music (measured: 27.5 credits per second, a 25 s track ~ 688) and never stock or
+downloaded music. Sound effects stay ElevenLabs: generate as many new ones as the action needs, within the R9 budget.
+
 =====================================================================================================================
 STEP 0 - CHANNEL MEMORY (before anything else, in phase 1)
 =====================================================================================================================
@@ -116,7 +121,7 @@ packaging (1D), send the card (1E) and STOP.
 ---------------------------------------------------------------------------------------------------------------------
 Research the internet and write one original YouTube Shorts script about a surprising fact or an interesting question,
 told as a short story (R10). The video will use simple 2D animations and should be at most 25 seconds long (21-24 s is
-ideal), with around 48-60 words of narration. Look for unusual questions, surprising explanations, everyday mysteries,
+ideal), with around 58-70 words of narration. Look for unusual questions, surprising explanations, everyday mysteries,
 or strange facts about science, animals, history, the human body, space, or engineering. For example, "Why don't we
 throw trash into volcanoes?" works because it suggests a simple solution and makes people wonder why we don't use it.
 Use that kind of curiosity, but find a different topic. Research several ideas before choosing the strongest one.
@@ -162,9 +167,10 @@ agencies, or established scientific organizations, and cross-check the explanati
 numbers, quotes, or consequences, and keep uncertainty where it matters. Real facts only in the voiceover (cartoon
 exaggeration is fine for what the characters do).
 
-Length: the whole video is at most 25 seconds (R7), so the narration is 48-60 words, at most ~360 characters with
-spaces (the voice budget), estimated at ~2.6 spoken words per second: the estimated speech length in the card must be
-at most 24 s. If the story does not fit, cut a sentence, never cram.
+Length: the whole video is at most 25 seconds (R7), so the narration is 58-70 words, at most ~400 characters with
+spaces (the voice budget). Estimate the speech length at ~3.1 spoken words per second (the Liam voice, measured in
+video #17; use the newest "Liam pace" in memory/STYLE.md if there is one; numbers in digits are read slower): the
+estimated speech length in the card must be at most 24 s. If the story does not fit, cut a sentence, never cram.
 
 Story (R10) - how a fact becomes a story:
 - A DOER WITH A GOAL. The story is about someone who has a problem RIGHT NOW and wants something concrete: "you" (in
@@ -269,7 +275,7 @@ Send me in Ukrainian (the script, titles and cover text stay in English):
  8. Packaging: 3 titles (pick marked), cover text, description with hashtags.
  9. Links to the sources that support the explanation.
 10. Credit plan from the price table in STEP 2 section 2 (voice, word times, pictures - all LOW 1K, sound effects
-    including what will be reused from sfx-library, reserve, total - the planned total must be <= 870, the hard cap
+    including what will be reused from sfx-library, music - local code 0, reserve, total - the planned total must be <= 870, the hard cap
     is 900), and the line "spent so far: 0 credits".
 11. MODE B only: two backup ideas, one line each, numbered №2 and №3.
 End with: "Відповідай «так», щоб запустити виробництво, або напиши правки / «№2» / «№3»."
@@ -280,7 +286,7 @@ STEP 2 - THE SKILL (used in phase 2)
 =====================================================================================================================
 ---
 name: cutout-cartoon-shorts-elevenlabs
-description: Turn a short story script into a vertical 2D cartoon Short (1080x1920, 60 fps, at most 25 seconds) in the cut-out style of "Can we throw trash in a volcano?". Every picture (each pose / expression, props, set pieces and the background) comes from ElevenLabs GPT Image 2.5 at 1K, quality LOW, and is keyed into a cut-out locally; the voice-over is ElevenLabs "Mark - Natural Conversations"; every sound effect is ElevenLabs Sound Effects; Remotion code animates it all (2.5D multiplane camera, squash-swap poses, real projectile physics, lava / smoke / steam effects, cartoon faces on objects). Hard budget: 900 ElevenLabs credits per video. Runs unattended from the approval of the idea card to the end. Use when someone asks for a cartoon / cut-out / Oddsoneout-style animation from a script made with ElevenLabs + code.
+description: Turn a short story script into a vertical 2D cartoon Short (1080x1920, 60 fps, at most 25 seconds) in the cut-out style of "Can we throw trash in a volcano?". Every picture (each pose / expression, props, set pieces and the background) comes from ElevenLabs GPT Image 2.5 at 1K, quality LOW, and is keyed into a cut-out locally; the voice-over is ElevenLabs "Liam - Viral Short-Form Storyteller"; every sound effect is ElevenLabs Sound Effects; the background music is synthesized locally in code (0 credits); Remotion code animates it all (2.5D multiplane camera, squash-swap poses, real projectile physics, lava / smoke / steam effects, cartoon faces on objects). Hard budget: 900 ElevenLabs credits per video. Runs unattended from the approval of the idea card to the end. Use when someone asks for a cartoon / cut-out / Oddsoneout-style animation from a script made with ElevenLabs + code.
 ---
 
 # Cut-out cartoon Shorts (ElevenLabs pictures + voice + sound, code animation)
@@ -303,7 +309,9 @@ Read the whole file once before starting. Follow the order; each step says what 
   `creative_add_flow_node`, `creative_run_flow_nodes`, `creative_get_flow_run_status`, `creative_get_generations`,
   `creative_transcribe_audio`, `creative_list_voices`, `creative_get_model_schema`. Do not install or use Higgsfield,
   any other generator or a sound library: pictures, the background, the voice and every sound effect are ElevenLabs
-  (the only reused sounds are ElevenLabs sounds from earlier videos in `sfx-library/`, section 10).
+  (the only reused sounds are ElevenLabs sounds from earlier videos in `sfx-library/`, section 10). The one exception
+  is the background music: it is synthesized locally in code (section 10b), never ElevenLabs Music, never stock or
+  downloaded music.
 - NO REFERENCES (hard rule, no exceptions): every image node gets a text prompt only. Never pass `connect_from` to an
   image node, never wire anything into its `images` port, never use `creative_edit_image`,
   `creative_attach_reference_file`, an upload or `creative_add_flow_asset_node` as an image input, and never feed the
@@ -315,7 +323,7 @@ Read the whole file once before starting. Follow the order; each step says what 
   (camera, Layer, shake, smoke / steam, lava, faces, sweat drop, sound cues) instead of rewriting it; the Short's own
   code goes in `src/<short>/`. `<short>` = a short kebab-case id of the topic (e.g. `bees-hexagons`); the composition id
   is the same name in PascalCase.
-- Python 3 with `pillow numpy opencv-python` (keying, measuring). Install whatever is missing yourself with pip.
+- Python 3 with `pillow numpy opencv-python scipy` (keying, measuring, music). Install whatever is missing yourself with pip.
   ffmpeg: Remotion ships one in `node_modules/@remotion/compositor-*/ffmpeg(.exe)`.
 - One ElevenLabs flow per Short: call `creative_create_flow` (name = the Short's name) first and pass its `flow_id`
   to every later call, so everything lands on one canvas. Put the flow link in the final report.
@@ -328,7 +336,7 @@ Read the whole file once before starting. Follow the order; each step says what 
 ---------------------------------------------------------------------------------------------------------------------
 ## 1. Script -> beat sheet (before generating anything)
 
-1. Split the approved script into lines: a Short of at most 25 s = 6-8 lines, 48-60 words. Use the approved words
+1. Split the approved script into lines: a Short of at most 25 s = 6-9 lines, 58-70 words. Use the approved words
    exactly. They are already written as a story told like a person talking (plain words, "so", "basically", "right?"),
    with no narrator phrases ("here's the thing", "but here's the part"), no hype words (incredible, shocking, amazing,
    insane) and no "!" lines: they make AI voices over-act.
@@ -345,7 +353,8 @@ Read the whole file once before starting. Follow the order; each step says what 
    The biggest gag sits on the payoff words.
 6. List the pictures you need (section 4) from the beats: every pose, every expression, every prop that moves on its
    own, every set piece, the background. Every one is LOW 1K; price each one (section 2).
-   Done = beat sheet table: time / words / what is on screen / which picture / which sound, plus `budget.md`.
+   Done = beat sheet table: time / words / what is on screen / which picture / which sound / which music part, plus
+   `budget.md`.
 
 ---------------------------------------------------------------------------------------------------------------------
 ## 2. Budget: 900 ElevenLabs credits per video, a hard cap (R9)
@@ -355,22 +364,26 @@ always estimate before you run.
 
 | What                                      | Settings                         | ~ credits                                      |
 |-------------------------------------------|----------------------------------|------------------------------------------------|
-| Voice, one take                           | eleven_v4, Mark                  | ~ 1 per character of the script (60 words ~ 360) |
+| Voice, one take                           | eleven_v4, Liam                  | ~ 1 per character of the script (70 words ~ 390) |
 | Word times                                | Scribe v1 on the voice           | ~ 10                                           |
 | Picture LOW                               | 1K, 2:3                          | ~ 47                                           |
 | Picture LOW                               | 1K, 3:2                          | ~ 47 (same pixel count as 2:3; confirm with the estimate) |
 | Picture LOW                               | 1K, 1:1                          | ~ 54 (pricier than 2:3, so use 2:3 / 3:2)      |
 | Picture MEDIUM / high / xhigh / max       | any                              | FORBIDDEN (R8): every picture is LOW           |
-| Sound effect                              | Sound Effects v2                 | ~ 11 per second (2 s ~ 22, 5 s ~ 55)           |
+| Sound effect                              | Sound Effects v2                 | estimate ~ 11 per second; billed ~ 3.3 per second in earlier videos |
 | Reused sound from `sfx-library/`          | an ElevenLabs sound from an earlier video | 0                                     |
+| Background music, made in code            | local Python synth (section 10b) | 0                                              |
+| Background music, ElevenLabs Music        | any version                      | FORBIDDEN (R11): 27.5 per second, 25 s ~ 688   |
 | Reference picture / image edit            | any                              | FORBIDDEN by rule (it would also add ~ 240 each) |
 | ElevenLabs background removal             |                                  | ~ 30 each, so never (key locally for free)     |
 
 Plan it before generating anything and write it to `images/<short>/budget.md`. Normal split:
-- voice <= 370 (one take; the approved script is <= ~360 characters);
+- voice <= 410 (one take; the approved script is <= ~400 characters);
 - word times ~ 10;
-- sound effects <= 80 (reuse from `sfx-library/` first, section 10; new effects short, 0.5-2 s; a 25 s video
-  rarely needs more than 6-7 cues);
+- sound effects: as many new ones as the action needs (typically 6-12 cues of 0.5-2 s; plan them at the estimate,
+  ~ 11 per second, even though earlier videos were billed less). Reuse a library file only when it really fits the
+  action, not just to save credits (section 10);
+- music: synthesized in code, 0 credits (section 10b);
 - pictures: all LOW 1K at ~47 each, normally 6-8 pictures = ~280-376. Spend it where it makes the video more alive
   (an extra expression, a reaction pose, a funnier prop), but no overkill: at most 8 pictures (a 9th only if the
   whole plan, reserve included, still stays <= 870, e.g. because all sounds are reused), never quality
@@ -378,7 +391,7 @@ Plan it before generating anything and write it to `images/<short>/budget.md`. N
   fine; never add pictures just to spend credits;
 - reserve ~ 50 (one LOW redo) for redoing a picture that failed the check.
 Expected total: roughly 700-870 credits, never more than 900.
-Example plan: voice 360 + word times 10 + 8 pictures 376 + sound effects 70 + reserve 50 = 866.
+Example plan: voice 390 + word times 10 + 7 pictures 329 + sound effects 80 + music 0 + reserve 50 = 859.
 
 Rules:
 - `generations_count: 1` on EVERY paid run. The defaults are 4 picture variations and 2 voice takes (4x / 2x the price).
@@ -387,8 +400,8 @@ Rules:
 - Before every paid run, make the same call with `estimate_only: true`, add the estimate to `images/<short>/credits.md`
   (what, settings, estimate, running total), then run it. Never start a run that would take the total over 870 (30 is
   kept as a margin because estimates are estimates). Never go over 900, even if the result would be better.
-- If the voice costs more than planned, take the difference from sound effects first (reuse library sounds), then
-  from pictures (drop the least important one), before you generate any picture.
+- If the voice costs more than planned, take the difference from pictures first (drop the least important one, never
+  below 6), then from sound effects (shorter cues, library sounds that really fit), before you generate any picture.
 - `estimate_only` on a node whose input is not generated yet also counts that input (Scribe before the voice exists
   shows ~425): estimate Scribe after the voice has finished.
 - If the plan does not fit, in this order: (1) draw a small prop in code instead, (2) put two small props into one
@@ -399,9 +412,12 @@ Rules:
 ---------------------------------------------------------------------------------------------------------------------
 ## 3. Voice (ElevenLabs) and word times
 
-- Voice: "Mark - Natural Conversations" (voice_id `UgBBYS2sOqTuMpoF3BR0`, a casual young American man). If that id is
-  ever rejected, find the same name with `creative_list_voices` (search "Mark Natural Conversations"); never use a
-  different voice. Model `eleven_v4`, plain text (no tags, no SSML), one take.
+- Voice: "Liam - Viral Short-Form Storyteller" (voice_id `VCgLBmBjldJmfphyB8sZ`, a professional library voice made for
+  Shorts: upbeat, charming, punchy storytelling). If that id is ever rejected, find the same name with
+  `creative_list_voices` (search "Liam Viral Short-Form Storyteller"); it is NOT the premade voice called just "Liam".
+  Never use a different voice. Model `eleven_v4`, plain text (no tags, no SSML), one take.
+- Pace: after the take, measure the real rate (words / seconds of speech) and write it into memory/STYLE.md as
+  "Liam pace" (video #17: 58 words in 18.56 s = ~3.1 words/s), so the next idea cards estimate the length with it.
 - How: `creative_add_flow_node` (node_type `tts`, model `eleven_v4`, `voice_id`, prompt = the approved script) ->
   estimate -> `creative_run_flow_nodes` with `generations_count: 1` -> poll `creative_get_flow_run_status` (wait
   `poll_after_seconds` between calls) until `all_completed` -> download the audio URL with curl to
@@ -666,12 +682,14 @@ const y = (tau: number) => ya + 0.5 * g * (tau - ta) * (tau - ta);
 - Smoke rings read as halos if too light: use mid-grey.
 
 ---------------------------------------------------------------------------------------------------------------------
-## 10. Sound (all from ElevenLabs)
+## 10. Sound effects (all from ElevenLabs) and the mix
 
-- Layers in code: the voice (0 dB) + effects (one cue list: file, start time, dB, optional dB keys over time).
-- Reuse first: read `sfx-library/index.md`. Reuse a library file only if it really fits the action (the same kind of
-  sound, the right length and character); otherwise generate a new one. Every reused file is an ElevenLabs sound from
-  an earlier video; copy it into `public/<short>/sfx/` and list it in the report as "reused".
+- Layers in code: the voice (0 dB) + the background music (section 10b, one pre-ducked WAV at a fixed level) + effects
+  (one cue list: file, start time, dB, optional dB keys over time).
+- Every action gets the sound it needs: there is no fixed limit on new effects, only the R9 budget. Check
+  `sfx-library/index.md` first and reuse a library file only if it really fits the action (the same kind of sound, the
+  right length and character); otherwise generate a new one. Every reused file is an ElevenLabs sound from an earlier
+  video; copy it into `public/<short>/sfx/` and list it in the report as "reused".
 - Every new effect is ElevenLabs Sound Effects v2: `creative_add_flow_node` with node_type `sfx`, model
   `eleven_text_to_sound_v2`, `model_parameters: {"duration_seconds": 0.5-3 (only as long as needed, ~ 11 credits per
   second), "prompt_influence": 0.7, "loop": false}` (`loop: true` only for a bed such as bubbling), prompt
@@ -684,7 +702,8 @@ const y = (tau: number) => ya + 0.5 * g * (tau - ta) * (tau - ta);
   index (file, what it sounds like, length, onset / peak, video, prompt).
 - Sync each file by its measured onset (impacts) or peak (whooshes) to the beat. Levels under a voice: whooshes -25 to
   -31 dB, impacts -14 to -19 dB, beds (bubbling, roar) -26 to -33 dB, the big blast -8 to -10 dB inside a pause.
-  Check the mix: no clipping, peak around -4 dBFS. No sound may run past the 25 s end: fade the last one out before it.
+  The music bed sits under all of it (section 10b). Check the mix: no clipping, peak around -4 dBFS. No sound and no
+  music may run past the 25 s end: fade the last one out before it.
 
 ```tsx
 {cues.map((c) => {
@@ -698,6 +717,43 @@ const y = (tau: number) => ya + 0.5 * g * (tau - ta) * (tau - ta);
 ```
 
 ---------------------------------------------------------------------------------------------------------------------
+## 10b. Background music (synthesized locally in code, 0 credits)
+
+Every video has a quiet cartoon music bed under the voice. It comes from our own Python script, never from ElevenLabs
+Music (27.5 credits per second) and never from stock / downloaded music. The generator is shared and improved from
+video to video, like `src/shared/`: `studio/scripts/music.py` (create it on the first video that needs it). Per video it
+renders `public/<short>/music/bed.wav` (mono, 44.1 kHz, 16-bit) from the T table and words.json.
+
+The sound (flat cartoon, like the pictures: simple, warm, bouncy, never harsh):
+- Instruments, all synthesized with numpy (+ scipy for filters and reverb): marimba (sine + a quiet 4x partial, fast
+  exponential decay), pizzicato strings (Karplus-Strong pluck), a soft round bass (sine + a little 2nd harmonic, short
+  attack), light percussion (a short high-passed noise "shaker" and a woodblock "tick"), a glockenspiel ping for the
+  payoff. No square / saw leads, no EDM drums, no long pads that cover the voice.
+- Every note gets a ~5 ms fade-in and a smooth release (no clicks). A short room reverb (convolution with ~0.6 s of
+  exponentially decaying noise, 15-20 % wet) so it doesn't sound dry and toy-like. Low-pass the whole bed at ~7 kHz and
+  cut below ~70 Hz.
+- Harmony: one major key (C, F or G), a simple progression (I-vi-IV-V or I-IV-V-I), the melody from the major
+  pentatonic so nothing clashes; a 2-bar motif that repeats with small variations. Tempo 96-120 BPM: pick the BPM in
+  that range (0.5 BPM steps) that puts the "but" word and the payoff word closest to a beat.
+- The music follows the story (R10):
+  - hook + plan: the playful theme (marimba melody + pizzicato + bass + shaker) from 0.1 s, no slow intro;
+  - "but": a comic STOP exactly on the word (0.3-0.6 s of near silence, only the reverb tail), then an "uh-oh" part:
+    sparser, a minor colour (vi / iii chords, or a ii-V that doesn't resolve), low pizzicato on the beats + a ticking
+    woodblock;
+  - "so" / the turn: a short rising arpeggio that builds;
+  - payoff: the main theme comes back, with a glockenspiel ping or a final chord on the punchline word;
+  - end: on the home chord (so the loop back to frame 0 sounds natural), faded out over the last ~0.5 s, nothing past
+    the 25 s end. A big blast or impact in a pause may sit in a music stop.
+- Ducking (done in the script, from words.json): -6 dB while words are spoken (80 ms attack, 250 ms release), back up
+  in the pauses. Then set the level so the bed's RMS sits about 22-26 dB under the voice's RMS (measure both): the
+  music is felt more than heard. In Remotion the bed plays from 0.1 s at one fixed volume.
+- Check without listening: peak <= -1 dBFS before mixing, no clipping, no clicks (no sample-to-sample jump above ~0.2
+  outside note attacks), no DC offset, little energy above 7 kHz, the bed exactly as long as the composition. Save the
+  settings (key, BPM, progression, instruments, sections, level) in `images/<short>/music.md`.
+- Fallback: if the generator breaks, a simpler bed (bass + pizzicato only, same story structure) is fine; a video
+  without music is the last resort and goes into the report.
+
+---------------------------------------------------------------------------------------------------------------------
 ## 11. Check, improve once, then render (1080x1920, no 4K)
 
 - Contact sheets: stills at every beat (`renderStill`, scale 0.5) in one grid; check frame 0, every swap, every gag,
@@ -706,8 +762,8 @@ const y = (tau: number) => ya + 0.5 * g * (tau - ta) * (tau - ta);
   above 2.2x the local median; every flag must be an intended swap or cut.
 - Improvement pass (exactly one; don't publish the first version as it is): look at the contact sheet and the preview
   as a viewer who has never seen it. Write down the 3 weakest moments (a dead hold, a gag that doesn't read, a payoff
-  that lands late, a beat off its word, a story event the voice tells but the picture doesn't show, anything that looks
-  cheap or AI-made, a hook frame that doesn't read in one second, a LOW-quality picture whose roughness shows) and fix
+  that lands late, a beat off its word, a story event the voice tells but the picture doesn't show, music that is too loud,
+  fights the voice or misses the "but" stop, anything that looks cheap or AI-made, a hook frame that doesn't read in one second, a LOW-quality picture whose roughness shows) and fix
   them in code. New ElevenLabs spending here only from the reserve, only for a broken picture, and still LOW 1K.
   Re-check those beats. Don't polish beyond this one pass: publishing regularly matters more than perfecting one video.
   Write what you fixed into the "lessons" of memory/STYLE.md.
@@ -740,16 +796,16 @@ MY SCRIPT: the voiceover approved in the idea card, word for word.
 
 What I want:
 
-1. Format: vertical 1080x1920 at 60 fps in my Remotion project (studio/). Final file = a 1080x1920 MP4 with the voice
-   and the sound effects mixed in. No 4K render and no upscaling. Length follows the voice, but the whole video is
+1. Format: vertical 1080x1920 at 60 fps in my Remotion project (studio/). Final file = a 1080x1920 MP4 with the voice,
+   the sound effects and the background music mixed in. No 4K render and no upscaling. Length follows the voice, but the whole video is
    at most 25 seconds (R7; target 21-24 s).
 
 2. Script: already checked and approved in STEP 1 (told as a story (R10), spoken style, no narrator phrases, no hype
    words, no "!" lines, true facts, the first line names what we see in the first frame). Use it word for word; the
    only exception is the factual-error rule in R3. Put the final lines in the final report.
 
-3. Voice: ElevenLabs, the voice "Mark - Natural Conversations" (voice_id UgBBYS2sOqTuMpoF3BR0), model eleven_v4, one
-   take. Get the word times with ElevenLabs Scribe and time every beat to the words. If the take makes the video longer
+3. Voice: ElevenLabs, the voice "Liam - Viral Short-Form Storyteller" (voice_id VCgLBmBjldJmfphyB8sZ), model
+   eleven_v4, one take. Get the word times with ElevenLabs Scribe and time every beat to the words. If the take makes the video longer
    than 25 s, fit it as STEP 2 section 3 says (shorter pauses, at most 6 % faster), never by cutting words.
 
 4. Beat sheet: one visual beat per line, landing on the exact word. Frame 0 = the premise, big and centred like a
@@ -779,9 +835,11 @@ What I want:
    depth-of-field blur on close-ups, gentle shake on impacts. Make it fun and alive: characters breathe and react,
    objects get faces when it makes the joke better. No motion blur, no fades between drawings.
 
-8. Sound effects: all made with ElevenLabs (new ones, or ElevenLabs sounds from earlier videos in sfx-library/ when
-   they really fit), on their own layer, quiet under the voice and synced to the action (whooshes on throws, plops,
-   rumbles, booms in a pause between words).
+8. Sound effects: all made with ElevenLabs, as many new ones as the action needs (or ElevenLabs sounds from earlier
+   videos in sfx-library/ when they really fit), on their own layer, quiet under the voice and synced to the action
+   (whooshes on throws, plops, rumbles, booms in a pause between words).
+   Background music: synthesized locally in code, 0 credits (STEP 2 section 10b): the playful theme, a comic stop on
+   "but", the theme back on the payoff, quiet under the voice and ducked under the words.
 
 9. Check before rendering: a contact sheet of every beat + a frame-by-frame pop scan of a quick preview + the one
    improvement pass. Fix anything that looks off.
@@ -806,10 +864,10 @@ Everything for one video goes to videos/<short>/.
 3. Files: the final MP4 -> videos/<short>/<short>.mp4 (not committed, see 5); videos/<short>/idea-card.md (the
    approved card); videos/<short>/report.md (the final report).
 4. Memory: add the row to memory/VIDEOS_LOG.md (views empty; note in "notes" that it is a <= 25 s STORY video with LOW
-   pictures, so later stats can compare it with the older 20-30 s MEDIUM videos and the <= 20 s fact-shaped LOW
+   pictures, the Liam voice and code music, so later stats can compare it with the older 20-30 s MEDIUM videos and the <= 20 s fact-shaped LOW
    videos); update memory/IDEA_BANK.md (used / new); memory/STYLE.md (the locked look if this was the first video, plus
    3-5 lessons: what looked good, what glitched, what to do differently next time, including how the LOW pictures held
-   up and how the story shape worked); the "Found by Claude" section of memory/COMPETITORS.md; sfx-library/ + its
+   up, how the story shape worked, the Liam pace and how the code music sounded); the "Found by Claude" section of memory/COMPETITORS.md; sfx-library/ + its
    index.
 5. Git: cartoon-shorts/.gitignore excludes studio/node_modules/, the bundle outDir, studio/out/, */raw/ and *.mp4
    (videos are sent to me instead, so the repository stays small). Commit everything else in cartoon-shorts/ on your
@@ -818,9 +876,9 @@ Everything for one video goes to videos/<short>/.
    origin/main && git push origin HEAD:main`. If the push to main is refused, leave it on the branch and say so in the
    report. Retry network failures up to 4 times (2 s, 4 s, 8 s, 16 s).
 6. Send me the MP4 and the cover PNG as files.
-7. Final report, in Ukrainian: the final script lines; the voice (and whether it had to be fitted to 25 s, how); the
+7. Final report, in Ukrainian: the final script lines; the voice (Liam, its measured pace, and whether it had to be fitted to 25 s, how); the
    final video length; the beat table (time / words / picture / gag / sound); the pictures (list, all LOW 1K, with
-   aspect ratios); the sound effects (new / reused); the credit ledger with the total; what the improvement pass
+   aspect ratios); the sound effects (new / reused); the music (key, BPM, sections, level); the credit ledger with the total; what the improvement pass
    changed; the upload kit (title, cover text, description, hashtags); the ElevenLabs flow link; the command to open
    the project in Remotion Studio (`cd cartoon-shorts/studio && npx remotion studio`); where all the files are; what
    was written to memory; the branch / main push result; any fallback you used and why.
