@@ -415,3 +415,23 @@ Video #15 (owl-pantograph, 2026-11-14) - all pictures LOW 1K; STORY rule, first 
 - RENDER: Remotion's own Chrome download is blocked (remotion.media): set CHROME to
   /opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell. 4 CPUs: CONC 4
   (CONC 6 is refused). Full 22.6 s render ~3.5 min.
+
+Video #16 (cow-eyes, 2026-11-14) - all pictures LOW 1K; STORY rule, 21.9 s:
+- GOOD: LOW held up a seventh time: 7 pictures (hero painting, smug guy blowing on his brush, cow side view, cow from
+  behind looking over her shoulder, lion sneak/walk pair sheet, lion face sly/shock pair sheet, savanna plate), 0 redos,
+  652.64 credits (voice 303.97, pictures 328.67, 5 sfx 20.00). Animals in the same flat style came out consistent with
+  STYLE_OBJ + "cute chubby cartoon ..." text; asking for "the rump plain white with no patch" left clean room for
+  code-drawn eyes.
+- GOOD: eyes drawn in code ON a sprite (svg overlay in the sprite's own pixel coordinates inside the Spr div) follow its
+  squash / breathing for free. Closed = arcs, open = Eye; a blink with the Eye lid looked like grey discs -> blink as arcs.
+- GLITCH: side-view animals side by side are very wide for 9:16: the first wide shot had the whole cast in a thin strip
+  with half the frame empty sky. Fix: depth layout - the predator in the FOREGROUND (lower, bigger: ground y +260 world,
+  scale 0.85) and the cow behind it (scale 0.6); a second row of grass tufts in front of the foreground.
+- GOOD: close-up 'hiding in grass' = big code grass blades along the bottom edge + the face sprite sliding down 330 px on
+  the key word (duck) - cheap and reads instantly. A cut to the reaction close-up in the middle of a phrase ("stare right
+  back at it") worked better than waiting for a pause.
+- SFX: the batch estimate priced 5 sfx at ~66, the charge was 20 (about 3.3 credits per second now).
+- TIMING: 60 words / 304 characters took 20.96 s with Mark (~2.9 words/s).
+- NETWORK: the session again started on the Default environment; switched to 'Work-Cloud-' before downloading.
+- RENDER: CHROME = playwright headless shell (see #15); full 21.9 s render > 10 min here, run it in the background.
+
