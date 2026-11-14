@@ -1,7 +1,7 @@
 # VIDEOS_LOG
 
 
-OWNER RULE (2026-11-14): every script is told as a short STORY (<= 20 s), not as a list of facts - see the rule at the top of memory/STYLE.md.
+OWNER RULE (2026-11-14): every script is told as a short STORY (<= 25 s since 2026-11-14, was 20 s), not as a list of facts - see the rule at the top of memory/STYLE.md and R10 in cartoon-shorts/PROMPT.md.
 One row per finished video. Views come from the STATS the owner sends.
 
 | # | date | short id | topic (one line) | category | title | cover text | theme / series | views (from STATS) | notes (what worked, what didn't) |
