@@ -41,6 +41,9 @@ import {VenicePilesCover} from './venice-piles/Cover';
 import {DURATION as VP_DURATION, FPS as VP_FPS} from './venice-piles/scene';
 import {BuildingMoveCover} from './building-move/Cover';
 import {DURATION as BM_DURATION, FPS as BM_FPS} from './building-move/scene';
+import {OwlPantographShort} from './owl-pantograph/Short';
+import {OwlPantographCover} from './owl-pantograph/Cover';
+import {DURATION as OP_DURATION, FPS as OP_FPS} from './owl-pantograph/scene';
 import {DURATION as EZ_DURATION, FPS as EZ_FPS} from './eagle-zap/scene';
 
 // One composition per Short (+ its cover still).
@@ -75,6 +78,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="BuildingMoveCover" component={BuildingMoveCover} width={1080} height={1920} />
       <Composition id="VenicePiles" component={VenicePilesShort} durationInFrames={Math.round(VP_DURATION * VP_FPS)} fps={VP_FPS} width={1080} height={1920} />
       <Still id="VenicePilesCover" component={VenicePilesCover} width={1080} height={1920} />
+      <Composition id="OwlPantograph" component={OwlPantographShort} durationInFrames={Math.round(OP_DURATION * OP_FPS)} fps={OP_FPS} width={1080} height={1920} />
+      <Still id="OwlPantographCover" component={OwlPantographCover} width={1080} height={1920} />
     </>
   );
 };

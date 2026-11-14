@@ -392,3 +392,26 @@ Video #14 (venice-piles, 2026-11-14) - all pictures LOW 1K; STORY rule:
 - TIMING: 48 words / 266 characters with '1902' took 16.96 s with Mark (~2.8 words/s). MIX: raw voice peak -5.2 dBFS -> MIX_DB 1.
 - NETWORK: the session again started on the Default environment; switched to 'Work-Cloud-' before downloading.
 
+
+Video #15 (owl-pantograph, 2026-11-14) - all pictures LOW 1K; STORY rule, first <= 25 s story:
+- GOOD: LOW held up a sixth time: 8 pictures (hero with binoculars, guy pair ears/thumbs-up, scissors pose, side-view bullet
+  train front car, T-shaped roof arm smooth/jagged pair sheet, owl perched/flying pair sheet, row of 3 houses, plate), 0 redos,
+  714.92 credits in all (voice 319.97, pictures 375.62, 4 sfx 19.33). A "smooth vs sawtooth-notched" pair sheet kept the
+  notches readable even at LOW (small sharp triangles along one edge).
+- GOOD: a long journey without a long world: the camera follows the train exactly (train fixed on screen) while sleepers,
+  grass tufts and the plate scroll; only the visible stretch of rails / tufts is generated (cam.x +- 560/k). Faraway
+  locations (houses down the line, the engineer, the owl, the workbench) are just far x offsets with hard cuts in pauses.
+- GOOD: houses sprite with faces in its windows (window boxes from blue-glass components in prep) - but they hid behind the
+  train: put background houses on a code-drawn grass berm (175 world px) so faces show above the train roof.
+- GOOD: abstract physics in a magnifier: a clipped circle with a comb-edged feather; dashed white air lines flow in, tiny
+  curls appear behind the teeth on "chop". A silent hunt = the owl steals the mouse's cheese, the mouse looks at empty paws
+  "?" (no violence, reads instantly).
+- GLITCH: a cheese wedge right in front of a left-facing mouse read as a yellow beak; keep props a body-width away.
+  A PuffCluster made only of a ring of circles left an uncovered ink sliver in its centre: always add a central puff.
+- FIX in the improvement pass: frame 0 / last frame pushed in (k 0.75 -> 1.0, the nose and the roof arm both in frame),
+  the houses lifted onto a berm, the poof moved fully into frame; cover camera rebuilt (it pointed at old coordinates).
+- TIMING: 60 words / 326 characters with '300' took 22.16 s with Mark (~2.7 words/s): the 25 s story fits 58-60 words.
+- MIX: raw voice peak -6.4 dBFS, MIX_DB 2 gave -7.3 dBFS -> +3.3 dB re-mux (video copied) to -4.0. Next time MIX_DB 5.
+- RENDER: Remotion's own Chrome download is blocked (remotion.media): set CHROME to
+  /opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell. 4 CPUs: CONC 4
+  (CONC 6 is refused). Full 22.6 s render ~3.5 min.
