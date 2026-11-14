@@ -368,3 +368,22 @@ Video #13 (building-move, 2026-11-14) - all pictures LOW 1K; first script under 
   (elevenlabsusercontent.com) with switch_environment before any download.
 - RENDER: full 19.3 s render ~4 min here (CONC 4, swangle).
 
+Video #14 (venice-piles, 2026-11-14) - all pictures LOW 1K; STORY rule:
+- GOOD: LOW held up a fifth time: 7 pictures (hero, guy pair sheet, dig pose, tower on a magenta key, 5 poles in one 3:2 picture,
+  a 3-object props sheet, square plate), 0 redos, 606.97 credits in all (voice 264.97, pictures 328.67, 3 sfx 13.33).
+- GOOD: frame 0 = a side view with a school-diagram cut-away under the ground line (slab, wooden platform, poles in mud bands):
+  the premise of the payoff (what is under the tower) is visible from the first frame, and the camera simply sinks into it.
+- GOOD: a collapse = the sprite slides down inside an overflow-hidden box whose bottom edge is the ground line (easeIn, 0.42 s)
+  + a merged dust PuffCluster arc + the rubble sprite growing from scaleY 0 + one prop (the bell) bouncing out. The rebuild for
+  the loop = the same box in reverse behind a big white poof.
+- GOOD: "five identical objects in a row" (poles) split into separate sprites gives five characters for one picture; sleeping =
+  closed-eye arcs + a small 'o' mouth that breathes. The Eye component with lid 1 (grey lid fill) still read as OPEN eyes at small
+  size: draw closed eyes as arcs.
+- GOOD: an abstract fact as characters: "AIR" bubbles that drop down the dig hole, squash on the mud and bounce out; the last one
+  squishes harder and pops on "air". A mushroom with a face lunges at a pole, then chokes ("> <", tongue), turns blue (CSS
+  hue-rotate; keep the colour change <= 0.1 s or it passes through purple) and flops over.
+- GLITCH: Zzz letters and cobwebs sized for a close-up were invisible in the 1.5x cut-away shot: size effects for the widest
+  camera they appear in (Zzz 58 world px, web strokes 4.5).
+- TIMING: 48 words / 266 characters with '1902' took 16.96 s with Mark (~2.8 words/s). MIX: raw voice peak -5.2 dBFS -> MIX_DB 1.
+- NETWORK: the session again started on the Default environment; switched to 'Work-Cloud-' before downloading.
+
