@@ -343,3 +343,28 @@ Video #12 (hoover-dam-pour, 2026-11-14) - all pictures LOW 1K again:
   environment 'Work-Cloud-' (host elevenlabsusercontent.com + setup script npm ci / pip pillow numpy opencv) now exists; use it.
 - RENDER: full 17 s render ~6.5 min here (CONC 4, swangle).
 
+Video #13 (building-move, 2026-11-14) - all pictures LOW 1K; first script under the owner's STORY rule:
+- GOOD: LOW held up a fourth time: 8 pictures (hero, 2 guy pair sheets, operator close-up, building front/side pair, crane,
+  props sheet, plate), 0 redos, 648.67 credits in all (voice 267.97, pictures 375.62, 1 sfx 5). A "front view + narrow side
+  view of the same building, same height, side by side" 3:2 pair came out consistent: the 90-degree turn = squash the front's
+  scaleX to side.w / front.w (easeIn) and swap to the side on the narrowest frame + a small spring. Reads as a real turn.
+- GOOD: a crane picture with "a cable hanging down to an empty hook": erase everything left of the boom tip below it in prep
+  (x < tip.x + 11, y > tip.y + 40, keep the biggest component) and draw the cable in code, so the ball can swing as a real
+  pendulum (angle -> rope + rotated ball sprite, contact angle from asin of the gap to the wall).
+- GOOD: free crowds again: the close-up operator sprite, tiny and clipped by each window (nested <svg> with overflow hidden,
+  windows = pale-yellow components grouped in prep) fills a building with ~40 workers in one go; they pop in a cascade.
+- GOOD: a "what-if" beat (one swing WOULD cut the calls) reads with: the ball stops at the wall, wire stubs dangle from the roof
+  with sparks, the phone in a bubble stops ringing + "?" + crickets; a white poof on "So" rewinds it.
+- GLITCH: Eye browTilt is in r * 0.25 units per unit, not degrees: -12 drew brows as long vertical sticks. Use -0.8 .. -1.3.
+- GLITCH: the head fit (least-squares circle) failed on the pointing hero (the arm row was the widest); the inscribed disc of
+  the hole-filled silhouette worked for all 5 poses this time. Check head numbers against the row widths before scaling.
+- GLITCH: a broken wire whose ends fall to the far (off-screen) anchors simply vanished; keep the broken piece on screen
+  (a stub hanging from the building with a spark).
+- FIX in the improvement pass: a 0.55 s pan flagged by the pop scan -> 0.75 s; ground line lower (every wide key 35 units higher);
+  push-in to the window starts earlier with a whoosh and the label leaves before it; MIX_DB 2 -> 4 (-6.4 -> -4.5 dBFS).
+- TIMING: 48 words / 268 characters with "1930" took 18.72 s with Mark (~2.6 words/s, slower than the last videos: the story
+  shape has more pauses - "The plan: ...", "said: ..."). With the story rule plan 44-46 words for <= 19 s.
+- NETWORK: the session started on the Default environment again (no hosts); switched to the personal 'Work-Cloud-' environment
+  (elevenlabsusercontent.com) with switch_environment before any download.
+- RENDER: full 19.3 s render ~4 min here (CONC 4, swangle).
+
