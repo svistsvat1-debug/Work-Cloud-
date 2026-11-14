@@ -5,3 +5,4 @@
   build (rising marimba arpeggios) on "So"; light theme (I-IV-V-I) while they watch the buzzard; short stop + uh-oh on the 2nd "but";
   build from "twists" through the cables; theme back on "rolls back level"; stop + home chord + glockenspiel ping on the last "wingtips"; 0.5 s fade.
 - ducking -6 dB under words (80/250 ms), bed RMS -23.5 dB under the voice RMS, peak -27 dBFS, max sample jump 0.004, DC 0, 3.6 % energy above 7 kHz.
+- REMIX: owner wanted the music louder -> under_db 18 (bed -18 dB under the voice RMS), duck_db 4. Peak of the full mix -4.1 dBFS.

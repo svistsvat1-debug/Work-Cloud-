@@ -135,7 +135,7 @@ mix = sosfilt(butter(4, 7000, 'lp', fs=SR, output='sos'), mix)
 mix = sosfilt(butter(2, 70, 'hp', fs=SR, output='sos'), mix)
 mix -= mix.mean()
 
-# ---------- ducking under the words (-6 dB, 80 ms attack, 250 ms release) ----------
+# ---------- ducking under the words (duck_db, default -6 dB, 80 ms attack, 250 ms release) ----------
 words = json.load(open(cfg['words']))['words']
 gate = np.zeros(N)
 for w in words:
@@ -145,7 +145,7 @@ g = np.zeros(N); cur = 0.0
 att = 1 - np.exp(-1 / (0.08 * SR)); rel = 1 - np.exp(-1 / (0.25 * SR))
 for i in range(N):
     cur += (gate[i] - cur) * (att if gate[i] > cur else rel); g[i] = cur
-mix *= 10 ** (-6 * g / 20)
+mix *= 10 ** (-cfg.get('duck_db', 6) * g / 20)
 # end fade (last 0.5 s) + 5 ms start fade
 nf = int(0.5 * SR); mix[-nf:] *= np.linspace(1, 0, nf) ** 1.5; mix[:220] *= np.linspace(0, 1, 220)
 

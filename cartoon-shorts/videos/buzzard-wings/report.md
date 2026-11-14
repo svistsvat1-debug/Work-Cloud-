@@ -10,3 +10,4 @@
 - Improvement pass: yellow + bigger wingtip flaps with arrows (were invisible grey), bigger whistle notes, cable-twist arrows kept until "level", push-in on the bird re-framed (brothers' heads peeked in), crash camera pushed in + shorter sand poof, frame 0 pushed in.
 - Checks: contact sheets, pop scan (only intended flags: impact, cuts, bike pop, bird swap, cable yank), audio 24.0 s, peak -4.0 dBFS, last 0.5 s still moving.
 - ElevenLabs flow: https://elevenlabs.io/app/flows/1P2KSDzYVAYnRIJXqUEP
+- REMIX (owner asked for louder music, same day): bed raised from -23.5 to -18 dB under the voice, ducking under words -6 -> -4 dB (music.json under_db 18, duck_db 4); audio re-rendered alone (scripts/audio.mjs) and muxed onto the same picture (video copied). Peak -4.1 dBFS.

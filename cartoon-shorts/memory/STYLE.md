@@ -479,3 +479,4 @@ Video #18 (buzzard-wings, 2026-11-14) - all pictures LOW 1K; STORY rule; Liam vo
   (peak -27 dBFS). The bed is rendered in VIDEO time (its own 0.1 s lead-in), so it plays from frame 0. Next: try more melody
   variation in the build sections.
 - MIX: Liam raw peak ~-0.5 dBFS; MIX_DB -1.5 gave a -4.7 dBFS preview mix -> MIX_DB -0.8.
+- OWNER FEEDBACK (#18): "video great, music a bit louder" -> the default music level is now -18 dB under the voice RMS with -4 dB ducking under words (music.py keys under_db / duck_db). Remix without re-rendering the picture: node scripts/audio.mjs <Comp> out/mix.wav + ffmpeg -c:v copy (~30 s).
