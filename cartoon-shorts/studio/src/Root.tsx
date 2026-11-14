@@ -47,6 +47,9 @@ import {DURATION as OP_DURATION, FPS as OP_FPS} from './owl-pantograph/scene';
 import {CowEyesShort} from './cow-eyes/Short';
 import {CowEyesCover} from './cow-eyes/Cover';
 import {DURATION as CE_DURATION, FPS as CE_FPS} from './cow-eyes/scene';
+import {ShipwormTunnelShort} from './shipworm-tunnel/Short';
+import {ShipwormTunnelCover} from './shipworm-tunnel/Cover';
+import {DURATION as ST_DURATION, FPS as ST_FPS} from './shipworm-tunnel/scene';
 import {DURATION as EZ_DURATION, FPS as EZ_FPS} from './eagle-zap/scene';
 
 // One composition per Short (+ its cover still).
@@ -85,6 +88,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="OwlPantographCover" component={OwlPantographCover} width={1080} height={1920} />
       <Composition id="CowEyes" component={CowEyesShort} durationInFrames={Math.round(CE_DURATION * CE_FPS)} fps={CE_FPS} width={1080} height={1920} />
       <Still id="CowEyesCover" component={CowEyesCover} width={1080} height={1920} />
+      <Composition id="ShipwormTunnel" component={ShipwormTunnelShort} durationInFrames={Math.round(ST_DURATION * ST_FPS)} fps={ST_FPS} width={1080} height={1920} />
+      <Still id="ShipwormTunnelCover" component={ShipwormTunnelCover} width={1080} height={1920} />
     </>
   );
 };

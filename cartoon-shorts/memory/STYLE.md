@@ -435,3 +435,23 @@ Video #16 (cow-eyes, 2026-11-14) - all pictures LOW 1K; STORY rule, 21.9 s:
 - NETWORK: the session again started on the Default environment; switched to 'Work-Cloud-' before downloading.
 - RENDER: CHROME = playwright headless shell (see #15); full 21.9 s render > 10 min here, run it in the background.
 
+Video #17 (shipworm-tunnel, 2026-11-14) - all pictures LOW 1K; STORY rule; TRIAL voice Liam (owner's one-off request):
+- GOOD: LOW held up a seventh time: 8 pictures (hero with a shovel, guy pair panic/plank-in-hands, guy pair point/cheer, shipworm,
+  cut-open plank with a winding lined tunnel, cast-iron shield 'like an open bookcase with three floors', train front car on
+  magenta, cut-away river plate), 0 redos, 675.6 credits for voice + pictures; all 14 sfx reused from the library (0 credits).
+- GOOD: "drilling reveal" for 0 credits: in prep, fill the tunnel region of the plank (rows between the white lining pixels per
+  column) with the median wood colour + a few grain lines -> plankFilled.png. In code show the real plank clipped LEFT of the worm
+  head and the filled copy clipped RIGHT of it (CSS clip-path inset): the tunnel appears exactly behind the head.
+- GOOD: a worm that follows a winding path = the head cropped from the picture (shell + a bit of body) rotated by the path angle
+  + the body as an SVG stroke along the path (black stroke wider underneath, pink stroke, dashed darker rings, light highlight).
+- GOOD: a set piece 'shaped like an open bookcase' keys its open floors through (enclosed key gaps): tiny hero clones stand in the
+  floors as diggers. A brick tube = two brick rows drawn in code, revealed behind the moving machine.
+- GOOD: a cut-away plate (river + banks + deep mud) gives frame 0 the whole premise; extend it sideways with flat bands sampled
+  from its edge column. GLITCH: a flat sky colour next to the plate showed a visible vertical seam; use a vertical gradient
+  sampled from the plate's edge column (top / middle / bottom).
+- GLITCH: a camera branch switch (follow-shot -> pull-out) with ease 'out' started at full speed (pop scan flag at 17.17 s): use
+  'io' when the move does not start on a cut. Signs / set pieces near the right edge got cut in the wide shot: check every
+  wide key's left/right world edges (cam.x +- 540/k).
+- TIMING: Liam (VCgLBmBjldJmfphyB8sZ, eleven_v4) read 58 words / 301 chars in 18.56 s (~3.1 words/s) - faster than Mark
+  (~2.7). With Liam, a 21-24 s video needs ~65-70 words. Raw voice peak -0.5 dBFS; MIX_DB -3 gave a -6.5 dBFS mix -> -0.5.
+- COVER: the first cover (wide shot, k 1.25) made the shield tiny; a closer camera (k 1.85) on the guy + shield fills it.
