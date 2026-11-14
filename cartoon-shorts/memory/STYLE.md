@@ -308,3 +308,27 @@ Video #11 (kingfisher-train, 2026-11-13) - all pictures LOW 1K again:
   0.2-0.4 s late vs the loudness envelope (trust RMS pauses).
 - MIX: MIX_DB 4.0 gave -3.4 dBFS (boom at -7 in a pause): no re-mux. Sound Effects v2 billed 3.3 credits/s again.
 - RENDER: full 16.3 s render ~1.6 min (CONC 4, swangle).
+
+Video #12 (hoover-dam-pour, 2026-11-14) - all pictures LOW 1K again:
+- GOOD: LOW held up a third time: 7 pictures (hero, 2 guy pair sheets, mixer truck, fridge, canyon walls, desert plate), 0 redos,
+  578.98 credits in all (voice 241, pictures 328.7, 2 sfx 9.3). The locked STYLE_CHAR block (text only) matched every pose.
+- GOOD: a keyed set piece with a hole IN FRONT of code-drawn content: 'two cliffs joined by a canyon floor, one empty U-shaped gap,
+  the green background shows through the gap' keyed cleanly; the code dam / concrete fill / blocks / pipes / falling chunk sit
+  behind it and are clipped by the cliffs for free. Extend such a plate sideways by repeating a column just inside its outer
+  outline (horizontal strata continue); below it use a flat rock colour + code strata lines (a repeated row carried vertical
+  seams). Pre-scale the plate x1.6 with Lanczos when the camera pushes in past 1.3x.
+- GOOD: mirror the guy (scaleX -1 about the feet) when the story needs him facing left: frame 0 became symmetric (truck pours
+  from the left rim, the guy points from the right rim). Put the payoff prop ON the main object (the fridge dropped onto the
+  dam's crest, pipes out of its foot): the final shot centred itself; the first layout (fridge on the far rim) left the dam on
+  one side and the payoff prop tiny.
+- GOOD: abstract time in one glance: a dark YEARS counter in the sky running 0 -> 125 + the guy growing a beard; a rewind =
+  white poof over the object + the counter spinning back + the beard retracting. Heat = colour lerp grey -> orange + a cooking
+  thermometer stuck in the top that pops its cap in the pause.
+- GLITCH: many small steam clusters (3 jets x 5 puffs) looked like popcorn in a wide shot. Fewer, bigger merged columns
+  (3 circles per puff, one PuffCluster per jet, slower rise) read as steam. Text that counts needs singular/plural ('1 YEAR').
+- MIX: this take peaked at -2.7 dBFS raw, so MIX_DB 4 would clip; MIX_DB 1.5 gave -4.2 dBFS. Check the raw voice peak first.
+- TIMING: 47 words / 241 characters with '125' took 16.24 s with Mark (~2.9 words/s).
+- NETWORK: the Default cloud environment allowed no hosts, so elevenlabsusercontent.com downloads failed (403). A personal
+  environment 'Work-Cloud-' (host elevenlabsusercontent.com + setup script npm ci / pip pillow numpy opencv) now exists; use it.
+- RENDER: full 17 s render ~6.5 min here (CONC 4, swangle).
+

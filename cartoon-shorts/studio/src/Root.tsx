@@ -31,6 +31,9 @@ import {TsunamiWallShort} from './tsunami-wall/Short';
 import {TsunamiWallCover} from './tsunami-wall/Cover';
 import {DURATION as TW_DURATION, FPS as TW_FPS} from './tsunami-wall/scene';
 import {EagleZapShort} from './eagle-zap/Short';
+import {HooverDamPourShort} from './hoover-dam-pour/Short';
+import {HooverDamPourCover} from './hoover-dam-pour/Cover';
+import {DURATION as HD_DURATION, FPS as HD_FPS} from './hoover-dam-pour/scene';
 import {EagleZapCover} from './eagle-zap/Cover';
 import {DURATION as EZ_DURATION, FPS as EZ_FPS} from './eagle-zap/scene';
 
@@ -60,6 +63,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="EagleZapCover" component={EagleZapCover} width={1080} height={1920} />
       <Composition id="KingfisherTrain" component={KingfisherTrainShort} durationInFrames={Math.round(KF_DURATION * KF_FPS)} fps={KF_FPS} width={1080} height={1920} />
       <Still id="KingfisherTrainCover" component={KingfisherTrainCover} width={1080} height={1920} />
+      <Composition id="HooverDamPour" component={HooverDamPourShort} durationInFrames={Math.round(HD_DURATION * HD_FPS)} fps={HD_FPS} width={1080} height={1920} />
+      <Still id="HooverDamPourCover" component={HooverDamPourCover} width={1080} height={1920} />
     </>
   );
 };
