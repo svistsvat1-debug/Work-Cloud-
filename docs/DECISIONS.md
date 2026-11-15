@@ -16,4 +16,5 @@
 
 ## Записи
 
+- 2026-11-14 · WarBoard (YouTube, WWII): стиль замінено з whiteboard на "Paint Explainer" (MS-Paint, stick-фігурки); усі картинки, анімація і мініатюра — лише кодом, 0 кредитів; ElevenLabs лише для SFX; музика кодом. Промпт: `docs/video/WARBOARD_PROMPT.md` · картинки ElevenLabs коштували б ~4–8 тис. кредитів на відео.
 - 2026-10-01 · Зафіксовано MASTER CONTEXT як базу роботи (`docs/MASTER_CONTEXT.md`) · щоб AI працював за одними правилами на всіх пристроях.
