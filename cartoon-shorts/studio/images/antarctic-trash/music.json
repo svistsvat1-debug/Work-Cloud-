@@ -1,0 +1,5 @@
+{"duration": 21.4, "start": 0.1, "vo_at": 0.1,
+ "words": "images/antarctic-trash/words.json", "voice": "public/antarctic-trash/vo/take1.mp3",
+ "key": "G", "bpm": [96, 120], "align": [6.9, 10.42, 12.58, 17.54, 20.42],
+ "sections": [[0.0, 6.9, "theme"], [6.9, 10.3, "uhoh"], [10.3, 12.58, "theme2"], [12.58, 15.0, "uhoh"], [15.0, 17.5, "build"], [17.5, 20.4, "theme"], [20.4, 21.4, "final"]],
+ "stops": [[6.9, 0.45], [12.58, 0.32]], "pings": [20.42], "end_chord": 20.42, "under_db": 18, "duck_db": 4}

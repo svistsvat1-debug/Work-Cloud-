@@ -480,3 +480,23 @@ Video #18 (buzzard-wings, 2026-11-14) - all pictures LOW 1K; STORY rule; Liam vo
   variation in the build sections.
 - MIX: Liam raw peak ~-0.5 dBFS; MIX_DB -1.5 gave a -4.7 dBFS preview mix -> MIX_DB -0.8.
 - OWNER FEEDBACK (#18): "video great, music a bit louder" -> the default music level is now -18 dB under the voice RMS with -4 dB ducking under words (music.py keys under_db / duck_db). Remix without re-rendering the picture: node scripts/audio.mjs <Comp> out/mix.wav + ffmpeg -c:v copy (~30 s).
+
+Video #19 (antarctic-trash, 2026-11-15) - all pictures LOW 1K; STORY rule; Liam voice; code music:
+- LIAM PACE: 69 words / 330 chars (no digits) took 20.80 s = ~3.3 words/s (faster than #18's 3.0). Short plain words read
+  fast: plan 70-74 words for a 23-24 s video, or keep 69 and accept ~21.5 s.
+- GOOD: LOW held up again: 8 pictures (hero with bag, pull/dig sheet, shock/wave sheet, sled+bag props, cargo ship,
+  research base, penguin judge/wave pair, sky plate), 0 redos. Magenta key for objects with white/blue (base, ship,
+  penguin) was clean; small enclosed key gaps (radio-mast lattice) need a second pass in prep (kill_key_gaps: any pixel
+  within 70 of the key colour -> transparent).
+- GOOD: ONE side-view cutaway world (snow surface y = 0, ice shelf face, water, sea floor) drawn in code carries the whole
+  story; the background plate is only the sky + mountains (cropped at its horizon line), tiled with mirrored copies on a
+  depth-1.4 layer with a flat far-snow band below its horizon = parallax on every pull-out for 0 credits.
+- GOOD: an object that comes alive (eyes on the ice face) + a big white outlined arrow on it explained "the ice is sliding"
+  at a wide k 0.62 shot; without the arrow the slide did not read (improvement pass). A judging penguin (one pair sheet:
+  judge / wave) gave a reaction in every shot.
+- FIX in the improvement pass: framing was too wide at first (k 1.05 hook -> 1.3; wide shots k 0.52 -> 0.62); a
+  supporting character hid behind the hero at the end of a move (check end positions vs. other sprites); the cover first
+  showed 6 things (bases, penguin, "?!") -> a `cover` prop on Scene hides extras (rule of three).
+- Rendering here: Remotion could not download its headless shell (no network to remotion.media); use
+  CHROME=/opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell and CONC<=4.
+

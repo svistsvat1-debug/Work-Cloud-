@@ -51,6 +51,8 @@ import {ShipwormTunnelShort} from './shipworm-tunnel/Short';
 import {ShipwormTunnelCover} from './shipworm-tunnel/Cover';
 import {BuzzardWingsShort, BW_DURATION, BW_FPS} from './buzzard-wings/Short';
 import {BuzzardWingsCover} from './buzzard-wings/Cover';
+import {AntarcticTrashShort, AT_DURATION, AT_FPS} from './antarctic-trash/Short';
+import {AntarcticTrashCover} from './antarctic-trash/Cover';
 import {DURATION as ST_DURATION, FPS as ST_FPS} from './shipworm-tunnel/scene';
 import {DURATION as EZ_DURATION, FPS as EZ_FPS} from './eagle-zap/scene';
 
@@ -94,6 +96,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="ShipwormTunnelCover" component={ShipwormTunnelCover} width={1080} height={1920} />
       <Composition id="BuzzardWings" component={BuzzardWingsShort} durationInFrames={Math.round(BW_DURATION * BW_FPS)} fps={BW_FPS} width={1080} height={1920} />
       <Still id="BuzzardWingsCover" component={BuzzardWingsCover} width={1080} height={1920} />
+      <Composition id="AntarcticTrash" component={AntarcticTrashShort} durationInFrames={Math.round(AT_DURATION * AT_FPS)} fps={AT_FPS} width={1080} height={1920} />
+      <Still id="AntarcticTrashCover" component={AntarcticTrashCover} width={1080} height={1920} />
     </>
   );
 };
