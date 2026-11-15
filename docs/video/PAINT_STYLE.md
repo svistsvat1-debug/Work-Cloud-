@@ -1,4 +1,4 @@
-# "Paint Explainer"-inspired style — TEST (2026-11-14, status: APPROVED by the owner 2026-11-14 — channel style; visuals and thumbnail by code only)
+# "Paint Explainer"-inspired style — TEST (2026-11-14, status: APPROVED by the owner 2026-11-14 — channel style; video visuals by code only; thumbnail = 1 ElevenLabs GPT Image 2.5 (16:9, 1K, medium))
 
 Goal: test replacing the whiteboard "Marker Explainer" style with a style inspired by @ThePaintExplainer
 (take the style only, never their characters, images or compositions).
