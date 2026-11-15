@@ -1,0 +1,4 @@
+{"duration": 24.2, "start": 0.1, "vo_at": 0.1, "words": "images/print-money/words.json", "voice": "public/print-money/vo/take1.mp3",
+ "key": "G", "bpm": [96, 120], "align": [7.54, 12.26, 13.66, 20.02, 23.14],
+ "sections": [[0.0, 7.54, "theme"], [7.54, 12.2, "uhoh"], [12.2, 16.1, "build"], [16.1, 20.0, "uhoh"], [20.0, 23.1, "theme2"], [23.1, 24.2, "final"]],
+ "stops": [[7.54, 0.45], [19.95, 0.25]], "pings": [23.14], "end_chord": 23.14, "under_db": 18, "duck_db": 4}

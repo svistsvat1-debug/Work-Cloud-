@@ -537,3 +537,21 @@ Video #21 (plastic-worms, 2026-11-15) - all pictures LOW 1K; STORY rule; Liam vo
   with k (1.3..1.7); frame 0 pile too small -> starts at 72 % height; framing too wide (empty lawn) -> k 1.15.
 - MUSIC: F major, 113.5 BPM, stop on "But" and at the x-ray cut, ping on "bacteria"; bed 18 dB under the voice. MIX_DB -0.5 -> -4.1 dBFS peak.
 - NETWORK: again switched the session to the 'Work-Cloud-' environment before downloading from elevenlabsusercontent.com.
+
+Video #22 (print-money, 2026-11-15) - all pictures LOW 1K; STORY rule; Liam voice; code music; owner asked to skip the approval stop:
+- LIAM PACE: 68 words / 377 chars (numbers as words: "nineteen twenty-three", "two hundred billion") took 23.46 s = ~2.9 words/s.
+  Numbers as words slow Liam down again (#20 3.0): with two spoken numbers plan <= 68 words for a 24 s video.
+- GOOD: LOW held up again: 7 pictures (sad hero with empty wallet, cheer/push sheet, shock/warm-sitting sheet, printing press,
+  bakery front on magenta, wheelbarrow+stove+loaf sheet, town-square plate), 0 redos; hero ran in the same batch as the rest
+  (the locked look made a separate hero run unnecessary). Total 726.3 credits (voice 377, Scribe 0, pictures 329, 4 sfx 20.7).
+- GOOD: a pun as the gag: the baker (cheer pose clipped behind the counter + code chef hat) literally RAISES the price board on
+  "raises the price"; the board is an HTML div whose number flips 1 -> 2 -> 5, then rolls up log-scale to 200,000,000,000.
+- GOOD: 'history moment' for 0 credits: CSS sepia() on the whole scene from "That's Germany" + a code wooden sign GERMANY 1923;
+  a dusk overlay + a screen-blend radial glow around the stove door for the cosy ending.
+- GOOD: one sheet with three different props (wheelbarrow / stove / loaf) split cleanly with split(k=3). A side-view pushing
+  pose's fists matched the flipped wheelbarrow's handle height with no extra measuring (hands at ~0.4 of the body height).
+- FIX in the improvement pass: frame 0 had the guy overlapping the printer's crank wheel (printer 760 -> 640 wide, guy moved
+  left); the price board was cut by the frame edge in the push shot (board moved left, camera follows guy+480); stove scene was
+  tiny at k 0.98 (-> k 1.22-1.31); printer steam puffs too small; the red X hid the firewood log (scaled to 0.72).
+- MUSIC: G major, 114.5 BPM, stops on "But" and before the stove cut, ping on "firewood"; bed 18 dB under the voice. MIX_DB -0.5 -> -4.2 dBFS.
+- RENDER: CONC=6 is refused on this machine (memory limit); CONC=4 works (0.5x preview ~1m45s).

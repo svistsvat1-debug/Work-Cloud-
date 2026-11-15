@@ -57,6 +57,8 @@ import {SunTrashShort, SUN_DURATION, SUN_FPS} from './sun-trash/Short';
 import {SunTrashCover} from './sun-trash/Cover';
 import {PlasticWormsShort, PW_DURATION, PW_FPS} from './plastic-worms/Short';
 import {PlasticWormsCover} from './plastic-worms/Cover';
+import {PrintMoneyShort, PM_DURATION, PM_FPS} from './print-money/Short';
+import {PrintMoneyCover} from './print-money/Cover';
 import {DURATION as ST_DURATION, FPS as ST_FPS} from './shipworm-tunnel/scene';
 import {DURATION as EZ_DURATION, FPS as EZ_FPS} from './eagle-zap/scene';
 
@@ -106,6 +108,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="SunTrashCover" component={SunTrashCover} width={1080} height={1920} />
       <Composition id="PlasticWorms" component={PlasticWormsShort} durationInFrames={Math.round(PW_DURATION * PW_FPS)} fps={PW_FPS} width={1080} height={1920} />
       <Still id="PlasticWormsCover" component={PlasticWormsCover} width={1080} height={1920} />
+      <Composition id="PrintMoney" component={PrintMoneyShort} durationInFrames={Math.round(PM_DURATION * PM_FPS)} fps={PM_FPS} width={1080} height={1920} />
+      <Still id="PrintMoneyCover" component={PrintMoneyCover} width={1080} height={1920} />
     </>
   );
 };
