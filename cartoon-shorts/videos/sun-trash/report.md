@@ -47,6 +47,9 @@ hero (2:3), aim/shock (3:2), pull/wave (3:2), palm/thumb (3:2), rocket (2:3), ca
 ElevenLabs flow: https://elevenlabs.io/app/flows/eANYKAHtqBgHKxRNOhGS
 Remotion Studio: `cd cartoon-shorts/studio && npx remotion studio` (композиції SunTrash і SunTrashCover).
 
+## Git
+Коміт b073891 запушено в гілку claude/clever-noether-0h463b і в main.
+
 ## Fallbacks / нотатки
 - nasa.gov та illinois.edu не відкривались із сесії (мережа) — факти перевірено через пошукові витяги цих сторінок.
 - Знайдено й виправлено конфлікт імпорту в Root.tsx (ST_DURATION уже використовувався), через нього композиція спершу мала 19.4 с.
