@@ -138,6 +138,8 @@
 | 2026-11-13 | Red Army one thing v2 («NO SOCKS. EVER.») | L2 |
 | 2026-11-13 | One soldier supply line v2 («5,958 TRUCKS. ONE DAY.») | L4 |
 | 2026-11-13 | Day Hitler lost v2 («IT WASN'T 1945») | L8 |
+| 2026-11-15 | Sailors all day v1 («THE PAINT COULD KILL») | канал-макет |
+| 2026-11-15 | Sailors all day v2 («DEADLY PAINT») | L1-мінімал |
 
 ### Red Army one thing v2 — макет L2 (2026-11-13) ✅
 `videos/2026-11-11_red-army-one-thing/thumbnail-v2/thumbnail.png`, 1 генерація без референсу, 63 кредити.
@@ -204,3 +206,11 @@
 - Дрібне: рука з молотком зайшла в правий нижній кут, а біля правого краю модель лишила крихітний штрих-«підпис». Наступного разу писати «the sailor's hands stay above the bottom 25% of the frame».
 - Click-tactic від Ink Story перенесено: один переляканий персонаж + коротке протиріччя (у них «NO FIGHTING», у нас «THE PAINT COULD KILL»).
 | CTR | [MISSING — власник додасть] | Views 7 днів | [MISSING] |
+
+### Sailors all day v2 — мінімалізм у справжньому стилі Paint Explainer (2026-11-15) ✅
+`videos/2026-11-15_ww2-sailors-all-day/thumb-v2/thumbnail.png`, 1 генерація без референсу, 63 кредити. Запит власника: «менше тексту, менше деталей, краще читається».
+- Макет: погруддя матроса ліворуч (~40 %), банка «USN» з вогником у червоному колі праворуч, 2 слова «DEADLY PAINT» чорним без обведення зверху, чисто білий фон. Багато порожнього місця.
+- Стиль: чисті рівні контури + плоскі кольори з легкою тінню (без штрихування і бруду) — читається на 320×180 краще за v1.
+- Правий нижній кут повністю білий (фраза «The bottom-right 25% of the frame stays completely empty white» спрацювала). Текст без помилок.
+- Double shock той самий: «смертельна фарба?» (мікро) + «що вони робили цілий день?» (макро, назва).
+- Порада: v1 vs v2 — запустити в YouTube «Test & compare» (обкладинки), записати переможця сюди.
