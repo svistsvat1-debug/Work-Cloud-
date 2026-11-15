@@ -11,8 +11,10 @@ No previous WarBoard video outperformed (9–27 views each), so no option is for
   - Demand for WW2 warship life is fresh, and small channels break out:
     GlimmerGlimpses (5.9K subs, median ≈6K) "Being on a Destroyer During WW2 was Hell" **240K ≈ 40x**;
     Hidden History (100K subs, median 25K) "Being on a Battleship During WW2 was Hell" **421K ≈ 17x**;
+    braintrusts (2.9K subs) old Navy film "USS Saufley DD465 1952 Living Conditions" **1.3M** and "Improving Shipboard Living Conditions, 1953" 233K → people search for *daily life on a warship*;
     Unknown Frequencies "POV: You're Japanese Sailor in WW2" 66K; What if 4k "Your Life as Every Rank in the U.S. Navy in WW2" 59K.
   - Exact upload dates of the warship videos: [MISSING] (watch pages blocked); GlimmerGlimpses' channel is active as of 2026-11-12.
+- **Formula transfer is proven, too:** Legacy of Steel (**750 subs**) "What Did German WW2 Soldiers Actually Do All Day?" **231K** (country swap of the same formula). A swap of the *group* is the next untaken step.
 - **Why people click:** the same proven curiosity ("what did they really do?") + a group the viewer has never pictured day-to-day; the answer is counter-intuitive.
 - **Why NOT a copy:** different group (navy, not infantry), our facts, our clock structure, our jokes, Paint-style code visuals; Ink Story never did a navy video.
 
