@@ -189,3 +189,9 @@
 - Текст без помилок; прапорів, символіки, крові немає; правий нижній кут — лише плече форми. На 320×180 читається відмінно.
 - Спрацювало: «two head-and-shoulders busts side by side… thin hand-drawn black vertical line», «no flags, no national emblems, no insignia, no rising-sun symbol», «bottom-right 20% shows only the sailor's plain uniform shoulder».
 | 2026-11-15 | Food ranked v2 | L1 |
+
+### Food ranked v3 — ElevenLabs, макет каналу «текст ліворуч + солдат + доказ» (2026-11-15) ✅
+`videos/2026-11-14_ww2-army-food-ranked/thumb-11labs/thumbnail_v3.png` — gpt-image-2.5-sunburst, 16:9, 1K, medium, 1 генерація, **63 кредити**.
+- «MADE / TO TASTE» білим + «BAD» червоним з чорною обвідкою, гірчичне тло (як аватарка), GI в M1 з сіткою: очі-кола, язик назовні, піт; шоколадка з обгорткою «D» у червоному колі + стрілка від «BAD».
+- Текст без помилок, без символіки. Правий нижній кут — лише форма й підтяжки. На 320×180 читається відмінно.
+| 2026-11-15 | Food ranked v3 (A/B до v2) | канал-макет |
