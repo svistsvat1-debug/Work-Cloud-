@@ -1,0 +1,4 @@
+{"duration": 21.56, "start": 0.1, "vo_at": 0.1, "words": "images/sahara-solar/words.json", "voice": "public/sahara-solar/vo/take1.mp3",
+ "key": "C", "bpm": [96, 120], "align": [6.22, 8.26, 13.82, 15.94, 17.94, 20.58],
+ "sections": [[0.0, 6.22, "theme"], [6.22, 10.0, "uhoh"], [10.0, 13.82, "theme2"], [13.82, 17.9, "uhoh"], [17.9, 20.4, "build"], [20.4, 21.56, "final"]],
+ "stops": [[6.22, 0.45], [13.82, 0.4]], "pings": [13.14], "end_chord": 20.58, "under_db": 18, "duck_db": 4}

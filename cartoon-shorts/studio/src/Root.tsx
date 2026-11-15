@@ -59,6 +59,8 @@ import {PlasticWormsShort, PW_DURATION, PW_FPS} from './plastic-worms/Short';
 import {PlasticWormsCover} from './plastic-worms/Cover';
 import {PrintMoneyShort, PM_DURATION, PM_FPS} from './print-money/Short';
 import {PrintMoneyCover} from './print-money/Cover';
+import {SaharaSolarShort, SS_DURATION, SS_FPS} from './sahara-solar/Short';
+import {SaharaSolarCover} from './sahara-solar/Cover';
 import {DURATION as ST_DURATION, FPS as ST_FPS} from './shipworm-tunnel/scene';
 import {DURATION as EZ_DURATION, FPS as EZ_FPS} from './eagle-zap/scene';
 
@@ -110,6 +112,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="PlasticWormsCover" component={PlasticWormsCover} width={1080} height={1920} />
       <Composition id="PrintMoney" component={PrintMoneyShort} durationInFrames={Math.round(PM_DURATION * PM_FPS)} fps={PM_FPS} width={1080} height={1920} />
       <Still id="PrintMoneyCover" component={PrintMoneyCover} width={1080} height={1920} />
+      <Composition id="SaharaSolar" component={SaharaSolarShort} durationInFrames={Math.round(SS_DURATION * SS_FPS)} fps={SS_FPS} width={1080} height={1920} />
+      <Still id="SaharaSolarCover" component={SaharaSolarCover} width={1080} height={1920} />
     </>
   );
 };
