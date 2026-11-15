@@ -500,3 +500,26 @@ Video #19 (antarctic-trash, 2026-11-15) - all pictures LOW 1K; STORY rule; Liam 
 - Rendering here: Remotion could not download its headless shell (no network to remotion.media); use
   CHROME=/opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell and CONC<=4.
 
+Video #20 (sun-trash, 2026-11-15) - all pictures LOW 1K; STORY rule; Liam voice; code music:
+- LIAM PACE: 70 words / 365 chars (two numbers written as words: "sixty-seven thousand", "fifty-five") took 23.20 s = ~3.0 words/s
+  (#19 3.3, #18 3.0). Numbers as words slow Liam down: 70 words with numbers fill 23.8 s with the 0.5 s tail - the 25 s cap is close.
+- GOOD: LOW held up again: 7 pictures (hero with bag, aim/shock sheet, pull/wave sheet, palm/thumb sheet, trash rocket on green,
+  can+bag props, space plate), 0 redos, 726 credits (voice 369, Scribe 0, pictures 329, 6 new sfx 28). Three "two DIFFERENT poses"
+  sheets = 6 poses for 3 pictures; all split cleanly.
+- GOOD: a "little planet" world for space topics: Earth, Mars and the Sun drawn in CODE (flat discs + outlined continents/craters +
+  one shade ring clipped to the disc) - they scale to any zoom (k 0.23 wide orbit .. k 1.85 hook) with no picture budget. Sprites
+  stand on the round Earth: y = -sqrt(R^2 - x^2), tilt = asin(x / R).
+- GOOD: the Sun's face slides toward where it looks (face centre = look * 0.55-0.8 R) and its features scale with a face-scale `fs`:
+  0.6 in close shots (else the eyes are wider than the frame), 1.0 in the wide orbit. A crosshair RING around its face = "aim at
+  the Sun" reads instantly and is the cover image.
+- GOOD: real orbital physics cheaply: Kepler ellipse (solve E - e sinE = M with 6 Newton steps), focus at the Sun, aphelion turned
+  to the launch direction, blended from the pad over 0.75 s; dashed trails = polyline of past positions.
+- GOOD: abstract numbers as objects: a speed gauge with a yellow "FALL IN" zone the needle must reach; 1 can (Mars) vs a scrolling
+  tower of cans with a running counter x1..x55 (Pow 1.4 count) - no fact needed beyond the script's numbers.
+- GLITCH: Root.tsx import alias collision (ST_DURATION already used by shipworm-tunnel): the new composition silently got 19.4 s.
+  Use a unique alias per Short (SUN_DURATION) and print durationInFrames after the first stills run.
+- FIX in the improvement pass: rocket too small in the k 0.23 orbit shot (scale 1.7 -> 2.3); the gauge needle hardly moved on
+  "lose" (easeInOut -> prog^0.85, it starts dropping on the word); a ring of 6 puffs around the spinning rocket read as a flower
+  (-> a few small puffs trailing from the tail).
+- MUSIC: C major, 117 BPM, stops on "But" and at the brake cut, ping on "system"; bed at -18 dB under the voice (owner level).
+- MIX: MIX_DB -1 gave a -5.0 dBFS preview mix -> -0.2.

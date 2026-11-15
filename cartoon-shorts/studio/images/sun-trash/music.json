@@ -1,0 +1,5 @@
+{"duration": 23.8, "start": 0.1, "vo_at": 0.1,
+ "words": "images/sun-trash/words.json", "voice": "public/sun-trash/vo/take1.mp3",
+ "key": "C", "bpm": [96, 120], "align": [3.3, 8.9, 11.78, 15.06, 18.58, 22.66],
+ "sections": [[0.0, 3.3, "theme"], [3.3, 8.9, "uhoh"], [8.9, 11.7, "theme2"], [11.7, 15.0, "uhoh"], [15.0, 18.5, "build"], [18.5, 22.6, "theme"], [22.6, 23.8, "final"]],
+ "stops": [[3.3, 0.45], [11.72, 0.3]], "pings": [22.66], "end_chord": 22.66, "under_db": 18, "duck_db": 4}
