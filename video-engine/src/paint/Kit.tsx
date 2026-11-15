@@ -114,12 +114,12 @@ const HatG: React.FC<{hat: Hat; at: number; seed: number}> = ({hat, at, seed}) =
     case 'de': return (<g>
       <Sh p={[[-70, -250], [-68, -300], [-38, -336], [0, -344], [38, -336], [68, -300], [70, -250], [88, -228], [64, -236], [-64, -236], [-88, -228]]} f={WW.steel} at={a} d={4} seed={seed} />
       <Sh p={[[-34, -320], [-12, -328]]} open at={a + 2} d={0} c={PAL.white} w={8} seed={seed + 2} /></g>);
-    case 'jp': return (<g>
+    case 'jp': return (<g transform="translate(0,-24)">
       <Sh p={[[-64, -262], [-58, -318], [0, -332], [58, -318], [64, -262]]} f={WW.khaki} at={a} d={4} seed={seed} />
       <Sh p={[[-66, -266], [-10, -270], [70, -258], [74, -246], [-4, -252]]} f={WW.khaki} at={a} d={0} seed={seed + 1} />
       <Sh p={[[-64, -262], [-78, -200], [-58, -196], [-50, -250]]} f={PAL.tan} at={a} d={0} seed={seed + 3} />
       <Sh p={[[-44, -302], [44, -302]]} open at={a} d={0} c={PAL.yellow} w={6} seed={seed + 4} /></g>);
-    case 'it': return (<g>
+    case 'it': return (<g transform="translate(0,-20)">
       <Sh p={[[-64, -268], [-56, -320], [0, -336], [56, -320], [64, -268]]} f={WW.khaki} at={a} d={4} seed={seed} />
       <Sh p={[[-80, -262], [-70, -276], [70, -276], [80, -262]]} f={WW.khaki} at={a} d={0} seed={seed + 1} />
       <Sh p={[[40, -320], [96, -380], [130, -360], [110, -330], [66, -306]]} f={PAL.black} at={a + 2} d={0} seed={seed + 3} /></g>);

@@ -3,6 +3,7 @@ import {AbsoluteFill} from 'remotion';
 import {PShape, PLine, PText} from './paint/Paint';
 import {FontGate} from './paint/Fonts';
 import {ell, PAL, P} from './paint/wobble';
+import {G as KG, Sh as KSh, Soldier as KSoldier, Can, Cone, Arrow} from './paint/Kit';
 
 // Thumbnail 1280x720 — "Every WW2 Army's Food Ranked" (2026-11-14).
 // Layout (channel standard): LEFT 3 lines of huge text | RIGHT shocked stick soldier | PROOF object with red circle + arrow.
@@ -91,4 +92,39 @@ export const Thumbnail: React.FC = () => (
       </svg>
     </AbsoluteFill>
   </FontGate>
+);
+
+// ---------- alternative thumbnails (2026-11-15), drawn in a 853x480 box => Kit's 7 px lines render ~10.5 px at 1280x720 ----------
+const Box853: React.FC<{bg: string; children: React.ReactNode}> = ({bg, children}) => (
+  <FontGate>
+    <AbsoluteFill style={{background: bg}}>
+      <svg viewBox="0 0 853 480" width={1280} height={720}>{children}</svg>
+    </AbsoluteFill>
+  </FontGate>
+);
+
+// B — "DEAD DONKEY?": suspicious Italian soldier + tin stamped A M (red circle + arrow)
+export const ThumbB: React.FC = () => (
+  <Box853 bg={PAL.turq}>
+    <PText x={22} y={128} at={0} size={124} font="bang" color={PAL.white} outline={PAL.black}>DEAD</PText>
+    <PText x={22} y={235} at={0} size={96} font="bang" color={PAL.white} outline={PAL.black}>DONKEY</PText>
+    <PText x={338} y={240} at={0} size={120} font="bang" color={PAL.red} outline={PAL.black}>?</PText>
+    <Can x={450} y={345} s={0.75} at={-30} label="A M" size={64} />
+    <PShape pts={ell(450, 345, 105, 112, 30, -0.3)} at={0} draw={0} sw={8} color={PAL.red} amp={3} seed={901} />
+    <Arrow a={[150, 330]} b={[330, 350]} at={-30} bend={-25} seed={902} w={8} />
+    <KSoldier x={700} y={520} s={1.05} at={-30} hat="it" face="suspicious" look={-1} arms="hip" seed={903} sweat />
+  </Box853>
+);
+
+// C — comparison (Paint Explainer L1): same war, two plates — GRASS vs ICE CREAM
+export const ThumbC: React.FC = () => (
+  <Box853 bg={PAL.white}>
+    <PShape pts={[[426, 20], [430, 240], [424, 470]]} closed={false} at={0} draw={0} sw={6} color={PAL.black} seed={910} />
+    <PText x={213} y={92} at={0} size={96} font="bang" anchor="middle">GRASS</PText>
+    <PText x={640} y={92} at={0} size={96} font="bang" anchor="middle" color={PAL.red}>ICE CREAM</PText>
+    <KSoldier x={190} y={560} s={1.1} at={-10} hat="jp" face="sad" arms="hold" seed={911} />
+    <KG x={335} y={400}>{[-14, -4, 6, 16].map((a, i) => <KSh key={i} p={[[a, 10], [a + (i - 1.5) * 9, -70]]} open at={-10} d={0} c={PAL.green} w={8} seed={912 + i} />)}</KG>
+    <KSoldier x={610} y={560} s={1.1} at={-10} hat="sailor" face="grin" arms="hold" seed={920} />
+    <Cone x={755} y={330} s={0.55} at={-10} />
+  </Box853>
 );
