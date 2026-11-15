@@ -24,7 +24,7 @@ HARD RULES (never break)
 
 WWII CONTENT SAFETY (advertiser-friendly; applies to video AND thumbnail)
 - Educational tone. Never glorify any regime, army or war crime.
-- No swastikas and no Nazi party symbols anywhere. For Germany use the Balkenkreuz, a "GERMANY" label, a map or a black-red-gold color code. Same caution for other extremist symbols.
+- No swastikas and no Nazi party symbols anywhere (also no eagle decals, no SS runes, no black-white-red flags). For Germany use the Balkenkreuz, a "GERMANY" label or a map; the black-red-gold tricolor is modern Germany, so use it only for a present-day context. Same caution for other extremist symbols.
 - No gore and no blood. Death and casualties are shown with numbers, icons, empty helmets or crosses on a map, never with graphic images. Cartoon "hit" stars and smoke puffs are fine.
 - Atrocities are covered factually and respectfully, without sensational wording; on those topics the stick figures stay serious (no comic faces).
 
@@ -103,6 +103,15 @@ TITLES
 THUMBNAIL RULES
 - Max 3 objects. A group of numbers or prices counts as 1 object.
 - The thumbnail must NOT repeat the title. It shows one surprising detail the title doesn't say (a price, a number, an object, a before/after), so the viewer is shocked twice: once by the thumbnail, once by the title.
+DOUBLE SHOCK (the core thumbnail rule)
+- Don't look at the title and draw the title. Make the viewer IMAGINE what the title says, but from another, more shocking angle.
+- Title = the BIG picture (the macro number or claim). Thumbnail = ONE concrete small thing that makes it physical (the micro proof).
+  Method example: title "The War That Cost -$300 Billion" -> a weak thumbnail repeats "-$300 BILLION" (no new information, one shock only); a strong thumbnail shows ONE soldier's helmet with a price tag "$2,000?" (shock 1: "a helmet cost THAT?"), then the eye goes to the title (shock 2: "300 billion?! I have to watch this"). The numbers in this example only show the method; every number we use is real and checked ([VERIFY]).
+- Order of the eye: thumbnail shock FIRST, title shock SECOND. Both shocks must be different facts that point at the same story.
+- CONTEXT MARKER: add one small identity detail onto the soldier or the proof object, so the viewer knows in a second WHO and WHEN (a national marking on the helmet or vehicle: US star, British or Soviet marking, Japanese flag, Balkenkreuz for Germany; or a year). It is part of that object, not a 4th object. It makes the thumbnail "complete". Follow the safety rules.
+- 3-SECOND TEST (write it for every concept): what a viewer understands at phone size in 3 seconds; shock 1 (thumbnail); shock 2 (title); why they must click. If shock 1 = shock 2, the concept fails.
+- WEAK vs STRONG: for the recommended concept, also write the "weak" mirror version (one that just repeats the title) in one line, and say in one line why the strong one gets more clicks. This keeps our thinking sharp.
+- COMPLETENESS CHECK: before generating, ask "which ONE small detail would make this thumbnail complete?" (a marking, a red circle, a reaction) and add it to the brief. After generating, name one detail that would improve it, but never re-run without my OK.
 - Thumbnail text: max 4 words.
 - THUMBNAIL TACTIC TRANSFER: reuse the competitor's click tactic from the FORMULA CARD (e.g. a recurring face type), adapted logically to our subject. Never copy their image.
 - Keep the bottom-right corner free of key elements (YouTube puts the duration there).
@@ -119,8 +128,8 @@ THUMBNAIL STYLE — INSPIRED BY "THE PAINT EXPLAINER" (@ThePaintExplainer)
   - PROOF OBJECT with red callouts: a red circle + red arrow pointing at it, a red strike-through on a number, or a red "?" on it.
   - Exactly these 3 objects: text block + soldier + proof object.
   -> Draw this layout in the Paint-Explainer comic style above. A top banner strip (brown or dark) with the text is an alternative layout; use it only if I ask.
-- CONSISTENCY: read docs/video/THUMBNAIL_STYLE.md first and re-check my channel's latest thumbnails (yt-dlp, free). If my newest thumbnails changed style, follow the newest. After generating, add what worked to that file.
-- 3 THUMBNAIL CONCEPTS (text only): for each, the 3 objects, the exact text, the layout, and which title it pairs with. Recommend 1 title + 1 thumbnail.
+- CONSISTENCY: read docs/video/THUMBNAIL_STYLE.md first and re-check my channel's latest thumbnails (yt-dlp, free). If my newest thumbnails changed style, follow the newest. After generating, add what worked to that file, including the title + thumbnail DOUBLE-SHOCK pair (I add CTR/views later, so we learn which pairs work).
+- 3 THUMBNAIL CONCEPTS (text only): for each, the 3 objects, the exact text, the layout, the context marker, which title it pairs with, and its 3-SECOND TEST (shock 1 / shock 2). Recommend 1 title + 1 thumbnail.
 THUMBNAIL GENERATION (ElevenLabs, GPT Image 2.5, exactly ONE image)
 - Model: gpt-image-2.5-sunburst. Parameters: aspect_ratio "16:9", resolution "1K", quality "medium". Exactly 1 generation (~81 credits, measured).
 - Do NOT use creative_generate_image (it cannot set quality and defaults to 4 variations). Instead:
@@ -250,6 +259,7 @@ B7. QA BEFORE DELIVERY (show me the checklist)
 [ ] Title answer appears only in the final block
 [ ] No "and then" lists in the script
 [ ] Script follows script_dna.md (pace and structure within ±20 %) AND the originality check passed (no shared 6+ word run with the donor transcript)
+[ ] DOUBLE SHOCK: thumbnail shock and title shock are two different facts about one story; context marker present; 3-second test written
 [ ] Thumbnail != title, max 3 objects, text spelled exactly, bottom-right corner free, exactly 1 ElevenLabs image generated (gpt-image-2.5-sunburst, 16:9, 1K, medium), Paint-Explainer-inspired comic style without gore
 [ ] 0 AI-generated images inside the video; ElevenLabs used only for SFX + the one thumbnail
 [ ] No finished frame held > 6 s without a pop or a loop, except the title card (automatic check across the beat timeline)
