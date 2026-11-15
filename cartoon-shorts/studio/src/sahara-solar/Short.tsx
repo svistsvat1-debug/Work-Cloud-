@@ -443,7 +443,7 @@ const cloudPos = (t: number): [number, number, number] => {
 
 // ---------- green: the sand turns green from his feet outward ----------
 const GREEN_T0 = T.sand2;
-const greenR = (t: number) => 3200 * easeInCubic(prog(t, GREEN_T0, GREEN_T0 + 1.25)) ** 0.7;
+const greenR = (t: number) => 3600 * easeOutCubic(prog(t, GREEN_T0, GREEN_T0 + 1.2)) ** 1.4;
 const TUFTS = [...Array(70)].map((_, i) => {
   const y = -270 + 560 * rnd(i * 5 + 2);
   return {x: -1500 + 3200 * rnd(i * 3 + 1), y, sc: scAt(y), kind: i % 4};
@@ -474,8 +474,8 @@ const Greenery: React.FC<{t: number}> = ({t}) => {
     <Svg>
       {TUFTS.map((p, i) => {
         const d = Math.hypot(p.x - GUY_X, (p.y - 0) * 2.6);
-        const tb = GREEN_T0 + 1.25 * Math.pow(d / 3200, 1 / 0.7) ** (1 / 3);
-        const s = R > d ? pop(t, Math.max(tb, GREEN_T0), 0.3) : 0;
+        const tb = GREEN_T0 + 1.2 * (1 - Math.cbrt(1 - Math.min(1, Math.pow(d / 3600, 1 / 1.4))));
+        const s = R > d ? pop(t, tb, 0.3) : 0;
         return <Tuft key={i} x={p.x} y={p.y} s={s * p.sc * 1.3} kind={p.kind} />;
       })}
     </Svg>
@@ -584,7 +584,7 @@ const SaharaSet: React.FC<{t: number; cam: Cam; cover?: boolean}> = ({t, cam, co
               style={{
                 position: 'absolute',
                 left: 9000 + GUY_X / PLATE_DEPTH - R,
-                top: -R * 0.36 - 10,
+                top: 400 - R * 0.36,
                 width: 2 * R,
                 height: 2 * R * 0.36,
                 borderRadius: '50%',

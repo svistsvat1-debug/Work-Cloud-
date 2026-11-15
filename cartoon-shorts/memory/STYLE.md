@@ -555,3 +555,13 @@ Video #22 (print-money, 2026-11-15) - all pictures LOW 1K; STORY rule; Liam voic
   tiny at k 0.98 (-> k 1.22-1.31); printer steam puffs too small; the red X hid the firewood log (scaled to 0.72).
 - MUSIC: G major, 114.5 BPM, stops on "But" and before the stove cut, ping on "firewood"; bed 18 dB under the voice. MIX_DB -0.5 -> -4.2 dBFS.
 - RENDER: CONC=6 is refused on this machine (memory limit); CONC=4 works (0.5x preview ~1m45s).
+Video #23 (sahara-solar, 2026-11-15) - all pictures LOW 1K; STORY rule; Liam voice; code music:
+- LIAM PACE: 69 words / 347 chars (no digits) took 20.96 s = ~3.3 words/s (#21 3.06, #19 3.3). Short plain words -> fast: 69 words gave only a 21.56 s video; 72-74 words would fill 23-24 s.
+- GOOD: LOW held up again: 7 pictures (hero thumbs-up, hot/shock sheet, rain-joy/point sheet, solar panel, lush/dry tree pair on magenta, camel bored/shocked pair, desert plate), 0 redos, ~708 credits (voice 355, Scribe 0, pictures 329, 5 sfx billed 24 of a 79 estimate).
+- GOOD: ONE prop sprite cloned in perspective rows (scale from y: 0.38 + 0.62 * (y + 300) / 560, sorted by y with the guy/camel, popping out by distance from the hero) = "cover the whole desert" for 0 extra credits. Keep clear zones around the hero / camel only for rows that would overlap them (front rows below the feet can stay).
+- GOOD: explaining albedo without words: two code sun rays - one bounces off the sand (white ring on impact, reflected arrow up), the other is swallowed by the dark panel, which opens eyes and gulps. Then heat squiggles + an orange drop-shadow glow on the panels + a light orange full-frame tint.
+- GOOD: a second location as a pure CODE set (Amazon: hills, ground, river, trees = the tree pair sprite) behind a hard cut on "But" - cheap and reads instantly with a big AMAZON label.
+- FIX in the improvement pass: the green-spreading ellipse was centred on the horizon line of the plate layer and grew with easeIn (nothing visible until late) -> centred at the hero's feet (plate-layer y ~ +400 below the horizon at the wide camera), easeOut growth; tufts pop when the edge reaches them. Reflected ray crossed the hero -> hero moved left, steeper rays. Rain over the payoff cluttered the face -> rain stops at 19.75 s. Cover camera k 1.05 -> 1.4.
+- NOTE: Remotion's bundled ffmpeg cannot decode mp3; scripts/music.py must use the system /usr/bin/ffmpeg (do not put the compositor dir first in PATH). scipy had to be pip-installed again.
+- MUSIC: C major, 117.5 BPM, stops on both "But"s, ping on "green", final chord on "up"; bed 18 dB under the voice.
+

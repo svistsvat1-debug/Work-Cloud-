@@ -8,7 +8,7 @@ export const SaharaSolarCover: React.FC = () => {
   useSSFont();
   return (
     <AbsoluteFill style={{background: '#A4D9FD'}}>
-      <Scene t={10.0} cam={{x: 80, y: -420, k: 1.05}} cover />
+      <Scene t={10.0} cam={{x: 40, y: -360, k: 1.4}} cover />
       <div
         style={{
           position: 'absolute',
