@@ -1,0 +1,67 @@
+{
+ "duration": 23.45,
+ "start": 0.1,
+ "vo_at": 0.1,
+ "words": "images/plastic-worms/words.json",
+ "voice": "public/plastic-worms/vo/take1.mp3",
+ "key": "F",
+ "bpm": [
+  96,
+  120
+ ],
+ "align": [
+  8.1,
+  12.18,
+  16.02,
+  19.62,
+  22.26
+ ],
+ "sections": [
+  [
+   0.0,
+   8.1,
+   "theme"
+  ],
+  [
+   8.1,
+   12.1,
+   "uhoh"
+  ],
+  [
+   12.1,
+   15.9,
+   "uhoh"
+  ],
+  [
+   15.9,
+   19.5,
+   "build"
+  ],
+  [
+   19.5,
+   22.2,
+   "theme"
+  ],
+  [
+   22.2,
+   23.45,
+   "final"
+  ]
+ ],
+ "stops": [
+  [
+   8.1,
+   0.45
+  ],
+  [
+   15.9,
+   0.25
+  ]
+ ],
+ "pings": [
+  21.0
+ ],
+ "end_chord": 22.26,
+ "under_db": 18,
+ "duck_db": 4
+}

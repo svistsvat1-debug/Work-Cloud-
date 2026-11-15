@@ -523,3 +523,17 @@ Video #20 (sun-trash, 2026-11-15) - all pictures LOW 1K; STORY rule; Liam voice;
   (-> a few small puffs trailing from the tail).
 - MUSIC: C major, 117 BPM, stops on "But" and at the brake cut, ping on "system"; bed at -18 dB under the voice (owner level).
 - MIX: MIX_DB -1 gave a -5.0 dBFS preview mix -> -0.2.
+
+Video #21 (plastic-worms, 2026-11-15) - all pictures LOW 1K; STORY rule; Liam voice; code music:
+- LIAM PACE: 70 words / 362 chars (no digits) took 22.85 s = ~3.06 words/s (#20 3.0, #19 3.3). 70 words = 23.45 s video: right under 25 s.
+- GOOD: LOW held up again: 7 pictures (hero 'just tipped it out', shock/bored-sitting sheet, facepalm/point sheet, mealworm pair
+  (happy / full asleep), foam-trash mountain, tub+flask on magenta, backyard plate), 0 redos, ~703 credits (sfx billed 12 for 3.6 s).
+- GOOD: one simple world (guy, tub, mountain on the bran) + one screen-space close-up (x-ray magnifier over a 1.45x worm sprite with
+  code bacteria) carried the whole story; code 'Bug' (green blob with Eye faces) works for anything microscopic.
+- GLITCH: worm legs left dark-green key fringe between them (kill_key_gaps not enough): prep despill() = for objects with no green,
+  pixels with G > R+15 and G > B+15 -> transparent. Two side-by-side copies of the bg plate showed a seam -> mirror the second copy.
+- FIX in the improvement pass: white beard on a white guy read as a blob -> grey beard (#D3D8DE); white foam pill on white foam
+  disappeared -> dark disc + yellow ring behind it; depth-of-field blur switched on abruptly at k 1.5 during pushes -> blur ramps
+  with k (1.3..1.7); frame 0 pile too small -> starts at 72 % height; framing too wide (empty lawn) -> k 1.15.
+- MUSIC: F major, 113.5 BPM, stop on "But" and at the x-ray cut, ping on "bacteria"; bed 18 dB under the voice. MIX_DB -0.5 -> -4.1 dBFS peak.
+- NETWORK: again switched the session to the 'Work-Cloud-' environment before downloading from elevenlabsusercontent.com.
