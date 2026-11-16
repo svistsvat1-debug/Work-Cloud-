@@ -51,3 +51,10 @@ Cut-outs (characters, props, foreground layers): PAPER_STYLE + KEY. Characters: 
 10. A foreground railing cut-out at 1.65x covered half the frame; foreground strips must stay in the bottom ~20 % (scale ~1.05 there).
 11. Owner backgrounds have torn paper borders at the image edges: start interior scenes at zoom >= 1.08 so the border never shows.
 12. faster-whisper mishears proper names ("Antonello da Messina" -> "Antonio Damacena"): compare the transcript by sound, not by spelling, before flagging a recording error.
+- 2026-11-16 angel-steps: same voice, 49 words in a 20.68 s file (speech to 20.4 s) = 2.37 words/s.
+
+## Lessons (angel-steps)
+13. A growing stack of one prop (14 steps) reads as stairs only with alternating tint (x0.86 every other step), squash 0.30 and 24 px spacing; at 20 px / 0.36 it merged into one white wedge.
+14. "Sinking" on a single cutaway picture: shift the whole image down a few px per step on twos and paste the unmoved column strip back on top - the houses drop, the column stays.
+15. A full-frame numpy shift per frame plus many glows made this render ~5x slower than messina-saints; wait for it with a longer background timeout (the 10-minute waiter expired).
+16. Cover text strip must sit below a top subject (the angel): check the cover crop before saving.
