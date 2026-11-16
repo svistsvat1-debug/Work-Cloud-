@@ -8,19 +8,19 @@ export const TsunamiGirlCover: React.FC = () => {
   useTGFont();
   return (
     <AbsoluteFill style={{background: '#70C5FD'}}>
-      <SceneWithShake t={5.6} cam={{x: 180, y: -330, k: 1.32}} cover />
+      <SceneWithShake t={5.6} cam={{x: 110, y: -300, k: 1.75}} cover />
       <div
         style={{
           position: 'absolute',
-          left: 470,
+          left: 540,
           top: 360,
           transform: 'translate(-50%, -50%) rotate(-4deg)',
           fontFamily: FONT,
-          fontSize: 170,
+          fontSize: 150,
           lineHeight: 1.0,
           textAlign: 'center',
           color: '#FFD23F',
-          WebkitTextStroke: '30px #000',
+          WebkitTextStroke: '28px #000',
           paintOrder: 'stroke fill',
           whiteSpace: 'nowrap',
         }}

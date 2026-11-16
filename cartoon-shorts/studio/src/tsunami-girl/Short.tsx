@@ -406,7 +406,7 @@ export const Scene: React.FC<{t: number; cam: Cam; cover?: boolean}> = ({t, cam,
           {gIn > 0 && t < RUN.girl[1] + 0.2 ? <Shadow x={gx} y={0} w={140} /> : null}
           {t < RUN.dad[1] ? <Shadow x={dx} y={0} w={200} /> : null}
           {t < RUN.guard[1] ? <Shadow x={grX} y={0} w={170} /> : null}
-          {t < RUN.tour[1] ? <Shadow x={tx} y={0} w={380} /> : null}
+          {t < RUN.tour[1] && !cover ? <Shadow x={tx} y={0} w={380} /> : null}
           {[RUN.girl[1], RUN.dad[1], RUN.tour[1], RUN.guard[1]].map((ta, i) =>
             t > ta && t < ta + 0.5 ? (
               <PuffCluster
@@ -420,7 +420,7 @@ export const Scene: React.FC<{t: number; cam: Cam; cover?: boolean}> = ({t, cam,
         </Svg>
         <Spr n="guard" x={grX} y={(t >= RUN.guard[0] ? hop(t, 4, 12) : 0)} s={0.255} sx={grBump * grIn} sy={grBump} />
         <Spr n={dPose} x={dx} y={dy} s={0.5} sx={dsx * dIn} sy={dsy} rot={dRot} />
-        <Spr n={tPose} x={tx} y={t >= RUN.tour[0] ? hop(t, 3.4, 18) : 0} s={tS} sx={tsx * tIn} sy={tsy * (t < RUN.tour[0] ? breathe(t, 1) : 1)} />
+        {cover ? null : <Spr n={tPose} x={tx} y={t >= RUN.tour[0] ? hop(t, 3.4, 18) : 0} s={tS} sx={tsx * tIn} sy={tsy * (t < RUN.tour[0] ? breathe(t, 1) : 1)} />}
         <Spr n={gPose} x={gx} y={gy} s={gS} sx={gsx * gIn} sy={gsy * (gPose === 'hero' ? breathe(t) : 1)} />
         <Svg>
           {/* sweat on dad while he runs to the guard */}
