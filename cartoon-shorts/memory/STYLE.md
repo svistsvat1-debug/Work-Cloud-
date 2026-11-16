@@ -619,3 +619,25 @@ Video #26 (tsunami-girl, 2026-11-16) - all pictures LOW 1K; STORY rule; Liam voi
 - MUSIC: G major, 111 BPM, stops on "But" and on "hits", ping + final chord on "dies"; bed 18 dB under the voice.
 - SOURCE pass: YouTube blocked yt-dlp, youtube-transcript-api and storyboards from the cloud; vidIQ transcript (5 credits)
   was the only way to read the source; the visual pass was not available.
+Video #27 (space-twin, 2026-11-16) - all pictures LOW 1K; STORY rule; Liam voice; code music; second video from a SOURCE segment:
+- LIAM PACE: 70 words / 384 chars ("two" as words, 7 sentences, a colon) took 24.74 s of speech = ~2.83 words/s - the slowest so far
+  (#26 2.92, #24 3.16). Many full stops + a colon = long pauses (0.4-0.56 s each). The take had to be FITTED: 6 pauses > 0.35 s
+  cut to 0.25 s by loudness (-1.38 s, images/space-twin/fit.py, no tempo change) -> 23.39 s voice, 23.95 s video. For a
+  story with 7+ sentences plan <= 64 words, or expect to fit the pauses.
+- GOOD: LOW held up again: 7 pictures (hero side view, brother side/shock sheet, float/proud sheet, weak/press sheet, rocket on
+  magenta, room plate, space plate), 0 redos, all keyed clean at dist < 60. 'Wearing only small round glasses' made the twin
+  brother readable with no other change. 728.96 credits in all (voice 382, Scribe 0, pictures 328.7, 5 sfx 18.3).
+- GOOD: StretchSpr (src/space-twin/Short.tsx) = a cut-out whose body STRETCHES: three clipped copies of one sprite (above the
+  cut moves by d, a 24-40 px band is scaled to fill the gap, below stays) along y (standing) or x (floating). Cut just below
+  the head (head centre + 0.98 r) so the face never distorts. Overlap the clipped boxes by 2 px or a hairline seam shows.
+- GOOD: an abstract force as a living character: a purple GRAVITY block arrow with angry eyes, first as a dashed 'ghost'
+  crossed out with a red X ("nothing presses down"), then real, dropping onto his head (thump + shake) and squinting while it
+  squeezes him down. Height facts read through a wall: a dashed line at the twins' height + a red line and up-arrow '+2 IN'.
+- GOOD loop: a full-screen '2 DAYS LATER' calendar card (HTML) hides the hard cut back to the frame-0 layout; the ruler drops
+  flat onto both heads again on "twins" and a green check pops on "again" = last frame ~ frame 0.
+- FIX in the improvement pass: icons (bone, bicep) were hidden behind the rocket at the frame edge -> moved above the head;
+  '+2 IN' label cut by the right edge -> centred above the red line; the landing shot was half empty wall -> the cut camera
+  centres the rocket, then glides to the twins; GRAVITY label covered the arrow's eyes -> moved to the shaft bottom.
+- MUSIC: C major, 96 BPM, stops on "But" and on the arrow's thump, ping + home chord on "again"; bed 18 dB under the voice.
+  MIX_DB -0.5 -> -3.5 dBFS final peak.
+- SOURCE pass: again only vidIQ could read the transcript (5 vidIQ credits); yt-dlp / youtube-transcript-api blocked (403).

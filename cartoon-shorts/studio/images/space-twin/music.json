@@ -1,0 +1,4 @@
+{"duration": 23.95, "start": 0.1, "vo_at": 0.1, "words": "images/space-twin/words.json", "voice": "public/space-twin/vo/take1_fit.wav",
+ "key": "C", "bpm": [96, 120], "align": [5.71, 14.52, 18.35, 23.2],
+ "sections": [[0.0, 5.71, "theme"], [5.71, 11.95, "theme2"], [11.95, 14.52, "theme"], [14.52, 18.35, "uhoh"], [18.35, 21.84, "build"], [21.84, 23.95, "final"]],
+ "stops": [[14.52, 0.45], [19.05, 0.35]], "pings": [23.2], "end_chord": 23.2, "under_db": 18, "duck_db": 4}

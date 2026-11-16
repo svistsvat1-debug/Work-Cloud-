@@ -1,0 +1,5 @@
+// space-twin: timing (video time = fitted voice time + 0.1 s; Scribe word starts, shifted by the cut pauses)
+export const FPS = 60;
+export const VO_AT = 0.1;
+export const DURATION = 23.95; // voice ends 23.76 s (video) + tail
+export const T = {two: 0.1, identical: 0.42, twins: 0.98, stand: 1.54, back: 1.78, to: 2.02, back2: 2.18, the: 2.74, same: 2.94, height: 3.22, then: 3.75, one: 4.31, flies: 4.55, off: 4.95, to2: 5.11, live: 5.27, in: 5.43, space: 5.71, for: 5.99, almost: 6.15, a: 6.55, year: 6.71, up: 7.3, there: 7.7, nothing: 8.1, presses: 8.54, down: 8.94, on: 9.1, his: 9.22, spine: 9.38, so: 9.94, it: 10.1, slowly: 10.34, stretches: 10.86, out: 11.3, he: 11.95, lands: 12.23, two2: 12.51, inches: 12.75, taller: 13.15, than: 13.55, his2: 13.71, brother: 13.87, but: 14.52, floating: 14.76, had: 15.2, a2: 15.32, price: 15.64, his3: 16.32, bones: 16.6, and: 16.84, muscles: 17.0, got: 17.4, weaker: 17.64, so2: 18.35, gravity: 18.59, gets: 19.07, to3: 19.23, work: 19.43, squeezing: 19.87, his4: 20.51, spine2: 20.67, back3: 21.11, down2: 21.39, two3: 21.84, days: 22.0, later: 22.24, theyre: 22.76, twins2: 22.92, again: 23.2, end: 23.76};

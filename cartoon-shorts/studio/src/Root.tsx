@@ -72,6 +72,8 @@ import {DURATION as ST_DURATION, FPS as ST_FPS} from './shipworm-tunnel/scene';
 import {DURATION as EZ_DURATION, FPS as EZ_FPS} from './eagle-zap/scene';
 
 // One composition per Short (+ its cover still).
+import {SpaceTwinShort, SPT_DURATION, SPT_FPS} from './space-twin/Short';
+import {SpaceTwinCover} from './space-twin/Cover';
 export const RemotionRoot: React.FC = () => {
   return (
     <>
@@ -127,6 +129,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="TsunamiGirlCover" component={TsunamiGirlCover} width={1080} height={1920} />
       <Composition id="MoaiWalk" component={MoaiWalkShort} durationInFrames={Math.round(MW_DURATION * MW_FPS)} fps={MW_FPS} width={1080} height={1920} />
       <Still id="MoaiWalkCover" component={MoaiWalkCover} width={1080} height={1920} />
+      <Composition id="SpaceTwin" component={SpaceTwinShort} durationInFrames={Math.round(SPT_DURATION * SPT_FPS)} fps={SPT_FPS} width={1080} height={1920} />
+      <Still id="SpaceTwinCover" component={SpaceTwinCover} width={1080} height={1920} />
     </>
   );
 };
