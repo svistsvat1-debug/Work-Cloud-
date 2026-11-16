@@ -1,0 +1,4 @@
+{"duration": 22.76, "start": 0.1, "vo_at": 0.1, "words": "images/iceberg-tow/words.json", "voice": "public/iceberg-tow/vo/take1.mp3",
+ "key": "F", "bpm": [96, 120], "align": [3.62, 12.3, 16.13, 21.62],
+ "sections": [[0.0, 3.62, "theme"], [3.62, 9.1, "uhoh"], [9.1, 12.3, "uhoh"], [12.3, 16.1, "build"], [16.1, 19.3, "uhoh"], [19.3, 22.76, "final"]],
+ "stops": [[3.62, 0.45], [17.8, 0.4]], "pings": [15.25], "end_chord": 21.62, "under_db": 18, "duck_db": 4}

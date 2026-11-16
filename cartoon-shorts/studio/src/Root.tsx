@@ -61,6 +61,8 @@ import {PrintMoneyShort, PM_DURATION, PM_FPS} from './print-money/Short';
 import {PrintMoneyCover} from './print-money/Cover';
 import {SaharaSolarShort, SS_DURATION, SS_FPS} from './sahara-solar/Short';
 import {SaharaSolarCover} from './sahara-solar/Cover';
+import {IcebergTowShort, IT_DURATION, IT_FPS} from './iceberg-tow/Short';
+import {IcebergTowCover} from './iceberg-tow/Cover';
 import {DURATION as ST_DURATION, FPS as ST_FPS} from './shipworm-tunnel/scene';
 import {DURATION as EZ_DURATION, FPS as EZ_FPS} from './eagle-zap/scene';
 
@@ -114,6 +116,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="PrintMoneyCover" component={PrintMoneyCover} width={1080} height={1920} />
       <Composition id="SaharaSolar" component={SaharaSolarShort} durationInFrames={Math.round(SS_DURATION * SS_FPS)} fps={SS_FPS} width={1080} height={1920} />
       <Still id="SaharaSolarCover" component={SaharaSolarCover} width={1080} height={1920} />
+      <Composition id="IcebergTow" component={IcebergTowShort} durationInFrames={Math.round(IT_DURATION * IT_FPS)} fps={IT_FPS} width={1080} height={1920} />
+      <Still id="IcebergTowCover" component={IcebergTowCover} width={1080} height={1920} />
     </>
   );
 };
