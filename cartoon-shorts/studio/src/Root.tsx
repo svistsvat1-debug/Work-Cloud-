@@ -74,6 +74,8 @@ import {DURATION as EZ_DURATION, FPS as EZ_FPS} from './eagle-zap/scene';
 // One composition per Short (+ its cover still).
 import {SpaceTwinShort, SPT_DURATION, SPT_FPS} from './space-twin/Short';
 import {SpaceTwinCover} from './space-twin/Cover';
+import {GlassRainPlanetShort, GRP_DURATION, GRP_FPS} from './glass-rain-planet/Short';
+import {GlassRainPlanetCover} from './glass-rain-planet/Cover';
 export const RemotionRoot: React.FC = () => {
   return (
     <>
@@ -131,6 +133,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="MoaiWalkCover" component={MoaiWalkCover} width={1080} height={1920} />
       <Composition id="SpaceTwin" component={SpaceTwinShort} durationInFrames={Math.round(SPT_DURATION * SPT_FPS)} fps={SPT_FPS} width={1080} height={1920} />
       <Still id="SpaceTwinCover" component={SpaceTwinCover} width={1080} height={1920} />
+      <Composition id="GlassRainPlanet" component={GlassRainPlanetShort} durationInFrames={Math.round(GRP_DURATION * GRP_FPS)} fps={GRP_FPS} width={1080} height={1920} />
+      <Still id="GlassRainPlanetCover" component={GlassRainPlanetCover} width={1080} height={1920} />
     </>
   );
 };

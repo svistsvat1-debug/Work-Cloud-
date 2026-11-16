@@ -641,3 +641,26 @@ Video #27 (space-twin, 2026-11-16) - all pictures LOW 1K; STORY rule; Liam voice
 - MUSIC: C major, 96 BPM, stops on "But" and on the arrow's thump, ping + home chord on "again"; bed 18 dB under the voice.
   MIX_DB -0.5 -> -3.5 dBFS final peak.
 - SOURCE pass: again only vidIQ could read the transcript (5 vidIQ credits); yt-dlp / youtube-transcript-api blocked (403).
+Video #28 (glass-rain-planet, 2026-11-16) - all pictures LOW 1K; STORY rule; Liam voice; code music; third video from a SOURCE segment;
+owner asked for MORE drawings (smoother animation) and allowed up to 30 s for this one:
+- GOOD: THREE-POSE 3:2 SHEETS work at LOW: "Three DIFFERENT poses of the same character side by side in one row, all three the
+  same size, with wide empty gaps" gave 5 clean sheets (15 poses) + a 2-pose sheet + the hero = 18 character drawings from 7
+  pictures (~47 credits per 3 poses), all keyed at dist < 60 and on-model with the text-only hero (swim goggles #5ACBF6/#1C7FBC +
+  red #F1301D ring as a 'role' add-on). Each third is ~500 px wide: fine for full-body poses at a world head radius of 75-95.
+  More drawings = every action beat gets its own in-between (crouch -> leap -> cannonball -> dive -> pinch -> starfish -> ...),
+  swapped with squash on motion: the pop scan only flagged intended swaps/cuts.
+- GLITCH -> FIX: LOW sometimes drops a stretch of outline (the 'hang' arm). prep.py fix_outline() paints a black band (2 px in,
+  4 px out) wherever white/grey fill (rgb sum > 400, runs >= 12 px) touches the silhouette edge. Motion marks the model draws next
+  to a pose are separate blobs: split_n() keeps the N biggest blobs of a sheet and drops the rest. "Waist-up close-up" came out
+  full body AGAIN (3rd time): plan close-ups as full-body poses clipped by code (here: a porthole circle).
+- GOOD (code gags, 0 credits): a cloud wipe (rising puff wall) hides the space -> sky cut; a thought bubble with a code icon +
+  a red X stamped on the word makes an abstract "there's no X" line readable; turning the character green = a div with the
+  sprite as CSS mask (WebkitMaskImage) + mix-blend-mode multiply (no new picture); a code umbrella that flips inside out.
+- LIAM PACE: 67 words / 328 chars, 7 sentences, numbers in words ("five thousand") = 21.4 s of speech = ~3.13 words/s (#27 2.83,
+  #26 2.92). No fitting needed; 67 words fit a 23.2 s video with a 1.7 s ending gag.
+- MUSIC: G major, 118 BPM; stops on "But", "Sideways" and the window slam; pings on "eggs", home chord when the planet sleeps;
+  bed 21.7 dB under the voice. MIX_DB -0.5 -> -4.1 dBFS final peak. MEASURE THE MIX PEAK ON THE STEREO DECODE (volumedetect or
+  f32le stereo): an `ffmpeg -ac 1` mono read was ~3 dB too hot and cost one extra audio pass.
+- SOURCE pass: this time yt-dlp auto-subs (free) and the YouTube storyboards (sb0 mhtml) worked; the video file itself still 403.
+  Split the storyboard mhtml by its Content-length headers (python's email parser corrupts the JPEGs). Structure model read from
+  a real transcript for the first time (Zack D. Films, 21M): the 'follow one tiny thing' journey shape mapped onto 'So you...'.
