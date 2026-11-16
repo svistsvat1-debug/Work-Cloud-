@@ -110,6 +110,9 @@ STRUCTURES #1 (cut-out «Can we throw trash in a volcano?», ~3,6M), варіа�
 - STYLE (уроки, темп Liam);
 - sfx-library (+3).
 
+## Git
+Закомічено в `claude/whyzap-video-production-daltkl` і запушено в main (981e0e2). MP4 не в git (*.mp4 у .gitignore). Папку work/ з транскриптом джерела видалено.
+
 ## Запасні рішення
 - Транскрипт джерела взято з vidIQ: yt-dlp, youtube-transcript-api і storyboards заблоковані. Візуальний аналіз пропущено.
 - Hero генерувався в одному батчі з іншими картинками, бо зафіксований вигляд персонажа вже є в STYLE.md і референсів немає.
