@@ -40,7 +40,7 @@ Cut-outs (characters, props, foreground layers): PAPER_STYLE + KEY. Characters: 
 
 ## Owner overrides
 - 2026-11-16: owner limit for a Short is 25 s (overrides R6 30-45 s). Target: narration ~50-55 words, estimate <= 23 s at 2.3 words/s, video <= 25.0 s; 6-9 pictures.
-- Channel name: [MISSING] (new channel, no name yet).
+- Channel name: Paper Mysteries (chosen by Claude at the owner's request, 2026-11-16; handle availability not checked). Mascot: a small paper detective - round cream face, dot eyes, mustard trench coat, dark teal fedora, cream magnifying glass (channel/avatar_800.png, channel/banner_2560x1440.png).
 
 ## Voice pace
 - 2026-11-16 messina-saints: Google AI Studio voice (name [MISSING]), 51 words in 22.16 s file (speech 0.00-21.68 s) = 2.30 words/s incl. pauses; natural pauses 0.5-0.8 s between sentences. Keep 2.3 w/s for estimates. Delivered as 24 kHz mono WAV.
