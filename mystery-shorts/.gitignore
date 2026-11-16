@@ -5,3 +5,4 @@ inputs/
 *.mp3
 *.jpg
 **/__pycache__/
+!sfx-library/*.wav
