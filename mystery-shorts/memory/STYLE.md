@@ -41,3 +41,13 @@ Cut-outs (characters, props, foreground layers): PAPER_STYLE + KEY. Characters: 
 ## Owner overrides
 - 2026-11-16: owner limit for a Short is 25 s (overrides R6 30-45 s). Target: narration ~50-55 words, estimate <= 23 s at 2.3 words/s, video <= 25.0 s; 6-9 pictures.
 - Channel name: [MISSING] (new channel, no name yet).
+
+## Voice pace
+- 2026-11-16 messina-saints: Google AI Studio voice (name [MISSING]), 51 words in 22.16 s file (speech 0.00-21.68 s) = 2.30 words/s incl. pauses; natural pauses 0.5-0.8 s between sentences. Keep 2.3 w/s for estimates. Delivered as 24 kHz mono WAV.
+
+## Lessons (messina-saints)
+8. A 25 s Short holds ~51 words at 2.3 w/s: 6 short sentences, cut on the sentence pauses, 6 scenes; video = voice + ~0.9 s tail.
+9. Owner pictures of one object in two states (altarpiece full / empty) came out with different frame shapes; hide the swap in a flashlight flash (screen-blend 0.85 for 0.1 s) + small shake + squash on the character.
+10. A foreground railing cut-out at 1.65x covered half the frame; foreground strips must stay in the bottom ~20 % (scale ~1.05 there).
+11. Owner backgrounds have torn paper borders at the image edges: start interior scenes at zoom >= 1.08 so the border never shows.
+12. faster-whisper mishears proper names ("Antonello da Messina" -> "Antonio Damacena"): compare the transcript by sound, not by spelling, before flagging a recording error.
