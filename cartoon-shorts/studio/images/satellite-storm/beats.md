@@ -1,0 +1,12 @@
+# satellite-storm - beat sheet (video time; voice at 0.1 s; little-planet world: Earth centre (0,0), R 700)
+| time | words | on screen | picture | sound | music |
+|------|-------|-----------|---------|-------|-------|
+| 0.0-4.8 | So forty-nine new satellites leave their rocket and start climbing to their orbit. | rocket stage with a stack of 8 satellites; they pop off one by one, open faces, fly into a train under the dashed ORBIT line; guy points up from the top of Earth; "49" label | hero, stage, sat, space | chirps, 8 pops, swoop | theme |
+| 4.8-8.1 | But the next day, a weak storm from the Sun hits Earth. | zoom out; NEXT DAY; the old stage flies off; guy swaps into his beach chair (poof); Sun with a face inhales, sneezes a small orange storm puff with a face that bonks into the air shell (wobble, shake) | relax, code Sun + Earth | flip, zoomaway, sneeze, whoosh, pop | stop on "But", uh-oh |
+| 8.1-10.6 | Down here, we barely feel it. | close-up: guy lounging in the chair, a little breeze passes; shrug on "barely" | relax -> shrug | gust (quiet) | uh-oh |
+| 10.7-14.5 | But up there, it heats the air and puffs it up like rising dough. | pull back; guy stands up worried (shade); the air shell gets a face, turns orange with heat squiggles, cheeks puff and it rises like dough past the satellites; smug when full | shade | sizzle, puffup (bloop on "dough") | stop on "But", build |
+| 14.9-18.7 | So now they're dragging through thicker air, like a hand out of a car window. | close on the satellites: > < strain faces, sweat drops, wind lines; the air blows; inset bubble: guy in a code car, hand out of the window pushed back | sat faces, ride (bubble) | gust x2, pop, swoop | uh-oh |
+| 19.1-21.1 | They turn edge-on, like paper. | guy slams the red button; satellites flatten edge-on, hopeful faces | press | button, whoosh | theme2 |
+| 21.5-22.3 | It doesn't work. | they straighten back and sink, sad faces; guy shocked | cheeks | sad trombone | stop on "It" |
+| 22.8-25.9 | Thirty-eight of them sink and burn up like shooting stars. | "38" label; six satellites dive in one by one with flame tails and turn into falling-star streaks, two survive (relieved); guy sad, then waves goodbye with a hanky | sad -> wave | stamp, 6 streaks | uh-oh |
+| 26.3-28.2 | So, make a wish. | close-up: back in the chair (poof), eyes closed, wishing; shooting stars behind; twinkle; camera glides back, a new rocket with a full stack pops in, he points up again (= frame 0) | wish -> hero | pop, streak, twinkle, pop, chirps | ping + home chord on "wish" |

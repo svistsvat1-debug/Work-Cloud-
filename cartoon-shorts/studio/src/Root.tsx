@@ -76,6 +76,8 @@ import {SpaceTwinShort, SPT_DURATION, SPT_FPS} from './space-twin/Short';
 import {SpaceTwinCover} from './space-twin/Cover';
 import {GlassRainPlanetShort, GRP_DURATION, GRP_FPS} from './glass-rain-planet/Short';
 import {GlassRainPlanetCover} from './glass-rain-planet/Cover';
+import {SatelliteStormShort, SAT_DURATION, SAT_FPS} from './satellite-storm/Short';
+import {SatelliteStormCover} from './satellite-storm/Cover';
 export const RemotionRoot: React.FC = () => {
   return (
     <>
@@ -135,6 +137,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="SpaceTwinCover" component={SpaceTwinCover} width={1080} height={1920} />
       <Composition id="GlassRainPlanet" component={GlassRainPlanetShort} durationInFrames={Math.round(GRP_DURATION * GRP_FPS)} fps={GRP_FPS} width={1080} height={1920} />
       <Still id="GlassRainPlanetCover" component={GlassRainPlanetCover} width={1080} height={1920} />
+      <Composition id="SatelliteStorm" component={SatelliteStormShort} durationInFrames={Math.round(SAT_DURATION * SAT_FPS)} fps={SAT_FPS} width={1080} height={1920} />
+      <Still id="SatelliteStormCover" component={SatelliteStormCover} width={1080} height={1920} />
     </>
   );
 };

@@ -664,3 +664,26 @@ owner asked for MORE drawings (smoother animation) and allowed up to 30 s for th
 - SOURCE pass: this time yt-dlp auto-subs (free) and the YouTube storyboards (sb0 mhtml) worked; the video file itself still 403.
   Split the storyboard mhtml by its Content-length headers (python's email parser corrupts the JPEGs). Structure model read from
   a real transcript for the first time (Zack D. Films, 21M): the 'follow one tiny thing' journey shape mapped onto 'So you...'.
+Video #29 (satellite-storm, 2026-11-16) - all pictures LOW 1K; STORY rule; Liam voice; code music; fourth video from a SOURCE segment;
+owner allowed up to 30 s and asked for AUDIBLE background music:
+- LIAM PACE: 82 words / 436 chars, 9 sentences, numbers as words ("forty-nine", "thirty-eight") = 27.46 s of speech = ~2.99 words/s
+  (#28 3.13, #27 2.83). No fitting; 82 words = a 28.2 s video with a 0.6 s loop tail. For a 30 s cap plan <= 84 words.
+- MUSIC LEVEL (owner, 2026-11-16: "the background music must be heard"): bed RMS 12 dB under the voice RMS, ducking only -3 dB
+  (was 18-22 dB / -4..-6 dB). Use this as the default from now on unless the owner says it is too loud. Mix peak still -3.9 dBFS.
+- GOOD: LOW held up again: 6 pictures (hero + 3 three-pose sheets + props sheet on magenta + space plate), 10 poses, 0 redos, all keyed
+  at dist < 60. A 'role' add-on (black headset with a #424141 ear cup, measured on the hero) carried over to every sheet. A beach chair
+  drawn INSIDE the pose pictures (all three chair poses on one sheet) stays identical between the poses.
+- GLITCH -> FIX: the inscribed-disc head measure lands on the CHAIR in seated poses; prep.py ray_head() (rays on the upper arc -160..-20
+  deg + least-squares circle, the heads2.py method) fits the head.
+- GOOD: the AIR as a character: a translucent shell path whose radius gets two sine ripples (9 and 14 per turn) = rising dough, an opaque
+  rim stroke + ink line on top, a face (Eye + cheeks) riding on the shell. LESSON: translucent orange over a navy sky reads BROWN - flip
+  the hue in the first third of the heat ramp and raise the opacity to ~0.85 so 'hot air' reads orange.
+- GOOD: an analogy line ("like a hand out of a car window") as a round inset bubble drawn in code (scrolling road, car body in FRONT of
+  the pose sprite, roof arch BEHIND it, wind lines only behind the guy) = one seated pose from a sheet, 0 extra pictures.
+- GOOD: satellites with code faces on the sprite (svg overlay in sprite px); edge-on = scaleY 0.28 (0.16 was unreadable); burning =
+  CSS sepia/saturate/hue filter + lava-palette flame tail + a fading falling-star streak; survivors drift out so the end = frame 0.
+- GLITCH -> FIX: poof puffs with a fixed ink width show as black dots while tiny -> scale the ink with the puff size. Too many wind lines
+  hid the satellites -> thin them out after the turn and end the wind on the "it doesn't work" beat.
+- RENDER: this machine has 4 cores: CONC must be <= 4 (6 crashes). Full 28.2 s render 1 min 24 s, 0.5x preview 43 s.
+- SOURCE pass: yt-dlp auto-subs (web_embedded client) + storyboards from the -J metadata worked again (free); the video file was not
+  offered. BRIGHT SIDE re-uploads compilations: 0:00-8:37 of HlirFKAVyY8 = 0:00-8:31 of xtqWGeG4NJA - check new links against SOURCE_LOG.

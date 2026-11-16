@@ -1,4 +1,4 @@
-# IDEA CARD - satellite-storm (2026-11-16) - waiting for approval
+# IDEA CARD - satellite-storm (2026-11-16) - APPROVED by the owner ("Так"), produced the same day
 
 Owner overrides for this video: length up to 30 s (instead of 25 s); background music must be clearly audible
 (plan: bed ~12 dB under the voice RMS instead of 18, ducking -3 dB instead of -4).
