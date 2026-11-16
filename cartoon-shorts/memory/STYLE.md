@@ -574,4 +574,27 @@ Video #24 (iceberg-tow, 2026-11-16) - all pictures LOW 1K; STORY rule; Liam voic
 - GLITCH: clear glass on a green key keys out to a green tint -> glassfix() recolours greenish pixels to pale blue at alpha 150. The city sprite came with a drawn sea strip -> cut below the lowest sand row.
 - FIX in the improvement pass: shore set framing too wide (half the frame was empty sand, guy cut at the edge) -> k 0.4 -> 0.47 and shifted right; the ending was a wide static shot -> push-in on the guy holding the empty glass after the berg disappears; the twenty tugs were tiny -> scale 1.75 -> 2.3 in 4 depth rows; 'HIDDEN' label cut by the frame edge -> moved onto the bulk; the Sun clipped at the top after raising the horizon -> lowered.
 - MUSIC: F major, 119.5 BPM, stops on "But" and on the keel thud, ping on "ships", final chord on "water"; bed 18 dB under the voice. MIX_DB -0.5 -> -4.4 dBFS preview peak.
-
+Video #25 (moai-walk, 2026-11-14) - all pictures LOW 1K again:
+- GOOD: LOW held up a third time: 6 pictures (hero, guy pair A proud/rope-pull, guy pair B scared/stunned, 'close-up', moai,
+  plate), 0 redos, 548.35 credits in all (voice 260, pictures 281.7, 2 sfx 6.7). A stone statue on a green key keyed clean;
+  its empty eye hollows are perfect sockets for code eyes (Eye r 33/27 in native px, pop open on 'stone giants').
+- GOOD: a tall statue that has to rock = rotate about the base corner on the tilt side (CSS rotate at the pivot point,
+  inner div offset so the base centre sits at (+-half width, 0)); a waddle = alternate the pivot corner each step while the
+  base centre eases forward; a rounded base = rotate about the centre of curvature (R 300) that rolls R*theta along.
+  Rope ends are computed by rotating native points with the same transform, so ropes stay tied while it rocks.
+- GOOD: 'the obvious answer' as a THOUGHT BUBBLE (HTML div, border-radius 50 %, overflow hidden, so a mini sprite can be
+  clipped) that pops into a poof on 'But' reads at once and keeps the main layout. A wheel that bonks and falls flat
+  (scaleY 0.18 about its bottom) + a red X, and a tiny code chicken for 'no big animals', made the hook line visual.
+- GLITCH: the head-disc measure on the WHITE mask gave a too-small head for a big grin (proud: 128 vs 146): measure the
+  inscribed disc on the hole-filled ALPHA silhouette instead (prep.py now does).
+- GLITCH: the 'close-up' prompt again came out as a big-head full body; used as a medium reaction shot (feet on the road,
+  head scaled to the full-body head height, k 2.9-3.15).
+- GLITCH: long dashed angle lines (vertical + tilted) over a statue read as a ladder; a fat yellow curved arrow over the
+  head reads 'leans forward' better. Step dust drawn too big reads as rocks/bread: keep puffs r ~15 and low.
+- FIX in the improvement pass: an OLD ROAD sign (drawn behind the moai, pointing away) on 'old roads'; the rope shot pushed
+  in (k 1.24 -> 1.4) and centred on the two pullers; the bubble poof tightened. From the first contact sheet: frame 0
+  pushed in (k 1.7 -> 1.95); the wheel/X and the chicken kept inside the frame edges; the base close-up framed so the guy
+  is whole (k 2.15).
+- MIX: MIX_DB 4.0 gave -4.6 dBFS on the preview: no re-mux. TIMING: 48 words / 260 characters, no digits, took 16.86 s
+  with Mark (~2.85 words/s). Sound Effects v2 billed 3.3 credits/s again (estimate 22, actual 6.67).
+- RENDER: full 17.3 s render ~4 min (CONC 4, swangle).
