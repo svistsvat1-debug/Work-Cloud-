@@ -58,3 +58,9 @@ Cut-outs (characters, props, foreground layers): PAPER_STYLE + KEY. Characters: 
 14. "Sinking" on a single cutaway picture: shift the whole image down a few px per step on twos and paste the unmoved column strip back on top - the houses drop, the column stays.
 15. A full-frame numpy shift per frame plus many glows made this render ~5x slower than messina-saints; wait for it with a longer background timeout (the 10-minute waiter expired).
 16. Cover text strip must sit below a top subject (the angel): check the cover crop before saving.
+- 2026-11-16 lost-brothers: same voice, 52 words in a 22.0 s file = 2.39 words/s.
+
+## Lessons (lost-brothers)
+17. Pictures from ChatGPT come as 941x1672 backgrounds and 1024x1536 / 1536x1024 cut-outs (webp in chat); the green key works the same. Faces are more detailed than the dot-eye style - keep all characters of one video from the same chat so they match.
+18. One caravel cut-out was enough for every sea shot: 2-3 copies at different scales, bob phases and a stern-lantern glow; a fog band (blurred grey stripe) swallows the 'lost' ship without a cross-fade.
+19. A story with a repeated beat ('two ships come back') reads best when the same sea background and the same two-ship layout repeat, so the viewer sees the missing third every time.
