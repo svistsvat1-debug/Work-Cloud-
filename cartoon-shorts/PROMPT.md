@@ -1,8 +1,16 @@
+SOURCE:
 MY IDEA:
 STATS:
+REFERENCE:
 
-(MY IDEA = my idea for this video, any language, one line is enough; leave it empty if I have none.
-STATS = optional, views of my published Shorts, e.g. "trash in volcano - 120k; mosquitoes - 3k".)
+(SOURCE = a link to a long video from my source channel (memory/SOURCE.md), optionally with a time range of the part I
+want, e.g. "https://youtu.be/xxxx 12:40-15:10"; leave it empty and you pick the next unused video from the source
+channel yourself (MODE B).
+MY IDEA = my idea for this video, any language, one line is enough; leave it empty if I have none. If SOURCE is filled
+too, MY IDEA tells you which part of the source video to use.
+STATS = optional, views of my published Shorts, e.g. "trash in volcano - 120k; mosquitoes - 3k".
+REFERENCE = optional: a link to a proven viral video (best a Short) whose STRUCTURE the script should follow, and/or its
+transcript pasted here (e.g. from NoteGPT). Leave it empty and you pick a proven model yourself (STEP 1S).)
 
 =====================================================================================================================
 RUN RULES - read these first. They override anything below that says otherwise.
@@ -10,19 +18,26 @@ RUN RULES - read these first. They override anything below that says otherwise.
 
 R1. LANGUAGES. The video, the voiceover, the titles, the cover text and the description are in English. Everything you
 write to me in chat (the idea card and the final report) is in Ukrainian. Memory files are in English.
+My channel is WhyZap (https://www.youtube.com/@whyzap1): short cartoon Shorts that answer curious "why / what if"
+questions about science, animals, space, the human body, history and engineering. Every video stays in that niche.
 
 R2. WHERE THE IDEA COMES FROM. Check in this order:
-  a) MY IDEA is filled -> MODE A with that idea.
-  b) MY IDEA is empty, but I wrote an idea for a video somewhere in this conversation (in this message around the
-     prompt, or in an earlier message of mine) that has not been turned into a video yet -> MODE A with that idea.
-     If there are several, take the latest one. An idea you proposed yourself counts only if I approved it.
-  c) Neither -> MODE B: you find the idea yourself (STEP 1B).
-  In MODE A you never research or propose other topics and never make a video on any other topic.
+  a) SOURCE is filled -> MODE S with that video (STEP 1V). If MY IDEA is filled too, it only says which part of the
+     video to use.
+  b) MY IDEA is filled (SOURCE empty) -> MODE A with that idea.
+  c) SOURCE and MY IDEA are empty, but I wrote an idea for a video somewhere in this conversation (in this message
+     around the prompt, or in an earlier message of mine) that has not been turned into a video yet -> MODE A with
+     that idea. If there are several, take the latest one. An idea you proposed yourself counts only if I approved it.
+  d) Nothing -> MODE B: you pick the next unused video from the source channel yourself (STEP 1B) and then work on it
+     exactly as in MODE S.
+  In MODE S and MODE A you never research or propose other topics and never make a video on any other topic.
 
-R3. ONE APPROVAL STOP, IN BOTH MODES.
+R3. ONE APPROVAL STOP, IN EVERY MODE.
   PHASE 1 (the message that contains this prompt): STEP 0 -> STEP 1 -> send me the IDEA CARD (STEP 1E) -> STOP and end
   your turn. In phase 1 you make no ElevenLabs call of any kind (no flow, no estimate, no voice, no picture, no sound)
-  and build nothing in Remotion: 0 credits are spent before I approve.
+  and build nothing in Remotion: 0 ElevenLabs credits are spent before I approve. The source-video analysis (STEP 1V)
+  uses free tools only; vidIQ tools cost vidIQ credits, so use them only as the last fallback (at most 2 calls) and
+  write in the card how many vidIQ credits were used.
   PHASE 2 (my reply to the card):
    - "так", "ок", "ok", "yes", "go", "давай", "погоджую" or "+" = approved -> do STEP 2, STEP 3 and STEP 4 with exactly
      the approved voiceover, from start to finish, unattended. From here on never ask me anything, never wait for me,
@@ -30,26 +45,30 @@ R3. ONE APPROVAL STOP, IN BOTH MODES.
      explain the choices in the final report.
    - Edits from me -> apply them (re-check any fact they touch), send the updated card, stop again.
    - "№2" / "№3" -> write the full card for that backup idea, stop again.
-   - A new idea from me -> MODE A with it, a new card, stop again.
+   - A new idea or a new SOURCE link from me -> start again with it (R2), a new card, stop again.
   After approval the voiceover is frozen: no new research, no rewording, no new topic. Only exception: if production
   turns up a factual error, change the fewest words needed to make it true and report it.
 
 R4. ONE VIDEO PER APPROVED IDEA: one script, one voice take, one ElevenLabs flow, one final MP4. Before you create the
-flow, check this conversation and memory/VIDEOS_LOG.md: if this idea has already been made (or a flow for it already
-exists in this conversation), do not make it again; tell me instead. Never go back to STEP 1 after approval.
+flow, check this conversation, memory/VIDEOS_LOG.md and memory/SOURCE_LOG.md: if this idea (or this segment of a
+source video) has already been made (or a flow for it already exists in this conversation), do not make it again;
+tell me instead. Never go back to STEP 1 after approval.
 
 R5. REPOSITORY. All work lives in the GitHub repository svistsvat1-debug/Work-Cloud-, in the folder cartoon-shorts/
 (below, every path is relative to that folder). Do not change anything outside cartoon-shorts/ (the rest of the repo
 is unrelated company material) and do not use any other repository. I start the session with this repository
 attached. If it is not attached, try add_repo with push access once; if that is refused, keep going in a local
 cartoon-shorts/ folder, send me the files at the end and say in the report that the memory was not saved. The
-repository is public: never write keys, tokens, emails or other private data into it.
+repository is public: never write keys, tokens, emails or other private data into it, and never commit anything
+downloaded from the source video (video, audio, frames, storyboards, subtitles, transcripts): all of that lives only in
+work/ (git-ignored) and is deleted at the end of the run.
 
 R6. NO REFERENCES (hard rule, no exceptions): no reference pictures, ever. Every picture is made from its text prompt
 only: nothing is wired, attached or uploaded into an image generation, no picture is made by editing another picture,
 no earlier picture (not even the hero, not even a picture from an earlier video) is fed back in, and I don't give you a
-reference picture. Reference videos or pictures from the internet are not used for style either. This is a hard rule,
-not a budget choice: do not break it even if the result would look better or more consistent.
+reference picture. Reference videos or pictures from the internet are not used for style either, and frames of the
+source video are never fed into any generation. This is a hard rule, not a budget choice: do not break it even if the
+result would look better or more consistent.
 
 R7. LENGTH: THE FINAL VIDEO IS 25 SECONDS AT MOST (hard cap, <= 1500 frames at 60 fps), including the 0.1 s lead-in and
 the tail after the last word. Target 21-24 s. Every length, word count and line count below follows this cap.
@@ -71,6 +90,35 @@ statements about the topic, and the people who discovered or invented something 
 All other script rules still hold (real facts only, the length cap, no hype words, no narrator phrases, no "!" lines).
 Details: STEP 1C "Story".
 
+R11. VOICE, MUSIC, SOUND. The voice of every video is ElevenLabs "Liam - Viral Short-Form Storyteller" (voice_id
+VCgLBmBjldJmfphyB8sZ). Every video has quiet background music, and that music is made locally in code for 0 credits
+(STEP 2 section 10b): never ElevenLabs Music (measured: 27.5 credits per second, a 25 s track ~ 688) and never stock or
+downloaded music. Sound effects stay ElevenLabs: generate as many new ones as the action needs, within the R9 budget.
+
+R12. MODEL THE STRUCTURE OF A PROVEN SCRIPT, NEVER ITS WORDS. Don't reinvent the shape of a script: every script is
+built on the structure, pacing and storytelling of a video that has already proven itself with big views, adapted to my
+idea, my character, the story rule (R10) and the 25 s cap. Copy only the structure (the beats, the rhythm, where the
+turn and the payoff sit, sentence length, point of view), never the words, sentences, title, jokes or thumbnail. Mix
+2-3 niches so the result is original (e.g. the storytelling shape of a viral history Short + an animal topic + our
+cut-out cartoon format). Details: STEP 1S. The source video (R13) gives the TOPIC; the structure model gives the SHAPE.
+They are two different videos.
+
+R13. ONE SOURCE CHANNEL. Ideas come from the long videos of ONE source channel, written in memory/SOURCE.md (main
+channel + one backup). Only I change it. Never take a source video from any other channel: if SOURCE is a link from
+another channel, say so in a short card, ask me for a link from the source channel and stop. The backup channel is used
+only if I say so or if the main channel has no usable segment left (say it in the card). One long video is split into
+segments (STEP 1V) and each good segment can become its own Short, so one long video feeds several days of Shorts.
+
+R14. THE SOURCE VIDEO IS AN IDEA, NOT MATERIAL (hard rule):
+  - Nothing from the source video goes into my Short: no footage, no frames, no audio, no music, no sentences, no
+    title, no thumbnail idea, no jokes. Its frames are only looked at to understand it.
+  - It is NOT a fact source: every claim taken from it is re-verified with reliable sources (STEP 1C "Facts"). Claims
+    that don't hold are dropped or corrected, and listed in the card.
+  - My Short is a NEW telling: a new story shape (R10, R12), my own words, my own character, my own visuals and a
+    stronger hook than the source's own way of introducing the topic.
+  - Originality check: no sentence of mine shares 5 or more consecutive words with the source transcript (checked in
+    code when the transcript is available).
+
 =====================================================================================================================
 STEP 0 - CHANNEL MEMORY (before anything else, in phase 1)
 =====================================================================================================================
@@ -78,10 +126,17 @@ STEP 0 - CHANNEL MEMORY (before anything else, in phase 1)
 The memory is in memory/ on the branch main. Run `git fetch origin main` and rebase your working branch onto
 origin/main before reading, so you always see the newest memory. Create any missing file with the columns below.
 
+- memory/SOURCE.md - the source channel (R13). If it is missing, create it with:
+  main: BRIGHT SIDE Series - https://www.youtube.com/@brightside_series (channel id UCeMnRjQQuzVkjlquGf0e6GA);
+  backup: Chill Dude Explains - https://www.youtube.com/@chilldudeexplains (channel id UCYwOOHF1BZ_hqPVnLnrT_fw).
+- memory/SOURCE_LOG.md - one row per analysed source video: video link | title | channel | length | views | date
+  analysed | segment map (one line per segment: time range | the question | the answer in a few words | score) |
+  used segments (time range -> short id) | segments left | notes (claims that didn't hold, how the visual pass went).
+  Only one-line summaries and links go here, never transcripts or frames (the repository is public).
 - memory/VIDEOS_LOG.md - one row per finished video: # | date | short id | topic (one line) | category | title |
-  cover text | theme / series | views (from STATS) | notes (what worked, what didn't).
+  cover text | theme / series | source video + segment | views (from STATS) | notes (what worked, what didn't).
 - memory/IDEA_BANK.md - candidate ideas not used yet: idea | why it could work (evidence + link) | category |
-  date found | status (new / used / rejected).
+  source video + segment (if any) | date found | status (new / used / rejected).
 - memory/STYLE.md - the channel's locked look: the STYLE_CHAR / STYLE_OBJ / KEY / STYLE_BG blocks with the measured
   numbers of the channel's character (hex colours, proportions), and "lessons": what looked good, what glitched, what
   to do differently. Read it before writing any picture prompt or animation code. (Lessons written for MEDIUM
@@ -89,82 +144,155 @@ origin/main before reading, so you always see the newest memory. Create any miss
 - memory/COMPETITORS.md - my own list of channels and videos in the niche. I fill it in by hand. You only read it; you
   may add videos you found to a separate section "Found by Claude" (link, views, channel subscribers, upload date, why
   it is interesting).
+- memory/STRUCTURES.md - the library of proven script structures (my own winners and other creators' viral videos):
+  # | date | reference (link) | channel (subscribers) | views | niche | length / words / words per second |
+  structure map (one line, see STEP 1S) | used in (short ids) | result (views of our videos built on it, from STATS).
+  Only the structure map and the link go here, never another creator's full transcript (the repository is public).
 - sfx-library/ + sfx-library/index.md - sound effects from earlier videos (all made with ElevenLabs): file | what it
   sounds like | length | onset / peak time | from which video | the ElevenLabs prompt.
 
 If STATS is filled, first write the views into VIDEOS_LOG.md (and commit + push the memory, see STEP 4.5, even in
 phase 1). Then work out WHAT WORKS ON MY CHANNEL: a video with at least 3x the median views of my logged videos (with
 3+ logged videos with views) is a winner, and its theme is a winning theme; a theme tried 2+ times that stayed far below
-the median is a weak theme. Also compare the story-shaped videos (from #13 on) with the older fact-shaped ones once
-both have views. Put one line about this into the idea card ("not enough data yet" is a fine answer).
+the median is a weak theme. A structure from memory/STRUCTURES.md whose videos won is a winning structure: try it
+first next time. Also compare the story-shaped videos (from #13 on) with the older fact-shaped ones, and the videos
+made from source segments with the older ones, once both have views. Put one line about this into the idea card ("not
+enough data yet" is a fine answer).
 
 =====================================================================================================================
 STEP 1 - IDEA, SCRIPT AND PACKAGING (phase 1; ends with the IDEA CARD and a STOP)
 =====================================================================================================================
 
 ---------------------------------------------------------------------------------------------------------------------
+1V. SOURCE VIDEO ANALYSIS (MODE S, and MODE B after 1B has picked the video)
+---------------------------------------------------------------------------------------------------------------------
+Goal: understand the long video completely (what it says AND what it shows), split it into segments, and pick the one
+segment that makes the strongest 25 s story Short. Work in work/<video-id>/ (git-ignored, R5). Free tools only (R3).
+
+1. Check the link. Read the video's channel (`yt-dlp -J --skip-download <url>` -> channel_id / channel_url). If it is
+   not the source channel in memory/SOURCE.md, stop as R13 says. If memory/SOURCE_LOG.md already has this video, reuse
+   its segment map and skip to point 6 (still re-check the facts of the chosen segment).
+2. Metadata: title, length, views, upload date, description, chapters (from the same `yt-dlp -J`).
+3. Transcript (free, never ElevenLabs Scribe): `pip install youtube-transcript-api` and fetch the English transcript
+   with timestamps; else `yt-dlp --skip-download --write-auto-subs --write-subs --sub-langs "en.*" --sub-format vtt`;
+   else a public transcript page found by web search. Last fallback only: the vidIQ transcript tool (R3). Never pretend
+   you read a transcript you didn't get.
+4. Visual pass, frame by frame (so you see what the video SHOWS, not only what it says):
+   a) Download a small copy: `yt-dlp -f "bv*[height<=360][ext=mp4]/b[height<=360]" -o work/<id>/video.mp4 <url>`.
+      Extract one frame at every scene change plus one every 3 s:
+      `ffmpeg -i video.mp4 -vf "select='gt(scene,0.3)+not(mod(n\,90))',scale=320:-1" -vsync vfr frames/%05d.jpg`
+      (write each frame's time into a list), then tile them into contact sheets of 4x5 frames with the time printed on
+      each frame, and look at every sheet. For the chosen segment, look closer: one frame every 1 s.
+   b) If the download is blocked (YouTube often blocks cloud servers): the YouTube storyboards
+      (`yt-dlp --list-formats` shows formats sb0 / sb1 / sb2; download the best one with `-f sb0` -> grids of small
+      frames over the whole video) and look at those.
+   c) If even that fails: the thumbnail, the chapters and the description only; write "visual pass not available" in
+      the card. (vidIQ's video-watch tool is allowed here as the last fallback, R3.)
+   Note per segment: what is on screen, how the video visualises the idea, the single strongest visual moment (the
+   "wow frame"), and anything confusing. This only inspires OUR own simpler 2D beats; nothing is copied (R14).
+5. Segment map: split the video into self-contained segments, each one question with one answer (use the chapters if
+   there are any). Per segment: time range | the question | the answer (one line) | the surprising part | the doer and
+   the turn if it were told as a story | how easy it is to show in simple 2D | the facts it relies on.
+6. Pick the segment:
+   - SOURCE has a time range, or MY IDEA points to a part -> that segment.
+   - Otherwise score every segment 1-5 on: curiosity of the question, surprise of the answer, works as a story (R10: a
+     clear doer, a goal, a turn, an ending), easy to show in simple 2D animation, facts that can be verified, fit with
+     what works on my channel (STEP 0) or with a trend, fits into 25 s without rushing, not already used (SOURCE_LOG,
+     VIDEOS_LOG). The best one wins; the next two best become the backups №2 and №3 in the card.
+   - Write the whole segment map into memory/SOURCE_LOG.md and the other good segments into memory/IDEA_BANK.md with
+     "source: <link> <time range>" (committed with the rest of the memory in STEP 4; if the card is rejected, commit the
+     memory anyway at the next run).
+7. Then the chosen segment is the idea: verify its facts independently (1C "Facts", R14), pick the structure model (1S),
+   write the script on it (1C), make the packaging (1D), send the card (1E) and STOP. The hook is the most surprising
+   moment of the segment told as a scene (R10), never the way the long video introduces it.
+
+---------------------------------------------------------------------------------------------------------------------
 1A. MODE A - my idea
 ---------------------------------------------------------------------------------------------------------------------
 Do not look for other ideas and do not propose other topics. Research only my idea: verify its central fact(s) with
 reliable sources (see "Facts" in 1C), find the surprising answer, the stakes and the clearest way to tell it as a
-story (whose problem it is, what they try, what goes wrong, how it ends; not the biography of whoever discovered it). If my idea is factually wrong or can't be supported, say so in
-the card and propose the closest true version of the SAME idea (not a new topic). Then write the script (1C), make the
-packaging (1D), send the card (1E) and STOP.
+story (whose problem it is, what they try, what goes wrong, how it ends; not the biography of whoever discovered it).
+If my idea is factually wrong or can't be supported, say so in the card and propose the closest true version of the
+SAME idea (not a new topic). If my idea is outside the channel's niche (R1), say so in one line in the card (I may
+still approve it). If the source channel has a video on this idea, you may analyse it with 1V for extra understanding
+(optional). Then pick the structure model (1S), write the script on it (1C), make the packaging (1D), send the card
+(1E) and STOP.
 
 ---------------------------------------------------------------------------------------------------------------------
-1B. MODE B - find the idea yourself
+1B. MODE B - pick the next source video yourself
 ---------------------------------------------------------------------------------------------------------------------
-Research the internet and write one original YouTube Shorts script about a surprising fact or an interesting question,
-told as a short story (R10). The video will use simple 2D animations and should be at most 25 seconds long (21-24 s is
-ideal), with around 48-60 words of narration. Look for unusual questions, surprising explanations, everyday mysteries,
-or strange facts about science, animals, history, the human body, space, or engineering. For example, "Why don't we
-throw trash into volcanoes?" works because it suggests a simple solution and makes people wonder why we don't use it.
-Use that kind of curiosity, but find a different topic. Research several ideas before choosing the strongest one.
-Choose something that can be told as a story in 25 seconds or less (someone tries something, it goes wrong or turns
-out differently, the ending is the answer), has a surprising answer or consequence, is easy to show through simple 2D
-animations, and makes sense without background knowledge. Choose the best idea yourself without asking me to pick a
-topic (I only approve or reject the card).
-
-Where candidates come from, in this order:
-1. WHAT WORKS ON MY CHANNEL (STEP 0). If a theme clearly won, the first candidates are its next episodes: a new
-   question in the same theme that someone who just watched the winner would want next (e.g. trash into a volcano ->
-   trash into the Sun -> feeding trash to a whale). A next episode is a NEW question with a NEW answer, never a copy or
-   slight variation of the winner. Avoid weak themes.
-2. TRENDS. What people are talking about right now (this week's news, launches, discoveries, events, seasons, viral
-   topics) that can be turned into a surprising fact or question in this format. Only if the facts are solid; the
-   video must explain something real, not just mention the trend.
-3. PROVEN DEMAND ELSEWHERE. A question that already got big views in another format (live footage, a long video,
-   another language, a forum thread such as ELI5) but has no 2D cartoon Short yet: redo it as a cartoon with my own
-   angle and my own words. (The volcano video worked this way: the same question had a 17M-view live-footage video six
-   years earlier; the cartoon version got 3.6M.) A small channel with one video far above its usual views is a strong
-   signal that there is room for a new channel on that topic.
-4. memory/COMPETITORS.md and the "new" ideas in memory/IDEA_BANK.md.
-
-Rules for choosing:
-- The category is chosen by what is trending and what works on my channel, not by rotating categories.
-- Each time I send this prompt, choose a new topic and explanation. Check the ideas already visible in this
-  conversation and in VIDEOS_LOG.md / IDEA_BANK.md (used, rejected) and avoid repeating them or making slight
-  variations of them (a next episode of a winning theme, as in point 1, is allowed). If you cannot access previous
-  ideas, don't claim you checked them.
-- Never copy another creator's script, title or thumbnail word for word: take the shape of a question that works, not
-  its words.
-- Shortlist 5-8 candidates and score each 1-5 on: curiosity of the question, proof of demand (with a link), surprise of
-  the answer, works as a story (a clear doer, a goal, a turn, an ending), easy to show in simple 2D animation, solid
-  facts, fit with what works on my channel or with a trend, fits into 25 seconds without rushing. Pick the best. Write
-  the others into IDEA_BANK.md; the next two best become the backups in the card.
-- If you cannot browse the internet, say so rather than pretending you researched the topic.
+Do not research topics across the internet: the idea comes from the source channel (R13).
+1. First look in memory/SOURCE_LOG.md: a video that is already analysed and still has good unused segments is the
+   fastest choice (no new analysis needed).
+2. Otherwise list the channel's long videos for free:
+   `yt-dlp --flat-playlist --print "%(id)s|%(title)s|%(view_count)s|%(duration)s" <main channel url>/videos`
+   (if views are missing in the flat list, read them for the top candidates with `yt-dlp -J --skip-download`).
+   Skip videos whose segments are all used, and topics already in VIDEOS_LOG.md or rejected in IDEA_BANK.md.
+3. Choose in this order:
+   a) a video whose topic is the next episode of a winning theme on my channel (STEP 0): a NEW question with a NEW
+      answer that someone who just watched the winner would want next, never a copy or slight variation; avoid weak
+      themes;
+   b) a video whose topic is trending right now (this week's news, launches, discoveries, seasons), only if the facts
+      are solid;
+   c) the most-viewed video that is not used yet (proven demand).
+4. Then analyse it with 1V (all of 1V), and the card's backups №2 and №3 are its next best segments (or the best
+   unused segments of other analysed videos if this one has fewer than three good ones).
+Rules: each time I send this prompt, choose a new segment and a new explanation; don't repeat or slightly vary used or
+rejected ones (a next episode of a winning theme is allowed). If you cannot access previous ideas, don't claim you
+checked them. If the channel list can't be read, use the unused source segments in IDEA_BANK.md / SOURCE_LOG.md and
+say so. If you cannot browse the internet at all, say so rather than pretending you researched the topic.
 
 ---------------------------------------------------------------------------------------------------------------------
-1C. SCRIPT RULES (both modes)
+1S. STRUCTURE MODEL - borrow the shape of a script that already works (every mode, before writing in 1C)
+---------------------------------------------------------------------------------------------------------------------
+Don't reinvent the script's shape: a video that already got big views has a structure, pace and way of telling that
+are proven to hold viewers. Learn that structure and write MY idea on it, in my own words. (The long source video from
+1V is NOT the structure model: it gives the topic only. The model is a proven, best short, video, R12.)
+
+1. Pick the model, in this order:
+   a) REFERENCE is filled -> that video / transcript is the model (if it doesn't fit 25 s or R10, take only its shape
+      and say so in the card).
+   b) A winning structure in memory/STRUCTURES.md, or one of my own winners from VIDEOS_LOG.md, that fits this idea.
+   c) Find one yourself: the most-viewed Shorts of channels in the idea's niche or a neighbouring one (animated
+      explainers, "what if" / "why don't we" Shorts, animal / history / engineering storytellers). Proof: about 1M+
+      views, or at least 3x that channel's usual views. Prefer a 15-60 s Short told as a story; a long video is only
+      a source of the storytelling shape (hook -> turn -> payoff), never of its length.
+2. Get its transcript for free (no ElevenLabs: never Scribe or any other paid call for this, phase 1 spends 0
+   credits): the pasted REFERENCE text first; otherwise the video's own captions (e.g. `pip install
+   youtube-transcript-api`, or `yt-dlp --skip-download --write-auto-subs`), or a public transcript page found by web
+   search. YouTube often blocks downloads from cloud servers: if no transcript can be had, build the structure map
+   from what you can verify (title, description, chapters, timestamps and quotes in comments) and say in the card that
+   it was not made from a transcript. Never pretend you read a transcript you didn't get.
+3. Learn it - write its STRUCTURE MAP: length in s, word count, words per second; number of sentences and average
+   sentence length; the hook type (question / surprising statement / "you" scenario / something in danger) and how
+   many seconds it takes; point of view and tense; when the first turn ("but") comes (in s and in % of the length);
+   how many turns; where the answer is revealed (% of the length); the payoff type (twist, reversal, callback,
+   punchline) and how the end loops back to the start; rhythm tricks (a short punch sentence after a long one, a
+   question to the viewer, a repeated phrase). Write one line on why it holds viewers.
+4. Map it onto MY story at 25 s: keep its proportions (the turn and the reveal at the same % of the length, the same
+   rhythm and point of view where they fit R10), then fill it with my idea, my facts and my own words. Everything in
+   1C still applies; where the model's shape and 1C disagree, 1C and R10 win.
+5. Originality check: no sentence of mine shares 5 or more consecutive words with the model's transcript or with the
+   source video's transcript (R14) (check it in code when you have the transcripts); the title, the cover text, the
+   jokes and every line are mine. The mix of the model's niche, my topic's niche and our cut-out cartoon format is what
+   makes the video original.
+6. Save the model to memory/STRUCTURES.md (link, channel, subscribers, views, niche, length / words / words per second,
+   the structure map, "used in <short>"; committed with the rest of the memory in STEP 4): only the map and the link,
+   never the full transcript. Keep the transcript itself out of the repository.
+
+---------------------------------------------------------------------------------------------------------------------
+1C. SCRIPT RULES (every mode)
 ---------------------------------------------------------------------------------------------------------------------
 Facts: verify the central fact using reliable sources, preferably original research, universities, museums, government
-agencies, or established scientific organizations, and cross-check the explanation where possible. Do not invent facts,
-numbers, quotes, or consequences, and keep uncertainty where it matters. Real facts only in the voiceover (cartoon
-exaggeration is fine for what the characters do).
+agencies, or established scientific organizations, and cross-check the explanation where possible. A claim from the
+source video counts only after this check (R14). Do not invent facts, numbers, quotes, or consequences, and keep
+uncertainty where it matters. Real facts only in the voiceover (cartoon exaggeration is fine for what the characters
+do).
 
-Length: the whole video is at most 25 seconds (R7), so the narration is 48-60 words, at most ~360 characters with
-spaces (the voice budget), estimated at ~2.6 spoken words per second: the estimated speech length in the card must be
-at most 24 s. If the story does not fit, cut a sentence, never cram.
+Length: the whole video is at most 25 seconds (R7), so the narration is 58-70 words, at most ~400 characters with
+spaces (the voice budget). Estimate the speech length at ~3.1 spoken words per second (the Liam voice, measured in
+video #17; use the newest "Liam pace" in memory/STYLE.md if there is one; numbers in digits are read slower): the
+estimated speech length in the card must be at most 24 s. If the story does not fit, cut a sentence, never cram.
 
 Story (R10) - how a fact becomes a story:
 - A DOER WITH A GOAL. The story is about someone who has a problem RIGHT NOW and wants something concrete: "you" (in
@@ -212,9 +340,10 @@ Examples of the FORM only (not a fact source; facts of a real script still need 
   was away. So it hatches first, and the blind, naked chick pushes every other egg out of the nest. And the warbler?
   She feeds it until it's way bigger than she is."
 
-Shape (the story's arc):
+Shape (the story's arc; when a structure model from 1S is used, its proportions and rhythm guide this arc):
 - 0-2 s HOOK = the story's opening moment: the doer + the thing + the goal, with the stakes or the promise clear at
   once. Start immediately, without a greeting or introduction. The first line names what we see in the first frame.
+  In MODE S / B the hook is the most surprising moment of the chosen segment, made into a scene.
 - THE PLAN (the obvious answer): what the doer tries, the simple solution that seems to work ("so why not just...?").
 - BUT -> SO: one problem (two only if they still fit in 25 s) that raises the stakes: what goes wrong, what it would
   cost, why the obvious plan fails, and what the doer does next.
@@ -228,6 +357,8 @@ Checks before the card:
   the story (what finally happens) instead of summing it up? (5) does it sound like a biography or a chronicle (starts
   with a name or a year, "discovered", "invented", "was born", "after years of work")? (if yes, rewrite it as a scene)
   Write the answers in the card.
+- Structure check: my script's structure map next to the model's (hook seconds, turn %, reveal %, sentence length,
+  point of view): close enough? Originality check (1S.5 + R14) passed?
 - Connector check: between every two sentences the link is "but", "so", "because", "which means" or "that's why"
   (said or clearly implied), never "and then". A run of "and then" is a list, and that is where viewers leave. Write
   the chain out in the card.
@@ -240,38 +371,51 @@ Checks before the card:
   insane, mind-blowing), no "!" lines (they make AI voices over-act), no generic hooks like "Did you know?", "This will
   blow your mind," or "You won't believe this." No forced suspense, exaggerated claims, AI-sounding phrases or calls to
   action.
-- Use original wording and do not copy another creator's script.
+- Use original wording and do not copy another creator's script (neither the structure model's nor the source
+  video's).
 
 ---------------------------------------------------------------------------------------------------------------------
 1D. PACKAGING (text only in phase 1; the cover picture is made in STEP 4)
 ---------------------------------------------------------------------------------------------------------------------
 - Titles: 3 options in English, at most 60 characters each, in a shape that is proven to get clicks ("What if we...?",
-  "Why don't we...?", "Why can't...?", "What happens if...?"). Mark your pick.
+  "Why don't we...?", "Why can't...?", "What happens if...?"). Mark your pick. Never reuse the source video's title.
 - Cover text: 1-4 words that add something the title does NOT say (a second surprise: a price, a number, an object, a
   before/after, a short question). Example: title "What if we threw trash into volcanoes?" + cover text "Endless
   dump?". Never repeat the title on the cover.
 - Rule of three objects: the cover shows at most three things: the character, the main object, the cover text.
 - Frame 0 of the video shows the same premise as the cover (it can be picked as the Shorts thumbnail).
-- Description: 1-2 plain sentences + the source links + 3-5 hashtags (#shorts + the topic).
+- Description: 1-2 plain sentences + the source links (the reliable fact sources, not the source video) + 3-5 hashtags
+  (#shorts + the topic).
 
 ---------------------------------------------------------------------------------------------------------------------
 1E. IDEA CARD -> STOP
 ---------------------------------------------------------------------------------------------------------------------
 Send me in Ukrainian (the script, titles and cover text stay in English):
- 1. Idea source (MY IDEA / an idea from the chat / found by you) and the idea in one sentence.
- 2. Why it should work: what works on my channel (STEP 0), the demand evidence (links, views) or the trend it rides on.
- 3. The complete voiceover, ready to record, without scene directions, told as a story (R10).
- 4. Narration word count, character count and estimated length in seconds (speech <= 24 s, whole video <= 25 s).
- 5. Story check: the doer and what they want, the turn ("but"), the ending (one line each), and the answers to the
+ 1. Idea source (SOURCE video / MY IDEA / an idea from the chat / a source video picked by you) and the idea in one
+    sentence.
+ 2. Source video (MODE S / B; in MODE A only if you used one): link, title, views, the chosen segment (time range),
+    where the transcript came from (youtube-transcript-api / subtitles / transcript page / vidIQ / not available), how
+    the visual pass was done (frames / storyboards / vidIQ / not available) and its strongest visual moment, the segment
+    map in short ("N segments, M used before, K left after this one"), claims of the source video that didn't hold
+    (or "all checked claims hold"), vidIQ credits used (0 if none).
+ 3. Why it should work: what works on my channel (STEP 0), the demand evidence (the source video's views, other links)
+    or the trend it rides on.
+ 4. The complete voiceover, ready to record, without scene directions, told as a story (R10).
+ 5. Narration word count, character count and estimated length in seconds (speech <= 24 s, whole video <= 25 s).
+ 6. Story check: the doer and what they want, the turn ("but"), the ending (one line each), and the answers to the
     story check in 1C.
- 6. The connector chain (sentence 1 -> but -> sentence 2 -> so -> ...).
- 7. A short beat outline: per line, what is on screen and the gag (a few words each).
- 8. Packaging: 3 titles (pick marked), cover text, description with hashtags.
- 9. Links to the sources that support the explanation.
-10. Credit plan from the price table in STEP 2 section 2 (voice, word times, pictures - all LOW 1K, sound effects
-    including what will be reused from sfx-library, reserve, total - the planned total must be <= 870, the hard cap
-    is 900), and the line "spent so far: 0 credits".
-11. MODE B only: two backup ideas, one line each, numbered №2 and №3.
+ 7. Structure model (1S): the reference (link, channel + subscribers, views), where its transcript came from (pasted /
+    captions / transcript page / not available), its structure map in one line, my script's map next to it, the niche
+    mix, and the originality check result (against the model AND the source video).
+ 8. The connector chain (sentence 1 -> but -> sentence 2 -> so -> ...).
+ 9. A short beat outline: per line, what is on screen and the gag (a few words each).
+10. Packaging: 3 titles (pick marked), cover text, description with hashtags.
+11. Links to the sources that support the explanation.
+12. Credit plan from the price table in STEP 2 section 2 (voice, word times, pictures - all LOW 1K, sound effects
+    including what will be reused from sfx-library, music - local code 0, reserve, total - the planned total must be
+    <= 870, the hard cap is 900), and the line "spent so far: 0 credits".
+13. Two backup ideas, one line each, numbered №2 and №3 (in MODE S / B: the next best segments, with their time
+    ranges; in MODE A: only if you found closer true versions of my idea, otherwise skip this point).
 End with: "Відповідай «так», щоб запустити виробництво, або напиши правки / «№2» / «№3»."
 Then end your turn. Do not start STEP 2, STEP 3 or STEP 4 before I approve.
 
@@ -280,7 +424,7 @@ STEP 2 - THE SKILL (used in phase 2)
 =====================================================================================================================
 ---
 name: cutout-cartoon-shorts-elevenlabs
-description: Turn a short story script into a vertical 2D cartoon Short (1080x1920, 60 fps, at most 25 seconds) in the cut-out style of "Can we throw trash in a volcano?". Every picture (each pose / expression, props, set pieces and the background) comes from ElevenLabs GPT Image 2.5 at 1K, quality LOW, and is keyed into a cut-out locally; the voice-over is ElevenLabs "Mark - Natural Conversations"; every sound effect is ElevenLabs Sound Effects; Remotion code animates it all (2.5D multiplane camera, squash-swap poses, real projectile physics, lava / smoke / steam effects, cartoon faces on objects). Hard budget: 900 ElevenLabs credits per video. Runs unattended from the approval of the idea card to the end. Use when someone asks for a cartoon / cut-out / Oddsoneout-style animation from a script made with ElevenLabs + code.
+description: Turn a short story script into a vertical 2D cartoon Short (1080x1920, 60 fps, at most 25 seconds) in the cut-out style of "Can we throw trash in a volcano?". Every picture (each pose / expression, props, set pieces and the background) comes from ElevenLabs GPT Image 2.5 at 1K, quality LOW, and is keyed into a cut-out locally; the voice-over is ElevenLabs "Liam - Viral Short-Form Storyteller"; every sound effect is ElevenLabs Sound Effects; the background music is synthesized locally in code (0 credits); Remotion code animates it all (2.5D multiplane camera, squash-swap poses, real projectile physics, lava / smoke / steam effects, cartoon faces on objects). Hard budget: 900 ElevenLabs credits per video. Runs unattended from the approval of the idea card to the end. Use when someone asks for a cartoon / cut-out / Oddsoneout-style animation from a script made with ElevenLabs + code.
 ---
 
 # Cut-out cartoon Shorts (ElevenLabs pictures + voice + sound, code animation)
@@ -303,24 +447,26 @@ Read the whole file once before starting. Follow the order; each step says what 
   `creative_add_flow_node`, `creative_run_flow_nodes`, `creative_get_flow_run_status`, `creative_get_generations`,
   `creative_transcribe_audio`, `creative_list_voices`, `creative_get_model_schema`. Do not install or use Higgsfield,
   any other generator or a sound library: pictures, the background, the voice and every sound effect are ElevenLabs
-  (the only reused sounds are ElevenLabs sounds from earlier videos in `sfx-library/`, section 10).
+  (the only reused sounds are ElevenLabs sounds from earlier videos in `sfx-library/`, section 10). The one exception
+  is the background music: it is synthesized locally in code (section 10b), never ElevenLabs Music, never stock or
+  downloaded music.
 - NO REFERENCES (hard rule, no exceptions): every image node gets a text prompt only. Never pass `connect_from` to an
   image node, never wire anything into its `images` port, never use `creative_edit_image`,
   `creative_attach_reference_file`, an upload or `creative_add_flow_asset_node` as an image input, and never feed the
-  hero or any other generated picture (also from an earlier video) back in. The look stays consistent through text and
-  code only (section 4).
+  hero or any other generated picture (also from an earlier video, and never a frame of the source video) back in. The
+  look stays consistent through text and code only (section 4).
 - Remotion 4 project (React/TypeScript): ONE project for all Shorts at `studio/`, one composition per Short in
   `src/Root.tsx`, assets in `public/`. Use the existing project; if there is none, create one non-interactively
   (`npx create-video@latest`, blank template). Reuse and improve the shared code from earlier Shorts in `src/shared/`
   (camera, Layer, shake, smoke / steam, lava, faces, sweat drop, sound cues) instead of rewriting it; the Short's own
   code goes in `src/<short>/`. `<short>` = a short kebab-case id of the topic (e.g. `bees-hexagons`); the composition id
   is the same name in PascalCase.
-- Python 3 with `pillow numpy opencv-python` (keying, measuring). Install whatever is missing yourself with pip.
-  ffmpeg: Remotion ships one in `node_modules/@remotion/compositor-*/ffmpeg(.exe)`.
+- Python 3 with `pillow numpy opencv-python scipy` (keying, measuring, music). Install whatever is missing yourself
+  with pip. ffmpeg: Remotion ships one in `node_modules/@remotion/compositor-*/ffmpeg(.exe)`.
 - One ElevenLabs flow per Short: call `creative_create_flow` (name = the Short's name) first and pass its `flow_id`
   to every later call, so everything lands on one canvas. Put the flow link in the final report.
 - Folders (inside `studio/`): `images/<short>/` (prompts.md, credits.md, raw/, scripts, qa/) for source pictures;
-  `public/<short>/` only for the final keyed sprites, sfx and voice (Remotion copies `public/` into every bundle).
+  `public/<short>/` only for the final keyed sprites, sfx, music and voice (Remotion copies `public/` into every bundle).
 - When a call fails: read the error, fix the cause, try once more. Never start a generation again before
   `creative_get_flow_run_status` says the first one failed: a second run is charged again. If something still can't
   be done, use the fallback written in this file and mention it in the final report. Do not stop to ask.
@@ -328,7 +474,7 @@ Read the whole file once before starting. Follow the order; each step says what 
 ---------------------------------------------------------------------------------------------------------------------
 ## 1. Script -> beat sheet (before generating anything)
 
-1. Split the approved script into lines: a Short of at most 25 s = 6-8 lines, 48-60 words. Use the approved words
+1. Split the approved script into lines: a Short of at most 25 s = 6-9 lines, 58-70 words. Use the approved words
    exactly. They are already written as a story told like a person talking (plain words, "so", "basically", "right?"),
    with no narrator phrases ("here's the thing", "but here's the part"), no hype words (incredible, shocking, amazing,
    insane) and no "!" lines: they make AI voices over-act.
@@ -342,10 +488,12 @@ Read the whole file once before starting. Follow the order; each step says what 
    establishing moves: keep every camera move short and purposeful.
 5. Plan the fun: one gag per beat that a kid would laugh at (an object that comes alive and opens its eyes, an
    anticipation "inhale" before a blast, squeezed "> <" eyes, a sweat drop, a smug smoke ring, the thing coming back).
-   The biggest gag sits on the payoff words.
+   The biggest gag sits on the payoff words. The notes from the visual pass (STEP 1V) may inspire a beat, but every
+   beat is drawn our own way, never copied from the source video.
 6. List the pictures you need (section 4) from the beats: every pose, every expression, every prop that moves on its
    own, every set piece, the background. Every one is LOW 1K; price each one (section 2).
-   Done = beat sheet table: time / words / what is on screen / which picture / which sound, plus `budget.md`.
+   Done = beat sheet table: time / words / what is on screen / which picture / which sound / which music part, plus
+   `budget.md`.
 
 ---------------------------------------------------------------------------------------------------------------------
 ## 2. Budget: 900 ElevenLabs credits per video, a hard cap (R9)
@@ -355,22 +503,26 @@ always estimate before you run.
 
 | What                                      | Settings                         | ~ credits                                      |
 |-------------------------------------------|----------------------------------|------------------------------------------------|
-| Voice, one take                           | eleven_v4, Mark                  | ~ 1 per character of the script (60 words ~ 360) |
+| Voice, one take                           | eleven_v4, Liam                  | ~ 1 per character of the script (70 words ~ 390) |
 | Word times                                | Scribe v1 on the voice           | ~ 10                                           |
 | Picture LOW                               | 1K, 2:3                          | ~ 47                                           |
 | Picture LOW                               | 1K, 3:2                          | ~ 47 (same pixel count as 2:3; confirm with the estimate) |
 | Picture LOW                               | 1K, 1:1                          | ~ 54 (pricier than 2:3, so use 2:3 / 3:2)      |
 | Picture MEDIUM / high / xhigh / max       | any                              | FORBIDDEN (R8): every picture is LOW           |
-| Sound effect                              | Sound Effects v2                 | ~ 11 per second (2 s ~ 22, 5 s ~ 55)           |
+| Sound effect                              | Sound Effects v2                 | estimate ~ 11 per second; billed ~ 3.3 per second in earlier videos |
 | Reused sound from `sfx-library/`          | an ElevenLabs sound from an earlier video | 0                                     |
+| Background music, made in code            | local Python synth (section 10b) | 0                                              |
+| Background music, ElevenLabs Music        | any version                      | FORBIDDEN (R11): 27.5 per second, 25 s ~ 688   |
 | Reference picture / image edit            | any                              | FORBIDDEN by rule (it would also add ~ 240 each) |
 | ElevenLabs background removal             |                                  | ~ 30 each, so never (key locally for free)     |
 
 Plan it before generating anything and write it to `images/<short>/budget.md`. Normal split:
-- voice <= 370 (one take; the approved script is <= ~360 characters);
+- voice <= 410 (one take; the approved script is <= ~400 characters);
 - word times ~ 10;
-- sound effects <= 80 (reuse from `sfx-library/` first, section 10; new effects short, 0.5-2 s; a 25 s video
-  rarely needs more than 6-7 cues);
+- sound effects: as many new ones as the action needs (typically 6-12 cues of 0.5-2 s; plan them at the estimate,
+  ~ 11 per second, even though earlier videos were billed less). Reuse a library file only when it really fits the
+  action, not just to save credits (section 10);
+- music: synthesized in code, 0 credits (section 10b);
 - pictures: all LOW 1K at ~47 each, normally 6-8 pictures = ~280-376. Spend it where it makes the video more alive
   (an extra expression, a reaction pose, a funnier prop), but no overkill: at most 8 pictures (a 9th only if the
   whole plan, reserve included, still stays <= 870, e.g. because all sounds are reused), never quality
@@ -378,7 +530,7 @@ Plan it before generating anything and write it to `images/<short>/budget.md`. N
   fine; never add pictures just to spend credits;
 - reserve ~ 50 (one LOW redo) for redoing a picture that failed the check.
 Expected total: roughly 700-870 credits, never more than 900.
-Example plan: voice 360 + word times 10 + 8 pictures 376 + sound effects 70 + reserve 50 = 866.
+Example plan: voice 390 + word times 10 + 7 pictures 329 + sound effects 80 + music 0 + reserve 50 = 859.
 
 Rules:
 - `generations_count: 1` on EVERY paid run. The defaults are 4 picture variations and 2 voice takes (4x / 2x the price).
@@ -387,8 +539,8 @@ Rules:
 - Before every paid run, make the same call with `estimate_only: true`, add the estimate to `images/<short>/credits.md`
   (what, settings, estimate, running total), then run it. Never start a run that would take the total over 870 (30 is
   kept as a margin because estimates are estimates). Never go over 900, even if the result would be better.
-- If the voice costs more than planned, take the difference from sound effects first (reuse library sounds), then
-  from pictures (drop the least important one), before you generate any picture.
+- If the voice costs more than planned, take the difference from pictures first (drop the least important one, never
+  below 6), then from sound effects (shorter cues, library sounds that really fit), before you generate any picture.
 - `estimate_only` on a node whose input is not generated yet also counts that input (Scribe before the voice exists
   shows ~425): estimate Scribe after the voice has finished.
 - If the plan does not fit, in this order: (1) draw a small prop in code instead, (2) put two small props into one
@@ -399,9 +551,12 @@ Rules:
 ---------------------------------------------------------------------------------------------------------------------
 ## 3. Voice (ElevenLabs) and word times
 
-- Voice: "Mark - Natural Conversations" (voice_id `UgBBYS2sOqTuMpoF3BR0`, a casual young American man). If that id is
-  ever rejected, find the same name with `creative_list_voices` (search "Mark Natural Conversations"); never use a
-  different voice. Model `eleven_v4`, plain text (no tags, no SSML), one take.
+- Voice: "Liam - Viral Short-Form Storyteller" (voice_id `VCgLBmBjldJmfphyB8sZ`, a professional library voice made for
+  Shorts: upbeat, charming, punchy storytelling). If that id is ever rejected, find the same name with
+  `creative_list_voices` (search "Liam Viral Short-Form Storyteller"); it is NOT the premade voice called just "Liam".
+  Never use a different voice. Model `eleven_v4`, plain text (no tags, no SSML), one take.
+- Pace: after the take, measure the real rate (words / seconds of speech) and write it into memory/STYLE.md as
+  "Liam pace" (video #17: 58 words in 18.56 s = ~3.1 words/s), so the next idea cards estimate the length with it.
 - How: `creative_add_flow_node` (node_type `tts`, model `eleven_v4`, `voice_id`, prompt = the approved script) ->
   estimate -> `creative_run_flow_nodes` with `generations_count: 1` -> poll `creative_get_flow_run_status` (wait
   `poll_after_seconds` between calls) until `all_completed` -> download the audio URL with curl to
@@ -666,12 +821,15 @@ const y = (tau: number) => ya + 0.5 * g * (tau - ta) * (tau - ta);
 - Smoke rings read as halos if too light: use mid-grey.
 
 ---------------------------------------------------------------------------------------------------------------------
-## 10. Sound (all from ElevenLabs)
+## 10. Sound effects (all from ElevenLabs) and the mix
 
-- Layers in code: the voice (0 dB) + effects (one cue list: file, start time, dB, optional dB keys over time).
-- Reuse first: read `sfx-library/index.md`. Reuse a library file only if it really fits the action (the same kind of
-  sound, the right length and character); otherwise generate a new one. Every reused file is an ElevenLabs sound from
-  an earlier video; copy it into `public/<short>/sfx/` and list it in the report as "reused".
+- Layers in code: the voice (0 dB) + the background music (section 10b, one pre-ducked WAV at a fixed level) + effects
+  (one cue list: file, start time, dB, optional dB keys over time).
+- Every action gets the sound it needs: there is no fixed limit on new effects, only the R9 budget. Check
+  `sfx-library/index.md` first and reuse a library file only if it really fits the action (the same kind of sound, the
+  right length and character); otherwise generate a new one. Every reused file is an ElevenLabs sound from an earlier
+  video; copy it into `public/<short>/sfx/` and list it in the report as "reused". Never use sound from the source
+  video.
 - Every new effect is ElevenLabs Sound Effects v2: `creative_add_flow_node` with node_type `sfx`, model
   `eleven_text_to_sound_v2`, `model_parameters: {"duration_seconds": 0.5-3 (only as long as needed, ~ 11 credits per
   second), "prompt_influence": 0.7, "loop": false}` (`loop: true` only for a bed such as bubbling), prompt
@@ -684,7 +842,8 @@ const y = (tau: number) => ya + 0.5 * g * (tau - ta) * (tau - ta);
   index (file, what it sounds like, length, onset / peak, video, prompt).
 - Sync each file by its measured onset (impacts) or peak (whooshes) to the beat. Levels under a voice: whooshes -25 to
   -31 dB, impacts -14 to -19 dB, beds (bubbling, roar) -26 to -33 dB, the big blast -8 to -10 dB inside a pause.
-  Check the mix: no clipping, peak around -4 dBFS. No sound may run past the 25 s end: fade the last one out before it.
+  The music bed sits under all of it (section 10b). Check the mix: no clipping, peak around -4 dBFS. No sound and no
+  music may run past the 25 s end: fade the last one out before it.
 
 ```tsx
 {cues.map((c) => {
@@ -698,6 +857,43 @@ const y = (tau: number) => ya + 0.5 * g * (tau - ta) * (tau - ta);
 ```
 
 ---------------------------------------------------------------------------------------------------------------------
+## 10b. Background music (synthesized locally in code, 0 credits)
+
+Every video has a quiet cartoon music bed under the voice. It comes from our own Python script, never from ElevenLabs
+Music (27.5 credits per second) and never from stock / downloaded music. The generator is shared and improved from
+video to video, like `src/shared/`: `studio/scripts/music.py` (create it on the first video that needs it). Per video it
+renders `public/<short>/music/bed.wav` (mono, 44.1 kHz, 16-bit) from the T table and words.json.
+
+The sound (flat cartoon, like the pictures: simple, warm, bouncy, never harsh):
+- Instruments, all synthesized with numpy (+ scipy for filters and reverb): marimba (sine + a quiet 4x partial, fast
+  exponential decay), pizzicato strings (Karplus-Strong pluck), a soft round bass (sine + a little 2nd harmonic, short
+  attack), light percussion (a short high-passed noise "shaker" and a woodblock "tick"), a glockenspiel ping for the
+  payoff. No square / saw leads, no EDM drums, no long pads that cover the voice.
+- Every note gets a ~5 ms fade-in and a smooth release (no clicks). A short room reverb (convolution with ~0.6 s of
+  exponentially decaying noise, 15-20 % wet) so it doesn't sound dry and toy-like. Low-pass the whole bed at ~7 kHz and
+  cut below ~70 Hz.
+- Harmony: one major key (C, F or G), a simple progression (I-vi-IV-V or I-IV-V-I), the melody from the major
+  pentatonic so nothing clashes; a 2-bar motif that repeats with small variations. Tempo 96-120 BPM: pick the BPM in
+  that range (0.5 BPM steps) that puts the "but" word and the payoff word closest to a beat.
+- The music follows the story (R10):
+  - hook + plan: the playful theme (marimba melody + pizzicato + bass + shaker) from 0.1 s, no slow intro;
+  - "but": a comic STOP exactly on the word (0.3-0.6 s of near silence, only the reverb tail), then an "uh-oh" part:
+    sparser, a minor colour (vi / iii chords, or a ii-V that doesn't resolve), low pizzicato on the beats + a ticking
+    woodblock;
+  - "so" / the turn: a short rising arpeggio that builds;
+  - payoff: the main theme comes back, with a glockenspiel ping or a final chord on the punchline word;
+  - end: on the home chord (so the loop back to frame 0 sounds natural), faded out over the last ~0.5 s, nothing past
+    the 25 s end. A big blast or impact in a pause may sit in a music stop.
+- Ducking (done in the script, from words.json): -6 dB while words are spoken (80 ms attack, 250 ms release), back up
+  in the pauses. Then set the level so the bed's RMS sits about 22-26 dB under the voice's RMS (measure both): the
+  music is felt more than heard. In Remotion the bed plays from 0.1 s at one fixed volume.
+- Check without listening: peak <= -1 dBFS before mixing, no clipping, no clicks (no sample-to-sample jump above ~0.2
+  outside note attacks), no DC offset, little energy above 7 kHz, the bed exactly as long as the composition. Save the
+  settings (key, BPM, progression, instruments, sections, level) in `images/<short>/music.md`.
+- Fallback: if the generator breaks, a simpler bed (bass + pizzicato only, same story structure) is fine; a video
+  without music is the last resort and goes into the report.
+
+---------------------------------------------------------------------------------------------------------------------
 ## 11. Check, improve once, then render (1080x1920, no 4K)
 
 - Contact sheets: stills at every beat (`renderStill`, scale 0.5) in one grid; check frame 0, every swap, every gag,
@@ -706,11 +902,12 @@ const y = (tau: number) => ya + 0.5 * g * (tau - ta) * (tau - ta);
   above 2.2x the local median; every flag must be an intended swap or cut.
 - Improvement pass (exactly one; don't publish the first version as it is): look at the contact sheet and the preview
   as a viewer who has never seen it. Write down the 3 weakest moments (a dead hold, a gag that doesn't read, a payoff
-  that lands late, a beat off its word, a story event the voice tells but the picture doesn't show, anything that looks
-  cheap or AI-made, a hook frame that doesn't read in one second, a LOW-quality picture whose roughness shows) and fix
-  them in code. New ElevenLabs spending here only from the reserve, only for a broken picture, and still LOW 1K.
-  Re-check those beats. Don't polish beyond this one pass: publishing regularly matters more than perfecting one video.
-  Write what you fixed into the "lessons" of memory/STYLE.md.
+  that lands late, a beat off its word, a story event the voice tells but the picture doesn't show, music that is too
+  loud, fights the voice or misses the "but" stop, anything that looks cheap or AI-made, a hook frame that doesn't
+  read in one second, a LOW-quality picture whose roughness shows) and fix them in code. New ElevenLabs spending here
+  only from the reserve, only for a broken picture, and still LOW 1K. Re-check those beats. Don't polish beyond this
+  one pass: publishing regularly matters more than perfecting one video. Write what you fixed into the "lessons" of
+  memory/STYLE.md.
 - Render at the composition size, no upscaling: `npx remotion render src/index.ts <CompId> out/<name>.mp4 --gl=angle
   --image-format=jpeg --jpeg-quality=95 --crf=18 --pixel-format=yuv420p`. Bundle ONCE to a fixed outDir in scripts
   (otherwise Remotion copies public/ into a new temp folder every bundle).
@@ -740,17 +937,19 @@ MY SCRIPT: the voiceover approved in the idea card, word for word.
 
 What I want:
 
-1. Format: vertical 1080x1920 at 60 fps in my Remotion project (studio/). Final file = a 1080x1920 MP4 with the voice
-   and the sound effects mixed in. No 4K render and no upscaling. Length follows the voice, but the whole video is
-   at most 25 seconds (R7; target 21-24 s).
+1. Format: vertical 1080x1920 at 60 fps in my Remotion project (studio/). Final file = a 1080x1920 MP4 with the voice,
+   the sound effects and the background music mixed in. No 4K render and no upscaling. Length follows the voice, but
+   the whole video is at most 25 seconds (R7; target 21-24 s).
 
-2. Script: already checked and approved in STEP 1 (told as a story (R10), spoken style, no narrator phrases, no hype
-   words, no "!" lines, true facts, the first line names what we see in the first frame). Use it word for word; the
-   only exception is the factual-error rule in R3. Put the final lines in the final report.
+2. Script: already checked and approved in STEP 1 (told as a story (R10) on a proven structure (R12), from the chosen
+   source segment (R13, R14) or my idea, spoken style, no narrator phrases, no hype words, no "!" lines, true facts,
+   the first line names what we see in the first frame). Use it word for word; the only exception is the factual-error
+   rule in R3. Put the final lines in the final report.
 
-3. Voice: ElevenLabs, the voice "Mark - Natural Conversations" (voice_id UgBBYS2sOqTuMpoF3BR0), model eleven_v4, one
-   take. Get the word times with ElevenLabs Scribe and time every beat to the words. If the take makes the video longer
-   than 25 s, fit it as STEP 2 section 3 says (shorter pauses, at most 6 % faster), never by cutting words.
+3. Voice: ElevenLabs, the voice "Liam - Viral Short-Form Storyteller" (voice_id VCgLBmBjldJmfphyB8sZ), model
+   eleven_v4, one take. Get the word times with ElevenLabs Scribe and time every beat to the words. If the take makes
+   the video longer than 25 s, fit it as STEP 2 section 3 says (shorter pauses, at most 6 % faster), never by cutting
+   words.
 
 4. Beat sheet: one visual beat per line, landing on the exact word. Frame 0 = the premise, big and centred like a
    thumbnail (the same premise as the cover). The story's doer is the character on screen, and every event the voice
@@ -763,10 +962,10 @@ What I want:
    pieces are all LOW 1K (R8). The background is an ElevenLabs picture too. Every cut-out on a flat key colour, keyed
    by code.
    NO REFERENCES, no exceptions: every picture from its text prompt only, nothing wired or uploaded into a generation,
-   no image edits, no earlier picture fed back in. The same character and the same flat style in every picture (thick
-   black outlines, flat colours) and in every video: use the locked look from memory/STYLE.md if there is one, make the
-   hero first, write its measured look into the text description, then make the rest from that text. Check every
-   cut-out on a coloured background and fix any glitch before animating.
+   no image edits, no earlier picture and no source-video frame fed back in. The same character and the same flat
+   style in every picture (thick black outlines, flat colours) and in every video: use the locked look from
+   memory/STYLE.md if there is one, make the hero first, write its measured look into the text description, then make
+   the rest from that text. Check every cut-out on a coloured background and fix any glitch before animating.
 
 6. Budget: never more than 900 ElevenLabs credits for the whole video (voice + word times + pictures + sound effects).
    Estimate every run first and keep a ledger. Use the pictures that make the video look as good as possible within
@@ -779,9 +978,11 @@ What I want:
    depth-of-field blur on close-ups, gentle shake on impacts. Make it fun and alive: characters breathe and react,
    objects get faces when it makes the joke better. No motion blur, no fades between drawings.
 
-8. Sound effects: all made with ElevenLabs (new ones, or ElevenLabs sounds from earlier videos in sfx-library/ when
-   they really fit), on their own layer, quiet under the voice and synced to the action (whooshes on throws, plops,
-   rumbles, booms in a pause between words).
+8. Sound effects: all made with ElevenLabs, as many new ones as the action needs (or ElevenLabs sounds from earlier
+   videos in sfx-library/ when they really fit), on their own layer, quiet under the voice and synced to the action
+   (whooshes on throws, plops, rumbles, booms in a pause between words).
+   Background music: synthesized locally in code, 0 credits (STEP 2 section 10b): the playful theme, a comic stop on
+   "but", the theme back on the payoff, quiet under the voice and ducked under the words.
 
 9. Check before rendering: a contact sheet of every beat + a frame-by-frame pop scan of a quick preview + the one
    improvement pass. Fix anything that looks off.
@@ -805,22 +1006,28 @@ Everything for one video goes to videos/<short>/.
    sources and hashtags, the file names. You do not upload anything to YouTube.
 3. Files: the final MP4 -> videos/<short>/<short>.mp4 (not committed, see 5); videos/<short>/idea-card.md (the
    approved card); videos/<short>/report.md (the final report).
-4. Memory: add the row to memory/VIDEOS_LOG.md (views empty; note in "notes" that it is a <= 25 s STORY video with LOW
-   pictures, so later stats can compare it with the older 20-30 s MEDIUM videos and the <= 20 s fact-shaped LOW
-   videos); update memory/IDEA_BANK.md (used / new); memory/STYLE.md (the locked look if this was the first video, plus
-   3-5 lessons: what looked good, what glitched, what to do differently next time, including how the LOW pictures held
-   up and how the story shape worked); the "Found by Claude" section of memory/COMPETITORS.md; sfx-library/ + its
+4. Memory: add the row to memory/VIDEOS_LOG.md (views empty; the source video + segment; note in "notes" that it is a
+   <= 25 s STORY video with LOW pictures, the Liam voice and code music, made from a source segment (or from my idea),
+   plus the structure model it was built on, so later stats can compare it with the older 20-30 s MEDIUM videos and
+   the <= 20 s fact-shaped LOW videos); memory/SOURCE_LOG.md (mark the segment as used with the short id, update
+   "segments left"); update memory/IDEA_BANK.md (used / new); memory/STYLE.md (the locked look if this was the first
+   video, plus 3-5 lessons: what looked good, what glitched, what to do differently next time, including how the LOW
+   pictures held up, how the story shape worked, the Liam pace and how the code music sounded); the "Found by Claude"
+   section of memory/COMPETITORS.md; memory/STRUCTURES.md (the model used, "used in <short>"); sfx-library/ + its
    index.
-5. Git: cartoon-shorts/.gitignore excludes studio/node_modules/, the bundle outDir, studio/out/, */raw/ and *.mp4
-   (videos are sent to me instead, so the repository stays small). Commit everything else in cartoon-shorts/ on your
-   working branch and push it. Then put the same commits on main so the next session finds the memory (I give my
-   explicit permission for this, for changes inside cartoon-shorts/ only): `git fetch origin main && git rebase
-   origin/main && git push origin HEAD:main`. If the push to main is refused, leave it on the branch and say so in the
-   report. Retry network failures up to 4 times (2 s, 4 s, 8 s, 16 s).
+5. Git: cartoon-shorts/.gitignore excludes studio/node_modules/, the bundle outDir, studio/out/, */raw/, work/ and
+   *.mp4 (videos are sent to me instead, so the repository stays small). Delete work/<video-id>/ (the downloaded
+   source video, frames and transcript) before committing. Commit everything else in cartoon-shorts/ on your working
+   branch and push it. Then put the same commits on main so the next session finds the memory (I give my explicit
+   permission for this, for changes inside cartoon-shorts/ only): `git fetch origin main && git rebase origin/main &&
+   git push origin HEAD:main`. If the push to main is refused, leave it on the branch and say so in the report. Retry
+   network failures up to 4 times (2 s, 4 s, 8 s, 16 s).
 6. Send me the MP4 and the cover PNG as files.
-7. Final report, in Ukrainian: the final script lines; the voice (and whether it had to be fitted to 25 s, how); the
-   final video length; the beat table (time / words / picture / gag / sound); the pictures (list, all LOW 1K, with
-   aspect ratios); the sound effects (new / reused); the credit ledger with the total; what the improvement pass
+7. Final report, in Ukrainian: the final script lines; the source video and segment it came from (link + time range)
+   and how many segments of that video are left; the structure model it follows (link + one-line map); the voice
+   (Liam, its measured pace, and whether it had to be fitted to 25 s, how); the final video length; the beat table
+   (time / words / picture / gag / sound); the pictures (list, all LOW 1K, with aspect ratios); the sound effects
+   (new / reused); the music (key, BPM, sections, level); the credit ledger with the total; what the improvement pass
    changed; the upload kit (title, cover text, description, hashtags); the ElevenLabs flow link; the command to open
    the project in Remotion Studio (`cd cartoon-shorts/studio && npx remotion studio`); where all the files are; what
    was written to memory; the branch / main push result; any fallback you used and why.
