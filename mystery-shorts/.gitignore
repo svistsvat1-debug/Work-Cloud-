@@ -1,0 +1,7 @@
+work/
+inputs/
+*.mp4
+*.wav
+*.mp3
+*.jpg
+**/__pycache__/
