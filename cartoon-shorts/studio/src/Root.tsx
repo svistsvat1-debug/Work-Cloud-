@@ -63,6 +63,8 @@ import {SaharaSolarShort, SS_DURATION, SS_FPS} from './sahara-solar/Short';
 import {SaharaSolarCover} from './sahara-solar/Cover';
 import {IcebergTowShort, IT_DURATION, IT_FPS} from './iceberg-tow/Short';
 import {IcebergTowCover} from './iceberg-tow/Cover';
+import {TsunamiGirlShort, TG_DURATION, TG_FPS} from './tsunami-girl/Short';
+import {TsunamiGirlCover} from './tsunami-girl/Cover';
 import {MoaiWalkShort} from './moai-walk/Short';
 import {MoaiWalkCover} from './moai-walk/Cover';
 import {DURATION as MW_DURATION, FPS as MW_FPS} from './moai-walk/scene';
@@ -121,6 +123,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="SaharaSolarCover" component={SaharaSolarCover} width={1080} height={1920} />
       <Composition id="IcebergTow" component={IcebergTowShort} durationInFrames={Math.round(IT_DURATION * IT_FPS)} fps={IT_FPS} width={1080} height={1920} />
       <Still id="IcebergTowCover" component={IcebergTowCover} width={1080} height={1920} />
+      <Composition id="TsunamiGirl" component={TsunamiGirlShort} durationInFrames={Math.round(TG_DURATION * TG_FPS)} fps={TG_FPS} width={1080} height={1920} />
+      <Still id="TsunamiGirlCover" component={TsunamiGirlCover} width={1080} height={1920} />
       <Composition id="MoaiWalk" component={MoaiWalkShort} durationInFrames={Math.round(MW_DURATION * MW_FPS)} fps={MW_FPS} width={1080} height={1920} />
       <Still id="MoaiWalkCover" component={MoaiWalkCover} width={1080} height={1920} />
     </>

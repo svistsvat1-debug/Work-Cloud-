@@ -598,3 +598,24 @@ Video #25 (moai-walk, 2026-11-14) - all pictures LOW 1K again:
 - MIX: MIX_DB 4.0 gave -4.6 dBFS on the preview: no re-mux. TIMING: 48 words / 260 characters, no digits, took 16.86 s
   with Mark (~2.85 words/s). Sound Effects v2 billed 3.3 credits/s again (estimate 22, actual 6.67).
 - RENDER: full 17.3 s render ~4 min (CONC 4, swangle).
+Video #26 (tsunami-girl, 2026-11-16) - all pictures LOW 1K; STORY rule; Liam voice; code music; FIRST video from a SOURCE segment:
+- GOOD: LOW held up again: 8 pictures (girl hero, girl pair shout/run, dad pair deck-chair/run, guard, tourist pair
+  stare/panic, hotel, wave, beach plate), 0 redos, all keyed clean at dist < 60. The locked character took text-only
+  'role' add-ons well: little girl = same character smaller + ONE red bow; dad = + straw hat + sunglasses; guard = + blue
+  cap + whistle. Three tourists in ONE picture (and their panic version as the other half of a 3:2 sheet) = one crowd for 47.
+- GOOD: one wide world (sea band behind, hotel off to the left) with the plate at PS 1.4 plus flat sky / sea / sand rects
+  of the plate's own colours extending it sideways: a long pan to the hotel and a 0.5 wide shot cost no extra picture.
+- GOOD: a thought bubble (PuffCluster) with a code TV whose screen clips a GRAYSCALE copy of an existing sprite (CSS
+  filter grayscale + contrast) = 'an old film from class' for 0 credits. Doors: runners squeeze to scaleX 0 in 0.14 s at
+  the door with a dust puff, then pop up on the roof.
+- GLITCH: shore foam drawn as a row of circles read as a string of pearls/balls: a single wavy white stroke with a black
+  under-stroke reads as foam. The flood rect appearing in one frame was a 36x pop: let water RISE from below the frame.
+  A depth-of-field blur switched off in one frame pops too: always ease blur in/out.
+- GLITCH: first contact sheet had the characters too small (k 1.25, 40 % empty sand): push in (k 1.4) and lift the
+  camera so the feet sit at ~60 % of the frame height; big labels placed at the character x get cut by the right edge -
+  place them toward the frame centre.
+- LIAM PACE: 69 words / ~370 chars, no digits took 23.66 s = ~2.92 words/s (slower than #21-#24: many full stops and
+  short sentences). 69 words with 10 sentences = a 24.5 s video; for 22-23 s keep ~62-64 words.
+- MUSIC: G major, 111 BPM, stops on "But" and on "hits", ping + final chord on "dies"; bed 18 dB under the voice.
+- SOURCE pass: YouTube blocked yt-dlp, youtube-transcript-api and storyboards from the cloud; vidIQ transcript (5 credits)
+  was the only way to read the source; the visual pass was not available.

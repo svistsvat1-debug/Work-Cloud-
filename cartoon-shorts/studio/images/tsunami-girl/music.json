@@ -1,0 +1,4 @@
+{"duration": 24.5, "start": 0.1, "vo_at": 0.1, "words": "images/tsunami-girl/words.json", "voice": "public/tsunami-girl/vo/take1.mp3",
+ "key": "G", "bpm": [96, 120], "align": [7.54, 10.94, 16.26, 21.74, 23.38],
+ "sections": [[0.0, 7.54, "theme"], [7.54, 10.94, "uhoh"], [10.94, 16.26, "build"], [16.26, 20.05, "build"], [20.05, 22.26, "uhoh"], [22.26, 24.5, "final"]],
+ "stops": [[7.54, 0.45], [21.74, 0.45]], "pings": [23.38], "end_chord": 23.38, "under_db": 18, "duck_db": 4}
