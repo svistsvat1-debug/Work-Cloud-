@@ -37,3 +37,7 @@ Cut-outs (characters, props, foreground layers): PAPER_STYLE + KEY. Characters: 
 6. A beat with no picture for it ("the cargo is still there") had to fall back to a camera move: plan one picture per
    sentence that names a new thing.
 7. Ending on the opening shot (darkened, fading back) makes the loop seamless.
+
+## Owner overrides
+- 2026-11-16: owner limit for a Short is 25 s (overrides R6 30-45 s). Target: narration ~50-55 words, estimate <= 23 s at 2.3 words/s, video <= 25.0 s; 6-9 pictures.
+- Channel name: [MISSING] (new channel, no name yet).
