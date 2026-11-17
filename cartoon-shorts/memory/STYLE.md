@@ -760,3 +760,29 @@ Video #32 (shark-storm, 2026-11-17) - all pictures LOW 1K; STORY rule; Liam voic
 - MUSIC: F major, 111.5 BPM; stops on "But" and at the WEEKS LATER cut; glock pings on "beeping", home chord at 24.18; bed 15 dB under
   the voice (between the owner's 'audible' 12 dB and the prompt's 22-26 dB), ducked 4 dB. Mix peak -3.8 dBFS (MIX_DB -0.5).
 - SOURCE pass: yt-dlp web_embedded metadata + auto-subs + storyboards worked again (free); the model's captions hit 429 / IP block.
+Video #33 (megalodon-trench, 2026-11-17) - all pictures LOW 1K; STORY rule; Liam voice; code music; MODE B source segment (approved card):
+- GOOD: an ANIMAL as the doer works with the same recipe as the guy: a megalodon hero (3:2, 0 redos), then its measured look written into
+  the text block (back #456075, fin shade #30485A, belly #E9E7EA + #BBBBC1 shade, ~4.4x as long as tall, six gill slits, nostril dot)
+  -> two 2:3 COLUMN sheets ("three DIFFERENT poses ... stacked one above the other in one column, each seen exactly from the side facing
+  to the RIGHT") gave 6 on-model long side views (~920 px long each). Swap anchor for side-view fish = (snout - 0.18 L, head top at that
+  column + 0.11 L), scale by the length L: an onion-skin sheet (qa/onion.png) showed the poses line up within a few %.
+- GLITCH -> FIX: mirroring a pose about its head anchor threw the body off-screen; flip it about the BODY CENTRE
+  (translateX(-0.32 * world length) before / after scale(-1, 1)) - turning left / right on "Not one" then stays in place.
+- GOOD (0 credits): a cutaway plate + a FOREGROUND layer cut from the same plate (rock + outlines below the ledge, made in prep) drawn over
+  the diving shark = it slips BEHIND the trench walls into the dark. A long descent = a hard cut into a code canyon (two jagged wall
+  polygons from sums of sines in the plate's rock colour + black edge + crack polylines) that blends into the bottom plate's wall edges,
+  a screen-space DEPTH HUD driven by the shark's world y, drifting marine-snow specks, and a vignette that darkens with depth.
+- GOOD: the guy as the witness in a code yellow sub (screen space, it "follows"): full-body poses clipped by the round window (head r ~47 px),
+  a lamp beam (linear-gradient polygon) aimed at the shark keeps it readable in the dark. The binoculars pose on "who'd ever look?" is the gag.
+- GOOD: X-ray = the sprite as a CSS mask filled with blue at 0.86 + a code spine and a big yellow liver that pops on "giant"; a code
+  pool-float valve on "float". Abstract biology became one readable beat.
+- GLITCH -> FIX (improvement pass): the silt splash as small outlined circles read as a row of balls -> few BIG overlapping puffs that billow
+  up; yellow squiggle "rumble" lines read as a plant -> a shaking "GRRR..." text; labels hidden under the screen-space sub -> moved; the
+  bottom plate ended at x 1080 and the camera saw a dark gap beside the floor -> silt + rock fills on both sides, rock only down to the floor.
+- LIAM PACE: 67 words / 374 chars, 7 sentences incl. a question and a 2-word fragment = 24.86 s of raw speech = ~2.70 words/s (#32 2.84,
+  #31 2.6). Fitted by shortening 5 pauses > 0.35 s to 0.25 s (0.30 s after "Not one."), -1.06 s, no tempo change -> 24.6 s video.
+  With 7+ short sentences plan <= 62 words, or expect to fit the pauses.
+- MUSIC: G major, 119.5 BPM; stops on "But", on "Not one" (crickets) and on the landing; glock ping + home chord on "long"; bed 15 dB under
+  the voice, ducked 4 dB; mix peak -3.8 dBFS (MIX_DB -0.5).
+- SOURCE pass: reused the SOURCE_LOG segment map (free); captions (web_embedded json3) + storyboards sb0 for the 5-point originality check
+  and the wow frame. Sound Effects v2 again billed ~3.3 credits/s (estimate 11/s): 4 new sfx cost 12.

@@ -84,6 +84,8 @@ import {DeepDiveShort, DD_DURATION, DD_FPS} from './deep-dive/Short';
 import {DeepDiveCover} from './deep-dive/Cover';
 import {SharkStormShort, SHS_DURATION, SHS_FPS} from './shark-storm/Short';
 import {SharkStormCover} from './shark-storm/Cover';
+import {MegalodonTrenchShort, MGT_DURATION, MGT_FPS} from './megalodon-trench/Short';
+import {MegalodonTrenchCover} from './megalodon-trench/Cover';
 export const RemotionRoot: React.FC = () => {
   return (
     <>
@@ -151,6 +153,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="DeepDiveCover" component={DeepDiveCover} width={1080} height={1920} />
       <Composition id="SharkStorm" component={SharkStormShort} durationInFrames={Math.round(SHS_DURATION * SHS_FPS)} fps={SHS_FPS} width={1080} height={1920} />
       <Still id="SharkStormCover" component={SharkStormCover} width={1080} height={1920} />
+      <Composition id="MegalodonTrench" component={MegalodonTrenchShort} durationInFrames={Math.round(MGT_DURATION * MGT_FPS)} fps={MGT_FPS} width={1080} height={1920} />
+      <Still id="MegalodonTrenchCover" component={MegalodonTrenchCover} width={1080} height={1920} />
     </>
   );
 };

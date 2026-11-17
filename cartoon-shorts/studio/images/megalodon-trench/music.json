@@ -1,0 +1,4 @@
+{"duration": 24.6, "start": 0.1, "vo_at": 0.1, "words": "images/megalodon-trench/words_fit.json", "voice": "public/megalodon-trench/vo/take1_fit.wav",
+ "key": "G", "bpm": [100, 120], "align": [7.48, 10.6, 18.65, 21.78, 23.68],
+ "sections": [[0.0, 7.48, "theme"], [7.95, 11.6, "uhoh"], [11.6, 16.7, "theme2"], [16.7, 18.6, "uhoh"], [18.6, 21.6, "build"], [21.7, 24.6, "final"]],
+ "stops": [[7.48, 0.45], [10.55, 0.5], [21.55, 0.22]], "pings": [23.68], "end_chord": 23.72, "under_db": 15, "duck_db": 4}

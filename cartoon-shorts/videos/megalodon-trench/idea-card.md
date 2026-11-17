@@ -1,0 +1,14 @@
+# megalodon-trench - idea card (approved by the owner on 2026-11-17: "Роби")
+
+1. Idea source: a source video picked by Claude (MODE B; SOURCE / MY IDEA empty). Idea: the last megalodon dives into the Mariana Trench to hide; but below ~3 miles there are no other sharks at all - the deep can't feed a shark's oily float-liver; at the bottom, dinner is a two-inch amphipod.
+2. Source video: https://youtu.be/STkGxpX7hck "What Happens to Your Body at the Mariana Trench Bottom?" (BRIGHT SIDE Series, 888,405 views). Segment 12:23-14:07 (creatures + "What was a Megalodon"). Transcript: YouTube auto-captions (yt-dlp web_embedded, free). Visual pass: storyboards sb0 (~9.9 s per frame); wow frame 13:51 (a megalodon next to a school bus). 16 segments, 1 used before, 14 left after this one. Claims not used: amphipod 'aluminium armour' (contested, Okada 2022), 'it would need to glow or grow huge eyes' (speculation). The turn (no sharks below ~3,000 m) comes from Priede et al. 2006, not from the source. vidIQ credits: 0.
+3. Why it should work: the trench theme = the channel's top Short #1 ocean-trench (27K, 24x the median); demand: What If 'What If the Megalodon Was Hiding in the Mariana Trench?' 1.36M, Short 'Megalodon sighted in Mariana Trench' 1.69M, The Meg (2018) premise.
+4. Voiceover (67 words, 374 characters):
+The last megalodon dives into the Mariana Trench to hide forever. Nearly seven miles of darkness, who'd ever look? But three miles down, there are no other sharks. Not one. Probably because a shark's giant oily liver, its float, takes lots of rich food, and only crumbs drift down here. So the deeper it hides, the hungrier it gets. At the bottom, dinner is two inches long.
+5. Estimate 22.3-23.6 s of speech (real take: 24.86 s raw -> fitted 23.94 s; video 24.6 s).
+6. Story: doer = the megalodon, wants to hide forever; turn = "But three miles down, there are no other sharks. Not one."; ending = at the bottom dinner is two inches long. Every line is an event, no two lines can swap, the last line is what finally happens, no biography.
+7. Structure model: STRUCTURES #4 (own winner #5 nuke-gas-fire, 25K): strange premise 0-16 % -> viewer question 16-28 % -> 'But' 28 % -> punch fragment 'Not one.' 42-45 % -> because-line 45-75 % -> 'So' 75 % -> number punchline 88-100 %; mix = history 'strange fix' shape + ocean-animal what-if (The Meg myth) + cut-out cartoon; originality: 0 shared 5-word runs with the source transcript and the model.
+8. Connectors: dives to hide -> (because) who'd look -> but no sharks at 3 mi -> (which means) not one -> because liver / crumbs -> so hungrier -> so dinner is two inches.
+10-11. Packaging and sources: see upload.md.
+12. Credit plan ~819-852 (voice ~375, Scribe ~10, 7-8 LOW 1K pictures, 4 new sfx, music 0, reserve 50); actual 762.
+13. Backups: No.2 'Why do divers act drunk at 100 feet?' (narcosis, 2:11-2:55); No.3 'Can the ocean have a black hole?' (A4pzqvN8FWw 1:22-1:56).
