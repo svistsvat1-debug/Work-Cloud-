@@ -1,4 +1,4 @@
-# shark-storm - звіт (відео #31, 2026-11-17)
+# shark-storm - звіт (відео #32, 2026-11-17)
 
 ## Сценарій (затверджений, без змін)
 1. Fourteen baby sharks beep from tiny tags in a shallow Florida bay, hiding from the big sharks in deep water.
@@ -106,7 +106,7 @@
 - **Відкрити в Remotion Studio:** `cd cartoon-shorts/studio && npx remotion studio` → композиції SharkStorm / SharkStormCover.
 
 ## Що записано в пам'ять
-- **VIDEOS_LOG:** рядок #31.
+- **VIDEOS_LOG:** рядок #32 (#31 тим часом зайняло відео deep-dive з іншої сесії).
 - **SOURCE_LOG:** сегмент 15:15–16:50 позначено → shark-storm, лишилось 18.
 - **IDEA_BANK:** акули → used, додано №2/№3.
 - **STYLE:** уроки #31 + темп Liam.

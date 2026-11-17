@@ -736,3 +736,27 @@ Video #31 (deep-dive, 2026-11-17) - all pictures LOW 1K; STORY rule; Liam voice;
 - SOURCE pass: yt-dlp -J (web_embedded + --ignore-no-formats-error) gives the caption URLs; downloading the en-orig json3 with urllib
   worked (yt-dlp --write-auto-subs with mweb hit 403). Storyboards sb0 fragments download directly from the -J formats list.
   Our own channel's views: `yt-dlp --flat-playlist --print "%(id)s|%(title)s|%(view_count)s" https://www.youtube.com/@whyzap1/shorts` (free).
+Video #32 (shark-storm, 2026-11-17) - all pictures LOW 1K; STORY rule; Liam voice; code music; sixth video from a SOURCE segment (MODE B):
+- LIAM PACE: 68 words / 379 chars, 7 sentences incl. a question and a 5-word fragment, no digits = 23.98 s of speech = ~2.84 words/s
+  (as slow as #27; #30 3.22). Short sentences + a question = long pauses (0.4-0.56 s). 68 words fit a 24.7 s video with a 0.6 s
+  loop tail, no fitting. For 7+ short sentences plan <= 64 words if the ending needs more than ~0.6 s.
+- GOOD: LOW held up again: 6 pictures (hero + 2 three-pose guy sheets + a 3-pose BABY SHARK sheet + a big-shark PAIR + bay plate),
+  0 redos, all keyed at dist < 60; 679.00 credits. Role add-on 'big over-ear headphones (#3F3E3E cups ~1/3 head width)' measured on
+  the hero carried over to all 6 sheet poses. A pose that HOLDS A PROP (hugging a wooden post, body blown out like a flag) is one
+  drawing: anchor it by the prop (post bottom on the dock) - prep measures the prop's brown pixels.
+- GOOD: animal sheets work like character sheets: "three DIFFERENT poses of the same small baby shark ... calm / scared / zooming"
+  gave matching sprites (motion marks dropped by split_n); an object-colour tag (orange) is found in prep and drives code FX
+  (ping arcs on each tag). 14 clones of 3 sprites (scale 0.26-0.34, mixed facing, bob + wiggle) = a school for 0 credits.
+- GOOD: ONE side-cutaway world (sky / dock / water / sloping sand) at PS 1.6 + code rects that extend its edges; day -> night ->
+  storm -> flashback night -> day are all code looks on the same plate. NIGHT: plate brightness 0.8 + '#34449A' multiply at 0.62,
+  sprites brightness 0.9 (0.64 / 0.85 / 0.76 made the sand charcoal and the guy grey). STORM: '#6E7F86' multiply 0.8 + puff cloud
+  with Eye faces + code rain / waves / lightning + a white flash. A flashback = white-flash cut + an 'EARLIER' tag.
+- GLITCH -> FIX: shared Eye's browTilt is a MULTIPLIER (~0.9), not degrees (22 drew long black lines); angry lids = lidTilt -24 with
+  side +-1. White-face measure (largest disc of the hole-filled white region) equalises head sizes better than the silhouette disc
+  when the ear cups / hands widen the head. Close-ups that push the plate past 2x: blur the plate layer (3 px) for that shot.
+- FIX in the improvement pass: the exodus school clumped ON the big shark's body -> waypoints under its nose + a wider start stagger
+  (a stream); the 'hiding' line had no action -> the 4 babies nearest the deep back away scared when the shark appears; tags moved to
+  the bottom of the frame (they covered the guy's head); cover text moved beside the guy, big shark + sign hidden (rule of three).
+- MUSIC: F major, 111.5 BPM; stops on "But" and at the WEEKS LATER cut; glock pings on "beeping", home chord at 24.18; bed 15 dB under
+  the voice (between the owner's 'audible' 12 dB and the prompt's 22-26 dB), ducked 4 dB. Mix peak -3.8 dBFS (MIX_DB -0.5).
+- SOURCE pass: yt-dlp web_embedded metadata + auto-subs + storyboards worked again (free); the model's captions hit 429 / IP block.

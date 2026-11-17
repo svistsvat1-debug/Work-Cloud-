@@ -82,6 +82,8 @@ import {SunVanishShort, SV_DURATION, SV_FPS} from './sun-vanish/Short';
 import {SunVanishCover} from './sun-vanish/Cover';
 import {DeepDiveShort, DD_DURATION, DD_FPS} from './deep-dive/Short';
 import {DeepDiveCover} from './deep-dive/Cover';
+import {SharkStormShort, SHS_DURATION, SHS_FPS} from './shark-storm/Short';
+import {SharkStormCover} from './shark-storm/Cover';
 export const RemotionRoot: React.FC = () => {
   return (
     <>
@@ -147,6 +149,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="SunVanishCover" component={SunVanishCover} width={1080} height={1920} />
       <Composition id="DeepDive" component={DeepDiveShort} durationInFrames={Math.round(DD_DURATION * DD_FPS)} fps={DD_FPS} width={1080} height={1920} />
       <Still id="DeepDiveCover" component={DeepDiveCover} width={1080} height={1920} />
+      <Composition id="SharkStorm" component={SharkStormShort} durationInFrames={Math.round(SHS_DURATION * SHS_FPS)} fps={SHS_FPS} width={1080} height={1920} />
+      <Still id="SharkStormCover" component={SharkStormCover} width={1080} height={1920} />
     </>
   );
 };
