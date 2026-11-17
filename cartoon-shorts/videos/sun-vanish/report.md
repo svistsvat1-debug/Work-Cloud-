@@ -56,6 +56,6 @@ hero 3:2 · lie3 2:3 (3 лежачі пози колонкою) · react3 3:2 ·
 
 ## Пам'ять і git
 - VIDEOS_LOG: рядок #30 (#29 — це satellite-storm з паралельної сесії). SOURCE_LOG: сегмент 2:31–5:12 позначено як використаний. IDEA_BANK: ідея → used.
-- STYLE: уроки #29 і темп Liam. STRUCTURES: модель #3. COMPETITORS: 4 відео в розділі «Found by Claude».
+- STYLE: уроки #30 і темп Liam. STRUCTURES: модель #3. COMPETITORS: 4 відео в розділі «Found by Claude».
 - sfx-library: +6 звуків з рядками в index.md.
 - Завантажені матеріали відео-джерела (work/) видалено.
