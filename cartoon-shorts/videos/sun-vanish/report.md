@@ -20,7 +20,8 @@
 - Мовлення 21,42 с → темп ~3,22 слова/с. Підганяти під 25 с не довелося.
 
 ## Відео
-- 1080×1920, 60 fps, 23,0 с (1380 кадрів). Файл: `cartoon-shorts/studio/out/sun-vanish.mp4` (у git не йде).
+- 1080×1920, 60 fps, 23,0 с (1380 кадрів), звук 23,02 с, пік міксу −3,9 dBFS. Наприкінці картинка ще рухається.
+- Файли: `videos/sun-vanish/sun-vanish.mp4` (у git не йде) і `videos/sun-vanish/cover.png`.
 
 ## Біти
 Таблиця бітів (час / слова / картинка / гег / звук / музика): `studio/images/sun-vanish/beats.md`.
@@ -52,3 +53,9 @@ hero 3:2 · lie3 2:3 (3 лежачі пози колонкою) · react3 3:2 ·
 ## Посилання
 - ElevenLabs flow: https://elevenlabs.io/app/flows/PBNDsKGBLNX0ZYe46kTM
 - Remotion Studio: `cd cartoon-shorts/studio && npx remotion studio` (композиції SunVanish і SunVanishCover).
+
+## Пам'ять і git
+- VIDEOS_LOG: рядок #29. SOURCE_LOG: сегмент 2:31–5:12 позначено як використаний. IDEA_BANK: ідея → used.
+- STYLE: уроки #29 і темп Liam. STRUCTURES: модель #3. COMPETITORS: 4 відео в розділі «Found by Claude».
+- sfx-library: +6 звуків з рядками в index.md.
+- Завантажені матеріали відео-джерела (work/) видалено.
