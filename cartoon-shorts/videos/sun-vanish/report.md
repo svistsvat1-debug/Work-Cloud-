@@ -1,4 +1,4 @@
-# sun-vanish - звіт (відео #29, 2026-11-17)
+# sun-vanish - звіт (відео #30, 2026-11-17)
 
 ## Сценарій (затверджений, без змін)
 1. So you're tanning on the beach, and the Sun vanishes.
@@ -55,7 +55,7 @@ hero 3:2 · lie3 2:3 (3 лежачі пози колонкою) · react3 3:2 ·
 - Remotion Studio: `cd cartoon-shorts/studio && npx remotion studio` (композиції SunVanish і SunVanishCover).
 
 ## Пам'ять і git
-- VIDEOS_LOG: рядок #29. SOURCE_LOG: сегмент 2:31–5:12 позначено як використаний. IDEA_BANK: ідея → used.
+- VIDEOS_LOG: рядок #30 (#29 — це satellite-storm з паралельної сесії). SOURCE_LOG: сегмент 2:31–5:12 позначено як використаний. IDEA_BANK: ідея → used.
 - STYLE: уроки #29 і темп Liam. STRUCTURES: модель #3. COMPETITORS: 4 відео в розділі «Found by Claude».
 - sfx-library: +6 звуків з рядками в index.md.
 - Завантажені матеріали відео-джерела (work/) видалено.
