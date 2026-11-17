@@ -1,0 +1,4 @@
+{"duration": 22.4, "start": 0.1, "vo_at": 0.1, "words": "images/buried-nuke/words_raw.json", "voice": "public/buried-nuke/vo/take1.mp3",
+ "key": "G", "bpm": [100, 120], "align": [4.34, 10.42, 15.98, 18.26, 20.82],
+ "sections": [[0.0, 10.42, "theme"], [10.9, 15.9, "uhoh"], [15.98, 18.3, "build"], [18.4, 22.0, "final"]],
+ "stops": [[4.34, 0.25], [10.42, 0.45]], "pings": [20.82], "end_chord": 21.5, "under_db": 15, "duck_db": 4}

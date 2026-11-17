@@ -786,3 +786,24 @@ Video #33 (megalodon-trench, 2026-11-17) - all pictures LOW 1K; STORY rule; Liam
   the voice, ducked 4 dB; mix peak -3.8 dBFS (MIX_DB -0.5).
 - SOURCE pass: reused the SOURCE_LOG segment map (free); captions (web_embedded json3) + storyboards sb0 for the 5-point originality check
   and the wow frame. Sound Effects v2 again billed ~3.3 credits/s (estimate 11/s): 4 new sfx cost 12.
+Video #34 (buried-nuke, 2026-11-17) - all pictures LOW 1K; STORY rule; Liam voice; code music; first video from a COMPETITOR-proven topic (owner: "my topic that took off + similar competitor topics"):
+- LIAM PACE: 65 words / 334 chars, 5 sentences incl. a question and a 2-word fragment, numbers as words = 21.28 s of speech = ~3.05 words/s
+  (#32 2.84, #30 3.22). 65 words gave a 22.4 s video with a 1.0 s loop tail: there is room for ~70 words with 5 sentences.
+- GOOD: LOW held up again: 6 pictures, 0 redos, all keyed at dist < 60. Role add-ons per SHEET work: a straw-hat sheet (farm owner)
+  and a hard-hat sheet (worker) are the same channel character in two roles; the hero = the straw-hat role. A plant pose with a GREEN
+  seedling needs a MAGENTA key (and despill magenta, not green, in prep).
+- GOOD: an object sheet (bomb / shovel / signpost, magenta key) worded neutrally ('a big fat rounded metal capsule ... like a chubby
+  torpedo with four tail fins') passed the content filter; faces are code Eyes inside the rotated sprite (Spr children = SVG in sprite px).
+- GLITCH -> FIX: the plane came out as an airliner with a row of cabin windows: prep paints the window strip (rows 474-512 of the
+  keyed 1536 px sheet) with the body colour -> reads as a bomber. Prompt next time: 'no windows except the cockpit'.
+- GLITCH -> FIX (pipeline): prep_lib.py hard-coded OUT = shark-storm and overwrote another video's sprites when exec'd after the
+  new OUT was set; now it keeps an OUT defined before the exec. Always set OUT before exec(open('prep_lib.py').read()).
+- GOOD (0 credits): a code plane split = two clipPath halves along a jagged polyline + an ink edge, halves drift/rotate apart with
+  merged-outline smoke puffs; a parachute that rips into two rags; a HUD speed gauge counting to the spoken number; a hole that deepens
+  (clods + growing dirt pile) and floods (water rect + seep drops); a beach thought bubble as the 'like...' analogy; a depth arrow with a
+  'not to scale' break mark; a red dashed 5 FT line + sign for the punchline.
+- IMPROVEMENT PASS: frame 0 pushed in (k 1.0 -> 1.1) and the plane started nearer the centre so the premise reads; the broken halves
+  slowed down (they had left the frame by 2 s, leaving a dead hold); a '!' on the farmer at the break; the $1,000 bill moved off his face;
+  the NORTH CAROLINA card moved from the frame edge to the sky centre and hidden before the bomb drops; the beach bubble moved off the
+  worker's head; sky colour extended above / beside the plate (a navy strip showed at the top).
+- MUSIC: G major, 116 BPM; stops on the impact (0.25 s) and on "But" (0.45 s); ping on "feet", home chord 21.5; bed 15 dB under the voice.
