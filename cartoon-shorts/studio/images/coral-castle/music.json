@@ -1,0 +1,4 @@
+{"duration": 24.4, "start": 0.1, "vo_at": 0.1, "words": "images/coral-castle/words_raw.json", "voice": "public/coral-castle/vo/take1.mp3",
+ "key": "F", "bpm": [100, 120], "align": [7.62, 14.26, 19.30, 23.06],
+ "sections": [[0.0, 7.62, "theme"], [8.1, 15.9, "build"], [15.94, 19.3, "theme2"], [19.75, 22.1, "uhoh"], [22.1, 23.9, "final"]],
+ "stops": [[7.62, 0.4], [19.30, 0.45]], "pings": [23.06], "end_chord": 23.6, "under_db": 15, "duck_db": 4}

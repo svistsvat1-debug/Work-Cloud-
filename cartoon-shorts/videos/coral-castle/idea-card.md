@@ -1,4 +1,4 @@
-# Idea card - coral-castle (sent 2026-11-17, WAITING FOR APPROVAL)
+# Idea card - coral-castle (sent 2026-11-17, APPROVED by the owner the same day: "tak, robu")
 
 Mode: B (source video picked by Claude). Source: https://youtu.be/OmK9H0EVp-8 53:27-62:24 (BRIGHT SIDE Series,
 "Scientists Can Finally Explain How Ancient Egyptians Cut Granite", 1:02:24, 1,001 views). Transcript: YouTube

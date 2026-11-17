@@ -88,6 +88,8 @@ import {MegalodonTrenchShort, MGT_DURATION, MGT_FPS} from './megalodon-trench/Sh
 import {MegalodonTrenchCover} from './megalodon-trench/Cover';
 import {BuriedNukeShort, BN_DURATION, BN_FPS} from './buried-nuke/Short';
 import {BuriedNukeCover} from './buried-nuke/Cover';
+import {CoralCastleShort, CC_DURATION, CC_FPS} from './coral-castle/Short';
+import {CoralCastleCover} from './coral-castle/Cover';
 export const RemotionRoot: React.FC = () => {
   return (
     <>
@@ -159,6 +161,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="MegalodonTrenchCover" component={MegalodonTrenchCover} width={1080} height={1920} />
       <Composition id="BuriedNuke" component={BuriedNukeShort} durationInFrames={Math.round(BN_DURATION * BN_FPS)} fps={BN_FPS} width={1080} height={1920} />
       <Still id="BuriedNukeCover" component={BuriedNukeCover} width={1080} height={1920} />
+      <Composition id="CoralCastle" component={CoralCastleShort} durationInFrames={Math.round(CC_DURATION * CC_FPS)} fps={CC_FPS} width={1080} height={1920} />
+      <Still id="CoralCastleCover" component={CoralCastleCover} width={1080} height={1920} />
     </>
   );
 };

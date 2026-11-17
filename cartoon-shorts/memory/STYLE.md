@@ -807,3 +807,31 @@ Video #34 (buried-nuke, 2026-11-17) - all pictures LOW 1K; STORY rule; Liam voic
   the NORTH CAROLINA card moved from the frame edge to the sky centre and hidden before the bomb drops; the beach bubble moved off the
   worker's head; sky colour extended above / beside the plate (a navy strip showed at the top).
 - MUSIC: G major, 116 BPM; stops on the impact (0.25 s) and on "But" (0.45 s); ping on "feet", home chord 21.5; bed 15 dB under the voice.
+Video #35 (coral-castle, 2026-11-17) - all pictures LOW 1K; STORY rule; Liam voice; code music; MODE B source segment (approved card):
+- LIAM PACE: 66 words / 337 chars (67 spoken, 'nine-ton'), 8 sentences incl. a one-word 'Alone.', no digits = 23.4 s of speech = ~2.87 words/s
+  (#34 3.05, #33 2.70, #32 2.84). 67 spoken words fit a 24.4 s video with a 0.9 s tail, no fitting. Plan ~2.85 w/s for 7-8 short sentences.
+- GOOD: LOW held up again: 7 pictures, 0 redos, all keyed at dist < 60 (691 credits). A role add-on measured on the hero ('small dark brown
+  felt hat #704428 / band #3A2214') carried over to the 3-pose sheet. A WALL set piece with 'one empty rectangular doorway gap ... the green
+  background shows through the gap' keyed into a real hole: prep measures the gap columns + the lintel row, and the gate sprite is scaled
+  non-uniformly (sx/sy) to fill it exactly. A crane picture with the cable + hook: prep cuts the hook into its own sprite and erases the
+  cable, so code draws a cable that lowers / lifts the hook (and the gate on a sling).
+- GOOD (0 credits): a camera FLASH (white, 0.07 s up) hides a cut into an OLD PHOTO: the whole world in CSS sepia, the container rotated
+  -2.5 deg and scaled 0.93, an evenodd SVG 'table' mask with a white border + tape, a radial vignette + scratches inside. Exit = the frame
+  overlay scales up past the camera (1 -> 2.7, easeIn) while sepia -> colour: 'flying through the photo', no fade (the first version faded
+  the mask and read like a cross-fade).
+- GOOD: physics as one picture: a LONG red arrow beside the hand chain + a LITTLE green arrow beside the rock; the hand chain's dash offset
+  runs fast on each pull while the load chain creeps. Telephone poles = brown poles + a crossarm with two green glass insulators popping on
+  'telephone'. A 3D spin of a flat slab: front face width |cos|, a side rect of the thickness |sin| (box projection), motion arcs (ellipse
+  polylines) + dizzy stars after it stops.
+- GOOD: '6 men' as a count: the workers pop one by one with yellow numbers over their heads (back row pushers in a conga, front row haulers
+  mirrored, a rope to the gate). Their pop order must match the reading order: here it read '3 2 1' left to right (the first pusher stands
+  at the gate) - next time number from the left or put #1 on the left.
+- GLITCH -> FIX: the first framing put the feet at ~64 % of the frame and left the bottom third as empty grass: aim the camera so the feet
+  sit at ~78-80 % (cam.y = feetY - 0.3 * 1920 / k). A night moon drawn UNDER the multiply overlay turned grey: draw sky objects above it.
+  A tripod leg crossed in front of the guy: keep the character outside the props he operates. Labels near the frame edge were cut: keep
+  text centres >= 300 px from the edges at the shot's camera.
+- MUSIC: F major, 110 BPM; stops on both 'But's (camera flash, 1986); ping on 'crane', home chord 23.6; bed 15 dB under the voice, ducked
+  4 dB; final mix peak -4.0 dBFS (MIX_DB -1.3). The 6 new Sound Effects v2 cues billed 25 credits for 7.7 s (~3.3/s); Scribe billed 0.
+- SOURCE pass: the newest 90 uploads of the source channel are space clickbait; older topics (Egypt, pyramids) are found with the channel's
+  own search (`yt-dlp --flat-playlist "<channel>/search?query=..."`, free); compilation videos may not contain their title topic (the
+  granite-cutting answer was only in the description) - read the transcript before building the segment map.

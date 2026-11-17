@@ -92,3 +92,9 @@ The owner's own list of channels and videos in the niche (filled in by hand).
 - 2026-11-17 (megalodon-trench, demand check; views read with yt-dlp, free):
 | https://www.youtube.com/watch?v=SYYdyLcAALk (What If, 'What If the Megalodon Was Hiding in the Mariana Trench?', 5:47) | 1,359,674 (2026-11-17) | 8.99M | 2021-12-12 | the exact question of our megalodon-trench Short as a long what-if: proven demand; do not reuse its title |
 | https://www.youtube.com/shorts/4zyoLBU4SX8 (BeastFrmDeEast, 'Megalodon sighted in Mariana Trench', 65 s) | 1,688,265 (2026-11-17) | 369 | 2010-08-04 | a fake-footage clip with 1.7M on a 369-subscriber channel: the megalodon + trench myth pulls views by itself |
+
+- 2026-11-17 (coral-castle, demand check; views read with yt-dlp ytsearch, free):
+| https://www.youtube.com/watch?v=qvvIqEexj_Y (Area52, 'Levitating 1000 Tons of Stone? - The Coral Castle (Full Documentary)', 57:34) | 1,063,352 (2026-11-17) | [MISSING] | [MISSING] | Coral Castle 'how did one man do it' pulls 1M+ even as a long documentary |
+| https://www.youtube.com/watch?v=XJ8n_HU0vP0 (Ricky Devlin, 'Coral Castle: Mystery Solved', 7:40) | 914,168 (2026-11-17) | [MISSING] | [MISSING] | the 'solved' angle (simple tools) works: our coral-castle Short uses the same answer in our own story |
+| https://www.youtube.com/watch?v=ekxTLhRci0E (PraveenMohan, '9 Ton Gate - Megalithic Miracle at Coral Castle, Florida', 7:17) | 341,596 (2026-11-17) | [MISSING] | [MISSING] | the 9-ton gate alone carries a whole video: a possible next episode (how the gate was balanced) |
+| https://www.youtube.com/watch?v=bH2N0bUss1s (VerseByVerseBT, 'Coral Castle Mystery solved with AMAZING new footage', 8:30) | 334,473 (2026-11-17) | [MISSING] | [MISSING] | old footage of the tripod / hoist is the hook |
