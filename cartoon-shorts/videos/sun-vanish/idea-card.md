@@ -1,4 +1,4 @@
-# IDEA CARD - sun-vanish (2026-11-16) - waiting for approval
+# IDEA CARD - sun-vanish (2026-11-16) - APPROVED by the owner ("Так", 2026-11-16)
 
 1. Джерело ідеї: SOURCE-відео (MODE S, посилання з повідомлення власника). Ідея: Сонце зникає, а ти ще 8 хвилин засмагаєш, бо світло і притягання Сонця ще летять до Землі; потім темрява, і Земля відлітає по прямій.
 2. Source: https://youtu.be/xtqWGeG4NJA - "What if you wake up and see THIS instead of the sun" (BRIGHT SIDE Series, 4,204,472 views, 26:25). Segment 2:31-5:12 (chapter "Sun disappears suddenly"). Transcript: YouTube auto-captions via yt-dlp (free). Visual pass: storyboards sb0 (1 frame / ~9.9 s; video file not offered). Wow frame: city at 2 p.m. gone dark + TV news. 18 segments, 0 used before, 17 left. Claims that didn't hold: 'millions of years from the core' (~10,000-170,000), Moon 'in the centre' / 'can't hold us', tides/winds/tilt, on-screen '492,000 MPH (220,000 KM/S)'. vidIQ: 0.

@@ -687,3 +687,27 @@ owner allowed up to 30 s and asked for AUDIBLE background music:
 - RENDER: this machine has 4 cores: CONC must be <= 4 (6 crashes). Full 28.2 s render 1 min 24 s, 0.5x preview 43 s.
 - SOURCE pass: yt-dlp auto-subs (web_embedded client) + storyboards from the -J metadata worked again (free); the video file was not
   offered. BRIGHT SIDE re-uploads compilations: 0:00-8:37 of HlirFKAVyY8 = 0:00-8:31 of xtqWGeG4NJA - check new links against SOURCE_LOG.
+Video #30 (sun-vanish, 2026-11-17) - all pictures LOW 1K; STORY rule; Liam voice; code music; fifth video from a SOURCE segment:
+- GOOD: role add-on 'sunglasses' measured on the hero (two round solid black lenses, each ~0.27 of the head width, thin
+  bridge + one arm) and written into every prompt -> 9 on-model poses from 4 pictures, 0 redos. LYING poses come out best as a
+  3-pose COLUMN sheet in a 2:3 picture ("stacked one above the other in one column ... head on the LEFT") - each pose
+  ~700 px wide; split_n(axis='y') sorts them top to bottom.
+- GOOD (0 credits): CODE 'TAN' COPIES of every pose in prep.py (white/grey fill -> #E9B07A / #D69660, outlines, glasses,
+  tongue, teeth and eye glints kept; small white islands inside the head disc are skipped) drawn on top of the same pose with
+  opacity = tan level, so he tans gradually without a cross-fade between different drawings. Pale 'raccoon' rings: eyes found
+  as solid dark blobs inside the head disc (area 0.02-0.12 R^2, h >= 0.7 w, not above 0.35 R over the centre) and the fill
+  inside an ellipse around each kept white. Reads instantly as "the last tan".
+- GOOD: an abstract physics idea made visible: gravity as a ROPE + light as moving dashes; after the Sun vanishes the gap and
+  the rope's slack travel outward at the SAME speed and reach Earth together; a HUD stopwatch (0:00 -> 8:20) stays on screen
+  across the beach / space intercut and hits 8:20 exactly on "out". A snap burst + pop/boing marks the release.
+- GOOD: beach plate at 1.35x with the camera at k 1.28-1.4 (plate <= 1.9x, sprites <= 0.75x) keeps the lying guy big; put the
+  ground (towel) at ~62 % of the frame height, not lower (first try at 1722 left him tiny in the bottom third).
+- NIGHT LOOK: a CSS brightness filter alone turned the sand muddy brown; brightness(0.62) + a '#34449A' multiply overlay on the
+  background layer and a milder brightness(0.74) on the characters reads as a blue cartoon night.
+- GLITCH -> FIX: a code thought-bubble demo must be BIG (hand ~80 px, stone r 30, cords 13 px) or it is unreadable at phone size.
+- LIAM PACE: 69 words / 353 chars, 5 sentences, numbers as words = 21.42 s of speech = ~3.22 words/s (#28 3.13, #27 2.83).
+  69 words fit a 23.0 s video with a 1.2 s ending.
+- MUSIC: C major, 111.5 BPM; stops on "But" (crickets) and "out" (light-switch click); ping on "history"; bed 21.4 dB under the voice.
+- SOURCE pass: yt-dlp metadata + auto-subs work with --extractor-args "youtube:player_client=web_embedded" (or mweb for
+  subtitles) + --ignore-no-formats-error; the default client hits 'sign in to confirm you're not a bot'. Storyboards sb0 again
+  (formats list of the web_embedded JSON); the video file itself is not offered. 0 vidIQ credits.

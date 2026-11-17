@@ -78,6 +78,8 @@ import {GlassRainPlanetShort, GRP_DURATION, GRP_FPS} from './glass-rain-planet/S
 import {GlassRainPlanetCover} from './glass-rain-planet/Cover';
 import {SatelliteStormShort, SAT_DURATION, SAT_FPS} from './satellite-storm/Short';
 import {SatelliteStormCover} from './satellite-storm/Cover';
+import {SunVanishShort, SV_DURATION, SV_FPS} from './sun-vanish/Short';
+import {SunVanishCover} from './sun-vanish/Cover';
 export const RemotionRoot: React.FC = () => {
   return (
     <>
@@ -139,6 +141,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="GlassRainPlanetCover" component={GlassRainPlanetCover} width={1080} height={1920} />
       <Composition id="SatelliteStorm" component={SatelliteStormShort} durationInFrames={Math.round(SAT_DURATION * SAT_FPS)} fps={SAT_FPS} width={1080} height={1920} />
       <Still id="SatelliteStormCover" component={SatelliteStormCover} width={1080} height={1920} />
+      <Composition id="SunVanish" component={SunVanishShort} durationInFrames={Math.round(SV_DURATION * SV_FPS)} fps={SV_FPS} width={1080} height={1920} />
+      <Still id="SunVanishCover" component={SunVanishCover} width={1080} height={1920} />
     </>
   );
 };
