@@ -711,3 +711,28 @@ Video #30 (sun-vanish, 2026-11-17) - all pictures LOW 1K; STORY rule; Liam voice
 - SOURCE pass: yt-dlp metadata + auto-subs work with --extractor-args "youtube:player_client=web_embedded" (or mweb for
   subtitles) + --ignore-no-formats-error; the default client hits 'sign in to confirm you're not a bot'. Storyboards sb0 again
   (formats list of the web_embedded JSON); the video file itself is not offered. 0 vidIQ credits.
+Video #31 (deep-dive, 2026-11-17) - all pictures LOW 1K; STORY rule; Liam voice; code music; MODE B source segment picked as the next episode of the channel's #1 winner (trench 27K); owner asked to skip the approval stop:
+- LIAM PACE: 70 words / 393 chars, 8 sentences, numbers as words, a '...' pause = 26.88 s of raw speech = ~2.6 words/s - the SLOWEST take so far
+  (#30 3.22, #28 3.13, #27 2.83). Fitted: 8 pauses > 0.35 s cut to 0.25 s (the '...' pause kept at 0.40 s) + atempo 1.05 -> 23.62 s
+  (images/deep-dive/fit.py, tempo applied after the cuts, word times shifted and divided). For 8 short sentences plan <= 62 words.
+- GOOD: LOW held up again: 7 pictures (3 three-pose sheets, craft, creatures sheet on magenta, 2 plates), 9 poses, 0 redos, all keyed at
+  dist < 60. A role add-on 'small round black-rimmed glasses' (space-twin words) gave the second crew member on-model in one sheet.
+- GOOD: a vehicle picture with 'one big round window ... a perfectly round EMPTY hole ... the flat green background shows through the
+  hole' keys into a real hole: anything drawn BEHIND the sprite in a circle-clipped div (cabin + tiny crew poses) shows through the window.
+  Measure the hole as the biggest enclosed transparent component that is about square (railing gaps are enclosed too).
+- GOOD (0 credits): a code porthole close-up (steel plate + ring + bolts + rivets, glass glare arcs) with full-body poses clipped by the
+  glass reads as 'inside the ball'; a code crack (polylines revealed by dash length, black + white glint) and a code milky fog (puff ring
+  closing in + an alpha circle, group opacity follows the fog) carry the turn and the payoff. An instant photo slides in = the punchline.
+- GOOD: an object character for an idea: a red AIR balloon with eyes crushed by pressure arrows ('> <' eyes, wobbly crumpled outline),
+  then the same arrows bounce off the smug gasoline float = 'unlike air, it barely squeezes' in one beat.
+- GLITCH -> FIX: the first fog version covered the window completely, so the guy raising the camera and the flash were invisible:
+  let the fog thin to ~55 % after the 'milky' word, put the flash ABOVE the fog. The bottom plate ended above the frame bottom when the
+  camera zoomed out: always extend the floor colour below a plate.
+- IMPROVEMENT PASS: frame 0 pushed in (k 1.05 -> 1.2, the float just fits the width) so the crew in the window read; the sea cucumber
+  hops with a '!' on the landing thump; the camera flash got a yellow burst over the fog.
+- MUSIC: F major, 114 BPM; stops on "But", on the bang and in the pause before "not one photo"; ping + home chord on "photo";
+  bed 13 dB under the voice, ducking 3 dB (owner: the music must be heard). MIX_DB -3 -> -4.2 dBFS final peak (voice take peaked 0 dBFS
+  after atempo; measure on the stereo decode).
+- SOURCE pass: yt-dlp -J (web_embedded + --ignore-no-formats-error) gives the caption URLs; downloading the en-orig json3 with urllib
+  worked (yt-dlp --write-auto-subs with mweb hit 403). Storyboards sb0 fragments download directly from the -J formats list.
+  Our own channel's views: `yt-dlp --flat-playlist --print "%(id)s|%(title)s|%(view_count)s" https://www.youtube.com/@whyzap1/shorts` (free).
