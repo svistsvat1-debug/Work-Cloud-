@@ -127,4 +127,6 @@
 - Музика ElevenLabs не використовувалась (за правилами).
 
 ## Git
-- Комміт у гілці `claude/proven-video-topics-ngd8qb` і в `main`.
+- Коміт `733702e` запушено в гілку `claude/proven-video-topics-ngd8qb` і в `main` (лише файли в cartoon-shorts/).
+- MP4 не комічено (*.mp4 у .gitignore) — надіслано в чат.
+- Завантажене з відео-джерела (work/: метадані, автосубтитри, storyboards) видалено перед комітом.
