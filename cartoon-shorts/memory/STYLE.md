@@ -835,3 +835,30 @@ Video #35 (coral-castle, 2026-11-17) - all pictures LOW 1K; STORY rule; Liam voi
 - SOURCE pass: the newest 90 uploads of the source channel are space clickbait; older topics (Egypt, pyramids) are found with the channel's
   own search (`yt-dlp --flat-playlist "<channel>/search?query=..."`, free); compilation videos may not contain their title topic (the
   granite-cutting answer was only in the description) - read the transcript before building the segment map.
+Video #36 (titanic-cover, 2026-11-18) - all pictures LOW 1K; STORY rule; Liam voice; code music; MODE B source segment (approved card):
+- LIAM PACE: 63 words / 343 chars, 8 sentences incl. a 3-word fragment ('Twelve days left.') and two colons, no digits = 23.04 s of speech
+  = ~2.73 words/s (#35 2.87, #34 3.05, #33 2.70). Colons and short fragments slow Liam down: 63 words filled a 23.8 s video
+  (0.6 s tail), no fitting. With 8 sentences plan <= 64 words.
+- GOOD: LOW held up again: 9 pictures, 0 redos, all keyed at dist < 60 (a 9th picture fit the plan: 343 + 9 x 47 + sfx + reserve
+  <= 870). Two role caps in one video (navy watch cap = the hunter, white peaked cap = the officer) read as two people. The cap
+  measured on the hero ('#213C69 / #142744') carried over to both hunter sheets. Prompting 'a plain dark-red book, no title'
+  gave clean covers for a code title.
+- GOOD (0 credits): a code prop held over a sprite's hands (manila folder + TOP SECRET stamp), a code title + tiny ship on the
+  sprite's plain book cover, and a green TRUE stamp at the end that mirrors the red TOP SECRET stamp at the start. A robot
+  camera sled with two big lenses = eyes for free (code glints, yellow lids, brows on the lens discs). A lamp cone = a blurred
+  black triangle in an SVG mask cut out of a dark overlay inside the World layer: give it an ANGLE and aim it at the subject's
+  centre (the first version lit only the floor). A top-down chart (search lines 1 MILE apart, a dotted trail, a sweep ping)
+  explained the search trick in 2.4 s.
+- GLITCH -> FIX: the held folder covered the hunter's face for 4 s (and on the cover) -> hold props beside the face; the stamp
+  text overflowed its frame ('TOP SECRE') -> font 0.118 x the folder width; a zoom-out to k ~0.19 showed the edges of the
+  background rects -> make background rects huge (+-9000); at k 0.19 small debris vanished -> scale bits 1.4x + code debris.
+- IMPROVEMENT PASS: the wreck reveal was too dark -> lamp aimed at the middle piece, overlay -18 % when the lamp is on, the
+  radiation sign pulses; the mile-long trail shot reframed (floor at ~65 %, bigger debris, 150 px '1 MILE+'); the dozing /
+  jumping hunter in the control room 1.32x bigger. Flashes: full-frame white only on every other flash (never 3 in 1 s).
+- MIX: measure peaks per channel (ffmpeg -ac 2 -f f32le); a mono downmix (-ac 1) reads ~3 dB hot. MIX_DB -0.3 with a raw Liam
+  peak of -0.6 dBFS gave -4.1 dBFS per channel.
+- MUSIC: C major, 102 BPM; stop on "But" (the cut to the ship), uh-oh under the dive and the 12 days, build under the replay,
+  ping on "true", home chord 23.3; bed 15 dB under the voice, ducked 4 dB. 4 new Sound Effects v2 cues billed 19.33 credits.
+- SOURCE pass: the channel search ('<channel>/search?query=titanic') found the video; nuclear topics are almost absent on the
+  source channel, so the nuclear part came from verified sources (NatGeo, WHOI, History.com, CNN). Captions free (web_embedded
+  json3), storyboards sb0. 0 vidIQ credits.

@@ -1,0 +1,4 @@
+{"duration": 23.8, "start": 0.1, "vo_at": 0.1, "words": "images/titanic-cover/words_raw.json", "voice": "public/titanic-cover/vo/take1.mp3",
+ "key": "C", "bpm": [100, 120], "align": [8.24, 11.42, 16.60, 22.98],
+ "sections": [[0.0, 8.24, "theme"], [8.62, 11.42, "uhoh"], [11.42, 16.56, "build"], [16.6, 19.0, "theme2"], [19.0, 20.6, "uhoh"], [20.6, 21.8, "build"], [21.8, 23.4, "final"]],
+ "stops": [[8.24, 0.38]], "pings": [22.98], "end_chord": 23.3, "under_db": 15, "duck_db": 4}

@@ -90,6 +90,8 @@ import {BuriedNukeShort, BN_DURATION, BN_FPS} from './buried-nuke/Short';
 import {BuriedNukeCover} from './buried-nuke/Cover';
 import {CoralCastleShort, CC_DURATION, CC_FPS} from './coral-castle/Short';
 import {CoralCastleCover} from './coral-castle/Cover';
+import {TitanicCoverShort, TC_DURATION, TC_FPS} from './titanic-cover/Short';
+import {TitanicCoverCover} from './titanic-cover/Cover';
 export const RemotionRoot: React.FC = () => {
   return (
     <>
@@ -163,6 +165,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="BuriedNukeCover" component={BuriedNukeCover} width={1080} height={1920} />
       <Composition id="CoralCastle" component={CoralCastleShort} durationInFrames={Math.round(CC_DURATION * CC_FPS)} fps={CC_FPS} width={1080} height={1920} />
       <Still id="CoralCastleCover" component={CoralCastleCover} width={1080} height={1920} />
+      <Composition id="TitanicCover" component={TitanicCoverShort} durationInFrames={Math.round(TC_DURATION * TC_FPS)} fps={TC_FPS} width={1080} height={1920} />
+      <Still id="TitanicCoverCover" component={TitanicCoverCover} width={1080} height={1920} />
     </>
   );
 };
