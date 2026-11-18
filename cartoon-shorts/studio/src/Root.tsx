@@ -92,6 +92,8 @@ import {CoralCastleShort, CC_DURATION, CC_FPS} from './coral-castle/Short';
 import {CoralCastleCover} from './coral-castle/Cover';
 import {TitanicCoverShort, TC_DURATION, TC_FPS} from './titanic-cover/Short';
 import {TitanicCoverCover} from './titanic-cover/Cover';
+import {MoaiHatsShort, MH_DURATION, MH_FPS} from './moai-hats/Short';
+import {MoaiHatsCover} from './moai-hats/Cover';
 export const RemotionRoot: React.FC = () => {
   return (
     <>
@@ -167,6 +169,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="CoralCastleCover" component={CoralCastleCover} width={1080} height={1920} />
       <Composition id="TitanicCover" component={TitanicCoverShort} durationInFrames={Math.round(TC_DURATION * TC_FPS)} fps={TC_FPS} width={1080} height={1920} />
       <Still id="TitanicCoverCover" component={TitanicCoverCover} width={1080} height={1920} />
+      <Composition id="MoaiHats" component={MoaiHatsShort} durationInFrames={Math.round(MH_DURATION * MH_FPS)} fps={MH_FPS} width={1080} height={1920} />
+      <Still id="MoaiHatsCover" component={MoaiHatsCover} width={1080} height={1920} />
     </>
   );
 };

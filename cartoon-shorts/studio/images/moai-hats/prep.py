@@ -1,0 +1,111 @@
+# prep.py - split the pose / object sheets, trim, normalise colours, measure anchors
+# -> public/moai-hats/*.png + src/moai-hats/sprites.ts   (run from images/moai-hats)
+import json, os
+import numpy as np, cv2
+from PIL import Image
+OUT = '../../public/moai-hats'
+os.makedirs(OUT, exist_ok=True)
+exec(open('prep_lib.py').read())   # load, despill, trim, normalise, feet, head_disc, box, split_n, drop_specks, fix_outline, find_eyes
+
+info = {}
+def white_head(a):
+    w = ((a[..., :3].astype(int).sum(2) > 560) & (a[..., 3] > 200)).astype(np.uint8)
+    n, lab, st, _ = cv2.connectedComponentsWithStats(w, connectivity=4)
+    best = None
+    for i in range(1, n):
+        m = (lab == i).astype(np.uint8)
+        inv = (1 - np.pad(m, 1)).astype(np.uint8); cv2.floodFill(inv, None, (0, 0), 2)
+        filled = np.where(inv == 2, 0, 1)[1:-1, 1:-1].astype(np.uint8)
+        dt = cv2.distanceTransform(filled, cv2.DIST_L2, 5); r = float(dt.max())
+        if best is None or r > best[2]:
+            y, x = np.unravel_index(dt.argmax(), dt.shape); best = [float(x), float(y), r]
+    return best
+
+def despill_strong(a, k=18):
+    r, g, b = [a[..., i].astype(int) for i in range(3)]
+    a[(g > r + k) & (g > b + k), 3] = 0
+    return a
+
+def save(name, a, guy=True, pad=12, strong=False):
+    a = despill_strong(a) if strong else despill(a)
+    a = drop_specks(a)
+    if guy:
+        a = normalise(a)
+        a, nfix = fix_outline(a)
+        if nfix: print('   outline fixed', name, nfix, 'px')
+    a, off = trim(a, pad)
+    Image.fromarray(a, 'RGBA').save(f'{OUT}/{name}.png', optimize=True)
+    d = dict(w=a.shape[1], h=a.shape[0], feet=feet(a), **box(a))
+    if guy: d['hw'] = white_head(a); d['hd'] = head_disc(a)
+    info[name] = d
+    return a
+
+def extreme(a, fn, mask=None):
+    al = a[..., 3] > 128
+    if mask is not None: al &= mask
+    ys, xs = np.where(al); i = np.argmax(fn(xs, ys)); return [int(xs[i]), int(ys[i])]
+
+# ---- the islander (the channel's guy) ----
+a = save('hero', load('hero'))
+for nm, p in zip(['lift', 'pull', 'shove'], split_n(load('sheetA'), 3)):
+    a = save(nm, p)
+    H, W = a.shape[:2]
+    yy = np.mgrid[0:H, 0:W][0]
+    if nm == 'lift': info[nm]['grip'] = extreme(a, lambda x, y: -x * 2 + y)            # hands: lowest-left
+    if nm == 'pull': info[nm]['grip'] = extreme(a, lambda x, y: x - 100000 * (y > 0.62 * H))   # fists: rightmost in the upper part
+    if nm == 'shove': info[nm]['grip'] = extreme(a, lambda x, y: -x)                   # palms: leftmost
+for nm, p in zip(['fall', 'aha', 'shrug'], split_n(load('sheetB'), 3)):
+    a = save(nm, p)
+    if nm == 'aha': info[nm]['tip'] = extreme(a, lambda x, y: -y - 10000 * (x > 0.5 * a.shape[1]))   # finger tip (left half)
+
+# ---- the moai ----
+a = save('moai', load('moai'), guy=False, strong=True)
+al = a[..., 3] > 128
+ys, xs = np.where(al)
+top = int(ys.min())
+row = np.where(al[top + 14])[0]
+info['moai']['headTop'] = [int(row.min()), int(row.max()), top]                      # flat top: x0, x1, y
+bot = int(ys.max())
+rowb = np.where(al[bot - 6])[0]
+info['moai']['base'] = [int(rowb.min()), int(rowb.max()), bot]
+# head width profile every 20 px (for the hat seat + the eye placement)
+prof = []
+for y in range(top, bot, 20):
+    r = np.where(al[y])[0]
+    if len(r): prof.append([y, int(r.min()), int(r.max())])
+info['moai']['prof'] = prof
+
+# ---- the hats ----
+up, disc = split_n(despill_strong(load('hats')), 2)
+a = save('hat_up', up, guy=False, strong=True)
+al = a[..., 3] > 128; ys, xs = np.where(al)
+info['hat_up']['bottomY'] = int(ys.max())
+rowb = np.where(al[int(ys.max()) - 10])[0]; info['hat_up']['bottomX'] = [int(rowb.min()), int(rowb.max())]
+a = save('hat_disc', disc, guy=False, strong=True)
+al = (a[..., 3] > 128).astype(np.uint8)
+cnts, _ = cv2.findContours(al, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+(cx, cy), r = cv2.minEnclosingCircle(max(cnts, key=cv2.contourArea))
+info['hat_disc']['c'] = [float(cx), float(cy), float(r)]
+
+# ---- the coast plate ----
+b = np.asarray(Image.open('raw/bg.png').convert('RGB')).astype(int)
+Hh, Ww = b.shape[:2]
+Image.fromarray(b.astype(np.uint8)).save(f'{OUT}/bg.png', optimize=True)
+# grass top line: first dark outline row below 55 % in the right half (sea / grass boundary)
+dark = b.sum(2) < 150
+hor = [int(np.argmax(dark[int(0.5 * Hh):int(0.75 * Hh), x]) + int(0.5 * Hh)) for x in range(900, 1500, 20) if dark[int(0.5 * Hh):int(0.75 * Hh), x].any()]
+horizon = int(np.median(hor)) if hor else int(0.6 * Hh)
+cols = {k: '#%02x%02x%02x' % tuple(int(v) for v in b[y, x]) for k, (x, y) in
+        dict(sky=(760, 6), grass=(760, Hh - 6), grassMid=(400, horizon + 80), sea=(1300, horizon - 15)).items()}
+info['bg'] = dict(w=Ww, h=Hh, horizon=horizon, cols=cols)
+print('bg', info['bg'])
+
+for nm in ['hero', 'aha', 'shrug', 'fall']:
+    h = np.asarray(Image.open(f'{OUT}/{nm}.png')).copy()
+    info[nm]['eyes'] = find_eyes(h, head_disc(h))
+os.makedirs('../../src/moai-hats', exist_ok=True)
+open('../../src/moai-hats/sprites.ts', 'w').write('// generated by images/moai-hats/prep.py\nexport const SPR = ' + json.dumps(info) + ' as const;\n')
+for k, v in info.items():
+    if not isinstance(v, dict) or 'w' not in v: continue
+    print(k, v.get('w'), v.get('h'), 'hd', [round(t) for t in v['hd']] if 'hd' in v else '-', 'feet', [round(t) for t in v.get('feet', [0, 0])],
+          {kk: vv for kk, vv in v.items() if kk in ('grip', 'tip', 'eyes', 'headTop', 'base', 'bottomY', 'bottomX', 'c')})

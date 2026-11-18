@@ -862,3 +862,29 @@ Video #36 (titanic-cover, 2026-11-18) - all pictures LOW 1K; STORY rule; Liam vo
 - SOURCE pass: the channel search ('<channel>/search?query=titanic') found the video; nuclear topics are almost absent on the
   source channel, so the nuclear part came from verified sources (NatGeo, WHOI, History.com, CNN). Captions free (web_embedded
   json3), storyboards sb0. 0 vidIQ credits.
+Video #37 (moai-hats, 2026-11-18) - all pictures LOW 1K; STORY rule; Liam voice; code music; MODE B source segment; the owner asked to skip the approval stop:
+- LIAM PACE: 65 words / 326 chars, 7 sentences, no digits ('twelve-ton' as a word) = 19.18 s of speech = ~3.39 words/s - the FASTEST take so far
+  (#36 2.73, #35 2.87, #34 3.05). Short plain words, few colons / fragments -> Liam runs fast: 65 words gave only a 20.0 s video. With a text like
+  this plan 72-76 words for 22-24 s; with colons and 2-3-word fragments keep the old ~2.8 words/s estimate.
+- GOOD: LOW held up again: 6 pictures, 0 redos, all keyed at dist < 60 (the hero kept a tiny enclosed green speck between the feet - the prep
+  despill removed it). Two 3-pose sheets (3:2) at RH 92 came out at 0.67-0.88 of native = crisp. ONE object sheet with BOTH views of the same object
+  (the hat upright, side view + lying, seen end-on as a circle) let the hat 'tip over toward the camera': squash the side view in Y to 0.08 about
+  its bottom, swap, stretch the end-on disc up from 0.08 with a spring - reads as a flip, no 3D needed. Same trick backwards for the flop onto the head.
+- GOOD (0 credits): a dashed 'ghost' outline of the goal object (white dashes over a faint black under-stroke + 28 % white fill) on the giant's
+  head explains 'want to crown' at a glance; re-used on a second giant as a callback that deflates on the sad line. Code eyes inside the moai's
+  eye hollows (shared Eye, brow NaN) bring the statue to life; lookAt(world point) keeps its pupils on the moving hat.
+- GOOD: parbuckling in code: rope = stake -> along the ramp top -> down the slope -> SVG arc around the downhill side of the disc from the contact
+  angle to the tangent toward the pullers' hands (tangent angle = atan2 +- acos(R/d), take the higher one) -> through the three pullers' hands; a
+  dashed overlay on the pulled part runs at 2x the hat's rolled distance (the 2:1 shown, not told).
+- GLITCH -> FIX: easeInOutCubic on a long climb = 3x peak speed in the middle (pop-scan flag; the 1/2 badge also rode the moving rope midpoint)
+  -> a 'haul' easing with a linear middle (short ease in/out, continuous speed) + the badge at a fixed world point. A camera key in the middle of a
+  follow move stops the camera for a frame (zero speed at the key) -> drop the key. The pullers' lean snapped back when 'pulling' went false ->
+  multiply the lean by an envelope.
+- LAYOUT: a 55 deg ramp up to the head of a full-size moai is ~2,600 world px wide and only fits a 9:16 frame at k ~0.4 (tiny figures, lots of sky)
+  -> open that shot with a fast pull-back from the head (ease 'out') while the ramp rises, then follow the hat up and in (k 0.41 -> 0.6). A pusher
+  needs flat ground behind the object: give the ramp a long flat top (1,000 px) and cut to it for the shove.
+- MUSIC: G major, 100.5 BPM; stops on 'But' and on 'though' (under the sad trombone); ping on 'head'; home chord 19.0; bed 15 dB under the voice,
+  ducked 4 dB; final mix peak -4.1 dBFS per channel (MIX_DB -1.1). 4 new Sound Effects v2 cues billed 15.33 credits for 4.6 s (3.33/s).
+- SOURCE pass: the channel search ('<channel>/search?query=ancient|pyramid|egypt|roman|...') found two Easter Island compilations that share most of
+  their narration (oTUy9NtDAjY, 0I8nvgHtDLM); the hats are only mentioned there - the answer came from the 2018 study. Captions free (web_embedded
+  json3), storyboards sb0. 0 vidIQ credits. Remotion: --concurrency max 4 on this machine (CONC=4).

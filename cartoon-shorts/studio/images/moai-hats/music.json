@@ -1,0 +1,4 @@
+{"duration": 20.0, "start": 0.1, "vo_at": 0.1, "words": "images/moai-hats/words_raw.json", "voice": "public/moai-hats/vo/take1.mp3",
+ "key": "G", "bpm": [100, 120], "align": [4.26, 6.06, 8.38, 15.18],
+ "sections": [[0.0, 4.26, "theme"], [4.66, 8.30, "uhoh"], [8.38, 13.10, "build"], [13.10, 15.70, "theme2"], [15.80, 17.14, "uhoh"], [17.64, 19.60, "final"]],
+ "stops": [[4.26, 0.4], [17.14, 0.5]], "pings": [15.18], "end_chord": 19.0, "under_db": 15, "duck_db": 4}
