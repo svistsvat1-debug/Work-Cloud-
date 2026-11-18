@@ -1,0 +1,42 @@
+{
+ "cable_snap": {
+  "dur": 1.2,
+  "prompt": "Sound effect only, no music, no voice: a thick steel cable under heavy load twangs with a low metallic wobble and then snaps with one sharp loud metallic crack and a quick whip-like whoosh, then silence.",
+  "headers": {
+   "Character-Cost": "13"
+  },
+  "bytes": 20105
+ },
+ "sub_splash": {
+  "dur": 1.6,
+  "prompt": "Sound effect only, no music, no voice: a small heavy submarine drops into the sea: one big deep belly-flop splash, a heavy water whoomp, then spray falling back with fizzing foam.",
+  "headers": {
+   "Character-Cost": "18"
+  },
+  "bytes": 26792
+ },
+ "fridge_open": {
+  "dur": 1.0,
+  "prompt": "Sound effect only, no music, no voice: an old refrigerator door is pulled open: a soft rubber-seal suction pop, a small rattle of glass bottles inside, then a low steady electric fridge hum.",
+  "headers": {
+   "Character-Cost": "11"
+  },
+  "bytes": 17179
+ },
+ "germ_feast": {
+  "dur": 1.6,
+  "prompt": "Sound effect only, no music, no voice: a swarm of tiny cartoon creatures devouring a sandwich very fast: rapid tiny crunchy chomps and squeaky munching, getting faster and frantic.",
+  "headers": {
+   "Character-Cost": "18"
+  },
+  "bytes": 26792
+ },
+ "fish_flop": {
+  "dur": 0.7,
+  "prompt": "Sound effect only, no music, no voice: a small wet fish flopping on a hard metal surface: two quick wet slaps and a tiny splash.",
+  "headers": {
+   "Character-Cost": "8"
+  },
+  "bytes": 12163
+ }
+}

@@ -1,0 +1,5 @@
+{"duration": 23.4, "start": 0.1, "vo_at": 0.1, "words": "images/sunken-lunch/words_raw.json", "voice": "public/sunken-lunch/vo/take1.mp3",
+ "key": "C", "bpm": [100, 120], "align": [4.18, 7.94, 12.26, 19.86, 22.18],
+ "sections": [[0.0, 4.18, "theme"], [4.62, 7.94, "uhoh"], [7.94, 9.06, "uhoh"], [9.06, 9.94, "build"], [9.94, 12.26, "theme2"],
+              [12.76, 16.5, "uhoh"], [16.82, 19.5, "uhoh"], [19.86, 23.0, "final"]],
+ "stops": [[4.18, 0.44], [12.26, 0.5], [19.46, 0.4]], "pings": [10.34, 22.18], "end_chord": 22.82, "under_db": 15, "duck_db": 4}

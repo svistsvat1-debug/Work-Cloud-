@@ -888,3 +888,32 @@ Video #37 (moai-hats, 2026-11-18) - all pictures LOW 1K; STORY rule; Liam voice;
 - SOURCE pass: the channel search ('<channel>/search?query=ancient|pyramid|egypt|roman|...') found two Easter Island compilations that share most of
   their narration (oTUy9NtDAjY, 0I8nvgHtDLM); the hats are only mentioned there - the answer came from the 2018 study. Captions free (web_embedded
   json3), storyboards sb0. 0 vidIQ credits. Remotion: --concurrency max 4 on this machine (CONC=4).
+Video #38 (sunken-lunch, 2026-11-18) - NO NEW PICTURES (fallback like #10); STORY rule; Liam voice; code music; MODE B source segment (card from the first session, produced in a second session):
+- BLOCKED AGAIN: the ElevenLabs connector failed to connect (HTTP 400, CLIENT_HTTP_NOT_IMPLEMENTED, retried with backoff) and the REST
+  image endpoint POST /v1/flows/image answered 402 "This endpoint requires a Pro plan or above" (validation runs first: an invalid body
+  gets 422, a valid one gets 402; nothing is charged). The public API has gpt-image-2.5-sunburst with quality low / 1K / 2:3 (schema in
+  /openapi.json), so images/sunken-lunch/el_image.py will work as is once the account has a Pro plan.
+- REST works for the rest (proxy injects the key): TTS /v1/text-to-speech/{voice}/with-timestamps (eleven_v4, Liam): 350 chars cost 154
+  (header Character-Cost; /v1/history shows character_count_change_from/to) - less than half the Flows price; the response alignment gives
+  exact per-character times of the text sent (matched Scribe within ~0.1 s). Scribe /v1/speech-to-text (scribe_v1): 7. Sound Effects
+  /v1/sound-generation bills ~11 credits/s (1.2 s = 13), NOT the ~3.3/s seen through Flows. /v1/user/subscription times out or 500s here.
+- LIAM PACE: 63 words / 350 chars, 10 sentences incl. 4 short fragments ('The sandwich doesn't.', 'Almost fresh.', 'Cold, right?') =
+  22.64 s of speech = 2.78 words/s (#37 3.39, #36 2.73). Fragments + a question keep Liam slow: ~2.8 words/s is the right estimate for them.
+- GOOD (0 credits for pictures): the library holds ~230 finished guy poses; pick poses with r/h 0.20-0.26 and equalise the head radius
+  (r_world / hd[2]). A second role without a new picture: the round-glasses guy (deep-dive b_*, space-twin, nuclear-warning nerd) = the
+  scientist. Contact sheets of public/*/ (tools: a 12-column grid with head-disc measures) make the casting fast.
+- GOOD: code objects carry a whole story: an Alvin-like sub (egg hull + orange tower + portholes + duct prop + skids), a sandwich with a
+  face (bread/lettuce/bologna layers, bites as an SVG mask, wet/mould tints clipped to the layer paths - a tint rect leaked as a blue box),
+  germs (wobbly blob + cilia + Eye + chomping toothy mouth), a code beard (shape anchored under the mouth, per-pose offsets in head radii)
+  = '10 months later' in one look. Occupants in a hatch: clipPath at the hatch line inside the sub's transform + the rim's front half on top.
+- GLITCH -> FIX: SVG <image> elements do not hold the frame like Remotion's <Img>: right after a cut the lab plate and the fridge were
+  missing in 2 frames (pop-scan flagged an alternating 33/1.7/35 diff). Fix: an SImg wrapper (delayRender in useState, continueRender on
+  onLoad/onError, key={href} so a pose swap waits again). Use it for every SVG image from now on.
+- GLITCH -> FIX: foam splashes made of outlined circles read as piles of balls; a cartoon water CROWN (a sheet path with 5 spikes,
+  light-blue inner arc, teardrop drops) on BOTH sides of the hull reads as a splash. A big ship sprite cannot share a frame with
+  readable characters (the guy at head r 60 needs the ship at ~2.5x its native pixels): draw the deck/stern/crane in code instead.
+- IMPROVEMENT PASS: the depth reveal (2-3 s) was empty bands -> a bold outlined dashed arrow that ends INSIDE the wide frame + fish crossing
+  the deep; the crew leaps were tiny -> tighter frame (k 1.0) and shorter arcs so all three land in frame; the 10-months shot pushed in
+  (k 0.98 -> 1.3) so the sleepy sandwich and the fish in the hatch read.
+- MUSIC: C major, 103.5 BPM; stops on 'snap', 'But' and before 'So'; glock pings on 'fresh' and 'purpose', home chord 22.82; bed 15 dB
+  under the voice, ducked 4 dB; final mix peak -3.99 dBFS per channel (MIX_DB -1.5).
