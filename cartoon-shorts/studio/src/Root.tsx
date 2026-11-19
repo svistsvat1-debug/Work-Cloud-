@@ -100,6 +100,8 @@ import {NotABombShort, NAB_DURATION, NAB_FPS} from './not-a-bomb/Short';
 import {NotABombCover} from './not-a-bomb/Cover';
 import {RoswellBalloonShort, RSW_DURATION, RSW_FPS} from './roswell-balloon/Short';
 import {RoswellBalloonCover} from './roswell-balloon/Cover';
+import {CampCenturyShort, CCN_DURATION, CCN_FPS} from './camp-century/Short';
+import {CampCenturyCover} from './camp-century/Cover';
 export const RemotionRoot: React.FC = () => {
   return (
     <>
@@ -183,6 +185,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="NotABombCover" component={NotABombCover} width={1080} height={1920} />
       <Composition id="RoswellBalloon" component={RoswellBalloonShort} durationInFrames={Math.round(RSW_DURATION * RSW_FPS)} fps={RSW_FPS} width={1080} height={1920} />
       <Still id="RoswellBalloonCover" component={RoswellBalloonCover} width={1080} height={1920} />
+      <Composition id="CampCentury" component={CampCenturyShort} durationInFrames={Math.round(CCN_DURATION * CCN_FPS)} fps={CCN_FPS} width={1080} height={1920} />
+      <Still id="CampCenturyCover" component={CampCenturyCover} width={1080} height={1920} />
     </>
   );
 };

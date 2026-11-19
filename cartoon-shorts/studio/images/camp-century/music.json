@@ -1,0 +1,4 @@
+{"duration": 24.4, "start": 0.1, "vo_at": 0.1, "words": "images/camp-century/words.json", "voice": "public/camp-century/vo/take1_fit.wav",
+ "key": "F", "bpm": [100, 120], "align": [7.15, 11.14, 19.39, 23.42],
+ "sections": [[0.0, 7.1, "theme"], [7.15, 11.1, "uhoh"], [11.6, 14.85, "uhoh"], [14.89, 17.15, "build"], [17.5, 19.35, "uhoh"], [19.39, 21.05, "theme2"], [21.1, 22.5, "build"], [22.5, 24.4, "final"]],
+ "stops": [[11.14, 0.42], [17.2, 0.28]], "pings": [6.11, 21.87, 23.42], "end_chord": 23.75, "under_db": 15, "duck_db": 4}
