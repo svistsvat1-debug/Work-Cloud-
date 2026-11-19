@@ -104,6 +104,8 @@ import {CampCenturyShort, CCN_DURATION, CCN_FPS} from './camp-century/Short';
 import {CampCenturyCover} from './camp-century/Cover';
 import {FairywrenTapeShort, FWT_DURATION, FWT_FPS} from './fairywren-tape/Short';
 import {FairywrenTapeCover} from './fairywren-tape/Cover';
+import {OrcaToothShort, ORCA_DURATION, ORCA_FPS} from './orca-tooth/Short';
+import {OrcaToothCover} from './orca-tooth/Cover';
 export const RemotionRoot: React.FC = () => {
   return (
     <>
@@ -191,6 +193,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="CampCenturyCover" component={CampCenturyCover} width={1080} height={1920} />
       <Composition id="FairywrenTape" component={FairywrenTapeShort} durationInFrames={Math.round(FWT_DURATION * FWT_FPS)} fps={FWT_FPS} width={1080} height={1920} />
       <Still id="FairywrenTapeCover" component={FairywrenTapeCover} width={1080} height={1920} />
+      <Composition id="OrcaTooth" component={OrcaToothShort} durationInFrames={Math.round(ORCA_DURATION * ORCA_FPS)} fps={ORCA_FPS} width={1080} height={1920} />
+      <Still id="OrcaToothCover" component={OrcaToothCover} width={1080} height={1920} />
     </>
   );
 };

@@ -1027,3 +1027,35 @@ Video #42 (fairywren-tape, 2026-11-19) - all pictures LOW 1K; STORY rule; Liam v
 - PROCESS: an 'original' topic = a fresh peer-reviewed paper + 15 yt-dlp YouTube searches (ytsearch15) showing no video on it. Read
   the primary PDF: WebFetch saves PDFs it cannot parse; `pdftotext -layout` reads them locally. Some publisher pages refuse
   automated fetches (allaboutbirds.org 403): cite them, do not work around the block. Claimed the topic on main first.
+Video #43 (orca-tooth, 2026-11-19) - all pictures LOW 1K; STORY rule; Liam voice; code music; ORIGINAL idea (no source channel, owner's request), approved idea card:
+- LIAM PACE: 65 words / 371 chars, 9 sentences (a 1-word 'How?', 'fifty-two' / 'sixty-five' as words, two colons) = 24.48 s of raw
+  speech = 2.66 words/s - the SLOWEST take so far (#42 2.99, #41 2.63). Colons and number words slow Liam down: with 2 numbers and 2
+  colons plan <= 60 words. Fitted by step 1 only (tail 0.3 s) -> 24.88 s; a 0.3 s tail still left room for the payoff gag and the wink.
+- GOOD: LOW held up again: 8 pictures (hero + 3-pose sheet + 6 object / plate pictures), 0 redos, all keyed at dist < 60. A role item for the
+  guy = round safety goggles pushed up on the forehead (lenses measured #BAE9FA on the hero) carried word for word to the pose sheet. MAGENTA
+  key for anything with pale-blue 'glass' (goggles, magnifier) and for grey/olive objects (bomb): no green fringe. A curly cable on a green
+  key keeps green specks between the coils: despill both green AND magenta leftovers in prep (despill_any).
+- GOOD (0 credits): the main object was CODE, not a picture: a tooth-slice disc with 52 ring lines (every 4th line darker/thicker, so the rings
+  read in the wide frame-0 shot; all-equal 1 px lines read as a flat brown target). Glow sweep = thick stroked annuli per band; compression =
+  interpolating two radius tables (52 even -> 66, the newest packed at the pulp, extra lines fade in); a magnifier = the same disc redrawn
+  inside a clipPath at 3.2x. Place the lens over the PACKED BAND, not the centre (centred, it only magnified the pulp).
+- GOOD: objects with faces carried the jokes: a bomb that drops ON the counter and wags 'no' (the 52 turns red and is struck out), a mushroom
+  cloud that tilts and shakes the fallout out like a salt shaker (with '> <' eyes), a tooth with shifty half-lidded eyes + sweat drop + 'o'
+  whistle mouth on 'lied', an old bull orca with code glasses + a grey brow that winks at the end. Tags carry facts cheaply: ORCA TOOTH,
+  1ST RING, AVERAGE MALE: 30.
+- GLITCH -> FIX: a sprite that hands off between two layers (the bomb sitting on the counter -> flying in screen space to the horizon) must
+  start at the SAME centre and rotation and keep its face; the first version flipped (sx -1) and jumped -> spin instead of flip. A 0.35 s
+  camera pull after 'How?' flagged 10 pop-scan frames -> 0.7 s. A sin() bump stops with full speed (velocity jump) -> sin^2 bumps.
+  The stump's face sat on the roots: read face spots off the grid image (qa/measure.jpg), not by guess. The probe cable crossed the whole
+  slice -> probe on the side of the Geiger counter. A tag near the frame edge was cut ('T RING') -> place tags toward the centre.
+- IMPROVEMENT PASS: 'ORCA TOOTH' tag on the whole tooth on 'killer whale's tooth' (the disc did not read as a tooth slice), the bomb's
+  take-off without a jump (spin + same face), the stump face moved onto the bark, smoother bumps and camera pull-back. Cover: only the guy +
+  the glowing slice + text (the Geiger counter and the cut-off tooth removed: rule of three).
+- MUSIC: C major, 112 BPM; stops on 'But' (0.42 s, under the record scratch) and on 'doesn't' (0.55 s, under the crickets); glock pings on
+  'fifty-two', 'first', 'sixty-five'; home chord 24.3; bed 15 dB under the voice, ducked 4 dB; final mix peak -4.1 dBFS (MIX_DB -0.5).
+  5 new Sound Effects v2 cues billed 14.67 credits for 4.4 s (3.33/s). Total 761.29 credits; account counter +762 (one session generating).
+- PROCESS: the owner's 'original video' request WITHOUT 'no confirmation' = normal idea card + stop. Fresh news topics get AI-news-channel
+  uploads within days (the 245-animals-in-a-nodule study had 10+ such videos one week later); the orca study (6 weeks old) had only two
+  0-view readings. Claimed the topic on main right after approval.
+- MISS: the library already had a wrong-answer buzzer.wav (#?) and a new one was generated (2 credits) and nearly overwrote it: grep
+  sfx-library/index.md for every planned sound by keyword before generating, and never copy into the library under an existing name.
