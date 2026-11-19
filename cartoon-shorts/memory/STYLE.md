@@ -888,3 +888,34 @@ Video #37 (moai-hats, 2026-11-18) - all pictures LOW 1K; STORY rule; Liam voice;
 - SOURCE pass: the channel search ('<channel>/search?query=ancient|pyramid|egypt|roman|...') found two Easter Island compilations that share most of
   their narration (oTUy9NtDAjY, 0I8nvgHtDLM); the hats are only mentioned there - the answer came from the 2018 study. Captions free (web_embedded
   json3), storyboards sb0. 0 vidIQ credits. Remotion: --concurrency max 4 on this machine (CONC=4).
+Video #38 (sunken-lunch, 2026-11-19) - all pictures LOW 1K; STORY rule; Liam voice; code music; MODE B source segment; the owner asked to skip the approval stop:
+- LIAM PACE: 63 words / 350 chars, 10 sentences incl. 4 short fragments ('The sandwich doesn't.', 'Almost fresh.', 'Cold, right?') and no digits
+  = 22.70 s of speech = ~2.78 words/s (#37 3.39, #36 2.73, #35 2.87). Many fragments slow Liam down: with 9-10 sentences plan <= 64 words.
+- GOOD: LOW held up again: 7 pictures, 0 redos, all keyed at dist < 60. The magenta key worked for the props sheet with green lettuce + green
+  mold (despill only magenta there, never the green despill). One props sheet with THREE STATES of the same object (fresh / soggy / rotten
+  sandwich) + a lunchbox gave every state change as a squash swap. Code faces (shared Eye + a MouthShape: smile / grin / o / gulp / wavy /
+  sleep) made food a character; keep browTilt within +-1 (it is multiplied by r * 0.25: -8 drew 'antennae').
+- GOOD (0 credits): a SubRig = sub sprite + an occupant layer clipped at the hatch's centre line inside the sub's own transform: the guy /
+  sandwich sit IN the hatch (the front half of the rim stays in front) and tilt with the sub. A porthole = a round overflow-hidden div with a
+  blue tint + glint over the sprite's glass. A front WATER layer (gradient rgba 0.5 -> 0.93 from the surface line down) drawn after the
+  objects makes anything below the surface read as underwater, including the plate's own hull. Fall + splash + bob = free fall to the
+  water line, then an underdamped spring (zeta 0.35, 1 Hz) to the floating depth.
+- GOOD: a close-up with the guy in the FOREGROUND in screen space (bottom-left, slightly bigger than his world size) solved 'two things far
+  apart in one shot' (deck vs hatch) after a cut; a magnifier callout (screen-space circle + pointer toward the porthole) showed the
+  germs at a readable size without upscaling any sprite past 1.5x.
+- GLITCH -> FIX: foam puffs in a row read as a string of pearls -> one mound: 14 overlapping puffs (r 0.075-0.115 w, spacing ~0.064 w),
+  highest in the middle; for a hatch going under use 2-3 expanding white ellipses instead of foam. Snapped cables first curled up into
+  a frame shape -> whip up for 0.18 s, then fall back to hang down with a damped swing. The fridge door must be drawn AFTER the sandwich
+  (body/interior -> sandwich + germs -> door), or the closed fridge shows the food. A hook on the hatch hid the payoff sandwich -> lift the
+  sub by an eye on the hull top beside the tower. A mud strip with a stroked closed path left a black line across the floor -> fill far
+  below the frame and stroke only the top edge. A title at 118 px overflowed 1080 px ('10 MONTHS LATER' = 15 chars -> 94 px).
+- IMPROVEMENT PASS: the 10-months shot was too wide (sleeping sandwich in the porthole unreadable) -> k 0.62 -> 0.86 and the porthole
+  sandwich 0.44 -> 0.55; the UP TO x100 badge covered the fridge thermometer -> moved to the top-left; frame 0 kept at k 1.0 so the sea
+  is in the first frame ('headed for the bottom of the sea').
+- MUSIC: F major, 108.5 BPM; stops on 'snap' (4.02) and 'But' (12.26); uh-oh under the sinking and the pressure, a build under '10 months
+  later' and under the germs ('a hundred times faster'), pings on 'fresh' and 'purpose', home chord 22.95; bed 15 dB under the voice,
+  ducked 4 dB. 5 new Sound Effects v2 cues billed 19.0 credits for 5.7 s (3.33/s); Scribe billed 0.
+- ENVIRONMENT: in the Default cloud environment the ElevenLabs connector failed to connect (HTTP 400) for ~30 min and only came up after the
+  session worker restarted; generated files live on elevenlabsusercontent.com, which the Default network blocked until the owner allowed it
+  (it is now in Default's allowed hosts). YouTube and WebFetch stay blocked there: the segment came from SOURCE_LOG (already analysed) and
+  the facts from WebSearch result summaries.

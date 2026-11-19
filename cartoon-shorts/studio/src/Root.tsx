@@ -94,6 +94,8 @@ import {TitanicCoverShort, TC_DURATION, TC_FPS} from './titanic-cover/Short';
 import {TitanicCoverCover} from './titanic-cover/Cover';
 import {MoaiHatsShort, MH_DURATION, MH_FPS} from './moai-hats/Short';
 import {MoaiHatsCover} from './moai-hats/Cover';
+import {SunkenLunchShort, SL_DURATION, SL_FPS} from './sunken-lunch/Short';
+import {SunkenLunchCover} from './sunken-lunch/Cover';
 export const RemotionRoot: React.FC = () => {
   return (
     <>
@@ -171,6 +173,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="TitanicCoverCover" component={TitanicCoverCover} width={1080} height={1920} />
       <Composition id="MoaiHats" component={MoaiHatsShort} durationInFrames={Math.round(MH_DURATION * MH_FPS)} fps={MH_FPS} width={1080} height={1920} />
       <Still id="MoaiHatsCover" component={MoaiHatsCover} width={1080} height={1920} />
+      <Composition id="SunkenLunch" component={SunkenLunchShort} durationInFrames={Math.round(SL_DURATION * SL_FPS)} fps={SL_FPS} width={1080} height={1920} />
+      <Still id="SunkenLunchCover" component={SunkenLunchCover} width={1080} height={1920} />
     </>
   );
 };
