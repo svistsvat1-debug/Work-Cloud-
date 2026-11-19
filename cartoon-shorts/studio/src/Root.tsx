@@ -98,6 +98,8 @@ import {SunkenLunchShort, SL_DURATION, SL_FPS} from './sunken-lunch/Short';
 import {SunkenLunchCover} from './sunken-lunch/Cover';
 import {NotABombShort, NAB_DURATION, NAB_FPS} from './not-a-bomb/Short';
 import {NotABombCover} from './not-a-bomb/Cover';
+import {RoswellBalloonShort, RSW_DURATION, RSW_FPS} from './roswell-balloon/Short';
+import {RoswellBalloonCover} from './roswell-balloon/Cover';
 export const RemotionRoot: React.FC = () => {
   return (
     <>
@@ -179,6 +181,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="SunkenLunchCover" component={SunkenLunchCover} width={1080} height={1920} />
       <Composition id="NotABomb" component={NotABombShort} durationInFrames={Math.round(NAB_DURATION * NAB_FPS)} fps={NAB_FPS} width={1080} height={1920} />
       <Still id="NotABombCover" component={NotABombCover} width={1080} height={1920} />
+      <Composition id="RoswellBalloon" component={RoswellBalloonShort} durationInFrames={Math.round(RSW_DURATION * RSW_FPS)} fps={RSW_FPS} width={1080} height={1920} />
+      <Still id="RoswellBalloonCover" component={RoswellBalloonCover} width={1080} height={1920} />
     </>
   );
 };

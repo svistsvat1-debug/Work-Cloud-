@@ -942,3 +942,27 @@ Video #39 (not-a-bomb, 2026-11-19) - all pictures LOW 1K; STORY rule; Liam voice
   pivot moved left, rests at 80 deg; the binocular pose got a slow scanning rotation (dead hold).
 - MUSIC: F major, 114 BPM; stops on 'Except', the splash, 'But', 'nothing' and a tiny one before 'And'; glock pings on 'spots' and
   'cameras'; home chord 23.5; bed 15 dB under the voice, ducked 4 dB.
+Video #40 (roswell-balloon, 2026-11-19) - all pictures LOW 1K; STORY rule; Liam voice; code music; MODE B source segment; the owner asked to skip the approval stop ("American secrets" direction, 2nd run of the day):
+- LIAM PACE: 67 words / 373 chars, 9 sentences with two colons and three short fragments = 24.50 s of raw speech = 2.73 words/s (#39 2.85,
+  #38 2.78). 67 words was too many for 25 s: the video only fit after cutting two pauses (0.6 s and 0.5 s -> 0.25 s, silence only). With colons
+  + fragments plan <= 64 words (as #36 said); 67-70 words only for plain sentences without colons.
+- GOOD: LOW held up again: 8 pictures, 0 redos, all keyed at dist < 60. A role hat per sheet (brown cowboy hat = rancher, olive peaked cap =
+  1940s officer, crinkled foil cone = 'people' / conspiracy fans) read as three different people at a glance. The hero hat colours measured
+  (#AA6B32 / #935B29 / band #63331B) carried over to the rancher sheet exactly.
+- GLITCH -> FIX: an object with see-through panels (the box-kite radar reflector) kept a pale-green enclosed panel after keying (key colour
+  seen 'through' the drawing): recolour enclosed greenish pixels to the object's shade colour before the despill. A face disc measured on a
+  pose holding a big white sheet (the newspaper) picked the paper as the 'head': use one head radius per sheet (R) and read paper / board
+  rects as the biggest white component below / above the face.
+- GOOD (0 credits): mirror-padded plates (cv2 BORDER_REFLECT_101, +512 px each side, +384 px below) let the camera pull out to k 0.68 and tilt
+  up without seams; a flat sky-colour rect above the plate covers big tilts. Hangar doors from the plate re-drawn in code (dark inside + two
+  sliding panels) = a 'reveal' set piece for free; a stamp clipped at the door seam splits when the doors open. A screen-space newspaper that
+  spins in, slams and then flies into a held blank paper (screen point of the paper rect via the camera) links two beats in one move.
+- IMPROVEMENT PASS: the saucer -> weather-balloon gag was hidden under the poof (poof 0.5 s -> 0.34 s, balloon 150 -> 210 px with a pop and a
+  sad face, foil radar target under it); the dropped paper rotated into a 'stick' -> it now falls flat (scaleY 0.3); the above-the-clouds
+  finale had a tiny device in an empty sky -> device x1.3, the far blast moved closer, camera k 1.0 -> 1.1-1.15; a static 2 s 'shh' shot got
+  a push-in onto the TOP SECRET doors. The '?' over the rancher sat on his hat -> moved up and right.
+- MUSIC: G major, 119.5 BPM; stop on 'But', tiny stop before 'Turns'; glock pings on 'disc', 'cover-up' and 'bombs'; home chord 23.95; bed 15 dB
+  under the voice, ducked 4 dB; final mix peak -4.17 dBFS per channel (MIX_DB -1.0). 5 new Sound Effects v2 cues billed 18.33 credits (3.33/s).
+- SOURCE pass: the flat channel list (2,024 videos) grepped for secret / CIA / government / area / submarine found the Area 51 compilation; its
+  YouTube chapters gave the segment map directly. youtube-transcript-api is IP-blocked here; yt-dlp web_embedded json3 captions work (one 429
+  on the 3rd video in a row). Storyboards sb0 for the visual pass. 0 vidIQ credits. Render on this machine: 24.5 s at 1080x1920 in 80 s (CONC=4).
