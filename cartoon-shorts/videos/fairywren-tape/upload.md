@@ -7,10 +7,12 @@ Other options: Why did this bird bring plastic instead of a flower? / Why is thi
 fairy-wren diving at the net with an orange plastic strip fluttering from his beak + the text)
 
 **Description:**
-A male fairy-wren flew straight into a research net where a female was caught, to court her the fairy-wren way: by showing her a flower petal. His "petal" was a strip of orange plastic flagging tape - most likely the tape the researchers tie to bushes to mark nests. Scientists say it is the first record of fairy-wrens using human-made material in a courtship display.
+A male fairy-wren flew straight into a research net where another fairy-wren, most likely a female, was already caught - to court her the fairy-wren way, by showing her a flower petal. His "petal" was a strip of orange plastic flagging tape, most likely the tape the researchers tie to bushes to mark nests. The scientists say it is the first record of fairy-wrens using human-made material in a courtship display.
+
 Sources:
-Salett et al. (2026), Australian Field Ornithology 43: 77-81, https://doi.org/10.20938/afo43077081
-https://www.allaboutbirds.org/news/australia-fairywrens-add-plastic-mating-displays/
+Salett et al. (2026), Australian Field Ornithology 43: 77-81 - https://doi.org/10.20938/afo43077081
+Cornell Lab of Ornithology - https://www.allaboutbirds.org/news/australia-fairywrens-add-plastic-mating-displays/
+
 #shorts #birds #fairywren #animals #plastic
 
 **Files:** fairywren-tape.mp4 (1080x1920, 60 fps, 21.6 s; not in git - sent in the chat), cover.png (1080x1920)
