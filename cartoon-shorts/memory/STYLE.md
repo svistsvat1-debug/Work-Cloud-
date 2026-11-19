@@ -966,3 +966,32 @@ Video #40 (roswell-balloon, 2026-11-19) - all pictures LOW 1K; STORY rule; Liam 
 - SOURCE pass: the flat channel list (2,024 videos) grepped for secret / CIA / government / area / submarine found the Area 51 compilation; its
   YouTube chapters gave the segment map directly. youtube-transcript-api is IP-blocked here; yt-dlp web_embedded json3 captions work (one 429
   on the 3rd video in a row). Storyboards sb0 for the visual pass. 0 vidIQ credits. Render on this machine: 24.5 s at 1080x1920 in 80 s (CONC=4).
+Video #41 (camp-century, 2026-11-19) - all pictures LOW 1K; STORY rule; Liam voice; code music; MODE A ('American secrets' direction), no approval stop:
+- LIAM PACE: 65 words / 368 chars, 8 sentences (a 3-word 'Officially, for science.' and a 4-word 'A hundred feet down.') = 24.68 s of raw speech
+  = 2.63 words/s - the SLOWEST take so far (#39 2.85, #37 3.39). Every full stop got a 0.35-0.48 s pause. Fitted by shortening 6 pauses
+  > 0.35 s to 0.25 s (-1.08 s), no tempo change -> 24.4 s video. With 8 short sentences plan <= 60 words or count on fitting.
+- GOOD: LOW held up again: 7 pictures, 0 redos (712.63 credits). An OLIVE-GREEN helmet role needs a MAGENTA key (#5B6737 / #434F29 measured
+  on the hero, carried word for word to 3 three-pose sheets). Prep despills magenta with (r > g + 40) & (b > g + 40): the pink tongue and the
+  red rocket nose survive. Equalise poses by the head+helmet inscribed disc ('hd'), NOT the white face disc ('hw'): a finger on the lips ('shh')
+  or a lowered head shrinks the white disc by up to 30 %.
+- GOOD (0 credits): a squeezable code tunnel = one SVG path (ceiling = CEIL + sag * gaussian(x) sampled every 20 px, rounded corners, the end
+  wall a quadratic that bulges in), so 'the ice squeezes the tunnels' is one continuous animation; hands / scraper are pinned to the wall with
+  wallAt(t, y). The ICE itself gets the eyes (two Eye r 66 in the roof band) and goes '> <' while it squeezes, sleeps (lids) after the lights go
+  out and winks at the end. A plan that was never built is drawn as a BLUEPRINT (blue sheet that unrolls, white grid, dashed tunnels, white
+  rocket silhouettes popping row by row + a HUD 0 -> 600 counter) so the picture never claims the missiles existed. Radar = expanding ellipse
+  arcs with an ink underlay + the buried town re-drawn as a glowing cyan outline ('x-ray').
+- GLITCH -> FIX: a world-space label near the top got cut by the camera move (GREENLAND card) -> screen-space HUD card; the screen-space counter
+  kept shrinking for 0.2 s after a hard cut (pop-scan flag) -> hide overlays AT the cut; snow thrown over the shoulder covered the digger's face
+  -> throw it forward; a fast plane had left the frame before its double take -> its speed set so it is centred on the punch word; a narrow
+  sag left the tunnel's end corner sticking up like a horn -> wider gaussian (sigma 420) centred near the wall.
+- IMPROVEMENT PASS: a 1 s dead hold after the landing -> the soldier 'looks around' (squash-turn toward the town) before the ta-da; the reactor
+  now leaves BEFORE the soldier (it was removed in 1964, before the camp closed) so they no longer overlap; the radar rings got an ink underlay
+  and the x-ray town a stronger cyan fill; the cover was re-framed closer (all 39 rockets in, TOP SECRET sign, reactor).
+- MUSIC: F major, 103 BPM; stops on 'But' (0.42 s) and 'So' (0.28 s); glock pings on 'science', 'accident', 'down'; home chord 23.75; bed 15 dB
+  under the voice, ducked 4 dB; final mix peak -3.89 dBFS per channel (MIX_DB -0.5). 4 new Sound Effects v2 cues billed 16.0 credits for 4.76 s.
+- CREDITS: the account counter (account_get_usage character_count) rose by 2,142 during this run while this flow was charged 712.63: two
+  parallel sessions (flows 'not-a-bomb (WhyZap #39)' and 'sunken-lunch') were generating at the same time. Keep the ledger from the per-flow
+  prices; the account delta is only valid when one session runs.
+- PROCESS: the owner sent the same 'American secrets' message to three sessions; each produced a video (#39 Palomares, #40 Roswell, #41 Camp
+  Century) - no duplicate only because each picked a different candidate. Re-fetch main right before creating the flow and claim the topic
+  early (a one-line IDEA_BANK commit pushed to main) whenever parallel runs are likely. Root.tsx conflicts on rebase: keep all compositions.
