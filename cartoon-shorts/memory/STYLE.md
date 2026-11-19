@@ -995,3 +995,35 @@ Video #41 (camp-century, 2026-11-19) - all pictures LOW 1K; STORY rule; Liam voi
 - PROCESS: the owner sent the same 'American secrets' message to three sessions; each produced a video (#39 Palomares, #40 Roswell, #41 Camp
   Century) - no duplicate only because each picked a different candidate. Re-fetch main right before creating the flow and claim the topic
   early (a one-line IDEA_BANK commit pushed to main) whenever parallel runs are likely. Root.tsx conflicts on rebase: keep all compositions.
+Video #42 (fairywren-tape, 2026-11-19) - all pictures LOW 1K; STORY rule; Liam voice; code music; ORIGINAL idea (no source channel, owner's request), no approval stop:
+- LIAM PACE: 62 words / 325 chars, 9 sentences (a 1-word question 'Why?', fragments of 5-7 words, a 2-word 'And him.') = 20.76 s of
+  speech = 2.99 words/s (#41 2.63, #39 2.85). No fitting: 21.6 s video. Short plain words keep Liam near 3.0 words/s even with many
+  full stops; 62 words left ~3 s of the cap unused (66-68 words would have fit).
+- GOOD: LOW held up again: 7 pictures, 0 redos, all keyed at dist < 60 on green. A role hat for the guy (khaki bush hat measured on the
+  hero: #CAA36E / #916E45 / band #75502D) carried word for word to two 3-pose sheets. ANIMALS AS THE DOERS: cartoon birds with big
+  white eyes described with hex colours (male #26262B + scarlet back #E8302A + brown wings #7A5A3C; female #A97E5B + cream #F3E7D3)
+  stayed on-model over three sheets. A FLY PAIR sheet (two identical copies, wings up / wings down) = a flapping cycle for free
+  (swap ~13x per second, both anchored on the eye; the beak offset matches within 1 px).
+- GOOD (0 credits): a mist net in code: diamond mesh (two families of 45 deg lines every 30 px, sampled every 18 px) + 5 shelf strings +
+  poles; 'pockets' = a radial gaussian push around each bird (+ a little sag), the impact pocket springs (a = 20 + 30 * spring). The
+  same mesh drawn again IN FRONT of the birds, clipped to an ellipse around each, reads as 'tangled in the net'. Perspective sells
+  'flies INTO the net': the bird starts big in front (scale 0.64) and shrinks to the net plane (0.42) while it dives.
+- GOOD: a plastic ribbon that reads as tape = flat fill with front / back colours per segment + width modulated by |cos(twist)|
+  (0.22-1.0) + a thin highlight only where the front faces us + one outline. The first version (two long stripes along the strip +
+  wavy edges) read as BACON. A long hanging strip must curl (gravity lerp factor 1.1, sway 0.55) or it reads as a stick. A small
+  white 'PLASTIC' luggage tag popping onto the strip on the word made the reveal instant (and filled a 2 s hold).
+- GOOD: cupped hands holding a small creature: draw the creature, then the guy's sprite again with a CSS clip-path polygon around the
+  fingers on top -> the fingers wrap it. A creature with a tall upright tail in front of the face reads as a moustache: use a
+  side-view pose (tail sideways) and clip its bottom at the cup line.
+- GLITCH -> FIX: frame 0 had the bird half outside the frame and the wider 'shock' pose cut at the left edge -> place characters so
+  the WIDEST pose fits at every camera key; a close-up showed the guy's foot as stray black blobs at the frame edge (moved the birds).
+  The first cover cut the bird and the text: a cover can place its own sprites (a COVER state) instead of a timeline moment;
+  128 px Inter Black fits 'NOT A PETAL' in 1080 px with a -4 deg tilt. Cover nets need no pockets (an empty bulge looks odd).
+- IMPROVEMENT PASS: bigger flying bird in the hook (perspective), PLASTIC tag on 'plastic', the tug-of-war shot reframed tighter
+  (k 1.4 -> 1.6), a push-in on 'And him.', a camera push onto the nest with the tapes on 'mark nests'.
+- MUSIC: G major, 102 BPM; stops on 'But' (0.36 s) and 'Except' (0.55 s, under a record scratch); glock pings on 'flirt', 'petal',
+  'back'; home chord 20.75; bed 15 dB under the voice, ducked 4 dB; final mix peak -4.2 dBFS (MIX_DB -0.5). 6 new Sound Effects v2
+  cues billed 17.33 credits for 5.2 s (3.33/s). Total 670.97 credits; account counter +672 (one session generating).
+- PROCESS: an 'original' topic = a fresh peer-reviewed paper + 15 yt-dlp YouTube searches (ytsearch15) showing no video on it. Read
+  the primary PDF: WebFetch saves PDFs it cannot parse; `pdftotext -layout` reads them locally. Some publisher pages refuse
+  automated fetches (allaboutbirds.org 403): cite them, do not work around the block. Claimed the topic on main first.

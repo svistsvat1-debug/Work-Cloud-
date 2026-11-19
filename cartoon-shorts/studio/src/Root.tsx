@@ -102,6 +102,8 @@ import {RoswellBalloonShort, RSW_DURATION, RSW_FPS} from './roswell-balloon/Shor
 import {RoswellBalloonCover} from './roswell-balloon/Cover';
 import {CampCenturyShort, CCN_DURATION, CCN_FPS} from './camp-century/Short';
 import {CampCenturyCover} from './camp-century/Cover';
+import {FairywrenTapeShort, FWT_DURATION, FWT_FPS} from './fairywren-tape/Short';
+import {FairywrenTapeCover} from './fairywren-tape/Cover';
 export const RemotionRoot: React.FC = () => {
   return (
     <>
@@ -187,6 +189,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="RoswellBalloonCover" component={RoswellBalloonCover} width={1080} height={1920} />
       <Composition id="CampCentury" component={CampCenturyShort} durationInFrames={Math.round(CCN_DURATION * CCN_FPS)} fps={CCN_FPS} width={1080} height={1920} />
       <Still id="CampCenturyCover" component={CampCenturyCover} width={1080} height={1920} />
+      <Composition id="FairywrenTape" component={FairywrenTapeShort} durationInFrames={Math.round(FWT_DURATION * FWT_FPS)} fps={FWT_FPS} width={1080} height={1920} />
+      <Still id="FairywrenTapeCover" component={FairywrenTapeCover} width={1080} height={1920} />
     </>
   );
 };

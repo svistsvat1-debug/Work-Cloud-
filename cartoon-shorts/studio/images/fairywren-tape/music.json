@@ -1,0 +1,4 @@
+{"duration": 21.6, "start": 0.1, "vo_at": 0.1, "words": "images/fairywren-tape/words_raw.json", "voice": "public/fairywren-tape/vo/take1.wav",
+ "key": "G", "bpm": [100, 120], "align": [6.14, 11.9, 18.82, 20.66],
+ "sections": [[0.0, 6.1, "theme"], [6.5, 11.85, "theme2"], [12.45, 15.45, "uhoh"], [15.5, 18.75, "build"], [18.8, 21.6, "final"]],
+ "stops": [[6.14, 0.36], [11.9, 0.55]], "pings": [8.46, 10.98, 19.82], "end_chord": 20.75, "under_db": 15, "duck_db": 4}
