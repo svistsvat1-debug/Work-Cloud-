@@ -917,3 +917,27 @@ Video #38 (sunken-lunch, 2026-11-18) - NO NEW PICTURES (fallback like #10); STOR
   (k 0.98 -> 1.3) so the sleepy sandwich and the fish in the hatch read.
 - MUSIC: C major, 103.5 BPM; stops on 'snap', 'But' and before 'So'; glock pings on 'fresh' and 'purpose', home chord 22.82; bed 15 dB
   under the voice, ducked 4 dB; final mix peak -3.99 dBFS per channel (MIX_DB -1.5).
+Video #39 (not-a-bomb, 2026-11-19) - all pictures LOW 1K; STORY rule; Liam voice; code music; MODE B source segment; the owner asked to skip the approval stop ("American secrets" direction):
+- CONNECTOR BACK: the ElevenLabs creative_* tools loaded and worked through one flow (voice 333 for 333 chars, Scribe 0, pictures 46.95 each,
+  Sound Effects v2 billed 3.33/s again: 5 cues = 21). Total 730 credits with 8 pictures. YouTube was reachable again (yt-dlp web_embedded).
+- LIAM PACE: 66 words / 333 chars, 9 sentences incl. two short fragments and a quoted phrase = 23.12 s of speech = 2.85 words/s
+  (#38 2.78, #37 3.39). The ~2.85 estimate held exactly: 66 words gave a 24.0 s video with a 0.55 s tail, no fitting.
+- GOOD: LOW held up again: 8 pictures, 0 redos, all keyed at dist < 60. Three role sheets in one video (officer cap, yellow sou'wester,
+  brown fedora) all on-model; props drawn INTO the poses (binoculars, a blank sign board on a stick, a flash camera, a microphone, a
+  notepad) came out clean and read instantly. A 'completely blank plain white sign' in a pose = a free code text board: draw a bigger
+  code board over it (cover the sprite's board fully, grow it away from the head) and pop the words in on the spoken words.
+- GOOD (0 credits): a FOREGROUND RAILING cut from the deck plate in prep (rows of the railing, blue sea/sky pixels -> alpha 0, eroded
+  1 px) lets a hook rise from the sea BEHIND the rail and a far boat sit between the bars. A code parachute (dome + scalloped rim + gores
+  + lines to the load) works at every scale: far + hazy, close-up, half-collapsed (width x0.72 flutter), flat on the water, crumpled on a
+  slope (polygon along the slope profile with bumps), wrapped around a robot. Bomb face = shared Eye pairs placed with a bombPt() helper
+  in the sprite's own frame, so the face follows any rotation (hanging nose-down, lying on a 32 deg slope, posing on a cradle).
+- GLITCH -> FIX: an SImg (SVG <image>) placed outside an <svg> never fires onLoad -> the render timed out on delayRender: every SVG image
+  must sit inside a FullSvg. A pose swap of the canopy width at a phase change (x0.72 at once) showed in the pop scan: blend factors in
+  over ~0.35 s. After an object plunges into the sea, stop drawing its attached parachute (two canopies showed for 0.3 s).
+- IMPROVEMENT PASS: the fall shot now TRACKS the falling bomb (camera = bomb position, zoom-out eased, y settles late with easeIn) instead
+  of interpolating to the end framing (mid-move the fisherman's huge head was cut by the frame); the deep-slope parachute was a white
+  'plank' -> crumpled cloth along the slope; the robot's face was hidden by the parachute wrap -> wrap drawn behind + tangled lines in
+  front; the press reporter's hat covered the sign's last line -> reporter moved down; the falling sign left the frame -> smaller sign,
+  pivot moved left, rests at 80 deg; the binocular pose got a slow scanning rotation (dead hold).
+- MUSIC: F major, 114 BPM; stops on 'Except', the splash, 'But', 'nothing' and a tiny one before 'And'; glock pings on 'spots' and
+  'cameras'; home chord 23.5; bed 15 dB under the voice, ducked 4 dB.

@@ -1,0 +1,5 @@
+{"duration": 24.0, "start": 0.1, "vo_at": 0.1, "words": "images/not-a-bomb/words_raw.json", "voice": "public/not-a-bomb/vo/take1.mp3",
+ "key": "F", "bpm": [100, 120], "align": [3.22, 6.5, 9.06, 14.82, 20.34, 22.74],
+ "sections": [[0.0, 3.22, "theme"], [3.57, 6.5, "uhoh"], [6.9, 9.06, "build"], [9.5, 12.82, "uhoh"], [12.82, 14.82, "uhoh"],
+              [14.82, 17.62, "build"], [18.1, 20.2, "build"], [20.34, 23.6, "final"]],
+ "stops": [[3.22, 0.35], [6.5, 0.4], [9.06, 0.44], [13.94, 0.42], [20.2, 0.14]], "pings": [16.02, 22.74], "end_chord": 23.5, "under_db": 15, "duck_db": 4}

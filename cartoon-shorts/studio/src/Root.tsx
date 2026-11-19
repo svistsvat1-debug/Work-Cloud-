@@ -96,6 +96,8 @@ import {MoaiHatsShort, MH_DURATION, MH_FPS} from './moai-hats/Short';
 import {MoaiHatsCover} from './moai-hats/Cover';
 import {SunkenLunchShort, SL_DURATION, SL_FPS} from './sunken-lunch/Short';
 import {SunkenLunchCover} from './sunken-lunch/Cover';
+import {NotABombShort, NAB_DURATION, NAB_FPS} from './not-a-bomb/Short';
+import {NotABombCover} from './not-a-bomb/Cover';
 export const RemotionRoot: React.FC = () => {
   return (
     <>
@@ -175,6 +177,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="MoaiHatsCover" component={MoaiHatsCover} width={1080} height={1920} />
       <Composition id="SunkenLunch" component={SunkenLunchShort} durationInFrames={Math.round(SL_DURATION * SL_FPS)} fps={SL_FPS} width={1080} height={1920} />
       <Still id="SunkenLunchCover" component={SunkenLunchCover} width={1080} height={1920} />
+      <Composition id="NotABomb" component={NotABombShort} durationInFrames={Math.round(NAB_DURATION * NAB_FPS)} fps={NAB_FPS} width={1080} height={1920} />
+      <Still id="NotABombCover" component={NotABombCover} width={1080} height={1920} />
     </>
   );
 };
