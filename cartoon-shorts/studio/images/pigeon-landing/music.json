@@ -1,0 +1,4 @@
+{"duration": 24.1, "start": 0.1, "vo_at": 0.1, "words": "images/pigeon-landing/words_raw.json", "voice": "public/pigeon-landing/vo/take1.mp3",
+ "key": "G", "bpm": [100, 120], "align": [5.30, 8.98, 21.74, 23.14],
+ "sections": [[0.0, 5.26, "theme"], [5.75, 8.3, "uhoh"], [8.98, 12.1, "build"], [12.15, 14.4, "theme2"], [14.4, 19.8, "uhoh"], [21.4, 24.1, "final"]],
+ "stops": [[5.30, 0.42], [19.85, 1.5]], "pings": [2.74, 12.12, 23.14], "end_chord": 23.7, "under_db": 15, "duck_db": 4}

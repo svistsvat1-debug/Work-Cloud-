@@ -8,6 +8,8 @@ The owner's own list of channels and videos in the niche (filled in by hand).
 ## Found by Claude
 | link | views | channel subscribers | upload date | why it is interesting |
 |------|-------|---------------------|-------------|-----------------------|
+| https://www.youtube.com/watch?v=CzTcW1MYz84 (Science X, 'Hawks learn on the fly to swoop up before perching') | 5.1K | 40.4K | 2022-06-30 | the only YouTube video near #44 pigeon-landing (Oxford 2022 hawk study, not the 2026 zero-speed model); proof the swoop-up landing gets interest |
+| https://www.youtube.com/watch?v=e_SxOfMXlgQ (Premier Aerodynamics, 'Why Birds Land on the Stall Edge') | 3.5K | 43K | 2026-01-14 | 19 min long-form on bird perching near stall (a different paper); bird landing physics has a niche audience, no Short tells it as a story |
 | https://www.youtube.com/watch?v=_WoTjxDRLAI (Oddly Engineered, "Why don't we just nuke tornadoes") | 228K | 25.1K | 2026-10-25 | 15 s "why don't we just..." weather Short from a small channel, cites NOAA SPC; same question shape as ours |
 | https://www.youtube.com/watch?v=7US2SW6aVk4 (Goofy Gus, "Why Don't We Just Catch Lightning?") | 7.6K | 69 | 2026-10-31 | brand-new 2D cartoon channel doing the exact "Why don't we just...?" format |
 | Real Engineering, "Wright Brothers Didn't Invent Flight" (long video; found as https://rosetta.to/u/realengineering/wright-brothers-didn-t-invent-flight) | 380K | [MISSING] | [MISSING] | long-form demand for the Wrights' control problem (wing warping); no 2D cartoon Short on the buzzard angle found (2026-11-14) |

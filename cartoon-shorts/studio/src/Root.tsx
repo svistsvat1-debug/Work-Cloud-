@@ -106,6 +106,8 @@ import {FairywrenTapeShort, FWT_DURATION, FWT_FPS} from './fairywren-tape/Short'
 import {FairywrenTapeCover} from './fairywren-tape/Cover';
 import {OrcaToothShort, ORCA_DURATION, ORCA_FPS} from './orca-tooth/Short';
 import {OrcaToothCover} from './orca-tooth/Cover';
+import {PigeonLandingShort, PIGEON_DURATION, PIGEON_FPS} from './pigeon-landing/Short';
+import {PigeonLandingCover} from './pigeon-landing/Cover';
 export const RemotionRoot: React.FC = () => {
   return (
     <>
@@ -195,6 +197,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="FairywrenTapeCover" component={FairywrenTapeCover} width={1080} height={1920} />
       <Composition id="OrcaTooth" component={OrcaToothShort} durationInFrames={Math.round(ORCA_DURATION * ORCA_FPS)} fps={ORCA_FPS} width={1080} height={1920} />
       <Still id="OrcaToothCover" component={OrcaToothCover} width={1080} height={1920} />
+      <Composition id="PigeonLanding" component={PigeonLandingShort} durationInFrames={Math.round(PIGEON_DURATION * PIGEON_FPS)} fps={PIGEON_FPS} width={1080} height={1920} />
+      <Still id="PigeonLandingCover" component={PigeonLandingCover} width={1080} height={1920} />
     </>
   );
 };

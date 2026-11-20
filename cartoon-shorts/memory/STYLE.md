@@ -1059,3 +1059,35 @@ Video #43 (orca-tooth, 2026-11-19) - all pictures LOW 1K; STORY rule; Liam voice
   0-view readings. Claimed the topic on main right after approval.
 - MISS: the library already had a wrong-answer buzzer.wav (#?) and a new one was generated (2 credits) and nearly overwrote it: grep
   sfx-library/index.md for every planned sound by keyword before generating, and never copy into the library under an existing name.
+Video #44 (pigeon-landing, 2026-11-20) - all pictures LOW 1K; STORY rule; Liam voice; code music; ORIGINAL idea (no source channel, owner's request), no approval stop:
+- LIAM PACE: 65 words / 350 chars, 9 sentences (two number words 'sixty-meter' / 'twenty-meter', one colon-free list, a 3-word 'For one
+  crumb.' and a 3-word 'So it flaps.') = 23.4 s of speech = 2.77 words/s (#43 2.66, #42 2.99). No fitting: 24.1 s video (tail 0.56 s).
+  65 plain words with 2 number words is the upper limit for 25 s.
+- GOOD: LOW held up again: 7 pictures (hero + guy 3-pose sheet + engineer 3-pose sheet with a yellow hard hat + three pigeon sheets
+  + city plate), 0 redos, all keyed at dist < 60 (guy / engineer on green, pigeons on MAGENTA because of the teal-green neck patch).
+  A NEW animal across three sheets stayed on-model by hex colours (body #9EA7B3 / #7F8895, head #646C79, neck #5FA88A + #8E6AAE, bars
+  #3F444C, feet #E0646A). Sheet sprites come out at different scales (a 2-pose sheet draws the bird ~1.3x bigger than a 3-pose sheet):
+  equalise animals by the inscribed disc of the HEAD colour region around the eye (headr.py), not by the eye (half-lidded eyes are
+  smaller) and not by the bounding box (wings change it).
+- GOOD (0 credits): the whole building is CODE (wall + window grid with glints + sills + roof cap), so the camera can tilt 6 floors down
+  for the dive and the plate only has to be the far skyline. Plate bottom extended by repeating the bottom window band (row period by
+  autocorrelation, 53 px) and mirror-padded sideways: wide shots at k 0.62 never show an edge. Placing the far skyline BELOW the roof
+  line (plate PY0 +548) made 'we are high up on a roof' read at once; first version had the city towering over the guy.
+- GOOD: abstract physics as props: a screen-space SPEED gauge whose needle follows the pigeon's real speed on the path (climbs into the
+  red before the smack, drops to 0 exactly on the touchdown with the needle clunk), a dashed 'just glide in' line, a white dashed trail
+  of the J-shaped swoop, a blueprint that unrolls with a paper roll and draws the 60 M / 20 M dimension arrows on the words, an engineer
+  (role hat) who scribbles, points and facepalms. A REWIND gag in the pause after the smack (<< icon, the pigeon zips back up, poof
+  resets the guy) turned 'Unless...' into a clear second attempt.
+- GLITCH -> FIX: the rewind icon was drawn as >> (fast-forward); the '20 M' label hung off the blueprint's edge (moved the drawing left);
+  the close-up cut half of the guy's face (camera centre moved right, k 1.7 -> 1.5); during the blueprint the guy behind it looked
+  headless (the sheet covered his head) -> the camera tilts up so he and the pigeon stand BELOW the sheet; the flap pull-back used an
+  'out' ease and popped (pop scan) -> in-out over 0.95 s; frame 0 cut the pigeon's tail -> glide start moved right.
+- MUSIC: G major, 114.5 BPM; stops on 'But' (0.42 s, under the record scratch) and on 'For one crumb.' (1.5 s, under crickets); glock
+  pings on 'flapping', the zero-speed touchdown and 'face'; home chord 23.7; bed 15 dB under the voice, ducked 4 dB.
+- MIX: the raw Liam take peaked at -0.46 dBFS; with MIX_DB -0.5 the preview mix peaked at -2.7 dBFS -> MIX_DB -2.5 + smack -14 dB.
+- CREDITS: 697.97 (voice 349.97, 7 pictures 328.67, 6 new sfx 19.33 billed for 5.84 s = 3.33/s, Scribe 0); account counter +698
+  (one session generating).
+- PROCESS: 'original video' + 'no confirmation' = pick a fresh peer-reviewed study (here 18 days old) in a winning cluster, 16 yt-dlp
+  YouTube searches (ytsearch15) + the channel's own list, claim the topic on main BEFORE the first paid call. yt-dlp is not installed in
+  a fresh container: pip install yt-dlp; metadata of single videos needs --ignore-no-formats-error (only storyboard images are served).
+  The publisher page (royalsocietypublishing.org) answers 403 to automated fetches: cite the university press release + DOI instead.
