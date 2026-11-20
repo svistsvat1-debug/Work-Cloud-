@@ -110,6 +110,8 @@ import {PigeonLandingShort, PIGEON_DURATION, PIGEON_FPS} from './pigeon-landing/
 import {PigeonLandingCover} from './pigeon-landing/Cover';
 import {MarsRotorMachShort, MARS_ROTOR_DURATION, MARS_ROTOR_FPS} from './mars-rotor-mach/Short';
 import {MarsRotorMachCover} from './mars-rotor-mach/Cover';
+import {KitefinHeadlightsShort, KITEFIN_DURATION, KITEFIN_FPS} from './kitefin-headlights/Short';
+import {KitefinHeadlightsCover} from './kitefin-headlights/Cover';
 import {MapleLeftoversShort, MAPLE_DURATION, MAPLE_FPS} from './maple-leftovers/Short';
 import {MapleLeftoversCover} from './maple-leftovers/Cover';
 export const RemotionRoot: React.FC = () => {
@@ -205,6 +207,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="PigeonLandingCover" component={PigeonLandingCover} width={1080} height={1920} />
       <Composition id="MarsRotorMach" component={MarsRotorMachShort} durationInFrames={Math.round(MARS_ROTOR_DURATION * MARS_ROTOR_FPS)} fps={MARS_ROTOR_FPS} width={1080} height={1920} />
       <Still id="MarsRotorMachCover" component={MarsRotorMachCover} width={1080} height={1920} />
+      <Composition id="KitefinHeadlights" component={KitefinHeadlightsShort} durationInFrames={Math.round(KITEFIN_DURATION * KITEFIN_FPS)} fps={KITEFIN_FPS} width={1080} height={1920} />
+      <Still id="KitefinHeadlightsCover" component={KitefinHeadlightsCover} width={1080} height={1920} />
       <Composition id="MapleLeftovers" component={MapleLeftoversShort} durationInFrames={Math.round(MAPLE_DURATION * MAPLE_FPS)} fps={MAPLE_FPS} width={1080} height={1920} />
       <Still id="MapleLeftoversCover" component={MapleLeftoversCover} width={1080} height={1920} />
     </>

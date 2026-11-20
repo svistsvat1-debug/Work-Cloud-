@@ -1,0 +1,4 @@
+{"duration": 23.75, "start": 0.1, "vo_at": 0.1, "words": "images/kitefin-headlights/words_raw.json", "voice": "public/kitefin-headlights/vo/take1.mp3",
+ "key": "F", "bpm": [96, 116], "align": [8.14, 16.78, 20.5, 22.74],
+ "sections": [[0.0, 8.1, "theme"], [8.6, 11.8, "uhoh"], [11.9, 16.7, "build"], [17.2, 20.4, "uhoh"], [20.45, 23.75, "final"]],
+ "stops": [[8.14, 0.42], [16.78, 0.4]], "pings": [1.38, 13.7, 22.74], "end_chord": 23.0, "under_db": 15, "duck_db": 4}

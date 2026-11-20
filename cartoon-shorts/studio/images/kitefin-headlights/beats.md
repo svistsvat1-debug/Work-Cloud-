@@ -1,0 +1,11 @@
+# kitefin-headlights - beat sheet (video time, s)
+| time | words | on screen | picture | sound | music |
+|---|---|---|---|---|---|
+| 0-3.6 | A six-foot shark glows in the pitch-black sea. | frame 0 = the glowing kitefin centred in the dark sea; '6 FT' ruler pops (0.38); glow swells on 'glows'; the sea darkens on 'pitch-black' | sh_calm + code glow (halo, belly glow, 46 twinkling photophore dots), plate | deep_bed, pop, glow_on, twinkle | theme, glock ping on 'glows' |
+| 3.7-8.0 | Everyone said it's hiding: the glow erases its shadow from below. | the guy (fishbowl helmet + bubbles) pops up, smug shrug; 'VIEW FROM BELOW': light disc, the shark turns into a black shadow, the glow erases it into the light | shrug, sh_calm silhouette | whoosh, pop, glow_on, magic | theme |
+| 8.1-9.9 | But nothing is known to hunt it. | record scratch; 'KNOWN ENEMIES: 0'; the shark looks around (flip, flip back) | sh_huh | scratch, pop, 2 darts, crickets | STOP, then uh-oh |
+| 10.1-11.7 | So who's it hiding from? | guy scratches his head, big '?' | scratch | pop | uh-oh |
+| 12.0-14.3 | Scientists bring up eight and measure the light. | 8 mini glowing sharks pop in; guy aims the light meter, dashed reading line, reads it | hero, read | winch, 3 pops, ping, button | build, ping on 'light' |
+| 14.5-16.7 | The belly hides it from prey below. | camera pans down; a squid rises below; the belly glow beams down in a soft cone; the squid sees nothing and whistles | idea, sq_calm, sq_whistle | pop, glow_on, whistle | build |
+| 16.8-20.4 | But more light spills sideways from its face, like headlights. | scratch; the shark tips its nose down and two headlight cones switch on from its snout, grow on 'spills/sideways'; guy is blinded on 'face'; high-beam double flash on 'headlights' | hero -> blind (mirrored) | scratch, lamp_on, whoosh, gulp, 2 button clicks | STOP, uh-oh |
+| 20.5-23.75 | So maybe it sneaks up on dinner with the lights on. | sly grin, guy laughs and drops out, the squid drifts into the beams, the shark sneaks closer in steps; 'lights' squid freezes + sweat drop; 'on' double flash + car horn beep-beep | sh_sneak, laugh, sq_scared | tiptoe, gulp, lamp_on, car_horn | final, ping on 'on', home chord |

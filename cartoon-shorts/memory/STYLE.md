@@ -1146,3 +1146,20 @@ Video #46 (mars-rotor-mach, 2026-11-20) - all pictures LOW 1K; STORY rule; Liam 
   1,767 in the same time: a parallel session was generating - trust the per-run billed amounts.
 - PROCESS: 'part 2 of a 2021 viral thing' = look for a 2026 development of a 2021 event; most 2021 viral topics (goldfish, Ever Given)
   are saturated on YouTube - the news itself is always covered somewhere, the original part is the story angle.
+Video #47 (kitefin-headlights, 2026-11-20) - 2021-viral PART 2, original idea, no approval stop:
+- GOOD: 6 LOW 1K pictures, 0 redos, all keyed clean at dist < 60. THREE SHARKS STACKED in one 2:3 picture (top / middle /
+  bottom) gave each long shark ~926 px of width - much better than three side by side in a 3:2 sheet for a long animal.
+- GOOD: a glowing animal entirely in code on top of a plain sprite: CSS drop-shadow halo (cyan, 0 offset) + a second
+  drop-shadow offset DOWN (belly glow), plus ~46 photophore dots sampled in prep inside the lower body and twinkled in SVG.
+  'Shadow from below' = the same sprite with filter brightness(0) on a radial light disc; the glow 'erases' it by fading
+  the black copy to 10 % while a blurred brightness(0) invert(1) copy fades in.
+- GOOD: headlight cones = two SVG triangles from the snout with a userSpace radial gradient + feGaussianBlur; tip the
+  shark's nose down (rotate -15 deg) so the cones reach characters standing on the floor. A fishbowl helmet + rising
+  bubbles drawn in code from the head disc made the guy 'underwater' with no extra picture.
+- GLITCH (fixed in the improvement pass): the shark moved down-right for the beams and its tail left the frame; the
+  frame-0 glow was too faint for the premise (base glow 0.62 -> 0.85); 'VIEW FROM BELOW' covered the guy (moved right).
+- MIX: peak -5.9 dBFS with MIX_DB -2.5 -> re-rendered with MIX_DB -1.0. MUSIC: F major, 111.5 BPM, stops on both 'But's.
+- LIAM PACE: 67 words / 370 chars, 8 sentences incl. a question and a colon = 23.12 s of speech = 2.90 words/s.
+- CREDITS: 659.35 (voice 369.96, Scribe 0, 6 pictures 281.72, 2 new sfx 7.67); 15 library sounds reused.
+- PROCESS: a parallel session got the same 'part 2 of 2021 viral' request (#46 Ingenuity, #48 Ever Given): claim the
+  topic on main first; the main branch moves while you work - rebase before every push.
