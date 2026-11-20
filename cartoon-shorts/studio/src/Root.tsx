@@ -108,6 +108,8 @@ import {OrcaToothShort, ORCA_DURATION, ORCA_FPS} from './orca-tooth/Short';
 import {OrcaToothCover} from './orca-tooth/Cover';
 import {PigeonLandingShort, PIGEON_DURATION, PIGEON_FPS} from './pigeon-landing/Short';
 import {PigeonLandingCover} from './pigeon-landing/Cover';
+import {MarsRotorMachShort, MARS_ROTOR_DURATION, MARS_ROTOR_FPS} from './mars-rotor-mach/Short';
+import {MarsRotorMachCover} from './mars-rotor-mach/Cover';
 import {MapleLeftoversShort, MAPLE_DURATION, MAPLE_FPS} from './maple-leftovers/Short';
 import {MapleLeftoversCover} from './maple-leftovers/Cover';
 export const RemotionRoot: React.FC = () => {
@@ -201,6 +203,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="OrcaToothCover" component={OrcaToothCover} width={1080} height={1920} />
       <Composition id="PigeonLanding" component={PigeonLandingShort} durationInFrames={Math.round(PIGEON_DURATION * PIGEON_FPS)} fps={PIGEON_FPS} width={1080} height={1920} />
       <Still id="PigeonLandingCover" component={PigeonLandingCover} width={1080} height={1920} />
+      <Composition id="MarsRotorMach" component={MarsRotorMachShort} durationInFrames={Math.round(MARS_ROTOR_DURATION * MARS_ROTOR_FPS)} fps={MARS_ROTOR_FPS} width={1080} height={1920} />
+      <Still id="MarsRotorMachCover" component={MarsRotorMachCover} width={1080} height={1920} />
       <Composition id="MapleLeftovers" component={MapleLeftoversShort} durationInFrames={Math.round(MAPLE_DURATION * MAPLE_FPS)} fps={MAPLE_FPS} width={1080} height={1920} />
       <Still id="MapleLeftoversCover" component={MapleLeftoversCover} width={1080} height={1920} />
     </>

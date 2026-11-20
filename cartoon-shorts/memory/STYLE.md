@@ -1121,3 +1121,28 @@ Video #45 (maple-leftovers, 2026-11-20) - all pictures LOW 1K; STORY rule; Liam 
   hook is hidden (a tree-physiology result found through bomb carbon) stayed uncovered 4 weeks after publication. Check 10+ phrasings with
   yt-dlp (ytsearch15) and claim the topic on main before the first paid call. nature.com article pages download fine with curl
   (WebFetch hit a login redirect); uottawa.ca answers 402 to automated fetches.
+
+Video #46 (mars-rotor-mach, 2026-11-20) - all pictures LOW 1K; STORY rule; Liam voice; code music; 'PART 2' of a 2021 viral moment (owner's request), no approval stop:
+- LIAM PACE: 67 words / 377 chars, 8 sentences (a colon, a 2-word question 'And then?', '...' pause, 2-word ending 'Rule broken.')
+  = 25.18 s of raw speech = 2.66 words/s (slowest-equal with #43). Pauses were already short (<= 0.29 s), so fitting needed ffmpeg
+  atempo 1.04 (no cuts) -> 24.22 s speech, 24.75 s video. LESSON: with 'twenty-seven hundred RPM' (letters read one by one) and
+  '...' 67 words is too long: 62-63 words next time when the script has acronyms or number words.
+- GOOD: LOW held up again: 7 pictures, 0 redos, all keyed at dist < 60 on green. A role prop (orange EARMUFFS on the guy, hex in the
+  ROLE line) stayed on-model across hero + two 3-pose sheets and doubles as a gag (hands on earmuffs = 'duck' for the boom).
+- GOOD (0 credits): machines with moving parts = picture WITHOUT the moving part ('NO rotor blades at all: the mast is bare') + the
+  part in code: rotor blades as bars whose tips trace a flat ellipse (e = 0.13 R), far blades drawn first, a faint white disc
+  (opacity <= 0.3) for speed; keep the visible rate <= ~3 rev/s (2 blades) / 2.8 rev/s (3 blades) or it strobes at 60 fps.
+- GOOD: screen-space dial gauge (semicircle, red zone at 80 %, mark label, readout box that turns red past the limit) carried both
+  'never past 2,700 RPM' and 'Mach 0.98 -> 1.08'; a two-bar comparison panel (EARTH 760 / MARS 540 MPH) made 'sound is slower' read.
+- GLITCH -> FIX (improvement pass): the guy pulling a lever at the right got cut by the frame edge when the camera pushed in (move
+  the camera centre toward him); steel shields placed near the plate edges were invisible (move set pieces inside 15-85 % of the
+  width); gas puffs + a 0.13 tint did not read as 'fake Mars air' (more, bigger puffs + 0.2 tint + a label); '760 MPH' wrapped
+  (whiteSpace nowrap on every label); 'and hold' had no visual -> sparkles on the intact blade tips.
+- MUSIC: F major 114.5 BPM; stops on 'gust' (0.38 s), on 'And then? Nobody's sure.' (2 s, crickets) and under the sonic boom (0.85 s).
+- MIX: MIX_DB -1.5 with the boom at -10 dB -> peak -3.9 dBFS.
+- TOOLS: Remotion's bundled ffmpeg cannot write f32le (music.py needs it): pip install imageio-ffmpeg and symlink its binary to
+  /usr/local/bin/ffmpeg; pip install scipy for music.py. Remotion concurrency max = 4 cores here.
+- CREDITS: 731.96 (voice 380.96, 7 pictures 328.67, 5 new sfx 22.33 billed for 6.68 s, Scribe 0). The account counter rose by
+  1,767 in the same time: a parallel session was generating - trust the per-run billed amounts.
+- PROCESS: 'part 2 of a 2021 viral thing' = look for a 2026 development of a 2021 event; most 2021 viral topics (goldfish, Ever Given)
+  are saturated on YouTube - the news itself is always covered somewhere, the original part is the story angle.
