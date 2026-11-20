@@ -1163,3 +1163,24 @@ Video #47 (kitefin-headlights, 2026-11-20) - 2021-viral PART 2, original idea, n
 - CREDITS: 659.35 (voice 369.96, Scribe 0, 6 pictures 281.72, 2 new sfx 7.67); 15 library sounds reused.
 - PROCESS: a parallel session got the same 'part 2 of 2021 viral' request (#46 Ingenuity, #48 Ever Given): claim the
   topic on main first; the main branch moves while you work - rebase before every push.
+Video #48 (suez-sequel, 2026-11-20) - all pictures LOW 1K; STORY rule; Liam voice; code music; ORIGINAL 2021-viral 'part 2' (no source channel, owner's request), no approval stop:
+- LIAM PACE: 68 words / 374 chars, 10 sentences (a 3-word 'The owners refuse.', 'Then, a deal.', a 4-word 'With two tugboats watching.',
+  'nine hundred million' as words) = 25.08 s of raw speech = 2.71 words/s - TOO LONG: six pauses > 0.35 s cut to 0.25 s (1.12 s of
+  silence, fit_voice.py, no tempo change) -> 24.03 s, video 24.5 s. Commas after 'So,' / 'Then,' and a colon each add a ~0.4 s pause:
+  for 25 s keep it to <= 64 words, or fewer commas.
+- GOOD: LOW held up again: 6 pictures (two 3-pose guy sheets with a sailor cap as the role item, ship, props sheet, two plates), 0 redos,
+  all keyed at dist < 60 (guy on green, ship + props on magenta). The container ship came out clean as ONE 3:2 sprite (1498 px wide);
+  the tugboat's round windows read as eyes by themselves -> code pupils / lids on top of them made the 'watching' gag for free.
+- GOOD (0 credits): a big object as the doer: code face on the hull near the bow (eyes r 38 native, gritted-teeth / O / wavy mouths),
+  water drawn IN FRONT of the hull from the waterline down (the ship sits in the water), a sand mound + flying clods for 'stuck', a
+  screen-space progress track for 'halfway', a bill that counts up to the real number, REFUSED / DEAL stamps, a tear-off calendar +
+  racing sun for 'three months'. The ship flipped with sx -1 for the return trip keeps its face on the bow.
+- GLITCH -> FIX: the plates' mirror padding shows a SECOND SUN at the edge when the camera pans -> paint a sky-coloured disc over the
+  mirrored copy (measure it in the padded plate). The punchline props (tugboats) were placed relative to the ship ends and fell out of
+  the frame -> for the payoff, push the camera onto the face and place the props next to it; the guy in front covered a tug -> move
+  him aside on the push. Plates have ~55 % sky: keep the camera low and the guy big (0.42) in the foreground.
+- ENV: remotion.media (Chrome download) and youtube.com are blocked in some containers -> CHROME=/opt/pw-browsers/chromium_headless_shell-1243/
+  chrome-headless-shell-linux64/chrome-headless-shell; concurrency max = cores (4). YouTube originality search was not possible (proxy 403):
+  web search only.
+- MUSIC: F major, 107 BPM, stops on 'But' and under REFUSED; bed 15 dB under the voice, ducked 4 dB; mix peak -4.1 dBFS with MIX_DB -1.0.
+- CREDITS: 671.68 (voice 373.96, Scribe 0, 6 pictures 281.72, 4 new sfx 16.00 billed for 4.8 s = 3.33/s); 16 library sounds reused.
