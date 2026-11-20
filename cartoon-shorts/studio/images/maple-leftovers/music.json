@@ -1,0 +1,4 @@
+{"duration": 24.2, "start": 0.1, "vo_at": 0.1, "words": "images/maple-leftovers/words_raw.json", "voice": "public/maple-leftovers/vo/take1.mp3",
+ "key": "C", "bpm": [100, 118], "align": [8.58, 18.98, 23.30],
+ "sections": [[0.0, 8.5, "theme"], [8.98, 12.6, "uhoh"], [12.75, 16.9, "build"], [17.0, 19.95, "theme2"], [20.0, 24.2, "final"]],
+ "stops": [[8.58, 0.40], [21.12, 0.55]], "pings": [18.98, 23.30], "end_chord": 23.75, "under_db": 15, "duck_db": 4}

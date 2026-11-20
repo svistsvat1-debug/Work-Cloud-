@@ -1091,3 +1091,33 @@ Video #44 (pigeon-landing, 2026-11-20) - all pictures LOW 1K; STORY rule; Liam v
   YouTube searches (ytsearch15) + the channel's own list, claim the topic on main BEFORE the first paid call. yt-dlp is not installed in
   a fresh container: pip install yt-dlp; metadata of single videos needs --ignore-no-formats-error (only storyboard images are served).
   The publisher page (royalsocietypublishing.org) answers 403 to automated fetches: cite the university press release + DOI instead.
+Video #45 (maple-leftovers, 2026-11-20) - all pictures LOW 1K; STORY rule; Liam voice; code music; ORIGINAL idea (no source channel, owner's request), no approval stop:
+- LIAM PACE: 66 words / 359 chars, 10 sentences (a 1-word 'Why?', fragments of 2-5 words, number words 'Two', 'half', 'Three to five') = 23.4 s of
+  speech = 2.82 words/s (#44 2.77, #43 2.66). No fitting: 24.2 s video (tail 0.66 s). 66 short plain words is the upper limit for 25 s.
+- GOOD: LOW held up again: 6 pictures (hero + guy 3-pose sheet + pancake PAIR sheet + tree + props sheet with leaf / syrup bottle / mushroom
+  cloud + meadow plate), 0 redos, all keyed at dist < 60 on MAGENTA (goggles + everything green). NO green despill in prep when leaves / trees
+  are in the sprites (the usual despill_any deletes #5DB04F leaves) - despill magenta only. The pair sheet (happy / shocked, same pose)
+  came out pixel-aligned (identical head discs), so the swap needs no ECC alignment.
+- GOOD (0 credits): a TREE AS A CHARACTER with a code face on the trunk (pops open, '> <' + O-mouth slurp, shifty half-lids + sweat, a wink)
+  and a code PANTRY cut-away in the trunk with an x-ray sap tube and sugar cubes riding up = 'stored sugar' made visible. A screen-space
+  ZOOM BUBBLE placed right ON the cut-away (no tail) reads better than a bubble with a tail: the tail crossed the trunk's face. A screen-space
+  'specimen' (the new leaf flies up big, right half golden via CSS clip inset(0 0 0 50%) + sepia/saturate filter, dashed split line,
+  FRESH / OLD SUGAR tags) made 'half from old sugar' instant - the first version (a small leaf at the crown edge) did not read.
+- GOOD: an abstract lag shown as a RACE inset (AIR cloud with legs finishes at 2022, the leaf waddles in at 2024, '+2 YEARS'); a LATE stamp,
+  LEFTOVERS sticky notes, birthday candles popping 3 then 5 on 'three to five', a party hat on the bottle, confetti on 'old'.
+- GLITCH -> FIX: a pouring bottle gripped by the NECK and rotated ~150 deg read as a big wooden SPOON (the stream ran along it): grip the
+  bottle by its BODY (anchor at the body centre), tilt ~125 deg so the mouth is right above the target, and let the syrup fall STRAIGHT
+  DOWN; draw it behind the guy while pouring (the fist overlaps it = grip) and in front once upright (face + note visible). The syrup pool
+  must stay at the pour x after the bottle moves. The test cloud hid behind the raised hand in the wide shot -> moved it right and made it
+  bigger. A 'CARBON-14' tag covered the guy's face -> tags go into empty sky. Falling leaves crossing the guy's face looked like stains ->
+  draw them behind him. A decaying sine started before its trigger time (t > t0 - 0.05 with exp(-k(t - t0))) = a 1-frame jump (pop scan).
+- IMPROVEMENT PASS: pluck sparkle + leaves falling behind the guy in the first 2 s, the FRESH / OLD SUGAR specimen on 'half', a camera
+  push onto the bottle on 'Leftovers too' and back on 'Three'.
+- MUSIC: C major, 114 BPM; stops on 'But' (0.40 s, under the record scratch) and 'Leftovers too' (0.55 s); uh-oh section with the ticking
+  woodblock under 'run late'; build arpeggio under the sugar ride; glock pings on 'leftovers' and 'old'; bed 15 dB under the voice, ducked
+  4 dB. MIX: the preview peaked at -5.8 dBFS with MIX_DB -2.5 -> MIX_DB -0.8.
+- CREDITS: 654.04 (voice 359, Scribe 0, 6 pictures 281.71, 4 new sfx 13.33 billed for 4.0 s = 3.33/s); 19 library sounds reused.
+- PROCESS: fresh striking papers (fossils, animal navigation) get science-news / AI-news uploads within ~1-10 days; a technical paper whose
+  hook is hidden (a tree-physiology result found through bomb carbon) stayed uncovered 4 weeks after publication. Check 10+ phrasings with
+  yt-dlp (ytsearch15) and claim the topic on main before the first paid call. nature.com article pages download fine with curl
+  (WebFetch hit a login redirect); uottawa.ca answers 402 to automated fetches.
