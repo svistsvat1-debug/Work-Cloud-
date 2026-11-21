@@ -122,6 +122,8 @@ import {LapalmaGasShort, LAPALMA_DURATION, LAPALMA_FPS} from './lapalma-gas/Shor
 import {LapalmaGasCover} from './lapalma-gas/Cover';
 import {ButtBreathShort, BB_DURATION, BB_FPS} from './butt-breath/Short';
 import {ButtBreathCover} from './butt-breath/Cover';
+import {ElephantHomeShort, EH_DURATION, EH_FPS} from './elephant-home/Short';
+import {ElephantHomeCover} from './elephant-home/Cover';
 export const RemotionRoot: React.FC = () => {
   return (
     <>
@@ -227,6 +229,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="LapalmaGasCover" component={LapalmaGasCover} width={1080} height={1920} />
       <Composition id="ButtBreath" component={ButtBreathShort} durationInFrames={Math.round(BB_DURATION * BB_FPS)} fps={BB_FPS} width={1080} height={1920} />
       <Still id="ButtBreathCover" component={ButtBreathCover} width={1080} height={1920} />
+      <Composition id="ElephantHome" component={ElephantHomeShort} durationInFrames={Math.round(EH_DURATION * EH_FPS)} fps={EH_FPS} width={1080} height={1920} />
+      <Still id="ElephantHomeCover" component={ElephantHomeCover} width={1080} height={1920} />
     </>
   );
 };

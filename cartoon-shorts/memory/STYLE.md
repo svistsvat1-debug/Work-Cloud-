@@ -1223,3 +1223,7 @@ Video #51 (butt-breath, 2026-11-21) - all pictures LOW 1K; STORY rule; Liam voic
 - LOOP: the side character that opened the video (the pig) walks off after the first beat and walks back in during the tail while the
   camera glides back to the frame-0 framing: the last frame matches frame 0.
 - CREDITS: 618.35 (voice 324.97, Scribe 0, 6 pictures 281.72, 3 new sfx 11.67 billed 3.33/s); 16 library sounds reused.
+Video #52 (elephant-home, 2026-11-21) - LOW 1K, story, Liam, code music, 2021-viral part 2, no approval stop:
+- LIAM PACE: 66 words / 359 chars = 22.32 s of speech = 2.96 words/s.
+- GOOD: a ranger hat as the role item; elephant 3-pose sheet (walk / sleep / happy) keyed clean; one walk drawing + code bob/rock reads as a gait. Live counters (KM, TONS) in the HUD give a reason to watch to the end.
+- GLITCH -> FIX: camera keys below the plate showed empty background -> clampCam(x, y to the plate) in WorldDiv. Small props (snacks at 0.22) disappeared behind the herd -> 0.4 and draw them after the herd. Frame-0 sprites gated by t > 0 vanish on frame 0.
