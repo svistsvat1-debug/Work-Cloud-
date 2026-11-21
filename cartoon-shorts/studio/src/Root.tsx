@@ -118,6 +118,8 @@ import {SuezSequelShort, SUEZ_DURATION, SUEZ_FPS} from './suez-sequel/Short';
 import {SuezSequelCover} from './suez-sequel/Cover';
 import {DragonPlaqueShort, DRAGON_DURATION, DRAGON_FPS} from './dragon-plaque/Short';
 import {DragonPlaqueCover} from './dragon-plaque/Cover';
+import {LapalmaGasShort, LAPALMA_DURATION, LAPALMA_FPS} from './lapalma-gas/Short';
+import {LapalmaGasCover} from './lapalma-gas/Cover';
 export const RemotionRoot: React.FC = () => {
   return (
     <>
@@ -219,6 +221,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="SuezSequelCover" component={SuezSequelCover} width={1080} height={1920} />
       <Composition id="DragonPlaque" component={DragonPlaqueShort} durationInFrames={Math.round(DRAGON_DURATION * DRAGON_FPS)} fps={DRAGON_FPS} width={1080} height={1920} />
       <Still id="DragonPlaqueCover" component={DragonPlaqueCover} width={1080} height={1920} />
+      <Composition id="LapalmaGas" component={LapalmaGasShort} durationInFrames={Math.round(LAPALMA_DURATION * LAPALMA_FPS)} fps={LAPALMA_FPS} width={1080} height={1920} />
+      <Still id="LapalmaGasCover" component={LapalmaGasCover} width={1080} height={1920} />
     </>
   );
 };

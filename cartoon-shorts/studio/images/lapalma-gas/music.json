@@ -1,0 +1,6 @@
+{"duration": 23.0, "start": 0.1, "vo_at": 0.1,
+ "words": "images/lapalma-gas/words.json", "voice": "public/lapalma-gas/vo/take1.mp3",
+ "key": "G", "bpm": [100, 118], "align": [2.42, 13.82, 18.1, 21.94],
+ "sections": [[0.0, 2.4, "theme"], [3.45, 13.8, "uhoh"], [14.95, 17.9, "build"], [18.05, 20.6, "theme2"], [20.75, 23.0, "final"]],
+ "stops": [[2.42, 0.4], [13.82, 0.45]],
+ "pings": [2.74, 18.66, 21.94], "end_chord": 22.3, "under_db": 15, "duck_db": 4}

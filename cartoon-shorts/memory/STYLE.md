@@ -1199,3 +1199,12 @@ Video #49 (dragon-plaque, 2026-11-21) - all pictures LOW 1K; STORY rule; Liam vo
 - ENV: the session's worker restarted mid-run; files on disk survived (raw pictures, voice), so no generation was repeated.
 - MUSIC: C major, 116 BPM, stops on 'But' and 'Nothing'; bed 15 dB under the voice; mix peak -4.8 dBFS with MIX_DB -1.0.
 - CREDITS: 684.97 (voice 343.97, Scribe 0, 7 pictures 328.67, 3 new sfx 12.33 billed for 3.7 s = 3.33/s); 14 library sounds reused.
+
+## Lessons - #50 lapalma-gas (2026-11-21)
+- Liam pace: 60 words / 333 chars in 22.4 s = 2.68 words/s (consistent with 2.7 in #48; plan cards at ~2.7 words/s, not 3.1).
+- GOOD (0 credits): a cut-away HOUSE plate (living room / garage / basement / cracked ground) carried 15 s of story with code only: a face in the ground that exhales, gas as a wavy translucent fill with a dashed moving top line that fills the basement then the garage ('heavier than air' = yellow down-chevrons), alarms as code boxes whose LED is red inside the gas and green above it.
+- GOOD: 'invisible' shown by dropping the gas fill opacity 0.55 -> 0.32 and adding a '(invisible)' label under 'CO2' - reads at once.
+- GOOD: animals 'drop dead' kid-safe: flip 180 deg about the sprite centre with a small lift + X eyes drawn over a fur-coloured disc; faint (slide whistle + thud) sfx.
+- FIX: the first frame had the guy too small at the right edge - for frame 0 on a wide plate scale the guy ~1.5x and keep him inside the middle 70 %; effects that happen off the plate edge (steam where lava meets the sea) must be moved into the frame.
+- LOW pictures held up well (keying clean at the default threshold on green and magenta); 6 pictures were enough for a 23 s story.
+- PROCESS: before taking over a 'claimed' topic, check its ElevenLabs flow for nodes created in the last minutes - another session may still be producing it (happened with #49 dragon-plaque).

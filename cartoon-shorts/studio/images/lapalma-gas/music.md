@@ -1,0 +1,2 @@
+# music - lapalma-gas (scripts/music.py, config music.json)
+G major, 110 BPM (picked in 100-118 to align "but", "drop", "two", "on"); sections: theme 0-2.4 / stop on "But" 2.42 (0.4 s) / uh-oh 3.45-13.8 / stop on "drop dead" 13.82 (0.45 s) / build 14.95-17.9 (alarms) / theme2 18.05-20.6 / final 20.75-23.0 + end chord 22.3; glock pings on "misses", "later", "on". Bed RMS -15 dB under the voice, ducked 4 dB under words, peak -15.5 dBFS.
