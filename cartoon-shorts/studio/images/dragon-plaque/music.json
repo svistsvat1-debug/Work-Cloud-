@@ -1,0 +1,4 @@
+{"duration": 24.1, "start": 0.1, "vo_at": 0.1, "words": "images/dragon-plaque/words.json", "voice": "public/dragon-plaque/vo/take1.mp3",
+ "key": "C", "bpm": [100, 118], "align": [7.3, 10.98, 16.02, 22.9],
+ "sections": [[0.0, 7.2, "theme"], [7.7, 11.8, "uhoh"], [11.85, 16.0, "build"], [16.02, 21.6, "theme2"], [21.65, 24.1, "final"]],
+ "stops": [[7.3, 0.4], [10.98, 0.45]], "pings": [5.78, 16.02, 22.9], "end_chord": 23.6, "under_db": 15, "duck_db": 4}

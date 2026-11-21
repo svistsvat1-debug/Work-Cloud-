@@ -1184,3 +1184,18 @@ Video #48 (suez-sequel, 2026-11-20) - all pictures LOW 1K; STORY rule; Liam voic
   web search only.
 - MUSIC: F major, 107 BPM, stops on 'But' and under REFUSED; bed 15 dB under the voice, ducked 4 dB; mix peak -4.1 dBFS with MIX_DB -1.0.
 - CREDITS: 671.68 (voice 373.96, Scribe 0, 6 pictures 281.72, 4 new sfx 16.00 billed for 4.8 s = 3.33/s); 16 library sounds reused.
+Video #49 (dragon-plaque, 2026-11-21) - all pictures LOW 1K; STORY rule; Liam voice; code music; ORIGINAL 2021-viral 'part 2' (no source channel, owner's request), no approval stop:
+- LIAM PACE: 65 words / 344 chars, 9 sentences (a 1-word 'Nothing.', a question, no digits, 'eighty-five' as a word) = 23.36 s of speech = 2.78 words/s.
+  65 words with short sentences fit 24.1 s without any fitting.
+- GOOD: LOW held up again: 7 pictures, 0 redos, all keyed at dist < 60 (guy + Denisovan on green, skull + props on magenta). A NON-channel
+  character (the Denisovan: brown skin, hair, fur wrap) in 'the same flat cartoon style' matched the outline weight of our guy on the first try.
+- GOOD (0 credits): a fossil skull as the doer - code eyes (shared Eye, no brows) placed in the measured eye sockets (dark-brown blobs found
+  in prep) read as alive at once: bored half-lids in the well, darting eyes on 'But', '> <' while drilled. A cut-away well drawn in code on a
+  plain 'ground cross-section' plate made a clear frame 0. A step stool (code) lifts the guy so a held tool (drill) reaches an object on a
+  counter - compute the guy's feet from the tool tip (tip - (tip - feet) * k).
+- GLITCH -> FIX: a sub-scene component drew the skull a SECOND time while the main scene still drew it (double skull) -> one owner per sprite.
+  Payoff character cut by the frame edge and labels on its head -> camera keys checked against sprite extents; labels at y 210-340.
+  Props on a counter hidden behind the guy's presenting hand -> put them in front of the object he presents, not under his hand.
+- ENV: the session's worker restarted mid-run; files on disk survived (raw pictures, voice), so no generation was repeated.
+- MUSIC: C major, 116 BPM, stops on 'But' and 'Nothing'; bed 15 dB under the voice; mix peak -4.8 dBFS with MIX_DB -1.0.
+- CREDITS: 684.97 (voice 343.97, Scribe 0, 7 pictures 328.67, 3 new sfx 12.33 billed for 3.7 s = 3.33/s); 14 library sounds reused.

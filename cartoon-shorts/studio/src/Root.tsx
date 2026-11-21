@@ -116,6 +116,8 @@ import {MapleLeftoversShort, MAPLE_DURATION, MAPLE_FPS} from './maple-leftovers/
 import {MapleLeftoversCover} from './maple-leftovers/Cover';
 import {SuezSequelShort, SUEZ_DURATION, SUEZ_FPS} from './suez-sequel/Short';
 import {SuezSequelCover} from './suez-sequel/Cover';
+import {DragonPlaqueShort, DRAGON_DURATION, DRAGON_FPS} from './dragon-plaque/Short';
+import {DragonPlaqueCover} from './dragon-plaque/Cover';
 export const RemotionRoot: React.FC = () => {
   return (
     <>
@@ -215,6 +217,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="MapleLeftoversCover" component={MapleLeftoversCover} width={1080} height={1920} />
       <Composition id="SuezSequel" component={SuezSequelShort} durationInFrames={Math.round(SUEZ_DURATION * SUEZ_FPS)} fps={SUEZ_FPS} width={1080} height={1920} />
       <Still id="SuezSequelCover" component={SuezSequelCover} width={1080} height={1920} />
+      <Composition id="DragonPlaque" component={DragonPlaqueShort} durationInFrames={Math.round(DRAGON_DURATION * DRAGON_FPS)} fps={DRAGON_FPS} width={1080} height={1920} />
+      <Still id="DragonPlaqueCover" component={DragonPlaqueCover} width={1080} height={1920} />
     </>
   );
 };
