@@ -1208,3 +1208,18 @@ Video #49 (dragon-plaque, 2026-11-21) - all pictures LOW 1K; STORY rule; Liam vo
 - FIX: the first frame had the guy too small at the right edge - for frame 0 on a wide plate scale the guy ~1.5x and keep him inside the middle 70 %; effects that happen off the plate edge (steam where lava meets the sea) must be moved into the frame.
 - LOW pictures held up well (keying clean at the default threshold on green and magenta); 6 pictures were enough for a 23 s story.
 - PROCESS: before taking over a 'claimed' topic, check its ElevenLabs flow for nodes created in the last minutes - another session may still be producing it (happened with #49 dragon-plaque).
+Video #51 (butt-breath, 2026-11-21) - all pictures LOW 1K; STORY rule; Liam voice; code music; ORIGINAL 2021-viral 'part 2' (no source channel), no approval stop:
+- LIAM PACE: 62 words / 322 chars, 8 sentences (one colon + one question) = 20.52 s of speech = 3.02 words/s, no fitting. 62 words left
+  room for a 1.5 s tail with a 'WOULD YOU?' end card (video 22.4 s). For a comment hook, <= 62 words is the sweet spot.
+- GOOD: 6 LOW pictures, 0 redos, all keyed at dist < 60 (guys / doctor / pig on green, props on magenta). A role item (round head
+  mirror on a headband + stethoscope) made a clear DOCTOR from the locked character. A 3-object props sheet (toilet / IV stand /
+  stopwatch) split cleanly; blank faces (stopwatch without numbers, bag without marks) let code draw the digits / levels.
+- GOOD (0 credits): a code liquid level inside a sprite's bag (a clipPath rect over the measured bag box), bubbles rising in it, a dashed
+  'flow' along a tube drawn BEHIND the guy (rendered before him), belly swell = sx 1 -> 1.13 on the hold pose, a 60:00 -> 00:00 countdown
+  on the blank stopwatch that later shrinks to the corner, a 27-head counter with 7 red X's, runners flipped (sx -1) sprinting to a toilet.
+- GLITCH -> FIX: the plate's floor ends ~54 % down: with feet at 62-70 % the bottom 30 % was empty floor -> put the feet low in the
+  world (y ~ 88 % of the plate) and clamp the camera to the plate (clampCam). A prop placed at the plate edge (toilet, doctor's hand)
+  got cut -> keep 200 px from the plate's side edges. Cover: hide every extra object (pig, its shadow, the doctor) - rule of three.
+- LOOP: the side character that opened the video (the pig) walks off after the first beat and walks back in during the tail while the
+  camera glides back to the frame-0 framing: the last frame matches frame 0.
+- CREDITS: 618.35 (voice 324.97, Scribe 0, 6 pictures 281.72, 3 new sfx 11.67 billed 3.33/s); 16 library sounds reused.

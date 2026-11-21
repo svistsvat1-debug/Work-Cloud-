@@ -116,10 +116,15 @@ import {MapleLeftoversShort, MAPLE_DURATION, MAPLE_FPS} from './maple-leftovers/
 import {MapleLeftoversCover} from './maple-leftovers/Cover';
 import {SuezSequelShort, SUEZ_DURATION, SUEZ_FPS} from './suez-sequel/Short';
 import {SuezSequelCover} from './suez-sequel/Cover';
+<<<<<<< HEAD
 import {DragonPlaqueShort, DRAGON_DURATION, DRAGON_FPS} from './dragon-plaque/Short';
 import {DragonPlaqueCover} from './dragon-plaque/Cover';
 import {LapalmaGasShort, LAPALMA_DURATION, LAPALMA_FPS} from './lapalma-gas/Short';
 import {LapalmaGasCover} from './lapalma-gas/Cover';
+=======
+import {ButtBreathShort, BB_DURATION, BB_FPS} from './butt-breath/Short';
+import {ButtBreathCover} from './butt-breath/Cover';
+>>>>>>> 9372dcc (cartoon-shorts: butt-breath (#51) - part 2 of the 2021 'butt breathing' study: 27 men try to hold the liquid for an hour, 20 make it, next time with oxygen)
 export const RemotionRoot: React.FC = () => {
   return (
     <>
@@ -219,10 +224,15 @@ export const RemotionRoot: React.FC = () => {
       <Still id="MapleLeftoversCover" component={MapleLeftoversCover} width={1080} height={1920} />
       <Composition id="SuezSequel" component={SuezSequelShort} durationInFrames={Math.round(SUEZ_DURATION * SUEZ_FPS)} fps={SUEZ_FPS} width={1080} height={1920} />
       <Still id="SuezSequelCover" component={SuezSequelCover} width={1080} height={1920} />
+<<<<<<< HEAD
       <Composition id="DragonPlaque" component={DragonPlaqueShort} durationInFrames={Math.round(DRAGON_DURATION * DRAGON_FPS)} fps={DRAGON_FPS} width={1080} height={1920} />
       <Still id="DragonPlaqueCover" component={DragonPlaqueCover} width={1080} height={1920} />
       <Composition id="LapalmaGas" component={LapalmaGasShort} durationInFrames={Math.round(LAPALMA_DURATION * LAPALMA_FPS)} fps={LAPALMA_FPS} width={1080} height={1920} />
       <Still id="LapalmaGasCover" component={LapalmaGasCover} width={1080} height={1920} />
+=======
+      <Composition id="ButtBreath" component={ButtBreathShort} durationInFrames={Math.round(BB_DURATION * BB_FPS)} fps={BB_FPS} width={1080} height={1920} />
+      <Still id="ButtBreathCover" component={ButtBreathCover} width={1080} height={1920} />
+>>>>>>> 9372dcc (cartoon-shorts: butt-breath (#51) - part 2 of the 2021 'butt breathing' study: 27 men try to hold the liquid for an hour, 20 make it, next time with oxygen)
     </>
   );
 };
