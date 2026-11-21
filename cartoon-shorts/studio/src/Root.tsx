@@ -124,6 +124,8 @@ import {ButtBreathShort, BB_DURATION, BB_FPS} from './butt-breath/Short';
 import {ButtBreathCover} from './butt-breath/Cover';
 import {ElephantHomeShort, EH_DURATION, EH_FPS} from './elephant-home/Short';
 import {ElephantHomeCover} from './elephant-home/Cover';
+import {CicadaReunionShort, CR_DURATION, CR_FPS} from './cicada-reunion/Short';
+import {CicadaReunionCover} from './cicada-reunion/Cover';
 export const RemotionRoot: React.FC = () => {
   return (
     <>
@@ -231,6 +233,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="ButtBreathCover" component={ButtBreathCover} width={1080} height={1920} />
       <Composition id="ElephantHome" component={ElephantHomeShort} durationInFrames={Math.round(EH_DURATION * EH_FPS)} fps={EH_FPS} width={1080} height={1920} />
       <Still id="ElephantHomeCover" component={ElephantHomeCover} width={1080} height={1920} />
+      <Composition id="CicadaReunion" component={CicadaReunionShort} durationInFrames={Math.round(CR_DURATION * CR_FPS)} fps={CR_FPS} width={1080} height={1920} />
+      <Still id="CicadaReunionCover" component={CicadaReunionCover} width={1080} height={1920} />
     </>
   );
 };

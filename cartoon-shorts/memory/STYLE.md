@@ -1227,3 +1227,7 @@ Video #52 (elephant-home, 2026-11-21) - LOW 1K, story, Liam, code music, 2021-vi
 - LIAM PACE: 66 words / 359 chars = 22.32 s of speech = 2.96 words/s.
 - GOOD: a ranger hat as the role item; elephant 3-pose sheet (walk / sleep / happy) keyed clean; one walk drawing + code bob/rock reads as a gait. Live counters (KM, TONS) in the HUD give a reason to watch to the end.
 - GLITCH -> FIX: camera keys below the plate showed empty background -> clampCam(x, y to the plate) in WorldDiv. Small props (snacks at 0.22) disappeared behind the herd -> 0.4 and draw them after the herd. Frame-0 sprites gated by t > 0 vanish on frame 0.
+Video #53 (cicada-reunion, 2026-11-21) - LOW 1K, story, Liam, code music, 2021-viral part 2, no approval stop:
+- LIAM PACE: 66 words / 386 chars = 24.3 s raw (2.7 words/s) -> too long; fitted by trimming pauses + atempo 1.04 to 22.6 s. Keep <= 60 words when an end card is planned.
+- GOOD: 5 pictures were enough; a second 'species/brood' = CSS hue-rotate tint of the same sprite (0 credits). Sepia filter on the whole scene reads as 'the past' at once; a calendar sprite with code digits rolling 1803 -> 2245 is a cheap retention device.
+- GLITCH -> FIX: frame-0 counter used pop(t, 0, ...) = 0 at t=0 -> plain scale 1; tall sprites (calendar) anchored at feet near the top got cut -> anchor lower; dropped prop (hat) must land on the measured head top (feet y - h*s).
